@@ -26,6 +26,7 @@
 #define HLEDATABASE_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -377,9 +378,22 @@ typedef enum _XRefDataBaseOffset
 // ******************************************************************
 // * XRefDataBase
 // ******************************************************************
-extern unsigned int XRefDataBase[XREF_COUNT];
+extern uint32_t XRefDataBase[XREF_COUNT];
 
 inline bool XRefAddrFound(XRefDataBaseOffset XRef) { return XRefDataBase[XRef] > XREF_ADDR_DERIVE; }
+
+// ******************************************************************
+// * API functions to use with other projects.
+// ******************************************************************
+
+bool bXRefFirstPass; // For search speed optimization, set in EmuHLEIntercept, read in EmuLocateFunction
+uint32_t UnResolvedXRefs; // Tracks XRef location, used (read/write) in EmuHLEIntercept and EmuLocateFunction
+
+extern inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint8_t* offset_out);
+
+extern inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, uint8_t* value_out);
+
+extern uint32_t EmuLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper);
 
 // ******************************************************************
 // * GetSymbolDataBaseHash

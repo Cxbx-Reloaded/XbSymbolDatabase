@@ -101,6 +101,151 @@ const unsigned int SymbolDBListCount = OOVPA_TABLE_COUNT(SymbolDBList);
 // ******************************************************************
 unsigned int XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEIntercept
 
+
+// ******************************************************************
+// * API functions to use with other projects.
+// ******************************************************************
+
+// NOTE: PatrickvL state the arguments are named differently and the function does something that has another meaning,
+//       the implementation could be changed if the need ever arises.
+inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint8_t* offset_out) {
+    // Note : These are stored swapped by the XREF_ENTRY macro, hence this difference from GetOovpaEntry :
+    *xref_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Offset;
+    *offset_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
+}
+
+inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, uint8_t* value_out) {
+    *offset_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Offset;
+    *value_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
+}
+
+bool CompareOOVPAToAddress(OOVPA *Oovpa, uint32_t cur) {
+    uint32_t v = 0; // verification counter
+
+                  // Check all XRefs, stop if any does not match
+    for (; v < Oovpa->XRefCount; v++) {
+        uint32_t XRef;
+        uint8_t Offset;
+
+        // get currently registered (un)known address
+        GetXRefEntry(Oovpa, v, &XRef, &Offset);
+        uint32_t XRefAddr = XRefDataBase[XRef];
+        // Undetermined XRef cannot be checked yet
+        // (EmuLocateFunction already checked this, but this check
+        // is cheap enough to keep, and keep this function generic).
+        if (XRefAddr == XREF_ADDR_UNDETERMINED)
+            return false;
+
+        // Don't verify an xref that has to be (but isn't yet) derived
+        if (XRefAddr == XREF_ADDR_DERIVE)
+            continue;
+
+        uint32_t ActualAddr = *(uint32_t*)(cur + Offset);
+        // check if PC-relative or direct reference matches XRef
+        if ((ActualAddr + cur + Offset + 4 != XRefAddr) && (ActualAddr != XRefAddr))
+            return false;
+    }
+
+    // Check all (Offset,Value)-pairs, stop if any does not match
+    for (; v < Oovpa->Count; v++) {
+        uint32_t Offset;
+        uint8_t ExpectedValue;
+
+        // get offset + value pair
+        GetOovpaEntry(Oovpa, v, &Offset, &ExpectedValue);
+        uint8_t ActualValue = *(uint8_t*)(cur + Offset);
+        if (ActualValue != ExpectedValue)
+            return false;
+    }
+
+    // all offsets matched
+    return true;
+}
+
+// locate the given function, searching within lower and upper bounds
+extern uint32_t EmuLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper) {
+    // skip out if this is an unnecessary search
+    if (!bXRefFirstPass && Oovpa->XRefCount == XRefZero && Oovpa->XRefSaveIndex == XRefNoSaveIndex)
+        return 0;
+
+    uint32_t derive_indices = 0;
+    // Check all XRefs are known (if not, don't do a useless scan) :
+    for (uint32_t v = 0; v < Oovpa->XRefCount; v++) {
+        uint32_t XRef;
+        uint8_t Offset;
+
+        // get currently registered (un)known address
+        GetXRefEntry(Oovpa, v, &XRef, &Offset);
+        uint32_t XRefAddr = XRefDataBase[XRef];
+        // Undetermined XRef cannot be checked yet
+        if (XRefAddr == XREF_ADDR_UNDETERMINED)
+            // Skip this scan over the address range
+            return 0;
+
+        // Don't verify an xref that has to be (but isn't yet) derived
+        if (XRefAddr == XREF_ADDR_DERIVE) {
+            // Mark (up to index 32) which xref needs to be derived
+            derive_indices |= (1 << v);
+            continue;
+        }
+    }
+
+    // correct upper bound with highest Oovpa offset
+    uint32_t count = Oovpa->Count;
+    {
+        uint32_t Offset;
+        uint8_t Value; // ignored
+
+        GetOovpaEntry(Oovpa, count - 1, &Offset, &Value);
+        upper -= Offset;
+    }
+
+    // search all of the image memory
+    for (uint32_t cur = lower; cur < upper; cur++)
+        if (CompareOOVPAToAddress(Oovpa, cur)) {
+
+            while (derive_indices > 0) {
+                uint32_t XRef;
+                uint8_t Offset;
+                uint32_t derive_index;
+
+                // Extract an index from the indices mask :
+                _BitScanReverse(&derive_index, derive_indices); // MSVC intrinsic; GCC has __builtin_clz
+                derive_indices ^= (1 << derive_index);
+
+                // get currently registered (un)known address
+                GetXRefEntry(Oovpa, derive_index, &XRef, &Offset);
+
+                // Calculate the address where the XRef resides
+                uint32_t XRefAddr = cur + Offset;
+                // Read the address it points to
+                XRefAddr = *((uint32_t*)XRefAddr);
+
+                // NOTE: Commented out code belows are no longer valid since we are using lower and upper passdown only.
+
+                /* For now assume it's a direct reference;
+                // TODO : Check if it's PC-relative reference?
+                if (XRefAddr + cur + Offset + 4 < XBE_MAX_VA)
+                XRefAddr = XRefAddr + cur + Offset + 4;
+                */
+
+                // Does the address seem valid?
+                /*if (XRefAddr < XBE_MAX_VA) {
+                    // save and count the derived address
+                    UnResolvedXRefs--;
+                    XRefDataBase[XRef] = XRefAddr;
+                }*/
+                UnResolvedXRefs--;
+                XRefDataBase[XRef] = XRefAddr;
+            }
+
+            return cur;
+        }
+
+    // found nothing
+    return 0;
+}
+
 // ******************************************************************
 // * GetSymbolDataBaseHash
 // ******************************************************************
