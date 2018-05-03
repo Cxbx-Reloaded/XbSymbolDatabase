@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   SymbolTableDB.h
+// *   XbSymbolDatabase.h
 // *
 // *  xbSymbolTable is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -44,19 +44,19 @@ typedef const struct _PairScanLibSec {
     const char *section[PAIRSCANSEC_MAX];
 } PairScanLibSec;
 
-typedef const struct _SymbolTableList {
+typedef const struct _SymbolDatabaseList {
 
     const PairScanLibSec LibSec;
 
     OOVPATable     *OovpaTable;
     unsigned int    OovpaTableCount;
-} SymbolTableList;
-extern SymbolTableList symbolTableList[];
+} SymbolDatabaseList;
+extern SymbolDatabaseList SymbolDBList[];
 
 // ******************************************************************
 // * HLEDataBaseCount
 // ******************************************************************
-extern const unsigned int symbolTableListCount;
+extern const unsigned int SymbolDBListCount;
 
 
 // ******************************************************************

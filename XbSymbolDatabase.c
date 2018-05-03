@@ -2,7 +2,7 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 // ******************************************************************
 // *
-// *   SymbolTableDB.c
+// *   XbSymbolDatabase.c
 // *
 // *  xbSymbolTable is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -42,7 +42,7 @@
 // * Xbox Symbol Table Database
 // ******************************************************************
 
-const SymbolTableList symbolTableList[] = {
+const SymbolDatabaseList SymbolDBList[] = {
     // Support inline functions in .text section
     { Lib_D3D8,{ Sec_text, Sec_D3D }, &D3D8_OOVPAV2, D3D8_OOVPA_COUNT },
 
@@ -92,9 +92,9 @@ const SymbolTableList symbolTableList[] = {
 };
 
 // ******************************************************************
-// * symbolTableListCount
+// * SymbolDBListCount
 // ******************************************************************
-const unsigned int symbolTableListCount = OOVPA_TABLE_COUNT(symbolTableList);
+const unsigned int SymbolDBListCount = OOVPA_TABLE_COUNT(SymbolDBList);
 
 // ******************************************************************
 // * XRefDataBase
