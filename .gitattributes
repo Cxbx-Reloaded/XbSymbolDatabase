@@ -1,0 +1,36 @@
+# Custom for Visual Studio
+*.cs     diff=csharp
+*.sln    merge=union
+*.csproj merge=union
+*.vbproj merge=union
+*.fsproj merge=union
+*.dbproj merge=union
+
+# Standard to msysgit
+*.doc	 diff=astextplain
+*.DOC	 diff=astextplain
+*.docx diff=astextplain
+*.DOCX diff=astextplain
+*.dot  diff=astextplain
+*.DOT  diff=astextplain
+*.pdf  diff=astextplain
+*.PDF	 diff=astextplain
+*.rtf	 diff=astextplain
+*.RTF	 diff=astextplain
+
+# Microsoft Visual C++ generated resource script with forced Unicode
+*.RC	binary
+*.rc	binary
+
+# Standard new line ending
+* text=auto
+*.c text eol=crlf
+*.h text eol=crlf
+*.inl text eol=crlf
+*.c text eol=crlf
+
+# Standard space requirement
+*.c filter=enforceTabSpace
+*.h filter=enforceTabSpace
+*.inl filter=enforceTabSpace
+*.c filter=enforceTabSpace
