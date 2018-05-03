@@ -2,7 +2,7 @@
 // *
 // *   OOVPADatabase->XOnline.1.0.5028.inl
 // *
-// *  xbSymbolTable is free software; you can redistribute them
+// *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
 // *  License as published by the Free Software Foundation; either
 // *  version 2 of the license, or (at your option) any later version.
