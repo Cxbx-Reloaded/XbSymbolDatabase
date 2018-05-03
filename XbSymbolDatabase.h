@@ -381,6 +381,14 @@ extern unsigned int XRefDataBase[XREF_COUNT];
 
 inline bool XRefAddrFound(XRefDataBaseOffset XRef) { return XRefDataBase[XRef] > XREF_ADDR_DERIVE; }
 
+// ******************************************************************
+// * GetSymbolDataBaseHash
+// ****************************************************************** 
+// Note: The returned hash is a 32-bit FNV-1a checksum
+// This checksum was chosen as the hash should approximate the database integrity - and run as fast as possible!
+// ******************************************************************
+extern unsigned int GetSymbolDataBaseHash();
+
 #ifdef __cplusplus
 }
 #endif

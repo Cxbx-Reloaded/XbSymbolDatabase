@@ -100,3 +100,67 @@ const unsigned int SymbolDBListCount = OOVPA_TABLE_COUNT(SymbolDBList);
 // * XRefDataBase
 // ******************************************************************
 unsigned int XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEIntercept
+
+// ******************************************************************
+// * GetSymbolDataBaseHash
+// ******************************************************************
+
+// Adapted from https://gist.github.com/underscorediscovery/81308642d0325fd386237cfa3b44785c
+#define fnv1aprime 0x1000193;
+void hash_fnv1a(unsigned int* hash, const void* key, const unsigned int len) {
+    const char* data = (char*)key;
+    for (unsigned int i = 0; i < len; ++i) {
+        unsigned char value = data[i];
+        *hash ^= value;
+        *hash *= fnv1aprime;
+    }
+}
+
+void HashAssumedLOOVPA(unsigned int* Hash, const OOVPA* pAssumedLOOVPA) {
+    // Number of offset-value pairs in the "Header" LOOVPA structure
+    unsigned int Size = pAssumedLOOVPA->Count * sizeof(LOVP);
+
+    // Size of "Header" structure
+    Size += sizeof(OOVPA);
+
+    // Part 1: The array of OOVPA::LOVP items
+    hash_fnv1a(Hash, pAssumedLOOVPA, Size);
+}
+
+void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable) {
+    // Part 1: function name string
+    if (pTable->szFuncName != (void*)0) {
+        hash_fnv1a(Hash, pTable->szFuncName, strlen(pTable->szFuncName));
+    }
+
+    // Part 2: version number
+    hash_fnv1a(Hash, &pTable->Version, sizeof(pTable->Version));
+
+    // Part 3: LOOVPA
+    if (pTable->Oovpa) {
+        HashAssumedLOOVPA(Hash, pTable->Oovpa);
+    }
+}
+
+void HashSymbolData(unsigned int* Hash, const SymbolDatabaseList* pData) {
+    for (unsigned int i = 0; i < pData->OovpaTableCount; ++i) {
+        HashOOVPATable(Hash, &pData->OovpaTable[i]);
+    }
+}
+
+const unsigned int HashSymbolDataArray(const SymbolDatabaseList* pDataArray, unsigned int Count) {
+    unsigned int Hash = 0x811c9dc5;
+    for (unsigned int i = 0; i < Count; ++i) {
+        HashSymbolData(&Hash, pDataArray + i);
+    }
+    return Hash;
+}
+
+extern unsigned int GetSymbolDataBaseHash() {
+    // Calculate this just once
+    static unsigned int CalculatedHash = 0;
+    if (CalculatedHash == 0) {
+        CalculatedHash = HashSymbolDataArray(SymbolDBList, SymbolDBListCount);
+    }
+    return CalculatedHash;
+}
