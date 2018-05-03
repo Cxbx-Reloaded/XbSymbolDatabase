@@ -15,7 +15,8 @@ These team members had assisted to revive Xbox Symbol Database, formally known a
 ## Current tasks
 
 * ~~Create a new repository with better title name.~~
-* Move all signature databases into new repo.
+* ~~Move all signature databases into new repo.~~
+  * TODO: Move all new OOVPA revisions in this repo.
 * Create simple functions to compile as library object with header file. C standard support, not C++
 * Link symbol table database library to Cxbx-R project.
 * Resume development on Cxbx-Reloaded project.
