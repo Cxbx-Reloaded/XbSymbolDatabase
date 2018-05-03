@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OOVPADatabase\D3D8.1.0.3911.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.3925.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.3948.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.4034.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.4134.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.4242.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.4361.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.4432.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.4531.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.4627.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.4831.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.4928.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.5028.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.5120.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.5233.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.5344.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.5455.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.5558.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.5788.inl" />
+    <None Include="OOVPADatabase\D3D8.1.0.5849.inl" />
+    <None Include="OOVPADatabase\D3D8.OOVPA.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.3911.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4039.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4432.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4531.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4627.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4721.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4928.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5028.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5120.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5233.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5344.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5455.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5788.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5849.inl" />
+    <None Include="OOVPADatabase\D3D8LTCG.OOVPA.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.3911.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.3936.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.4039.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.4134.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.4242.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.4361.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.4432.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.4531.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.4627.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.4721.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.4831.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.5028.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.5233.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.5344.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.5455.inl" />
+    <None Include="OOVPADatabase\DSound.1.0.5558.inl" />
+    <None Include="OOVPADatabase\DSound.OOVPA.inl" />
+    <None Include="OOVPADatabase\XactEng.1.0.4627.inl" />
+    <None Include="OOVPADatabase\XactEng.1.0.4928.inl" />
+    <None Include="OOVPADatabase\XactEng.1.0.5120.inl" />
+    <None Include="OOVPADatabase\XactEng.1.0.5233.inl" />
+    <None Include="OOVPADatabase\XactEng.1.0.5344.inl" />
+    <None Include="OOVPADatabase\XactEng.1.0.5558.inl" />
+    <None Include="OOVPADatabase\XactEng.OOVPA.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.3911.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.3950.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.4039.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.4134.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.4242.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.4361.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.4432.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.4721.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.4831.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.5028.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.5120.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.5344.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.5455.inl" />
+    <None Include="OOVPADatabase\Xapi.1.0.5788.inl" />
+    <None Include="OOVPADatabase\Xapi.OOVPA.inl" />
+    <None Include="OOVPADatabase\XG.1.0.3911.inl" />
+    <None Include="OOVPADatabase\XG.1.0.4134.inl" />
+    <None Include="OOVPADatabase\XG.1.0.4361.inl" />
+    <None Include="OOVPADatabase\XG.OOVPA.inl" />
+    <None Include="OOVPADatabase\XNet.1.0.3911.inl" />
+    <None Include="OOVPADatabase\XNet.1.0.4361.inl" />
+    <None Include="OOVPADatabase\XNet.1.0.4627.inl" />
+    <None Include="OOVPADatabase\XNet.1.0.5120.inl" />
+    <None Include="OOVPADatabase\XNet.1.0.5455.inl" />
+    <None Include="OOVPADatabase\XNet.OOVPA.inl" />
+    <None Include="OOVPADatabase\XOnline.1.0.4361.inl" />
+    <None Include="OOVPADatabase\XOnline.1.0.4627.inl" />
+    <None Include="OOVPADatabase\XOnline.1.0.4831.inl" />
+    <None Include="OOVPADatabase\XOnline.1.0.5028.inl" />
+    <None Include="OOVPADatabase\XOnline.1.0.5455.inl" />
+    <None Include="OOVPADatabase\XOnline.1.0.5558.inl" />
+    <None Include="OOVPADatabase\XOnline.1.0.5659.inl" />
+    <None Include="OOVPADatabase\XOnline.1.0.5788.inl" />
+    <None Include="OOVPADatabase\XOnline.1.0.5849.inl" />
+    <None Include="OOVPADatabase\XOnline.OOVPA.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="OOVPA.h" />
+    <ClInclude Include="XbSymbolDatabase.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="XbSymbolDatabase.c" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B8D9AFC2-B38F-4714-846D-8A2754F076C9}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>XbSymbolDatabase</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>XbSymbolDatabase</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>XbSymbolDatabase.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>XbSymbolDatabase.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

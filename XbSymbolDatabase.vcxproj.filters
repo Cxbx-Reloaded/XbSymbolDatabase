@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="XbSymbolDatabase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OOVPA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OOVPADatabase\D3D8.1.0.3911.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.3925.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.3948.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.4034.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.4134.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.4242.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.4361.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.4432.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.4531.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.4627.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.4831.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.4928.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.5028.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.5120.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.5233.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.5344.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.5455.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.5558.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.5788.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.1.0.5849.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8.OOVPA.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.OOVPA.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.3911.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4039.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4432.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4531.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4627.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4721.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.4928.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5028.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5120.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5233.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5344.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5455.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5788.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\D3D8LTCG.1.0.5849.inl">
+      <Filter>OOVPA Database\D3D8LTCG</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.3911.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.3936.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.4039.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.4134.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.4242.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.4361.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.4432.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.4531.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.4627.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.4721.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.4831.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.5028.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.5233.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.5344.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.5455.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.1.0.5558.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\DSound.OOVPA.inl">
+      <Filter>OOVPA Database\DSound</Filter>
+    </None>
+    <None Include="OOVPADatabase\XactEng.1.0.4627.inl">
+      <Filter>OOVPA Database\XactEng</Filter>
+    </None>
+    <None Include="OOVPADatabase\XactEng.1.0.4928.inl">
+      <Filter>OOVPA Database\XactEng</Filter>
+    </None>
+    <None Include="OOVPADatabase\XactEng.1.0.5120.inl">
+      <Filter>OOVPA Database\XactEng</Filter>
+    </None>
+    <None Include="OOVPADatabase\XactEng.1.0.5233.inl">
+      <Filter>OOVPA Database\XactEng</Filter>
+    </None>
+    <None Include="OOVPADatabase\XactEng.1.0.5344.inl">
+      <Filter>OOVPA Database\XactEng</Filter>
+    </None>
+    <None Include="OOVPADatabase\XactEng.1.0.5558.inl">
+      <Filter>OOVPA Database\XactEng</Filter>
+    </None>
+    <None Include="OOVPADatabase\XactEng.OOVPA.inl">
+      <Filter>OOVPA Database\XactEng</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.3911.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.3950.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.4039.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.4134.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.4242.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.4361.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.4432.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.4721.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.4831.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.5028.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.5120.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.5344.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.5455.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.1.0.5788.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\Xapi.OOVPA.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
+    <None Include="OOVPADatabase\XG.1.0.3911.inl">
+      <Filter>OOVPA Database\XG</Filter>
+    </None>
+    <None Include="OOVPADatabase\XG.1.0.4134.inl">
+      <Filter>OOVPA Database\XG</Filter>
+    </None>
+    <None Include="OOVPADatabase\XG.1.0.4361.inl">
+      <Filter>OOVPA Database\XG</Filter>
+    </None>
+    <None Include="OOVPADatabase\XG.OOVPA.inl">
+      <Filter>OOVPA Database\XG</Filter>
+    </None>
+    <None Include="OOVPADatabase\XNet.1.0.3911.inl">
+      <Filter>OOVPA Database\XNet</Filter>
+    </None>
+    <None Include="OOVPADatabase\XNet.1.0.4361.inl">
+      <Filter>OOVPA Database\XNet</Filter>
+    </None>
+    <None Include="OOVPADatabase\XNet.1.0.4627.inl">
+      <Filter>OOVPA Database\XNet</Filter>
+    </None>
+    <None Include="OOVPADatabase\XNet.1.0.5120.inl">
+      <Filter>OOVPA Database\XNet</Filter>
+    </None>
+    <None Include="OOVPADatabase\XNet.1.0.5455.inl">
+      <Filter>OOVPA Database\XNet</Filter>
+    </None>
+    <None Include="OOVPADatabase\XNet.OOVPA.inl">
+      <Filter>OOVPA Database\XNet</Filter>
+    </None>
+    <None Include="OOVPADatabase\XOnline.1.0.4361.inl">
+      <Filter>OOVPA Database\XOnline</Filter>
+    </None>
+    <None Include="OOVPADatabase\XOnline.1.0.4627.inl">
+      <Filter>OOVPA Database\XOnline</Filter>
+    </None>
+    <None Include="OOVPADatabase\XOnline.1.0.4831.inl">
+      <Filter>OOVPA Database\XOnline</Filter>
+    </None>
+    <None Include="OOVPADatabase\XOnline.1.0.5028.inl">
+      <Filter>OOVPA Database\XOnline</Filter>
+    </None>
+    <None Include="OOVPADatabase\XOnline.1.0.5455.inl">
+      <Filter>OOVPA Database\XOnline</Filter>
+    </None>
+    <None Include="OOVPADatabase\XOnline.1.0.5558.inl">
+      <Filter>OOVPA Database\XOnline</Filter>
+    </None>
+    <None Include="OOVPADatabase\XOnline.1.0.5659.inl">
+      <Filter>OOVPA Database\XOnline</Filter>
+    </None>
+    <None Include="OOVPADatabase\XOnline.1.0.5788.inl">
+      <Filter>OOVPA Database\XOnline</Filter>
+    </None>
+    <None Include="OOVPADatabase\XOnline.1.0.5849.inl">
+      <Filter>OOVPA Database\XOnline</Filter>
+    </None>
+    <None Include="OOVPADatabase\XOnline.OOVPA.inl">
+      <Filter>OOVPA Database\XOnline</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{25fc26ba-5faa-427c-a51b-a82a80be989d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{ed283cce-683b-47d7-b238-de22437271f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OOVPA Database">
+      <UniqueIdentifier>{56a023d8-fa4b-4bc4-9287-48da5118d82f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OOVPA Database\D3D8">
+      <UniqueIdentifier>{12a8e65f-e9a0-41d6-9ed3-3fb2e4fc30b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OOVPA Database\D3D8LTCG">
+      <UniqueIdentifier>{87dc9284-725a-4877-8412-afb83ce0214e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OOVPA Database\DSound">
+      <UniqueIdentifier>{fb87286c-c0bb-46dc-b8a3-eba56f6e41a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OOVPA Database\XactEng">
+      <UniqueIdentifier>{11a54236-3765-4bac-994b-46b27da022da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OOVPA Database\Xapi">
+      <UniqueIdentifier>{555b6242-f9a9-4968-a935-23cae6eed84d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OOVPA Database\XG">
+      <UniqueIdentifier>{9d98c3cb-67c2-438f-bb38-937efd24e3d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OOVPA Database\XNet">
+      <UniqueIdentifier>{7df13290-2e29-4939-93ae-e20dfa78fe5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OOVPA Database\XOnline">
+      <UniqueIdentifier>{fa4535f4-20eb-4da2-b688-00c8e3a0da8e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="XbSymbolDatabase.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
