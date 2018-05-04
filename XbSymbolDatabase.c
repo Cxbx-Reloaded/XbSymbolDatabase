@@ -43,53 +43,68 @@
 // * Xbox Symbol Table Database
 // ******************************************************************
 
-const SymbolDatabaseList SymbolDBList[] = {
+#define PAIRSCANSEC_MAX 3
+
+typedef const struct _PairScanLibSec {
+    uint32_t library;
+    const char *section[PAIRSCANSEC_MAX];
+} PairScanLibSec;
+
+typedef const struct _SymbolDatabaseList {
+
+    PairScanLibSec LibSec;
+
+    OOVPATable     *OovpaTable;
+    unsigned int    OovpaTableCount;
+} SymbolDatabaseList;
+
+SymbolDatabaseList SymbolDBList[] = {
     // Support inline functions in .text section
-    { Lib_D3D8,{ Sec_text, Sec_D3D }, &D3D8_OOVPAV2, D3D8_OOVPA_COUNT },
+    { XbSymbolLib_D3D8,{ Sec_text, Sec_D3D }, &D3D8_OOVPAV2, D3D8_OOVPA_COUNT },
 
     // Cannot support LTCG in HLE
-    { Lib_D3D8LTCG,{ Sec_D3D }, &D3D8LTCG_OOVPAV2, D3D8LTCG_OOVPA_COUNT },
+    { XbSymbolLib_D3D8LTCG,{ Sec_D3D }, &D3D8LTCG_OOVPAV2, D3D8LTCG_OOVPA_COUNT },
 
     // Jarupxx mention this is not a requirement?
     //{ Lib_D3DX8,{ Sec_D3DX }, _OOVPAV2, _OOVPA_COUNT },
 
     //
-    { Lib_DSOUND,{ Sec_DSOUND }, &DSound_OOVPAV2, DSound_OOVPA_COUNT },
+    { XbSymbolLib_DSOUND,{ Sec_DSOUND }, &DSound_OOVPAV2, DSound_OOVPA_COUNT },
 
     // DSOUNDH is just meant to define hot fix, there is no separate section
-    //{ Lib_DSOUNDH,{ Sec_DSOUND }, DSound_OOVPAV2, DSound_OOVPA_COUNT },
+    //{ XbSymbolLib_DSOUNDH,{ Sec_DSOUND }, &DSound_OOVPAV2, DSound_OOVPA_COUNT },
 
     //
-    { Lib_XACTENG, { Sec_XACTENG }, &XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
+    { XbSymbolLib_XACTENG, { Sec_XACTENG }, &XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
 
     // test case: Power Drome (Unluckily, it use LTCG version of the library.)
-    //{ Lib_XACTENLT,{ Sec_XACTENG }, XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
+    //{ XbSymbolLib_XACTENLT,{ Sec_XACTENG }, &XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
 
     //
-    { Lib_XAPILIB,{ Sec_text, Sec_XPP }, &XAPILIB_OOVPAV2, XAPILIB_OOVPA_COUNT },
+    { XbSymbolLib_XAPILIB,{ Sec_text, Sec_XPP }, &XAPILIB_OOVPAV2, XAPILIB_OOVPA_COUNT },
 
     // Support inline functions in .text section
-    { Lib_XGRAPHC,{ Sec_text, Sec_XGRPH }, &XGRAPHC_OOVPAV2, XGRAPHC_OOVPA_COUNT },
+    { XbSymbolLib_XGRAPHC,{ Sec_text, Sec_XGRPH }, &XGRAPHC_OOVPAV2, XGRAPHC_OOVPA_COUNT },
 
     // Cannot support LTCG in HLE
     //{ Lib_XGRAPHCL,{ Sec_XGRPH }, XGRAPHC_OOVPAV2, XGRAPHC_OOVPA_COUNT },
 
     // Added Sec_text and Sec_XNET just in case.
     // TODO: Need to find out which function is only part of XOnlines.
-    { Lib_XONLINE,{ Sec_text, Sec_XONLINE, Sec_XNET }, &XONLINES_OOVPAV2, XONLINES_OOVPA_COUNT },
+    { XbSymbolLib_XONLINE,{ Sec_text, Sec_XONLINE, Sec_XNET }, &XONLINES_OOVPAV2, XONLINES_OOVPA_COUNT },
 
     // Fun fact, XONLINES are split into 2 header sections.
-    { Lib_XONLINES,{ Sec_text, Sec_XONLINE, Sec_XNET }, &XONLINES_OOVPAV2, XONLINES_OOVPA_COUNT },
+    { XbSymbolLib_XONLINES,{ Sec_text, Sec_XONLINE, Sec_XNET }, &XONLINES_OOVPAV2, XONLINES_OOVPA_COUNT },
 
     // Added Sec_text just in case.
     // TODO: Need to find out which function is only part of XNets.
-    { Lib_XNET,{ Sec_text, Sec_XNET }, &XNET_OOVPAV2, XNET_OOVPA_COUNT },
+    { XbSymbolLib_XNET,{ Sec_text, Sec_XNET }, &XNET_OOVPAV2, XNET_OOVPA_COUNT },
 
     // XNETS only has XNET, might be true.
-    { Lib_XNETS,{ Sec_text, Sec_XNET }, &XNET_OOVPAV2, XNET_OOVPA_COUNT },
+    { XbSymbolLib_XNETS,{ Sec_text, Sec_XNET }, &XNET_OOVPAV2, XNET_OOVPA_COUNT },
 
     // test case: Stake
-    { Lib_XNETN,{ Sec_text, Sec_XNET }, &XNET_OOVPAV2, XNET_OOVPA_COUNT },
+    { XbSymbolLib_XNETN,{ Sec_text, Sec_XNET }, &XNET_OOVPAV2, XNET_OOVPA_COUNT },
 };
 
 // ******************************************************************
@@ -102,10 +117,18 @@ const unsigned int SymbolDBListCount = OOVPA_TABLE_COUNT(SymbolDBList);
 // ******************************************************************
 unsigned int XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEIntercept
 
+bool bXRefFirstPass = false; // For search speed optimization, set in EmuHLEIntercept, read in EmuLocateFunction
+uint32_t UnResolvedXRefs = 0; // Tracks XRef location, used (read/write) in EmuHLEIntercept and EmuLocateFunction
+
 
 // ******************************************************************
 // * API functions to use with other projects.
 // ******************************************************************
+
+uint32_t g_library_flag = 0;
+bool XbSymbolRegisterLibrary(uint32_t library_flag) {
+    g_library_flag = library_flag;
+}
 
 // NOTE: PatrickvL state the arguments are named differently and the function does something that has another meaning,
 //       the implementation could be changed if the need ever arises.
@@ -164,7 +187,7 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, uint32_t cur) {
 }
 
 // locate the given function, searching within lower and upper bounds
-extern uint32_t EmuLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper) {
+uint32_t EmuLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper) {
     // skip out if this is an unnecessary search
     if (!bXRefFirstPass && Oovpa->XRefCount == XRefZero && Oovpa->XRefSaveIndex == XRefNoSaveIndex)
         return 0;
@@ -247,6 +270,61 @@ extern uint32_t EmuLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper) 
     return 0;
 }
 
+
+bool XbSymbolScan(void* xbeData, char* section_name, uint32_t lower_bound, uint32_t upper_bound, xb_symbol_register_t register_func) {
+    
+    for (uint32_t d2 = 0; d2 < SymbolDBListCount; d2++) {
+
+        //TODO: Add support for library specific scan only to have optimized performance.
+
+        //Initialize a matching specific section is currently pair with library in order to scan specific section only.
+        //By doing this method will reduce false detection dramatically. If it had happened before.
+        for (uint32_t d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
+            if (SymbolDBList[d2].LibSec.section[d3] != NULL && strcmp(section_name, SymbolDBList[d2].LibSec.section[d3]) == 0) {
+
+                // traverse the full OOVPA table
+                OOVPATable *pLoopEnd = &SymbolDBList[d2].OovpaTable[SymbolDBList[d2].OovpaTableCount];
+                OOVPATable *pLoop = SymbolDBList[d2].OovpaTable;
+                OOVPATable *pLastKnownSymbol = (void*)0;
+                uint32_t pLastKnownFunc = 0;
+                const char *SymbolName = (void*)0;
+                for (; pLoop < pLoopEnd; pLoop++) {
+
+                    if (SymbolName == (void*)0) {
+                        SymbolName = pLoop->szFuncName;
+                    } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
+                        SymbolName = pLoop->szFuncName;
+                        if (pLastKnownSymbol != (void*)0) {
+                            // Now that we found the address, store it (regardless if we patch it or not)
+                            register_func((void*)0, pLastKnownSymbol->szFuncName, pLastKnownFunc, pLastKnownSymbol->Version);
+                            pLastKnownSymbol = (void*)0;
+                            pLastKnownFunc = 0;
+                        }
+                    }
+
+                    /* NOTE: For time being, let's preserve this code in case we need to re-enable it with updated argument.
+                    // Skip higher build version
+                    if (buildVersion < pLoop->Version)
+                        continue;
+                    */
+
+                    // Search for each function's location using the OOVPA
+                    uint32_t pFunc = (uint32_t)EmuLocateFunction(pLoop->Oovpa, lower_bound, upper_bound);
+                    if (pFunc == 0)
+                        continue;
+
+                    pLastKnownFunc = pFunc;
+                    pLastKnownSymbol = pLoop;
+                }
+                if (pLastKnownSymbol != (void*)0) {
+                    register_func((void*)0, pLastKnownSymbol->szFuncName, pLastKnownFunc, pLastKnownSymbol->Version);
+                }
+                break;
+            }
+        }
+    }
+}
+
 // ******************************************************************
 // * GetSymbolDataBaseHash
 // ******************************************************************
@@ -288,13 +366,13 @@ void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable) {
     }
 }
 
-void HashSymbolData(unsigned int* Hash, const SymbolDatabaseList* pData) {
+void HashSymbolData(unsigned int* Hash, SymbolDatabaseList* pData) {
     for (unsigned int i = 0; i < pData->OovpaTableCount; ++i) {
         HashOOVPATable(Hash, &pData->OovpaTable[i]);
     }
 }
 
-const unsigned int HashSymbolDataArray(const SymbolDatabaseList* pDataArray, unsigned int Count) {
+const unsigned int HashSymbolDataArray(SymbolDatabaseList* pDataArray, unsigned int Count) {
     unsigned int Hash = 0x811c9dc5;
     for (unsigned int i = 0; i < Count; ++i) {
         HashSymbolData(&Hash, pDataArray + i);
@@ -302,7 +380,7 @@ const unsigned int HashSymbolDataArray(const SymbolDatabaseList* pDataArray, uns
     return Hash;
 }
 
-extern unsigned int GetSymbolDataBaseHash() {
+unsigned int XbSymbolLibraryVersion() {
     // Calculate this just once
     static unsigned int CalculatedHash = 0;
     if (CalculatedHash == 0) {
