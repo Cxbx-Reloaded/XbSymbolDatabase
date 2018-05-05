@@ -75,21 +75,21 @@ typedef struct _LOVP
 
 // This XRefZero constant, when set in the OOVPA.XRefCount field,
 // indicates there are no {offset, XREF_*-enum} present in the OOVPA.
-#define XRefZero 0U
+#define XRefZero 0x00
 
 // This XRefOne constant, when set in the OOVPA.XRefCount field,
 // indicates the OOVPA contains one (1) {offset, XREF_* enum} pair.
-#define XRefOne 1U
+#define XRefOne 0x01
 
 // Sometimes, there can be more than one {Offset, XREF_*-enum}
 // pair at the start of the OOVPA's.
-#define XRefTwo 2U
-#define XRefThree 3U
+#define XRefTwo 0x02
+#define XRefThree 0x03
 
 // This XRefNoSaveIndex constant, when set in the OOVPA.XRefSaveIndex
 // field, functions as a marker indicating there's no XREF_* enum
 // defined for the OOVPA.
-#define XRefNoSaveIndex 0xFFFF
+#define XRefNoSaveIndex 0xFF
 
 // Macro used for storing an XRef {Offset, XREF}-Pair.
 //
@@ -118,7 +118,7 @@ typedef struct _LOOVPA
 } LOOVPA;
 
 #define OOVPA_XREF(Name, Version, Count, XRefSaveIndex, XRefCount)    \
-LOOVPA Name##_##Version = { Count, XRefCount, XRefSaveIndex, {
+LOOVPA Name##_##Version = { Count, XRefCount, (unsigned char)XRefSaveIndex, {
 
 #define OOVPA_NO_XREF(Name, Version, Count) \
 OOVPA_XREF(Name, Version, Count, XRefNoSaveIndex, XRefZero)
