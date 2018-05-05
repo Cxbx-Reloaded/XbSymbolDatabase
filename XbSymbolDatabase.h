@@ -38,6 +38,7 @@ extern "C" {
 // ******************************************************************
 // * Library strings
 // ******************************************************************
+#define Lib_UNKNOWN     "UNKNOWN"
 #define Lib_D3D8        "D3D8"
 #define Sec_D3D         "D3D"
 #define Lib_D3D8LTCG    "D3D8LTCG"
@@ -389,7 +390,7 @@ bool XbSymbolRegisterLibrary(uint32_t library_flag);
 /// <param name="address">Address base on lower and upper bound detection.</param>
 /// <param name="revision">Found with specific revision.</param>
 /// <returns>Return true if store for existing XREF, or else return false to disregard new discover.</returns>
-typedef bool (*xb_symbol_register_t)(char* library_name, char* symbol_name, uint32_t address, uint32_t revision);
+typedef void (*xb_symbol_register_t)(char* library_name, char* symbol_name, uint32_t address, uint32_t revision);
 
 /// <summary>
 /// To scan symbols for each Xbe's section given with boundaries requirement.

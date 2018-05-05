@@ -118,7 +118,6 @@ const unsigned int SymbolDBListCount = OOVPA_TABLE_COUNT(SymbolDBList);
 unsigned int XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEIntercept
 
 bool bXRefFirstPass = false; // For search speed optimization, set in EmuHLEIntercept, read in EmuLocateFunction
-uint32_t UnResolvedXRefs = 0; // Tracks XRef location, used (read/write) in EmuHLEIntercept and EmuLocateFunction
 
 
 // ******************************************************************
@@ -128,6 +127,50 @@ uint32_t UnResolvedXRefs = 0; // Tracks XRef location, used (read/write) in EmuH
 uint32_t g_library_flag = 0;
 bool XbSymbolRegisterLibrary(uint32_t library_flag) {
     g_library_flag = library_flag;
+}
+
+const char* XbSymbolLibraryToString(uint32_t library_flag) {
+    switch (library_flag) {
+        case XbSymbolLib_D3D8: {
+            return Lib_D3D8;
+        }
+        case XbSymbolLib_D3D8LTCG: {
+            return Lib_D3D8LTCG;
+        }
+        case XbSymbolLib_D3DX8: {
+            return Lib_D3DX8;
+        }
+        case XbSymbolLib_DSOUND: {
+            return Lib_DSOUND;
+        }
+        case XbSymbolLib_XACTENG: {
+            return Lib_XACTENG;
+        }
+        case XbSymbolLib_XAPILIB: {
+            return Lib_XAPILIB;
+        }
+        case XbSymbolLib_XGRAPHC: {
+            return Lib_XGRAPHC;
+        }
+        case XbSymbolLib_XNET: {
+            return Lib_XNET;
+        }
+        case XbSymbolLib_XNETN: {
+            return Lib_XNETN;
+        }
+        case XbSymbolLib_XNETS: {
+            return Lib_XNETS;
+        }
+        case XbSymbolLib_XONLINE: {
+            return Lib_XONLINE;
+        }
+        case XbSymbolLib_XONLINES: {
+            return Lib_XONLINES;
+        }
+        default: {
+            return Lib_UNKNOWN;
+        }
+    }
 }
 
 // NOTE: PatrickvL state the arguments are named differently and the function does something that has another meaning,
@@ -256,10 +299,8 @@ uint32_t EmuLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper) {
                 // Does the address seem valid?
                 /*if (XRefAddr < XBE_MAX_VA) {
                     // save and count the derived address
-                    UnResolvedXRefs--;
                     XRefDataBase[XRef] = XRefAddr;
                 }*/
-                UnResolvedXRefs--;
                 XRefDataBase[XRef] = XRefAddr;
             }
 
@@ -270,56 +311,71 @@ uint32_t EmuLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper) {
     return 0;
 }
 
+void XbSymbolRegisterSymbol(OOVPATable* OovpaTable, uint32_t address, xb_symbol_register_t register_func) {
+    if (OovpaTable != (void*)0) {
+
+        OOVPA* Oovpa = OovpaTable->Oovpa;
+
+        // do we need to save the found address?
+        if (Oovpa->XRefSaveIndex != XRefNoSaveIndex) {
+            // If XRef is not found, save it then register once.
+            if (XRefDataBase[Oovpa->XRefSaveIndex] == 0) {
+                XRefDataBase[Oovpa->XRefSaveIndex] = address;
+                register_func((void*)0, OovpaTable->szFuncName, address, OovpaTable->Version);
+            }
+        } else {
+            register_func((void*)0, OovpaTable->szFuncName, address, OovpaTable->Version);
+        }
+    }
+}
 
 bool XbSymbolScan(void* xbeData, char* section_name, uint32_t lower_bound, uint32_t upper_bound, xb_symbol_register_t register_func) {
-    
+
+
     for (uint32_t d2 = 0; d2 < SymbolDBListCount; d2++) {
 
-        //TODO: Add support for library specific scan only to have optimized performance.
+        if (g_library_flag == 0 || (SymbolDBList[d2].LibSec.library & g_library_flag) > 0) {
 
-        //Initialize a matching specific section is currently pair with library in order to scan specific section only.
-        //By doing this method will reduce false detection dramatically. If it had happened before.
-        for (uint32_t d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
-            if (SymbolDBList[d2].LibSec.section[d3] != NULL && strcmp(section_name, SymbolDBList[d2].LibSec.section[d3]) == 0) {
+            //Initialize a matching specific section is currently pair with library in order to scan specific section only.
+            //By doing this method will reduce false detection dramatically. If it had happened before.
+            for (uint32_t d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
+                if (SymbolDBList[d2].LibSec.section[d3] != NULL && strcmp(section_name, SymbolDBList[d2].LibSec.section[d3]) == 0) {
 
-                // traverse the full OOVPA table
-                OOVPATable *pLoopEnd = &SymbolDBList[d2].OovpaTable[SymbolDBList[d2].OovpaTableCount];
-                OOVPATable *pLoop = SymbolDBList[d2].OovpaTable;
-                OOVPATable *pLastKnownSymbol = (void*)0;
-                uint32_t pLastKnownFunc = 0;
-                const char *SymbolName = (void*)0;
-                for (; pLoop < pLoopEnd; pLoop++) {
+                    // traverse the full OOVPA table
+                    OOVPATable *pLoopEnd = &SymbolDBList[d2].OovpaTable[SymbolDBList[d2].OovpaTableCount];
+                    OOVPATable *pLoop = SymbolDBList[d2].OovpaTable;
+                    OOVPATable *pLastKnownSymbol = (void*)0;
+                    uint32_t pLastKnownFunc = 0;
+                    const char *SymbolName = (void*)0;
+                    for (; pLoop < pLoopEnd; pLoop++) {
 
-                    if (SymbolName == (void*)0) {
-                        SymbolName = pLoop->szFuncName;
-                    } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
-                        SymbolName = pLoop->szFuncName;
-                        if (pLastKnownSymbol != (void*)0) {
-                            // Now that we found the address, store it (regardless if we patch it or not)
-                            register_func((void*)0, pLastKnownSymbol->szFuncName, pLastKnownFunc, pLastKnownSymbol->Version);
+                        if (SymbolName == (void*)0) {
+                            SymbolName = pLoop->szFuncName;
+                        } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
+                            XbSymbolRegisterSymbol(pLastKnownSymbol, pLastKnownFunc, register_func);
+
+                            SymbolName = pLoop->szFuncName;
                             pLastKnownSymbol = (void*)0;
                             pLastKnownFunc = 0;
                         }
+
+                        /* NOTE: For time being, let's preserve this code in case we need to re-enable it with updated argument.
+                        // Skip higher build version
+                        if (buildVersion < pLoop->Version)
+                            continue;
+                        */
+
+                        // Search for each function's location using the OOVPA
+                        uint32_t pFunc = EmuLocateFunction(pLoop->Oovpa, lower_bound, upper_bound);
+                        if (pFunc == 0)
+                            continue;
+
+                        pLastKnownFunc = pFunc;
+                        pLastKnownSymbol = pLoop;
                     }
-
-                    /* NOTE: For time being, let's preserve this code in case we need to re-enable it with updated argument.
-                    // Skip higher build version
-                    if (buildVersion < pLoop->Version)
-                        continue;
-                    */
-
-                    // Search for each function's location using the OOVPA
-                    uint32_t pFunc = (uint32_t)EmuLocateFunction(pLoop->Oovpa, lower_bound, upper_bound);
-                    if (pFunc == 0)
-                        continue;
-
-                    pLastKnownFunc = pFunc;
-                    pLastKnownSymbol = pLoop;
+                    XbSymbolRegisterSymbol(pLastKnownSymbol, pLastKnownFunc, register_func);
+                    break;
                 }
-                if (pLastKnownSymbol != (void*)0) {
-                    register_func((void*)0, pLastKnownSymbol->szFuncName, pLastKnownFunc, pLastKnownSymbol->Version);
-                }
-                break;
             }
         }
     }
