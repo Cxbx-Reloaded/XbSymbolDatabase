@@ -36,34 +36,9 @@ extern "C" {
 #include "OOVPA.h"
 
 // ******************************************************************
-// * HLEDataBase
-// ******************************************************************
-
-#define PAIRSCANSEC_MAX 3
-
-typedef const struct _PairScanLibSec {
-    const char *library;
-    const char *section[PAIRSCANSEC_MAX];
-} PairScanLibSec;
-
-typedef const struct _SymbolDatabaseList {
-
-    const PairScanLibSec LibSec;
-
-    OOVPATable     *OovpaTable;
-    unsigned int    OovpaTableCount;
-} SymbolDatabaseList;
-extern SymbolDatabaseList SymbolDBList[];
-
-// ******************************************************************
-// * HLEDataBaseCount
-// ******************************************************************
-extern const unsigned int SymbolDBListCount;
-
-
-// ******************************************************************
 // * Library strings
 // ******************************************************************
+#define Lib_UNKNOWN     "UNKNOWN"
 #define Lib_D3D8        "D3D8"
 #define Sec_D3D         "D3D"
 #define Lib_D3D8LTCG    "D3D8LTCG"
@@ -85,6 +60,19 @@ extern const unsigned int SymbolDBListCount;
 #define Sec_XONLINE     Lib_XONLINE
 #define Lib_XONLINES    "XONLINES"
 #define Sec_XNET        "XNET"
+
+#define XbSymbolLib_D3D8        (1 << 0)
+#define XbSymbolLib_D3D8LTCG    (1 << 1)
+#define XbSymbolLib_D3DX8       (1 << 2)
+#define XbSymbolLib_DSOUND      (1 << 3)
+#define XbSymbolLib_XACTENG     (1 << 4)
+#define XbSymbolLib_XAPILIB     (1 << 5)
+#define XbSymbolLib_XGRAPHC     (1 << 6)
+#define XbSymbolLib_XNET        (1 << 7)
+#define XbSymbolLib_XNETN       (1 << 8)
+#define XbSymbolLib_XNETS       (1 << 9)
+#define XbSymbolLib_XONLINE     (1 << 10)
+#define XbSymbolLib_XONLINES    (1 << 11)
 
 // ******************************************************************
 // * XRefDataBaseOffset
@@ -373,36 +361,48 @@ typedef enum _XRefDataBaseOffset
 } XRefDataBaseOffset;
 
 #define XREF_ADDR_UNDETERMINED -1
-#define XREF_ADDR_NOT_FOUND ((void*)NULL)
+#define XREF_ADDR_NOT_FOUND ((void*)0)
 #define XREF_ADDR_DERIVE 1
-
-// ******************************************************************
-// * XRefDataBase
-// ******************************************************************
-extern uint32_t XRefDataBase[XREF_COUNT];
-
-inline bool XRefAddrFound(XRefDataBaseOffset XRef) { return XRefDataBase[XRef] > XREF_ADDR_DERIVE; }
 
 // ******************************************************************
 // * API functions to use with other projects.
 // ******************************************************************
 
-bool bXRefFirstPass; // For search speed optimization, set in EmuHLEIntercept, read in EmuLocateFunction
-uint32_t UnResolvedXRefs; // Tracks XRef location, used (read/write) in EmuHLEIntercept and EmuLocateFunction
+/// <summary>
+/// Return value is only useful to prevent re-cache the file every time. It does not taken existing functions into account.
+/// </summary>
+/// <returns>Return a version of current library database.</returns>
+unsigned int XbSymbolLibraryVersion();
 
-extern inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint8_t* offset_out);
+/// <summary>
+/// Register one or more library to be scan instead of whole database for optimize performance.
+/// <param name="library_flag">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to scan.</param>
+/// </summary>
+/// <returns>Return true if success, or else will return false for invalid parameter.</returns>
+bool XbSymbolRegisterLibrary(uint32_t library_flag);
 
-extern inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, uint8_t* value_out);
+/// <summary>
+/// To register any detected symbol name with address and revision back to third-party program.
+/// NOTE: Be aware of library name will be varity since some libraries are detecting in other sections as well.
+/// </summary>
+/// <param name="library_name">Library name string.</param>
+/// <param name="symbol_name">Symbol name string.</param>
+/// <param name="address">Address base on lower and upper bound detection.</param>
+/// <param name="revision">Found with specific revision.</param>
+/// <returns>Return true if store for existing XREF, or else return false to disregard new discover.</returns>
+typedef void (*xb_symbol_register_t)(char* library_name, char* symbol_name, uint32_t address, uint32_t revision);
 
-extern uint32_t EmuLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper);
-
-// ******************************************************************
-// * GetSymbolDataBaseHash
-// ****************************************************************** 
-// Note: The returned hash is a 32-bit FNV-1a checksum
-// This checksum was chosen as the hash should approximate the database integrity - and run as fast as possible!
-// ******************************************************************
-extern unsigned int GetSymbolDataBaseHash();
+/// <summary>
+/// To scan symbols for each Xbe's section given with boundaries requirement.
+/// NOTE: Scanning per section is a requirement to prevent any false detection since some binary functions are too small and a lot of identical codes.
+/// </summary>
+/// <param name="xbeData">Starting point of xbe memory address; Or per section if lower is set to 0 and upper bound is set to max size of section</param>
+/// <param name="section_name">Section name string to scan.</param>
+/// <param name="lower_bound">Starting point of relative address base on xbeData.</param>
+/// <param name="upper_bound">Ending point of relative address base on xbeData.</param>
+/// <param name="register_func">Callback register function to be call for any detected symbols.</param>
+/// <returns>Only return true if a section name is in the database.</returns>
+bool XbSymbolScan(void* xbeData, char* section_name, uint32_t lower_bound, uint32_t upper_bound, xb_symbol_register_t register_func);
 
 #ifdef __cplusplus
 }
