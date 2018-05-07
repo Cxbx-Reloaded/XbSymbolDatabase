@@ -117,8 +117,6 @@ const unsigned int SymbolDBListCount = OOVPA_TABLE_COUNT(SymbolDBList);
 // ******************************************************************
 unsigned int XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEIntercept
 
-bool bXRefFirstPass = false; // For search speed optimization, set in EmuHLEIntercept, read in EmuLocateFunction
-
 
 // ******************************************************************
 // * API functions to use with other projects.
@@ -126,7 +124,14 @@ bool bXRefFirstPass = false; // For search speed optimization, set in EmuHLEInte
 
 uint32_t g_library_flag = 0;
 bool XbSymbolRegisterLibrary(uint32_t library_flag) {
+
+    // Check to make sure all flags are acceptable before set.
+    if ((library_flag & ~XbSymbolLib_ALL) > 0) {
+        return 0;
+    }
+
     g_library_flag = library_flag;
+    return 1;
 }
 
 const char* XbSymbolLibraryToString(uint32_t library_flag) {
@@ -231,9 +236,11 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, uint32_t cur) {
 
 // locate the given function, searching within lower and upper bounds
 uint32_t EmuLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper) {
+#if 0
     // skip out if this is an unnecessary search
     if (!bXRefFirstPass && Oovpa->XRefCount == XRefZero && Oovpa->XRefSaveIndex == XRefNoSaveIndex)
         return 0;
+#endif
 
     uint32_t derive_indices = 0;
     // Check all XRefs are known (if not, don't do a useless scan) :
@@ -329,8 +336,12 @@ void XbSymbolRegisterSymbol(OOVPATable* OovpaTable, uint32_t address, xb_symbol_
     }
 }
 
-bool XbSymbolScan(void* xbeData, char* section_name, uint32_t lower_bound, uint32_t upper_bound, xb_symbol_register_t register_func) {
+bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const char* section_name, uint32_t section_virtual_address, uint32_t section_size, uint16_t revision, xb_symbol_register_t register_func) {
 
+    // Invalid argument
+    if (section_name == NULL || xbe_size == 0 || section_size == 0 || register_func == 0) {
+        return 0;
+    }
 
     for (uint32_t d2 = 0; d2 < SymbolDBListCount; d2++) {
 
@@ -359,14 +370,15 @@ bool XbSymbolScan(void* xbeData, char* section_name, uint32_t lower_bound, uint3
                             pLastKnownFunc = 0;
                         }
 
-                        /* NOTE: For time being, let's preserve this code in case we need to re-enable it with updated argument.
+                        //* NOTE: For time being, let's preserve this code in case we need to re-enable it with updated argument.
                         // Skip higher build version
-                        if (buildVersion < pLoop->Version)
+                        if (revision < pLoop->Version) {
                             continue;
-                        */
+                        }
+                        //*/
 
                         // Search for each function's location using the OOVPA
-                        uint32_t pFunc = EmuLocateFunction(pLoop->Oovpa, lower_bound, upper_bound);
+                        uint32_t pFunc = EmuLocateFunction(pLoop->Oovpa, section_virtual_address, section_virtual_address+section_size);
                         if (pFunc == 0)
                             continue;
 
@@ -379,6 +391,7 @@ bool XbSymbolScan(void* xbeData, char* section_name, uint32_t lower_bound, uint3
             }
         }
     }
+    return 1;
 }
 
 // ******************************************************************

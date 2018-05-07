@@ -74,6 +74,10 @@ extern "C" {
 #define XbSymbolLib_XONLINE     (1 << 10)
 #define XbSymbolLib_XONLINES    (1 << 11)
 
+#define XbSymbolLib_ALL ( XbSymbolLib_D3D8| XbSymbolLib_D3D8LTCG| XbSymbolLib_D3DX8| XbSymbolLib_DSOUND \
+                        | XbSymbolLib_XACTENG| XbSymbolLib_XAPILIB| XbSymbolLib_XGRAPHC| XbSymbolLib_XNET \
+                        | XbSymbolLib_XNETN| XbSymbolLib_XNETS| XbSymbolLib_XONLINE| XbSymbolLib_XONLINES)
+
 // ******************************************************************
 // * XRefDataBaseOffset
 // ******************************************************************
@@ -390,7 +394,7 @@ bool XbSymbolRegisterLibrary(uint32_t library_flag);
 /// <param name="address">Address base on lower and upper bound detection.</param>
 /// <param name="revision">Found with specific revision.</param>
 /// <returns>Return true if store for existing XREF, or else return false to disregard new discover.</returns>
-typedef void (*xb_symbol_register_t)(char* library_name, char* symbol_name, uint32_t address, uint32_t revision);
+typedef void (*xb_symbol_register_t)(const char* library_name, const char* symbol_name, uint32_t address, uint32_t revision);
 
 /// <summary>
 /// To scan symbols for each Xbe's section given with boundaries requirement.
@@ -402,7 +406,8 @@ typedef void (*xb_symbol_register_t)(char* library_name, char* symbol_name, uint
 /// <param name="upper_bound">Ending point of relative address base on xbeData.</param>
 /// <param name="register_func">Callback register function to be call for any detected symbols.</param>
 /// <returns>Only return true if a section name is in the database.</returns>
-bool XbSymbolScan(void* xbeData, char* section_name, uint32_t lower_bound, uint32_t upper_bound, xb_symbol_register_t register_func);
+//bool XbSymbolScan(void* xbeData, char* section_name, uint32_t lower_bound, uint32_t upper_bound, xb_symbol_register_t register_func);
+bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const char* section_name, uint32_t section_virtual_address, uint32_t section_size, uint16_t revision, xb_symbol_register_t register_func);
 
 #ifdef __cplusplus
 }
