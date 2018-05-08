@@ -58,7 +58,7 @@ typedef struct _OOVPA
     // This OOVPA field (uint16 XRefSaveIndex) contains either an
     // XREF_* enum value, or the XRefNoSaveIndex marker when there's
     // no XREF_* enum defined for this OOVPA.
-    unsigned char XRefSaveIndex;
+    unsigned short XRefSaveIndex;
 
     // Define LOVP here to reduce type definition complexity.
     // (Otherwise, if defined in the template classes, that would mean
@@ -89,7 +89,7 @@ typedef struct _LOVP
 // This XRefNoSaveIndex constant, when set in the OOVPA.XRefSaveIndex
 // field, functions as a marker indicating there's no XREF_* enum
 // defined for the OOVPA.
-#define XRefNoSaveIndex 0xFF
+#define XRefNoSaveIndex 0xFFFF
 
 // Macro used for storing an XRef {Offset, XREF}-Pair.
 //
@@ -118,7 +118,7 @@ typedef struct _LOOVPA
 } LOOVPA;
 
 #define OOVPA_XREF(Name, Version, Count, XRefSaveIndex, XRefCount)    \
-LOOVPA Name##_##Version = { Count, XRefCount, (unsigned char)XRefSaveIndex, {
+LOOVPA Name##_##Version = { Count, XRefCount, (unsigned short)XRefSaveIndex, {
 
 #define OOVPA_NO_XREF(Name, Version, Count) \
 OOVPA_XREF(Name, Version, Count, XRefNoSaveIndex, XRefZero)
