@@ -397,17 +397,31 @@ bool XbSymbolRegisterLibrary(uint32_t library_flag);
 typedef void (*xb_symbol_register_t)(const char* library_name, const char* symbol_name, uint32_t address, uint32_t revision);
 
 /// <summary>
+/// To scan symbols for Xbe's file.
+/// </summary>
+/// <param name="xbeData">Starting point of xbe memory address.</param>
+/// <param name="register_func">Callback register function to be call for any detected symbols.</param>
+/// <returns>Only return false if something is not valid.</returns>
+bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func);
+
+/// <summary>
 /// To scan symbols for each Xbe's section given with boundaries requirement.
 /// NOTE: Scanning per section is a requirement to prevent any false detection since some binary functions are too small and a lot of identical codes.
 /// </summary>
-/// <param name="xbeData">Starting point of xbe memory address; Or per section if lower is set to 0 and upper bound is set to max size of section</param>
+/// <param name="xbeData">Starting point of xbe memory address.</param>
 /// <param name="section_name">Section name string to scan.</param>
 /// <param name="lower_bound">Starting point of relative address base on xbeData.</param>
 /// <param name="upper_bound">Ending point of relative address base on xbeData.</param>
 /// <param name="register_func">Callback register function to be call for any detected symbols.</param>
 /// <returns>Only return true if a section name is in the database.</returns>
-//bool XbSymbolScan(void* xbeData, char* section_name, uint32_t lower_bound, uint32_t upper_bound, xb_symbol_register_t register_func);
 bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const char* section_name, uint32_t section_virtual_address, uint32_t section_size, uint16_t revision, xb_symbol_register_t register_func);
+
+/// <summary>
+/// To convert library name string into flag format.
+/// </summary>
+/// <param name="library_name">Input library name string.</param>
+/// <returns>Return 0 if does not in the database. Otherwise will return flag value.</returns>
+inline uint32_t XbSymbolLibrayToFlag(const char* library_name);
 
 #ifdef __cplusplus
 }
