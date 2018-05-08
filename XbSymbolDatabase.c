@@ -366,7 +366,7 @@ uint32_t XbSymbolLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper) {
     return 0;
 }
 
-void XbSymbolRegisterSymbol(OOVPATable* OovpaTable, uint32_t address, xb_symbol_register_t register_func) {
+void XbSymbolRegisterSymbol(OOVPATable* OovpaTable, const char * LibraryName, uint32_t address, xb_symbol_register_t register_func) {
     if (OovpaTable != (void*)0) {
 
         OOVPA* Oovpa = OovpaTable->Oovpa;
@@ -377,15 +377,15 @@ void XbSymbolRegisterSymbol(OOVPATable* OovpaTable, uint32_t address, xb_symbol_
             if (XRefDataBase[Oovpa->XRefSaveIndex] == XREF_ADDR_UNDETERMINED) {
                 UnResolvedXRefs--;
                 XRefDataBase[Oovpa->XRefSaveIndex] = address;
-                register_func((void*)0, OovpaTable->szFuncName, address, OovpaTable->Version);
+                register_func(LibraryName, OovpaTable->szFuncName, address, OovpaTable->Version);
             }
         } else {
-            register_func((void*)0, OovpaTable->szFuncName, address, OovpaTable->Version);
+            register_func(LibraryName, OovpaTable->szFuncName, address, OovpaTable->Version);
         }
     }
 }
 
-void XbSymbolScanOOVPA(OOVPATable *OovpaTable, unsigned int OovpaTableCount, xbe_section_header *pSectionHeader, uint16_t buildVersion, xb_symbol_register_t register_func) {
+void XbSymbolScanOOVPA(OOVPATable *OovpaTable, unsigned int OovpaTableCount, const char* LibraryName, xbe_section_header *pSectionHeader, uint16_t buildVersion, xb_symbol_register_t register_func) {
     unsigned int lower = pSectionHeader->dwVirtualAddr;
 
     // Find the highest address contained within an executable segment
@@ -405,7 +405,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable, unsigned int OovpaTableCount, xbe
             SymbolName = pLoop->szFuncName;
             if (pLastKnownSymbol != (void*)0) {
                 // Now that we found the address, store it (regardless if we patch it or not)
-                XbSymbolRegisterSymbol(pLastKnownSymbol, pLastKnownFunc, register_func);
+                XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, pLastKnownFunc, register_func);
                 pLastKnownSymbol = (void*)0;
                 pLastKnownFunc = 0;
             }
@@ -432,7 +432,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable, unsigned int OovpaTableCount, xbe
         pLastKnownSymbol = pLoop;
     }
     if (pLastKnownSymbol != (void*)0) {
-        XbSymbolRegisterSymbol(pLastKnownSymbol, pLastKnownFunc, register_func);
+        XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, pLastKnownFunc, register_func);
     }
 }
 
@@ -446,6 +446,8 @@ bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const cha
     for (uint32_t d2 = 0; d2 < SymbolDBListCount; d2++) {
 
         if (g_library_flag == 0 || (SymbolDBList[d2].LibSec.library & g_library_flag) > 0) {
+
+            const char* LibraryName = XbSymbolLibraryToString(SymbolDBList[d2].LibSec.library);
 
             //Initialize a matching specific section is currently pair with library in order to scan specific section only.
             //By doing this method will reduce false detection dramatically. If it had happened before.
@@ -463,7 +465,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const cha
                         if (SymbolName == (void*)0) {
                             SymbolName = pLoop->szFuncName;
                         } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
-                            XbSymbolRegisterSymbol(pLastKnownSymbol, pLastKnownFunc, register_func);
+                            XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, pLastKnownFunc, register_func);
 
                             SymbolName = pLoop->szFuncName;
                             pLastKnownSymbol = (void*)0;
@@ -485,7 +487,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const cha
                         pLastKnownFunc = pFunc;
                         pLastKnownSymbol = pLoop;
                     }
-                    XbSymbolRegisterSymbol(pLastKnownSymbol, pLastKnownFunc, register_func);
+                    XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, pLastKnownFunc, register_func);
                     break;
                 }
             }
@@ -1021,9 +1023,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
                                     bPrintSkip = false;
 
-                                    // TODO: Perform library scan here.
-                                    //EmuInstallPatches(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, pSectionScan, BuildVersion);
-                                    XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, pSectionScan, BuildVersion, register_func);
+                                    XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, LibraryStr, pSectionScan, BuildVersion, register_func);
                                     break;
                                 }
                             }
