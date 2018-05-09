@@ -60,29 +60,21 @@ OOVPA_NO_XREF(D3DDevice_Reset, 1036, 11)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetVertexShaderInput
+// * D3DDevice_SetPalette
 // ******************************************************************
-//8B0F81C10000F8FF8BC1A9
-OOVPA_NO_XREF(D3DDevice_SetVertexShaderInput, 1036, 19)
+//000085C05774258B4E
+OOVPA_NO_XREF(D3DDevice_SetPalette, 1048, 11)
 
         { 0x00, 0x53 },
         { 0x01, 0x8B },
-        { 0x02, 0x5C },
-        { 0x03, 0x24 },
-        { 0x04, 0x08 },
-        { 0x05, 0x56 },
-        { 0x06, 0x8B },
-        { 0x07, 0x35 },
 
-        { 0x25, 0x8B },
-        { 0x26, 0x0F },
-        { 0x27, 0x81 },
-        { 0x28, 0xC1 },
-        { 0x29, 0x00 },
-        { 0x2A, 0x00 },
-        { 0x2B, 0xF8 },
-        { 0x2C, 0xFF },
-        { 0x2D, 0x8B },
-        { 0x2E, 0xC1 },
-        { 0x2F, 0xA9 },
+        { 0x11, 0x00 },
+        { 0x12, 0x00 },
+        { 0x13, 0x85 },
+        { 0x14, 0xC0 },
+        { 0x15, 0x57 },
+        { 0x16, 0x74 },
+        { 0x17, 0x25 },
+        { 0x18, 0x8B },
+        { 0x19, 0x4E },
 OOVPA_END;
