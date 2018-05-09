@@ -298,6 +298,30 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_StencilFail, 1084, 7)
 OOVPA_END;
 
 // ******************************************************************
+// * D3DDevice_SetTextureState_TexCoordIndex
+// ******************************************************************
+//81E30000FFFFB901 ...C3
+OOVPA_XREF(D3DDevice_SetTextureState_TexCoordIndex_0, 2058, 1+10,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        XREF_ENTRY( 0x15, XREF_D3DTSS_TEXCOORDINDEX ), // Derived
+
+        { 0x00, 0x83 },
+        { 0x01, 0xEC },
+
+        { 0x41, 0x81 },
+        { 0x42, 0xE3 },
+        { 0x43, 0x00 },
+        { 0x44, 0x00 },
+        { 0x45, 0xFF },
+        { 0x46, 0xFF },
+        { 0x47, 0xB9 },
+        { 0x48, 0x01 },
+OOVPA_END;
+
+// ******************************************************************
 // * D3DDevice_Release
 // ******************************************************************
 //8B873809000083
@@ -351,9 +375,10 @@ OOVPA_END;
 // * D3DDevice_SelectVertexShader
 // ******************************************************************
 //00008B4904578D
-OOVPA_NO_XREF(D3DDevice_SelectVertexShader, 1024, 8)
+OOVPA_NO_XREF(D3DDevice_SelectVertexShader, 1024, 9)
 
         { 0x00, 0x8B },
+        { 0x01, 0x44 },
 
         { 0x13, 0x00 },
         { 0x14, 0x00 },

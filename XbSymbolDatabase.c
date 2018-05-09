@@ -925,6 +925,14 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_1958, lower, upper);
                                     pXRefOffset = 0x19;
                                 }
+                                if (pFunc == 0) { // verified for World Series Baseball 2K3
+                                    pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4_2052, lower, upper);
+                                    pXRefOffset = 0x15;
+                                }
+                                if (pFunc == 0) { // verified for Ski Racing 2006
+                                    pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_0_2058, lower, upper);
+                                    pXRefOffset = 0x15;
+                                }
                             }
 
                             if (pFunc != 0) {

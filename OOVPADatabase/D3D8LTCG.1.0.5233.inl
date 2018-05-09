@@ -64,6 +64,30 @@ OOVPA_NO_XREF(D3DDevice_GetBackBuffer2_0, 2048, 13)
 OOVPA_END;
 
 // ******************************************************************
+// * D3DDevice_SetTextureState_TexCoordIndex
+// ******************************************************************
+//81E30000FFFFB901 ...C20400
+OOVPA_XREF(D3DDevice_SetTextureState_TexCoordIndex_4, 2052, 1+10,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        XREF_ENTRY( 0x15, XREF_D3DTSS_TEXCOORDINDEX ), // Derived
+
+        { 0x00, 0x51 },
+        { 0x01, 0x53 },
+
+        { 0x40, 0x81 },
+        { 0x41, 0xE3 },
+        { 0x42, 0x00 },
+        { 0x43, 0x00 },
+        { 0x44, 0xFF },
+        { 0x45, 0xFF },
+        { 0x46, 0xB9 },
+        { 0x47, 0x01 },
+OOVPA_END;
+
+// ******************************************************************
 // * D3DDevice_SetTextureState_BorderColor
 // ******************************************************************
 //8BCEC1E10681C1241B04 ...C3
@@ -130,9 +154,11 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetVertexShaderConstantNotInline
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetVertexShaderConstantNotInline, 1024, 8)
+//56578BFBC1E704 ...C3
+OOVPA_NO_XREF(D3DDevice_SetVertexShaderConstantNotInline_0, 2048, 9)
 
         { 0x00, 0xF6 },
+        { 0x01, 0x05 },
 
         { 0x09, 0x56 },
         { 0x0A, 0x57 },
@@ -164,12 +190,14 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetPalette
 // ******************************************************************
-//85C05774258B4E2C8948088BBC
-OOVPA_NO_XREF(D3DDevice_SetPalette, 1036, 15)
+//000085C05774258B4E
+OOVPA_NO_XREF(D3DDevice_SetPalette, 1036, 11)
 
         { 0x00, 0x53 },
         { 0x01, 0x8B },
 
+        { 0x16, 0x00 },
+        { 0x17, 0x00 },
         { 0x18, 0x85 },
         { 0x19, 0xC0 },
         { 0x1A, 0x57 },
@@ -177,12 +205,6 @@ OOVPA_NO_XREF(D3DDevice_SetPalette, 1036, 15)
         { 0x1C, 0x25 },
         { 0x1D, 0x8B },
         { 0x1E, 0x4E },
-        { 0x1F, 0x2C },
-        { 0x20, 0x89 },
-        { 0x21, 0x48 },
-        { 0x22, 0x08 },
-        { 0x23, 0x8B },
-        { 0x24, 0xBC },
 OOVPA_END;
 
 // ******************************************************************
@@ -202,4 +224,24 @@ OOVPA_NO_XREF(D3DDevice_SelectVertexShader_0, 2048, 9)
 
         { 0x1C, 0x00 },
         { 0x1D, 0x00 },
+OOVPA_END;
+
+// ******************************************************************
+// * D3DDevice_SelectVertexShaderDirect
+// ******************************************************************
+//53568BF185F68BD8741E57B8 ...C3
+OOVPA_NO_XREF(D3DDevice_SelectVertexShaderDirect_0, 2048, 12)
+
+        { 0x00, 0x53 },
+        { 0x01, 0x56 },
+        { 0x02, 0x8B },
+        { 0x03, 0xF1 },
+        { 0x04, 0x85 },
+        { 0x05, 0xF6 },
+        { 0x06, 0x8B },
+        { 0x07, 0xD8 },
+        { 0x08, 0x74 },
+        { 0x09, 0x1E },
+        { 0x0A, 0x57 },
+        { 0x0B, 0xB8 },
 OOVPA_END;
