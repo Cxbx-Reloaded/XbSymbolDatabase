@@ -368,6 +368,13 @@ typedef enum _XRefDataBaseOffset
 #define XREF_ADDR_NOT_FOUND ((void*)0)
 #define XREF_ADDR_DERIVE 1
 
+typedef enum _xb_output_message {
+    XB_OUTPUT_MESSAGE_INFO=0,
+    XB_OUTPUT_MESSAGE_WARN,
+    XB_OUTPUT_MESSAGE_ERROR,
+    XB_OUTPUT_MESSAGE_DEBUG
+} xb_output_message;
+
 // ******************************************************************
 // * API functions to use with other projects.
 // ******************************************************************
@@ -389,12 +396,25 @@ bool XbSymbolRegisterLibrary(uint32_t library_flag);
 /// To register any detected symbol name with address and revision back to third-party program.
 /// NOTE: Be aware of library name will be varity since some libraries are detecting in other sections as well.
 /// </summary>
-/// <param name="library_name">Library name string.</param>
-/// <param name="symbol_name">Symbol name string.</param>
-/// <param name="address">Address base on lower and upper bound detection.</param>
+/// <param name="library_str">Name of the library in string.</param>
+typedef void(*xb_output_message_t)(xb_output_message message_flag, const char* message_str);
+
+/// <summary>
+/// For output a message to a program when have information to be output.
+/// </summary>
+/// <param name="message_func">Set output message to a function.</param>
+void XbSymbolSetOutputMessage(xb_output_message_t message_func);
+
+/// <summary>
+/// To register any detected symbol name with address and revision back to third-party program.
+/// NOTE: Be aware of library name will be varity since some libraries are detecting in other sections as well.
+/// </summary>
+/// <param name="library_str">Name of the library in string.</param>
+/// <param name="library_flag">Name of the library in flag.</param>
+/// <param name="symbol_str">Name of the library in symbol string.</param>
+/// <param name="address">TBD.</param>
 /// <param name="revision">Found with specific revision.</param>
-/// <returns>Return true if store for existing XREF, or else return false to disregard new discover.</returns>
-typedef void (*xb_symbol_register_t)(const char* library_name, const char* symbol_name, uint32_t address, uint32_t revision);
+typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, uint32_t address, uint32_t revision);
 
 /// <summary>
 /// To scan symbols for Xbe's file.
@@ -404,6 +424,7 @@ typedef void (*xb_symbol_register_t)(const char* library_name, const char* symbo
 /// <returns>Only return false if something is not valid.</returns>
 bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func);
 
+/* NOTE: Do not use this function, It is currently not functional and optimized at the moment.
 /// <summary>
 /// To scan symbols for each Xbe's section given with boundaries requirement.
 /// NOTE: Scanning per section is a requirement to prevent any false detection since some binary functions are too small and a lot of identical codes.
@@ -415,6 +436,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func);
 /// <param name="register_func">Callback register function to be call for any detected symbols.</param>
 /// <returns>Only return true if a section name is in the database.</returns>
 bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const char* section_name, uint32_t section_virtual_address, uint32_t section_size, uint16_t revision, xb_symbol_register_t register_func);
+*/
 
 /// <summary>
 /// To convert library name string into flag format.
