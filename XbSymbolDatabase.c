@@ -23,6 +23,7 @@
 // *  (c) 2016-2018 LukeUsher
 // *  (c) 2016-2017 PatrickvL
 // *  (c) 2017-2018 RadWolfie
+// *  (c) 2017-2018 jarupxx
 // *  (c) 2018 x1nixmzeng
 // *
 // *  All rights reserved
