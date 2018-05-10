@@ -200,7 +200,8 @@ const char* XbSymbolLibraryToString(uint32_t library_flag)
     }
 }
 
-inline uint32_t XbSymbolLibrayToFlag(const char* library_name) {
+inline uint32_t XbSymbolLibrayToFlag(const char* library_name)
+{
     if (strncmp(library_name, Lib_D3D8, 8) == 0) {
         return XbSymbolLib_D3D8;
     }
@@ -242,18 +243,21 @@ inline uint32_t XbSymbolLibrayToFlag(const char* library_name) {
 
 // NOTE: PatrickvL state the arguments are named differently and the function does something that has another meaning,
 //       the implementation could be changed if the need ever arises.
-inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint8_t* offset_out) {
+inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint8_t* offset_out) 
+{
     // Note : These are stored swapped by the XREF_ENTRY macro, hence this difference from GetOovpaEntry :
     *xref_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Offset;
     *offset_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
 }
 
-inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, uint8_t* value_out) {
+inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, uint8_t* value_out)
+{
     *offset_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Offset;
     *value_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
 }
 
-bool CompareOOVPAToAddress(OOVPA *Oovpa, uint32_t cur) {
+bool CompareOOVPAToAddress(OOVPA *Oovpa, uint32_t cur)
+{
     uint32_t v = 0; // verification counter
 
                   // Check all XRefs, stop if any does not match
@@ -297,7 +301,10 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, uint32_t cur) {
 }
 
 // locate the given function, searching within lower and upper bounds
-uint32_t XbSymbolLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper) {
+uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
+                                uint32_t lower,
+                                uint32_t upper)
+{
 
     // skip out if this is an unnecessary search
     if (!bXRefFirstPass && Oovpa->XRefCount == XRefZero && Oovpa->XRefSaveIndex == XRefNoSaveIndex)
@@ -461,7 +468,14 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
     }
 }
 
-bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const char* section_name, uint32_t section_virtual_address, uint32_t section_size, uint16_t revision, xb_symbol_register_t register_func) {
+bool XbSymbolScanSection(uint32_t xbe_base_address,
+                         uint32_t xbe_size,
+                         const char* section_name,
+                         uint32_t section_virtual_address,
+                         uint32_t section_size,
+                         uint16_t revision,
+                         xb_symbol_register_t register_func)
+{
 
     // Invalid argument
     if (section_name == NULL || xbe_size == 0 || section_size == 0 || register_func == 0) {
@@ -1058,7 +1072,8 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
 // Adapted from https://gist.github.com/underscorediscovery/81308642d0325fd386237cfa3b44785c
 #define fnv1aprime 0x1000193;
-void hash_fnv1a(unsigned int* hash, const void* key, const unsigned int len) {
+void hash_fnv1a(unsigned int* hash, const void* key, const unsigned int len)
+{
     const char* data = (char*)key;
     for (unsigned int i = 0; i < len; ++i) {
         unsigned char value = data[i];
@@ -1067,7 +1082,8 @@ void hash_fnv1a(unsigned int* hash, const void* key, const unsigned int len) {
     }
 }
 
-void HashAssumedLOOVPA(unsigned int* Hash, const OOVPA* pAssumedLOOVPA) {
+void HashAssumedLOOVPA(unsigned int* Hash, const OOVPA* pAssumedLOOVPA)
+{
     // Number of offset-value pairs in the "Header" LOOVPA structure
     unsigned int Size = pAssumedLOOVPA->Count * sizeof(LOVP);
 
@@ -1078,7 +1094,8 @@ void HashAssumedLOOVPA(unsigned int* Hash, const OOVPA* pAssumedLOOVPA) {
     hash_fnv1a(Hash, pAssumedLOOVPA, Size);
 }
 
-void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable) {
+void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable)
+{
     // Part 1: function name string
     if (pTable->szFuncName != (void*)0) {
         hash_fnv1a(Hash, pTable->szFuncName, strlen(pTable->szFuncName));
@@ -1093,13 +1110,15 @@ void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable) {
     }
 }
 
-void HashSymbolData(unsigned int* Hash, SymbolDatabaseList* pData) {
+void HashSymbolData(unsigned int* Hash, SymbolDatabaseList* pData)
+{
     for (unsigned int i = 0; i < pData->OovpaTableCount; ++i) {
         HashOOVPATable(Hash, &pData->OovpaTable[i]);
     }
 }
 
-const unsigned int HashSymbolDataArray(SymbolDatabaseList* pDataArray, unsigned int Count) {
+const unsigned int HashSymbolDataArray(SymbolDatabaseList* pDataArray, unsigned int Count)
+{
     unsigned int Hash = 0x811c9dc5;
     for (unsigned int i = 0; i < Count; ++i) {
         HashSymbolData(&Hash, pDataArray + i);
@@ -1107,7 +1126,8 @@ const unsigned int HashSymbolDataArray(SymbolDatabaseList* pDataArray, unsigned 
     return Hash;
 }
 
-unsigned int XbSymbolLibraryVersion() {
+unsigned int XbSymbolLibraryVersion()
+{
     // Calculate this just once
     static unsigned int CalculatedHash = 0;
     if (CalculatedHash == 0) {
