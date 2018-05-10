@@ -85,22 +85,22 @@ typedef enum _XRefDataBaseOffset
 {
     // D3D variable addresses
     XREF_D3DDEVICE=0, // initially set to XREF_ADDR_DERIVE // TODO : Rename to XREF_GLOBAL_PDEVICE or something?
-	XREF_D3DRS_CULLMODE, // initially set to XREF_ADDR_DERIVE
+    XREF_D3DRS_CULLMODE, // initially set to XREF_ADDR_DERIVE
     //XREF_D3DRS_MULTISAMPLEMODE, // Avoid; It replaced to X_D3DRS_MULTISAMPLETYPE around XDK 4361
     XREF_D3DRS_MULTISAMPLERENDERTARGETMODE, // initially set to XREF_ADDR_DERIVE
     XREF_D3DRS_ROPZCMPALWAYSREAD, // initially set to XREF_ADDR_DERIVE
     XREF_D3DRS_ROPZREAD, // initially set to XREF_ADDR_DERIVE
     XREF_D3DRS_DONOTCULLUNCOMPRESSED, // initially set to XREF_ADDR_DERIVE
     XREF_D3DRS_STENCILCULLENABLE, // initially set to XREF_ADDR_DERIVE
-	XREF_D3DTSS_TEXCOORDINDEX, // initially set to XREF_ADDR_DERIVE
-	XREF_G_STREAM, // initially set to XREF_ADDR_DERIVE
-	// Offsets :
-	XREF_OFFSET_D3DDEVICE_M_PIXELSHADER, // initially set to XREF_ADDR_DERIVE
-	XREF_OFFSET_D3DDEVICE_M_TEXTURES, // initially set to XREF_ADDR_DERIVE
-	XREF_OFFSET_D3DDEVICE_M_PALETTES, // initially set to XREF_ADDR_DERIVE
-	XREF_OFFSET_D3DDEVICE_M_RENDERTARGET, // initially set to XREF_ADDR_DERIVE
-	XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL, // initially set to XREF_ADDR_DERIVE
-	// Functions
+    XREF_D3DTSS_TEXCOORDINDEX, // initially set to XREF_ADDR_DERIVE
+    XREF_G_STREAM, // initially set to XREF_ADDR_DERIVE
+    // Offsets :
+    XREF_OFFSET_D3DDEVICE_M_PIXELSHADER, // initially set to XREF_ADDR_DERIVE
+    XREF_OFFSET_D3DDEVICE_M_TEXTURES, // initially set to XREF_ADDR_DERIVE
+    XREF_OFFSET_D3DDEVICE_M_PALETTES, // initially set to XREF_ADDR_DERIVE
+    XREF_OFFSET_D3DDEVICE_M_RENDERTARGET, // initially set to XREF_ADDR_DERIVE
+    XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL, // initially set to XREF_ADDR_DERIVE
+    // Functions
     XREF_D3DDevice_SetRenderState_CullMode,
     XREF_D3DRS_STENCILENABLE,
     XREF_D3DRS_TWOSIDEDLIGHTING,
@@ -123,12 +123,12 @@ typedef enum _XRefDataBaseOffset
     XREF_D3D_CreateStandAloneSurface,
     XREF_D3D_SetFence,
     XREF_D3D_SetTileNoWait,
-	XREF_D3D_KickOffAndWaitForIdle,
-	XREF_D3D_MakeRequestedSpace,
-	XREF_D3D_CDevice_KickOff,
-	XREF_D3DPalette_Lock2,
-	XREF_D3DTexture_GetSurfaceLevel2,
-	XREF_D3DDevice_CreatePalette2,
+    XREF_D3D_KickOffAndWaitForIdle,
+    XREF_D3D_MakeRequestedSpace,
+    XREF_D3D_CDevice_KickOff,
+    XREF_D3DPalette_Lock2,
+    XREF_D3DTexture_GetSurfaceLevel2,
+    XREF_D3DDevice_CreatePalette2,
     XREF_D3DDevice_CreateIndexBuffer2,
     XREF_D3DDevice_CreateVertexBuffer2,
     XREF_D3DDevice_GetBackBuffer2,
@@ -147,16 +147,16 @@ typedef enum _XRefDataBaseOffset
     XREF_CDirectSound_SetRolloffFactor,
     XREF_CMcpxAPU_Set3dRolloffFactor,
     XREF_CDirectSound_SetDopplerFactor,
-	XREF_CMcpxBuffer_SetCurrentPosition,
-	XREF_CDirectSoundBuffer_SetCurrentPosition,
-	XREF_CMcpxBuffer_GetCurrentPosition,
-	XREF_CDirectSoundBuffer_GetCurrentPosition,
+    XREF_CMcpxBuffer_SetCurrentPosition,
+    XREF_CDirectSoundBuffer_SetCurrentPosition,
+    XREF_CMcpxBuffer_GetCurrentPosition,
+    XREF_CDirectSoundBuffer_GetCurrentPosition,
     XREF_CDirectSoundBuffer_Play,
-	XREF_CMcpxBuffer_Stop,
-	XREF_CDirectSoundBuffer_Stop,
+    XREF_CMcpxBuffer_Stop,
+    XREF_CDirectSoundBuffer_Stop,
     XREF_CDirectSoundStream_FlushEx,
-	XREF_CMcpxBuffer_SetBufferData,
-	XREF_CDirectSoundBuffer_SetBufferData,
+    XREF_CMcpxBuffer_SetBufferData,
+    XREF_CDirectSoundBuffer_SetBufferData,
     XREF_CDirectSound_CreateSoundBuffer,
     XREF_CDirectSound_CreateSoundStream,
     XREF_CDirectSound_SetI3DL2Listener,
@@ -188,7 +188,7 @@ typedef enum _XRefDataBaseOffset
     XREF_CDirectSoundBuffer_SetPlayRegion,
     XREF_CDirectSoundBuffer_Lock,
     XREF_CDirectSoundVoice_SetHeadroom,
-	XREF_CDirectSoundBuffer_SetHeadroom,
+    XREF_CDirectSoundBuffer_SetHeadroom,
     XREF_CDirectSoundStream_SetFrequency,
     XREF_CDirectSoundBuffer_SetFrequency,
     XREF_CDirectSoundVoice_SetFrequency,
@@ -269,45 +269,45 @@ typedef enum _XRefDataBaseOffset
     XREF_WaveFormat_CreateXboxAdpcmFormat,
     XREF_CDirectSoundVoice_CommitDeferredSettings,
     XREF_CDirectSoundBuffer_SetAllParameters,
-	XREF_CDirectSound_GetOutputLevels,
-	XREF_CMcpxBuffer_Pause,
-	XREF_CDirectSoundBuffer_Pause,
+    XREF_CDirectSound_GetOutputLevels,
+    XREF_CMcpxBuffer_Pause,
+    XREF_CDirectSoundBuffer_Pause,
     XREF_CMcpxBuffer_Pause_Ex,
     XREF_CDirectSoundBuffer_PauseEx,
-	XREF_CMcpxBuffer_GetStatus,
-	XREF_CDirectSoundBuffer_GetStatus,
+    XREF_CMcpxBuffer_GetStatus,
+    XREF_CDirectSoundBuffer_GetStatus,
     XREF_CMcpxStream_GetStatus,
     XREF_CDirectSoundStream_SetEG,
-	XREF_CDirectSoundVoice_SetEG,
-	XREF_CMcpxVoiceClient_SetEG,
-	XREF_CMcpxVoiceClient_SetFilter,
-	XREF_CDirectSoundVoice_SetFilter,
-	XREF_CDirectSoundBuffer_SetFilter,
-	XREF_CDirectSoundStream_SetFilter,
-	XREF_CDirectSoundBuffer_StopEx,
-	XREF_CMcpxBuffer_Stop_Ex,
-	XREF_CMcpxAPU_Set3dDopplerFactor,
-	XREF_CSensaura3d_GetFullHRTFFilterPair,
-	XREF_CSensaura3d_GetLiteHRTFFilterPair,
-	XREF_CDirectSound_GetCaps,
-	XREF_DirectSoundEnterCriticalSection,
-	XREF_CMcpxVoiceClient_Commit3dSettings,
-	XREF_CMcpxVoiceClient_SetI3DL2Source,
-	XREF_CDirectSoundVoice_SetI3DL2Source,
-	XREF_CDirectSoundStream_SetMixBinVolumes_12,
-	XREF_CDirectSoundStream_SetMixBinVolumes_8,
+    XREF_CDirectSoundVoice_SetEG,
+    XREF_CMcpxVoiceClient_SetEG,
+    XREF_CMcpxVoiceClient_SetFilter,
+    XREF_CDirectSoundVoice_SetFilter,
+    XREF_CDirectSoundBuffer_SetFilter,
+    XREF_CDirectSoundStream_SetFilter,
+    XREF_CDirectSoundBuffer_StopEx,
+    XREF_CMcpxBuffer_Stop_Ex,
+    XREF_CMcpxAPU_Set3dDopplerFactor,
+    XREF_CSensaura3d_GetFullHRTFFilterPair,
+    XREF_CSensaura3d_GetLiteHRTFFilterPair,
+    XREF_CDirectSound_GetCaps,
+    XREF_DirectSoundEnterCriticalSection,
+    XREF_CMcpxVoiceClient_Commit3dSettings,
+    XREF_CMcpxVoiceClient_SetI3DL2Source,
+    XREF_CDirectSoundVoice_SetI3DL2Source,
+    XREF_CDirectSoundStream_SetMixBinVolumes_12,
+    XREF_CDirectSoundStream_SetMixBinVolumes_8,
     XREF_CDirectSoundStream_SetMixBins,
-	XREF_CDirectSoundStream_SetHeadroom,
-	XREF_CDirectSoundVoice_SetOutputBuffer,
-	XREF_CDirectSoundBuffer_SetOutputBuffer,
-	XREF_CDirectSoundBuffer_SetNotificationPositions,
-	XREF_CDirectSoundBuffer_SetEG,
-	XREF_CDirectSound_GetEffectData,
-	XREF_CMcpxBuffer_Play_Ex,
-	XREF_CDirectSoundVoice_Use3DVoiceData,
-	XREF_CDirectSoundBuffer_Use3DVoiceData,
+    XREF_CDirectSoundStream_SetHeadroom,
+    XREF_CDirectSoundVoice_SetOutputBuffer,
+    XREF_CDirectSoundBuffer_SetOutputBuffer,
+    XREF_CDirectSoundBuffer_SetNotificationPositions,
+    XREF_CDirectSoundBuffer_SetEG,
+    XREF_CDirectSound_GetEffectData,
+    XREF_CMcpxBuffer_Play_Ex,
+    XREF_CDirectSoundVoice_Use3DVoiceData,
+    XREF_CDirectSoundBuffer_Use3DVoiceData,
     XREF_CDirectSoundStream_Use3DVoiceData,
-	XREF_CDirectSound_SetEffectData,
+    XREF_CDirectSound_SetEffectData,
     XREF_CDirectSound_GetSpeakerConfig,
     XREF_CDirectSound_DownloadEffectsImage,
     XREF_CDirectSound_CommitEffectData,
@@ -340,27 +340,27 @@ typedef enum _XRefDataBaseOffset
     XREF_CHrtfSource_SetAlgorithm_FullHrtf,
     XREF_CHrtfSource_SetAlgorithm_LightHrtf,
     XREF_CLightHrtfSource_GetHrtfFilterPair,
-	// XACT
-	// +s
-	XREF_XACT_CEngine_RegisterWaveBank,
-	XREF_XACT_CEngine_RegisterStreamedWaveBank,
-	XREF_XACT_CEngine_CreateSoundBank,
-	XREF_XACT_CEngine_DownloadEffectsImage,
-	XREF_XACT_CEngine_CreateSoundSource,
-	XREF_XACT_CSoundBank_GetSoundCueIndexFromFriendlyName,
-	XREF_XACT_CSoundBank_Play,
-	XREF_XACT_CEngine_RegisterNotification,
-	XREF_XACT_CEngine_GetNotification,
-	XREF_XACT_CEngine_UnRegisterWaveBank,
-	// XONLINE
-	// +s
-	XREF_XoUpdateLaunchNewImageInternal,
-	XREF_CXo_XOnlineLogon,
+    // XACT
+    // +s
+    XREF_XACT_CEngine_RegisterWaveBank,
+    XREF_XACT_CEngine_RegisterStreamedWaveBank,
+    XREF_XACT_CEngine_CreateSoundBank,
+    XREF_XACT_CEngine_DownloadEffectsImage,
+    XREF_XACT_CEngine_CreateSoundSource,
+    XREF_XACT_CSoundBank_GetSoundCueIndexFromFriendlyName,
+    XREF_XACT_CSoundBank_Play,
+    XREF_XACT_CEngine_RegisterNotification,
+    XREF_XACT_CEngine_GetNotification,
+    XREF_XACT_CEngine_UnRegisterWaveBank,
+    // XONLINE
+    // +s
+    XREF_XoUpdateLaunchNewImageInternal,
+    XREF_CXo_XOnlineLogon,
 
     // XAPI
-	XREF_XAPI_GetTypeInformation,
+    XREF_XAPI_GetTypeInformation,
 
-	XREF_COUNT // XREF_COUNT must always be last.
+    XREF_COUNT // XREF_COUNT must always be last.
     // Also, if XREF_COUNT > sizeof(uint16), enlarge struct OOVPA.XRefSaveIndex (and Value somehow)
 } XRefDataBaseOffset;
 

@@ -5,7 +5,7 @@
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
 // *  License as published by the Free Software Foundation; either
-// *  version 2 of the license	or (at your option) any later version.
+// *  version 2 of the license, or (at your option) any later version.
 // *
 // *  This program is distributed in the hope that it will be useful,
 // *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,8 +14,8 @@
 // *
 // *  You should have recieved a copy of the GNU General Public License
 // *  along with this program; see the file COPYING.
-// *  If not	write to the Free Software Foundation	Inc.,
-// *  59 Temple Place - Suite 330	Bostom	MA 02111-1307	USA.
+// *  If not, write to the Free Software Foundation, Inc.,
+// *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
 // *  (c) 2017 jarupxx
 // *
@@ -77,17 +77,17 @@
 // ******************************************************************
 OOVPATable XGRAPHC_OOVPAV2[] = {
 
-	REGISTER_OOVPAS(XFONT_OpenBitmapFontFromMemory, 4361),
-	REGISTER_OOVPAS(XGCompressRect, 3911), // TODO: Do we need to patch this?
-	REGISTER_OOVPAS(XGIsSwizzledFormat, 3911),
-	REGISTER_OOVPAS(XGSetIndexBufferHeader, 3911, 4134),
-	REGISTER_OOVPAS(XGSetTextureHeader, 3911),
-	REGISTER_OOVPAS(XGSetVertexBufferHeader, 3911, 4134),
-	REGISTER_OOVPAS(XGSwizzleBox, 3911),
-	REGISTER_OOVPAS(XGSwizzleRect, 3911),
-	REGISTER_OOVPAS(XGUnswizzleBox, 3911),
-	REGISTER_OOVPAS(XGUnswizzleRect, 3911),
-	REGISTER_OOVPAS(XGWriteSurfaceOrTextureToXPR, 3911),
+    REGISTER_OOVPAS(XFONT_OpenBitmapFontFromMemory, 4361),
+    REGISTER_OOVPAS(XGCompressRect, 3911), // TODO: Do we need to patch this?
+    REGISTER_OOVPAS(XGIsSwizzledFormat, 3911),
+    REGISTER_OOVPAS(XGSetIndexBufferHeader, 3911, 4134),
+    REGISTER_OOVPAS(XGSetTextureHeader, 3911),
+    REGISTER_OOVPAS(XGSetVertexBufferHeader, 3911, 4134),
+    REGISTER_OOVPAS(XGSwizzleBox, 3911),
+    REGISTER_OOVPAS(XGSwizzleRect, 3911),
+    REGISTER_OOVPAS(XGUnswizzleBox, 3911),
+    REGISTER_OOVPAS(XGUnswizzleRect, 3911),
+    REGISTER_OOVPAS(XGWriteSurfaceOrTextureToXPR, 3911),
 };
 
 // ******************************************************************
