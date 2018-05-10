@@ -131,8 +131,8 @@ OOVPA_END;
 //8B88041A000085
 OOVPA_XREF(D3DDevice_GetRenderTarget2, 1024, 1+7,
 
-	XREF_D3DDevice_GetRenderTarget2,
-	XRefOne)
+    XREF_D3DDevice_GetRenderTarget2,
+    XRefOne)
 
         XREF_ENTRY( 0x2D, XREF_D3DResource_AddRef ),
 

@@ -20,6 +20,7 @@
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
 // *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
+// *  (c) 2018 x1nixmzeng
 // *  (c) 2018 RadWolfie
 // *
 // *  All rights reserved
@@ -143,7 +144,19 @@ bool XbSymbolRegisterLibrary(uint32_t library_flag) {
     return 1;
 }
 
-const char* XbSymbolLibraryToString(uint32_t library_flag) {
+xb_output_message_t output_func = 0;
+void XbSymbolSetOutputMessage(xb_output_message_t message_func)
+{
+    output_func = message_func;
+}
+void XbSymbolOutputMessage(xb_output_message mFlag, const char* message) {
+    if (output_func != 0) {
+        output_func(mFlag, message);
+    }
+}
+
+const char* XbSymbolLibraryToString(uint32_t library_flag)
+{
     switch (library_flag) {
         case XbSymbolLib_D3D8: {
             return Lib_D3D8;
@@ -187,7 +200,8 @@ const char* XbSymbolLibraryToString(uint32_t library_flag) {
     }
 }
 
-inline uint32_t XbSymbolLibrayToFlag(const char* library_name) {
+inline uint32_t XbSymbolLibrayToFlag(const char* library_name)
+{
     if (strncmp(library_name, Lib_D3D8, 8) == 0) {
         return XbSymbolLib_D3D8;
     }
@@ -229,18 +243,21 @@ inline uint32_t XbSymbolLibrayToFlag(const char* library_name) {
 
 // NOTE: PatrickvL state the arguments are named differently and the function does something that has another meaning,
 //       the implementation could be changed if the need ever arises.
-inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint8_t* offset_out) {
+inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint8_t* offset_out) 
+{
     // Note : These are stored swapped by the XREF_ENTRY macro, hence this difference from GetOovpaEntry :
     *xref_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Offset;
     *offset_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
 }
 
-inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, uint8_t* value_out) {
+inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, uint8_t* value_out)
+{
     *offset_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Offset;
     *value_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
 }
 
-bool CompareOOVPAToAddress(OOVPA *Oovpa, uint32_t cur) {
+bool CompareOOVPAToAddress(OOVPA *Oovpa, uint32_t cur)
+{
     uint32_t v = 0; // verification counter
 
                   // Check all XRefs, stop if any does not match
@@ -284,7 +301,10 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, uint32_t cur) {
 }
 
 // locate the given function, searching within lower and upper bounds
-uint32_t XbSymbolLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper) {
+uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
+                                uint32_t lower,
+                                uint32_t upper)
+{
 
     // skip out if this is an unnecessary search
     if (!bXRefFirstPass && Oovpa->XRefCount == XRefZero && Oovpa->XRefSaveIndex == XRefNoSaveIndex)
@@ -366,7 +386,12 @@ uint32_t XbSymbolLocateFunction(OOVPA *Oovpa, uint32_t lower, uint32_t upper) {
     return 0;
 }
 
-void XbSymbolRegisterSymbol(OOVPATable* OovpaTable, const char * LibraryName, uint32_t address, xb_symbol_register_t register_func) {
+void XbSymbolRegisterSymbol(OOVPATable* OovpaTable,
+                            const char* LibraryName,
+                            uint32_t    LibraryFlag,
+                            uint32_t address,
+                            xb_symbol_register_t register_func)
+{
     if (OovpaTable != (void*)0) {
 
         OOVPA* Oovpa = OovpaTable->Oovpa;
@@ -377,15 +402,22 @@ void XbSymbolRegisterSymbol(OOVPATable* OovpaTable, const char * LibraryName, ui
             if (XRefDataBase[Oovpa->XRefSaveIndex] == XREF_ADDR_UNDETERMINED) {
                 UnResolvedXRefs--;
                 XRefDataBase[Oovpa->XRefSaveIndex] = address;
-                register_func(LibraryName, OovpaTable->szFuncName, address, OovpaTable->Version);
+                register_func(LibraryName, LibraryFlag, OovpaTable->szFuncName, address, OovpaTable->Version);
             }
         } else {
-            register_func(LibraryName, OovpaTable->szFuncName, address, OovpaTable->Version);
+            register_func(LibraryName, LibraryFlag, OovpaTable->szFuncName, address, OovpaTable->Version);
         }
     }
 }
 
-void XbSymbolScanOOVPA(OOVPATable *OovpaTable, unsigned int OovpaTableCount, const char* LibraryName, xbe_section_header *pSectionHeader, uint16_t buildVersion, xb_symbol_register_t register_func) {
+void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
+                       unsigned int OovpaTableCount,
+                       const char* LibraryName,
+                       uint32_t    LibraryFlag,
+                       xbe_section_header *pSectionHeader,
+                       uint16_t buildVersion,
+                       xb_symbol_register_t register_func)
+{
     unsigned int lower = pSectionHeader->dwVirtualAddr;
 
     // Find the highest address contained within an executable segment
@@ -405,7 +437,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable, unsigned int OovpaTableCount, con
             SymbolName = pLoop->szFuncName;
             if (pLastKnownSymbol != (void*)0) {
                 // Now that we found the address, store it (regardless if we patch it or not)
-                XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, pLastKnownFunc, register_func);
+                XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
                 pLastKnownSymbol = (void*)0;
                 pLastKnownFunc = 0;
             }
@@ -432,11 +464,18 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable, unsigned int OovpaTableCount, con
         pLastKnownSymbol = pLoop;
     }
     if (pLastKnownSymbol != (void*)0) {
-        XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, pLastKnownFunc, register_func);
+        XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
     }
 }
 
-bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const char* section_name, uint32_t section_virtual_address, uint32_t section_size, uint16_t revision, xb_symbol_register_t register_func) {
+bool XbSymbolScanSection(uint32_t xbe_base_address,
+                         uint32_t xbe_size,
+                         const char* section_name,
+                         uint32_t section_virtual_address,
+                         uint32_t section_size,
+                         uint16_t revision,
+                         xb_symbol_register_t register_func)
+{
 
     // Invalid argument
     if (section_name == NULL || xbe_size == 0 || section_size == 0 || register_func == 0) {
@@ -465,7 +504,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const cha
                         if (SymbolName == (void*)0) {
                             SymbolName = pLoop->szFuncName;
                         } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
-                            XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, pLastKnownFunc, register_func);
+                            XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
 
                             SymbolName = pLoop->szFuncName;
                             pLastKnownSymbol = (void*)0;
@@ -487,7 +526,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const cha
                         pLastKnownFunc = pFunc;
                         pLastKnownSymbol = pLoop;
                     }
-                    XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, pLastKnownFunc, register_func);
+                    XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
                     break;
                 }
             }
@@ -573,9 +612,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                     // However August 2003 XDK (5659) still uses the old function.
                     // Please use updated 5788 instead.
                     if (BuildVersion >= 5558 && BuildVersion <= 5659 && QFEVersion > 1) {
-#if 0  // TODO: Move this to Cxbx or some other way.
-                        EmuWarning("D3D8 version 1.0.%d.%d Title Detected: This game uses an alias version 1.0.5788", BuildVersion, QFEVersion);
-#endif
+                        XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, "D3D8 version 1.0.%d.%d Title Detected: This game uses an alias version 1.0.5788");// , BuildVersion, QFEVersion);
                         BuildVersion = 5788;
                     }
                 }
@@ -640,21 +677,21 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                 // Temporary verification - is XREF_D3DDEVICE derived correctly?
                                 unsigned int DerivedAddr_D3DDevice = *(unsigned int*)(pFunc + 0x03);
                                 if (XRefDataBase[XREF_D3DDEVICE] != DerivedAddr_D3DDevice) {
-#if 0  // TODO: How can we enforce it for callback?
-                                    if (XRefDataBase[XREF_D3DDEVICE] != XREF_ADDR_DERIVE)
-                                        CxbxPopupMessage("Second derived XREF_D3DDEVICE differs from first!");
-#endif
+
+                                    if (XRefDataBase[XREF_D3DDEVICE] != XREF_ADDR_DERIVE) {
+                                        XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_INFO, "Second derived XREF_D3DDEVICE differs from first!");
+                                    }
 
                                     XRefDataBase[XREF_D3DDEVICE] = DerivedAddr_D3DDevice;
                                 }
-                                register_func(LibraryStr, "D3DDEVICE", DerivedAddr_D3DDevice, 0);
+                                register_func(LibraryStr, LibraryFlag, "D3DDEVICE", DerivedAddr_D3DDevice, 0);
 
                                 // Temporary verification - is XREF_D3D_RenderState_CullMode derived correctly?
                                 if (XRefDataBase[XREF_D3DRS_CULLMODE] != DerivedAddr_D3DRS_CULLMODE) {
-#if 0  // TODO: How can we enforce it for callback?
-                                    if (XRefDataBase[XREF_D3DRS_CULLMODE] != XREF_ADDR_DERIVE)
-                                        CxbxPopupMessage("Second derived XREF_D3D_RenderState_CullMode differs from first!");
-#endif
+
+                                    if (XRefDataBase[XREF_D3DRS_CULLMODE] != XREF_ADDR_DERIVE) {
+                                        XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, "Second derived XREF_D3D_RenderState_CullMode differs from first!");
+                                    }
 
                                     XRefDataBase[XREF_D3DRS_CULLMODE] = DerivedAddr_D3DRS_CULLMODE;
                                 }
@@ -671,12 +708,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                             XRefDataBase[XREF_D3DRS_ROPZREAD] = EmuD3DDeferredRenderState + patchOffset + 2 * 4;
                             XRefDataBase[XREF_D3DRS_DONOTCULLUNCOMPRESSED] = EmuD3DDeferredRenderState + patchOffset + 3 * 4;
 
-#if 0 // TODO: Need to apply in Cxbx, not in XbSymbolDatabase.
-                            for (int v = 0; v<44; v++) {
-                                XTL::EmuD3DDeferredRenderState[v] = XTL::X_D3DRS_UNK;
-                            }
-#endif
-                            register_func(LibraryStr, "D3DDeferredRenderState", EmuD3DDeferredRenderState, 0);
+                            register_func(LibraryStr, LibraryFlag, "D3DDeferredRenderState", EmuD3DDeferredRenderState, 0);
                         }
 
                         // locate D3DDeferredTextureState
@@ -707,11 +739,10 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
                                     // Temporary verification - is XREF_D3D_TextureState_TexCoordIndex derived correctly?
                                     if (XRefDataBase[XREF_D3DTSS_TEXCOORDINDEX] != DerivedAddr_D3DTSS_TEXCOORDINDEX) {
-#if 0  // TODO: How can we enforce it for callback?
+
                                         if (XRefDataBase[XREF_D3DTSS_TEXCOORDINDEX] != XREF_ADDR_DERIVE) {
-                                            CxbxPopupMessage("Second derived XREF_D3D_TextureState_TexCoordIndex differs from first!");
+                                            XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, "Second derived XREF_D3D_TextureState_TexCoordIndex differs from first!");
                                         }
-#endif
 
                                         XRefDataBase[XREF_D3DTSS_TEXCOORDINDEX] = DerivedAddr_D3DTSS_TEXCOORDINDEX;
                                     }
@@ -719,15 +750,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
                                 unsigned int EmuD3DDeferredTextureState = DerivedAddr_D3DTSS_TEXCOORDINDEX - Decrement;
 
-#if 0 // TODO: Need to apply in Cxbx, not in XbSymbolDatabase.
-                                for (int s = 0; s < 4; s++) {
-                                    for (int v = 0; v < 32; v++) {
-                                        XTL::EmuD3DDeferredTextureState[v + s * 32] = X_D3DTSS_UNK;
-                                    }
-                                }
-#endif
-
-                                register_func(LibraryStr, "D3DDeferredTextureState", EmuD3DDeferredTextureState, 0);
+                                register_func(LibraryStr, LibraryFlag, "D3DDeferredTextureState", EmuD3DDeferredTextureState, 0);
                             }
                         }
 
@@ -760,7 +783,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                 // Now that both Derived XREF and OOVPA-based function-contents match,
                                 // correct base-address (because "g_Stream" is actually "g_Stream"+8") :
                                 Derived_g_Stream -= 8;
-                                register_func(LibraryStr, "g_Stream", Derived_g_Stream, 0);
+                                register_func(LibraryStr, LibraryFlag, "g_Stream", Derived_g_Stream, 0);
                             }
                         }
                     } else if (LibraryFlag == XbSymbolLib_D3D8LTCG) {
@@ -831,20 +854,21 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                 // Temporary verification - is XREF_D3DDEVICE derived correctly?
                                 unsigned int DerivedAddr_D3DDevice = *(unsigned int*)(pFunc + 0x03);
                                 if (XRefDataBase[XREF_D3DDEVICE] != DerivedAddr_D3DDevice) {
-#if 0  // TODO: How can we enforce it for callback?
-                                    if (XRefDataBase[XREF_D3DDEVICE] != XREF_ADDR_DERIVE)
-                                        EmuWarning("Second derived XREF_D3DDEVICE differs from first!");
-#endif
+
+                                    if (XRefDataBase[XREF_D3DDEVICE] != XREF_ADDR_DERIVE) {
+                                        XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, "Second derived XREF_D3DDEVICE differs from first!");
+                                    }
+
                                     XRefDataBase[XREF_D3DDEVICE] = DerivedAddr_D3DDevice;
                                 }
-                                register_func(LibraryStr, "D3DDEVICE", DerivedAddr_D3DDevice, 0);
+                                register_func(LibraryStr, LibraryFlag, "D3DDEVICE", DerivedAddr_D3DDevice, 0);
 
                                 // Temporary verification - is XREF_D3DRS_CULLMODE derived correctly?
                                 if (XRefDataBase[XREF_D3DRS_CULLMODE] != DerivedAddr_D3DRS_CULLMODE) {
-#if 0  // TODO: How can we enforce it for callback?
-                                    if (XRefDataBase[XREF_D3DRS_CULLMODE] != XREF_ADDR_DERIVE)
-                                        CxbxPopupMessage("Second derived XREF_D3DRS_CULLMODE differs from first!");
-#endif
+
+                                    if (XRefDataBase[XREF_D3DRS_CULLMODE] != XREF_ADDR_DERIVE) {
+                                        XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, "Second derived XREF_D3DRS_CULLMODE differs from first!");
+                                    }
 
                                     XRefDataBase[XREF_D3DRS_CULLMODE] = DerivedAddr_D3DRS_CULLMODE;
                                 }
@@ -889,13 +913,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                             XRefDataBase[XREF_D3DRS_ROPZREAD] = EmuD3DDeferredRenderState + patchOffset + 2 * 4;
                             XRefDataBase[XREF_D3DRS_DONOTCULLUNCOMPRESSED] = EmuD3DDeferredRenderState + patchOffset + 3 * 4;
 
-#if 0 // TODO: Need to apply in Cxbx, not in XbSymbolDatabase.
-                            for (int v = 0; v<44; v++) {
-                                XTL::EmuD3DDeferredRenderState[v] = XTL::X_D3DRS_UNK;
-                            }
-#endif
-
-                            register_func(LibraryStr, "D3DDeferredRenderState", EmuD3DDeferredRenderState, 0);
+                            register_func(LibraryStr, LibraryFlag, "D3DDeferredRenderState", EmuD3DDeferredRenderState, 0);
                         }
 
                         // locate D3DDeferredTextureState
@@ -945,28 +963,21 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
                                     // Temporary verification - is XREF_D3DTSS_TEXCOORDINDEX derived correctly?
                                     if (XRefDataBase[XREF_D3DTSS_TEXCOORDINDEX] != DerivedAddr_D3DTSS_TEXCOORDINDEX) {
-#if 0  // TODO: How can we enforce it for callback?
-                                        if (XRefDataBase[XREF_D3DTSS_TEXCOORDINDEX] != XREF_ADDR_DERIVE)
-                                            CxbxPopupMessage("Second derived XREF_D3DTSS_TEXCOORDINDEX differs from first!");
-#endif
 
-                                        //	XRefDataBase[XREF_D3DTSS_BUMPENV] = DerivedAddr_D3DTSS_TEXCOORDINDEX - 28*4;
+                                        if (XRefDataBase[XREF_D3DTSS_TEXCOORDINDEX] != XREF_ADDR_DERIVE) {
+                                            XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, "Second derived XREF_D3DTSS_TEXCOORDINDEX differs from first!");
+                                        }
+
+                                        //XRefDataBase[XREF_D3DTSS_BUMPENV] = DerivedAddr_D3DTSS_TEXCOORDINDEX - 28*4;
                                         XRefDataBase[XREF_D3DTSS_TEXCOORDINDEX] = DerivedAddr_D3DTSS_TEXCOORDINDEX;
-                                        //	XRefDataBase[XREF_D3DTSS_BORDERCOLOR] = DerivedAddr_D3DTSS_TEXCOORDINDEX + 1*4;
-                                        //	XRefDataBase[XREF_D3DTSS_COLORKEYCOLOR] = DerivedAddr_D3DTSS_TEXCOORDINDEX + 2*4;
+                                        //XRefDataBase[XREF_D3DTSS_BORDERCOLOR] = DerivedAddr_D3DTSS_TEXCOORDINDEX + 1*4;
+                                        //XRefDataBase[XREF_D3DTSS_COLORKEYCOLOR] = DerivedAddr_D3DTSS_TEXCOORDINDEX + 2*4;
                                     }
                                 }
 
                                 unsigned int EmuD3DDeferredTextureState = DerivedAddr_D3DTSS_TEXCOORDINDEX - Decrement;
 
-#if 0 // TODO: Need to apply in Cxbx, not in XbSymbolDatabase.
-                                for (int s = 0; s<4; s++) {
-                                    for (int v = 0; v<32; v++) {
-                                        XTL::EmuD3DDeferredTextureState[v + s * 32] = X_D3DTSS_UNK;
-                                    }
-                                }
-#endif
-                                register_func(LibraryStr, "D3DDeferredTextureState", EmuD3DDeferredTextureState, 0);
+                                register_func(LibraryStr, LibraryFlag, "D3DDeferredTextureState", EmuD3DDeferredTextureState, 0);
                             }
                         }
 
@@ -1010,7 +1021,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                 // Now that both Derived XREF and OOVPA-based function-contents match,
                                 // correct base-address (because "g_Stream" is actually "g_Stream"+8") :
                                 Derived_g_Stream -= 8;
-                                register_func(LibraryStr, "g_Stream", Derived_g_Stream, 0);
+                                register_func(LibraryStr, LibraryFlag, "g_Stream", Derived_g_Stream, 0);
                             }
                         }
                     }
@@ -1031,7 +1042,8 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
                                     bPrintSkip = false;
 
-                                    XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, LibraryStr, pSectionScan, BuildVersion, register_func);
+                                    XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, LibraryStr, SymbolDBList[d2].LibSec.library, 
+                                                      pSectionScan, BuildVersion, register_func);
                                     break;
                                 }
                             }
@@ -1060,7 +1072,8 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
 // Adapted from https://gist.github.com/underscorediscovery/81308642d0325fd386237cfa3b44785c
 #define fnv1aprime 0x1000193;
-void hash_fnv1a(unsigned int* hash, const void* key, const unsigned int len) {
+void hash_fnv1a(unsigned int* hash, const void* key, const unsigned int len)
+{
     const char* data = (char*)key;
     for (unsigned int i = 0; i < len; ++i) {
         unsigned char value = data[i];
@@ -1069,7 +1082,8 @@ void hash_fnv1a(unsigned int* hash, const void* key, const unsigned int len) {
     }
 }
 
-void HashAssumedLOOVPA(unsigned int* Hash, const OOVPA* pAssumedLOOVPA) {
+void HashAssumedLOOVPA(unsigned int* Hash, const OOVPA* pAssumedLOOVPA)
+{
     // Number of offset-value pairs in the "Header" LOOVPA structure
     unsigned int Size = pAssumedLOOVPA->Count * sizeof(LOVP);
 
@@ -1080,7 +1094,8 @@ void HashAssumedLOOVPA(unsigned int* Hash, const OOVPA* pAssumedLOOVPA) {
     hash_fnv1a(Hash, pAssumedLOOVPA, Size);
 }
 
-void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable) {
+void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable)
+{
     // Part 1: function name string
     if (pTable->szFuncName != (void*)0) {
         hash_fnv1a(Hash, pTable->szFuncName, strlen(pTable->szFuncName));
@@ -1095,13 +1110,15 @@ void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable) {
     }
 }
 
-void HashSymbolData(unsigned int* Hash, SymbolDatabaseList* pData) {
+void HashSymbolData(unsigned int* Hash, SymbolDatabaseList* pData)
+{
     for (unsigned int i = 0; i < pData->OovpaTableCount; ++i) {
         HashOOVPATable(Hash, &pData->OovpaTable[i]);
     }
 }
 
-const unsigned int HashSymbolDataArray(SymbolDatabaseList* pDataArray, unsigned int Count) {
+const unsigned int HashSymbolDataArray(SymbolDatabaseList* pDataArray, unsigned int Count)
+{
     unsigned int Hash = 0x811c9dc5;
     for (unsigned int i = 0; i < Count; ++i) {
         HashSymbolData(&Hash, pDataArray + i);
@@ -1109,7 +1126,8 @@ const unsigned int HashSymbolDataArray(SymbolDatabaseList* pDataArray, unsigned 
     return Hash;
 }
 
-unsigned int XbSymbolLibraryVersion() {
+unsigned int XbSymbolLibraryVersion()
+{
     // Calculate this just once
     static unsigned int CalculatedHash = 0;
     if (CalculatedHash == 0) {
