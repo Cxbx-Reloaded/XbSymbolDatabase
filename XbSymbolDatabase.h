@@ -19,7 +19,7 @@
 // *
 // *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
 // *  (c) 2016-2017 PatrickvL
-// *  (c) 2017-2018 LukeUsher
+// *  (c) 2017-2018 Luke Usher
 // *  (c) 2018 RadWolfie
 // *
 // *  All rights reserved
