@@ -361,7 +361,7 @@ typedef enum _XRefDataBaseOffset
 	XREF_XAPI_GetTypeInformation,
 
 	XREF_COUNT // XREF_COUNT must always be last.
-	// Also, if XREF_COUNT > sizeof(uint8), enlarge struct OOVPA.XRefSaveIndex (and Value somehow)
+    // Also, if XREF_COUNT > sizeof(uint16), enlarge struct OOVPA.XRefSaveIndex (and Value somehow)
 } XRefDataBaseOffset;
 
 #define XREF_ADDR_UNDETERMINED -1
