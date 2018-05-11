@@ -1001,7 +1001,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                             }
                             if (pFunc == 0) { // verified for 4039
                                 OOVPA_version = 4034;
-                                pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_1040, lower, upper);
+                                pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_8_2040, lower, upper);
                                 iCodeOffsetFor_g_Stream = 0x23;
                             }
                             if (pFunc == 0) { // verified for 3925
