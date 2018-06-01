@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->D3D8.1.0.3948.inl
+// *   OOVPADatabase->D3D8.1.0.3947.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -27,27 +27,31 @@
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
-OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 3948, 8)
+OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 3947, 9)
 #else
-OOVPA_XREF(D3DDevice_SetRenderTarget, 3948, 1+8,
+OOVPA_XREF(D3DDevice_SetRenderTarget, 3947, 1+9,
 
     XRefNoSaveIndex,
     XRefOne)
 
-        XREF_ENTRY( 0x17, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET ), // Derived TODO : Verify offset
+        XREF_ENTRY( 0x1D, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET ), // Derived
 #endif
-        // D3DDevice_SetRenderTarget+0x00 : sub esp, 0x30
+        // D3DDevice_SetRenderTarget+0x00 : sub esp, 0xXX
         { 0x00, 0x83 },
         { 0x01, 0xEC },
-        { 0x02, 0x30 },
+        //{ 0x02, 0x30 }, // 3947 0x2C vs 3948 0x30
 
         // D3DDevice_SetRenderTarget+0x32 : and ecx, 0x0F
         { 0x32, 0x83 },
         { 0x33, 0xE1 },
         { 0x34, 0x0F },
 
-        // D3DDevice_SetRenderTarget+0x69 : push ebx
-        { 0x69, 0x53 },
+        // D3DDevice_SetRenderTarget+0x35 : mov edi, 1
+        { 0x35, 0xBF },
+        { 0x36, 0x01 },
+
+        // D3DDevice_SetRenderTarget+0x68 : inc eax
+        { 0x68, 0x40 },
 
         // D3DDevice_SetRenderTarget+0xDA : push edx
         { 0xDA, 0x52 },
