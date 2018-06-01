@@ -158,7 +158,7 @@
 
 #include "D3D8.1.0.3911.inl"
 #include "D3D8.1.0.3925.inl"
-#include "D3D8.1.0.3948.inl"
+#include "D3D8.1.0.3947.inl"
 #include "D3D8.1.0.4034.inl"
 #include "D3D8.1.0.4134.inl"
 #include "D3D8.1.0.4242.inl"
@@ -338,7 +338,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_YuvEnable, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZBias, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZEnable, 3911, 4034, 4134, 4432),
-    REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 3911, 3948, 4039, 4627, 5344, 5455),
+    REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 3911, 3947, 4039, 4627, 5344, 5455),
     REGISTER_OOVPAS(D3DDevice_SetRenderTargetFast, 5233),
     REGISTER_OOVPAS(D3DDevice_SetScissors, 3911, 5344, 5558), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 4034, 5455), // Was 5233 (from 5344's comment)
