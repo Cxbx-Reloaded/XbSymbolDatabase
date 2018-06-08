@@ -109,6 +109,8 @@ typedef struct _LOVP
 // ******************************************************************
 // * Large Optimized (Offset,Value)-Pair Array
 // ******************************************************************
+#pragma warning(push)
+#pragma warning(disable: 4200)
 typedef struct _LOOVPA
 {
     OOVPA Header;
@@ -116,6 +118,7 @@ typedef struct _LOOVPA
     // Large (Offset,Value)-Pair(s)
     LOVP Lovp[];
 } LOOVPA;
+#pragma warning(pop)
 
 #define OOVPA_XREF(Name, Version, Count, XRefSaveIndex, XRefCount)    \
 LOOVPA Name##_##Version = { Count, XRefCount, (unsigned short)XRefSaveIndex, {
