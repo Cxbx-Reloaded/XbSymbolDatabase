@@ -215,6 +215,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>XbSymbolDatabase.h</PrecompiledHeaderFile>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
