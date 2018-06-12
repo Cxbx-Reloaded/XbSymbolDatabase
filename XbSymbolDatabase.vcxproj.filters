@@ -7,6 +7,9 @@
     <ClInclude Include="OOVPA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Xbe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="OOVPADatabase\D3D8.1.0.3911.inl">
