@@ -581,6 +581,23 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
         XRefDataBase[XREF_OFFSET_D3DDEVICE_M_RENDERTARGET] = XREF_ADDR_DERIVE;
         XRefDataBase[XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL] = XREF_ADDR_DERIVE;
 
+        xbe_section_header* pSectionHeaders = pXbeHeader->pSectionHeadersAddr;
+        xbe_section_header* pSectionScan;
+        const char* SectionName;
+        bool bDSoundLibHeader = false;
+
+        // Verify if title do contain DirectSound library section.
+        for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
+            SectionName = pSectionHeaders[v].SectionNameAddr;
+
+            for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
+                if (strncmp(SectionName, Lib_DSOUND, 8) == 0) {
+                    bDSoundLibHeader = true;
+                    break;
+                }
+            }
+        }
+
         for (int p = 0; UnResolvedXRefs < LastUnResolvedXRefs; p++) {
 
             LastUnResolvedXRefs = UnResolvedXRefs;
@@ -599,10 +616,6 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                 const char* LibraryStr = pLibraryVersion[v].szName;
                 uint32_t LibraryFlag = XbSymbolLibrayToFlag(LibraryStr);
 
-
-                xbe_section_header* pSectionHeaders;
-                xbe_section_header* pSectionScan;
-                const char* SectionName;
 
             reProcessScan:
 
@@ -1055,7 +1068,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                     }
                 }
 
-                if (v == dwLibraryVersions - 1 && bDSoundLibSection == false) {
+                if (v == dwLibraryVersions - 1 && bDSoundLibSection == false && bDSoundLibHeader == true) {
                     LibraryStr = Lib_DSOUND;
                     LibraryFlag = XbSymbolLib_DSOUND;
                     BuildVersion = preserveVersion;
