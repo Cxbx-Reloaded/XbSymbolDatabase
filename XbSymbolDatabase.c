@@ -650,7 +650,10 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                             unsigned int upper = pXbeHeader->dwBaseAddr + pXbeHeader->dwSizeofImage;
                             unsigned int pFunc = 0;
 
-                            if (BuildVersion >= 3911 && BuildVersion < 4034) {
+                            if (BuildVersion < 3911) {
+                                // Not supported, currently ignored.
+                            }
+                            if (BuildVersion < 4034) {
                                 pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetRenderState_CullMode_3911, lower, upper);
                             } else {
                                 pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetRenderState_CullMode_4034, lower, upper);
