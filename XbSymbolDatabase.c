@@ -552,7 +552,8 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
     //
     if (pLibraryVersion == NULL) {
         return 0;
-    } else {
+    }
+    else {
 
         UnResolvedXRefs = XREF_COUNT;
 
@@ -591,6 +592,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
             SectionName = pSectionHeaders[v].SectionNameAddr;
 
             for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
+
                 if (strncmp(SectionName, Lib_DSOUND, 8) == 0) {
                     bDSoundLibHeader = true;
                     break;
@@ -632,6 +634,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                             BuildVersion = 5788;
                         }
                     }
+
                     if (LibraryFlag == XbSymbolLib_DSOUND) {
                         bDSoundLibSection = true;
                     }
@@ -664,26 +667,32 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                                      // Read address of D3DRS_CULLMODE from D3DDevice_SetRenderState_CullMode
                                                      // TODO : Simplify this when XREF_D3D_RenderState_CullMode derivation is deemed stable
                                 {
-                                    if (BuildVersion < 4034) {
+                                    if (BuildVersion < 3911) {
+                                        // Not supported, currently ignored.
+                                    }
+                                    else if (BuildVersion < 4034) {
                                         DerivedAddr_D3DRS_CULLMODE = *(unsigned int*)(pFunc + 0x25);
                                         Decrement = 0x1FC;  // TODO: Clean up (?)
                                         Increment = 82 * 4;
                                         patchOffset = 140 * 4; // Verified 3925 and 3948
 
-                                                               //Decrement = 0x19F;  // TODO: Clean up (?)
-                                                               //Increment = 72 * 4;
-                                                               //patchOffset = 142*4; // TODO: Verify
-                                    } else if (BuildVersion <= 4361) {
+                                        //Decrement = 0x19F;  // TODO: Clean up (?)
+                                        //Increment = 72 * 4;
+                                        //patchOffset = 142*4; // TODO: Verify
+                                    }
+                                    else if (BuildVersion <= 4361) {
                                         DerivedAddr_D3DRS_CULLMODE = *(unsigned int*)(pFunc + 0x2B);
                                         Decrement = 0x200;
                                         Increment = 82 * 4;
                                         patchOffset = 142 * 4;
-                                    } else if (BuildVersion < 4627) {
+                                    }
+                                    else if (BuildVersion < 4627) {
                                         DerivedAddr_D3DRS_CULLMODE = *(unsigned int*)(pFunc + 0x2B);
                                         Decrement = 0x204;
                                         Increment = 83 * 4;
                                         patchOffset = 143 * 4;
-                                    } else { // 4627-5933
+                                    }
+                                    else { // 4627-5933
                                         DerivedAddr_D3DRS_CULLMODE = *(unsigned int*)(pFunc + 0x2B);
                                         Decrement = 0x24C;
                                         Increment = 92 * 4;
@@ -729,16 +738,23 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
                             // locate D3DDeferredTextureState
                             {
-                                pFunc = 0;
 
-                                if (BuildVersion >= 3911 && BuildVersion < 4034)
+                                if (BuildVersion < 3911) {
+                                    // Not supported, currently ignored.
+                                    pFunc = 0;
+                                }
+                                else if (BuildVersion < 4034) {
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_3911, lower, upper);
-                                else if (BuildVersion >= 4034 && BuildVersion < 4242)
+                                }
+                                else if (BuildVersion < 4242) {
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4034, lower, upper);
-                                else if (BuildVersion >= 4242 && BuildVersion < 4627)
+                                }
+                                else if (BuildVersion < 4627) {
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4242, lower, upper);
-                                else if (BuildVersion >= 4627)
+                                } 
+                                else {
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4627, lower, upper);
+                                }
 
                                 if (pFunc != 0) {
                                     unsigned int DerivedAddr_D3DTSS_TEXCOORDINDEX = 0;
@@ -746,12 +762,15 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
                                                           // TODO : Remove this when XREF_D3D_TextureState_TexCoordIndex derivation is deemed stable
                                     {
-                                        if (BuildVersion >= 3911 && BuildVersion < 4034) // 0x18F180
+                                        if (BuildVersion >= 3911 && BuildVersion < 4034) {// 0x18F180
                                             DerivedAddr_D3DTSS_TEXCOORDINDEX = *(unsigned int*)(pFunc + 0x11);
-                                        else if (BuildVersion >= 4034 && BuildVersion < 4242)
+                                        }
+                                        else if (BuildVersion >= 4034 && BuildVersion < 4242) {
                                             DerivedAddr_D3DTSS_TEXCOORDINDEX = *(unsigned int*)(pFunc + 0x18);
-                                        else
+                                        }
+                                        else {
                                             DerivedAddr_D3DTSS_TEXCOORDINDEX = *(unsigned int*)(pFunc + 0x19);
+                                        }
 
                                         // Temporary verification - is XREF_D3D_TextureState_TexCoordIndex derived correctly?
                                         if (XRefDataBase[XREF_D3DTSS_TEXCOORDINDEX] != DerivedAddr_D3DTSS_TEXCOORDINDEX) {
@@ -779,7 +798,8 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                 if (BuildVersion >= 4034) {
                                     OOVPA_version = 4034;
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_4034, lower, upper);
-                                } else {
+                                }
+                                else {
                                     OOVPA_version = 3911;
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_3911, lower, upper);
                                     iCodeOffsetFor_g_Stream = 0x23; // verified for 3911
@@ -802,7 +822,8 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                     register_func(LibraryStr, LibraryFlag, "g_Stream", Derived_g_Stream, 0);
                                 }
                             }
-                        } else if (LibraryFlag == XbSymbolLib_D3D8LTCG) {
+                        }
+                         else if (LibraryFlag == XbSymbolLib_D3D8LTCG) {
                             int pXRefOffset = 0; // TODO : Rename into something understandable
 
                             // TODO: Why do we need this? Also, can we just scan library versions for this only?
@@ -820,10 +841,12 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetRenderState_CullMode_1049, lower, upper);
                                     pXRefOffset = 0x31; // verified for 4039
                                 }
+
                                 if (pFunc == 0) {
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetRenderState_CullMode_1052, lower, upper);
                                     pXRefOffset = 0x34;
                                 }
+
                                 if (pFunc == 0) {
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetRenderState_CullMode_1053, lower, upper);
                                     pXRefOffset = 0x35;
@@ -840,26 +863,32 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                                      // Read address of D3DRS_CULLMODE from D3DDevice_SetRenderState_CullMode
                                                      // TODO : Simplify this when XREF_D3D_RenderState_CullMode derivation is deemed stable
                                 {
-                                    if (BuildVersion < 4034) {
+                                    if (BuildVersion < 3911) {
+                                        // Not supported, currently ignored.
+                                    }
+                                    else if (BuildVersion < 4034) {
                                         DerivedAddr_D3DRS_CULLMODE = *(unsigned int*)(pFunc + pXRefOffset);
                                         Decrement = 0x1FC;  // TODO: Clean up (?)
                                         Increment = 82 * 4;
                                         patchOffset = 140 * 4; // Verified 3925 and 3948
 
-                                                               //Decrement = 0x19F;  // TODO: Clean up (?)
-                                                               //Increment = 72 * 4;
-                                                               //patchOffset = 142*4; // TODO: Verify
-                                    } else if (BuildVersion <= 4361) {
+                                        //Decrement = 0x19F;  // TODO: Clean up (?)
+                                        //Increment = 72 * 4;
+                                        //patchOffset = 142*4; // TODO: Verify
+                                    }
+                                    else if (BuildVersion <= 4361) {
                                         DerivedAddr_D3DRS_CULLMODE = *(unsigned int*)(pFunc + pXRefOffset);
                                         Decrement = 0x200;
                                         Increment = 82 * 4;
                                         patchOffset = 142 * 4;
-                                    } else if (BuildVersion < 4627) {
+                                    }
+                                    else if (BuildVersion < 4627) {
                                         DerivedAddr_D3DRS_CULLMODE = *(unsigned int*)(pFunc + pXRefOffset);
                                         Decrement = 0x204;
                                         Increment = 83 * 4;
                                         patchOffset = 143 * 4;
-                                    } else { // 4627-5933
+                                    }
+                                    else { // 4627-5933
                                              // NOTE: Burnout 3 is (pFunc + 0x34), Black is (pFunc + 0x35)
                                         DerivedAddr_D3DRS_CULLMODE = *(unsigned int*)(pFunc + pXRefOffset);
                                         Decrement = 0x24C;
@@ -918,8 +947,9 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                 // XRefDataBase[XREF_D3DRS_SHADOWFUNC]            = DerivedAddr_D3DRS_CULLMODE + 9*4;
                                 // XRefDataBase[XREF_D3DRS_LINEWIDTH]             = DerivedAddr_D3DRS_CULLMODE + 10*4;
 
-                                if (BuildVersion >= 4627 && BuildVersion <= 5933) // Add XDK 4627
+                                if (BuildVersion >= 4627 && BuildVersion <= 5933) {// Add XDK 4627
                                     XRefDataBase[XREF_D3DRS_SAMPLEALPHA] = DerivedAddr_D3DRS_CULLMODE + 11 * 4;
+                                }
 
                                 XRefDataBase[XREF_D3DRS_DXT1NOISEENABLE] = EmuD3DDeferredRenderState + patchOffset - 3 * 4;
                                 XRefDataBase[XREF_D3DRS_YUVENABLE] = EmuD3DDeferredRenderState + patchOffset - 2 * 4;
@@ -939,30 +969,37 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                 { // verified for 3925
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_0_2039, lower, upper);
                                     pXRefOffset = 0x08;
+
                                     if (pFunc == 0) { // verified for 4039
                                         pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4_2040, lower, upper);
                                         pXRefOffset = 0x14;
                                     }
+
                                     if (pFunc == 0) { // verified for 4432
                                         pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_1944, lower, upper);
                                         pXRefOffset = 0x19;
                                     }
+
                                     if (pFunc == 0) { // verified for 4531
                                         pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4_2045, lower, upper);
                                         pXRefOffset = 0x14;
                                     }
+
                                     if (pFunc == 0) { // verified for 4627 and higher
                                         pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4_2058, lower, upper);
                                         pXRefOffset = 0x14;
                                     }
+
                                     if (pFunc == 0) { // verified for 4627 and higher
                                         pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_1958, lower, upper);
                                         pXRefOffset = 0x19;
                                     }
+
                                     if (pFunc == 0) { // verified for World Series Baseball 2K3
                                         pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4_2052, lower, upper);
                                         pXRefOffset = 0x15;
                                     }
+
                                     if (pFunc == 0) { // verified for Ski Racing 2006
                                         pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_0_2058, lower, upper);
                                         pXRefOffset = 0x15;
@@ -1007,16 +1044,19 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                                     OOVPA_version = 4034; // TODO Verify
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_1044, lower, upper);
                                 }
+
                                 if (pFunc == 0) { // LTCG specific
                                     OOVPA_version = 4034; // TODO Verify
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_4_2058, lower, upper);
                                     iCodeOffsetFor_g_Stream = 0x1E;
                                 }
+
                                 if (pFunc == 0) { // verified for 4039
                                     OOVPA_version = 4034;
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_8_2040, lower, upper);
                                     iCodeOffsetFor_g_Stream = 0x23;
                                 }
+
                                 if (pFunc == 0) { // verified for 3925
                                     OOVPA_version = 3911;
                                     pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_1039, lower, upper);
@@ -1046,6 +1086,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                     //Initialize library scan against HLE database we want to search for address of patches and xreferences.
                     bool bPrintSkip = true;
                     for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
+
                         if (LibraryFlag == SymbolDBList[d2].LibSec.library) {
                             for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
                                 SectionName = pSectionHeaders[v].SectionNameAddr;
