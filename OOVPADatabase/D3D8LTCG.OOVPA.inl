@@ -253,8 +253,8 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_ApplyStateBlock, 3911, 4627),
     REGISTER_OOVPAS(D3DDevice_Begin, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_BeginPush, 4531,4627, 5028),
-    REGISTER_OOVPAS(D3DDevice_BeginPush2, 4134),
-    REGISTER_OOVPAS(D3DDevice_BeginPushBuffer, 3911, 4134), // Not implemented yet. (from 5788's comment)
+    REGISTER_OOVPAS(D3DDevice_BeginPush2, 4039),
+    REGISTER_OOVPAS(D3DDevice_BeginPushBuffer, 3911, 4039), // Not implemented yet. (from 5788's comment)
     REGISTER_OOVPAS(D3DDevice_BeginStateBig, 5028),
     REGISTER_OOVPAS(D3DDevice_BeginStateBlock, 3911, 4134),
     REGISTER_OOVPAS(D3DDevice_BeginVisibilityTest, 3911, 4034),
@@ -289,14 +289,14 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_DrawVerticesUP, 3911, 4039, 5344),
     REGISTER_OOVPAS(D3DDevice_EnableOverlay, 3911, 4134),
     REGISTER_OOVPAS(D3DDevice_End, 3911, 4039, 5344),
-    REGISTER_OOVPAS(D3DDevice_EndPush, 4134), // Was 4627 (from 5233's comment)
+    REGISTER_OOVPAS(D3DDevice_EndPush, 4039), // Was 4627 (from 5233's comment)
     REGISTER_OOVPAS(D3DDevice_EndPushBuffer, 3911), // Not implemented yet. (from 5788's comment)
     REGISTER_OOVPAS(D3DDevice_EndStateBlock, 3911, 4134),
     REGISTER_OOVPAS(D3DDevice_EndVisibilityTest, 3911),
     REGISTER_OOVPAS(D3DDevice_FlushVertexCache, 3911, 4134),
     REGISTER_OOVPAS(D3DDevice_GetBackBuffer, 3911, 4034, 4134, 4627), // Called D3DDevice_GetBackBuffer2 (from 4627's comment) NOTE: Use D3DDevice_GetBackBuffer2 for 4627 and above
     REGISTER_OOVPAS(D3DDevice_GetBackBuffer2, 4627), // 5233 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_GetBackMaterial, 3911, 4134, 4627, 5344, 5558, 5788),
+    REGISTER_OOVPAS(D3DDevice_GetBackMaterial, 3911, 4039, 4134, 4627, 5344, 5558, 5788),
     REGISTER_OOVPAS(D3DDevice_GetCreationParameters, 3911),
     REGISTER_OOVPAS(D3DDevice_GetDepthStencilSurface, 3911, 4627), // Called D3DDevice_GetDepthStencilSurface2 (from 4627's comment) NOTE: Use D3DDevice_GetDepthStencilSurface2 for 4627 and above
     REGISTER_OOVPAS(D3DDevice_GetDepthStencilSurface2, 4627),
@@ -306,8 +306,8 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_GetGammaRamp, 3911),
     REGISTER_OOVPAS(D3DDevice_GetLight, 3911),
     REGISTER_OOVPAS(D3DDevice_GetLightEnable, 3911, 5344),
-    REGISTER_OOVPAS(D3DDevice_GetMaterial, 3911, 4134, 4627, 5344, 5558, 5788),
-    REGISTER_OOVPAS(D3DDevice_GetModelView, 3911, 4134),
+    REGISTER_OOVPAS(D3DDevice_GetMaterial, 3911, 4039, 4134, 4627, 5344, 5558, 5788),
+    REGISTER_OOVPAS(D3DDevice_GetModelView, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_GetOverlayUpdateStatus, 3911),
     REGISTER_OOVPAS(D3DDevice_GetPersistedSurface2, 4928), // For only on Unreal Championship (from 4627's comment)
     REGISTER_OOVPAS(D3DDevice_GetPixelShader, 3911, 4039, 4134, 5028, 5558, 5788),
@@ -345,22 +345,22 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_MakeSpace, 4134),
     REGISTER_OOVPAS(D3DDevice_PersistDisplay, 3911, 4039, 4627, 4831, 5455, 5558),
     REGISTER_OOVPAS(D3DDevice_Present, 3911),
-    REGISTER_OOVPAS(D3DDevice_PrimeVertexCache, 3911, 4134),
+    REGISTER_OOVPAS(D3DDevice_PrimeVertexCache, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_Release, 3911),
     REGISTER_OOVPAS(D3DDevice_Reset, 3911),
     REGISTER_OOVPAS(D3DDevice_RunPushBuffer, 3911, 4039, 4627, 5120, 5558), // for 5455 (from 5558's comment)
-    REGISTER_OOVPAS(D3DDevice_RunVertexStateShader, 3911, 4134),
+    REGISTER_OOVPAS(D3DDevice_RunVertexStateShader, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_SelectVertexShader, 3911, 4034, 5455),
     REGISTER_OOVPAS(D3DDevice_SelectVertexShaderDirect, 4361),
-    REGISTER_OOVPAS(D3DDevice_SetBackBufferScale, 4134),
-    REGISTER_OOVPAS(D3DDevice_SetBackMaterial, 3911, 4134, 4627, 5344, 5558, 5788),
+    REGISTER_OOVPAS(D3DDevice_SetBackBufferScale, 4039),
+    REGISTER_OOVPAS(D3DDevice_SetBackMaterial, 3911, 4039, 4134, 4627, 5344, 5558, 5788),
     REGISTER_OOVPAS(D3DDevice_SetDepthClipPlanes, 4432),
     REGISTER_OOVPAS(D3DDevice_SetFlickerFilter, 3911, 4034, 4134),
     REGISTER_OOVPAS(D3DDevice_SetGammaRamp, 3911, 4627),
     REGISTER_OOVPAS(D3DDevice_SetIndices, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetLight, 3911, 5344),
     REGISTER_OOVPAS(D3DDevice_SetMaterial, 3911, 4034, 4134, 4627, 5344, 5558, 5788), // Was 4627 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_SetModelView, 3911, 4134, 4627),
+    REGISTER_OOVPAS(D3DDevice_SetModelView, 3911, 4039, 4627),
     REGISTER_OOVPAS(D3DDevice_SetPalette, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetPixelShader, 3911, 4034, 4627),
     REGISTER_OOVPAS(D3DDevice_SetPixelShaderConstant, 3911, 4831),
@@ -397,7 +397,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_YuvEnable, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZBias, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZEnable, 3911, 4034, 4134, 4432),
-    REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 3911, 3947, 4039, 4627, 5344, 5455),
+    REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 3911, 3947, 4034, 4039, 4627, 5344, 5455),
     REGISTER_OOVPAS(D3DDevice_SetRenderTargetFast, 5233),
     REGISTER_OOVPAS(D3DDevice_SetScissors, 3911, 5344, 5558), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 4034, 5455), // Was 5233 (from 5344's comment)
@@ -407,7 +407,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetStateVB, 3911, 4034, 4134),
     REGISTER_OOVPAS(D3DDevice_SetStipple, 4627),
     REGISTER_OOVPAS(D3DDevice_SetStreamSource, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetSwapCallback, 4134, 4242, 4432, 4627, 5028, 5233, 5344, 5455, 5558, 5788),
+    REGISTER_OOVPAS(D3DDevice_SetSwapCallback, 4039, 4134, 4242, 4432, 4627, 5028, 5233, 5344, 5455, 5558, 5788),
     REGISTER_OOVPAS(D3DDevice_SetTexture, 3911, 4034, 4361, 4831),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BorderColor, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BumpEnv, 3911, 4034),
@@ -417,10 +417,10 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetTransform, 3911, 4034, 5344, 5558), // Was 4134 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_MultiplyTransform, 3911, 4034), // TODO: Verify 4034 is correct
     REGISTER_OOVPAS(D3DDevice_SetVertexData2f, 3911, 4039), // Was 4627 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_SetVertexData2s, 3911, 4134),
+    REGISTER_OOVPAS(D3DDevice_SetVertexData2s, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_SetVertexData4f, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_SetVertexData4s, 3911, 4134),
-    REGISTER_OOVPAS(D3DDevice_SetVertexData4ub, 3911, 4134),
+    REGISTER_OOVPAS(D3DDevice_SetVertexData4s, 3911, 4039),
+    REGISTER_OOVPAS(D3DDevice_SetVertexData4ub, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_SetVertexDataColor, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_SetVertexShader, 3911, 4034, 4134, 5028, 5455),
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstant, 3911, 4034, 4627),
@@ -429,7 +429,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstant4, 4627),
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstantNotInline, 4627, 5028, 5558),
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstantNotInlineFast, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetVertexShaderInput, 3911, 4134),
+    REGISTER_OOVPAS(D3DDevice_SetVertexShaderInput, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderInputDirect, 4361),
     REGISTER_OOVPAS(D3DDevice_SetVerticalBlankCallback, 3911, 4039, 4134, 4242, 4432, 4627, 5028, 5233, 5344, 5455, 5558, 5788), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_SetViewport, 3911, 4034, 5344, 5455), // Was 5233 (from 5344's comment)
