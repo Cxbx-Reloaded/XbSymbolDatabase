@@ -177,7 +177,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetScissors, 1024, 1036, 1048, 1060, 1072),
     REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 1024),
     REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode, 1024),
-    REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode_0, 2048),
+    REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode_0, 2024, 2036, 2048, 2060, 2072, 2084, 2096, 2108, 2120, 2132, 2144, 2156),
     REGISTER_OOVPAS(D3DDevice_SetSoftDisplayFilter_0, 2048),
     REGISTER_OOVPAS(D3DDevice_SetStreamSource, 1039, 1044),
     REGISTER_OOVPAS(D3DDevice_SetStreamSource_4, 2058),

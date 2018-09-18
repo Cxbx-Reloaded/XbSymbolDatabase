@@ -245,3 +245,26 @@ OOVPA_NO_XREF(D3DDevice_SelectVertexShaderDirect_0, 2048, 12)
         { 0x0A, 0x57 },
         { 0x0B, 0xB8 },
 OOVPA_END;
+
+// ******************************************************************
+// * D3DDevice_SetShaderConstantMode
+// ******************************************************************
+//A810538B1D ...C3
+OOVPA_NO_XREF(D3DDevice_SetShaderConstantMode_0, 2084, 13)
+
+        { 0x00, 0xA8 },
+        { 0x01, 0x10 },
+        { 0x02, 0x53 },
+        { 0x03, 0x8B },
+        { 0x04, 0x1D },
+
+        { 0x10, 0x00 },
+        { 0x11, 0x02 },
+        { 0x12, 0x00 },
+        { 0x13, 0x00 },
+        { 0x14, 0xEB },
+        { 0x15, 0x06 },
+
+        { 0x121, 0x5B },
+        { 0x122, 0xC3 },
+OOVPA_END;

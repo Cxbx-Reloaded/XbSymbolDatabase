@@ -653,7 +653,7 @@ OOVPA_END;
 // * D3DDevice_SetShaderConstantMode
 // ******************************************************************
 //A810538B1D ...C3
-OOVPA_NO_XREF(D3DDevice_SetShaderConstantMode_0, 2048, 11)
+OOVPA_NO_XREF(D3DDevice_SetShaderConstantMode_0, 2024, 13)
 
         { 0x00, 0xA8 },
         { 0x01, 0x10 },
@@ -667,6 +667,9 @@ OOVPA_NO_XREF(D3DDevice_SetShaderConstantMode_0, 2048, 11)
         { 0x13, 0x00 },
         { 0x14, 0xEB },
         { 0x15, 0x06 },
+
+        { 0xEE, 0x5B },
+        { 0xEF, 0xC3 },
 OOVPA_END;
 
 // ******************************************************************
