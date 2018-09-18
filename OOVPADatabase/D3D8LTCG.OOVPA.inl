@@ -126,7 +126,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_RunPushBuffer, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_RunVertexStateShader_4, 2048),
     REGISTER_OOVPAS(D3DDevice_SelectVertexShader, 1024, 1036),
-    REGISTER_OOVPAS(D3DDevice_SelectVertexShader_0, 2024, 2048, 2060),
+    REGISTER_OOVPAS(D3DDevice_SelectVertexShader_0, 2024, 2048, 2060, 2072, 2084),
     REGISTER_OOVPAS(D3DDevice_SelectVertexShader_4, 2024, 2048, 2060),
     REGISTER_OOVPAS(D3DDevice_SelectVertexShaderDirect_0, 2048),
     REGISTER_OOVPAS(D3DDevice_SetFlickerFilter_0, 2024),
