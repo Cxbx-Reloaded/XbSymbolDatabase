@@ -250,6 +250,48 @@ OOVPA_NO_XREF(D3DDevice_SelectVertexShaderDirect_0, 2048, 12)
 OOVPA_END;
 
 // ******************************************************************
+// * D3D_CommonSetRenderTarget
+// ******************************************************************
+//8B490CC1E91483E10FB801
+OOVPA_XREF(D3D_CommonSetRenderTarget, 1060, 13,
+
+    XREF_D3D_CommonSetRenderTarget,
+    XRefZero)
+
+        { 0x00, 0x83 },
+        { 0x01, 0xEC },
+
+        { 0x5A, 0x8B },
+        { 0x5B, 0x49 },
+        { 0x5C, 0x0C },
+        { 0x5D, 0xC1 },
+        { 0x5E, 0xE9 },
+        { 0x5F, 0x14 },
+        { 0x60, 0x83 },
+        { 0x61, 0xE1 },
+        { 0x62, 0x0F },
+        { 0x63, 0xB8 },
+        { 0x64, 0x01 },
+OOVPA_END;
+
+//******************************************************************
+//* D3DDevice_SetRenderTarget
+//******************************************************************
+OOVPA_XREF(D3DDevice_SetRenderTarget_0, 2048, 1+5,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        XREF_ENTRY( 0x08, XREF_D3D_CommonSetRenderTarget ),
+
+        { 0x00, 0x68 },
+        { 0x05, 0x50 },
+        { 0x06, 0x51 },
+        { 0x07, 0xE8 },
+        { 0x0C, 0xC3 },
+OOVPA_END;
+
+// ******************************************************************
 // * D3DDevice_SetShaderConstantMode
 // ******************************************************************
 //A810538B1D ...C3

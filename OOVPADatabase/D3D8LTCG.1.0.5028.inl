@@ -83,3 +83,28 @@ OOVPA_NO_XREF(D3DDevice_LoadVertexShader_4, 2024, 9)
         { 0x63, 0x00 },
         { 0x64, 0x89 },
 OOVPA_END;
+
+// ******************************************************************
+// * D3D_CommonSetRenderTarget
+// ******************************************************************
+//8B490CC1E91483E10FB801
+OOVPA_XREF(D3D_CommonSetRenderTarget, 1048, 13,
+
+    XREF_D3D_CommonSetRenderTarget,
+    XRefZero)
+
+        { 0x00, 0x83 },
+        { 0x01, 0xEC },
+
+        { 0x57, 0x8B },
+        { 0x58, 0x49 },
+        { 0x59, 0x0C },
+        { 0x5A, 0xC1 },
+        { 0x5B, 0xE9 },
+        { 0x5C, 0x14 },
+        { 0x5D, 0x83 },
+        { 0x5E, 0xE1 },
+        { 0x5F, 0x0F },
+        { 0x60, 0xB8 },
+        { 0x61, 0x01 },
+OOVPA_END;

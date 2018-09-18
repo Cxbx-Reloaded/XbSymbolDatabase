@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->D3D8LTCG.1.0.5659.inl
+// *   OOVPADatabase->D3D8LTCG.1.0.5788.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -612,6 +612,23 @@ OOVPA_NO_XREF(D3DDevice_RunPushBuffer, 1048, 11)
         { 0x51, 0x00 },
         { 0x52, 0x20 },
         { 0x53, 0x8B },
+OOVPA_END;
+
+// ******************************************************************
+// * D3DDevice_SetVertexDataColor
+// ******************************************************************
+//0C8D....40190400
+OOVPA_NO_XREF(D3DDevice_SetVertexDataColor, 1048, 8)
+
+        { 0x00, 0x56 },
+        { 0x01, 0x8B },
+
+        { 0x25, 0x0F },
+        { 0x26, 0xB6 },
+        { 0x29, 0x40 },
+        { 0x2A, 0x19 },
+        { 0x2B, 0x04 },
+        { 0x2C, 0x00 },
 OOVPA_END;
 
 // ******************************************************************
