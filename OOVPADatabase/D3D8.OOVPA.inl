@@ -159,6 +159,7 @@
 #include "D3D8.1.0.3925.inl"
 #include "D3D8.1.0.3947.inl"
 #include "D3D8.1.0.4034.inl"
+#include "D3D8.1.0.4039.inl"
 #include "D3D8.1.0.4134.inl"
 #include "D3D8.1.0.4242.inl"
 #include "D3D8.1.0.4361.inl"
