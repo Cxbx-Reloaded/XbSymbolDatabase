@@ -210,20 +210,23 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SelectVertexShader
 // ******************************************************************
-//578D78FF89......0000 ...C3
-OOVPA_NO_XREF(D3DDevice_SelectVertexShader_0, 2048, 9)
+//04C700941E080083 ...C3
+OOVPA_NO_XREF(D3DDevice_SelectVertexShader_0, 2048, 12)
 
         { 0x00, 0x85 },
         { 0x01, 0xC0 },
 
-        { 0x14, 0x57 },
-        { 0x15, 0x8D },
-        { 0x16, 0x78 },
-        { 0x17, 0xFF },
-        { 0x18, 0x89 },
+        { 0x46, 0x04 },
+        { 0x47, 0xC7 },
+        { 0x48, 0x00 },
+        { 0x49, 0x94 },
+        { 0x4A, 0x1E },
+        { 0x4B, 0x08 },
+        { 0x4C, 0x00 },
+        { 0x4D, 0x83 },
 
-        { 0x1C, 0x00 },
-        { 0x1D, 0x00 },
+        { 0x8E, 0x5E },
+        { 0x8F, 0xC3 },
 OOVPA_END;
 
 // ******************************************************************
@@ -244,4 +247,69 @@ OOVPA_NO_XREF(D3DDevice_SelectVertexShaderDirect_0, 2048, 12)
         { 0x09, 0x1E },
         { 0x0A, 0x57 },
         { 0x0B, 0xB8 },
+OOVPA_END;
+
+// ******************************************************************
+// * D3D_CommonSetRenderTarget
+// ******************************************************************
+//8B490CC1E91483E10FB801
+OOVPA_XREF(D3D_CommonSetRenderTarget, 1060, 13,
+
+    XREF_D3D_CommonSetRenderTarget,
+    XRefZero)
+
+        { 0x00, 0x83 },
+        { 0x01, 0xEC },
+
+        { 0x5A, 0x8B },
+        { 0x5B, 0x49 },
+        { 0x5C, 0x0C },
+        { 0x5D, 0xC1 },
+        { 0x5E, 0xE9 },
+        { 0x5F, 0x14 },
+        { 0x60, 0x83 },
+        { 0x61, 0xE1 },
+        { 0x62, 0x0F },
+        { 0x63, 0xB8 },
+        { 0x64, 0x01 },
+OOVPA_END;
+
+//******************************************************************
+//* D3DDevice_SetRenderTarget
+//******************************************************************
+OOVPA_XREF(D3DDevice_SetRenderTarget_0, 2048, 1+5,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        XREF_ENTRY( 0x08, XREF_D3D_CommonSetRenderTarget ),
+
+        { 0x00, 0x68 },
+        { 0x05, 0x50 },
+        { 0x06, 0x51 },
+        { 0x07, 0xE8 },
+        { 0x0C, 0xC3 },
+OOVPA_END;
+
+// ******************************************************************
+// * D3DDevice_SetShaderConstantMode
+// ******************************************************************
+//A810538B1D ...C3
+OOVPA_NO_XREF(D3DDevice_SetShaderConstantMode_0, 2084, 13)
+
+        { 0x00, 0xA8 },
+        { 0x01, 0x10 },
+        { 0x02, 0x53 },
+        { 0x03, 0x8B },
+        { 0x04, 0x1D },
+
+        { 0x10, 0x00 },
+        { 0x11, 0x02 },
+        { 0x12, 0x00 },
+        { 0x13, 0x00 },
+        { 0x14, 0xEB },
+        { 0x15, 0x06 },
+
+        { 0x121, 0x5B },
+        { 0x122, 0xC3 },
 OOVPA_END;

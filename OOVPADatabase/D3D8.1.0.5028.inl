@@ -81,8 +81,9 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_DrawIndexedVertices
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_DrawIndexedVertices, 5028, 8)
+OOVPA_NO_XREF(D3DDevice_DrawIndexedVertices, 5028, 9)
 
+        { 0x00, 0x55 },
         { 0x1E, 0x5E },
         { 0x3E, 0x17 },
         { 0x5E, 0x00 },

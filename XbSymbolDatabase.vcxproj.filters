@@ -24,6 +24,9 @@
     <None Include="OOVPADatabase\D3D8.1.0.4034.inl">
       <Filter>OOVPA Database\D3D8</Filter>
     </None>
+    <None Include="OOVPADatabase\D3D8.1.0.4039.inl">
+      <Filter>OOVPA Database\D3D8</Filter>
+    </None>
     <None Include="OOVPADatabase\D3D8.1.0.4134.inl">
       <Filter>OOVPA Database\D3D8</Filter>
     </None>
