@@ -80,7 +80,7 @@ OOVPA_END;
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
-OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 4039, 10)
+OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 4039, 9)
 #else
 OOVPA_XREF(D3DDevice_SetRenderTarget, 4039, 1+9,
 
