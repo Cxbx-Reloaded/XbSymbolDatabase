@@ -723,6 +723,9 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
                                         XRefDataBase[XREF_D3DRS_CULLMODE] = DerivedAddr_D3DRS_CULLMODE;
                                     }
+
+									// Register the offset of D3DRS_CULLMODE, this can be used to programatically locate other render-states in the calling program
+									register_func(LibraryStr, LibraryFlag, "D3DRS_CULLMODE", DerivedAddr_D3DRS_CULLMODE, 0);
                                 }
 
                                 // Derive address of EmuD3DDeferredRenderState from D3DRS_CULLMODE
