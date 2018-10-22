@@ -445,7 +445,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const cha
 /// </summary>
 /// <param name="library_name">Input library name string.</param>
 /// <returns>Return 0 if does not in the database. Otherwise will return flag value.</returns>
-inline uint32_t XbSymbolLibrayToFlag(const char* library_name);
+uint32_t XbSymbolLibrayToFlag(const char* library_name);
 
 #ifdef __cplusplus
 }
