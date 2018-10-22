@@ -37,7 +37,7 @@
 // * Xbox Symbol Database
 // ******************************************************************
 
-#include "xbSymbolDatabase.h"
+#include "XbSymbolDatabase.h"
 #include "Xbe.h"
 
 // ******************************************************************
@@ -49,7 +49,7 @@
 #include "OOVPADatabase/D3D8LTCG.OOVPA.inl"
 #include "OOVPADatabase/DSound.OOVPA.inl"
 #include "OOVPADatabase/XG.OOVPA.inl"
-#include "OOVPADatabase/XNET.OOVPA.inl"
+#include "OOVPADatabase/XNet.OOVPA.inl"
 #include "OOVPADatabase/XOnline.OOVPA.inl"
 #include "OOVPADatabase/XactEng.OOVPA.inl"
 
