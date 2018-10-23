@@ -37,7 +37,7 @@
 // * Xbox Symbol Database
 // ******************************************************************
 
-#include "xbSymbolDatabase.h"
+#include "XbSymbolDatabase.h"
 #include "Xbe.h"
 
 // ******************************************************************
@@ -49,7 +49,7 @@
 #include "OOVPADatabase/D3D8LTCG.OOVPA.inl"
 #include "OOVPADatabase/DSound.OOVPA.inl"
 #include "OOVPADatabase/XG.OOVPA.inl"
-#include "OOVPADatabase/XNET.OOVPA.inl"
+#include "OOVPADatabase/XNet.OOVPA.inl"
 #include "OOVPADatabase/XOnline.OOVPA.inl"
 #include "OOVPADatabase/XactEng.OOVPA.inl"
 
@@ -203,7 +203,7 @@ const char* XbSymbolLibraryToString(uint32_t library_flag)
     }
 }
 
-inline uint32_t XbSymbolLibrayToFlag(const char* library_name)
+uint32_t XbSymbolLibrayToFlag(const char* library_name)
 {
     if (strncmp(library_name, Lib_D3D8, 8) == 0) {
         return XbSymbolLib_D3D8;
@@ -246,14 +246,14 @@ inline uint32_t XbSymbolLibrayToFlag(const char* library_name)
 
 // NOTE: PatrickvL state the arguments are named differently and the function does something that has another meaning,
 //       the implementation could be changed if the need ever arises.
-inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint8_t* offset_out) 
+static inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint8_t* offset_out) 
 {
     // Note : These are stored swapped by the XREF_ENTRY macro, hence this difference from GetOovpaEntry :
     *xref_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Offset;
     *offset_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
 }
 
-inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, uint8_t* value_out)
+static inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, uint8_t* value_out)
 {
     *offset_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Offset;
     *value_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
