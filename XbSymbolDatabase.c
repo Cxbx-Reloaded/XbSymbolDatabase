@@ -538,7 +538,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
     return 1;
 }
 
-void XbSymbolSectionDX8Refs(uint32_t BuildVersion,
+void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
                             const char* LibraryStr,
                             uint32_t LibraryFlag,
                             xb_symbol_register_t register_func,
@@ -680,7 +680,7 @@ void XbSymbolDX8RegisterStream(uint32_t LibraryFlag,
     }
 }
 
-void XbSymbolScanSectionDX8(uint32_t LibraryFlag,
+void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
                             const xbe_header* pXbeHeader,
                             unsigned short BuildVersion,
                             const char* LibraryStr,
@@ -755,7 +755,7 @@ void XbSymbolScanSectionDX8(uint32_t LibraryFlag,
                 patchOffset = 162 * 4;
             }
 
-            XbSymbolSectionDX8Refs(BuildVersion, LibraryStr, LibraryFlag, register_func, pFunc, DerivedAddr_D3DRS_CULLMODE, patchOffset, Increment, Decrement);
+            XbSymbolDX8SectionRefs(BuildVersion, LibraryStr, LibraryFlag, register_func, pFunc, DerivedAddr_D3DRS_CULLMODE, patchOffset, Increment, Decrement);
         }
 
         // then locate D3DDeferredTextureState
@@ -866,7 +866,7 @@ void XbSymbolScanSectionDX8(uint32_t LibraryFlag,
                 patchOffset = 162 * 4;
             }
 
-            XbSymbolSectionDX8Refs(BuildVersion, LibraryStr, LibraryFlag, register_func, pFunc, DerivedAddr_D3DRS_CULLMODE, patchOffset, Increment, Decrement);
+            XbSymbolDX8SectionRefs(BuildVersion, LibraryStr, LibraryFlag, register_func, pFunc, DerivedAddr_D3DRS_CULLMODE, patchOffset, Increment, Decrement);
 
         }
 
@@ -1052,7 +1052,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
                     if (bXRefFirstPass) {
                         if ((LibraryFlag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
-                            XbSymbolScanSectionDX8(LibraryFlag, pXbeHeader, BuildVersion, LibraryStr, register_func);
+                            XbSymbolDX8SectionScan(LibraryFlag, pXbeHeader, BuildVersion, LibraryStr, register_func);
                         }
                     }
 
