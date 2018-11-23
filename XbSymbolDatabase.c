@@ -537,6 +537,63 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
     return 1;
 }
 
+bool XbSymbolInit(const void* xbeData, xb_symbol_register_t register_func, bool* pbDSoundLibHeader) {
+    if (xbeData == (void*)0 || register_func == 0) {
+        return 0;
+    }
+
+    const xbe_header* pXbeHeader = xbeData;
+    size_t xbe_relative_addr = (size_t)xbeData - pXbeHeader->dwBaseAddr;
+    xbe_library_version* pLibraryVersion = (xbe_library_version*)(xbe_relative_addr + pXbeHeader->pLibraryVersionsAddr);
+
+    //
+    // initialize Microsoft XDK scan
+    //
+    if (pLibraryVersion == NULL) {
+        return 0;
+    }
+    else {
+
+        UnResolvedXRefs = XREF_COUNT;
+
+        bXRefFirstPass = true; // Set to false for search speed optimization
+
+                               // Mark all Xrefs initially as undetermined
+        memset((void*)XRefDataBase, XREF_ADDR_UNDETERMINED, sizeof(XRefDataBase));
+
+        // Request a few fundamental XRefs to be derived instead of checked
+        XRefDataBase[XREF_D3DDEVICE] = XREF_ADDR_DERIVE;                            //In use
+        XRefDataBase[XREF_D3DRS_CULLMODE] = XREF_ADDR_DERIVE;                       //In use
+        XRefDataBase[XREF_D3DRS_MULTISAMPLERENDERTARGETMODE] = XREF_ADDR_DERIVE;    //In use
+        XRefDataBase[XREF_D3DRS_ROPZCMPALWAYSREAD] = XREF_ADDR_DERIVE;              //In use
+        XRefDataBase[XREF_D3DRS_ROPZREAD] = XREF_ADDR_DERIVE;                       //In use
+        XRefDataBase[XREF_D3DRS_DONOTCULLUNCOMPRESSED] = XREF_ADDR_DERIVE;          //In use
+        XRefDataBase[XREF_D3DRS_STENCILCULLENABLE] = XREF_ADDR_DERIVE;              //In use
+        XRefDataBase[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                 //In use
+        XRefDataBase[XREF_G_STREAM] = XREF_ADDR_DERIVE;                             //In use
+        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_PIXELSHADER] = XREF_ADDR_DERIVE;
+        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_TEXTURES] = XREF_ADDR_DERIVE;
+        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_PALETTES] = XREF_ADDR_DERIVE;
+        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_RENDERTARGET] = XREF_ADDR_DERIVE;
+        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL] = XREF_ADDR_DERIVE;
+
+        xbe_section_header* pSectionHeaders = (xbe_section_header*)(xbe_relative_addr + pXbeHeader->pSectionHeadersAddr);
+        const char* SectionName;
+        *pbDSoundLibHeader = false;
+
+        // Verify if title do contain DirectSound library section.
+        for (uint32_t v = 0; v < pXbeHeader->dwSections; v++) {
+            SectionName = (const char*)(xbe_relative_addr + pSectionHeaders[v].SectionNameAddr);
+
+            if (strncmp(SectionName, Lib_DSOUND, 8) == 0) {
+                *pbDSoundLibHeader = true;
+                break;
+            }
+        }
+    }
+    return 1;
+}
+
 void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
                             const char* LibraryStr,
                             uint32_t LibraryFlag,
@@ -922,147 +979,110 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
 
 bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func)
 {
+
+    bool bDSoundLibHeader;
+
+    if (!XbSymbolInit(xbeData, register_func, &bDSoundLibHeader)) {
+        return 0;
+    }
     if (xbeData == (void*)0 || register_func == 0) {
         return 0;
     }
 
     const xbe_header* pXbeHeader = xbeData;
-    xbe_library_version* pLibraryVersion = pXbeHeader->pLibraryVersionsAddr;
+    size_t xbe_data_addr = (size_t)pXbeHeader;
+    xbe_library_version* pLibraryVersion = (xbe_library_version*)(pXbeHeader->pLibraryVersionsAddr);
 
-    //
-    // initialize Microsoft XDK scan
-    //
-    if (pLibraryVersion == NULL) {
-        return 0;
-    }
-    else {
+    uint32_t dwLibraryVersions = pXbeHeader->dwLibraryVersions;
+    uint32_t LastUnResolvedXRefs = UnResolvedXRefs + 1;
+    uint32_t OrigUnResolvedXRefs = UnResolvedXRefs;
+    xbe_section_header* pSectionHeaders = (xbe_section_header*)(pXbeHeader->pSectionHeadersAddr);
+    xbe_section_header* pSectionScan;
+    const char* SectionName;
 
-        UnResolvedXRefs = XREF_COUNT;
+    for (int p = 0; UnResolvedXRefs < LastUnResolvedXRefs; p++) {
 
-        unsigned int dwLibraryVersions = pXbeHeader->dwLibraryVersions;
-        unsigned int LastUnResolvedXRefs = UnResolvedXRefs + 1;
-        unsigned int OrigUnResolvedXRefs = UnResolvedXRefs;
+        LastUnResolvedXRefs = UnResolvedXRefs;
 
-        bXRefFirstPass = true; // Set to false for search speed optimization
+        bool bDSoundLibSection = false;
+        uint16_t preserveVersion = 0;
 
-                               // Mark all Xrefs initially as undetermined
-        memset((void*)XRefDataBase, XREF_ADDR_UNDETERMINED, sizeof(XRefDataBase));
+        for (unsigned int v = 0; v<dwLibraryVersions; v++) {
+            uint16_t BuildVersion = pLibraryVersion[v].wBuildVersion;
+            uint16_t QFEVersion = pLibraryVersion[v].wFlags.QFEVersion;
 
-        // Request a few fundamental XRefs to be derived instead of checked
-        XRefDataBase[XREF_D3DDEVICE] = XREF_ADDR_DERIVE;                            //In use
-        XRefDataBase[XREF_D3DRS_CULLMODE] = XREF_ADDR_DERIVE;                       //In use
-        XRefDataBase[XREF_D3DRS_MULTISAMPLERENDERTARGETMODE] = XREF_ADDR_DERIVE;    //In use
-        XRefDataBase[XREF_D3DRS_ROPZCMPALWAYSREAD] = XREF_ADDR_DERIVE;              //In use
-        XRefDataBase[XREF_D3DRS_ROPZREAD] = XREF_ADDR_DERIVE;                       //In use
-        XRefDataBase[XREF_D3DRS_DONOTCULLUNCOMPRESSED] = XREF_ADDR_DERIVE;          //In use
-        XRefDataBase[XREF_D3DRS_STENCILCULLENABLE] = XREF_ADDR_DERIVE;              //In use
-        XRefDataBase[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                 //In use
-        XRefDataBase[XREF_G_STREAM] = XREF_ADDR_DERIVE;                             //In use
-        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_PIXELSHADER] = XREF_ADDR_DERIVE;
-        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_TEXTURES] = XREF_ADDR_DERIVE;
-        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_PALETTES] = XREF_ADDR_DERIVE;
-        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_RENDERTARGET] = XREF_ADDR_DERIVE;
-        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL] = XREF_ADDR_DERIVE;
-
-        xbe_section_header* pSectionHeaders = pXbeHeader->pSectionHeadersAddr;
-        xbe_section_header* pSectionScan;
-        const char* SectionName;
-        bool bDSoundLibHeader = false;
-
-        // Verify if title do contain DirectSound library section.
-        for (uint32_t v = 0; v < pXbeHeader->dwSections; v++) {
-            SectionName = pSectionHeaders[v].SectionNameAddr;
-
-            if (strncmp(SectionName, Lib_DSOUND, 8) == 0) {
-                bDSoundLibHeader = true;
-                break;
+            if (preserveVersion < BuildVersion) {
+                preserveVersion = BuildVersion;
             }
-        }
 
-        for (int p = 0; UnResolvedXRefs < LastUnResolvedXRefs; p++) {
+            const char* LibraryStr = pLibraryVersion[v].szName;
+            uint32_t LibraryFlag = XbSymbolLibrayToFlag(LibraryStr);
 
-            LastUnResolvedXRefs = UnResolvedXRefs;
 
-            bool bDSoundLibSection = false;
-            unsigned short preserveVersion = 0;
+            do {
 
-            for (unsigned int v = 0; v<dwLibraryVersions; v++) {
-                unsigned short BuildVersion = pLibraryVersion[v].wBuildVersion;
-                unsigned short QFEVersion = pLibraryVersion[v].wFlags.QFEVersion;
+                pSectionHeaders = (xbe_section_header*)pXbeHeader->pSectionHeadersAddr;
+                pSectionScan = NULL;
 
-                if (preserveVersion < BuildVersion) {
-                    preserveVersion = BuildVersion;
+                if (LibraryFlag == XbSymbolLib_D3D8LTCG || LibraryFlag == XbSymbolLib_D3D8) {
+
+                    // Functions in this library were updated by June 2003 XDK (5558) with Integrated Hotfixes,
+                    // However August 2003 XDK (5659) still uses the old function.
+                    // Please use updated 5788 instead.
+                    if (BuildVersion >= 5558 && BuildVersion <= 5659 && QFEVersion > 1) {
+                        XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, "D3D8 version 1.0.%d.%d Title Detected: This game uses an alias version 1.0.5788");// , BuildVersion, QFEVersion);
+                        BuildVersion = 5788;
+                    }
                 }
 
-                const char* LibraryStr = pLibraryVersion[v].szName;
-                uint32_t LibraryFlag = XbSymbolLibrayToFlag(LibraryStr);
+                if (LibraryFlag == XbSymbolLib_DSOUND) {
+                    bDSoundLibSection = true;
+                }
 
-
-                do {
-
-                    pSectionHeaders = pXbeHeader->pSectionHeadersAddr;
-                    pSectionScan = NULL;
-
-                    if (LibraryFlag == XbSymbolLib_D3D8LTCG || LibraryFlag == XbSymbolLib_D3D8) {
-
-                        // Functions in this library were updated by June 2003 XDK (5558) with Integrated Hotfixes,
-                        // However August 2003 XDK (5659) still uses the old function.
-                        // Please use updated 5788 instead.
-                        if (BuildVersion >= 5558 && BuildVersion <= 5659 && QFEVersion > 1) {
-                            XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, "D3D8 version 1.0.%d.%d Title Detected: This game uses an alias version 1.0.5788");// , BuildVersion, QFEVersion);
-                            BuildVersion = 5788;
-                        }
+                if (bXRefFirstPass) {
+                    if ((LibraryFlag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
+                        XbSymbolDX8SectionScan(LibraryFlag, pXbeHeader, BuildVersion, LibraryStr, register_func);
                     }
+                }
 
-                    if (LibraryFlag == XbSymbolLib_DSOUND) {
-                        bDSoundLibSection = true;
-                    }
+                //Initialize library scan against HLE database we want to search for address of patches and xreferences.
+                bool bPrintSkip = true;
+                for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
 
-                    if (bXRefFirstPass) {
-                        if ((LibraryFlag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
-                            XbSymbolDX8SectionScan(LibraryFlag, pXbeHeader, BuildVersion, LibraryStr, register_func);
-                        }
-                    }
+                    if (LibraryFlag == SymbolDBList[d2].LibSec.library) {
+                        for (uint32_t v = 0; v < pXbeHeader->dwSections; v++) {
+                            SectionName = (const char*)pSectionHeaders[v].SectionNameAddr;
 
-                    //Initialize library scan against HLE database we want to search for address of patches and xreferences.
-                    bool bPrintSkip = true;
-                    for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
+                            //Initialize a matching specific section is currently pair with library in order to scan specific section only.
+                            //By doing this method will reduce false detection dramatically. If it had happened before.
+                            for (unsigned int d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
+                                if (SymbolDBList[d2].LibSec.section[d3] != NULL && strncmp(SectionName, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
+                                    pSectionScan = pSectionHeaders + v;
 
-                        if (LibraryFlag == SymbolDBList[d2].LibSec.library) {
-                            for (uint32_t v = 0; v < pXbeHeader->dwSections; v++) {
-                                SectionName = pSectionHeaders[v].SectionNameAddr;
+                                    bPrintSkip = false;
 
-                                //Initialize a matching specific section is currently pair with library in order to scan specific section only.
-                                //By doing this method will reduce false detection dramatically. If it had happened before.
-                                for (unsigned int d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
-                                    if (SymbolDBList[d2].LibSec.section[d3] != NULL && strncmp(SectionName, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
-                                        pSectionScan = pSectionHeaders + v;
-
-                                        bPrintSkip = false;
-
-                                        XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, LibraryStr, SymbolDBList[d2].LibSec.library,
-                                                          pSectionScan, BuildVersion, register_func);
-                                        break;
-                                    }
+                                    XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, LibraryStr, SymbolDBList[d2].LibSec.library,
+                                                        pSectionScan, BuildVersion, register_func);
+                                    break;
                                 }
                             }
-                            break;
                         }
+                        break;
                     }
+                }
 
-                    if (v == dwLibraryVersions - 1 && bDSoundLibSection == false && bDSoundLibHeader == true) {
-                        LibraryStr = Lib_DSOUND;
-                        LibraryFlag = XbSymbolLib_DSOUND;
-                        BuildVersion = preserveVersion;
-                        continue;
-                    }
+                if (v == dwLibraryVersions - 1 && bDSoundLibSection == false && bDSoundLibHeader == true) {
+                    LibraryStr = Lib_DSOUND;
+                    LibraryFlag = XbSymbolLib_DSOUND;
+                    BuildVersion = preserveVersion;
+                    continue;
+                }
 
-                    break;
-                } while (true);
-            }
-
-            bXRefFirstPass = false;
+                break;
+            } while (true);
         }
+
+        bXRefFirstPass = false;
     }
     return 1;
 }
