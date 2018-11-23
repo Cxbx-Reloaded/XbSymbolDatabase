@@ -985,9 +985,6 @@ bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func)
     if (!XbSymbolInit(xbeData, register_func, &bDSoundLibHeader)) {
         return 0;
     }
-    if (xbeData == (void*)0 || register_func == 0) {
-        return 0;
-    }
 
     const xbe_header* pXbeHeader = xbeData;
     uintptr_t xbe_data_addr = (uintptr_t)pXbeHeader;
@@ -1007,21 +1004,20 @@ bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func)
         bool bDSoundLibSection = false;
         uint16_t preserveVersion = 0;
 
-        for (unsigned int v = 0; v < dwLibraryVersions; v++) {
-            uint16_t BuildVersion = pLibraryVersion[v].wBuildVersion;
-            uint16_t QFEVersion = pLibraryVersion[v].wFlags.QFEVersion;
+        for (unsigned int lv = 0; lv < dwLibraryVersions; lv++) {
+            uint16_t BuildVersion = pLibraryVersion[lv].wBuildVersion;
+            uint16_t QFEVersion = pLibraryVersion[lv].wFlags.QFEVersion;
 
             if (preserveVersion < BuildVersion) {
                 preserveVersion = BuildVersion;
             }
 
-            const char* LibraryStr = pLibraryVersion[v].szName;
+            const char* LibraryStr = pLibraryVersion[lv].szName;
             uint32_t LibraryFlag = XbSymbolLibrayToFlag(LibraryStr);
 
 
             do {
 
-                pSectionHeaders = (xbe_section_header*)pXbeHeader->pSectionHeadersAddr;
                 pSectionScan = NULL;
 
                 if (LibraryFlag == XbSymbolLib_D3D8LTCG || LibraryFlag == XbSymbolLib_D3D8) {
@@ -1046,20 +1042,17 @@ bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func)
                 }
 
                 //Initialize library scan against HLE database we want to search for address of patches and xreferences.
-                bool bPrintSkip = true;
                 for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
 
                     if (LibraryFlag == SymbolDBList[d2].LibSec.library) {
-                        for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
-                            SectionName = (const char*)pSectionHeaders[v].SectionNameAddr;
+                        for (unsigned int s = 0; s < pXbeHeader->dwSections; s++) {
+                            SectionName = (const char*)(xb_start_addr + pSectionHeaders[s].SectionNameAddr);
 
                             //Initialize a matching specific section is currently pair with library in order to scan specific section only.
                             //By doing this method will reduce false detection dramatically. If it had happened before.
                             for (unsigned int d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
                                 if (SymbolDBList[d2].LibSec.section[d3] != NULL && strncmp(SectionName, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
-                                    pSectionScan = pSectionHeaders + v;
-
-                                    bPrintSkip = false;
+                                    pSectionScan = pSectionHeaders + s;
 
                                     XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, LibraryStr, SymbolDBList[d2].LibSec.library,
                                                         pSectionScan, BuildVersion, register_func);
@@ -1071,7 +1064,7 @@ bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func)
                     }
                 }
 
-                if (v == dwLibraryVersions - 1 && bDSoundLibSection == false && bDSoundLibHeader == true) {
+                if (lv == dwLibraryVersions - 1 && bDSoundLibSection == false && bDSoundLibHeader == true) {
                     LibraryStr = Lib_DSOUND;
                     LibraryFlag = XbSymbolLib_DSOUND;
                     BuildVersion = preserveVersion;
