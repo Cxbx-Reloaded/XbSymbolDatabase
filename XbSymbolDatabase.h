@@ -424,7 +424,7 @@ typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_f
 /// <param name="xbeData">Starting point of xbe memory address.</param>
 /// <param name="register_func">Callback register function to be call for any detected symbols.</param>
 /// <returns>Only return false if something is not valid.</returns>
-bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func);
+bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func);
 
 /* NOTE: Do not use this function, It is currently not functional and optimized at the moment.
 /// <summary>

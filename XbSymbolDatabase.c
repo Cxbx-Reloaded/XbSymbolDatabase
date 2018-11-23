@@ -125,10 +125,10 @@ const unsigned int SymbolDBListCount = OOVPA_TABLE_COUNT(SymbolDBList);
 // ******************************************************************
 // * XRefDataBase
 // ******************************************************************
-unsigned int XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEIntercept
+uint32_t XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEIntercept
 
 bool bXRefFirstPass; // For search speed optimization, set in XbSymbolScan, read in XbSymbolLocateFunction
-unsigned int UnResolvedXRefs = XREF_COUNT;
+uint32_t UnResolvedXRefs = XREF_COUNT;
 
 
 // ******************************************************************
@@ -152,6 +152,7 @@ void XbSymbolSetOutputMessage(xb_output_message_t message_func)
 {
     output_func = message_func;
 }
+
 void XbSymbolOutputMessage(xb_output_message mFlag, const char* message) {
     if (output_func != 0) {
         output_func(mFlag, message);
@@ -259,11 +260,11 @@ static inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, 
     *value_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
 }
 
-bool CompareOOVPAToAddress(OOVPA *Oovpa, uint32_t cur)
+bool CompareOOVPAToAddress(OOVPA *Oovpa, size_t cur)
 {
     uint32_t v = 0; // verification counter
 
-                  // Check all XRefs, stop if any does not match
+    // Check all XRefs, stop if any does not match
     for (; v < Oovpa->XRefCount; v++) {
         uint32_t XRef;
         uint8_t Offset;
@@ -305,8 +306,8 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, uint32_t cur)
 
 // locate the given function, searching within lower and upper bounds
 uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
-                                uint32_t lower,
-                                uint32_t upper)
+                                size_t lower,
+                                size_t upper)
 {
 
     // skip out if this is an unnecessary search
@@ -346,7 +347,7 @@ uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
     }
 
     // search all of the image memory
-    for (uint32_t cur = lower; cur < upper; cur++)
+    for (size_t cur = lower; cur < upper; cur++)
         if (CompareOOVPAToAddress(Oovpa, cur)) {
 
             while (derive_indices > 0) {
@@ -361,10 +362,8 @@ uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
                 // get currently registered (un)known address
                 GetXRefEntry(Oovpa, derive_index, &XRef, &Offset);
 
-                // Calculate the address where the XRef resides
-                uint32_t XRefAddr = cur + Offset;
-                // Read the address it points to
-                XRefAddr = *((uint32_t*)XRefAddr);
+                // Calculate the address where the XRef resides and read the address it points to
+                uint32_t XRefAddr = *(uint32_t*)(cur + Offset);
 
                 // NOTE: Commented out code belows are no longer valid since we are using lower and upper passdown only.
 
@@ -430,7 +429,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
     OOVPATable *pLoopEnd = &OovpaTable[OovpaTableCount];
     OOVPATable *pLoop = OovpaTable;
     OOVPATable *pLastKnownSymbol = (void*)0;
-    unsigned int pLastKnownFunc = 0;
+    uint32_t pLastKnownFunc = 0;
     const char *SymbolName = (void*)0;
     for (; pLoop < pLoopEnd; pLoop++) {
 
@@ -921,13 +920,13 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
     XbSymbolDX8RegisterStream(LibraryFlag, LibraryStr, register_func, pFunc, iCodeOffsetFor_g_Stream);
 }
 
-bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
+bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func)
 {
     if (xbeData == (void*)0 || register_func == 0) {
         return 0;
     }
 
-    xbe_header* pXbeHeader = xbeData;
+    const xbe_header* pXbeHeader = xbeData;
     xbe_library_version* pLibraryVersion = pXbeHeader->pLibraryVersionsAddr;
 
     //
@@ -1030,7 +1029,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
                     for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
 
                         if (LibraryFlag == SymbolDBList[d2].LibSec.library) {
-                            for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
+                            for (uint32_t v = 0; v < pXbeHeader->dwSections; v++) {
                                 SectionName = pSectionHeaders[v].SectionNameAddr;
 
                                 //Initialize a matching specific section is currently pair with library in order to scan specific section only.
@@ -1074,7 +1073,7 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
 
 // Adapted from https://gist.github.com/underscorediscovery/81308642d0325fd386237cfa3b44785c
 #define fnv1aprime 0x1000193;
-void hash_fnv1a(unsigned int* hash, const void* key, const unsigned int len)
+void hash_fnv1a(unsigned int* hash, const void* key, const size_t len)
 {
     const char* data = (char*)key;
     for (unsigned int i = 0; i < len; ++i) {
