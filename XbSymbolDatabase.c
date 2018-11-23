@@ -971,15 +971,12 @@ bool XbSymbolScan(void* xbeData, xb_symbol_register_t register_func)
         bool bDSoundLibHeader = false;
 
         // Verify if title do contain DirectSound library section.
-        for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
+        for (uint32_t v = 0; v < pXbeHeader->dwSections; v++) {
             SectionName = pSectionHeaders[v].SectionNameAddr;
 
-            for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
-
-                if (strncmp(SectionName, Lib_DSOUND, 8) == 0) {
-                    bDSoundLibHeader = true;
-                    break;
-                }
+            if (strncmp(SectionName, Lib_DSOUND, 8) == 0) {
+                bDSoundLibHeader = true;
+                break;
             }
         }
 
