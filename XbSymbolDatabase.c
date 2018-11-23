@@ -260,7 +260,7 @@ static inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, 
     *value_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
 }
 
-bool CompareOOVPAToAddress(OOVPA *Oovpa, size_t cur)
+bool CompareOOVPAToAddress(OOVPA *Oovpa, uintptr_t cur)
 {
     uint32_t v = 0; // verification counter
 
@@ -306,8 +306,8 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, size_t cur)
 
 // locate the given function, searching within lower and upper bounds
 uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
-                                size_t lower,
-                                size_t upper)
+                                uintptr_t lower,
+                                uintptr_t upper)
 {
 
     // skip out if this is an unnecessary search
@@ -316,7 +316,7 @@ uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
 
     uint32_t derive_indices = 0;
     // Check all XRefs are known (if not, don't do a useless scan) :
-    for (uint32_t v = 0; v < Oovpa->XRefCount; v++) {
+    for (unsigned int v = 0; v < Oovpa->XRefCount; v++) {
         uint32_t XRef;
         uint8_t Offset;
 
@@ -347,7 +347,7 @@ uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
     }
 
     // search all of the image memory
-    for (size_t cur = lower; cur < upper; cur++)
+    for (uintptr_t cur = lower; cur < upper; cur++)
         if (CompareOOVPAToAddress(Oovpa, cur)) {
 
             while (derive_indices > 0) {
@@ -543,7 +543,7 @@ bool XbSymbolInit(const void* xbeData, xb_symbol_register_t register_func, bool*
     }
 
     const xbe_header* pXbeHeader = xbeData;
-    size_t xbe_relative_addr = (size_t)xbeData - pXbeHeader->dwBaseAddr;
+    uintptr_t xbe_relative_addr = (uintptr_t)xbeData - pXbeHeader->dwBaseAddr;
     xbe_library_version* pLibraryVersion = (xbe_library_version*)(xbe_relative_addr + pXbeHeader->pLibraryVersionsAddr);
 
     //
@@ -582,7 +582,7 @@ bool XbSymbolInit(const void* xbeData, xb_symbol_register_t register_func, bool*
         *pbDSoundLibHeader = false;
 
         // Verify if title do contain DirectSound library section.
-        for (uint32_t v = 0; v < pXbeHeader->dwSections; v++) {
+        for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
             SectionName = (const char*)(xbe_relative_addr + pSectionHeaders[v].SectionNameAddr);
 
             if (strncmp(SectionName, Lib_DSOUND, 8) == 0) {
@@ -598,7 +598,7 @@ void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
                             const char* LibraryStr,
                             uint32_t LibraryFlag,
                             xb_symbol_register_t register_func,
-                            size_t pFunc,
+                            uintptr_t pFunc,
                             uint32_t DerivedAddr_D3DRS_CULLMODE,
                             uint32_t patchOffset,
                             uint32_t Increment,
@@ -677,7 +677,7 @@ void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
 void XbSymbolDX8RegisterD3DTSS(uint32_t LibraryFlag,
                                const char* LibraryStr,
                                xb_symbol_register_t register_func,
-                               size_t pFunc,
+                               uintptr_t pFunc,
                                uint32_t pXRefOffset)
 {
     if (pFunc == 0) {
@@ -713,7 +713,7 @@ void XbSymbolDX8RegisterD3DTSS(uint32_t LibraryFlag,
 void XbSymbolDX8RegisterStream(uint32_t LibraryFlag,
                                const char* LibraryStr,
                                xb_symbol_register_t register_func,
-                               size_t pFunc,
+                               uintptr_t pFunc,
                                uint32_t iCodeOffsetFor_g_Stream)
 {
     if (pFunc == 0) {
@@ -741,9 +741,9 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
                             xb_symbol_register_t register_func)
 {
     // Generic usage
-    size_t lower = pXbeHeader->dwBaseAddr;
-    size_t upper = pXbeHeader->dwBaseAddr + pXbeHeader->dwSizeofImage;
-    size_t pFunc = 0;
+    uintptr_t lower = pXbeHeader->dwBaseAddr;
+    uintptr_t upper = pXbeHeader->dwBaseAddr + pXbeHeader->dwSizeofImage;
+    uintptr_t pFunc = 0;
     // offset for stencil cull enable render state in the deferred render state buffer
     uint32_t DerivedAddr_D3DRS_CULLMODE = 0;
     int Decrement = 0; // TODO : Rename into something understandable
@@ -990,7 +990,7 @@ bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func)
     }
 
     const xbe_header* pXbeHeader = xbeData;
-    size_t xbe_data_addr = (size_t)pXbeHeader;
+    uintptr_t xbe_data_addr = (uintptr_t)pXbeHeader;
     xbe_library_version* pLibraryVersion = (xbe_library_version*)(pXbeHeader->pLibraryVersionsAddr);
 
     uint32_t dwLibraryVersions = pXbeHeader->dwLibraryVersions;
@@ -1007,7 +1007,7 @@ bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func)
         bool bDSoundLibSection = false;
         uint16_t preserveVersion = 0;
 
-        for (unsigned int v = 0; v<dwLibraryVersions; v++) {
+        for (unsigned int v = 0; v < dwLibraryVersions; v++) {
             uint16_t BuildVersion = pLibraryVersion[v].wBuildVersion;
             uint16_t QFEVersion = pLibraryVersion[v].wFlags.QFEVersion;
 
@@ -1050,7 +1050,7 @@ bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func)
                 for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
 
                     if (LibraryFlag == SymbolDBList[d2].LibSec.library) {
-                        for (uint32_t v = 0; v < pXbeHeader->dwSections; v++) {
+                        for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
                             SectionName = (const char*)pSectionHeaders[v].SectionNameAddr;
 
                             //Initialize a matching specific section is currently pair with library in order to scan specific section only.
@@ -1093,7 +1093,7 @@ bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func)
 
 // Adapted from https://gist.github.com/underscorediscovery/81308642d0325fd386237cfa3b44785c
 #define fnv1aprime 0x1000193;
-void hash_fnv1a(unsigned int* hash, const void* key, const size_t len)
+void hash_fnv1a(unsigned int* hash, const void* key, const uintptr_t len)
 {
     const char* data = (char*)key;
     for (unsigned int i = 0; i < len; ++i) {
