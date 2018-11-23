@@ -420,12 +420,21 @@ void XbSymbolSetOutputMessage(xb_output_message_t message_func);
 typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, uint32_t address, uint32_t revision);
 
 /// <summary>
-/// To scan symbols for Xbe's file.
+/// To scan symbols in runtime xbe usage.
 /// </summary>
 /// <param name="xbeData">Starting point of xbe memory address.</param>
 /// <param name="register_func">Callback register function to be call for any detected symbols.</param>
 /// <returns>Only return false if something is not valid.</returns>
-bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func);
+bool XbSymbolScanRunTime(const void* xbeData, xb_symbol_register_t register_func);
+#define XbSymbolScan XbSymbolScanRunTime
+
+/// <summary>
+/// To scan symbols in Xbe's file image.
+/// </summary>
+/// <param name="xbeData">Starting point of xbe memory address.</param>
+/// <param name="register_func">Callback register function to be call for any detected symbols.</param>
+/// <returns>Only return false if something is not valid.</returns>
+bool XbSymbolScanFileImage(const void* xbeData, xb_symbol_register_t register_func);
 
 /* NOTE: Do not use this function, It is currently not functional and optimized at the moment.
 /// <summary>
