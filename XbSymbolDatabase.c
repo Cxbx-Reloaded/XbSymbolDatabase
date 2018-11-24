@@ -1086,7 +1086,7 @@ bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func)
 
 // Adapted from https://gist.github.com/underscorediscovery/81308642d0325fd386237cfa3b44785c
 #define fnv1aprime 0x1000193;
-void hash_fnv1a(unsigned int* hash, const void* key, const uintptr_t len)
+void hash_fnv1a(unsigned int* hash, const void* key, const size_t len)
 {
     const char* data = (char*)key;
     for (unsigned int i = 0; i < len; ++i) {

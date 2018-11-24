@@ -28,6 +28,7 @@
 #ifndef HLEDATABASE_H
 #define HLEDATABASE_H
 
+#include <stdlib.h> // for size_t
 #include <stdbool.h>
 #include <stdint.h>
 

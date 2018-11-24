@@ -29,7 +29,7 @@
 
 #pragma pack(1)
 
-#define p_xbe_string uint32_t
+typedef uint32_t p_xbe_string;
 
 // Xbe section header
 typedef struct _xbe_s_flags {
@@ -63,30 +63,30 @@ typedef struct _xbe_section_header {
     uint32_t dwTailSharedRefCountAddr;          // tail shared page reference count address
     uint8_t bzSectionDigest[20];                // section digest
 } xbe_section_header;
-#define p_xbe_section_header uint32_t
+typedef uint32_t p_xbe_section_header;
 
 typedef struct _xbe_certificate
 {
-    uint32_t dwSize;                               // 0x0000 - size of certificate
-    uint32_t dwTimeDate;                           // 0x0004 - timedate stamp
-    uint32_t dwTitleId;                            // 0x0008 - title id
-    const wchar_t wszTitleName[40];                // 0x000C - title name (unicode)
-    uint32_t dwAlternateTitleId[0x10];             // 0x005C - alternate title ids
-    uint32_t dwAllowedMedia;                       // 0x009C - allowed media types
-    uint32_t dwGameRegion;                         // 0x00A0 - game region
-    uint32_t dwGameRatings;                        // 0x00A4 - game ratings
-    uint32_t dwDiskNumber;                         // 0x00A8 - disk number
-    uint32_t dwVersion;                            // 0x00AC - version
+    uint32_t dwSize;                              // 0x0000 - size of certificate
+    uint32_t dwTimeDate;                          // 0x0004 - timedate stamp
+    uint32_t dwTitleId;                           // 0x0008 - title id
+    const wchar_t wszTitleName[40];               // 0x000C - title name (unicode)
+    uint32_t dwAlternateTitleId[0x10];            // 0x005C - alternate title ids
+    uint32_t dwAllowedMedia;                      // 0x009C - allowed media types
+    uint32_t dwGameRegion;                        // 0x00A0 - game region
+    uint32_t dwGameRatings;                       // 0x00A4 - game ratings
+    uint32_t dwDiskNumber;                        // 0x00A8 - disk number
+    uint32_t dwVersion;                           // 0x00AC - version
     uint8_t bzLanKey[16];                         // 0x00B0 - lan key
     uint8_t bzSignatureKey[16];                   // 0x00C0 - signature key
     // NOT ALL XBEs have these fields!
     uint8_t bzTitleAlternateSignatureKey[16][16]; // 0x00D0 - alternate signature keys
-    uint32_t dwOriginalCertificateSize;			  // 0x01D0 - Original Certificate Size?
-    uint32_t dwOnlineService;					  // 0x01D4 - Online Service ID
-    uint32_t dwSecurityFlags;					  // 0x01D8 - Extra Security Flags
-    uint8_t bzCodeEncKey[16];					  // 0x01DC - Code Encryption Key?
+    uint32_t dwOriginalCertificateSize;           // 0x01D0 - Original Certificate Size?
+    uint32_t dwOnlineService;                     // 0x01D4 - Online Service ID
+    uint32_t dwSecurityFlags;                     // 0x01D8 - Extra Security Flags
+    uint8_t bzCodeEncKey[16];                     // 0x01DC - Code Encryption Key?
 } xbe_certificate;
-#define p_xbe_certificate uint32_t
+typedef uint32_t p_xbe_certificate;
 
 // Xbe library versions
 typedef struct _xbe_lv_flags {
@@ -105,7 +105,7 @@ typedef struct _xbe_library_version {
         uint16_t wFlags_value;
     };
 } xbe_library_version;
-#define p_xbe_library_version uint32_t
+typedef uint32_t p_xbe_library_version;
 
 // Xbe header
 typedef struct _xbe_h_InitFlags {
