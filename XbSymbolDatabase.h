@@ -378,6 +378,10 @@ typedef enum _xb_output_message {
     XB_OUTPUT_MESSAGE_DEBUG
 } xb_output_message;
 
+#ifndef xbaddr
+typedef uint32_t xbaddr;
+#endif
+
 // ******************************************************************
 // * API functions to use with other projects.
 // ******************************************************************
@@ -415,9 +419,9 @@ void XbSymbolSetOutputMessage(xb_output_message_t message_func);
 /// <param name="library_str">Name of the library in string.</param>
 /// <param name="library_flag">Name of the library in flag.</param>
 /// <param name="symbol_str">Name of the library in symbol string.</param>
-/// <param name="address">TBD.</param>
+/// <param name="address">Return xbox's virtual address.</param>
 /// <param name="revision">Found with specific revision.</param>
-typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, uint32_t address, uint32_t revision);
+typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, xbaddr address, uint32_t revision);
 
 /// <summary>
 /// To scan symbols in runtime xbe usage.

@@ -125,10 +125,10 @@ const unsigned int SymbolDBListCount = OOVPA_TABLE_COUNT(SymbolDBList);
 // ******************************************************************
 // * XRefDataBase
 // ******************************************************************
-uint32_t XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEIntercept
+xbaddr XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEIntercept
 
 bool bXRefFirstPass; // For search speed optimization, set in XbSymbolScan, read in XbSymbolLocateFunction
-uint32_t UnResolvedXRefs = XREF_COUNT;
+unsigned int UnResolvedXRefs = XREF_COUNT;
 
 
 // ******************************************************************
@@ -271,7 +271,7 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, uintptr_t cur, uintptr_t xb_start_virt_
 
         // get currently registered (un)known address
         GetXRefEntry(Oovpa, v, &XRef, &Offset);
-        uint32_t XRefAddr = XRefDataBase[XRef];
+        xbaddr XRefAddr = XRefDataBase[XRef];
         // Undetermined XRef cannot be checked yet
         // (XbSymbolLocateFunction already checked this, but this check
         // is cheap enough to keep, and keep this function generic).
@@ -282,9 +282,9 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, uintptr_t cur, uintptr_t xb_start_virt_
         if (XRefAddr == XREF_ADDR_DERIVE)
             continue;
 
-        uint32_t ActualAddr = *(uint32_t*)(cur + Offset);
+        xbaddr ActualAddr = *(xbaddr*)(cur + Offset);
         // check if PC-relative or direct reference matches XRef
-        if ((ActualAddr + (uint32_t)(cur - xb_start_virt_addr) + Offset + 4 != XRefAddr) && (ActualAddr != XRefAddr))
+        if ((ActualAddr + (xbaddr)(cur - xb_start_virt_addr) + Offset + 4 != XRefAddr) && (ActualAddr != XRefAddr))
             return false;
     }
 
@@ -305,7 +305,7 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, uintptr_t cur, uintptr_t xb_start_virt_
 }
 
 // locate the given function, searching within lower and upper bounds
-uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
+xbaddr XbSymbolLocateFunction(OOVPA *Oovpa,
                                 uintptr_t lower,
                                 uintptr_t upper,
                                 uintptr_t xb_start_virtual_addr)
@@ -323,7 +323,7 @@ uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
 
         // get currently registered (un)known address
         GetXRefEntry(Oovpa, v, &XRef, &Offset);
-        uint32_t XRefAddr = XRefDataBase[XRef];
+        xbaddr XRefAddr = XRefDataBase[XRef];
         // Undetermined XRef cannot be checked yet
         if (XRefAddr == XREF_ADDR_UNDETERMINED)
             // Skip this scan over the address range
@@ -382,7 +382,7 @@ uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
                 XRefDataBase[XRef] = XRefAddr;
             }
 
-            return (uint32_t)(cur - xb_start_virtual_addr);
+            return (xbaddr)(cur - xb_start_virtual_addr);
         }
 
     // found nothing
@@ -392,7 +392,7 @@ uint32_t XbSymbolLocateFunction(OOVPA *Oovpa,
 void XbSymbolRegisterSymbol(OOVPATable* OovpaTable,
                             const char* LibraryName,
                             uint32_t    LibraryFlag,
-                            uint32_t address,
+                            xbaddr address,
                             xb_symbol_register_t register_func)
 {
     if (OovpaTable != (void*)0) {
@@ -452,7 +452,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
             continue;
 
         // Search for each function's location using the OOVPA
-        uint32_t pFunc = XbSymbolLocateFunction(pLoop->Oovpa, lower, upper, xb_start_virt_addr);
+        xbaddr pFunc = XbSymbolLocateFunction(pLoop->Oovpa, lower, upper, xb_start_virt_addr);
         if (pFunc == 0)
             continue;
 
@@ -603,7 +603,7 @@ void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
                             uint32_t LibraryFlag,
                             xb_symbol_register_t register_func,
                             uintptr_t pFunc,
-                            uint32_t DerivedAddr_D3DRS_CULLMODE,
+                            xbaddr DerivedAddr_D3DRS_CULLMODE,
                             uint32_t patchOffset,
                             uint32_t Increment,
                             uint32_t Decrement)
@@ -612,7 +612,7 @@ void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
         return;
     }
     // Temporary verification - is XREF_D3DDEVICE derived correctly?
-    uint32_t DerivedAddr_D3DDevice = *(uint32_t*)(pFunc + 0x03);
+    xbaddr DerivedAddr_D3DDevice = *(xbaddr*)(pFunc + 0x03);
     if (XRefDataBase[XREF_D3DDEVICE] != DerivedAddr_D3DDevice) {
 
         if (XRefDataBase[XREF_D3DDEVICE] != XREF_ADDR_DERIVE) {
@@ -636,7 +636,7 @@ void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
     register_func(LibraryStr, LibraryFlag, "D3DRS_CULLMODE", DerivedAddr_D3DRS_CULLMODE, 0);
 
     // Derive address of EmuD3DDeferredRenderState from D3DRS_CULLMODE
-    uint32_t EmuD3DDeferredRenderState = DerivedAddr_D3DRS_CULLMODE - Decrement + Increment;
+    xbaddr EmuD3DDeferredRenderState = DerivedAddr_D3DRS_CULLMODE - Decrement + Increment;
     patchOffset -= Increment;
 
     // Derive address of a few other deferred render state slots (to help xref-based function location)
@@ -687,12 +687,12 @@ void XbSymbolDX8RegisterD3DTSS(uint32_t LibraryFlag,
     if (pFunc == 0) {
         return;
     }
-    uint32_t DerivedAddr_D3DTSS_TEXCOORDINDEX = 0;
+    xbaddr DerivedAddr_D3DTSS_TEXCOORDINDEX = 0;
     int Decrement = 0x70; // TODO : Rename into something understandable
 
     // TODO : Remove this when XREF_D3D_TextureState_TexCoordIndex derivation is deemed stable
     {
-        DerivedAddr_D3DTSS_TEXCOORDINDEX = *(uint32_t*)(pFunc + pXRefOffset);
+        DerivedAddr_D3DTSS_TEXCOORDINDEX = *(xbaddr*)(pFunc + pXRefOffset);
 
         // Temporary verification - is XREF_D3DTSS_TEXCOORDINDEX derived correctly?
         if (XRefDataBase[XREF_D3DTSS_TEXCOORDINDEX] != DerivedAddr_D3DTSS_TEXCOORDINDEX) {
@@ -1016,13 +1016,13 @@ bool XbSymbolScanInternal(const void* xbeData,
     xbe_library_version* pLibraryVersion = (xbe_library_version*)(xb_start_addr + pXbeHeader->pLibraryVersionsAddr);
 
     uint32_t dwLibraryVersions = pXbeHeader->dwLibraryVersions;
-    uint32_t LastUnResolvedXRefs = UnResolvedXRefs + 1;
-    uint32_t OrigUnResolvedXRefs = UnResolvedXRefs;
+    unsigned int LastUnResolvedXRefs = UnResolvedXRefs + 1;
+    unsigned int OrigUnResolvedXRefs = UnResolvedXRefs;
     xbe_section_header* pSectionHeaders = (xbe_section_header*)(xb_start_addr + pXbeHeader->pSectionHeadersAddr);
     xbe_section_header* pSectionScan;
     const char* SectionName;
 
-    for (int p = 0; UnResolvedXRefs < LastUnResolvedXRefs; p++) {
+    for (unsigned int p = 0; UnResolvedXRefs < LastUnResolvedXRefs; p++) {
 
         LastUnResolvedXRefs = UnResolvedXRefs;
 
