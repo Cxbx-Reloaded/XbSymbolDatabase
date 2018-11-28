@@ -55,6 +55,8 @@
 
 #define PAIRSCANSEC_MAX 3
 
+typedef uint8_t* memptr_t;
+
 typedef const struct _PairScanLibSec {
     uint32_t library;
     const char *section[PAIRSCANSEC_MAX];
@@ -260,7 +262,7 @@ static inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, 
     *value_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
 }
 
-bool CompareOOVPAToAddress(OOVPA *Oovpa, uintptr_t cur, uintptr_t xb_start_virt_addr)
+bool CompareOOVPAToAddress(OOVPA *Oovpa, memptr_t cur, uintptr_t xb_start_virt_addr)
 {
     uint32_t v = 0; // verification counter
 
@@ -284,7 +286,7 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, uintptr_t cur, uintptr_t xb_start_virt_
 
         xbaddr ActualAddr = *(xbaddr*)(cur + Offset);
         // check if PC-relative or direct reference matches XRef
-        if ((ActualAddr + (xbaddr)(cur - xb_start_virt_addr) + Offset + 4 != XRefAddr) && (ActualAddr != XRefAddr))
+        if ((ActualAddr + (xbaddr)((uintptr_t)cur - xb_start_virt_addr) + Offset + 4 != XRefAddr) && (ActualAddr != XRefAddr))
             return false;
     }
 
@@ -305,9 +307,9 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, uintptr_t cur, uintptr_t xb_start_virt_
 }
 
 // locate the given function, searching within lower and upper bounds
-xbaddr XbSymbolLocateFunction(OOVPA *Oovpa,
-                                uintptr_t lower,
-                                uintptr_t upper,
+void* XbSymbolLocateFunction(OOVPA *Oovpa,
+                                memptr_t lower,
+                                memptr_t upper,
                                 uintptr_t xb_start_virtual_addr)
 {
 
@@ -348,7 +350,7 @@ xbaddr XbSymbolLocateFunction(OOVPA *Oovpa,
     }
 
     // search all of the image memory
-    for (uintptr_t cur = lower; cur < upper; cur++)
+    for (memptr_t cur = lower; cur < upper; cur++)
         if (CompareOOVPAToAddress(Oovpa, cur, xb_start_virtual_addr)) {
 
             while (derive_indices > 0) {
@@ -382,12 +384,15 @@ xbaddr XbSymbolLocateFunction(OOVPA *Oovpa,
                 XRefDataBase[XRef] = XRefAddr;
             }
 
-            return (xbaddr)(cur - xb_start_virtual_addr);
+            return cur - xb_start_virtual_addr;
         }
 
     // found nothing
     return 0;
 }
+
+#define XbSymbolLocateFunctionCast(Oovpa, lower, upper, xb_start_virtual_addr) \
+        XbSymbolLocateFunction((OOVPA*)Oovpa, lower, upper, (uintptr_t)xb_start_virtual_addr)
 
 void XbSymbolRegisterSymbol(OOVPATable* OovpaTable,
                             const char* LibraryName,
@@ -420,12 +425,12 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
                        xbe_section_header *pSectionHeader,
                        uint16_t buildVersion,
                        xb_symbol_register_t register_func,
-                       uintptr_t xb_start_virt_addr)
+                       memptr_t xb_start_virt_addr)
 {
-    uintptr_t lower = xb_start_virt_addr + pSectionHeader->dwVirtualAddr;
+    memptr_t lower = xb_start_virt_addr + pSectionHeader->dwVirtualAddr;
 
     // Find the highest address contained within an executable segment
-    uintptr_t upper = xb_start_virt_addr + pSectionHeader->dwVirtualAddr + pSectionHeader->dwVirtualSize;
+    memptr_t upper = xb_start_virt_addr + pSectionHeader->dwVirtualAddr + pSectionHeader->dwVirtualSize;
 
     // traverse the full OOVPA table
     OOVPATable *pLoopEnd = &OovpaTable[OovpaTableCount];
@@ -452,7 +457,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
             continue;
 
         // Search for each function's location using the OOVPA
-        xbaddr pFunc = XbSymbolLocateFunction(pLoop->Oovpa, lower, upper, xb_start_virt_addr);
+        xbaddr pFunc = (xbaddr)(uintptr_t)XbSymbolLocateFunction(pLoop->Oovpa, lower, upper, (uintptr_t)xb_start_virt_addr);
         if (pFunc == 0)
             continue;
 
@@ -547,7 +552,7 @@ bool XbSymbolInit(const void* xbeData, xb_symbol_register_t register_func, bool*
     }
 
     const xbe_header* pXbeHeader = xbeData;
-    uintptr_t xbe_relative_addr = (uintptr_t)xbeData - pXbeHeader->dwBaseAddr;
+    memptr_t xbe_relative_addr = (memptr_t)xbeData - pXbeHeader->dwBaseAddr;
     xbe_library_version* pLibraryVersion = (xbe_library_version*)(xbe_relative_addr + pXbeHeader->pLibraryVersionsAddr);
 
     //
@@ -602,13 +607,13 @@ void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
                             const char* LibraryStr,
                             uint32_t LibraryFlag,
                             xb_symbol_register_t register_func,
-                            uintptr_t pFunc,
+                            memptr_t pFunc,
                             xbaddr DerivedAddr_D3DRS_CULLMODE,
                             uint32_t patchOffset,
                             uint32_t Increment,
                             uint32_t Decrement)
 {
-    if (pFunc == 0) {
+    if (pFunc == (void*)0) {
         return;
     }
     // Temporary verification - is XREF_D3DDEVICE derived correctly?
@@ -681,10 +686,10 @@ void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
 void XbSymbolDX8RegisterD3DTSS(uint32_t LibraryFlag,
                                const char* LibraryStr,
                                xb_symbol_register_t register_func,
-                               uintptr_t pFunc,
+                               memptr_t pFunc,
                                uint32_t pXRefOffset)
 {
-    if (pFunc == 0) {
+    if (pFunc == (void*)0) {
         return;
     }
     xbaddr DerivedAddr_D3DTSS_TEXCOORDINDEX = 0;
@@ -717,10 +722,10 @@ void XbSymbolDX8RegisterD3DTSS(uint32_t LibraryFlag,
 void XbSymbolDX8RegisterStream(uint32_t LibraryFlag,
                                const char* LibraryStr,
                                xb_symbol_register_t register_func,
-                               uintptr_t pFunc,
+                               memptr_t pFunc,
                                uint32_t iCodeOffsetFor_g_Stream)
 {
-    if (pFunc == 0) {
+    if (pFunc == (void*)0) {
         return;
     }
     // Read address of Xbox_g_Stream from D3DDevice_SetStreamSource
@@ -743,12 +748,12 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
                             unsigned short BuildVersion,
                             const char* LibraryStr,
                             xb_symbol_register_t register_func,
-                            uintptr_t xb_start_virt_addr)
+                            memptr_t xb_start_virt_addr)
 {
     // Generic usage
-    uintptr_t lower = xb_start_virt_addr + pSectionHeader->dwVirtualAddr;
-    uintptr_t upper = xb_start_virt_addr + pSectionHeader->dwVirtualAddr + pSectionHeader->dwVirtualSize;;
-    uintptr_t pFunc = 0;
+    memptr_t lower = xb_start_virt_addr + pSectionHeader->dwVirtualAddr;
+    memptr_t upper = xb_start_virt_addr + pSectionHeader->dwVirtualAddr + pSectionHeader->dwVirtualSize;;
+    memptr_t pFunc = 0;
     // offset for stencil cull enable render state in the deferred render state buffer
     uint32_t DerivedAddr_D3DRS_CULLMODE = 0;
     int Decrement = 0; // TODO : Rename into something understandable
@@ -769,16 +774,16 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
             // Not supported, currently ignored.
         }
         if (BuildVersion < 4034) {
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetRenderState_CullMode_3911, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_3911, lower, upper, xb_start_virt_addr);
         }
         else {
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetRenderState_CullMode_4034, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_4034, lower, upper, xb_start_virt_addr);
         }
 
         // then locate D3DDeferredRenderState
         if (pFunc != 0) {
             // NOTE: Is a requirement to align properly.
-            pFunc += xb_start_virt_addr;
+            pFunc += (uintptr_t)xb_start_virt_addr;
 
             // Read address of D3DRS_CULLMODE from D3DDevice_SetRenderState_CullMode
             // TODO : Simplify this when XREF_D3D_RenderState_CullMode derivation is deemed stable
@@ -817,27 +822,27 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
     }
     else { // XbSymbolLib_D3D8LTCG
         // locate D3DDevice_SetRenderState_CullMode first
-        pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetRenderState_CullMode_1045, lower, upper, xb_start_virt_addr);
+        pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_1045, lower, upper, xb_start_virt_addr);
         pXRefOffset = 0x2D; // verified for 3925
         if (pFunc == 0) {
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetRenderState_CullMode_1049, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_1049, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x31; // verified for 4039
         }
 
         if (pFunc == 0) {
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetRenderState_CullMode_1052, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_1052, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x34;
         }
 
         if (pFunc == 0) {
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetRenderState_CullMode_1053, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_1053, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x35;
         }
 
         // then locate D3DDeferredRenderState
         if (pFunc != 0) {
             // NOTE: Is a requirement to align properly.
-            pFunc += xb_start_virt_addr;
+            pFunc += (uintptr_t)xb_start_virt_addr;
 
             // Read address of D3DRS_CULLMODE from D3DDevice_SetRenderState_CullMode
             // TODO : Simplify this when XREF_D3D_RenderState_CullMode derivation is deemed stable
@@ -885,66 +890,66 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
             pFunc = 0;
         }
         else if (BuildVersion < 4034) {
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_3911, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_3911, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x11;
         }
         else if (BuildVersion < 4242) {
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4034, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4034, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x18;
         }
         else if (BuildVersion < 4627) {
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4242, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4242, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x19;
         }
         else {
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4627, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4627, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x19;
         }
     }
     else { // XbSymbolLib_D3D8LTCG
         // verified for 3925
-        pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_0_2039, lower, upper, xb_start_virt_addr);
+        pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_0_2039, lower, upper, xb_start_virt_addr);
         pXRefOffset = 0x08;
 
         if (pFunc == 0) { // verified for 4039
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4_2040, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4_2040, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x14;
         }
 
         if (pFunc == 0) { // verified for 4432
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_1944, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_1944, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x19;
         }
 
         if (pFunc == 0) { // verified for 4531
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4_2045, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4_2045, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x14;
         }
 
         if (pFunc == 0) { // verified for 4627 and higher
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4_2058, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4_2058, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x14;
         }
 
         if (pFunc == 0) { // verified for 4627 and higher
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_1958, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_1958, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x19;
         }
 
         if (pFunc == 0) { // verified for World Series Baseball 2K3
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_4_2052, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4_2052, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x15;
         }
 
         if (pFunc == 0) { // verified for Ski Racing 2006
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetTextureState_TexCoordIndex_0_2058, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_0_2058, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x15;
         }
     }
 
     if (pFunc != 0) {
         // NOTE: Is a requirement to align properly.
-        pFunc += xb_start_virt_addr;
+        pFunc += (uintptr_t)xb_start_virt_addr;
         XbSymbolDX8RegisterD3DTSS(LibraryFlag, LibraryStr, register_func, pFunc, pXRefOffset);
     }
 
@@ -957,42 +962,42 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
     if (LibraryFlag == XbSymbolLib_D3D8) {
         if (BuildVersion >= 4034) {
             OOVPA_version = 4034;
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_4034, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_4034, lower, upper, xb_start_virt_addr);
         }
         else {
             OOVPA_version = 3911;
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_3911, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_3911, lower, upper, xb_start_virt_addr);
             iCodeOffsetFor_g_Stream = 0x23; // verified for 3911
         }
     }
     else { // XbSymbolLib_D3D8LTCG
         if (BuildVersion > 4039) {
             OOVPA_version = 4034; // TODO Verify
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_1044, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_1044, lower, upper, xb_start_virt_addr);
         }
 
         if (pFunc == 0) { // LTCG specific
             OOVPA_version = 4034; // TODO Verify
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_4_2058, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_4_2058, lower, upper, xb_start_virt_addr);
             iCodeOffsetFor_g_Stream = 0x1E;
         }
 
         if (pFunc == 0) { // verified for 4039
             OOVPA_version = 4034;
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_8_2040, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_8_2040, lower, upper, xb_start_virt_addr);
             iCodeOffsetFor_g_Stream = 0x23;
         }
 
         if (pFunc == 0) { // verified for 3925
             OOVPA_version = 3911;
-            pFunc = XbSymbolLocateFunction((OOVPA*)&D3DDevice_SetStreamSource_1039, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_1039, lower, upper, xb_start_virt_addr);
             iCodeOffsetFor_g_Stream = 0x47;
         }
     }
 
     if (pFunc != 0) {
         // NOTE: Is a requirement to align properly.
-        pFunc += xb_start_virt_addr;
+        pFunc += (uintptr_t)xb_start_virt_addr;
 
         XbSymbolDX8RegisterStream(LibraryFlag, LibraryStr, register_func, pFunc, iCodeOffsetFor_g_Stream);
     }
@@ -1010,9 +1015,9 @@ bool XbSymbolScanInternal(const void* xbeData,
     }
 
     const xbe_header* pXbeHeader = xbeData;
-    uintptr_t xbe_data_addr = (uintptr_t)pXbeHeader;
-    uintptr_t xb_start_addr = xbe_data_addr - pXbeHeader->dwBaseAddr;
-    uintptr_t xb_start_virt_addr = xb_start_addr;
+    memptr_t xbe_data_addr = (memptr_t)xbeData;
+    memptr_t xb_start_addr = xbe_data_addr - pXbeHeader->dwBaseAddr;
+    memptr_t xb_start_virt_addr = xb_start_addr;
     xbe_library_version* pLibraryVersion = (xbe_library_version*)(xb_start_addr + pXbeHeader->pLibraryVersionsAddr);
 
     uint32_t dwLibraryVersions = pXbeHeader->dwLibraryVersions;
