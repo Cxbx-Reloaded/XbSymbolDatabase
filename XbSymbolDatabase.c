@@ -1072,7 +1072,7 @@ bool XbSymbolScanInternal(const void* xbeData,
                             if (strncmp(SectionName, Sec_D3D, 8) == 0) {
 
                                 if (isRunTime) {
-                                    // if an emulator did not load a section, then skip the section scan.
+                                    // if an xbe executable did not load a section, then skip the section scan.
                                     if (pSectionHeaders[s].dwSectionRefCount == 0) {
                                         continue;
                                     }
