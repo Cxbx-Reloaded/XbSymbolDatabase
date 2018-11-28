@@ -1140,8 +1140,8 @@ bool XbSymbolScanInternal(const void* xbeData,
     return 1;
 }
 
-bool XbSymbolScanRunTime(const void* xbeData,
-                         xb_symbol_register_t register_func)
+bool XbSymbolScanRunTimeMemory(const void* xbeData,
+                               xb_symbol_register_t register_func)
 {
     return XbSymbolScanInternal(xbeData, register_func, true);
 }
