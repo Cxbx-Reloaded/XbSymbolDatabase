@@ -438,7 +438,7 @@ bool XbSymbolScanRunTime(const void* xbeData, xb_symbol_register_t register_func
 /// <param name="xbeData">Starting point of xbe memory address.</param>
 /// <param name="register_func">Callback register function to be call for any detected symbols.</param>
 /// <returns>Only return false if something is not valid.</returns>
-bool XbSymbolScanFileImage(const void* xbeData, xb_symbol_register_t register_func);
+bool XbSymbolScanRawFileMemory(const void* xbeData, xb_symbol_register_t register_func);
 
 /* NOTE: Do not use this function, It is currently not functional and optimized at the moment.
 /// <summary>
