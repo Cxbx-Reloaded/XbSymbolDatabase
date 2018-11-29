@@ -424,21 +424,13 @@ void XbSymbolSetOutputMessage(xb_output_message_t message_func);
 typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, xbaddr address, uint32_t revision);
 
 /// <summary>
-/// To scan symbols in runtime xbe usage.
+/// To scan symbols in memory of raw xbe or host's virtual xbox environment.
 /// </summary>
-/// <param name="xbeData">Starting point of xbe memory address.</param>
+/// <param name="xb_header_addr">Starting point of xbox header address.</param>
 /// <param name="register_func">Callback register function to be call for any detected symbols.</param>
+/// <param name="is_raw">True: Full scan of raw xbe; False: Scan only loaded sections.</param>
 /// <returns>Only return false if something is not valid.</returns>
-bool XbSymbolScanRunTimeMemory(const void* xbeData, xb_symbol_register_t register_func);
-#define XbSymbolScan XbSymbolScanRunTimeMemory
-
-/// <summary>
-/// To scan symbols in Xbe's file image.
-/// </summary>
-/// <param name="xbeData">Starting point of xbe memory address.</param>
-/// <param name="register_func">Callback register function to be call for any detected symbols.</param>
-/// <returns>Only return false if something is not valid.</returns>
-bool XbSymbolScanRawFileMemory(const void* xbeData, xb_symbol_register_t register_func);
+bool XbSymbolScan(const void* xb_header_addr, xb_symbol_register_t register_func, bool is_raw);
 
 /* NOTE: Do not use this function, It is currently not functional and optimized at the moment.
 /// <summary>

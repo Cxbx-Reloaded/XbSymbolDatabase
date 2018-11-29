@@ -546,14 +546,16 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
 }
 #endif
 
-bool XbSymbolInit(const void* xbeData, xb_symbol_register_t register_func, bool* pbDSoundLibHeader) {
-    if (xbeData == (void*)0 || register_func == 0) {
+bool XbSymbolInit(const void* xb_header_addr,
+                  xb_symbol_register_t register_func,
+                  bool* pbDSoundLibHeader) {
+    if (xb_header_addr == (void*)0 || register_func == 0) {
         return 0;
     }
 
-    const xbe_header* pXbeHeader = xbeData;
-    memptr_t xbe_relative_addr = (memptr_t)xbeData - pXbeHeader->dwBaseAddr;
-    xbe_library_version* pLibraryVersion = (xbe_library_version*)(xbe_relative_addr + pXbeHeader->pLibraryVersionsAddr);
+    const xbe_header* pXbeHeader = xb_header_addr;
+    memptr_t xb_start_addr = (memptr_t)xb_header_addr - pXbeHeader->dwBaseAddr;
+    xbe_library_version* pLibraryVersion = (xbe_library_version*)(xb_start_addr + pXbeHeader->pLibraryVersionsAddr);
 
     //
     // initialize Microsoft XDK scan
@@ -586,13 +588,13 @@ bool XbSymbolInit(const void* xbeData, xb_symbol_register_t register_func, bool*
         XRefDataBase[XREF_OFFSET_D3DDEVICE_M_RENDERTARGET] = XREF_ADDR_DERIVE;
         XRefDataBase[XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL] = XREF_ADDR_DERIVE;
 
-        xbe_section_header* pSectionHeaders = (xbe_section_header*)(xbe_relative_addr + pXbeHeader->pSectionHeadersAddr);
+        xbe_section_header* pSectionHeaders = (xbe_section_header*)(xb_start_addr + pXbeHeader->pSectionHeadersAddr);
         const char* SectionName;
         *pbDSoundLibHeader = false;
 
         // Verify if title do contain DirectSound library section.
         for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
-            SectionName = (const char*)(xbe_relative_addr + pSectionHeaders[v].SectionNameAddr);
+            SectionName = (const char*)(xb_start_addr + pSectionHeaders[v].SectionNameAddr);
 
             if (strncmp(SectionName, Lib_DSOUND, 8) == 0) {
                 *pbDSoundLibHeader = true;
@@ -1003,20 +1005,19 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
     }
 }
 
-bool XbSymbolScanInternal(const void* xbeData,
-                          xb_symbol_register_t register_func,
-                          bool isRunTime)
+bool XbSymbolScan(const void* xb_header_addr,
+                  xb_symbol_register_t register_func,
+                  bool is_raw)
 {
 
     bool bDSoundLibHeader;
 
-    if (!XbSymbolInit(xbeData, register_func, &bDSoundLibHeader)) {
+    if (!XbSymbolInit(xb_header_addr, register_func, &bDSoundLibHeader)) {
         return 0;
     }
 
-    const xbe_header* pXbeHeader = xbeData;
-    memptr_t xbe_data_addr = (memptr_t)xbeData;
-    memptr_t xb_start_addr = xbe_data_addr - pXbeHeader->dwBaseAddr;
+    const xbe_header* pXbeHeader = xb_header_addr;
+    memptr_t xb_start_addr = (memptr_t)xb_header_addr - pXbeHeader->dwBaseAddr;
     memptr_t xb_start_virt_addr = xb_start_addr;
     xbe_library_version* pLibraryVersion = (xbe_library_version*)(xb_start_addr + pXbeHeader->pLibraryVersionsAddr);
 
@@ -1071,14 +1072,14 @@ bool XbSymbolScanInternal(const void* xbeData,
                             SectionName = (const char*)(xb_start_addr + pSectionHeaders[s].SectionNameAddr);
                             if (strncmp(SectionName, Sec_D3D, 8) == 0) {
 
-                                if (isRunTime) {
+                                if (!is_raw) {
                                     // if an xbe executable did not load a section, then skip the section scan.
                                     if (pSectionHeaders[s].dwSectionRefCount == 0) {
                                         continue;
                                     }
                                 }
                                 else {
-                                    xb_start_virt_addr = ((xbe_data_addr + pSectionHeaders[s].dwRawAddr) - pSectionHeaders[s].dwVirtualAddr);
+                                    xb_start_virt_addr = (((memptr_t)xb_header_addr + pSectionHeaders[s].dwRawAddr) - pSectionHeaders[s].dwVirtualAddr);
                                 }
                                 pSectionScan = pSectionHeaders + s;
 
@@ -1098,14 +1099,14 @@ bool XbSymbolScanInternal(const void* xbeData,
                         for (unsigned int s = 0; s < pXbeHeader->dwSections; s++) {
                             SectionName = (const char*)(xb_start_addr + pSectionHeaders[s].SectionNameAddr);
 
-                            if (isRunTime) {
+                            if (!is_raw) {
                                 // if an emulator did not load a section, then skip the section scan.
                                 if (pSectionHeaders[s].dwSectionRefCount == 0) {
                                     continue;
                                 }
                             }
                             else {
-                                xb_start_virt_addr = ((xbe_data_addr + pSectionHeaders[s].dwRawAddr) - pSectionHeaders[s].dwVirtualAddr);
+                                xb_start_virt_addr = (((memptr_t)xb_header_addr + pSectionHeaders[s].dwRawAddr) - pSectionHeaders[s].dwVirtualAddr);
                             }
 
                             //Initialize a matching specific section is currently pair with library in order to scan specific section only.
@@ -1138,17 +1139,6 @@ bool XbSymbolScanInternal(const void* xbeData,
         bXRefFirstPass = false;
     }
     return 1;
-}
-
-bool XbSymbolScanRunTimeMemory(const void* xbeData,
-                               xb_symbol_register_t register_func)
-{
-    return XbSymbolScanInternal(xbeData, register_func, true);
-}
-bool XbSymbolScanRawFileMemory(const void* xbeData,
-                  xb_symbol_register_t register_func)
-{
-    return XbSymbolScanInternal(xbeData, register_func, false);
 }
 
 // ******************************************************************
