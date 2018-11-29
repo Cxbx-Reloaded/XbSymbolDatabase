@@ -308,9 +308,9 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, memptr_t cur, uintptr_t xb_start_virt_a
 
 // locate the given function, searching within lower and upper bounds
 void* XbSymbolLocateFunction(OOVPA *Oovpa,
-                                memptr_t lower,
-                                memptr_t upper,
-                                uintptr_t xb_start_virtual_addr)
+                             memptr_t lower,
+                             memptr_t upper,
+                             uintptr_t xb_start_virtual_addr)
 {
 
     // skip out if this is an unnecessary search
@@ -548,7 +548,8 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
 
 bool XbSymbolInit(const void* xb_header_addr,
                   xb_symbol_register_t register_func,
-                  bool* pbDSoundLibHeader) {
+                  bool* pbDSoundLibHeader)
+{
     if (xb_header_addr == (void*)0 || register_func == 0) {
         return 0;
     }
