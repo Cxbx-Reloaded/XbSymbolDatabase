@@ -378,6 +378,10 @@ typedef enum _xb_output_message {
     XB_OUTPUT_MESSAGE_DEBUG
 } xb_output_message;
 
+#ifndef xbaddr
+typedef uint32_t xbaddr;
+#endif
+
 // ******************************************************************
 // * API functions to use with other projects.
 // ******************************************************************
@@ -415,17 +419,18 @@ void XbSymbolSetOutputMessage(xb_output_message_t message_func);
 /// <param name="library_str">Name of the library in string.</param>
 /// <param name="library_flag">Name of the library in flag.</param>
 /// <param name="symbol_str">Name of the library in symbol string.</param>
-/// <param name="address">TBD.</param>
+/// <param name="address">Return xbox's virtual address.</param>
 /// <param name="revision">Found with specific revision.</param>
-typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, uint32_t address, uint32_t revision);
+typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, xbaddr address, uint32_t revision);
 
 /// <summary>
-/// To scan symbols for Xbe's file.
+/// To scan symbols in memory of raw xbe or host's virtual xbox environment.
 /// </summary>
-/// <param name="xbeData">Starting point of xbe memory address.</param>
+/// <param name="xb_header_addr">Starting point of xbox header address.</param>
 /// <param name="register_func">Callback register function to be call for any detected symbols.</param>
+/// <param name="is_raw">True: Full scan of raw xbe; False: Scan only loaded sections.</param>
 /// <returns>Only return false if something is not valid.</returns>
-bool XbSymbolScan(const void* xbeData, xb_symbol_register_t register_func);
+bool XbSymbolScan(const void* xb_header_addr, xb_symbol_register_t register_func, bool is_raw);
 
 /* NOTE: Do not use this function, It is currently not functional and optimized at the moment.
 /// <summary>
