@@ -414,3 +414,33 @@ OOVPA_XREF(IDirectSoundStream_Set3DVoiceData, 5455, 1+1,
         // IDirectSoundStream_Set3DVoiceData+0x00 : jmp 0x........
         { 0x00, 0xE9 },
 OOVPA_END;
+
+// ******************************************************************
+// * XAudioCalculatePitch
+// ******************************************************************
+OOVPA_XREF(XAudioCalculatePitch, 5455, 12,
+
+    XREF_XAudioCalculatePitch,
+    XRefZero)
+
+        { 0x00, 0x55 },
+
+        // XAudioCalculatePitch+0x0F : cmp eax, 0xBB80
+        { 0x0F, 0x3D },
+        { 0x10, 0x80 },
+        { 0x11, 0xBB },
+        { 0x12, 0x00 },
+
+        // XAudioCalculatePitch+0x18 : jmp +0x21
+        { 0x18, 0xEB },
+        { 0x19, 0x21 },
+
+        // XAudioCalculatePitch+0x3B : lea ecx, [ebp+08]
+        { 0x3B, 0x8D },
+        { 0x3C, 0x4D },
+        { 0x3D, 0x08 },
+
+        // XAudioCalculatePitch+0x47 : retn 0x04
+        { 0x47, 0xC2 },
+        { 0x48, 0x04 },
+OOVPA_END;

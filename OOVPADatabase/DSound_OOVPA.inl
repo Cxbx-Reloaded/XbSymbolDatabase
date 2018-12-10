@@ -173,7 +173,7 @@
 // ******************************************************************
 OOVPATable DSound_OOVPAV2[] = {
 
-    REGISTER_OOVPAS(XAudioCalculatePitch, 3911, 4039),
+    REGISTER_OOVPAS(XAudioCalculatePitch, 3911, 4039, 5455),
     REGISTER_OOVPAS(DirectSoundEnterCriticalSection, 3911),
     REGISTER_OOVPAS(CMcpxAPU_Commit3dSettings, 3911),
     REGISTER_OOVPAS(CMcpxAPU_ServiceDeferredCommandsLow, 3911),

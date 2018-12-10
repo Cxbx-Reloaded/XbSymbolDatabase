@@ -1576,10 +1576,12 @@ OOVPA_END;
 // ******************************************************************
 // * XAudioCalculatePitch
 // ******************************************************************
-OOVPA_XREF(XAudioCalculatePitch, 3911, 11,
+OOVPA_XREF(XAudioCalculatePitch, 3911, 12,
 
     XREF_XAudioCalculatePitch,
     XRefZero)
+
+        { 0x00, 0x55 },
 
         // XAudioCalculatePitch+0x08 : cmp esi, 0xBB80
         { 0x08, 0x81 },
