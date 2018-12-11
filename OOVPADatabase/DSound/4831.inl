@@ -158,6 +158,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxStream_Pause
 // ******************************************************************
+// Generic OOVPA as of ____? and newer
 OOVPA_XREF(CMcpxStream_Pause, 4831, 11,
 
     XREF_CMcpxStream_Pause,

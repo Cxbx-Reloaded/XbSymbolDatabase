@@ -51,38 +51,6 @@ OOVPA_XREF(CDirectSoundStream_Flush, 5028, 1+8,
 OOVPA_END;
 
 // ******************************************************************
-// * CDirectSoundStream_FlushEx
-// ******************************************************************
-// Generic OOVPA as of 5028 and newer
-OOVPA_XREF(CDirectSoundStream_FlushEx, 5028, 16,
-
-    XREF_CDirectSoundStream_FlushEx,
-    XRefZero)
-
-        { 0x00, 0x55 },
-
-        { 0x24, 0xB8 },
-        { 0x25, 0x05 },
-        { 0x26, 0x40 },
-        { 0x27, 0x00 },
-        { 0x28, 0x80 },
-
-        { 0x29, 0xEB },
-        { 0x2A, 0x3A },
-        { 0x2B, 0x83 },
-        { 0x2C, 0x7D },
-
-        { 0x36, 0x74 },
-        { 0x37, 0x12 },
-
-        { 0x3E, 0xFF },
-        { 0x40, 0x0C },
-
-        { 0x67, 0xC2 },
-        { 0x68, 0x10 },
-OOVPA_END;
-
-// ******************************************************************
 // * CMcpxVoiceClient_GetVoiceProperties
 // ******************************************************************
 // Generic OOVPA as of 5028 and newer

@@ -26,10 +26,12 @@
 // ******************************************************************
 // * CMcpxStream_Discontinuity
 // ******************************************************************
-OOVPA_XREF(CMcpxStream_Discontinuity, 4531, 9,
+OOVPA_XREF(CMcpxStream_Discontinuity, 4531, 1+9,
 
     XREF_CMcpxStream_Discontinuity,
-    XRefZero)
+    XRefOne)
+
+        XREF_ENTRY( 0x24, XREF_CMcpxStream_Stop_Ex ),
 
         // CMcpxStream_Discontinuity+0x00 : push esi; push edi
         { 0x00, 0x56 },

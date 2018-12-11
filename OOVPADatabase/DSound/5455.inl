@@ -138,10 +138,12 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxStream_Discontinuity
 // ******************************************************************
-OOVPA_XREF(CMcpxStream_Discontinuity, 5455, 9,
+OOVPA_XREF(CMcpxStream_Discontinuity, 5455, 1+9,
 
     XREF_CMcpxStream_Discontinuity,
-    XRefZero)
+    XRefOne)
+
+        XREF_ENTRY( 0x22, XREF_CMcpxStream_Stop ),
 
         // CMcpxStream_Discontinuity+0x00 : push esi; push edi
         { 0x00, 0x56 },
@@ -153,10 +155,10 @@ OOVPA_XREF(CMcpxStream_Discontinuity, 5455, 9,
         { 0x14, 0x00 },
         { 0x15, 0x08 },
 
-        // CMcpxStream_Discontinuity+0x23 : call Stop@CMcpxStream@DirectSound@@QAEJK@Z
+        // CMcpxStream_Discontinuity+0x21 : call Stop@CMcpxStream@DirectSound@@QAEJK@Z
         { 0x21, 0xE8 },
 
-        // CMcpxStream_Discontinuity+0x2D : pop esi; ret
+        // CMcpxStream_Discontinuity+0x2B : pop esi; ret
         { 0x2B, 0x5E },
         { 0x2C, 0xC3 },
 OOVPA_END;
@@ -284,42 +286,6 @@ OOVPA_XREF(CDirectSound_GetSpeakerConfig, 5455, 14,
 OOVPA_END;
 
 // ******************************************************************
-// * CMcpxStream_Flush
-// ******************************************************************
-// Might not be ideal, however I had not see any changes from these
-// Offsets.
-OOVPA_XREF(CMcpxStream_Flush, 5455, 16,
-
-    XREF_CMcpxStream_Flush,
-    XRefZero)
-
-        // CMcpxStream_Flush+0x00 : push ebp; mov ebp, esp; sub esp, 10h
-        { 0x00, 0x55 },
-        { 0x01, 0x8B },
-        { 0x02, 0xEC },
-        { 0x03, 0x83 },
-        { 0x04, 0xEC },
-        { 0x05, 0x10 },
-
-        // Offset is unique for this asm code.
-        // CMcpxStream_Flush+0x0A : movzx eax,byte ptr fs:[24h]
-        { 0x0A, 0x64 },
-        { 0x0B, 0x0F },
-        { 0x0C, 0xB6 },
-        { 0x0D, 0x05 },
-        { 0x0E, 0x24 },
-        { 0x0F, 0x00 },
-        { 0x10, 0x00 },
-        { 0x11, 0x00 },
-
-        // CMcpxStream_Flush+0x2F : mov
-        { 0x2F, 0x8B },
-
-        // CMcpxStream_Flush+0x6A : Call [CIrql_Lower]
-        { 0x6A, 0xE8 },
-OOVPA_END;
-
-// ******************************************************************
 // * DirectSound::CDirectSoundVoice::Set3DVoiceData
 // ******************************************************************
 OOVPA_XREF(CDirectSoundVoice_Set3DVoiceData, 5455, 9,
@@ -443,4 +409,27 @@ OOVPA_XREF(XAudioCalculatePitch, 5455, 12,
         // XAudioCalculatePitch+0x47 : retn 0x04
         { 0x47, 0xC2 },
         { 0x48, 0x04 },
+OOVPA_END;
+
+// ******************************************************************
+// * CMcpxStream::Stop
+// ******************************************************************
+OOVPA_XREF(CMcpxStream_Stop, 5455, 7,
+
+    XREF_CMcpxStream_Stop,
+    XRefZero)
+
+    // calls to CIrql_Raise, CIrql_Lower, CMcpxVoiceClient_ReleaseVoice, CMcpxVoiceClient_DeactivateVoice
+
+        // CMcpxStream_Stop+0x00 : push ebp; mov ebp,esp
+        { 0x00, 0x55 },
+        { 0x01, 0x8B },
+        { 0x02, 0xEC },
+
+        // Offset is unique for this asm code.
+        // CMcpxStream_Stop+0x1F : test [ebp+8],6
+        { 0x1F, 0xF6 },
+        { 0x20, 0x45 },
+        { 0x21, 0x08 },
+        { 0x22, 0x06 },
 OOVPA_END;

@@ -1269,6 +1269,7 @@ OOVPA_XREF(IDirectSound_UnmapBufferData, 5344, 1+6,
 OOVPA_END;
 
 // ******************************************************************
-// * Rollback support signature(s)
+// * Reverted function signature
 // ******************************************************************
-#define DirectSoundUseFullHRTF_5344 DirectSoundUseFullHRTF_4134 // In theory... TBD.
+// Generic OOVPA as of 5344 (aka 4134 sig) and newer
+#define DirectSoundUseFullHRTF_5344 DirectSoundUseFullHRTF_4134
