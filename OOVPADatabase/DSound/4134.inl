@@ -2722,26 +2722,29 @@ OOVPA_END;
 // * CDirectSound::SetAllParameters
 // ******************************************************************
 // Generic OOVPA as of 4134 and newer
-OOVPA_XREF(CDirectSound_SetAllParameters, 4134, 15,
+OOVPA_XREF(CDirectSound_SetAllParameters, 4134, 1+8,
 
     XREF_CDirectSound_SetAllParameters,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSound_SetAllParameters+0x01 : call [DirectSoundEnterCriticalSection]
+        XREF_ENTRY( 0x02, XREF_DirectSoundEnterCriticalSection ),
 
         { 0x00, 0x56 },
+        { 0x01, 0xE8 },
 
+        // CDirectSound_SetAllParameters+0x06 : cmp [DirectSoundCriticalSection], 0
         { 0x0C, 0x00 },
-        { 0x0D, 0x0F },
-        { 0x0E, 0xB6 },
-        { 0x0F, 0xF0 },
-        { 0x10, 0x74 },
-        { 0x11, 0x19 },
-        { 0x12, 0x85 },
-        { 0x13, 0xF6 },
-        { 0x14, 0x74 },
-        { 0x15, 0x0B },
-        { 0x16, 0x68 },
 
+        // CDirectSound_SetAllParameters+0x21 : mov eax, 0x80004005
         { 0x21, 0xB8 },
+
+        // CDirectSound_SetAllParameters+0x2B : mov XXX, [esp+X]
+        { 0x2B, 0x8B },
+        { 0x2D, 0x24 },
+
+        // Offset is unique for this asm code.
+        // CDirectSound_SetAllParameters+0x32 : mov XXX, [esp+X]
         { 0x32, 0x8B },
         //{ 0x33, 0x44 }, // 4134 0x44 VS 5558 0x4C
         { 0x34, 0x24 },

@@ -56,28 +56,6 @@ OOVPA_XREF(CDirectSound_SetVelocity, 4627, 15,
 OOVPA_END;
 
 // ******************************************************************
-// * CDirectSound::SetAllParametersA
-// ******************************************************************
-OOVPA_XREF(CDirectSound_SetAllParametersA, 4627, 10,
-
-    XREF_CDirectSound_SetAllParameters,
-    XRefZero)
-
-        { 0x16, 0x68 },
-        { 0x17, 0xE8 },
-        { 0x18, 0xF7 },
-        { 0x19, 0x2D },
-
-        { 0x2F, 0xD9 },
-        { 0x30, 0x41 },
-        { 0x31, 0x04 },
-
-        { 0x87, 0x8B },
-        { 0x88, 0x50 },
-        { 0x89, 0x08 },
-OOVPA_END;
-
-// ******************************************************************
 // * CDirectSound_SetPosition
 // ******************************************************************
 OOVPA_XREF(CDirectSound_SetPosition, 4627, 11,

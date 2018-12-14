@@ -123,9 +123,6 @@
 // * 4134 verification needed: (Verifying with Double-S.T.E.A.L title is done, need different title to find the remaining...)
 //   * DirectSoundUseLightHRTF
 //   * XAudioCreateAdpcmFormat
-// * CDirectSound_SetAllParameters and CDirectSound_SetAllParametersA currently separated
-//   * Need to review what's the difference and why is it necessary to be separated.
-//   * It also have various revisions, we should be able to narrow it down to remove duplicates.
 // * 4039 CDirectSoundVoice_SetPitch need to be strengthen by using XREF to CMcpxVoiceClient_SetPitch function.
 // * List of OOVPAs may could be lower to include support older titles.
 //   * CDirectSoundVoice_SetI3DL2Source (5344)
@@ -352,8 +349,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSound_GetSpeakerConfig, 3911, 4242, 4627, 5455),
     REGISTER_OOVPAS(CDirectSound_GetTime, 3911),
     REGISTER_OOVPAS(CDirectSound_MapBufferData, 5344),
-    REGISTER_OOVPAS(CDirectSound_SetAllParameters, 3911, 4039, 4134), //TODO: Need to improvise after 4134
-    REGISTER_OOVPAS(CDirectSound_SetAllParametersA, 4627, 4721, 4831), //TODO: Need to improvise after 4134 then move in CDirectSound_SetAllParameters
+    REGISTER_OOVPAS(CDirectSound_SetAllParameters, 3911, 4039, 4134), // Final generic OOVPA: 4134
     REGISTER_OOVPAS(CDirectSound_SetDistanceFactor, 3911, 4039, 4134, 4627, 5344),
     REGISTER_OOVPAS(CDirectSound_SetDopplerFactor, 3911, 4039, 4134, 4627, 5344),
     REGISTER_OOVPAS(CDirectSound_SetEffectData, 3911, 4039, 4134),

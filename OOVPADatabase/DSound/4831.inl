@@ -185,28 +185,6 @@ OOVPA_XREF(CMcpxStream_Pause, 4831, 11,
 OOVPA_END;
 
 // ******************************************************************
-// * CDirectSound::SetAllParametersA
-// ******************************************************************
-OOVPA_XREF(CDirectSound_SetAllParametersA, 4831, 10,
-
-    XREF_CDirectSound_SetAllParameters,
-    XRefZero)
-
-        { 0x16, 0x68 },
-        { 0x17, 0x08 },
-        { 0x18, 0x6E },
-        { 0x19, 0x18 },
-
-        { 0x2F, 0xD9 },
-        { 0x30, 0x41 },
-        { 0x31, 0x04 },
-
-        { 0x87, 0x8B },
-        { 0x88, 0x50 },
-        { 0x89, 0x08 },
-OOVPA_END;
-
-// ******************************************************************
 // * DirectSound::CMcpxBuffer::Pause
 // ******************************************************************
 OOVPA_XREF(CMcpxBuffer_Pause, 4831, 7,
