@@ -2760,8 +2760,6 @@ OOVPA_XREF(CDirectSoundVoice_SetAllParameters, 3911, 1+11,
     XREF_CDirectSoundVoice_SetAllParameters,
     XRefOne)
 
-    // TODO: re-use for CDirectSoundBuffer_SetAllParametersA!?
-
         // CDirectSoundVoice_SetAllParameters+0x25 : call [CMcpxVoiceClient_Set3dParameters]
         XREF_ENTRY( 0x1F, XREF_CMcpxVoiceClient_Set3dParameters ),
 
@@ -3016,8 +3014,6 @@ OOVPA_XREF(CDirectSoundStream_SetConeOrientation, 3911, 1+8,
 
     XREF_CDirectSoundStream_SetConeOrientation,
     XRefOne)
-
-    // TODO: re-use for CDirectSoundBuffer_SetConeOrientationA!?
 
         // CDirectSoundStream_SetConeOrientation+0x25 : call [CDirectSoundVoice_SetConeOrientation]
         XREF_ENTRY( 0x25, XREF_CDirectSoundVoice_SetConeOrientation ),
