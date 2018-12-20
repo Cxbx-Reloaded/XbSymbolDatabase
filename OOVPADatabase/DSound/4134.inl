@@ -52,8 +52,13 @@ OOVPA_END;
 // * DirectSoundDoWork
 // ******************************************************************
 // Generic OOVPA as of 4134 and newer
-// TODO: DirectSoundDoWork 4134 has weak OV list, need to add more or at least use XREF support to be strengthen.
-OOVPA_NO_XREF(DirectSoundDoWork, 4134, 11)
+OOVPA_XREF(DirectSoundDoWork, 4134, 11,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        // DirectSoundDoWork+0x13 : call [CDirectSound::DoWork]
+        XREF_ENTRY( 0x14, XREF_CDirectSound_DoWork ),
 
         { 0x00, 0x56 },
 
@@ -322,11 +327,25 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSoundVoice::SetFrequency
 // ******************************************************************
-OOVPA_XREF(CDirectSoundVoice_SetFrequency, 4134, 11,
+// Generic OOVPA as of 4134 and newer
+OOVPA_XREF(CDirectSoundVoice_SetFrequency, 4134, 2+6,
 
     XREF_CDirectSoundVoice_SetFrequency,
-    XRefZero)
+    XRefTwo)
 
+        // CDirectSoundVoice_SetFrequency+0x14 : call [XAudioCalcatePitch]
+        XREF_ENTRY( 0x15, XREF_XAudioCalculatePitch ),
+
+        // CDirectSoundVoice_SetFrequency+0x1B : call [CDirectSoundVoice::SetPitch]
+        XREF_ENTRY( 0x1C, XREF_CDirectSoundVoice_SetPitch ),
+
+        // CDirectSoundVoice_SetFrequency+0x00 : mov eax, [esp+0x08]
+        { 0x00, 0x8B },
+        { 0x01, 0x44 },
+        { 0x02, 0x24 },
+        { 0x03, 0x08 },
+
+#if 0 // 9 pairs total
         // CDirectSoundVoice_SetFrequency+0x0D : mov eax, [esi+0x10]
         { 0x0D, 0x8B },
         { 0x0E, 0x46 },
@@ -341,6 +360,7 @@ OOVPA_XREF(CDirectSoundVoice_SetFrequency, 4134, 11,
         { 0x14, 0xE8 },
         { 0x19, 0x50 },
         { 0x1A, 0x56 },
+#endif
 
         // CDirectSoundVoice_SetFrequency+0x22 : retn 0x08
         { 0x21, 0xC2 },
@@ -3814,4 +3834,40 @@ OOVPA_XREF(CMcpxStream_Stop_Ex, 4134, 1+8,
         // CMcpxStream_Stop_Ex+0x36 : push esi
         { 0x36, 0xC2 },
         { 0x37, 0x0C },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSound::DoWork
+// ******************************************************************
+// Generic OOVPA as of 4134 and newer
+OOVPA_XREF(CDirectSound_DoWork, 4134, 14,
+
+    XREF_CDirectSound_DoWork,
+    XRefZero)
+
+        // CDirectSound_DoWork+0x0D : mov esi, al
+        { 0x0D, 0x0F },
+        { 0x0E, 0xB6 },
+        { 0x0F, 0xF0 },
+
+        // The rest are identical to 4039 OOVPA with one offset forward.
+
+        // CDirectSound_DoWork+0x10 : jnz +0x0C
+        { 0x10, 0x75 },
+        { 0x11, 0x0C },
+
+        // CDirectSound_DoWork+0x12 : mov eax, [esp+4+arg_0]
+        { 0x12, 0x8B },
+        { 0x13, 0x44 },
+        { 0x14, 0x24 },
+        { 0x15, 0x08 },
+
+        // CDirectSound_DoWork+0x16 : mov ecx, [eax+0Ch]
+        { 0x16, 0x8B },
+        { 0x17, 0x48 },
+        { 0x18, 0x0C },
+
+        // CDirectSound_DoWork+0x2E : retn 0x04
+        { 0x2E, 0xC2 },
+        { 0x2F, 0x04 },
 OOVPA_END;

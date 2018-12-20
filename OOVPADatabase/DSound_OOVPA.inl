@@ -234,7 +234,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSoundVoice_SetEG, 3911, 4039),
     REGISTER_OOVPAS(CDirectSoundVoice_SetFilter, 3911, 4039),
     REGISTER_OOVPAS(CDirectSoundVoice_SetFormat, 4039, 4721),
-    REGISTER_OOVPAS(CDirectSoundVoice_SetFrequency, 3911, 4039, 4134),
+    REGISTER_OOVPAS(CDirectSoundVoice_SetFrequency, 3911, 4039, 4134), // Final generic OOVPA: 4134
     REGISTER_OOVPAS(CDirectSoundVoice_SetHeadroom, 3911, 4039, 4134),
     REGISTER_OOVPAS(CDirectSoundVoice_SetI3DL2Source, 3911, 4039, 4134, 5344),
     REGISTER_OOVPAS(CDirectSoundVoice_SetLFO, 3911, 4039),
@@ -341,7 +341,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSound_CreateSoundBuffer, 3911, 4039, 4134),
     REGISTER_OOVPAS(CDirectSound_CreateSoundStream, 3911, 4039, 4134),
     REGISTER_OOVPAS(CDirectSound_DownloadEffectsImage, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSound_DoWork, 3911, 4039),
+    REGISTER_OOVPAS(CDirectSound_DoWork, 3911, 4039, 4134), // Final generic OOVPA: 4134
     REGISTER_OOVPAS(CDirectSound_EnableHeadphones, 3911, 4039, 4134, 5344, 5455), // Final generic OOVPA: 5455
     REGISTER_OOVPAS(CDirectSound_GetCaps, 3911, 4039, 4134, 4361),
     REGISTER_OOVPAS(CDirectSound_GetEffectData, 3911, 4039, 4134),
@@ -486,7 +486,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(DirectSoundCreate, 3911, 4039, 4134),
     REGISTER_OOVPAS(DirectSoundCreateBuffer, 3911, 4039, 4134),
     REGISTER_OOVPAS(DirectSoundCreateStream, 3911, 4039, 4134),
-    REGISTER_OOVPAS(DirectSoundDoWork, 3911, 4134),
+    REGISTER_OOVPAS(DirectSoundDoWork, 3911, 4134), // Final generic OOVPA: 4134
     REGISTER_OOVPAS(DirectSoundGetSampleTime, 3911, 4361),
     REGISTER_OOVPAS(DirectSoundUseFullHRTF, 3911, 4039, 4134, 4242, 5344), // Final generic OOVPA: 5344
     REGISTER_OOVPAS(DirectSoundUseLightHRTF, 3911, 4242, 5344), // Final generic OOVPA: 5344
