@@ -99,7 +99,6 @@
 //   * IDirectSoundStream_SetHeadroom   & CDirectSoundStream_SetHeadroom
 //   * IDirectSoundStream_SetFrequency  & CDirectSoundStream_SetFrequency
 //   * IDirectSoundStream_SetMixBins    & CDirectSoundStream_SetMixBins
-// * Need to include func export support for IDirectSoundStream_Setxxxxx from above.
 // * 3911 - Not part of API, yet is a non-member function : (might be useful)
 //   * GetFormatSize
 //   * CopyFormat
