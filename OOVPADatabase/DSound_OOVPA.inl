@@ -169,10 +169,11 @@
 // ******************************************************************
 OOVPATable DSound_OOVPAV2[] = {
 
-    REGISTER_OOVPAS(XAudioCalculatePitch, 3911, 4039, 5455),
-    REGISTER_OOVPAS(DirectSoundEnterCriticalSection, 3911),
-    REGISTER_OOVPAS(CMcpxAPU_Commit3dSettings, 3911),
-    REGISTER_OOVPAS(CMcpxAPU_ServiceDeferredCommandsLow, 3911),
+    REGISTER_OOVPAS(XAudioCalculatePitch, 3911, 4039, 5455), // Final generic OOVPA: 5455; Removed: 0
+    REGISTER_OOVPAS(DirectSoundEnterCriticalSection, 3911), // Final generic OOVPA: 3911; Removed: 0
+
+    REGISTER_OOVPAS(CMcpxAPU_Commit3dSettings, 3911), // Final generic OOVPA: 3911; Removed: 4134+
+    REGISTER_OOVPAS(CMcpxAPU_ServiceDeferredCommandsLow, 3911, 4134, 5455), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS(CMcpxAPU_Set3dDistanceFactor, 3911),
     REGISTER_OOVPAS(CMcpxAPU_Set3dDopplerFactor, 3911),
     REGISTER_OOVPAS(CMcpxAPU_Set3dParameters, 3911),
@@ -182,6 +183,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CMcpxAPU_SetI3DL2Listener, 3911),
     REGISTER_OOVPAS(CMcpxAPU_SetMixBinHeadroom, 3911),
     REGISTER_OOVPAS(CMcpxAPU_SynchPlayback, 4831),
+
     REGISTER_OOVPAS(CMcpxBuffer_GetCurrentPosition, 3911, 4039, 4134),
     REGISTER_OOVPAS(CMcpxBuffer_GetStatus, 3911, 4039, 4134, 4721, 4831),
     REGISTER_OOVPAS(CMcpxBuffer_Pause, 4721, 4831), // NOTE: ?Pause@CMcpxBuffer@DirectSound@@QAEJK@Z
@@ -192,6 +194,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CMcpxBuffer_SetCurrentPosition, 3911, 4039, 4134),
     REGISTER_OOVPAS(CMcpxBuffer_Stop, 3911, 4134, 4242), // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJK@Z
     REGISTER_OOVPAS(CMcpxBuffer_Stop_Ex, 4134), // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJ_JK@Z
+
     REGISTER_OOVPAS(CMcpxStream_Stop, 4134, 5455), // Final generic OOVPA: 5455 (introduced in 4134)
     REGISTER_OOVPAS(CMcpxStream_Stop_Ex, 4134), // Final generic OOVPA: 4134 (introduced in 4134)
     REGISTER_OOVPAS(CMcpxStream_Discontinuity, 3911, 4039, 4134, 4531, 5455),
@@ -199,6 +202,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CMcpxStream_GetStatus, 4134, 4721),
     REGISTER_OOVPAS(CMcpxStream_Pause, 3911, 4039, 4134, 4831),
     REGISTER_OOVPAS(CMcpxStream_Pause_Ex, 4361),
+
     REGISTER_OOVPAS(CSensaura3d_GetFullHRTFFilterPair, 3911, 3936),
     REGISTER_OOVPAS(CSensaura3d_GetLiteHRTFFilterPair, 3911, 3936),
     REGISTER_OOVPAS(CMcpxVoiceClient_Commit3dSettings, 3911),

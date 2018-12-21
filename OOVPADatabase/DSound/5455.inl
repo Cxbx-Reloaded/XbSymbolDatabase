@@ -384,6 +384,7 @@ OOVPA_END;
 // ******************************************************************
 // * XAudioCalculatePitch
 // ******************************************************************
+// Generic OOVPA as of 5455 and newer
 OOVPA_XREF(XAudioCalculatePitch, 5455, 12,
 
     XREF_XAudioCalculatePitch,
@@ -432,4 +433,29 @@ OOVPA_XREF(CMcpxStream_Stop, 5455, 7,
         { 0x20, 0x45 },
         { 0x21, 0x08 },
         { 0x22, 0x06 },
+OOVPA_END;
+
+// ******************************************************************
+// * DirectSound::CMcpxAPU::ServiceDeferredCommandsLow
+// ******************************************************************
+// Generic OOVPA as of 5455 and newer; whole asm had not been changed since.
+OOVPA_XREF(CMcpxAPU_ServiceDeferredCommandsLow, 5455, 9,
+
+    XREF_CMcpxAPU_ServiceDeferredCommandsLow,
+    XRefZero)
+
+        // CMcpxAPU_ServiceDeferredCommandsLow+0x00: push ebp; mov ebp,esp
+        { 0x00, 0x55 },
+        { 0x01, 0x8B },
+        { 0x02, 0xEC },
+
+        // CMcpxAPU_ServiceDeferredCommandsLow+0x11: lea ecx,[ebp-10]
+        { 0x11, 0x8D },
+        { 0x12, 0x4D },
+        { 0x13, 0xF0 },
+
+        // CMcpxAPU_ServiceDeferredCommandsLow+0x17: mov [ebp-08],eax
+        { 0x17, 0x89 },
+        { 0x18, 0x45 },
+        { 0x19, 0xF8 },
 OOVPA_END;

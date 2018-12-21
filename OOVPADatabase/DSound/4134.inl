@@ -3840,10 +3840,13 @@ OOVPA_END;
 // * CDirectSound::DoWork
 // ******************************************************************
 // Generic OOVPA as of 4134 and newer
-OOVPA_XREF(CDirectSound_DoWork, 4134, 14,
+OOVPA_XREF(CDirectSound_DoWork, 4134, 1+10,
 
     XREF_CDirectSound_DoWork,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSound_DoWork+0x19 : call [CMcpxAPU::ServiceDeferredCommandsLow]
+        XREF_ENTRY( 0x1A, XREF_CMcpxAPU_ServiceDeferredCommandsLow),
 
         // CDirectSound_DoWork+0x0D : mov esi, al
         { 0x0D, 0x0F },
@@ -3856,11 +3859,13 @@ OOVPA_XREF(CDirectSound_DoWork, 4134, 14,
         { 0x10, 0x75 },
         { 0x11, 0x0C },
 
+#if 0 // disabled to reduce scan size
         // CDirectSound_DoWork+0x12 : mov eax, [esp+4+arg_0]
         { 0x12, 0x8B },
         { 0x13, 0x44 },
         { 0x14, 0x24 },
         { 0x15, 0x08 },
+#endif
 
         // CDirectSound_DoWork+0x16 : mov ecx, [eax+0Ch]
         { 0x16, 0x8B },
@@ -3870,4 +3875,30 @@ OOVPA_XREF(CDirectSound_DoWork, 4134, 14,
         // CDirectSound_DoWork+0x2E : retn 0x04
         { 0x2E, 0xC2 },
         { 0x2F, 0x04 },
+OOVPA_END;
+
+// ******************************************************************
+// * DirectSound::CMcpxAPU::ServiceDeferredCommandsLow
+// ******************************************************************
+OOVPA_XREF(CMcpxAPU_ServiceDeferredCommandsLow, 4134, 9,
+
+    XREF_CMcpxAPU_ServiceDeferredCommandsLow,
+    XRefZero)
+
+        // CMcpxAPU_ServiceDeferredCommandsLow+0x00: push ebp; mov ebp,esp
+        { 0x00, 0x55 },
+        { 0x01, 0x8B },
+        { 0x02, 0xEC },
+
+        // CMcpxAPU_ServiceDeferredCommandsLow+0x17: lea ecx,[ebp-10]
+        { 0x17, 0x8D },
+        { 0x18, 0x4D },
+        { 0x19, 0xF0 },
+
+        // CMcpxAPU_ServiceDeferredCommandsLow+0x1A: mov [ebp-08],eax
+        { 0x1A, 0x89 },
+        { 0x1B, 0x45 },
+        { 0x1C, 0xF8 },
+
+        // Generic support over multiple revisions end at offset 0x3A
 OOVPA_END;

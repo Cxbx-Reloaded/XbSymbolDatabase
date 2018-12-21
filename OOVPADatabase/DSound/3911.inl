@@ -1294,6 +1294,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxAPU_Commit3dSettings
 // ******************************************************************
+//Generic OOVPA as of 3911 to 4039; 4134 and newer no longer have it.
 OOVPA_XREF(CMcpxAPU_Commit3dSettings, 3911, 11,
 
     XREF_CMcpxAPU_Commit3dSettings,
