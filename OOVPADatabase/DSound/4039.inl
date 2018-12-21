@@ -4127,10 +4127,14 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound::SetMixBinHeadroom
 // ******************************************************************
-OOVPA_XREF(CDirectSound_SetMixBinHeadroom, 4039, 17,
+// NOTE: Might be possible to merge into 3911 since call offset is the same.
+OOVPA_XREF(CDirectSound_SetMixBinHeadroom, 4039, 1+8,
 
     XREF_CDirectSound_SetMixBinHeadroom,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSound_SetMixBinHeadroom+0x18 : call [CMcpxAPU_SetMixBinHeadroom]
+        XREF_ENTRY( 0x19, XREF_CMcpxAPU_SetMixBinHeadroom),
 
         // CDirectSound_SetMixBinHeadroom+0x00 : push esi
         { 0x00, 0x56 },
@@ -4142,6 +4146,7 @@ OOVPA_XREF(CDirectSound_SetMixBinHeadroom, 4039, 17,
         { 0x23, 0x00 },
         { 0x24, 0x80 },
 
+#if 0
         // CDirectSound_SetMixBinHeadroom+0x37 : mov [edx+ecx*4+88h], edi
         { 0x37, 0x89 },
         { 0x38, 0xBC },
@@ -4156,6 +4161,7 @@ OOVPA_XREF(CDirectSound_SetMixBinHeadroom, 4039, 17,
 
         // CDirectSound_SetMixBinHeadroom+0x3F : mov ecx, [eax+0Ch]
         { 0x3F, 0x8B },
+#endif
 
         // CDirectSound_SetMixBinHeadroom+0x5C : retn 0x0C
         { 0x5C, 0xC2 },

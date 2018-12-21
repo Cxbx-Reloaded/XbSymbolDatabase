@@ -174,15 +174,15 @@ OOVPATable DSound_OOVPAV2[] = {
 
     REGISTER_OOVPAS(CMcpxAPU_Commit3dSettings, 3911), // Final generic OOVPA: 3911; Removed: 4134+
     REGISTER_OOVPAS(CMcpxAPU_ServiceDeferredCommandsLow, 3911, 4134, 5455), // Final generic OOVPA: 5455; Removed: 0
-    REGISTER_OOVPAS(CMcpxAPU_Set3dDistanceFactor, 3911),
-    REGISTER_OOVPAS(CMcpxAPU_Set3dDopplerFactor, 3911),
-    REGISTER_OOVPAS(CMcpxAPU_Set3dParameters, 3911),
-    REGISTER_OOVPAS(CMcpxAPU_Set3dPosition, 3911),
-    REGISTER_OOVPAS(CMcpxAPU_Set3dRolloffFactor, 3911),
-    REGISTER_OOVPAS(CMcpxAPU_Set3dVelocity, 3911),
-    REGISTER_OOVPAS(CMcpxAPU_SetI3DL2Listener, 3911),
-    REGISTER_OOVPAS(CMcpxAPU_SetMixBinHeadroom, 3911),
-    REGISTER_OOVPAS(CMcpxAPU_SynchPlayback, 4831),
+    REGISTER_OOVPAS(CMcpxAPU_Set3dDistanceFactor, 3911), // Final generic OOVPA: 3911; Removed: 4134+
+    REGISTER_OOVPAS(CMcpxAPU_Set3dDopplerFactor, 3911), // Final generic OOVPA: 3911; Removed: 4134+
+    REGISTER_OOVPAS(CMcpxAPU_Set3dParameters, 3911), // Final generic OOVPA: 3911; Removed: 4134+
+    REGISTER_OOVPAS(CMcpxAPU_Set3dPosition, 3911), // Final generic OOVPA: 3911; Removed: 4134+
+    REGISTER_OOVPAS(CMcpxAPU_Set3dRolloffFactor, 3911), // Final generic OOVPA: 3911; Removed: 4134+
+    REGISTER_OOVPAS(CMcpxAPU_Set3dVelocity, 3911), // Final generic OOVPA: 3911; Removed: 4134+
+    REGISTER_OOVPAS(CMcpxAPU_SetI3DL2Listener, 3911), // Final generic OOVPA: 3911; Removed: 4134+
+    REGISTER_OOVPAS(CMcpxAPU_SetMixBinHeadroom, 3911, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CMcpxAPU_SynchPlayback, 4831), // Final generic OOVPA: 4831; Removed: 0
 
     REGISTER_OOVPAS(CMcpxBuffer_GetCurrentPosition, 3911, 4039, 4134),
     REGISTER_OOVPAS(CMcpxBuffer_GetStatus, 3911, 4039, 4134, 4721, 4831),
@@ -357,7 +357,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSound_SetDopplerFactor, 3911, 4039, 4134, 4627, 5344),
     REGISTER_OOVPAS(CDirectSound_SetEffectData, 3911, 4039, 4134),
     REGISTER_OOVPAS(CDirectSound_SetI3DL2Listener, 3911, 4039, 4134, 5344, 5455),
-    REGISTER_OOVPAS(CDirectSound_SetMixBinHeadroom, 3911, 4039, 4134),
+    REGISTER_OOVPAS(CDirectSound_SetMixBinHeadroom, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 // NOTE: 4039 could be merge into 3911 for call offset is the same.
     REGISTER_OOVPAS(CDirectSound_SetOrientation, 3911, 4039, 4134),
     REGISTER_OOVPAS(CDirectSound_SetPosition, 3911, 4039, 4134, 4627, 5344),
     REGISTER_OOVPAS(CDirectSound_SetRolloffFactor, 3911, 4039, 4134, 5344),

@@ -3095,7 +3095,7 @@ OOVPA_XREF(CDirectSoundBuffer_SetOutputBuffer, 4134, 1+17,
     XREF_CDirectSoundBuffer_SetOutputBuffer,
     XRefOne)
 
-        // CDirectSoundBuffer_SetOutputBuffer+0x31 : call [XREF_CDirectSoundVoice_SetOutputBuffer]
+        // CDirectSoundBuffer_SetOutputBuffer+0x31 : call [CDirectSoundVoice_SetOutputBuffer]
         XREF_ENTRY( 0x32, XREF_CDirectSoundVoice_SetOutputBuffer),
 
         // CDirectSoundBuffer_SetOutputBuffer+0x00 : push esi
@@ -3130,10 +3130,13 @@ OOVPA_END;
 // * CDirectSound::SetMixBinHeadroom
 // ******************************************************************
 // Generic OOVPA as of 4134 and newer
-OOVPA_XREF(CDirectSound_SetMixBinHeadroom, 4134, 18,
+OOVPA_XREF(CDirectSound_SetMixBinHeadroom, 4134, 1+12,
 
     XREF_CDirectSound_SetMixBinHeadroom,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSound_SetMixBinHeadroom+0x41 : call [CMcpxAPU_SetMixBinHeadroom]
+        XREF_ENTRY( 0x42, XREF_CMcpxAPU_SetMixBinHeadroom),
 
         // CDirectSound_SetMixBinHeadroom+0x00 : push esi
         { 0x00, 0x56 },
@@ -3151,6 +3154,7 @@ OOVPA_XREF(CDirectSound_SetMixBinHeadroom, 4134, 18,
         { 0x36, 0x24 },
         { 0x37, 0x14 },
 
+#if 0
         // CDirectSound_SetMixBinHeadroom+0x39 : mov [edx+ecx+0x__], bl
         { 0x39, 0x88 },
         { 0x3A, 0x5C },
@@ -3161,6 +3165,7 @@ OOVPA_XREF(CDirectSound_SetMixBinHeadroom, 4134, 18,
         { 0x3E, 0x8B },
         { 0x3F, 0x48 },
         { 0x40, 0x0C },
+#endif
 
         // CDirectSound_SetMixBinHeadroom+0x5C : retn 0x0C
         { 0x5C, 0xC2 },
@@ -3899,6 +3904,37 @@ OOVPA_XREF(CMcpxAPU_ServiceDeferredCommandsLow, 4134, 9,
         { 0x1A, 0x89 },
         { 0x1B, 0x45 },
         { 0x1C, 0xF8 },
+
+        // Generic support over multiple revisions end at offset 0x3A
+OOVPA_END;
+
+// ******************************************************************
+// * CMcpxAPU::SetMixBinHeadroom
+// ******************************************************************
+// Generic OOVPA as of 4134 and newer
+OOVPA_XREF(CMcpxAPU_SetMixBinHeadroom, 4134, 11,
+
+    XREF_CMcpxAPU_SetMixBinHeadroom,
+    XRefZero)
+
+        // CMcpxAPU_SetMixBinHeadroom+0x00: push ebp;
+        { 0x00, 0x55 },
+
+        // CMcpxAPU_SetMixBinHeadroom+0x14: mov eax, [0xFE820010]
+        { 0x14, 0xA1 },
+        { 0x15, 0x10 },
+        { 0x16, 0x00 },
+        { 0x17, 0x82 },
+        { 0x18, 0xFE },
+
+        // CMcpxAPU_SetMixBinHeadroom+0x19: and eax,-04
+        { 0x19, 0x83 },
+        { 0x1A, 0xE0 },
+        { 0x1B, 0xFC },
+
+        // CMcpxAPU_SetMixBinHeadroom+0x42: ret
+        { 0x42, 0xC2 },
+        { 0x43, 0x04 },
 
         // Generic support over multiple revisions end at offset 0x3A
 OOVPA_END;
