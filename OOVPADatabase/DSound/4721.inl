@@ -52,27 +52,35 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxBuffer_GetStatus
 // ******************************************************************
-OOVPA_XREF(CMcpxBuffer_GetStatus, 4721, 17,
+OOVPA_XREF(CMcpxBuffer_GetStatus, 4721, 11,
 
     XREF_CMcpxBuffer_GetStatus,
     XRefZero)
 
+        // CMcpxBuffer_GetStatus+0x00 : movzx eax,word [ecx+0x12]
         { 0x00, 0x0F },
         { 0x01, 0xB7 },
         { 0x02, 0x41 },
         { 0x03, 0x12 },
-        { 0x04, 0x8B },
-        { 0x05, 0xC8 },
+
+#if 0
+        // Offset is unique for this asm code.
+        // CMcpxBuffer_GetStatus+0x06 : and ecx, 0x03
         { 0x06, 0x83 },
         { 0x07, 0xE1 },
         { 0x08, 0x03 },
+#endif
+
+        // Offset is unique for this asm code.
+        // CMcpxBuffer_GetStatus+0x09 : cmp cl, 0x03
         { 0x09, 0x80 },
         { 0x0A, 0xF9 },
         { 0x0B, 0x03 },
-        { 0x0C, 0x75 },
 
-        { 0x25, 0xEB },
-        { 0x26, 0x14 },
+        // Offset is unique for this asm code.
+        // CMcpxBuffer_GetStatus+0x12 : test al, 0x04
+        { 0x12, 0xA8 },
+        { 0x13, 0x04 },
 
         { 0x3D, 0xC2 },
         { 0x3E, 0x04 },
