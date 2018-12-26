@@ -627,7 +627,7 @@ OOVPA_XREF(CDirectSoundBuffer_SetFrequency, 4039, 1+12,
     XRefOne)
 
         // CDirectSoundBuffer_SetFrequency+0x31 : call [CDirectSoundVoice::SetFrequency]
-        XREF_ENTRY( 0x31, XREF_CDirectSoundVoice_SetFrequency ), // Was 4134 Offset -0x01h
+        XREF_ENTRY( 0x31, XREF_CDirectSoundVoice_SetFrequency ), // Was 4134 Offset -0x01
 
         // CDirectSoundBuffer_SetFrequency+0x00 : push esi
         { 0x00, 0x56 },
