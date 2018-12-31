@@ -138,6 +138,8 @@
 //   * XAudioCreateAdpcmFormat (4039 - 4134)
 //   * XFileCreateMediaObject (4039 - 4242)
 //   * XWaveFileCreateMediaObject (4039 - 4242)
+// * List of OOVPAs might need to be lower
+//   * CMcpxStream_Stop (5233)
 
 
 #ifndef DSOUND_OOVPA_INL
@@ -258,7 +260,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CMcpxBuffer_Stop, 3911, 4134, 4242), // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJK@Z
     REGISTER_OOVPAS(CMcpxBuffer_Stop_Ex, 4134), // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJ_JK@Z
 
-    REGISTER_OOVPAS(CMcpxStream_Stop, 4134, 5455), // Final generic OOVPA: 5455 (introduced in 4134)
+    REGISTER_OOVPAS(CMcpxStream_Stop, 4134, 5233), // Final generic OOVPA: 5233? (introduced in 4134)
     REGISTER_OOVPAS(CMcpxStream_Stop_Ex, 4134), // Final generic OOVPA: 4134 (introduced in 4134)
     REGISTER_OOVPAS(CMcpxStream_Flush, 3911, 3936, 4039, 4134), // Final generic OOVPA: 4134
     REGISTER_OOVPAS(CMcpxStream_Discontinuity, 3911, 4039, 4134, 4531, 5455), // NOTE: Must be after CMcpxStream_Flush for one time scan.

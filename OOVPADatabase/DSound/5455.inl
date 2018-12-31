@@ -385,29 +385,6 @@ OOVPA_XREF(XAudioCalculatePitch, 5455, 12,
 OOVPA_END;
 
 // ******************************************************************
-// * CMcpxStream::Stop
-// ******************************************************************
-OOVPA_XREF(CMcpxStream_Stop, 5455, 7,
-
-    XREF_CMcpxStream_Stop,
-    XRefZero)
-
-    // calls to CIrql_Raise, CIrql_Lower, CMcpxVoiceClient_ReleaseVoice, CMcpxVoiceClient_DeactivateVoice
-
-        // CMcpxStream_Stop+0x00 : push ebp; mov ebp,esp
-        { 0x00, 0x55 },
-        { 0x01, 0x8B },
-        { 0x02, 0xEC },
-
-        // Offset is unique for this asm code.
-        // CMcpxStream_Stop+0x1F : test [ebp+8],6
-        { 0x1F, 0xF6 },
-        { 0x20, 0x45 },
-        { 0x21, 0x08 },
-        { 0x22, 0x06 },
-OOVPA_END;
-
-// ******************************************************************
 // * DirectSound::CMcpxAPU::ServiceDeferredCommandsLow
 // ******************************************************************
 // Generic OOVPA as of 5455 and newer; whole asm had not been changed since.
