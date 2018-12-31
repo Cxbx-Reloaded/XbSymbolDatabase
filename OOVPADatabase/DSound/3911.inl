@@ -2710,12 +2710,20 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxVoiceClient::Commit3dSettings
 // ******************************************************************
-OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 3911, 10,
+OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 3911, 2+11,
 
     XREF_CMcpxVoiceClient_Commit3dSettings,
-    XRefZero)
+    XRefTwo)
 
-        // CMcpxVoiceClient::Commit3dSettings+0x17 : or [eax+0x80], ecx
+        // CMcpxVoiceClient::Commit3dSettings+0x65 : call [CMcpxVoiceClient_SetVolume]
+        XREF_ENTRY( 0x66, XREF_CMcpxVoiceClient_SetVolume ),
+
+        // CMcpxVoiceClient::Commit3dSettings+0x83 : call [CMcpxVoiceClient_SetFilter]
+        XREF_ENTRY( 0x84, XREF_CMcpxVoiceClient_SetFilter ),
+
+        { 0x00, 0x55 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x17 : or [eax+0x80],ecx
         { 0x17, 0x09 },
         { 0x18, 0x88 },
         { 0x19, 0x80 },
@@ -2724,7 +2732,8 @@ OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 3911, 10,
         { 0x2B, 0x05 },
         { 0x2C, 0x80 },
         { 0x2D, 0x00 },
-        // CMcpxVoiceClient::Commit3dSettings+0x3D : cmpxchg [ecx], edx
+
+        // CMcpxVoiceClient::Commit3dSettings+0x3D : cmpxchg [ecx],edx
         { 0x3D, 0x0F },
         { 0x3E, 0xB1 },
         { 0x3F, 0x11 },

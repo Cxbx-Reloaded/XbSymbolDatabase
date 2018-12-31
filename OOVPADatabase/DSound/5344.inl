@@ -347,26 +347,27 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound::CommitDeferredSettings
 // ******************************************************************
-OOVPA_XREF(CDirectSound_CommitDeferredSettings, 5344, 11,
+OOVPA_XREF(CDirectSound_CommitDeferredSettings, 5344, 2+8,
 
     XREF_CDirectSound_CommitDeferredSettings,
-    XRefZero)
+    XRefTwo)
+    
+        // CDirectSound_CommitDeferredSettings+0x46 : call [CDirectSound3DCalculator::Calculate3D]
+        XREF_ENTRY( 0x47, XREF_CDirectSound3DCalculator_Calculate3D ),
+    
+        // CDirectSound_CommitDeferredSettings+0x5E : call [CDirectSoundVoice::CommitDeferredSettings]
+        XREF_ENTRY( 0x5F, XREF_CDirectSoundVoice_CommitDeferredSettings ),
 
-        // CDirectSound_CommitDeferredSettings+0x11 : movzx eax, al
-        { 0x11, 0x0F },
-        { 0x12, 0xB6 },
-        { 0x13, 0xC0 },
+        // CDirectSound_CommitDeferredSettings+0x00 : push ebp; mov ebp,esp
+        { 0x00, 0x55 },
+        { 0x01, 0x8B },
+        { 0x02, 0xEC },
 
         // CDirectSound_CommitDeferredSettings+0x27 : mov eax, 0x80004005
         { 0x28, 0xB8 },
         { 0x29, 0x05 },
         { 0x2A, 0x40 },
         { 0x2C, 0x80 },
-
-        // CDirectSound_CommitDeferredSettings+0x6D : mov [eax+0x34], edi
-        { 0x6E, 0x89 },
-        { 0x6F, 0x78 },
-        { 0x70, 0x34 },
 
         // CDirectSound_CommitDeferredSettings+0x97 : leave
         { 0x97, 0xC9 },
@@ -1266,6 +1267,61 @@ OOVPA_XREF(IDirectSound_UnmapBufferData, 5344, 1+6,
         { 0x0C, 0xF8 },
         { 0x19, 0xC2 },
         { 0x1A, 0x08 },
+OOVPA_END;
+
+// ******************************************************************
+// * CMcpxVoiceClient::Commit3dSettings
+// ******************************************************************
+// Generic OOVPA as of 5344 and newer
+OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 5344, 2+9,
+
+    XREF_CMcpxVoiceClient_Commit3dSettings,
+    XRefTwo)
+
+        // CMcpxVoiceClient::Commit3dSettings+0x2B : call [CDirectSound3DCalculator::Calculate3D]
+        XREF_ENTRY( 0x2C, XREF_CDirectSound3DCalculator_Calculate3D ),
+
+        // CMcpxVoiceClient::Commit3dSettings+0x56 : call [CDirectSound3DCalculator::GetVoiceData]
+        XREF_ENTRY( 0x57, XREF_CDirectSound3DCalculator_GetVoiceData ),
+
+        { 0x00, 0x55 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x5E : mov e__,[e__+0x000000B4]
+        { 0x5E, 0x8B },
+        //{ 0x5F, 0x__ },
+        { 0x60, 0xB4 },
+        { 0x61, 0x00 },
+        //{ 0x62, 0x00 },
+        { 0x63, 0x00 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x67 : mov eax,[eax+0x000000B4]
+        { 0x6A, 0x8B },
+        //{ 0x6B, 0x80 },
+        { 0x6C, 0xB4 },
+        { 0x6D, 0x00 },
+        //{ 0x6E, 0x00 },
+        { 0x6F, 0x00 },
+
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundVoice::CommitDeferredSettings
+// ******************************************************************
+// Generic OOVPA as of 5344 and newer
+OOVPA_XREF(CDirectSoundVoice_CommitDeferredSettings, 5344, 1+6,
+
+    XREF_CDirectSoundVoice_CommitDeferredSettings,
+    XRefOne)
+
+        // CDirectSoundVoice::CommitDeferredSettings+0x07 : call [CMcpxVoiceClient::Commit3dSettings]
+        XREF_ENTRY( 0x08, XREF_CMcpxVoiceClient_Commit3dSettings ),
+
+        { 0x01, 0x44 },
+        { 0x04, 0x8B },
+        { 0x07, 0xE8 },
+        { 0x0C, 0x33 },
+        { 0x0D, 0xC0 },
+        { 0x10, 0x00 },
 OOVPA_END;
 
 // ******************************************************************

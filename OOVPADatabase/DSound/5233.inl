@@ -41,3 +41,36 @@ OOVPA_XREF(CDirectSound_EnableHeadphones, 5233, 9,
         { 0x74, 0xA4 },
         { 0x99, 0x08 },
 OOVPA_END;
+
+// ******************************************************************
+// * CMcpxVoiceClient::Commit3dSettings
+// ******************************************************************
+OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 5233, 12,
+
+    XREF_CMcpxVoiceClient_Commit3dSettings,
+    XRefZero)
+
+        { 0x00, 0x55 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x3F : cmp edi, 0x02
+        { 0x3F, 0x83 },
+        { 0x40, 0xFF },
+        { 0x41, 0x02 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x61 : mov e__,[e__+0x000000B4]
+        { 0x61, 0x8B },
+        //{ 0x62, 0x__ },
+        { 0x63, 0xB4 },
+        { 0x64, 0x00 },
+        //{ 0x65, 0x00 },
+        { 0x66, 0x00 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x70 : mov eax,[eax+0x000000B4]
+        { 0x70, 0x8B },
+        //{ 0x71, 0x80 },
+        { 0x72, 0xB4 },
+        { 0x73, 0x00 },
+        //{ 0x74, 0x00 },
+        { 0x75, 0x00 },
+
+OOVPA_END;

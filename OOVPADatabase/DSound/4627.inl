@@ -283,3 +283,36 @@ OOVPA_XREF(CDirectSoundVoice_SetDopplerFactor, 4627, 12,
         { 0x31, 0x0C },
         { 0x32, 0x00 }
 OOVPA_END;
+
+// ******************************************************************
+// * CMcpxVoiceClient::Commit3dSettings
+// ******************************************************************
+OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 4627, 12,
+
+    XREF_CMcpxVoiceClient_Commit3dSettings,
+    XRefZero)
+
+        { 0x00, 0x55 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x42 : cmp edi, 0x02
+        { 0x42, 0x83 },
+        { 0x43, 0xFF },
+        { 0x44, 0x02 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x68 : mov e__,[e__+0x000000B4]
+        { 0x68, 0x8B },
+        //{ 0x69, 0x__ },
+        { 0x6A, 0xB4 },
+        { 0x6B, 0x00 },
+        //{ 0x6C, 0x00 },
+        { 0x6D, 0x00 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x77 : mov eax,[eax+0x000000B4]
+        { 0x77, 0x8B },
+        //{ 0x78, 0x80 },
+        { 0x79, 0xB4 },
+        { 0x7A, 0x00 },
+        //{ 0x7B, 0x00 },
+        { 0x7C, 0x00 },
+
+OOVPA_END;

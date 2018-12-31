@@ -196,7 +196,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSound3DCalculator_GetVoiceData, 5344),
 
     //========================================================
-    REGISTER_OOVPAS(CMcpxVoiceClient_Commit3dSettings, 3911),
+    REGISTER_OOVPAS(CMcpxVoiceClient_Commit3dSettings, 3911, 4039, 4134, 4242, 4627, 5233, 5344, 5455), // Final generic OOVPA: 5455; Removed: 0 
     REGISTER_OOVPAS(CMcpxVoiceClient_GetVoiceProperties, 5028),
     REGISTER_OOVPAS(CMcpxVoiceClient_Set3dConeOrientation, 3911),
     REGISTER_OOVPAS(CMcpxVoiceClient_Set3dConeOutsideVolume, 3911),
@@ -216,7 +216,7 @@ OOVPATable DSound_OOVPAV2[] = {
 
     REGISTER_OOVPAS(CDirectSoundVoiceSettings_SetMixBinVolumes, 4039, 4134),
 
-    REGISTER_OOVPAS(CDirectSoundVoice_CommitDeferredSettings, 5455),
+    REGISTER_OOVPAS(CDirectSoundVoice_CommitDeferredSettings, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 4039)
     REGISTER_OOVPAS(CDirectSoundVoice_GetVoiceProperties, 5028),
     REGISTER_OOVPAS(CDirectSoundVoice_Set3DVoiceData, 5455),
     REGISTER_OOVPAS(CDirectSoundVoice_SetAllParameters, 3911, 4039, 4134),
@@ -350,7 +350,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSoundStream_SetVolume, 3911, 4039, 4134),
     REGISTER_OOVPAS(CDirectSoundStream_Use3DVoiceData, 5558), // Final generic OOVPA: 5558 (introduced in 5558)
 
-    REGISTER_OOVPAS(CDirectSound_CommitDeferredSettings, 3911, 4039, 4134, 5344, 5455), // Final generic OOVPA: 5455
+    REGISTER_OOVPAS(CDirectSound_CommitDeferredSettings, 3911, 4039, 4134, 5344, 5455), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS(CDirectSound_CommitEffectData, 3911, 4039, 4134),
     REGISTER_OOVPAS(CDirectSound_CreateSoundBuffer, 3911, 4039, 4134),
     REGISTER_OOVPAS(CDirectSound_CreateSoundStream, 3911, 4039, 4134),

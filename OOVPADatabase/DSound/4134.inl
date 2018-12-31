@@ -3938,3 +3938,70 @@ OOVPA_XREF(CMcpxAPU_SetMixBinHeadroom, 4134, 11,
 
         // Generic support over multiple revisions end at offset 0x3A
 OOVPA_END;
+
+// ******************************************************************
+// * CMcpxVoiceClient::Commit3dSettings
+// ******************************************************************
+OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 4134, 12,
+
+    XREF_CMcpxVoiceClient_Commit3dSettings,
+    XRefZero)
+
+        { 0x00, 0x55 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x3D : cmp edi, 0x02
+        { 0x3D, 0x83 },
+        { 0x3E, 0xFF },
+        { 0x3F, 0x02 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x59 : mov e__,[e__+0x000000B4]
+        { 0x59, 0x8B },
+        //{ 0x5A, 0x__ },
+        { 0x5B, 0xB4 },
+        { 0x5C, 0x00 },
+        //{ 0x5D, 0x00 },
+        { 0x5E, 0x00 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x66 : mov eax,[eax+0x000000B4]
+        { 0x66, 0x8B },
+        //{ 0x67, 0x80 },
+        { 0x68, 0xB4 },
+        { 0x69, 0x00 },
+        //{ 0x6A, 0x00 },
+        { 0x6B, 0x00 },
+
+OOVPA_END;
+
+// ******************************************************************
+// * CMcpxVoiceClient::Commit3dSettings
+// ******************************************************************
+OOVPA_XREF(CDirectSoundVoice_CommitDeferredSettings, 4134, 1+11,
+
+    XREF_CDirectSoundVoice_CommitDeferredSettings,
+    XRefOne)
+
+        // CDirectSoundVoice::CommitDeferredSettings+0x20 : call [CMcpxVoiceClient::Commit3dSettings]
+        XREF_ENTRY( 0x21, XREF_CMcpxVoiceClient_Commit3dSettings ),
+
+        { 0x00, 0x56 },
+
+        // CDirectSoundVoice::CommitDeferredSettings+0x0E : mov ecx,[ecx+0x000000A4]
+        { 0x0E, 0x8B },
+        { 0x0F, 0x89 },
+        { 0x10, 0xA4 },
+        { 0x11, 0x00 },
+        //{ 0x12, 0x00 },
+        //{ 0x13, 0x00 },
+
+        // CDirectSoundVoice::CommitDeferredSettings+0x14 : mov eax,[eax+0x000000B4]
+        { 0x14, 0x8B },
+        { 0x15, 0x80 },
+        { 0x16, 0xB4 },
+        { 0x17, 0x00 },
+        //{ 0x18, 0x00 },
+        //{ 0x19, 0x00 },
+
+        { 0x36, 0xC2 },
+        { 0x37, 0x04 },
+
+OOVPA_END;
