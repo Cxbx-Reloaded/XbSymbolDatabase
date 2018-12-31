@@ -4005,3 +4005,29 @@ OOVPA_XREF(CDirectSoundVoice_CommitDeferredSettings, 4134, 1+11,
         { 0x37, 0x04 },
 
 OOVPA_END;
+
+// ******************************************************************
+// * CMcpxVoiceClient_SetPitch
+// ******************************************************************
+OOVPA_XREF(CMcpxVoiceClient_SetPitch, 4134, 10,
+
+    XREF_CMcpxVoiceClient_SetPitch,
+    XRefZero)
+
+        { 0x00, 0x55 },
+
+        // CMcpxVoiceClient_SetPitch+0x22 : lea edi, [esi+0x44]
+        { 0x22, 0x8D },
+        { 0x23, 0x7E },
+        { 0x24, 0x44 },
+
+        // CMcpxVoiceClient_SetPitch+0x4E : lea ecx,[eax+eax]
+        { 0x4E, 0x8D },
+        { 0x4F, 0x0C },
+        { 0x50, 0x00 },
+
+        // CMcpxVoiceClient_SetPitch+0x64 : lea eax,[esi+0x0C]
+        { 0x64, 0x8D },
+        { 0x65, 0x46 },
+        { 0x66, 0x0C },
+OOVPA_END;

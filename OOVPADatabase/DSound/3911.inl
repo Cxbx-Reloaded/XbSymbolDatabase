@@ -1498,6 +1498,7 @@ OOVPA_XREF(CMcpxVoiceClient_SetPitch, 3911, 11,
 
     XREF_CMcpxVoiceClient_SetPitch,
     XRefZero)
+
         // CMcpxVoiceClient_SetPitch+0x21 : lea edi, [esi+0xB4]
         { 0x21, 0x8D },
         { 0x22, 0xBE },
@@ -2268,6 +2269,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxVoiceClient_Set3dMaxDistance
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_XREF(CMcpxVoiceClient_Set3dMaxDistance, 3911, 12,
 
     XREF_CMcpxVoiceClient_Set3dMaxDistance,
@@ -2427,6 +2429,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxVoiceClient_Set3dMinDistance
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_XREF(CMcpxVoiceClient_Set3dMinDistance, 3911, 12,
 
     XREF_CMcpxVoiceClient_Set3dMinDistance,
@@ -2586,6 +2589,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxVoiceClient_Set3dConeOutsideVolume
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_XREF(CMcpxVoiceClient_Set3dConeOutsideVolume, 3911, 12,
 
     XREF_CMcpxVoiceClient_Set3dConeOutsideVolume,
@@ -2742,6 +2746,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxVoiceClient_Set3dParameters
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_XREF(CMcpxVoiceClient_Set3dParameters, 3911, 1+11,
 
     XREF_CMcpxVoiceClient_Set3dParameters,
@@ -2905,6 +2910,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxVoiceClient_Set3dConeOrientation
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_XREF(CMcpxVoiceClient_Set3dConeOrientation, 3911, 11,
 
     XREF_CMcpxVoiceClient_Set3dConeOrientation,
@@ -3072,6 +3078,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxVoiceClient::Set3dMode
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_XREF(CMcpxVoiceClient_Set3dMode, 3911, 12,
 
     XREF_CMcpxVoiceClient_Set3dMode,
@@ -3177,6 +3184,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxVoiceClient_Set3dPosition
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer
 OOVPA_XREF(CMcpxVoiceClient_Set3dPosition, 3911, 11,
 
     XREF_CMcpxVoiceClient_Set3dPosition,
@@ -3429,6 +3437,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxVoiceClient_Set3dVelocity
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_XREF(CMcpxVoiceClient_Set3dVelocity, 3911, 12,
 
     XREF_CMcpxVoiceClient_Set3dVelocity,
@@ -3627,6 +3636,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxVoiceClient::SetI3DL2Source
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_XREF(CMcpxVoiceClient_SetI3DL2Source, 3911, 7,
 
     XREF_CMcpxVoiceClient_SetI3DL2Source,

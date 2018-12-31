@@ -199,22 +199,22 @@ OOVPATable DSound_OOVPAV2[] = {
 
     //========================================================
     REGISTER_OOVPAS(CMcpxVoiceClient_Commit3dSettings, 3911, 4039, 4134, 4242, 4627, 5233, 5344, 5455), // Final generic OOVPA: 5455; Removed: 0 
-    REGISTER_OOVPAS(CMcpxVoiceClient_GetVoiceProperties, 5028),
-    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dConeOrientation, 3911),
-    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dConeOutsideVolume, 3911),
-    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dMaxDistance, 3911),
-    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dMinDistance, 3911),
-    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dMode, 3911),
-    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dParameters, 3911),
-    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dPosition, 3911),
-    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dVelocity, 3911),
-    REGISTER_OOVPAS(CMcpxVoiceClient_SetEG, 3911, 4039, 4134, 4242),
-    REGISTER_OOVPAS(CMcpxVoiceClient_SetFilter, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CMcpxVoiceClient_SetI3DL2Source, 3911),
-    REGISTER_OOVPAS(CMcpxVoiceClient_SetLFO, 3911, 4039, 4134, 4242),
-    REGISTER_OOVPAS(CMcpxVoiceClient_SetMixBins, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CMcpxVoiceClient_SetPitch, 3911),
-    REGISTER_OOVPAS(CMcpxVoiceClient_SetVolume, 3911, 4039, 4134),
+    REGISTER_OOVPAS(CMcpxVoiceClient_GetVoiceProperties, 5028), // Final generic OOVPA: 5028; Removed: 0 (introduced in 5028)
+    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dConeOrientation, 3911), // Final generic OOVPA: 3911; Removed: 4039+
+    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dConeOutsideVolume, 3911), // Final generic OOVPA: 3911; Removed: 4039+
+    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dMaxDistance, 3911), // Final generic OOVPA: 3911; Removed: 4039+
+    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dMinDistance, 3911), // Final generic OOVPA: 3911; Removed: 4039+
+    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dMode, 3911), // Final generic OOVPA: 3911; Removed: 4039+
+    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dParameters, 3911), // Final generic OOVPA: 3911; Removed: 4039+
+    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dPosition, 3911), // Final generic OOVPA: 3911; Removed: 4039+
+    REGISTER_OOVPAS(CMcpxVoiceClient_Set3dVelocity, 3911), // Final generic OOVPA: 3911; Removed: 4039+
+    REGISTER_OOVPAS(CMcpxVoiceClient_SetEG, 3911, 4039, 4134, 4242), // Final generic OOVPA: 4242; Removed: 0
+    REGISTER_OOVPAS(CMcpxVoiceClient_SetFilter, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CMcpxVoiceClient_SetI3DL2Source, 3911), // Final generic OOVPA: 3911; Removed: 4039+
+    REGISTER_OOVPAS(CMcpxVoiceClient_SetLFO, 3911, 4039, 4134, 4242), // Final generic OOVPA: 4242; Removed: 0
+    REGISTER_OOVPAS(CMcpxVoiceClient_SetMixBins, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CMcpxVoiceClient_SetPitch, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CMcpxVoiceClient_SetVolume, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
 
     REGISTER_OOVPAS(CDirectSoundVoiceSettings_SetMixBinVolumes, 4039, 4134),
 
@@ -239,7 +239,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSoundVoice_SetMixBinVolumes, 3911, 4039),
     REGISTER_OOVPAS(CDirectSoundVoice_SetMode, 3911, 4039, 4134, 5344),
     REGISTER_OOVPAS(CDirectSoundVoice_SetOutputBuffer, 3911, 4039),
-    REGISTER_OOVPAS(CDirectSoundVoice_SetPitch, 3911, 4039),
+    REGISTER_OOVPAS(CDirectSoundVoice_SetPitch, 3911, 4039), // Final generic OOVPA: 4039; Removed 0
     REGISTER_OOVPAS(CDirectSoundVoice_SetFrequency, 3911, 4039, 4134), // Final generic OOVPA: 4134 // NOTE: Must be after CDirectSoundVoice_SetPitch for one time scan.
     REGISTER_OOVPAS(CDirectSoundVoice_SetPosition, 3911, 4039, 4134, 5344), // Final generic OOVPA: 5344
     REGISTER_OOVPAS(CDirectSoundVoice_SetRolloffCurve, 4361, 5344), // Final generic OOVPA: 5344

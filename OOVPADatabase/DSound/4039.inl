@@ -503,28 +503,34 @@ OOVPA_XREF(CDirectSoundBuffer_SetBufferData, 4039, 16,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CDirectSoundVoice::SetPitch
+// * CDirectSoundVoice::SetPitch
 // ******************************************************************
+// Generic OOVPA as of 4039 and newer
 // Verified with Agent Under Fire.
 // Same as 4134
-// TOOD: CDirectSoundVoice_SetPitch need to be strengthen by using XREF to CMcpxVoiceClient_SetPitch function.
-OOVPA_XREF(CDirectSoundVoice_SetPitch, 4039, 11,
+OOVPA_XREF(CDirectSoundVoice_SetPitch, 4039, 1+11,
 
     XREF_CDirectSoundVoice_SetPitch,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSoundVoice::SetPitch+0x11 : call [CMcpxVoiceClient::SetPitch]
+        XREF_ENTRY( 0x12, XREF_CMcpxVoiceClient_SetPitch ),
 
         { 0x02, 0x24 },
 
         { 0x06, 0x10 },
+
         { 0x07, 0x8B },
         { 0x08, 0x54 },
         { 0x09, 0x24 },
         { 0x0A, 0x08 },
+
         { 0x0B, 0x89 },
         { 0x0C, 0x51 },
         //{ 0x0D, 0x18 }, // 4039 0x20 vs 4134 0x18
 
         { 0x0E, 0x8B },
+
         { 0x16, 0xC2 },
         { 0x17, 0x08 },
 OOVPA_END;
@@ -4302,4 +4308,32 @@ OOVPA_XREF(CDirectSoundVoice_CommitDeferredSettings, 4039, 1+11,
         { 0x2F, 0xC2 },
         { 0x30, 0x04 },
 
+OOVPA_END;
+
+// ******************************************************************
+// * CMcpxVoiceClient_SetPitch
+// ******************************************************************
+OOVPA_XREF(CMcpxVoiceClient_SetPitch, 4039, 12,
+
+    XREF_CMcpxVoiceClient_SetPitch,
+    XRefZero)
+
+        { 0x00, 0x55 },
+
+        // CMcpxVoiceClient_SetPitch+0x25 : lea edi, [esi+0xC4]
+        { 0x25, 0x8D },
+        { 0x26, 0xBE },
+        { 0x27, 0xC4 },
+        { 0x28, 0x00 },
+
+        // CMcpxVoiceClient_SetPitch+0x5C : lea ecx,[eax+eax]
+        { 0x5C, 0x8D },
+        { 0x5D, 0x0C },
+        { 0x5E, 0x00 },
+
+        // CMcpxVoiceClient_SetPitch+0x72 : lea eax,[esi+0x84]
+        { 0x72, 0x8D },
+        { 0x73, 0x86 },
+        { 0x74, 0x84 },
+        { 0x75, 0x00 },
 OOVPA_END;
