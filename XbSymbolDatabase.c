@@ -55,6 +55,8 @@
 
 #define PAIRSCANSEC_MAX 3
 
+#define std_nullptr (void*)0
+
 typedef uint8_t* memptr_t;
 
 typedef const struct _PairScanLibSec {
@@ -149,7 +151,7 @@ bool XbSymbolRegisterLibrary(uint32_t library_flag) {
     return 1;
 }
 
-xb_output_message_t output_func = 0;
+xb_output_message_t output_func = std_nullptr;
 void XbSymbolSetOutputMessage(xb_output_message_t message_func)
 {
     output_func = message_func;
@@ -400,7 +402,7 @@ void XbSymbolRegisterSymbol(OOVPATable* OovpaTable,
                             xbaddr address,
                             xb_symbol_register_t register_func)
 {
-    if (OovpaTable != (void*)0) {
+    if (OovpaTable != std_nullptr) {
 
         OOVPA* Oovpa = OovpaTable->Oovpa;
 
@@ -435,19 +437,19 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
     // traverse the full OOVPA table
     OOVPATable *pLoopEnd = &OovpaTable[OovpaTableCount];
     OOVPATable *pLoop = OovpaTable;
-    OOVPATable *pLastKnownSymbol = (void*)0;
+    OOVPATable *pLastKnownSymbol = std_nullptr;
     uint32_t pLastKnownFunc = 0;
-    const char *SymbolName = (void*)0;
+    const char *SymbolName = std_nullptr;
     for (; pLoop < pLoopEnd; pLoop++) {
 
-        if (SymbolName == (void*)0) {
+        if (SymbolName == std_nullptr) {
             SymbolName = pLoop->szFuncName;
         } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
             SymbolName = pLoop->szFuncName;
-            if (pLastKnownSymbol != (void*)0) {
+            if (pLastKnownSymbol != std_nullptr) {
                 // Now that we found the address, store it (regardless if we patch it or not)
                 XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
-                pLastKnownSymbol = (void*)0;
+                pLastKnownSymbol = std_nullptr;
                 pLastKnownFunc = 0;
             }
         }
@@ -472,7 +474,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
         pLastKnownFunc = pFunc;
         pLastKnownSymbol = pLoop;
     }
-    if (pLastKnownSymbol != (void*)0) {
+    if (pLastKnownSymbol != std_nullptr) {
         XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
     }
 }
@@ -506,18 +508,18 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
                     // traverse the full OOVPA table
                     OOVPATable *pLoopEnd = &SymbolDBList[d2].OovpaTable[SymbolDBList[d2].OovpaTableCount];
                     OOVPATable *pLoop = SymbolDBList[d2].OovpaTable;
-                    OOVPATable *pLastKnownSymbol = (void*)0;
+                    OOVPATable *pLastKnownSymbol = std_nullptr;
                     uint32_t pLastKnownFunc = 0;
-                    const char *SymbolName = (void*)0;
+                    const char *SymbolName = std_nullptr;
                     for (; pLoop < pLoopEnd; pLoop++) {
 
-                        if (SymbolName == (void*)0) {
+                        if (SymbolName == std_nullptr) {
                             SymbolName = pLoop->szFuncName;
                         } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
                             XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
 
                             SymbolName = pLoop->szFuncName;
-                            pLastKnownSymbol = (void*)0;
+                            pLastKnownSymbol = std_nullptr;
                             pLastKnownFunc = 0;
                         }
 
@@ -550,7 +552,7 @@ bool XbSymbolInit(const void* xb_header_addr,
                   xb_symbol_register_t register_func,
                   bool* pbDSoundLibHeader)
 {
-    if (xb_header_addr == (void*)0 || register_func == 0) {
+    if (xb_header_addr == std_nullptr || register_func == 0) {
         return 0;
     }
 
@@ -616,7 +618,7 @@ void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
                             uint32_t Increment,
                             uint32_t Decrement)
 {
-    if (pFunc == (void*)0) {
+    if (pFunc == std_nullptr) {
         return;
     }
     // Temporary verification - is XREF_D3DDEVICE derived correctly?
@@ -692,7 +694,7 @@ void XbSymbolDX8RegisterD3DTSS(uint32_t LibraryFlag,
                                memptr_t pFunc,
                                uint32_t pXRefOffset)
 {
-    if (pFunc == (void*)0) {
+    if (pFunc == std_nullptr) {
         return;
     }
     xbaddr DerivedAddr_D3DTSS_TEXCOORDINDEX = 0;
@@ -728,7 +730,7 @@ void XbSymbolDX8RegisterStream(uint32_t LibraryFlag,
                                memptr_t pFunc,
                                uint32_t iCodeOffsetFor_g_Stream)
 {
-    if (pFunc == (void*)0) {
+    if (pFunc == std_nullptr) {
         return;
     }
     // Read address of Xbox_g_Stream from D3DDevice_SetStreamSource
@@ -1173,7 +1175,7 @@ void HashAssumedLOOVPA(unsigned int* Hash, const OOVPA* pAssumedLOOVPA)
 void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable)
 {
     // Part 1: function name string
-    if (pTable->szFuncName != (void*)0) {
+    if (pTable->szFuncName != std_nullptr) {
         hash_fnv1a(Hash, pTable->szFuncName, strlen(pTable->szFuncName));
     }
 
