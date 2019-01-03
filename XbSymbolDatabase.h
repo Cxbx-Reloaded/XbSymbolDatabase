@@ -453,6 +453,12 @@ bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const cha
 /// <returns>Return 0 if does not in the database. Otherwise will return flag value.</returns>
 uint32_t XbSymbolLibrayToFlag(const char* library_name);
 
+/// <summary>
+/// By calling it will perform a self test for duplicate OOVPAs. (May will change at any time.)
+/// </summary>
+/// <returns>Return total count of errors.</returns>
+unsigned int XbSymbolDataBaseTestOOVPAs();
+
 #ifdef __cplusplus
 }
 #endif
