@@ -57,8 +57,6 @@
 
 #define PAIRSCANSEC_MAX 3
 
-#define std_nullptr (void*)0
-
 typedef uint8_t* memptr_t;
 
 typedef const struct _PairScanLibSec {
@@ -153,7 +151,7 @@ bool XbSymbolRegisterLibrary(uint32_t library_flag) {
     return 1;
 }
 
-xb_output_message_t output_func = std_nullptr;
+xb_output_message_t output_func = NULL;
 void XbSymbolSetOutputMessage(xb_output_message_t message_func)
 {
     output_func = message_func;
@@ -404,7 +402,7 @@ void XbSymbolRegisterSymbol(OOVPATable* OovpaTable,
                             xbaddr address,
                             xb_symbol_register_t register_func)
 {
-    if (OovpaTable != std_nullptr) {
+    if (OovpaTable != NULL) {
 
         OOVPA* Oovpa = OovpaTable->Oovpa;
 
@@ -439,19 +437,19 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
     // traverse the full OOVPA table
     OOVPATable *pLoopEnd = &OovpaTable[OovpaTableCount];
     OOVPATable *pLoop = OovpaTable;
-    OOVPATable *pLastKnownSymbol = std_nullptr;
+    OOVPATable *pLastKnownSymbol = NULL;
     uint32_t pLastKnownFunc = 0;
-    const char *SymbolName = std_nullptr;
+    const char *SymbolName = NULL;
     for (; pLoop < pLoopEnd; pLoop++) {
 
-        if (SymbolName == std_nullptr) {
+        if (SymbolName == NULL) {
             SymbolName = pLoop->szFuncName;
         } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
             SymbolName = pLoop->szFuncName;
-            if (pLastKnownSymbol != std_nullptr) {
+            if (pLastKnownSymbol != NULL) {
                 // Now that we found the address, store it (regardless if we patch it or not)
                 XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
-                pLastKnownSymbol = std_nullptr;
+                pLastKnownSymbol = NULL;
                 pLastKnownFunc = 0;
             }
         }
@@ -476,7 +474,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
         pLastKnownFunc = pFunc;
         pLastKnownSymbol = pLoop;
     }
-    if (pLastKnownSymbol != std_nullptr) {
+    if (pLastKnownSymbol != NULL) {
         XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
     }
 }
@@ -492,7 +490,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
 {
 
     // Invalid argument
-    if (section_name == std_nullptr || xbe_size == 0 || section_size == 0 || register_func == std_nullptr) {
+    if (section_name == NULL || xbe_size == 0 || section_size == 0 || register_func == NULL) {
         return 0;
     }
 
@@ -505,23 +503,23 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
             //Initialize a matching specific section is currently pair with library in order to scan specific section only.
             //By doing this method will reduce false detection dramatically. If it had happened before.
             for (uint32_t d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
-                if (SymbolDBList[d2].LibSec.section[d3] != std_nullptr && strcmp(section_name, SymbolDBList[d2].LibSec.section[d3]) == 0) {
+                if (SymbolDBList[d2].LibSec.section[d3] != NULL && strcmp(section_name, SymbolDBList[d2].LibSec.section[d3]) == 0) {
 
                     // traverse the full OOVPA table
                     OOVPATable *pLoopEnd = &SymbolDBList[d2].OovpaTable[SymbolDBList[d2].OovpaTableCount];
                     OOVPATable *pLoop = SymbolDBList[d2].OovpaTable;
-                    OOVPATable *pLastKnownSymbol = std_nullptr;
+                    OOVPATable *pLastKnownSymbol = NULL;
                     uint32_t pLastKnownFunc = 0;
-                    const char *SymbolName = std_nullptr;
+                    const char *SymbolName = NULL;
                     for (; pLoop < pLoopEnd; pLoop++) {
 
-                        if (SymbolName == std_nullptr) {
+                        if (SymbolName == NULL) {
                             SymbolName = pLoop->szFuncName;
                         } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
                             XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
 
                             SymbolName = pLoop->szFuncName;
-                            pLastKnownSymbol = std_nullptr;
+                            pLastKnownSymbol = NULL;
                             pLastKnownFunc = 0;
                         }
 
@@ -554,7 +552,7 @@ bool XbSymbolInit(const void* xb_header_addr,
                   xb_symbol_register_t register_func,
                   bool* pbDSoundLibHeader)
 {
-    if (xb_header_addr == std_nullptr || register_func == std_nullptr) {
+    if (xb_header_addr == NULL || register_func == NULL) {
         return 0;
     }
 
@@ -565,7 +563,7 @@ bool XbSymbolInit(const void* xb_header_addr,
     //
     // initialize Microsoft XDK scan
     //
-    if (pLibraryVersion == std_nullptr) {
+    if (pLibraryVersion == NULL) {
         return 0;
     }
     else {
@@ -620,7 +618,7 @@ void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
                             uint32_t Increment,
                             uint32_t Decrement)
 {
-    if (pFunc == std_nullptr) {
+    if (pFunc == NULL) {
         return;
     }
     // Temporary verification - is XREF_D3DDEVICE derived correctly?
@@ -696,7 +694,7 @@ void XbSymbolDX8RegisterD3DTSS(uint32_t LibraryFlag,
                                memptr_t pFunc,
                                uint32_t pXRefOffset)
 {
-    if (pFunc == std_nullptr) {
+    if (pFunc == NULL) {
         return;
     }
     xbaddr DerivedAddr_D3DTSS_TEXCOORDINDEX = 0;
@@ -732,7 +730,7 @@ void XbSymbolDX8RegisterStream(uint32_t LibraryFlag,
                                memptr_t pFunc,
                                uint32_t iCodeOffsetFor_g_Stream)
 {
-    if (pFunc == std_nullptr) {
+    if (pFunc == NULL) {
         return;
     }
     // Read address of Xbox_g_Stream from D3DDevice_SetStreamSource
@@ -1054,7 +1052,7 @@ bool XbSymbolScan(const void* xb_header_addr,
 
             do {
 
-                pSectionScan = std_nullptr;
+                pSectionScan = NULL;
 
                 if (LibraryFlag == XbSymbolLib_D3D8LTCG || LibraryFlag == XbSymbolLib_D3D8) {
 
@@ -1117,7 +1115,7 @@ bool XbSymbolScan(const void* xb_header_addr,
                             //Initialize a matching specific section is currently pair with library in order to scan specific section only.
                             //By doing this method will reduce false detection dramatically. If it had happened before.
                             for (unsigned int d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
-                                if (SymbolDBList[d2].LibSec.section[d3] != std_nullptr && strncmp(SectionName, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
+                                if (SymbolDBList[d2].LibSec.section[d3] != NULL && strncmp(SectionName, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
                                     pSectionScan = pSectionHeaders + s;
 
                                     XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, LibraryStr, SymbolDBList[d2].LibSec.library,
@@ -1177,7 +1175,7 @@ void HashAssumedLOOVPA(unsigned int* Hash, const OOVPA* pAssumedLOOVPA)
 void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable)
 {
     // Part 1: function name string
-    if (pTable->szFuncName != std_nullptr) {
+    if (pTable->szFuncName != NULL) {
         hash_fnv1a(Hash, pTable->szFuncName, strlen(pTable->szFuncName));
     }
 
@@ -1239,13 +1237,13 @@ void HLEError(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, char 
     static char bufferTemp[400] = { 0 };
     int ret_str_count;
 
-    if (context->main_data != std_nullptr) {
+    if (context->main_data != NULL) {
 
         ret_str_count = HLEErrorString(bufferTemp, context->main_data, buildVersion, context->main_index);
         (void)strncat(buffer, bufferTemp, ret_str_count);
     }
 
-    if (context->against != std_nullptr && context->against_data != std_nullptr) {
+    if (context->against != NULL && context->against_data != NULL) {
         (void)strncat(buffer, ", comparing against ", OOVPA_TABLE_COUNT(", comparing against "));
 
         ret_str_count = HLEErrorString(bufferTemp, context->against_data, buildVersion, context->against_index);
@@ -1262,7 +1260,7 @@ void HLEError(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, char 
     (void)strncat(buffer, " : ", 3);
     (void)strncat(buffer, bufferTemp, ret_str_count);
 
-    if (output_func != std_nullptr) {
+    if (output_func != NULL) {
         output_func(XB_OUTPUT_MESSAGE_ERROR, buffer);
     }
 }
@@ -1272,7 +1270,7 @@ unsigned int XbSymbolDataBaseVerifyDataBaseList(SymbolDatabaseVerifyContext *con
 unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, OOVPA *oovpa)
 {
     unsigned int error_count = 0;
-    if (context->against == std_nullptr) {
+    if (context->against == NULL) {
         // TODO : verify XRefSaveIndex and XRef's (how?)
 
         // verify offsets are in increasing order
@@ -1293,7 +1291,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, u
         context->oovpa = oovpa;
         context->against = oovpa;
         error_count += XbSymbolDataBaseVerifyDataBaseList(context);
-        context->against = std_nullptr; // reset scanning state
+        context->against = NULL; // reset scanning state
         return error_count;
     }
 
@@ -1383,14 +1381,14 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, u
 
 unsigned int XbSymbolDataBaseVerifyEntry(SymbolDatabaseVerifyContext *context, const OOVPATable *table, uint32_t index)
 {
-    if (context->against == std_nullptr) {
+    if (context->against == NULL) {
         context->main_index = index;
     } else {
         context->against_index = index;
     }
 
     // verify the OOVPA of this entry
-    if (table[index].Oovpa != std_nullptr) {
+    if (table[index].Oovpa != NULL) {
         return XbSymbolDataBaseVerifyOOVPA(context, table[index].Version, table[index].Oovpa);
     }
     return 0;
@@ -1399,7 +1397,7 @@ unsigned int XbSymbolDataBaseVerifyEntry(SymbolDatabaseVerifyContext *context, c
 unsigned int XbSymbolDataBaseVerifyDatabase(SymbolDatabaseVerifyContext *context, SymbolDatabaseList *data)
 {
     unsigned int error_count = 0;
-    if (context->against == std_nullptr) {
+    if (context->against == NULL) {
         context->main_data = data;
     } else {
         context->against_data = data;
