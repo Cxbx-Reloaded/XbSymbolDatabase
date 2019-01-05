@@ -32,6 +32,8 @@
 #define _XBOXKRNL_DEFEXTRN_
 
 #include <string.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 // ******************************************************************
 // * Xbox Symbol Database
@@ -149,7 +151,7 @@ bool XbSymbolRegisterLibrary(uint32_t library_flag) {
     return 1;
 }
 
-xb_output_message_t output_func = 0;
+xb_output_message_t output_func = NULL;
 void XbSymbolSetOutputMessage(xb_output_message_t message_func)
 {
     output_func = message_func;
@@ -400,7 +402,7 @@ void XbSymbolRegisterSymbol(OOVPATable* OovpaTable,
                             xbaddr address,
                             xb_symbol_register_t register_func)
 {
-    if (OovpaTable != (void*)0) {
+    if (OovpaTable != NULL) {
 
         OOVPA* Oovpa = OovpaTable->Oovpa;
 
@@ -435,19 +437,19 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
     // traverse the full OOVPA table
     OOVPATable *pLoopEnd = &OovpaTable[OovpaTableCount];
     OOVPATable *pLoop = OovpaTable;
-    OOVPATable *pLastKnownSymbol = (void*)0;
+    OOVPATable *pLastKnownSymbol = NULL;
     uint32_t pLastKnownFunc = 0;
-    const char *SymbolName = (void*)0;
+    const char *SymbolName = NULL;
     for (; pLoop < pLoopEnd; pLoop++) {
 
-        if (SymbolName == (void*)0) {
+        if (SymbolName == NULL) {
             SymbolName = pLoop->szFuncName;
         } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
             SymbolName = pLoop->szFuncName;
-            if (pLastKnownSymbol != (void*)0) {
+            if (pLastKnownSymbol != NULL) {
                 // Now that we found the address, store it (regardless if we patch it or not)
                 XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
-                pLastKnownSymbol = (void*)0;
+                pLastKnownSymbol = NULL;
                 pLastKnownFunc = 0;
             }
         }
@@ -472,7 +474,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
         pLastKnownFunc = pFunc;
         pLastKnownSymbol = pLoop;
     }
-    if (pLastKnownSymbol != (void*)0) {
+    if (pLastKnownSymbol != NULL) {
         XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
     }
 }
@@ -488,7 +490,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
 {
 
     // Invalid argument
-    if (section_name == NULL || xbe_size == 0 || section_size == 0 || register_func == 0) {
+    if (section_name == NULL || xbe_size == 0 || section_size == 0 || register_func == NULL) {
         return 0;
     }
 
@@ -506,18 +508,18 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
                     // traverse the full OOVPA table
                     OOVPATable *pLoopEnd = &SymbolDBList[d2].OovpaTable[SymbolDBList[d2].OovpaTableCount];
                     OOVPATable *pLoop = SymbolDBList[d2].OovpaTable;
-                    OOVPATable *pLastKnownSymbol = (void*)0;
+                    OOVPATable *pLastKnownSymbol = NULL;
                     uint32_t pLastKnownFunc = 0;
-                    const char *SymbolName = (void*)0;
+                    const char *SymbolName = NULL;
                     for (; pLoop < pLoopEnd; pLoop++) {
 
-                        if (SymbolName == (void*)0) {
+                        if (SymbolName == NULL) {
                             SymbolName = pLoop->szFuncName;
                         } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
                             XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
 
                             SymbolName = pLoop->szFuncName;
-                            pLastKnownSymbol = (void*)0;
+                            pLastKnownSymbol = NULL;
                             pLastKnownFunc = 0;
                         }
 
@@ -550,7 +552,7 @@ bool XbSymbolInit(const void* xb_header_addr,
                   xb_symbol_register_t register_func,
                   bool* pbDSoundLibHeader)
 {
-    if (xb_header_addr == (void*)0 || register_func == 0) {
+    if (xb_header_addr == NULL || register_func == NULL) {
         return 0;
     }
 
@@ -616,7 +618,7 @@ void XbSymbolDX8SectionRefs(uint32_t BuildVersion,
                             uint32_t Increment,
                             uint32_t Decrement)
 {
-    if (pFunc == (void*)0) {
+    if (pFunc == NULL) {
         return;
     }
     // Temporary verification - is XREF_D3DDEVICE derived correctly?
@@ -692,7 +694,7 @@ void XbSymbolDX8RegisterD3DTSS(uint32_t LibraryFlag,
                                memptr_t pFunc,
                                uint32_t pXRefOffset)
 {
-    if (pFunc == (void*)0) {
+    if (pFunc == NULL) {
         return;
     }
     xbaddr DerivedAddr_D3DTSS_TEXCOORDINDEX = 0;
@@ -728,7 +730,7 @@ void XbSymbolDX8RegisterStream(uint32_t LibraryFlag,
                                memptr_t pFunc,
                                uint32_t iCodeOffsetFor_g_Stream)
 {
-    if (pFunc == (void*)0) {
+    if (pFunc == NULL) {
         return;
     }
     // Read address of Xbox_g_Stream from D3DDevice_SetStreamSource
@@ -1173,7 +1175,7 @@ void HashAssumedLOOVPA(unsigned int* Hash, const OOVPA* pAssumedLOOVPA)
 void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable)
 {
     // Part 1: function name string
-    if (pTable->szFuncName != (void*)0) {
+    if (pTable->szFuncName != NULL) {
         hash_fnv1a(Hash, pTable->szFuncName, strlen(pTable->szFuncName));
     }
 
@@ -1210,4 +1212,221 @@ unsigned int XbSymbolLibraryVersion()
         CalculatedHash = HashSymbolDataArray(SymbolDBList, SymbolDBListCount);
     }
     return CalculatedHash;
+}
+
+
+// ******************************************************************
+// * XbSymbolDataBaseTestOOVPAs
+// ******************************************************************
+
+typedef struct _SymbolDatabaseVerifyContext {
+    SymbolDatabaseList *main_data;
+    OOVPA *oovpa, *against;
+    SymbolDatabaseList *against_data;
+    uint32_t main_index, against_index;
+} SymbolDatabaseVerifyContext;
+
+int HLEErrorString(char *bufferTemp, SymbolDatabaseList *data, uint16_t buildVersion, uint32_t index)
+{
+    return sprintf(bufferTemp, "OOVPATable %2u %4hu [%4u] %s", data->LibSec.library, buildVersion, index, data->OovpaTable[index].szFuncName);
+}
+
+void HLEError(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, char *format, ...)
+{
+    char buffer[2048] = { 0 };
+    static char bufferTemp[400] = { 0 };
+    int ret_str_count;
+
+    if (context->main_data != NULL) {
+
+        ret_str_count = HLEErrorString(bufferTemp, context->main_data, buildVersion, context->main_index);
+        (void)strncat(buffer, bufferTemp, ret_str_count);
+    }
+
+    if (context->against != NULL && context->against_data != NULL) {
+        (void)strncat(buffer, ", comparing against ", OOVPA_TABLE_COUNT(", comparing against "));
+
+        ret_str_count = HLEErrorString(bufferTemp, context->against_data, buildVersion, context->against_index);
+        (void)strncat(buffer, bufferTemp, ret_str_count);
+    }
+
+    // format specific error message
+    va_list args;
+    va_start(args, format);
+    ret_str_count = vsprintf(bufferTemp, format, args);
+    va_end(args);
+
+
+    (void)strncat(buffer, " : ", 3);
+    (void)strncat(buffer, bufferTemp, ret_str_count);
+
+    if (output_func != NULL) {
+        output_func(XB_OUTPUT_MESSAGE_ERROR, buffer);
+    }
+}
+
+unsigned int XbSymbolDataBaseVerifyDataBaseList(SymbolDatabaseVerifyContext *context); // forward
+
+unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, OOVPA *oovpa)
+{
+    unsigned int error_count = 0;
+    if (context->against == NULL) {
+        // TODO : verify XRefSaveIndex and XRef's (how?)
+
+        // verify offsets are in increasing order
+        uint32_t prev_offset;
+        uint8_t dummy_value;
+        GetOovpaEntry(oovpa, oovpa->XRefCount, &prev_offset, &dummy_value);
+        for (int p = oovpa->XRefCount + 1; p < oovpa->Count; p++) {
+            uint32_t curr_offset;
+            GetOovpaEntry(oovpa, p, &curr_offset, &dummy_value);
+            if (!(curr_offset > prev_offset)) {
+                error_count++;
+                HLEError(context, buildVersion, "Lovp[%2u] : Offset (0x%03x) must be larger then previous offset (0x%03x)",
+                         p, curr_offset, prev_offset);
+            }
+        }
+
+        // find duplicate OOVPA's across all other data-table-oovpa's
+        context->oovpa = oovpa;
+        context->against = oovpa;
+        error_count += XbSymbolDataBaseVerifyDataBaseList(context);
+        context->against = NULL; // reset scanning state
+        return error_count;
+    }
+
+    // prevent checking an oovpa against itself
+    if (context->against == oovpa) {
+        return error_count;
+    }
+
+    // compare {Offset, Value}-pairs between two OOVPA's
+    OOVPA *left = context->against, *right = oovpa;
+    int l = 0, r = 0;
+    uint32_t left_offset, right_offset;
+    uint8_t left_value, right_value;
+    GetOovpaEntry(left, l, &left_offset, &left_value);
+    GetOovpaEntry(right, r, &right_offset, &right_value);
+    int unique_offset_left = 0;
+    int unique_offset_right = 0;
+    int equal_offset_value = 0;
+    int equal_offset_different_value = 0;
+    while (true) {
+        bool left_next = true;
+        bool right_next = true;
+
+        if (left_offset < right_offset) {
+            unique_offset_left++;
+            right_next = false;
+        } else if (left_offset > right_offset) {
+            unique_offset_right++;
+            left_next = false;
+        } else if (left_value == right_value) {
+            equal_offset_value++;
+        } else {
+            equal_offset_different_value++;
+        }
+
+        // increment r before use (in left_next)
+        if (right_next) {
+            r++;
+        }
+
+        if (left_next) {
+            l++;
+            if (l >= left->Count) {
+                unique_offset_right += right->Count - r;
+                break;
+            }
+
+            GetOovpaEntry(left, l, &left_offset, &left_value);
+        }
+
+        if (right_next) {
+            if (r >= right->Count) {
+                unique_offset_left += left->Count - l;
+                break;
+            }
+
+            GetOovpaEntry(right, r, &right_offset, &right_value);
+        }
+    }
+
+    // no mismatching values on identical offsets?
+    if (equal_offset_different_value == 0) {
+        // enough matching OV-pairs?
+        if (equal_offset_value > 4) {
+            // no unique OV-pairs on either side?
+            if (unique_offset_left + unique_offset_right == 0) {
+                error_count++;
+                HLEError(context, buildVersion, "OOVPA's are identical",
+                         unique_offset_left,
+                         unique_offset_right);
+            } else {
+                // not too many new OV-pairs on the left side?
+                if (unique_offset_left < 6) {
+                    // not too many new OV-parirs on the right side?
+                    if (unique_offset_right < 6) {
+                        error_count++;
+                        HLEError(context, buildVersion, "OOVPA's are expanded (left +%d, right +%d)",
+                                 unique_offset_left,
+                                 unique_offset_right);
+                    }
+                }
+            }
+        }
+    }
+    return error_count;
+}
+
+unsigned int XbSymbolDataBaseVerifyEntry(SymbolDatabaseVerifyContext *context, const OOVPATable *table, uint32_t index)
+{
+    if (context->against == NULL) {
+        context->main_index = index;
+    } else {
+        context->against_index = index;
+    }
+
+    // verify the OOVPA of this entry
+    if (table[index].Oovpa != NULL) {
+        return XbSymbolDataBaseVerifyOOVPA(context, table[index].Version, table[index].Oovpa);
+    }
+    return 0;
+}
+
+unsigned int XbSymbolDataBaseVerifyDatabase(SymbolDatabaseVerifyContext *context, SymbolDatabaseList *data)
+{
+    unsigned int error_count = 0;
+    if (context->against == NULL) {
+        context->main_data = data;
+    } else {
+        context->against_data = data;
+    }
+
+    // Don't check a database against itself :
+    if (context->main_data == context->against_data) {
+        return error_count;
+    }
+
+    // verify each entry in this SymbolDatabaseList
+    for (uint32_t e = 0; e < data->OovpaTableCount; e++) {
+        error_count += XbSymbolDataBaseVerifyEntry(context, data->OovpaTable, e);
+    }
+    return error_count;
+}
+
+unsigned int XbSymbolDataBaseVerifyDataBaseList(SymbolDatabaseVerifyContext *context)
+{
+    unsigned int error_count = 0;
+    // verify all SymbolDatabaseList's
+    for (uint32_t d = 0; d < SymbolDBListCount; d++) {
+        error_count += XbSymbolDataBaseVerifyDatabase(context, &SymbolDBList[d]);
+    }
+    return error_count;
+}
+
+unsigned int XbSymbolDataBaseTestOOVPAs()
+{
+    SymbolDatabaseVerifyContext context = { 0 };
+    return XbSymbolDataBaseVerifyDataBaseList(&context);
 }
