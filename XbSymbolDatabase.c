@@ -492,7 +492,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
 {
 
     // Invalid argument
-    if (section_name == NULL || xbe_size == 0 || section_size == 0 || register_func == 0) {
+    if (section_name == std_nullptr || xbe_size == 0 || section_size == 0 || register_func == std_nullptr) {
         return 0;
     }
 
@@ -505,7 +505,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
             //Initialize a matching specific section is currently pair with library in order to scan specific section only.
             //By doing this method will reduce false detection dramatically. If it had happened before.
             for (uint32_t d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
-                if (SymbolDBList[d2].LibSec.section[d3] != NULL && strcmp(section_name, SymbolDBList[d2].LibSec.section[d3]) == 0) {
+                if (SymbolDBList[d2].LibSec.section[d3] != std_nullptr && strcmp(section_name, SymbolDBList[d2].LibSec.section[d3]) == 0) {
 
                     // traverse the full OOVPA table
                     OOVPATable *pLoopEnd = &SymbolDBList[d2].OovpaTable[SymbolDBList[d2].OovpaTableCount];
@@ -554,7 +554,7 @@ bool XbSymbolInit(const void* xb_header_addr,
                   xb_symbol_register_t register_func,
                   bool* pbDSoundLibHeader)
 {
-    if (xb_header_addr == std_nullptr || register_func == 0) {
+    if (xb_header_addr == std_nullptr || register_func == std_nullptr) {
         return 0;
     }
 
@@ -565,7 +565,7 @@ bool XbSymbolInit(const void* xb_header_addr,
     //
     // initialize Microsoft XDK scan
     //
-    if (pLibraryVersion == NULL) {
+    if (pLibraryVersion == std_nullptr) {
         return 0;
     }
     else {
@@ -1054,7 +1054,7 @@ bool XbSymbolScan(const void* xb_header_addr,
 
             do {
 
-                pSectionScan = NULL;
+                pSectionScan = std_nullptr;
 
                 if (LibraryFlag == XbSymbolLib_D3D8LTCG || LibraryFlag == XbSymbolLib_D3D8) {
 
@@ -1117,7 +1117,7 @@ bool XbSymbolScan(const void* xb_header_addr,
                             //Initialize a matching specific section is currently pair with library in order to scan specific section only.
                             //By doing this method will reduce false detection dramatically. If it had happened before.
                             for (unsigned int d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
-                                if (SymbolDBList[d2].LibSec.section[d3] != NULL && strncmp(SectionName, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
+                                if (SymbolDBList[d2].LibSec.section[d3] != std_nullptr && strncmp(SectionName, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
                                     pSectionScan = pSectionHeaders + s;
 
                                     XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, LibraryStr, SymbolDBList[d2].LibSec.library,
