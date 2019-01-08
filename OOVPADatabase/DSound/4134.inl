@@ -1827,9 +1827,13 @@ OOVPA_XREF(CDirectSoundVoice_SetAllParameters, 4134, 14,
         { 0x66, 0x8B },
 
         { 0x83, 0x24 },
+
+        // CDirectSoundVoice::SetAllParameters+0x84 : mov edx,[eax+0x10]
         { 0x84, 0x8B },
         { 0x85, 0x50 },
         { 0x86, 0x10 },
+
+        // CDirectSoundVoice::SetAllParameters+0x87 : mov edx,[edx+0x000000B4]
         { 0x87, 0x8B },
         { 0x88, 0x92 },
         { 0x89, 0xB4 },

@@ -3908,19 +3908,28 @@ OOVPA_END;
 // ******************************************************************
 // * DirectSound::CDirectSoundVoice::SetFormat
 // ******************************************************************
-OOVPA_XREF(CDirectSoundVoice_SetFormat, 4039, 8,
+OOVPA_XREF(CDirectSoundVoice_SetFormat, 4039, 2+6,
 
     XREF_CDirectSoundVoice_SetFormat,
-    XRefZero)
+    XRefTwo)
 
-        { 0x07, 0x4E },
-        { 0x10, 0xE8 },
-        { 0x19, 0xD8 },
-        { 0x22, 0xFF },
-        { 0x2B, 0x0C },
-        { 0x34, 0xFF },
-        { 0x3F, 0x8B },
-        { 0x46, 0x00 },
+        // CDirectSoundVoice::SetFormat+0x2C : call [CMcpxVoiceClient::SetMixBins]
+        XREF_ENTRY( 0x2D, XREF_CMcpxVoiceClient_SetMixBins),
+
+        // CDirectSoundVoice::SetFormat+0x3A : call [CMcpxVoiceClient::SetPitch]
+        XREF_ENTRY( 0x3B, XREF_CMcpxVoiceClient_SetPitch),
+
+        // CDirectSoundVoice::SetFormat+0x00 : push ebx; push esi
+        { 0x00, 0x53 },
+        { 0x01, 0x56 },
+
+        // CDirectSoundVoice::SetFormat+0x0A : push 0x01
+        { 0x0A, 0x6A },
+        { 0x0B, 0x01 },
+
+        // CDirectSoundVoice::SetFormat+0x44 : ret 0x08
+        { 0x44, 0xC2 },
+        { 0x45, 0x08 },
 OOVPA_END;
 
 // ******************************************************************

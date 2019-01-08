@@ -183,30 +183,6 @@ OOVPA_XREF(CDirectSound_SetDopplerFactor, 4627, 14,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CDirectSoundVoice::SetFormat
-// ******************************************************************
-// Generic OOVPA as of 4721 and newer
-OOVPA_XREF(CDirectSoundVoice_SetFormat, 4721, 12,
-
-    XREF_CDirectSoundVoice_SetFormat,
-    XRefZero)
-
-        { 0x00, 0x56 },
-
-        { 0x06, 0x4E },
-        { 0x0E, 0xE8 },
-        { 0x18, 0x4E },
-        { 0x25, 0xFF },
-        { 0x2E, 0x0C },
-        { 0x2F, 0xE8 }, // call CMcpxVoiceClient::SetMixBins
-        { 0x34, 0x85 },
-        { 0x38, 0x8B },
-        { 0x3B, 0xE8 }, // call CMcpxVoiceClient::SetPitch
-        { 0x41, 0xC2 },
-        { 0x42, 0x08 },
-OOVPA_END;
-
-// ******************************************************************
 // * DirectSound::CMemoryManager::MemAlloc
 // ******************************************************************
 // * FOR DEBUGGING USE ONLY!

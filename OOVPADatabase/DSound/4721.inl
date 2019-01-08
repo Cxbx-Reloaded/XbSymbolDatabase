@@ -250,3 +250,30 @@ OOVPA_XREF(CMcpxBuffer_Play, 4721, 11,
         { 0x52, 0x33 },
         { 0x53, 0xC0 },
 OOVPA_END;
+
+// ******************************************************************
+// * DirectSound::CDirectSoundVoice::SetFormat
+// ******************************************************************
+// Generic OOVPA as of 4721 and newer
+OOVPA_XREF(CDirectSoundVoice_SetFormat, 4721, 2+5,
+
+    XREF_CDirectSoundVoice_SetFormat,
+    XRefTwo)
+
+        // CDirectSoundVoice::SetFormat+0x2F : call [CMcpxVoiceClient::SetMixBins]
+        XREF_ENTRY( 0x30, XREF_CMcpxVoiceClient_SetMixBins),
+
+        // CDirectSoundVoice::SetFormat+0x3B : call [CMcpxVoiceClient::SetPitch]
+        XREF_ENTRY( 0x3C, XREF_CMcpxVoiceClient_SetPitch),
+
+        // CDirectSoundVoice::SetFormat+0x00 : push esi
+        { 0x00, 0x56 },
+
+        // CDirectSoundVoice::SetFormat+0x08 : push 0x01
+        { 0x08, 0x6A },
+        { 0x09, 0x01 },
+
+        // CDirectSoundVoice::SetFormat+0x41 : ret 0x08
+        { 0x41, 0xC2 },
+        { 0x42, 0x08 },
+OOVPA_END;
