@@ -428,24 +428,37 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSoundVoice_SetHeadroom
 // ******************************************************************
-OOVPA_XREF(CDirectSoundVoice_SetHeadroom, 4039, 12,
+// Generic OOVPA as of 4039 and newer
+OOVPA_XREF(CDirectSoundVoice_SetHeadroom, 4039, 1+12,
 
     XREF_CDirectSoundVoice_SetHeadroom,
-    XRefZero)
+    XRefOne)
 
+        // CDirectSoundVoice::SetHeadroom+0x1A : call [CMcpxVoiceClient::SetVolume]
+        XREF_ENTRY( 0x1B, XREF_CMcpxVoiceClient_SetVolume ),
+
+        // CDirectSoundVoice::SetHeadroom+0x00 : mov edx,[esp+0x04]
         { 0x00, 0x8B },
-        { 0x08, 0x48 },
-        { 0x0F, 0x2B },
+        { 0x01, 0x54 },
+        { 0x02, 0x24 },
+        { 0x03, 0x04 },
 
-        { 0x13, 0x24 }, // 4039 0x24 vs 4134 0x1C
+        //{ 0x13, 0x24 }, // 4039 0x24 vs 4134 0x1C
+
+        // CDirectSoundVoice::SetHeadroom+0x14 : mov [eax+0x28],esi
         { 0x14, 0x89 },
         { 0x15, 0x70 },
-        { 0x16, 0x28 }, // 4039 0x28 vs 4134 0x20
+        //{ 0x16, 0x28 }, // 4039 0x28 vs 4134 0x20
+
+        // CDirectSoundVoice::SetHeadroom+0x1A : mov ecx,[edx+0x0C]
         { 0x17, 0x8B },
         { 0x18, 0x4A },
         { 0x19, 0x0C },
+
+        // CDirectSoundVoice::SetHeadroom+0x1A : call [CMcpxVoiceClient::SetVolume]
         { 0x1A, 0xE8 },
 
+        { 0x20, 0xC2 },
         { 0x21, 0x08 },
 OOVPA_END;
 
@@ -1283,6 +1296,7 @@ OOVPA_END;
 // * CDirectSoundVoice::SetMixBins
 // ******************************************************************
 // Generic OOVPA as of 4039 and newer
+// TODO: Maybe able to reduce pairs and include another XREF.
 OOVPA_XREF(CDirectSoundVoice_SetMixBins, 4039, 1+16,
 
     XREF_CDirectSoundVoice_SetMixBins,
@@ -1417,6 +1431,7 @@ OOVPA_END;
 // * CDirectSoundVoice::SetMixBinVolumes
 // ******************************************************************
 // Generic OOVPA as of 4039 and newer.
+// TODO: Should be able to reduce pairs since there are two XREFs.
 OOVPA_XREF(CDirectSoundVoice_SetMixBinVolumes, 4039, 2+13,
 
     XREF_CDirectSoundVoice_SetMixBinVolumes,
@@ -1649,6 +1664,7 @@ OOVPA_XREF(CDirectSoundVoice_SetLFO, 4039, 1+6,
         { 0x04, 0xFF },
         { 0x07, 0x08 },
         { 0x0A, 0x0C },
+
         { 0x10, 0xC2 },
         { 0x11, 0x08 },
 OOVPA_END;
@@ -1869,15 +1885,24 @@ OOVPA_XREF(CDirectSoundVoice_SetOutputBuffer, 4039, 13,
 
         { 0x10, 0x24 },
         { 0x11, 0x10 },
+
+        // CDirectSoundVoice::SetOutputBuffer+0x12 : and esi,eax
         { 0x12, 0x23 },
         { 0x13, 0xF0 },
+
+        // CDirectSoundVoice::SetOutputBuffer+0x14 : mov eax,[edi+0x10]
         { 0x14, 0x8B },
         { 0x15, 0x47 },
         { 0x16, 0x10 },
+
+        // CDirectSoundVoice::SetOutputBuffer+0x17 : mov eax,[eax+0x________]
         { 0x17, 0x8B },
         { 0x18, 0x80 },
 
+        // CDirectSoundVoice::SetOutputBuffer+0x45 : call [?]
         { 0x45, 0xE8 },
+
+        // CDirectSoundVoice::SetOutputBuffer+0x51 : ret 0x0008
         { 0x51, 0xC2 },
         { 0x52, 0x08 },
 OOVPA_END;
@@ -2024,7 +2049,7 @@ OOVPA_XREF(CDirectSoundVoice_SetMaxDistance, 4039, 14,
         { 0x09, 0x24 },
         { 0x0A, 0x08 },
 
-        // CDirectSoundVoice_SetMaxDistance+0x0B : mov [eax+10h], edx
+        // CDirectSoundVoice_SetMaxDistance+0x0B : mov [eax+10Ch], edx
         { 0x0B, 0x89 },
         { 0x0C, 0x90 },
         { 0x0D, 0x0C }, // SetMaxDistance 0x0C VS SetMinDistance 0x08
@@ -2085,7 +2110,7 @@ OOVPA_XREF(CDirectSoundVoice_SetMinDistance, 4039, 14,
         { 0x09, 0x24 },
         { 0x0A, 0x08 },
 
-        // CDirectSoundVoice_SetMinDistance+0x0B : mov [eax+10h], edx
+        // CDirectSoundVoice_SetMinDistance+0x0B : mov [eax+108h], edx
         { 0x0B, 0x89 },
         { 0x0C, 0x90 },
         { 0x0D, 0x08 }, // SetMaxDistance 0x0C VS SetMinDistance 0x08
@@ -2135,22 +2160,33 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSoundVoice::SetMode
 // ******************************************************************
-OOVPA_XREF(CDirectSoundVoice_SetMode, 4039, 12,
+OOVPA_XREF(CDirectSoundVoice_SetMode, 4039, 1+12,
 
     XREF_CDirectSoundVoice_SetMode,
-    XRefZero)
+    XRefOne)
 
+        // CDirectSoundVoice::SetMode+0x19 : call [CDirectSoundVoice::CommitDeferredSettings]
+        XREF_ENTRY( 0x1A, XREF_CDirectSoundVoice_CommitDeferredSettings),
+
+        // CDirectSoundVoice::SetMode+0x00 : test byte [esp+0x0C],0x01
         { 0x00, 0xF6 },
         { 0x01, 0x44 },
         { 0x02, 0x24 },
         { 0x03, 0x0C },
         { 0x04, 0x01 },
+
+        // CDirectSoundVoice::SetMode+0x05 : mov eax,[esp+0x__]
         { 0x05, 0x8B },
         { 0x06, 0x44 },
         { 0x07, 0x24 },
 
+        // CDirectSoundVoice::SetMode+0x16 : jne 0x__
         { 0x16, 0x75 },
+
+        // CDirectSoundVoice::SetMode+0x19 : call [CDirectSoundVoice::CommitDeferredSettings]
         { 0x19, 0xE8 },
+
+        // CDirectSoundVoice::SetMode+0x20 : ret 0x000C
         { 0x20, 0xC2 },
         { 0x21, 0x0C },
 OOVPA_END;
@@ -3659,6 +3695,7 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSoundVoice::SetI3DL2Source
 // ******************************************************************
+// TODO: Is possible to reduce pairs with an XREF included?
 OOVPA_XREF(CDirectSoundVoice_SetI3DL2Source, 4039, 18,
 
     XREF_CDirectSoundVoice_SetI3DL2Source,

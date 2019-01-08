@@ -145,10 +145,13 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSoundVoice::SetMaxDistance
 // ******************************************************************
-OOVPA_XREF(CDirectSoundVoice_SetMaxDistance, 4361, 12,
+OOVPA_XREF(CDirectSoundVoice_SetMaxDistance, 4361, 1+12,
 
     XREF_CDirectSoundVoice_SetMaxDistance,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSoundVoice::SetMaxDistance+0x29 : call [CDirectSoundVoice::CommitDeferredSettings]
+        XREF_ENTRY( 0x2A, XREF_CDirectSoundVoice_CommitDeferredSettings),
 
         // CDirectSoundVoice_SetMaxDistance+0x0D : mov edx, [esp+arg_4]
         { 0x0D, 0x8B },
@@ -159,11 +162,11 @@ OOVPA_XREF(CDirectSoundVoice_SetMaxDistance, 4361, 12,
         // CDirectSoundVoice_SetMaxDistance+0x11 : mov [eax+38h], edx
         { 0x11, 0x89 },
         { 0x12, 0x50 },
-        { 0x13, 0x38 },
+        { 0x13, 0x38 }, // SetMaxDistance 0x38 VS SetMinDistance 0x34
 
         { 0x14, 0x8B },
         { 0x1D, 0x83 },
-        { 0x1F, 0x78 },
+        { 0x1F, 0x78 }, // 4134 0x70 VS 4361 0x78
 
         // CDirectSoundVoice_SetMaxDistance+0x30 : retn 0Ch
         { 0x31, 0x0C },
@@ -173,10 +176,13 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSoundVoice::SetMinDistance
 // ******************************************************************
-OOVPA_XREF(CDirectSoundVoice_SetMinDistance, 4361, 12,
+OOVPA_XREF(CDirectSoundVoice_SetMinDistance, 4361, 1+12,
 
     XREF_CDirectSoundVoice_SetMinDistance,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSoundVoice::SetMinDistance+0x29 : call [CDirectSoundVoice::CommitDeferredSettings]
+        XREF_ENTRY( 0x2A, XREF_CDirectSoundVoice_CommitDeferredSettings),
 
         // CDirectSoundVoice_SetMinDistance+0x0D : mov edx, [esp+arg_4]
         { 0x0D, 0x8B },
@@ -187,11 +193,11 @@ OOVPA_XREF(CDirectSoundVoice_SetMinDistance, 4361, 12,
         // CDirectSoundVoice_SetMinDistance+0x11 : mov [eax+34h], edx
         { 0x11, 0x89 },
         { 0x12, 0x50 },
-        { 0x13, 0x34 },
+        { 0x13, 0x34 }, // SetMaxDistance 0x38 VS SetMinDistance 0x34
 
         { 0x14, 0x8B },
         { 0x1D, 0x83 },
-        { 0x1F, 0x78 },
+        { 0x1F, 0x78 }, // 4134 0x70 VS 4361 0x78
 
         // CDirectSoundVoice_SetMinDistance+0x30 : retn 0Ch
         { 0x31, 0x0C },

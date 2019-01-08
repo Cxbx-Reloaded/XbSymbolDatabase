@@ -1103,6 +1103,7 @@ OOVPA_XREF(CDirectSoundVoice_SetLFO, 3911, 1+9,
         { 0x10, 0x10 },
         { 0x11, 0x8B },
         { 0x12, 0x48 },
+
         { 0x2E, 0xC2 },
         { 0x2F, 0x08 },
 OOVPA_END;
@@ -1990,10 +1991,12 @@ OOVPA_XREF(CDirectSoundVoice_SetHeadroom, 3911, 1+11,
     XREF_CDirectSoundVoice_SetHeadroom,
     XRefOne)
 
-    // WARNING: I am unsure if this is SetHeadroom
-
-        // CDirectSoundVoice_SetHeadroom+0x23 : call [CMcpxVoiceClient_SetVolume]
+        // CDirectSoundVoice_SetHeadroom+0x22 : call [CMcpxVoiceClient::SetVolume]
         XREF_ENTRY( 0x23, XREF_CMcpxVoiceClient_SetVolume ),
+
+        // CDirectSoundVoice_SetHeadroom+0x00 : push esi; push edi
+        { 0x00, 0x56 },
+        { 0x01, 0x57 },
 
         // CDirectSoundVoice_SetHeadroom+0x07 : mov edx, [esp+0x0C]
         { 0x07, 0x8B },
@@ -2005,10 +2008,6 @@ OOVPA_XREF(CDirectSoundVoice_SetHeadroom, 3911, 1+11,
         { 0x11, 0x8B },
         { 0x12, 0x42 },
         { 0x13, 0x18 },
-
-        // CDirectSoundVoice_SetHeadroom+0x2B : jz +0x0B
-        { 0x2B, 0x74 },
-        { 0x2C, 0x0B },
 
         // CDirectSoundVoice_SetHeadroom+0x3C : retn 0x08
         { 0x3C, 0xC2 },

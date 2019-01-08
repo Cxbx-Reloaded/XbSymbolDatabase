@@ -26,10 +26,13 @@
 // ******************************************************************
 // * DirectSound::CDirectSoundVoice::SetMinDistance
 // ******************************************************************
-OOVPA_XREF(CDirectSoundVoice_SetMinDistance, 5344, 12,
+OOVPA_XREF(CDirectSoundVoice_SetMinDistance, 5344, 1+12,
 
     XREF_CDirectSoundVoice_SetMinDistance,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSoundVoice::SetMinDistance+0x29 : call [CDirectSoundVoice::CommitDeferredSettings]
+        XREF_ENTRY( 0x2A, XREF_CDirectSoundVoice_CommitDeferredSettings),
 
         // CDirectSoundVoice_SetMinDistance+0x0D : mov edx, [esp+arg_4]
         { 0x0D, 0x8B },
@@ -40,7 +43,7 @@ OOVPA_XREF(CDirectSoundVoice_SetMinDistance, 5344, 12,
         // CDirectSoundVoice_SetMinDistance+0x11 : mov [eax+38h], edx
         { 0x11, 0x89 },
         { 0x12, 0x50 },
-        { 0x13, 0x38 },
+        { 0x13, 0x38 }, // SetMinDistance 0x38 VS SetMaxDistance 0x3C
 
         { 0x14, 0x8B },
         { 0x1D, 0x80 },
@@ -130,10 +133,13 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSoundVoice::SetMaxDistance
 // ******************************************************************
-OOVPA_XREF(CDirectSoundVoice_SetMaxDistance, 5344, 12,
+OOVPA_XREF(CDirectSoundVoice_SetMaxDistance, 5344, 1+12,
 
     XREF_CDirectSoundVoice_SetMaxDistance,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSoundVoice::SetMaxDistance+0x29 : call [CDirectSoundVoice::CommitDeferredSettings]
+        XREF_ENTRY( 0x2A, XREF_CDirectSoundVoice_CommitDeferredSettings),
 
         // CDirectSoundVoice_SetMaxDistance+0x0D : mov edx, [esp+arg_4]
         { 0x0D, 0x8B },
@@ -144,7 +150,7 @@ OOVPA_XREF(CDirectSoundVoice_SetMaxDistance, 5344, 12,
         // CDirectSoundVoice_SetMaxDistance+0x11 : mov [eax+3Ch], edx
         { 0x11, 0x89 },
         { 0x12, 0x50 },
-        { 0x13, 0x3C },
+        { 0x13, 0x3C }, // SetMinDistance 0x38 VS SetMaxDistance 0x3C
 
         { 0x14, 0x8B },
         { 0x1D, 0x80 },
@@ -159,10 +165,13 @@ OOVPA_END;
 // CDirectSoundVoice::SetMode
 // ******************************************************************
 // Generic OOVPA as of 5344 and newer
-OOVPA_XREF(CDirectSoundVoice_SetMode, 5344, 14,
+OOVPA_XREF(CDirectSoundVoice_SetMode, 5344, 1+12,
 
     XREF_CDirectSoundVoice_SetMode,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSoundVoice::SetMode+0x29 : call [CDirectSoundVoice::CommitDeferredSettings]
+        XREF_ENTRY( 0x2A, XREF_CDirectSoundVoice_CommitDeferredSettings),
 
         { 0x00, 0x8B },
 
@@ -173,9 +182,6 @@ OOVPA_XREF(CDirectSoundVoice_SetMode, 5344, 14,
 
         { 0x14, 0x8B },
         { 0x15, 0x41 },
-
-        { 0x18, 0x80 },
-        { 0x19, 0xB4 },
 
         { 0x1D, 0x80 },
         { 0x1F, 0x02 },
@@ -565,11 +571,16 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSoundVoice::SetI3DL2Source
 // ******************************************************************
-// Generic OOVPA as of ____? and newer
-OOVPA_XREF(CDirectSoundVoice_SetI3DL2Source, 5344, 15,
+// Generic OOVPA as of 5344 and newer
+OOVPA_XREF(CDirectSoundVoice_SetI3DL2Source, 5344, 1+11,
 
     XREF_CDirectSoundVoice_SetI3DL2Source,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSoundBuffer_SetI3DL2Source+0xC0 : call [CDirectSoundVoice::SetI3DL2Source]
+        XREF_ENTRY( 0xC1, XREF_CDirectSoundVoice_CommitDeferredSettings),
+
+        { 0x00, 0x8B },
 
         // CDirectSoundVoice_SetI3DL2Source+0x12 : mov esi, [ecx]
         { 0x12, 0x8B },
@@ -583,15 +594,8 @@ OOVPA_XREF(CDirectSoundVoice_SetI3DL2Source, 5344, 15,
         // CDirectSoundVoice_SetI3DL2Source+0xB3 : or byte ptr [ecx+7Eh],7Fh
         { 0xB3, 0x80 },
         { 0xB4, 0x49 },
-        //{ 0xB5, 0x7E }, //0x7E is known for 5344 and later, not sure about earlier.
+        //{ 0xB5, 0x7E }, //0x7E is known for 5344 and later
         { 0xB6, 0x7F },
-
-        // CDirectSoundVoice_SetI3DL2Source+0x50 : test byte ptr [esp+10h],1
-        { 0xB7, 0xF6 },
-        { 0xB8, 0x44 },
-        { 0xB9, 0x24 },
-        { 0xBA, 0x10 },
-        { 0xBB, 0x01 },
 
         // CDirectSoundVoice_SetI3DL2Source+0xC7 : retn 0Ch
         { 0xC7, 0xC2 },
