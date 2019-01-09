@@ -140,7 +140,7 @@ OOVPA_XREF(CMcpxBuffer_GetStatus, 4831, 11,
 OOVPA_END;
 
 // ******************************************************************
-// * public: long __thiscall DirectSound::CMcpxBuffer::Play(unsigned long)
+// * CMcpxBuffer::Play(unsigned long)
 // ******************************************************************
 // Generic OOVPA as of 4831 and newer
 OOVPA_XREF(CMcpxBuffer_Play, 4831, 11,
@@ -198,18 +198,34 @@ OOVPA_XREF(CMcpxStream_Pause, 4831, 11,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CMcpxBuffer::Pause
+// * CMcpxBuffer::Pause(unsigned long)
 // ******************************************************************
-OOVPA_XREF(CMcpxBuffer_Pause, 4831, 7,
+// Generic OOVPA as of 4831 and newer
+OOVPA_XREF(CMcpxBuffer_Pause, 4831, 10,
 
     XREF_CMcpxBuffer_Pause,
     XRefZero)
 
-        { 0x0D, 0x4D },
-        { 0x1C, 0x44 },
-        { 0x2B, 0x8B },
-        { 0x3A, 0x75 },
-        { 0x49, 0x7D },
-        { 0x58, 0xEB },
-        { 0x67, 0xE8 },
+        // CMcpxBuffer::Pause+0x00 : push ebp
+        { 0x00, 0x55 },
+
+        // Offset is unique for this asm code.
+        // CMcpxBuffer::Pause+0x27 : and eax, -0xBB
+        { 0x27, 0x83 },
+        { 0x28, 0xE0 },
+        { 0x29, 0xBB },
+
+        // CMcpxBuffer::Pause+0x2D : call [?]
+        { 0x2D, 0xE8 },
+
+        // Offset is unique for this asm code.
+        // CMcpxBuffer::Pause+0x40 : and eax, -0xBF
+        { 0x40, 0x83 },
+        { 0x41, 0xE0 },
+        { 0x42, 0xBF },
+
+        // CMcpxBuffer::Pause+0x40 : ret 4
+        { 0x72, 0xC2 },
+        { 0x73, 0x04 },
+
 OOVPA_END;

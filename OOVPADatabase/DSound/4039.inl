@@ -482,35 +482,46 @@ OOVPA_XREF(CDirectSoundBuffer_SetHeadroom, 4039, 1+7,
 OOVPA_END;
 
 // ******************************************************************
-// * CDirectSoundBuffer_SetBufferData
+// * CDirectSoundBuffer::SetBufferData
 // ******************************************************************
 // Verified with Agent Under Fire.
-OOVPA_XREF(CDirectSoundBuffer_SetBufferData, 4039, 16,
+OOVPA_XREF(CDirectSoundBuffer_SetBufferData, 4039, 2+11,
 
     XREF_CDirectSoundBuffer_SetBufferData,
-    XRefZero)
+    XRefTwo)
 
-        // CDirectSoundBuffer_SetBufferData+0x3D : mov eax, 0x80004005
+        // CDirectSoundBuffer::SetBufferData+0x76 : call [CDirectSoundBufferSettings::SetBufferData]
+        XREF_ENTRY( 0x77, XREF_CDirectSoundBufferSettings_SetBufferData ),
+
+        // CDirectSoundBuffer::SetBufferData+0x8A : call [CMcpxBuffer::SetBufferData]
+        XREF_ENTRY( 0x8B, XREF_CMcpxBuffer_SetBufferData ),
+
+        // CDirectSoundBuffer::SetBufferData+0x00 : push ebp
+        { 0x00, 0x55 },
+
+        // CDirectSoundBuffer::SetBufferData+0x3D : mov eax, 0x80004005
         { 0x3D, 0xB8 }, // Was 4134 Offset -0x03h
         { 0x3E, 0x05 },
         { 0x3F, 0x40 },
         { 0x40, 0x00 },
         { 0x41, 0x80 },
 
-        // CDirectSoundBuffer_SetBufferData+0x48 : mov eax, [esi+1Ch]
+        // CDirectSoundBuffer::SetBufferData+0x48 : mov eax, [esi+1Ch]
         { 0x48, 0x8B },
         { 0x49, 0x46 },
         { 0x4A, 0x1C },
 
-        // CDirectSoundBuffer_SetBufferData+0x4B : cmp  ebx, [eax+13Ch]
+#if 0
+        // CDirectSoundBuffer::SetBufferData+0x4B : cmp  ebx, [eax+13Ch]
         { 0x4B, 0x3B },
         { 0x4C, 0x98 },
         { 0x4D, 0x3C },
         { 0x4E, 0x01 },
         { 0x4F, 0x00 },
         { 0x50, 0x00 },
+#endif
 
-        // CDirectSoundBuffer_SetBufferData+0xA8 : retn 0Ch
+        // CDirectSoundBuffer::SetBufferData+0xA8 : retn 0xC
         { 0xA8, 0xC2 },
         { 0xA9, 0x0C },
 OOVPA_END;
@@ -766,7 +777,7 @@ OOVPA_XREF(CDirectSound_CommitDeferredSettings, 4039, 14,
 OOVPA_END;
 
 // ******************************************************************
-// * public: long __thiscall DirectSound::CMcpxBuffer::Play(unsigned long)
+// * CMcpxBuffer::Play(unsigned long)
 // ******************************************************************
 OOVPA_XREF(CMcpxBuffer_Play, 4039, 13,
 
@@ -798,8 +809,9 @@ OOVPA_XREF(CMcpxBuffer_Play, 4039, 13,
 OOVPA_END;
 
 // ******************************************************************
-// * public: long __thiscall DirectSound::CMcpxBuffer::Play(__int64,unsigned long)
+// * CMcpxBuffer::Play(__int64,unsigned long)
 // ******************************************************************
+// Generic OOVPA as of 4039 and newer
 OOVPA_XREF(CMcpxBuffer_Play_Ex, 4039, 1+8,
 
     XREF_CMcpxBuffer_Play_Ex,
@@ -4382,4 +4394,38 @@ OOVPA_XREF(CMcpxVoiceClient_SetPitch, 4039, 12,
         { 0x73, 0x86 },
         { 0x74, 0x84 },
         { 0x75, 0x00 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBufferSettings::SetBufferData
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBufferSettings_SetBufferData, 4039, 12,
+
+    XREF_CDirectSoundBufferSettings_SetBufferData,
+    XRefZero)
+
+        // CDirectSoundBufferSettings::SetBufferData+0x00 : push ebp
+        { 0x00, 0x55 },
+
+        // CDirectSoundBufferSettings::SetBufferData+0x0C : mov edx,0x80000000
+        { 0x0C, 0xBB },
+        { 0x0D, 0x00 },
+        //{ 0x0E, 0x00 },
+        { 0x0F, 0x00 },
+        { 0x10, 0x80 },
+
+        // CDirectSoundBufferSettings::SetBufferData+0x20 : jmp +0x06
+        { 0x20, 0xEB },
+        { 0x21, 0x06 },
+
+        // This offset is unique.
+        // CDirectSoundBufferSettings::SetBufferData+0x43 : and byte [esi+0x0B],0x7F
+        { 0x43, 0x80 },
+        { 0x44, 0x66 },
+        //{ 0x45, 0x0B },
+        { 0x46, 0x7F },
+
+        // CDirectSoundBufferSettings::SetBufferData+0x78 : ret 8
+        { 0x78, 0xC2 },
+        { 0x79, 0x08 },
 OOVPA_END;

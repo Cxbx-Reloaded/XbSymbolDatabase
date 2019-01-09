@@ -304,6 +304,7 @@ typedef enum _XRefDataBaseOffset
     XREF_CMcpxAPU_SetI3DL2Listener,
     XREF_CMcpxAPU_SetMixBinHeadroom,
     XREF_CMcpxAPU_SynchPlayback,
+    XREF_CDirectSoundBufferSettings_SetBufferData,
     XREF_CMcpxBuffer_GetCurrentPosition,
     XREF_CMcpxBuffer_GetStatus,
     XREF_CMcpxBuffer_Pause,

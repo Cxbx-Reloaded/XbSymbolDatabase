@@ -87,25 +87,34 @@ OOVPA_XREF(CMcpxBuffer_GetStatus, 4721, 11,
 OOVPA_END;
 
 // ******************************************************************
-// * CMcpxBuffer_Pause
+// * CMcpxBuffer::Pause(unsigned long)
 // ******************************************************************
 OOVPA_XREF(CMcpxBuffer_Pause, 4721, 12,
 
     XREF_CMcpxBuffer_Pause,
     XRefZero)
 
+        // CMcpxBuffer::Pause+0x00 : push ebp
         { 0x00, 0x55 },
-        { 0x14, 0x8A },
 
+        { 0x14, 0x8A },
         { 0x20, 0x01 },
+
+        // CMcpxBuffer::Pause+0x21 : jne +0x04
         { 0x21, 0x75 },
         { 0x22, 0x04 },
+
+        // CMcpxBuffer::Pause+0x23 : push 0x04
         { 0x23, 0x6A },
         { 0x24, 0x04 },
+
+        // CMcpxBuffer::Pause+0x25 : jmp +0x08
         { 0x25, 0xEB },
         { 0x26, 0x08 },
+
         { 0x27, 0x83 },
 
+        // CMcpxBuffer::Pause+0x42 : ret 4
         { 0x42, 0xC2 },
         { 0x43, 0x04 },
 OOVPA_END;
@@ -156,7 +165,7 @@ OOVPA_XREF(IDirectSoundBuffer_PauseEx, 4721, 1+7,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CMcpxBuffer::Pause
+// * CMcpxBuffer::Pause(__int64, unsigned long)
 // ******************************************************************
 // Generic OOVPA as of 4721 and newer
 OOVPA_XREF(CMcpxBuffer_Pause_Ex, 4721, 1+8,
@@ -224,7 +233,7 @@ OOVPA_XREF(IDirectSoundBuffer_Pause, 4721, 1+7,
 OOVPA_END;
 
 // ******************************************************************
-// * CMcpxBuffer_Play
+// * CMcpxBuffer::Play(unsigned long)
 // ******************************************************************
 OOVPA_XREF(CMcpxBuffer_Play, 4721, 11,
 

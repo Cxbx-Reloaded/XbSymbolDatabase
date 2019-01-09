@@ -258,16 +258,18 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSoundVoice_Use3DVoiceData, 5558), // Final generic OOVPA: 5558; Removed: 0 (introduced in 5558)
 
     //========================================================
+    REGISTER_OOVPAS(CDirectSoundBufferSettings_SetBufferData, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+
     REGISTER_OOVPAS(CMcpxBuffer_GetCurrentPosition, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CMcpxBuffer_GetStatus, 3911, 4039, 4134, 4721, 4831), // Final generic OOVPA: 4831; Removed: 0
-    REGISTER_OOVPAS(CMcpxBuffer_Pause, 4721, 4831), // NOTE: ?Pause@CMcpxBuffer@DirectSound@@QAEJK@Z
-    REGISTER_OOVPAS(CMcpxBuffer_Pause_Ex, 4721), // NOTE: ?Pause@CMcpxBuffer@DirectSound@@QAEJ_JK@Z
-    REGISTER_OOVPAS(CMcpxBuffer_Play, 3911, 4039, 4134, 4721, 4831), // NOTE: ?Play@CMcpxBuffer@DirectSound@@QAEJK@Z
-    REGISTER_OOVPAS(CMcpxBuffer_Play_Ex, 4039), // NOTE: ?Play@CMcpxBuffer@DirectSound@@QAEJ_JK@Z
-    REGISTER_OOVPAS(CMcpxBuffer_SetBufferData, 4134, 5455),
-    REGISTER_OOVPAS(CMcpxBuffer_SetCurrentPosition, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CMcpxBuffer_Stop, 3911, 4134, 4242), // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJK@Z
-    REGISTER_OOVPAS(CMcpxBuffer_Stop_Ex, 4134), // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJ_JK@Z
+    REGISTER_OOVPAS(CMcpxBuffer_Pause, 4721, 4831), // Final generic OOVPA: 4831; Removed: 0 (introduced in 4721) // NOTE: ?Pause@CMcpxBuffer@DirectSound@@QAEJK@Z
+    REGISTER_OOVPAS(CMcpxBuffer_Pause_Ex, 4721), // Final generic OOVPA: 4721; Removed: 0 (introduced in 4721) // NOTE: ?Pause@CMcpxBuffer@DirectSound@@QAEJ_JK@Z
+    REGISTER_OOVPAS(CMcpxBuffer_Play, 3911, 4039, 4134, 4721, 4831), // Final generic OOVPA: 4831; Removed: 0 // NOTE: ?Play@CMcpxBuffer@DirectSound@@QAEJK@Z
+    REGISTER_OOVPAS(CMcpxBuffer_Play_Ex, 4039), // Final generic OOVPA: 4039; Removed: 0 (introduced in 4039) // NOTE: ?Play@CMcpxBuffer@DirectSound@@QAEJ_JK@Z
+    REGISTER_OOVPAS(CMcpxBuffer_SetBufferData, 3911, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CMcpxBuffer_SetCurrentPosition, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CMcpxBuffer_Stop, 3911, 4134, 4242), // Final generic OOVPA: 4242; Removed: 0 // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJK@Z
+    REGISTER_OOVPAS(CMcpxBuffer_Stop_Ex, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134) // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJ_JK@Z
 
     REGISTER_OOVPAS(CMcpxStream_Stop, 4134, 5233), // Final generic OOVPA: 5233? (introduced in 4134)
     REGISTER_OOVPAS(CMcpxStream_Stop_Ex, 4134), // Final generic OOVPA: 4134 (introduced in 4134)
@@ -288,7 +290,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSoundBuffer_Play, 3911, 4039, 4134), // NOTE: Must be after CDirectSoundBuffer_PlayEx for one time scan.
     REGISTER_OOVPAS(CDirectSoundBuffer_Set3DVoiceData, 5455),
     REGISTER_OOVPAS(CDirectSoundBuffer_SetAllParameters, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetBufferData, 3911, 4039, 4134),
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetBufferData, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSoundBuffer_SetConeAngles, 4039, 4134),
     REGISTER_OOVPAS(CDirectSoundBuffer_SetConeOrientation, 3911, 4039, 4134),
     REGISTER_OOVPAS(CDirectSoundBuffer_SetConeOutsideVolume, 3911, 4039, 4134),

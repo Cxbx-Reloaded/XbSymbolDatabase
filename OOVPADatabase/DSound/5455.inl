@@ -201,32 +201,6 @@ OOVPA_XREF(CDirectSound_SetI3DL2Listener, 5455, 20,
 OOVPA_END;
 
 // ******************************************************************
-// * CMcpxBuffer_SetBufferData
-// ******************************************************************
-OOVPA_XREF(CMcpxBuffer_SetBufferData, 5455, 9,
-
-    XREF_CMcpxBuffer_SetBufferData,
-    XRefZero)
-
-        // CMcpxBuffer_SetBufferData+0x1E : cmp eax, ebx
-        { 0x1E, 0x3B },
-        { 0x1F, 0xC3 },
-
-        // CMcpxBuffer_SetBufferData+0x20 : jz +0x0C
-        { 0x20, 0x74 },
-        { 0x21, 0x0C },
-
-        // CMcpxBuffer_SetBufferData+0x45 : mov [esi+0xBC], ecx
-        { 0x45, 0x89 },
-        { 0x46, 0x8E },
-        { 0x47, 0xBC },
-
-        // CMcpxBuffer_SetBufferData+0x89 : retn 0x08
-        { 0x89, 0xC2 },
-        { 0x8A, 0x08 },
-OOVPA_END;
-
-// ******************************************************************
 // * CDirectSound_GetSpeakerConfig
 // ******************************************************************
 // Generic OOVPA as of 5455 and newer
