@@ -2659,10 +2659,10 @@ OOVPA_XREF(CDirectSoundBuffer_SetConeOutsideVolume, 3911, 1+1,
     XREF_CDirectSoundBuffer_SetConeOutsideVolume,
     XRefOne)
 
-        // CDirectSoundBuffer_SetConeOutsideVolume+0x00 : jmp CDirectSoundVoice_SetConeOutsideVolume
+        // CDirectSoundBuffer::SetConeOutsideVolume+0x00 : jmp CDirectSoundVoice::SetConeOutsideVolume
         XREF_ENTRY( 0x1, XREF_CDirectSoundVoice_SetConeOutsideVolume ),
 
-        // CDirectSoundBuffer_SetConeOutsideVolume+0x00 : jmp
+        // CDirectSoundBuffer::SetConeOutsideVolume+0x00 : jmp
         { 0x00, 0xE9 },
 OOVPA_END;
 
@@ -5614,21 +5614,25 @@ OOVPA_XREF(CMcpxStream_Pause, 3911, 12,
     XREF_CMcpxStream_Pause,
     XRefZero)
 
+        // CMcpxStream_Pause+0x00 : push ebp
         { 0x00, 0x55 },
 
+        // CMcpxStream_Pause+0x16 : mov eax,[esi+XX]
         { 0x16, 0x8B },
         { 0x17, 0x46 },
 
+        // CMcpxStream_Pause+0x19 : or eax,4
         { 0x19, 0x83 },
         { 0x1A, 0xC8 },
         { 0x1B, 0x04 },
 
+        // CMcpxStream_Pause+0x27 : and eax,-5
         { 0x27, 0x83 },
         { 0x28, 0xE0 },
         { 0x29, 0xFB },
 
+        // CMcpxStream_Pause+0x44 : leave; retn 0x04
         { 0x44, 0xC9 },
-
         { 0x45, 0xC2 },
         { 0x46, 0x04 },
 OOVPA_END;
@@ -5818,4 +5822,199 @@ OOVPA_XREF(CMcpxBuffer_SetBufferData, 3911, 9,
 
         // CMcpxBuffer::SetBufferData+0x13 : ret
         { 0x13, 0xC3 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetAllParameters
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetAllParameters, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetAllParameters,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetAllParameters+0x00 : jmp CDirectSoundVoice::SetAllParameters
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetAllParameters ),
+
+        // CDirectSoundBuffer::SetAllParameters+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetConeAngles
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetConeAngles, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetConeAngles,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetConeAngles+0x00 : jmp CDirectSoundVoice::SetConeAngles
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetConeAngles),
+
+        // CDirectSoundBuffer::SetConeAngles+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetEG
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetEG, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetEG,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetEG+0x00 : jmp CDirectSoundVoice::SetEG
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetEG),
+
+        // CDirectSoundBuffer::SetEG+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetFilter
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetFilter, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetFilter,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetFilter+0x00 : jmp CDirectSoundVoice::SetFilter
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetFilter),
+
+        // CDirectSoundBuffer::SetFilter+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetHeadroom
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetHeadroom, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetHeadroom,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetHeadroom+0x00 : jmp CDirectSoundVoice::SetHeadroom
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetHeadroom),
+
+        // CDirectSoundBuffer::SetHeadroom+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetFrequency
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetFrequency, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetFrequency,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetFrequency+0x00 : jmp CDirectSoundVoice::SetFrequency
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetFrequency),
+
+        // CDirectSoundBuffer::SetFrequency+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetI3DL2Source
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetI3DL2Source, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetI3DL2Source,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetI3DL2Source+0x00 : jmp CDirectSoundVoice::SetI3DL2Source
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetI3DL2Source),
+
+        // CDirectSoundBuffer::SetI3DL2Source+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetLFO
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetLFO, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetLFO,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetLFO+0x00 : jmp CDirectSoundVoice::SetLFO
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetLFO),
+
+        // CDirectSoundBuffer::SetLFO+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetMixBins
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetMixBins, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetMixBins,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetMixBins+0x00 : jmp CDirectSoundVoice::SetMixBins
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetMixBins),
+
+        // CDirectSoundBuffer::SetMixBins+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetMixBinVolumes
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetMixBinVolumes, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetMixBinVolumes,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetMixBinVolumes+0x00 : jmp CDirectSoundVoice::SetMixBinVolumes
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetMixBinVolumes),
+
+        // CDirectSoundBuffer::SetMixBinVolumes+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetMode
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetMode, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetMode,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetMode+0x00 : jmp CDirectSoundVoice::SetMode
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetMode),
+
+        // CDirectSoundBuffer::SetMode+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetPitch
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetPitch, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetPitch,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetPitch+0x00 : jmp CDirectSoundVoice::SetPitch
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetPitch),
+
+        // CDirectSoundBuffer:SetPitch:+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundBuffer::SetVolume
+// ******************************************************************
+OOVPA_XREF(CDirectSoundBuffer_SetVolume, 3911, 1+1,
+
+    XREF_CDirectSoundBuffer_SetVolume,
+    XRefOne)
+
+        // CDirectSoundBuffer::SetVolume+0x00 : jmp CDirectSoundVoice::SetVolume
+        XREF_ENTRY( 0x01, XREF_CDirectSoundVoice_SetVolume),
+
+        // CDirectSoundBuffer::SetVolume+0x00 : jmp 0x........
+        { 0x00, 0xE9 },
 OOVPA_END;

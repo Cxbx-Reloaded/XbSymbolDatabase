@@ -26,6 +26,7 @@
 // ******************************************************************
 // * CMcpxStream_GetStatus
 // ******************************************************************
+// Generic OOVPA as of 4721 and newer;
 OOVPA_XREF(CMcpxStream_GetStatus, 4721, 14,
 
     XREF_CMcpxStream_GetStatus,
@@ -120,7 +121,7 @@ OOVPA_XREF(CMcpxBuffer_Pause, 4721, 12,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CDirectSoundBuffer::PauseEx
+// * CDirectSoundBuffer::PauseEx
 // ******************************************************************
 // Generic OOVPA as of 4721 and newer
 OOVPA_XREF(CDirectSoundBuffer_PauseEx, 4721, 1+10,
@@ -191,8 +192,9 @@ OOVPA_XREF(CMcpxBuffer_Pause_Ex, 4721, 1+8,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CDirectSoundBuffer::Pause
+// * CDirectSoundBuffer::Pause
 // ******************************************************************
+// Generic OOVPA as of 4721 and newer
 OOVPA_XREF(CDirectSoundBuffer_Pause, 4721, 1+10,
 
     XREF_CDirectSoundBuffer_Pause,

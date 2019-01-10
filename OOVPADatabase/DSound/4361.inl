@@ -44,7 +44,7 @@ OOVPA_NO_XREF(DirectSoundGetSampleTime, 4361, 8)
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CMcpxStream::Pause2
+// * CMcpxStream::Pause(__int64, unsigned long)
 // ******************************************************************
 // Generic OOVPA as of 4361 and newer
 OOVPA_XREF(CMcpxStream_Pause_Ex, 4361, 1+8,
@@ -54,17 +54,22 @@ OOVPA_XREF(CMcpxStream_Pause_Ex, 4361, 1+8,
 
         XREF_ENTRY( 0x2B, XREF_CMcpxStream_Pause ),
 
+        // CMcpxStream::Pause+0x00 : push ebp
         { 0x00, 0x55 },
 
         { 0x0D, 0x8B },
 
+        // CMcpxStream::Pause+0x1C : push 0x05
         { 0x1C, 0x6A },
         { 0x1D, 0x05 },
 
+        // CMcpxStream::Pause+0x23 : jne
         { 0x23, 0x75 },
 
+        // CMcpxStream::Pause+0x2A : call [CMcpxStream::Pause(unsigned long)]
         { 0x2A, 0xE8 },
 
+        // CMcpxStream::Pause+0x0F : ret 0xC
         { 0x36, 0xC2 },
         { 0x37, 0x0C },
 OOVPA_END;
@@ -370,7 +375,7 @@ OOVPA_XREF(CDirectSound_GetCaps, 4361, 13,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CDirectSoundVoice::SetRolloffCurve
+// * CDirectSoundVoice::SetRolloffCurve
 // ******************************************************************
 // Generic OOVPA as of 4361 and newer
 OOVPA_XREF(CDirectSoundVoice_SetRolloffCurve, 4361, 12,
@@ -395,8 +400,9 @@ OOVPA_XREF(CDirectSoundVoice_SetRolloffCurve, 4361, 12,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CDirectSoundBuffer::SetRolloffCurve
+// * CDirectSoundBuffer::SetRolloffCurve
 // ******************************************************************
+// Generic OOVPA as of 4361 and newer
 OOVPA_XREF(CDirectSoundBuffer_SetRolloffCurve, 4361, 1+7,
 
     XREF_CDirectSoundBuffer_SetRolloffCurve,

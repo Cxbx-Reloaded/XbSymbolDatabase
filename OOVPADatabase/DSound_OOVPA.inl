@@ -149,6 +149,7 @@
 //     * Maybe able to reduce pairs and include another XREF.
 //   * CDirectSoundVoice_SetMixBinVolumes
 //     * Should be able to reduce pairs since there are two XREFs.
+// * (TODO) CDirectSoundBuffer_SetNotificationPositions, add XREF supports.
 
 
 #ifndef DSOUND_OOVPA_INL
@@ -271,57 +272,57 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CMcpxBuffer_Stop, 3911, 4134, 4242), // Final generic OOVPA: 4242; Removed: 0 // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJK@Z
     REGISTER_OOVPAS(CMcpxBuffer_Stop_Ex, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134) // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJ_JK@Z
 
-    REGISTER_OOVPAS(CMcpxStream_Stop, 4134, 5233), // Final generic OOVPA: 5233? (introduced in 4134)
-    REGISTER_OOVPAS(CMcpxStream_Stop_Ex, 4134), // Final generic OOVPA: 4134 (introduced in 4134)
-    REGISTER_OOVPAS(CMcpxStream_Flush, 3911, 3936, 4039, 4134), // Final generic OOVPA: 4134
+    REGISTER_OOVPAS(CMcpxStream_Stop, 4134, 5233), // Final generic OOVPA: 5233?; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(CMcpxStream_Stop_Ex, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(CMcpxStream_Flush, 3911, 3936, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CMcpxStream_Discontinuity, 3911, 4039, 4134, 4531, 5455), // NOTE: Must be after CMcpxStream_Flush for one time scan.
-    REGISTER_OOVPAS(CMcpxStream_GetStatus, 4134, 4721),
-    REGISTER_OOVPAS(CMcpxStream_Pause, 3911, 4039, 4134, 4831),
-    REGISTER_OOVPAS(CMcpxStream_Pause_Ex, 4361),
+    REGISTER_OOVPAS(CMcpxStream_GetStatus, 4134, 4721), // Final generic OOVPA: 4721; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(CMcpxStream_Pause, 3911, 4039, 4134, 4831), // Final generic OOVPA: 4831; Removed: 0
+    REGISTER_OOVPAS(CMcpxStream_Pause_Ex, 4361), // Final generic OOVPA: 4361; Removed: 0 (introduced in 4361)
 
     //========================================================
-    REGISTER_OOVPAS(CDirectSoundBuffer_GetCurrentPosition, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_GetStatus, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_GetVoiceProperties, 5028),
-    REGISTER_OOVPAS(CDirectSoundBuffer_Lock, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_Pause, 4721),
-    REGISTER_OOVPAS(CDirectSoundBuffer_PauseEx, 4721),
-    REGISTER_OOVPAS(CDirectSoundBuffer_PlayEx, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_Play, 3911, 4039, 4134), // NOTE: Must be after CDirectSoundBuffer_PlayEx for one time scan.
-    REGISTER_OOVPAS(CDirectSoundBuffer_Set3DVoiceData, 5455),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetAllParameters, 4039, 4134),
+    REGISTER_OOVPAS(CDirectSoundBuffer_GetCurrentPosition, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_GetStatus, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_GetVoiceProperties, 5028), // Final generic OOVPA: 5028; Removed: 0 (introduced in 5028)
+    REGISTER_OOVPAS(CDirectSoundBuffer_Lock, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_Pause, 4721), // Final generic OOVPA: 4721; Removed: 0 (introduced in 4721)
+    REGISTER_OOVPAS(CDirectSoundBuffer_PauseEx, 4721), // Final generic OOVPA: 4721; Removed: 0 (introduced in 4721)
+    REGISTER_OOVPAS(CDirectSoundBuffer_PlayEx, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_Play, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 // NOTE: Must be after CDirectSoundBuffer_PlayEx for one time scan.
+    REGISTER_OOVPAS(CDirectSoundBuffer_Set3DVoiceData, 5455), // Final generic OOVPA: 5455; Removed: 0 (introduced in 5455)
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetAllParameters, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSoundBuffer_SetBufferData, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetConeAngles, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetConeOrientation, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetConeOutsideVolume, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetCurrentPosition, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetDistanceFactor, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetDopplerFactor, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetEG, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetFilter, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetFormat, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetFrequency, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetHeadroom, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetI3DL2Source, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetLFO, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetLoopRegion, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetMaxDistance, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetMinDistance, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetMixBins, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetMixBinVolumes, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetMode, 4039, 4134),
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetConeAngles, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetConeOrientation, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetConeOutsideVolume, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetCurrentPosition, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetDistanceFactor, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetDopplerFactor, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetEG, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetFilter, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetFormat, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4039)
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetFrequency, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetHeadroom, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetI3DL2Source, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetLFO, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetLoopRegion, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetMaxDistance, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetMinDistance, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetMixBins, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetMixBinVolumes, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetMode, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSoundBuffer_SetNotificationPositions, 3911, 4039, 4242), // Uncommenting these fixes dashboard 4920 (from 4627 comment)
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetOutputBuffer, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetPitch, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetPlayRegion, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetPosition, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetRolloffCurve, 4361),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetRolloffFactor, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetVelocity, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_SetVolume, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_StopEx, 3911, 4039, 4134),
-    REGISTER_OOVPAS(CDirectSoundBuffer_Stop, 3911, 4039, 4134), // NOTE: Must be after CDirectSoundBuffer_StopEx for one time scan.
-    REGISTER_OOVPAS(CDirectSoundBuffer_Use3DVoiceData, 5558), // Final generic OOVPA: 5558 (introduced in 5558)
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetOutputBuffer, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetPitch, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetPlayRegion, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetPosition, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetRolloffCurve, 4361), // Final generic OOVPA: 4361; Removed: 0 (introduced in 4361)
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetRolloffFactor, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetVelocity, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_SetVolume, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_StopEx, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundBuffer_Stop, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 // NOTE: Must be after CDirectSoundBuffer_StopEx for one time scan.
+    REGISTER_OOVPAS(CDirectSoundBuffer_Use3DVoiceData, 5558), // Final generic OOVPA: 5558; Removed: 0 (introduced in 5558)
 
     REGISTER_OOVPAS(CDirectSoundStream_AddRef, 3911, 4039, 4134),
     REGISTER_OOVPAS(CDirectSoundStream_Discontinuity, 3911, 4039, 4134),

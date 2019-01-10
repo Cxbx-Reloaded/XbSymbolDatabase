@@ -3943,10 +3943,10 @@ OOVPA_XREF(CDirectSoundBuffer_SetNotificationPositions, 4039, 12,
         { 0x0E, 0x4E },
         { 0x0F, 0x1C },
 
-        // CDirectSoundBuffer_SetNotificationPositions+0x10 : Call [CDirectSoundBufferSettings_SetNotificationPositions]
+        // CDirectSoundBuffer_SetNotificationPositions+0x10 : Call [CDirectSoundBufferSettings::SetNotificationPositions]
         { 0x10, 0xE8 },
 
-        // CDirectSoundBuffer_SetNotificationPositions+0x1C : Call [CMcpxBuffer_SetNotificationPositions]
+        // CDirectSoundBuffer_SetNotificationPositions+0x1C : Call [CMcpxBuffer::SetNotificationPositions]
         { 0x1C, 0xE8 },
 
         // CDirectSoundBuffer_SetNotificationPositions+0x22 : retn 0Ch
