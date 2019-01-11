@@ -296,6 +296,7 @@ OOVPA_END;
 // ******************************************************************
 // * DirectSound::CDirectSoundStream::Set3DVoiceData
 // ******************************************************************
+// Generic OOVPA as of 5455 and newer
 OOVPA_XREF(CDirectSoundStream_Set3DVoiceData, 5455, 1+8,
 
     XREF_CDirectSoundStream_Set3DVoiceData,

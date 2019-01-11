@@ -2166,7 +2166,7 @@ OOVPA_XREF(CDirectSoundStream_Flush, 3911, 1+8,
     XRefNoSaveIndex,
     XRefOne)
 
-        //CDirectSoundStream_Flush+0x10 : call [CMcpxStream_Flush]
+        // CDirectSoundStream::Flush+0x10 : call [CMcpxStream::Flush]
         XREF_ENTRY( 0x11, XREF_CMcpxStream_Flush ),
 
         { 0x00, 0x56 },
@@ -2177,9 +2177,10 @@ OOVPA_XREF(CDirectSoundStream_Flush, 3911, 1+8,
         { 0x0D, 0x8B },
         { 0x0F, 0x24 },
 
+        // CDirectSoundStream::Flush+0x10 : call [CMcpxStream::Flush]
         { 0x10, 0xE8 },
 
-        //CDirectSoundStream_Flush+0x2A : ret 4
+        // CDirectSoundStream::Flush+0x2A : ret 4
         { 0x2A, 0xC2 },
         { 0x2B, 0x04 },
 OOVPA_END;
@@ -2232,6 +2233,7 @@ OOVPA_XREF(CDirectSoundStream_Discontinuity, 3911, 1+8,
         { 0x0D, 0x8B },
         { 0x0F, 0x24 },
 
+        //CDirectSoundStream::Discontinuity+0x10 : call [CMcpxStream_Discontinuity]
         { 0x10, 0xE8 },
 
         //CDirectSoundStream_Discontinuity+0x2A : ret 4
@@ -3513,7 +3515,7 @@ OOVPA_XREF(CDirectSoundStream_SetVelocity, 3911, 1+8,
     XREF_CDirectSoundStream_SetVelocity,
     XRefOne)
 
-        // CDirectSoundStream_SetVelocity+0x25 : call [CDirectSoundVoice_SetVelocity]
+        // CDirectSoundStream_SetVelocity+0x24 : call [CDirectSoundVoice_SetVelocity]
         XREF_ENTRY( 0x25, XREF_CDirectSoundVoice_SetVelocity ),
 
         // CDirectSoundStream_SetVelocity+0x06 : fld [ebp+0x14]

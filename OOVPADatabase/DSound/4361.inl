@@ -422,6 +422,7 @@ OOVPA_END;
 // ******************************************************************
 // * DirectSound::CDirectSoundStream::SetRolloffCurve
 // ******************************************************************
+// Generic OOVPA as of 4361 and newer
 OOVPA_XREF(CDirectSoundStream_SetRolloffCurve, 4361, 1+7,
 
     XREF_CDirectSoundStream_SetRolloffCurve,
