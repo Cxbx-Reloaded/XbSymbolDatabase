@@ -26,6 +26,7 @@
 // ******************************************************************
 // * DirectSoundCreate
 // ******************************************************************
+// Generic OOVPA as of 4134 and newer
 OOVPA_NO_XREF(DirectSoundCreate, 4134, 9)
 
         // DirectSoundCreate+0x0B : movzx esi, al
@@ -3721,6 +3722,7 @@ OOVPA_END;
 // ******************************************************************
 // * DirectSoundCreateBuffer
 // ******************************************************************
+// Generic OOVPA as of 4134 and newer
 OOVPA_XREF(DirectSoundCreateBuffer, 4134, 1+11,
 
     XRefNoSaveIndex,

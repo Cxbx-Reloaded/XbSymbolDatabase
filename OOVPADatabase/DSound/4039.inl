@@ -3909,6 +3909,7 @@ OOVPA_END;
 // ******************************************************************
 // * IsValidFormat
 // ******************************************************************
+// Generic OOVPA as of 4039 and newer
 OOVPA_NO_XREF(IsValidFormat, 4039, 11)
 
         // IsValidFormat+0x00 : mov ecx, [esp+4]
@@ -4287,6 +4288,7 @@ OOVPA_END;
 // ******************************************************************
 // * WaveFormat::CreateXboxAdpcmFormat
 // ******************************************************************
+// Generic OOVPA as of 4039 and newer
 OOVPA_XREF(WaveFormat_CreateXboxAdpcmFormat, 4039, 12,
 
     XREF_WaveFormat_CreateXboxAdpcmFormat,

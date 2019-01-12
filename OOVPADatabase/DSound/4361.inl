@@ -26,6 +26,7 @@
 // ******************************************************************
 // * DirectSoundGetSampleTime
 // ******************************************************************
+// Generic OOVPA as of 4361 and newer
 OOVPA_NO_XREF(DirectSoundGetSampleTime, 4361, 8)
 
         // DirectSoundGetSampleTime+0x00 : xor eax, eax

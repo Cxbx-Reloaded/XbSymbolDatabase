@@ -518,31 +518,31 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CHrtfSource_SetAlgorithm_FullHrtf, 4242), // Final generic OOVPA: 4242; Removed: 5344+ (introduced in 4242)
     REGISTER_OOVPAS(CHrtfSource_SetAlgorithm_LightHrtf, 4242), // Final generic OOVPA: 4242; Removed: 5344+ (introduced in 4242)
 
-    REGISTER_OOVPAS(DirectSoundCreate, 3911, 4039, 4134),
-    REGISTER_OOVPAS(DirectSoundCreateBuffer, 3911, 4039, 4134),
-    REGISTER_OOVPAS(DirectSoundCreateStream, 3911, 4039, 4134),
+    REGISTER_OOVPAS(DirectSoundCreate, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(DirectSoundCreateBuffer, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(DirectSoundCreateStream, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(DirectSoundDoWork, 3911, 4134), // Final generic OOVPA: 4134; Removed: 0
-    REGISTER_OOVPAS(DirectSoundGetSampleTime, 3911, 4361),
+    REGISTER_OOVPAS(DirectSoundGetSampleTime, 3911, 4361), // Final generic OOVPA: 4361; Removed: 0
     REGISTER_OOVPAS(DirectSoundUseFullHRTF, 3911, 4039, 4134, 4242, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(DirectSoundUseLightHRTF, 3911, /*4039?, 4134?,*/ 4242, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(DirectSoundUseFullHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
     REGISTER_OOVPAS(DirectSoundUseLightHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
 
-    REGISTER_OOVPAS(WaveFormat_CreateXboxAdpcmFormat, 4039),
+    REGISTER_OOVPAS(WaveFormat_CreateXboxAdpcmFormat, 4039), // Final generic OOVPA: 4039; Removed: 0 (introduced in 4039)
 
-    REGISTER_OOVPAS(IsValidFormat, 3911, 4039),
+    REGISTER_OOVPAS(IsValidFormat, 3911, 4039), // Final generic OOVPA: 4039; Removed: 4361+ // NOTE: 4361+ is replace into a class function
 
-    REGISTER_OOVPAS(XAudioDownloadEffectsImage, 4134),
-    REGISTER_OOVPAS(XAudioSetEffectData, 5344),
-    REGISTER_OOVPAS(XAudioCreatePcmFormat, 3911),
-    REGISTER_OOVPAS(XAudioCreateAdpcmFormat, 3911, 4039),
+    REGISTER_OOVPAS(XAudioDownloadEffectsImage, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(XAudioSetEffectData, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
+    REGISTER_OOVPAS(XAudioCreatePcmFormat, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: later revision changed to a jmp, and convert into class function
+    REGISTER_OOVPAS(XAudioCreateAdpcmFormat, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
 
-    REGISTER_OOVPAS(XFileCreateMediaObject, 3911, 4361),
-    REGISTER_OOVPAS(XFileCreateMediaObjectAsync, 4432),
-    REGISTER_OOVPAS(XFileCreateMediaObjectEx, 4361),
+    REGISTER_OOVPAS(XFileCreateMediaObject, 3911, 4361), // TODO: Need investigation on 3911-4242
+    REGISTER_OOVPAS(XFileCreateMediaObjectAsync, 4432), // TODO: Need investigation
+    REGISTER_OOVPAS(XFileCreateMediaObjectEx, 4361), // TODO: Need investigation
 
-    REGISTER_OOVPAS(XWaveFileCreateMediaObject, 3911, 4361),
-    REGISTER_OOVPAS(XWaveFileCreateMediaObjectEx, 4361),
+    REGISTER_OOVPAS(XWaveFileCreateMediaObject, 3911, 4361), // TODO: Need investigation
+    REGISTER_OOVPAS(XWaveFileCreateMediaObjectEx, 4361), // TODO: Need investigation
 };
 
 // ******************************************************************

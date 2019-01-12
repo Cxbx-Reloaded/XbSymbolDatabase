@@ -5622,6 +5622,8 @@ OOVPA_END;
 // ******************************************************************
 // * XAudioCreatePcmFormat
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer
+// NOTE: later revision changed to a jmp, and convert into class function
 OOVPA_NO_XREF(XAudioCreatePcmFormat, 3911, 11)
 
         { 0x00, 0x8B },
@@ -5694,7 +5696,6 @@ OOVPA_END;
 // ******************************************************************
 // * XFileCreateMediaObject
 // ******************************************************************
-// Generic OOVPA as of 3911 and newer
 OOVPA_XREF(XFileCreateMediaObject, 3911, 14,
 
     XRefNoSaveIndex,
@@ -5705,12 +5706,15 @@ OOVPA_XREF(XFileCreateMediaObject, 3911, 14,
 
         { 0x0D, 0x85 },
         { 0x0E, 0xC0 },
+
         { 0x0F, 0x74 },
         { 0x10, 0x16 },
+
         { 0x11, 0x83 },
         { 0x12, 0x60 },
         { 0x13, 0x04 },
         { 0x14, 0x00 },
+
         { 0x15, 0xC7 },
         { 0x16, 0x00 },
 
@@ -5721,7 +5725,6 @@ OOVPA_END;
 // ******************************************************************
 // * XWaveFileCreateMediaObject
 // ******************************************************************
-// Generic OOVPA as of 3911 and newer
 OOVPA_NO_XREF(XWaveFileCreateMediaObject, 3911, 14)
 
         { 0x00, 0x55 },
