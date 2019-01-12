@@ -88,7 +88,7 @@ OOVPA_XREF(CDirectSound_EnableHeadphones, 5455, 17,
         { 0xC6, 0x0C },
         { 0xC7, 0x00 },
 
-        // CDirectSound_EnableHeadphones+0x117 : leave
+        // CDirectSound_EnableHeadphones+0x117 : leave; ret 8
         //{ 0x117, 0xC9 },
         { 0x118, 0xC2 },
         { 0x119, 0x08 },
@@ -149,55 +149,6 @@ OOVPA_XREF(CMcpxStream_Discontinuity, 5455, 1+9,
         // CMcpxStream_Discontinuity+0x2B : pop esi; ret
         { 0x2B, 0x5E },
         { 0x2C, 0xC3 },
-OOVPA_END;
-
-// ******************************************************************
-// * DirectSound::CDirectSound::SetI3DL2Listener
-// ******************************************************************
-OOVPA_XREF(CDirectSound_SetI3DL2Listener, 5455, 20,
-
-    XREF_CDirectSound_SetI3DL2Listener,
-    XRefZero)
-
-        // CDirectSound_SetI3DL2Listener+0x00 : push esi
-        { 0x00, 0x56 },
-
-        // CDirectSound_SetI3DL2Listener+0x3A : mov edi,88780032h (unchanged since 3911)
-        { 0x3A, 0xBF },
-        //{ 0x3B, 0x32 },
-        //{ 0x3C, 0x00 },
-        //{ 0x3D, 0x78 },
-        { 0x3E, 0x88 },
-
-        // CDirectSound_SetI3DL2Listener+0x54 : mov ebx,dword ptr [ecx+4]
-        { 0x54, 0x8B },
-        { 0x55, 0x59 },
-        { 0x56, 0x04 },
-
-        // CDirectSound_SetI3DL2Listener+0x57 : mov edx,dword ptr [eax+8]
-        { 0x57, 0x8B },
-        { 0x58, 0x50 },
-        { 0x59, 0x08 },
-
-        // CDirectSound_SetI3DL2Listener+0x9C : mov ebx,dword ptr [ecx+1Ch]
-        { 0x9C, 0x8B },
-        { 0x9D, 0x59 },
-        { 0x9E, 0x1C },
-
-        // CDirectSound_SetI3DL2Listener+0xDB : or word ptr [ecx+__h],0FFFh
-        { 0xDB, 0x66 },
-        { 0xDC, 0x81 },
-        { 0xDD, 0x89 },
-        //{ 0xDE, 0x80 }, vs 5344 0x84
-        { 0xDF, 0x00 },
-        //{ 0xE0, 0x00 },
-        //{ 0xE1, 0x00 },
-        { 0xE2, 0xFF },
-        { 0xE3, 0x0F },
-
-        // CDirectSound_SetI3DL2Listener+0x105 : retn 0x0C
-        { 0x105, 0xC2 },
-        { 0x106, 0x0C },
 OOVPA_END;
 
 // ******************************************************************

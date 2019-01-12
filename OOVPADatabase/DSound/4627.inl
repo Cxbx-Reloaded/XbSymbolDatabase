@@ -116,7 +116,7 @@ OOVPA_END;
 #define CMcpxBuffer_Play_Ex_4627 CMcpxBuffer_Play_Ex_4361
 
 // ******************************************************************
-// * CDirectSound::SetDistanceFactorA
+// * CDirectSound::SetDistanceFactor
 // ******************************************************************
 OOVPA_XREF(CDirectSound_SetDistanceFactor, 4627, 17,
 

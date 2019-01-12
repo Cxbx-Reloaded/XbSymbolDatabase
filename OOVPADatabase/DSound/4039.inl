@@ -279,7 +279,7 @@ OOVPA_XREF(CDirectSound_SetDopplerFactor, 4039, 14,
         // CDirectSound_SetDopplerFactor+0x32 : mov [eax+0x50], edx
         { 0x32, 0x89 },
         { 0x33, 0x50 },
-        { 0x34, 0x50 }, // Value is CDirectSound_SetDistanceFactor+ 0x08h
+        { 0x34, 0x50 }, // Value is CDirectSound_SetDistanceFactor+ 0x08
 
         // CDirectSound_SetDopplerFactor+0x38 : or dword ptr[eax+0x84], 0x40
         { 0x38, 0x83 },
@@ -748,10 +748,13 @@ OOVPA_END;
 // * CDirectSound::CommitDeferredSettings
 // ******************************************************************
 // Verified with Agent Under Fire.
-OOVPA_XREF(CDirectSound_CommitDeferredSettings, 4039, 14,
+OOVPA_XREF(CDirectSound_CommitDeferredSettings, 4039, 1+12,
 
     XREF_CDirectSound_CommitDeferredSettings,
-    XRefZero)
+    XRefOne)
+
+        // CDirectSound_CommitDeferredSettings+0x44 : call [CDirectSoundVoice::CommitDeferredSettings]
+        XREF_ENTRY( 0x45, XREF_CDirectSoundVoice_CommitDeferredSettings ),
 
         // CDirectSound_CommitDeferredSettings+0x00 : push    ebp
         { 0x00, 0x55 },
@@ -769,8 +772,8 @@ OOVPA_XREF(CDirectSound_CommitDeferredSettings, 4039, 14,
         { 0x54, 0x84 },
         { 0x55, 0x00 },
         { 0x56, 0x00 },
-        { 0x57, 0x00 },
-        { 0x58, 0x00 },
+        //{ 0x57, 0x00 },
+        //{ 0x58, 0x00 },
 
         // CDirectSound_CommitDeferredSettings+0x78 : leave
         { 0x6F, 0xC9 },
@@ -2619,36 +2622,35 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound::SetI3DL2Listener
 // ******************************************************************
-OOVPA_XREF(CDirectSound_SetI3DL2Listener, 4039, 16,
+OOVPA_XREF(CDirectSound_SetI3DL2Listener, 4039, 12,
 
     XREF_CDirectSound_SetI3DL2Listener,
     XRefZero)
+
         // CDirectSound_SetI3DL2Listener+0x00 : push ebp
         { 0x00, 0x55 },
 
-        // CDirectSound_SetI3DL2Listener+0x35 : cmp dword ptr [eax+0C],-01
+        // CDirectSound_SetI3DL2Listener+0x35 : mov __x,[eax+0x08]
+        { 0x32, 0x8B },
+        //{ 0x33, 0x },
+        { 0x34, 0x08 },
+
+        // CDirectSound_SetI3DL2Listener+0x34 : cmp [__x+0xXX],-1
         { 0x35, 0x83 },
-        //{ 0x36, 0x78 },
-        { 0x37, 0x0C },
+        //{ 0x36, 0x },
+        //{ 0x37, 0x },
         { 0x38, 0xFF },
 
-        // CDirectSound_SetI3DL2Listener+0x3B : mov [ebp-04h],0x88780032
+        // CDirectSound_SetI3DL2Listener+0x38 : jne +0x09
+        { 0x39, 0x75 },
+        { 0x3A, 0x09 },
+
+        // CDirectSound_SetI3DL2Listener+0x3B : mov [ebp-0x04], 0x88780032 (unchanged since 3911)
         { 0x3B, 0xC7 },
-        { 0x3C, 0x45 },
-        { 0x3D, 0xFC },
         { 0x3E, 0x32 },
         { 0x3F, 0x00 },
         { 0x40, 0x78 },
         { 0x41, 0x88 },
-
-        // CDirectSound_SetI3DL2Listener+0x45 : mov esi,[ebp+0Ch]
-        { 0x45, 0x8B },
-        { 0x46, 0x75 },
-        { 0x47, 0x0C },
-
-        // CDirectSound_SetI3DL2Listener+0x7F : retn 0x0C
-        { 0x7F, 0xC2 },
-        { 0x80, 0x0C },
 OOVPA_END;
 
 // ******************************************************************

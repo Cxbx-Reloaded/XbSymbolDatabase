@@ -224,8 +224,8 @@ OOVPA_XREF(CMcpxBuffer_Pause, 4831, 10,
         { 0x41, 0xE0 },
         { 0x42, 0xBF },
 
-        // CMcpxBuffer::Pause+0x40 : ret 4
-        { 0x72, 0xC2 },
-        { 0x73, 0x04 },
+        // CMcpxBuffer::Pause+0x70 : ret 4
+        { 0x70, 0xC2 },
+        { 0x71, 0x04 },
 
 OOVPA_END;

@@ -78,6 +78,7 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound::CreateSoundBuffer
 // ******************************************************************
+// Generic OOVPA as of 4134 and newer
 OOVPA_XREF(CDirectSound_CreateSoundBuffer, 4134, 14,
 
     XREF_CDirectSound_CreateSoundBuffer,
@@ -140,27 +141,41 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound::SetI3DL2Listener
 // ******************************************************************
-OOVPA_XREF(CDirectSound_SetI3DL2Listener, 4134, 11,
+// Generic OOVPA as of 4134 and newer
+OOVPA_XREF(CDirectSound_SetI3DL2Listener, 4134, 13,
 
     XREF_CDirectSound_SetI3DL2Listener,
     XRefZero)
 
-        // CDirectSound_SetI3DL2Listener+0x3A : mov edi, 0x88780032
+        // CDirectSound_SetI3DL2Listener+0x00 : push esi; push edi
+        { 0x00, 0x56 },
+        { 0x01, 0x57 },
+
+        // CDirectSound_SetI3DL2Listener+0x34 : mov __x,[eax+0x08]
+        { 0x31, 0x8B },
+        //{ 0x32, 0x }, // change over time
+        { 0x33, 0x08 },
+
+        // CDirectSound_SetI3DL2Listener+0x34 : cmp [__x+0xXX],-1
+        { 0x34, 0x83 },
+        //{ 0x35, 0x }, // change over time
+        //{ 0x36, 0x }, // change over time
+        { 0x37, 0xFF },
+
+        // CDirectSound_SetI3DL2Listener+0x38 : jne +0x0A
+        { 0x38, 0x75 },
+        { 0x39, 0x0A },
+
+        // Offset is unique for this asm code.
+        // CDirectSound_SetI3DL2Listener+0x3A : mov edi, 0x88780032 (unchanged since 3911)
         { 0x3A, 0xBF },
         { 0x3B, 0x32 },
         { 0x3C, 0x00 },
         { 0x3D, 0x78 },
         { 0x3E, 0x88 },
 
-        // CDirectSound_SetI3DL2Listener+0xA2 : fstp dword ptr[edx+0x94]
-        { 0xA2, 0xD9 },
-        { 0xA3, 0x9A },
-        { 0xA4, 0x94 },
+        // After offset 0x44, asm code does shift around in 5344 and 5455.
 
-        // CDirectSound_SetI3DL2Listener+0xA8 : fld dword ptr[ecx+0x24]
-        { 0xA8, 0xD9 },
-        { 0xA9, 0x41 },
-        { 0xAA, 0x24 },
 OOVPA_END;
 
 // ******************************************************************
@@ -230,34 +245,39 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound_SetPosition
 // ******************************************************************
-OOVPA_XREF(CDirectSound_SetPosition, 4134, 14,
+// Generic OOVPA as of 4134 and newer
+OOVPA_XREF(CDirectSound_SetPosition, 4134, 15,
 
     XREF_CDirectSound_SetPosition,
     XRefZero)
 
-        // CDirectSound_SetPosition+0x00 : push ebp
+        // CDirectSound_SetPosition+0x00 : push ebp; mov ebp, esp
         { 0x00, 0x55 },
+        { 0x01, 0x8B },
+        { 0x02, 0xEC },
 
         // CDirectSound_SetPosition+0x2B : mov ecx, [ebp+0x08]
         { 0x2B, 0x8B },
         { 0x2C, 0x4D },
         { 0x2D, 0x08 },
 
-        // CDirectSound_SetPosition+0x3F : mov [edx+0x3C], edi
+        // CDirectSound_SetPosition+0x37 : mov [edx+0x38],edi
+        { 0x37, 0x89 },
+        { 0x38, 0x7A },
+        { 0x39, 0x38 },
+
+        // CDirectSound_SetPosition+0x3F : mov [edx+0x3C],edi
         { 0x3F, 0x89 },
         { 0x40, 0x7A },
         { 0x41, 0x3C },
 
-        // CDirectSound_SetPosition+0x4C : or word ptr [eax+0xA4], 0x01FF
-        { 0x4C, 0x80 },
-        { 0x4D, 0x88 },
-        { 0x4E, 0xA4 },
-        { 0x4F, 0x00 },
-        { 0x52, 0xFF },
+        // CDirectSound_SetPosition+0x47 : mov [edx+0x40],edi
+        { 0x47, 0x89 },
+        { 0x48, 0x7A },
+        { 0x49, 0x40 },
 
-        // CDirectSound_SetPosition+0x73 : retn 0x14
-        { 0x73, 0xC2 },
-        { 0x74, 0x14 },
+        // After offset 0x4A, asm code does change in 4627 and later.
+
 OOVPA_END;
 
 // ******************************************************************
@@ -814,10 +834,16 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound::SetRolloffFactor
 // ******************************************************************
-OOVPA_XREF(CDirectSound_SetRolloffFactor, 4134, 17,
+OOVPA_XREF(CDirectSound_SetRolloffFactor, 4134, 13,
 
     XREF_CDirectSound_SetRolloffFactor,
     XRefZero)
+
+        // CDirectSound_SetRolloffFactor+0x00 : push esi
+        { 0x00, 0x56 },
+
+        // CDirectSound_SetRolloffFactor+0x01 : call DirectSoundEnterCriticalSection
+        { 0x01, 0xE8 },
 
         // CDirectSound_SetRolloffFactor+0x21 : mov eax, 0x80004005
         { 0x21, 0xB8 },
@@ -826,6 +852,7 @@ OOVPA_XREF(CDirectSound_SetRolloffFactor, 4134, 17,
         { 0x24, 0x00 },
         { 0x25, 0x80 },
 
+        // This asm code is unique.
         // CDirectSound_SetRolloffFactor+0x33 : mov [eax+6Ch], edx
         { 0x33, 0x89 },
         { 0x34, 0x50 },
@@ -836,15 +863,7 @@ OOVPA_XREF(CDirectSound_SetRolloffFactor, 4134, 17,
         { 0x37, 0x41 },
         { 0x38, 0x08 },
 
-        // CDirectSound_SetRolloffFactor+0x39 : or dword ptr[eax+0xA4], 0x04
-        { 0x39, 0x83 },
-        { 0x3A, 0x88 },
-        { 0x3B, 0xA4 },
-        { 0x3F, 0x04 },
-
-        // CDirectSound_SetRolloffFactor+0x4F : jz +0x0B
-        { 0x4F, 0x74 },
-        { 0x50, 0x0B },
+        // Offset 0x39 and later has change in 5344
 OOVPA_END;
 
 // ******************************************************************
@@ -881,15 +900,23 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound::CommitDeferredSettings
 // ******************************************************************
-OOVPA_XREF(CDirectSound_CommitDeferredSettings, 4134, 11,
+OOVPA_XREF(CDirectSound_CommitDeferredSettings, 4134, 1+9,
 
     XREF_CDirectSound_CommitDeferredSettings,
-    XRefZero)
+    XRefOne)
 
+        // CDirectSound_CommitDeferredSettings+0x49 : call [CDirectSoundVoice::CommitDeferredSettings]
+        XREF_ENTRY( 0x4A, XREF_CDirectSoundVoice_CommitDeferredSettings ),
+
+        // CDirectSound_CommitDeferredSettings+0x00 : push ebp
+        { 0x00, 0x55 },
+
+#if 0
         // CDirectSound_CommitDeferredSettings+0x10 : movzx eax, al
         { 0x10, 0x0F },
         { 0x11, 0xB6 },
         { 0x12, 0xC0 },
+#endif
 
         // CDirectSound_CommitDeferredSettings+0x27 : mov eax, 0x80004005
         { 0x27, 0xB8 },
@@ -2463,6 +2490,7 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound_SetOrientation
 // ******************************************************************
+//Generic OOVPA as of 4134 and newer.
 OOVPA_XREF(CDirectSound_SetOrientation, 4134, 13,
 
     XREF_CDirectSound_SetOrientation,
@@ -2488,6 +2516,7 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound_DownloadEffectsImage
 // ******************************************************************
+//Generic OOVPA as of 4134 and newer.
 OOVPA_XREF(CDirectSound_DownloadEffectsImage, 4134, 18,
 
     XREF_CDirectSound_DownloadEffectsImage,

@@ -352,6 +352,7 @@ OOVPA_END;
 // ******************************************************************
 // * DirectSound::GetCaps
 // ******************************************************************
+// Generic OOVPA as of 4361 and newer
 OOVPA_XREF(CDirectSound_GetCaps, 4361, 13,
 
     XREF_CDirectSound_GetCaps,
@@ -477,6 +478,7 @@ OOVPA_END;
 // ******************************************************************
 // * DirectSound::CDirectSound::GetOutputLevels
 // ******************************************************************
+// Generic OOVPA as of 4361 and newer
 OOVPA_XREF(CDirectSound_GetOutputLevels, 4361, 12,
 
     XREF_CDirectSound_GetOutputLevels,
@@ -485,15 +487,21 @@ OOVPA_XREF(CDirectSound_GetOutputLevels, 4361, 12,
         { 0x00, 0x56 },
         { 0x07, 0x10 },
 
+        // CDirectSound::GetOutputLevels+0x18 : pop edi; pop esi
         { 0x18, 0x5F },
         { 0x19, 0x5E },
+
+        // CDirectSound::GetOutputLevels+0x1A : je +0x25; mov[edx],eax
         { 0x1A, 0x74 },
         { 0x1B, 0x25 },
         { 0x1C, 0x89 },
         { 0x1D, 0x02 },
+
+        // CDirectSound::GetOutputLevels+0x1E : mov [0xFE85A6B0],eax
         { 0x1E, 0xA3 },
         { 0x1F, 0xB0 },
 
+        // CDirectSound::GetOutputLevels+0x00 : ret 0xC
         { 0x43, 0xC2 },
         { 0x44, 0x0C },
 OOVPA_END;
