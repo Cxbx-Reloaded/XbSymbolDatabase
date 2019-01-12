@@ -509,6 +509,7 @@ OOVPA_END;
 // ******************************************************************
 // * IDirectSound_GetOutputLevels
 // ******************************************************************
+// Generic OOVPA as of 4361 and newer
 OOVPA_XREF(IDirectSound_GetOutputLevels, 4361, 1+8,
 
     XRefNoSaveIndex,

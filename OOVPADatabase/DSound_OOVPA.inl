@@ -387,124 +387,124 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSound_SetPosition, 3911, 4039, 4134, 4627, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSound_SetRolloffFactor, 3911, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSound_SetVelocity, 3911, 4039, 4134, 4627, 5344), // Final generic OOVPA: 5344; Removed: 0
-    REGISTER_OOVPAS(CDirectSound_SynchPlayback, 4831, 5344),// Final generic OOVPA: 5344
+    REGISTER_OOVPAS(CDirectSound_SynchPlayback, 4831, 5344),// Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSound_UnmapBufferData, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
 
     //========================================================
-    REGISTER_OOVPAS(IDirectSound3DCalculator_Calculate3D, 5344), // jmp only
-    REGISTER_OOVPAS(IDirectSound3DCalculator_GetMixBinVolumes, 5344), // jmp only
-    REGISTER_OOVPAS(IDirectSound3DCalculator_GetPanData, 5344),
-    REGISTER_OOVPAS(IDirectSound3DCalculator_GetVoiceData, 5344),
+    REGISTER_OOVPAS(IDirectSound3DCalculator_Calculate3D, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344) // jmp only
+    REGISTER_OOVPAS(IDirectSound3DCalculator_GetMixBinVolumes, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344) // jmp only
+    REGISTER_OOVPAS(IDirectSound3DCalculator_GetPanData, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
+    REGISTER_OOVPAS(IDirectSound3DCalculator_GetVoiceData, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
 
-    REGISTER_OOVPAS(IDirectSoundBuffer_AddRef, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_GetCurrentPosition, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_GetStatus, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_GetVoiceProperties, 5028),
-    REGISTER_OOVPAS(IDirectSoundBuffer_Lock, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_Pause, 4721),
-    REGISTER_OOVPAS(IDirectSoundBuffer_PauseEx, 4721),
-    REGISTER_OOVPAS(IDirectSoundBuffer_Play, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_PlayEx, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_Release, 3911),
+    REGISTER_OOVPAS(IDirectSoundBuffer_AddRef, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_GetCurrentPosition, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_GetStatus, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_GetVoiceProperties, 5028), // Final generic OOVPA: 5028; Removed: 0 (introduced in 5028)
+    REGISTER_OOVPAS(IDirectSoundBuffer_Lock, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_Pause, 4721), // Final generic OOVPA: 5028; Removed: 0 (introduced in 5028)
+    REGISTER_OOVPAS(IDirectSoundBuffer_PauseEx, 4721), // Final generic OOVPA: 5028; Removed: 0 (introduced in 5028)
+    REGISTER_OOVPAS(IDirectSoundBuffer_Play, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_PlayEx, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_Release, 3911), // Final generic OOVPA: 3911; Removed: 0
     //REGISTER_OOVPAS(IDirectSoundBuffer_Restore, 3911), // Xbox does not use it plus can't create OOVPA for it.
-    REGISTER_OOVPAS(IDirectSoundBuffer_Set3DVoiceData, 5455), // undocument
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetAllParameters, 3911, 4039), // Final generic OOVPA: 4039
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetBufferData, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetConeAngles, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetConeOrientation, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetConeOutsideVolume, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetCurrentPosition, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetDistanceFactor, 4134),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetDopplerFactor, 4134),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetEG, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetFilter, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetFormat, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetFrequency, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetHeadroom, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetI3DL2Source, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetLFO, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetLoopRegion, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetMaxDistance, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetMinDistance, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetMixBins, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetMixBinVolumes_12, 3911), //This revision is only used in XDK 3911 to 3936.
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetMixBinVolumes_8, 4039), //Then it has changed in XDK 4039 and higher.
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetMode, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetNotificationPositions, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetOutputBuffer, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetPitch, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetPlayRegion, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetPosition, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetRolloffCurve, 4361),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetRolloffFactor, 4134),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetVelocity, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetVolume, 3911, 4039),
-    REGISTER_OOVPAS(IDirectSoundBuffer_Stop, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_StopEx, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_Unlock, 3911),
-    REGISTER_OOVPAS(IDirectSoundBuffer_Use3DVoiceData, 5558), // undocument  // Final generic OOVPA: 5558 (introduced in 5558)
+    REGISTER_OOVPAS(IDirectSoundBuffer_Set3DVoiceData, 5455), // undocument // Final generic OOVPA: 5455; Removed: 0 (introduced in 5455)
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetAllParameters, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetBufferData, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetConeAngles, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetConeOrientation, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetConeOutsideVolume, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetCurrentPosition, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetDistanceFactor, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetDopplerFactor, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetEG, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetFilter, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetFormat, 4039), // Final generic OOVPA: 4039; Removed: 0 (introduced in 4039)
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetFrequency, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetHeadroom, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetI3DL2Source, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetLFO, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetLoopRegion, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetMaxDistance, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetMinDistance, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetMixBins, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetMixBinVolumes_12, 3911), // Final generic OOVPA: 3911; Removed: 4039+ // This revision is only used in 3911 to 3936.
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetMixBinVolumes_8, 4039), // Final generic OOVPA: 4039; Removed: 0 // Then it has changed in 4039 and higher.
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetMode, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetNotificationPositions, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetOutputBuffer, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetPitch, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetPlayRegion, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetPosition, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetRolloffCurve, 4361), // Final generic OOVPA: 4361; Removed: 0 (introduced in 4361)
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetRolloffFactor, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetVelocity, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_SetVolume, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_Stop, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_StopEx, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_Unlock, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundBuffer_Use3DVoiceData, 5558), // undocument // Final generic OOVPA: 5558; Removed: 0 (introduced in 5558)
 
-    REGISTER_OOVPAS(IDirectSoundStream_GetVoiceProperties, 5028), // jmp only
-    REGISTER_OOVPAS(IDirectSoundStream_FlushEx, 4134),// Final generic OOVPA: 4134 (introduced in 4134)
-    REGISTER_OOVPAS(IDirectSoundStream_Pause, 3911), //NOTE: 3911 only perform a jmp, later XDK revision may need a patch?
-    REGISTER_OOVPAS(IDirectSoundStream_PauseEx, 4361),
-    REGISTER_OOVPAS(IDirectSoundStream_Set3DVoiceData, 5455), // jmp only
-    REGISTER_OOVPAS(IDirectSoundStream_SetAllParameters, 3911), //NOTE: 3911 only perform a jmp, later XDK revision may need a patch?
-    REGISTER_OOVPAS(IDirectSoundStream_SetConeAngles, 3911), //NOTE: 3911 only perform a jmp, later XDK revision may need a patch?
-    REGISTER_OOVPAS(IDirectSoundStream_SetConeOrientation, 3911),
-    REGISTER_OOVPAS(IDirectSoundStream_SetConeOutsideVolume, 3911), //NOTE: 3911 only perform a jmp, later XDK revision may need a patch?
-    REGISTER_OOVPAS(IDirectSoundStream_SetDistanceFactor, 4134),
-    REGISTER_OOVPAS(IDirectSoundStream_SetDopplerFactor, 4134),
-    REGISTER_OOVPAS(IDirectSoundStream_SetEG, 3911, 4039), //NOTE: Is require to be patch since its' calling to voice class.
-    REGISTER_OOVPAS(IDirectSoundStream_SetLFO, 3911, 4039), //NOTE: Is require to be patch since its' calling to voice class.
-    REGISTER_OOVPAS(IDirectSoundStream_SetFilter, 3911, 4039), //NOTE: Is require to be patch since its' calling to voice class.
-    REGISTER_OOVPAS(IDirectSoundStream_SetFormat, 4039),
-    REGISTER_OOVPAS(IDirectSoundStream_SetFrequency, 3911, 4039), //NOTE: Is require to be patch since its' calling to voice class.
-    REGISTER_OOVPAS(IDirectSoundStream_SetHeadroom, 3911, 4039), //NOTE: Is require to be patch since its' calling to voice class.
-    REGISTER_OOVPAS(IDirectSoundStream_SetI3DL2Source, 3911), //NOTE: 3911 only perform a jmp, later XDK revision may need a patch?
-    REGISTER_OOVPAS(IDirectSoundStream_SetMaxDistance, 3911),
-    REGISTER_OOVPAS(IDirectSoundStream_SetMinDistance, 3911),
-    REGISTER_OOVPAS(IDirectSoundStream_SetMixBins, 3911, 4039), //NOTE: Is require to be patch since its' calling to voice class.
-    REGISTER_OOVPAS(IDirectSoundStream_SetMixBinVolumes_12, 3911), //NOTE: 3911 only perform a jmp, see more note for CDirectSoundStream_SetMixBinVolumes_12
-    REGISTER_OOVPAS(IDirectSoundStream_SetMixBinVolumes_8, 4039), //NOTE: 4039 and newer only perform a jmp.
-    REGISTER_OOVPAS(IDirectSoundStream_SetMode, 3911), //NOTE: 3911 only perform a jmp, later XDK revision may need a patch?
-    REGISTER_OOVPAS(IDirectSoundStream_SetOutputBuffer, 3911), //NOTE: 3911 only perform a jmp, later XDK revision may need a patch?
-    REGISTER_OOVPAS(IDirectSoundStream_SetPitch, 3911, 4039), //NOTE: Is require to be patch since its' calling to voice class.
-    REGISTER_OOVPAS(IDirectSoundStream_SetPosition, 3911),
-    REGISTER_OOVPAS(IDirectSoundStream_SetRolloffCurve, 4361),
-    REGISTER_OOVPAS(IDirectSoundStream_SetRolloffFactor, 4134),
-    REGISTER_OOVPAS(IDirectSoundStream_SetVelocity, 3911),
-    REGISTER_OOVPAS(IDirectSoundStream_SetVolume, 3911, 4039), //NOTE: Is require to be patch since its' calling to voice class.
+    REGISTER_OOVPAS(IDirectSoundStream_GetVoiceProperties, 5028), // Final generic OOVPA: 5028; Removed: 0 (introduced in 5028) // jmp only
+    REGISTER_OOVPAS(IDirectSoundStream_FlushEx, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(IDirectSoundStream_Pause, 3911), // Final generic OOVPA: 3911; Removed: 0 // jmp only
+    REGISTER_OOVPAS(IDirectSoundStream_PauseEx, 4361), // Final generic OOVPA: 4361; Removed: 0 (introduced in 4361)
+    REGISTER_OOVPAS(IDirectSoundStream_Set3DVoiceData, 5455), // Final generic OOVPA: 5455; Removed: 0 (introduced in 5455) // jmp only
+    REGISTER_OOVPAS(IDirectSoundStream_SetAllParameters, 3911), // Final generic OOVPA: 3911; Removed: 0 // jmp only
+    REGISTER_OOVPAS(IDirectSoundStream_SetConeAngles, 3911), // Final generic OOVPA: 3911; Removed: 0 // jmp only
+    REGISTER_OOVPAS(IDirectSoundStream_SetConeOrientation, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundStream_SetConeOutsideVolume, 3911), // Final generic OOVPA: 3911; Removed: 0 // jmp only
+    REGISTER_OOVPAS(IDirectSoundStream_SetDistanceFactor, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(IDirectSoundStream_SetDopplerFactor, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(IDirectSoundStream_SetEG, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: Is require to be patch since its' calling to voice class.
+    REGISTER_OOVPAS(IDirectSoundStream_SetLFO, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: Is require to be patch since its' calling to voice class.
+    REGISTER_OOVPAS(IDirectSoundStream_SetFilter, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: Is require to be patch since its' calling to voice class.
+    REGISTER_OOVPAS(IDirectSoundStream_SetFormat, 4039), // Final generic OOVPA: 4039; Removed: 0 (introduced in 4039)
+    REGISTER_OOVPAS(IDirectSoundStream_SetFrequency, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: Is require to be patch since its' calling to voice class.
+    REGISTER_OOVPAS(IDirectSoundStream_SetHeadroom, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: Is require to be patch since its' calling to voice class.
+    REGISTER_OOVPAS(IDirectSoundStream_SetI3DL2Source, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundStream_SetMaxDistance, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundStream_SetMinDistance, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundStream_SetMixBins, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: Is require to be patch since its' calling to voice class.
+    REGISTER_OOVPAS(IDirectSoundStream_SetMixBinVolumes_12, 3911), // Final generic OOVPA: 3911; Removed: 4039+ // This revision is only used in 3911 to 3936.
+    REGISTER_OOVPAS(IDirectSoundStream_SetMixBinVolumes_8, 4039), // Final generic OOVPA: 4039; Removed: 0 // Then it has changed in 4039 and higher.
+    REGISTER_OOVPAS(IDirectSoundStream_SetMode, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundStream_SetOutputBuffer, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundStream_SetPitch, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: Is require to be patch since its' calling to voice class.
+    REGISTER_OOVPAS(IDirectSoundStream_SetPosition, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundStream_SetRolloffCurve, 4361), // Final generic OOVPA: 4361; Removed: 0 (introduced in 4361)
+    REGISTER_OOVPAS(IDirectSoundStream_SetRolloffFactor, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(IDirectSoundStream_SetVelocity, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSoundStream_SetVolume, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: Is require to be patch since its' calling to voice class.
     REGISTER_OOVPAS(IDirectSoundStream_Use3DVoiceData, 5558), // jmp only // Final generic OOVPA: 5558 (introduced in 5558)
 
-    REGISTER_OOVPAS(IDirectSound_AddRef, 3911),
-    REGISTER_OOVPAS(IDirectSound_CommitDeferredSettings, 3911),
-    REGISTER_OOVPAS(IDirectSound_CommitEffectData, 3911),
+    REGISTER_OOVPAS(IDirectSound_AddRef, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_CommitDeferredSettings, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_CommitEffectData, 3911), // Final generic OOVPA: 3911; Removed: 0
     //REGISTER_OOVPAS(IDirectSound_Compact, 3911), // Xbox does not use it plus can't create OOVPA for it.
-    REGISTER_OOVPAS(IDirectSound_CreateSoundBuffer, 3911 /*3936, 4134, 4361*/),
-    REGISTER_OOVPAS(IDirectSound_CreateSoundStream, 3911 ),
-    REGISTER_OOVPAS(IDirectSound_DownloadEffectsImage, 3911),
-    REGISTER_OOVPAS(IDirectSound_EnableHeadphones, 3911),
-    REGISTER_OOVPAS(IDirectSound_GetCaps, 3911),
-    REGISTER_OOVPAS(IDirectSound_GetEffectData, 3911),
-    REGISTER_OOVPAS(IDirectSound_GetOutputLevels, 4361),
-    REGISTER_OOVPAS(IDirectSound_GetSpeakerConfig, 3911),
-    REGISTER_OOVPAS(IDirectSound_GetTime, 3911),
-    REGISTER_OOVPAS(IDirectSound_MapBufferData, 5344), // undocument
-    REGISTER_OOVPAS(IDirectSound_Release, 3911),
-    REGISTER_OOVPAS(IDirectSound_SetAllParameters, 3911),
+    REGISTER_OOVPAS(IDirectSound_CreateSoundBuffer, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_CreateSoundStream, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_DownloadEffectsImage, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_EnableHeadphones, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_GetCaps, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_GetEffectData, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_GetOutputLevels, 4361), // Final generic OOVPA: 4361; Removed: 0 (introduced in 4361)
+    REGISTER_OOVPAS(IDirectSound_GetSpeakerConfig, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_GetTime, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_MapBufferData, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
+    REGISTER_OOVPAS(IDirectSound_Release, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_SetAllParameters, 3911), // Final generic OOVPA: 3911; Removed: 0
     //REGISTER_OOVPAS(IDirectSound_SetCooperativeLevel, 3911), // Xbox does not use it plus can't create OOVPA for it.
-    REGISTER_OOVPAS(IDirectSound_SetDistanceFactor, 3911),
-    REGISTER_OOVPAS(IDirectSound_SetDopplerFactor, 3911),
-    REGISTER_OOVPAS(IDirectSound_SetEffectData, 3911),
-    REGISTER_OOVPAS(IDirectSound_SetI3DL2Listener, 3911),
-    REGISTER_OOVPAS(IDirectSound_SetMixBinHeadroom, 3911),
-    REGISTER_OOVPAS(IDirectSound_SetOrientation, 3911),
-    REGISTER_OOVPAS(IDirectSound_SetPosition, 3911),
-    REGISTER_OOVPAS(IDirectSound_SetRolloffFactor, 3911),
-    REGISTER_OOVPAS(IDirectSound_SetVelocity, 3911),
-    REGISTER_OOVPAS(IDirectSound_SynchPlayback, 4831),
-    REGISTER_OOVPAS(IDirectSound_UnmapBufferData, 5344), // undocument
+    REGISTER_OOVPAS(IDirectSound_SetDistanceFactor, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_SetDopplerFactor, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_SetEffectData, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_SetI3DL2Listener, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_SetMixBinHeadroom, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_SetOrientation, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_SetPosition, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_SetRolloffFactor, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_SetVelocity, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(IDirectSound_SynchPlayback, 4831), // Final generic OOVPA: 4831; Removed: 0 (introduced in 4831)
+    REGISTER_OOVPAS(IDirectSound_UnmapBufferData, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
 
     REGISTER_OOVPAS(CSensaura3d_GetFullHRTFFilterPair, 3911, 3936), // Final generic OOVPA: 3936; Removed: 4134+ // NOTE: 4039 revert back to 3911
     REGISTER_OOVPAS(CSensaura3d_GetLiteHRTFFilterPair, 3911, 3936), // Final generic OOVPA: 3936; Removed: 4134+ // NOTE: 4039 revert back to 3911

@@ -281,37 +281,6 @@ OOVPA_XREF(CDirectSound_SetPosition, 4134, 15,
 OOVPA_END;
 
 // ******************************************************************
-// * IDirectSound_CreateSoundBuffer
-// ******************************************************************
-OOVPA_XREF(IDirectSound_CreateSoundBuffer, 4134, 1+11,
-
-    XRefNoSaveIndex,
-    XRefOne)
-
-        // IDirectSound_CreateSoundBuffer+0x1D : call [CDirectSound::CreateSoundBuffer]
-        XREF_ENTRY( 0x1D, XREF_CDirectSound_CreateSoundBuffer ),
-
-        // IDirectSound_CreateSoundBuffer+0x04 : mov eax, [esp+8]
-        { 0x04, 0x8B },
-        { 0x05, 0x44 },
-        { 0x06, 0x24 },
-        { 0x07, 0x08 },
-
-        // IDirectSound_CreateSoundBuffer+0x12 : add eax, 0xFFFFFFF8
-        { 0x12, 0x83 },
-        { 0x13, 0xC0 },
-        { 0x14, 0xF8 },
-
-        // IDirectSound_CreateSoundBuffer+0x17 : sbb ecx, ecx
-        { 0x17, 0x1B },
-        { 0x18, 0xC9 },
-
-        // IDirectSound_CreateSoundBuffer+0x21 : retn 0x10
-        { 0x21, 0xC2 },
-        { 0x22, 0x10 },
-OOVPA_END;
-
-// ******************************************************************
 // * CDirectSoundVoice::SetFrequency
 // ******************************************************************
 // Generic OOVPA as of 4134 and newer

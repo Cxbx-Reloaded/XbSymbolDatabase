@@ -218,6 +218,7 @@ OOVPA_END;
 // ******************************************************************
 // * IDirectSoundBuffer_Pause
 // ******************************************************************
+// Generic OOVPA as of 4721 and newer
 OOVPA_XREF(IDirectSoundBuffer_Pause, 4721, 1+7,
 
     XRefNoSaveIndex,

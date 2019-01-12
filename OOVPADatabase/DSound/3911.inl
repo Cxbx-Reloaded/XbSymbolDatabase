@@ -671,6 +671,7 @@ OOVPA_END;
 // ******************************************************************
 // * IDirectSoundBuffer_SetLoopRegion
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_XREF(IDirectSoundBuffer_SetLoopRegion, 3911, 1+9,
 
     XRefNoSaveIndex,
@@ -1190,28 +1191,6 @@ OOVPA_XREF(IDirectSoundBuffer_SetEG, 3911, 1+7,
         { 0x19, 0xC2 },
         { 0x1A, 0x08 },
 OOVPA_END;
-
-#if 0 // Disabled due to both functions are not unique and unable to identify the difference.
-// ******************************************************************
-// * IDirectSoundStream_SetEG & CDirectSoundStream_SetEG
-// ******************************************************************
-OOVPA_XREF(IDirectSoundStream_SetEG, 3911, 1+8,
-
-    XRefNoSaveIndex,
-    XRefOne)
-
-        XREF_ENTRY( 0xD, XREF_CDirectSoundVoice_SetEG ),
-
-        { 0x02, 0x24 },
-        { 0x03, 0x08 },
-        { 0x06, 0x24 },
-        { 0x07, 0x08 },
-        { 0x08, 0x83 },
-        { 0x0C, 0xE8 },
-        { 0x11, 0xC2 },
-        { 0x12, 0x08 },
-OOVPA_END;
-#endif
 
 // ******************************************************************
 // * IDirectSoundBuffer_SetOutputBuffer
@@ -3261,7 +3240,7 @@ OOVPA_XREF(CDirectSoundStream_SetPosition, 3911, 1+8,
     XREF_CDirectSoundStream_SetPosition,
     XRefOne)
 
-        // CDirectSoundStream_SetPosition+0x25 : call [CDirectSoundVoice_SetPosition]
+        // CDirectSoundStream_SetPosition+0x24 : call [CDirectSoundVoice_SetPosition]
         XREF_ENTRY( 0x25, XREF_CDirectSoundVoice_SetPosition ),
 
         // CDirectSoundStream_SetPosition+0x06 : fld [ebp+0x14]
@@ -3287,7 +3266,7 @@ OOVPA_XREF(IDirectSoundStream_SetPosition, 3911, 1+8,
     XRefNoSaveIndex,
     XRefOne)
 
-        // IDirectSoundStream_SetPosition+0x21 : call [CDirectSoundStream_SetPosition]
+        // IDirectSoundStream_SetPosition+0x20 : call [CDirectSoundStream_SetPosition]
         XREF_ENTRY( 0x21, XREF_CDirectSoundStream_SetPosition ),
 
         // IDirectSoundStream_SetPosition+0x06 : fld [ebp+0x14]
@@ -5022,6 +5001,7 @@ OOVPA_END;
 // ******************************************************************
 // * IDirectSound_SetI3DL2Listener
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_XREF(IDirectSound_SetI3DL2Listener, 3911, 1+8,
 
     XRefNoSaveIndex,
