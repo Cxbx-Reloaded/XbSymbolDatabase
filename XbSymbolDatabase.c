@@ -469,6 +469,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
     OOVPATable *pLastKnownSymbol = NULL;
     uint32_t pLastKnownFunc = 0;
     const char *SymbolName = NULL;
+    char output[2048];
     for (; pLoop < pLoopEnd; pLoop++) {
 
         if (SymbolName == NULL) {
@@ -494,10 +495,14 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
 
         if (pFunc == pLastKnownFunc && pLastKnownSymbol == pLoop - 1) {
             //if (g_SymbolAddresses[pLastKnownSymbol->szFuncName] == 0) {
-                char output[2048];
                 sprintf(output, "Duplicate OOVPA signature found for %s, %hd vs %hd!", pLastKnownSymbol->szFuncName, pLastKnownSymbol->Version, pLoop->Version);
                 XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, output);
             //}
+        }
+
+        if (buildVersion < pLoop->Version) {
+            sprintf(output, "OOVPA signature is too high for [%hd] %s!", pLoop->Version, pLoop->szFuncName);
+            XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, output);
         }
 
         pLastKnownFunc = pFunc;
