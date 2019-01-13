@@ -702,7 +702,7 @@ OOVPA_XREF(CDirectSound_SetRolloffFactor, 5344, 14,
         // CDirectSound_SetRolloffFactor+0x33 : mov [eax+0x__], edx
         { 0x33, 0x89 },
         { 0x34, 0x50 },
-        //{ 0x35, 0x74 }, vs 5455 0x70
+        //{ 0x35, 0x70 }, vs 5455 0x6C
 
         // CDirectSound_SetRolloffFactor+0x39 : or dword ptr[eax+0x__], 0x10
         { 0x39, 0x83 },

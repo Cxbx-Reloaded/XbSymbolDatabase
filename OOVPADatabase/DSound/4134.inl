@@ -804,16 +804,13 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound::SetRolloffFactor
 // ******************************************************************
-OOVPA_XREF(CDirectSound_SetRolloffFactor, 4134, 13,
+OOVPA_XREF(CDirectSound_SetRolloffFactor, 4134, 14,
 
     XREF_CDirectSound_SetRolloffFactor,
     XRefZero)
 
         // CDirectSound_SetRolloffFactor+0x00 : push esi
         { 0x00, 0x56 },
-
-        // CDirectSound_SetRolloffFactor+0x01 : call DirectSoundEnterCriticalSection
-        { 0x01, 0xE8 },
 
         // CDirectSound_SetRolloffFactor+0x21 : mov eax, 0x80004005
         { 0x21, 0xB8 },
@@ -826,14 +823,21 @@ OOVPA_XREF(CDirectSound_SetRolloffFactor, 4134, 13,
         // CDirectSound_SetRolloffFactor+0x33 : mov [eax+6Ch], edx
         { 0x33, 0x89 },
         { 0x34, 0x50 },
-        { 0x35, 0x6C },
+        //{ 0x35, 0x6C }, vs 5344 (0x70) then revert back.
 
         // CDirectSound_SetRolloffFactor+0x36 : mov eax, [ecx+8]
         { 0x36, 0x8B },
         { 0x37, 0x41 },
         { 0x38, 0x08 },
 
-        // Offset 0x39 and later has change in 5344
+        // Offset 0x3B and later has change in 5344,
+        // however offset 0x35 is a requirement.
+
+        // CDirectSound_SetRolloffFactor+0x39 : or dword ptr[eax+0xA4], 0x04
+        { 0x39, 0x83 },
+        { 0x3A, 0x88 },
+        //{ 0x3B, 0xA4 },
+        { 0x3F, 0x04 },
 OOVPA_END;
 
 // ******************************************************************
