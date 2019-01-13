@@ -157,6 +157,7 @@ xbaddr XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEInterce
 
 bool bXRefFirstPass; // For search speed optimization, set in XbSymbolScan, read in XbSymbolLocateFunction
 unsigned int UnResolvedXRefs = XREF_COUNT;
+bool bStrictBuildVersionLimit = false;
 
 
 // ******************************************************************
@@ -179,6 +180,11 @@ xb_output_message_t output_func = NULL;
 void XbSymbolSetOutputMessage(xb_output_message_t message_func)
 {
     output_func = message_func;
+}
+
+void XbSymbolBypassBuildVersionLimit(bool bypass_limit)
+{
+    bStrictBuildVersionLimit = !bypass_limit;
 }
 
 void XbSymbolOutputMessage(xb_output_message mFlag, const char* message) {
@@ -478,7 +484,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
         }
 
         // Skip higher build version
-        if (buildVersion < pLoop->Version)
+        if (bStrictBuildVersionLimit && buildVersion < pLoop->Version)
             continue;
 
         // Search for each function's location using the OOVPA
@@ -486,13 +492,13 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
         if (pFunc == 0)
             continue;
 
-#if 0 // TODO: Find a way to support this.
         if (pFunc == pLastKnownFunc && pLastKnownSymbol == pLoop - 1) {
-            if (g_SymbolAddresses[pLastKnownSymbol->szFuncName] == 0) {
-                printf("HLE: Duplicate OOVPA signature found for %s, %d vs %d!\n", pLastKnownSymbol->szFuncName, pLastKnownSymbol->Version, pLoop->Version);
-            }
+            //if (g_SymbolAddresses[pLastKnownSymbol->szFuncName] == 0) {
+                char output[2048];
+                sprintf(output, "Duplicate OOVPA signature found for %s, %hd vs %hd!", pLastKnownSymbol->szFuncName, pLastKnownSymbol->Version, pLoop->Version);
+                XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, output);
+            //}
         }
-#endif
 
         pLastKnownFunc = pFunc;
         pLastKnownSymbol = pLoop;
@@ -508,7 +514,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
                          const char* section_name,
                          uint32_t section_virtual_address,
                          uint32_t section_size,
-                         uint16_t revision,
+                         uint16_t build_verison,
                          xb_symbol_register_t register_func)
 {
 
@@ -548,7 +554,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
 
                         //* NOTE: For time being, let's preserve this code in case we need to re-enable it with updated argument.
                         // Skip higher build version
-                        if (revision < pLoop->Version) {
+                        if (build_version < pLoop->Version) {
                             continue;
                         }
                         //*/
@@ -1283,9 +1289,7 @@ void HLEError(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, char 
     (void)strcat(buffer, " : ");
     (void)strncat(buffer, bufferTemp, ret_str_count);
 
-    if (output_func != NULL) {
-        output_func(XB_OUTPUT_MESSAGE_ERROR, buffer);
-    }
+    XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_ERROR, buffer);
 }
 
 unsigned int XbSymbolDataBaseVerifyDataBaseList(SymbolDatabaseVerifyContext *context); // forward

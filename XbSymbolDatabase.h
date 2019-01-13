@@ -423,7 +423,7 @@ unsigned int XbSymbolLibraryVersion();
 bool XbSymbolRegisterLibrary(uint32_t library_flag);
 
 /// <summary>
-/// To register any detected symbol name with address and revision back to third-party program.
+/// To register any detected symbol name with address and build version back to third-party program.
 /// NOTE: Be aware of library name will be varity since some libraries are detecting in other sections as well.
 /// </summary>
 /// <param name="library_str">Name of the library in string.</param>
@@ -436,15 +436,15 @@ typedef void(*xb_output_message_t)(xb_output_message message_flag, const char* m
 void XbSymbolSetOutputMessage(xb_output_message_t message_func);
 
 /// <summary>
-/// To register any detected symbol name with address and revision back to third-party program.
+/// To register any detected symbol name with address and build version back to third-party program.
 /// NOTE: Be aware of library name will be varity since some libraries are detecting in other sections as well.
 /// </summary>
 /// <param name="library_str">Name of the library in string.</param>
 /// <param name="library_flag">Name of the library in flag.</param>
 /// <param name="symbol_str">Name of the library in symbol string.</param>
 /// <param name="address">Return xbox's virtual address.</param>
-/// <param name="revision">Found with specific revision.</param>
-typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, xbaddr address, uint32_t revision);
+/// <param name="build_verison">Found with specific build verison.</param>
+typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, xbaddr address, uint32_t build_verison);
 
 /// <summary>
 /// To scan symbols in memory of raw xbe or host's virtual xbox environment.
@@ -466,7 +466,7 @@ bool XbSymbolScan(const void* xb_header_addr, xb_symbol_register_t register_func
 /// <param name="upper_bound">Ending point of relative address base on xbeData.</param>
 /// <param name="register_func">Callback register function to be call for any detected symbols.</param>
 /// <returns>Only return true if a section name is in the database.</returns>
-bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const char* section_name, uint32_t section_virtual_address, uint32_t section_size, uint16_t revision, xb_symbol_register_t register_func);
+bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const char* section_name, uint32_t section_virtual_address, uint32_t section_size, uint16_t build_verison, xb_symbol_register_t register_func);
 */
 
 /// <summary>
@@ -481,6 +481,13 @@ uint32_t XbSymbolLibrayToFlag(const char* library_name);
 /// </summary>
 /// <returns>Return total count of errors.</returns>
 unsigned int XbSymbolDataBaseTestOOVPAs();
+
+/// <summary>
+/// (Debug feature) Set to true will perform full range of OOVPAs registered in current database.
+/// Or stop at xbe's build version detected.
+/// </summary>
+/// <param name="bypass_limit">Input boolean to either bypass or enable the build version limit.</param>
+void XbSymbolBypassBuildVersionLimit(bool bypass_limit);
 
 #ifdef __cplusplus
 }
