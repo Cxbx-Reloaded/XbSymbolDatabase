@@ -42,6 +42,11 @@ extern "C" {
 // * Library strings
 // ******************************************************************
 #define Lib_UNKNOWN     "UNKNOWN"
+// Group of sections since most libraries are compiled inside the
+// section(s) below.
+#define Sec_text        ".text"
+#define Sec_FLASHROM    "FLASHROM"
+// Individual library (yet do include group sections above)
 #define Lib_D3D8        "D3D8"
 #define Sec_D3D         "D3D"
 #define Lib_D3D8LTCG    "D3D8LTCG"
@@ -53,7 +58,6 @@ extern "C" {
 #define Sec_XACTENG     Lib_XACTENG
 #define Lib_XAPILIB     "XAPILIB"
 #define Sec_XPP         "XPP"
-#define Sec_text        ".text"
 #define Lib_XGRAPHC     "XGRAPHC"
 #define Sec_XGRPH       "XGRPH"
 #define Lib_XNET        "XNET"
