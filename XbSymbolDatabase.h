@@ -63,6 +63,7 @@ extern "C" {
 #define Sec_XONLINE     Lib_XONLINE
 #define Lib_XONLINES    "XONLINES"
 #define Sec_XNET        "XNET"
+#define Sec_FLASHROM    "FLASHROM"
 
 #define XbSymbolLib_D3D8        (1 << 0)
 #define XbSymbolLib_D3D8LTCG    (1 << 1)

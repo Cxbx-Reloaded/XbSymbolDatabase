@@ -55,7 +55,7 @@
 #include "OOVPADatabase/XOnline.OOVPA.inl"
 #include "OOVPADatabase/XactEng.OOVPA.inl"
 
-#define PAIRSCANSEC_MAX 3
+#define PAIRSCANSEC_MAX 4
 
 typedef uint8_t* memptr_t;
 
@@ -74,7 +74,7 @@ typedef const struct _SymbolDatabaseList {
 
 SymbolDatabaseList SymbolDBList[] = {
     // Support inline functions in .text section
-    { XbSymbolLib_D3D8,{ Sec_text, Sec_D3D }, D3D8_OOVPAV2, D3D8_OOVPA_COUNT },
+    { XbSymbolLib_D3D8,{ Sec_text, Sec_D3D, Sec_FLASHROM }, D3D8_OOVPAV2, D3D8_OOVPA_COUNT },
 
     // Cannot support LTCG in HLE
     { XbSymbolLib_D3D8LTCG,{ Sec_D3D }, D3D8LTCG_OOVPAV2, D3D8LTCG_OOVPA_COUNT },
@@ -95,30 +95,30 @@ SymbolDatabaseList SymbolDBList[] = {
     //{ XbSymbolLib_XACTENLT,{ Sec_XACTENG }, XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
 
     //
-    { XbSymbolLib_XAPILIB,{ Sec_text, Sec_XPP }, XAPILIB_OOVPAV2, XAPILIB_OOVPA_COUNT },
+    { XbSymbolLib_XAPILIB,{ Sec_text, Sec_XPP, Sec_FLASHROM }, XAPILIB_OOVPAV2, XAPILIB_OOVPA_COUNT },
 
     // Support inline functions in .text section
-    { XbSymbolLib_XGRAPHC,{ Sec_text, Sec_XGRPH }, XGRAPHC_OOVPAV2, XGRAPHC_OOVPA_COUNT },
+    { XbSymbolLib_XGRAPHC,{ Sec_text, Sec_XGRPH, Sec_FLASHROM }, XGRAPHC_OOVPAV2, XGRAPHC_OOVPA_COUNT },
 
     // Cannot support LTCG in HLE
     //{ Lib_XGRAPHCL,{ Sec_XGRPH }, XGRAPHC_OOVPAV2, XGRAPHC_OOVPA_COUNT },
 
     // Added Sec_text and Sec_XNET just in case.
     // TODO: Need to find out which function is only part of XOnlines.
-    { XbSymbolLib_XONLINE,{ Sec_text, Sec_XONLINE, Sec_XNET }, XONLINES_OOVPAV2, XONLINES_OOVPA_COUNT },
+    { XbSymbolLib_XONLINE,{ Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINES_OOVPAV2, XONLINES_OOVPA_COUNT },
 
     // Fun fact, XONLINES are split into 2 header sections.
-    { XbSymbolLib_XONLINES,{ Sec_text, Sec_XONLINE, Sec_XNET }, XONLINES_OOVPAV2, XONLINES_OOVPA_COUNT },
+    { XbSymbolLib_XONLINES,{ Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINES_OOVPAV2, XONLINES_OOVPA_COUNT },
 
     // Added Sec_text just in case.
     // TODO: Need to find out which function is only part of XNets.
-    { XbSymbolLib_XNET,{ Sec_text, Sec_XNET }, XNET_OOVPAV2, XNET_OOVPA_COUNT },
+    { XbSymbolLib_XNET,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPAV2, XNET_OOVPA_COUNT },
 
     // XNETS only has XNET, might be true.
-    { XbSymbolLib_XNETS,{ Sec_text, Sec_XNET }, XNET_OOVPAV2, XNET_OOVPA_COUNT },
+    { XbSymbolLib_XNETS,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPAV2, XNET_OOVPA_COUNT },
 
     // test case: Stake
-    { XbSymbolLib_XNETN,{ Sec_text, Sec_XNET }, XNET_OOVPAV2, XNET_OOVPA_COUNT },
+    { XbSymbolLib_XNETN,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPAV2, XNET_OOVPA_COUNT },
 };
 
 // ******************************************************************
