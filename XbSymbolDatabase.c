@@ -82,14 +82,15 @@ SymbolDatabaseList SymbolDBList[] = {
     // Jarupxx mention this is not a requirement?
     //{ Lib_D3DX8,{ Sec_D3DX }, _OOVPAV2, _OOVPA_COUNT },
 
-    //
-    { XbSymbolLib_DSOUND,{ Sec_DSOUND }, DSound_OOVPAV2, DSound_OOVPA_COUNT },
+    // NOTE: By adding FLASHROM to scan section may will lead false detection.
+    // Since some symbols has very short asm codes.
+    { XbSymbolLib_DSOUND,{ Sec_DSOUND, Sec_FLASHROM }, DSound_OOVPAV2, DSound_OOVPA_COUNT },
 
     // DSOUNDH is just meant to define hot fix, there is no separate section
     //{ XbSymbolLib_DSOUNDH,{ Sec_DSOUND }, &DSound_OOVPAV2, DSound_OOVPA_COUNT },
 
     //
-    { XbSymbolLib_XACTENG, { Sec_XACTENG }, XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
+    { XbSymbolLib_XACTENG, { Sec_XACTENG, Sec_FLASHROM }, XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
 
     // test case: Power Drome (Unluckily, it use LTCG version of the library.)
     //{ XbSymbolLib_XACTENLT,{ Sec_XACTENG }, XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
