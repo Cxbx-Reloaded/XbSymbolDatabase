@@ -1268,7 +1268,7 @@ void HLEError(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, char 
     }
 
     if (context->against != NULL && context->against_data != NULL) {
-        (void)strncat(buffer, ", comparing against ", OOVPA_TABLE_COUNT(", comparing against "));
+        (void)strcat(buffer, ", comparing against ");
 
         ret_str_count = HLEErrorString(bufferTemp, context->against_data, buildVersion, context->against_index);
         (void)strncat(buffer, bufferTemp, ret_str_count);
@@ -1281,7 +1281,7 @@ void HLEError(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, char 
     va_end(args);
 
 
-    (void)strncat(buffer, " : ", 3);
+    (void)strcat(buffer, " : ");
     (void)strncat(buffer, bufferTemp, ret_str_count);
 
     if (output_func != NULL) {
