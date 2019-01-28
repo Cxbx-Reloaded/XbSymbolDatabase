@@ -186,9 +186,45 @@ OOVPA_NO_XREF(JvsEEPROM_Write2, 4831, 10)
 OOVPA_END;
 
 // ******************************************************************
+// * JvsFirmwareDownloadString
+// ******************************************************************
+OOVPA_XREF(JvsFirmwareDownloadString, 4831, 19, 
+	XREF_JVS_JvsFirmwareDownloadString, 
+	XRefZero)
+
+	{ 0x00, 'S' },
+	{ 0x01, 't' },
+	{ 0x02, 'a' },
+	{ 0x03, 't' },
+	
+	{ 0x07, 'w' },
+	{ 0x08, 'a' },
+	{ 0x09, 'i' },
+	{ 0x0A, 't' },
+
+	{ 0x10, 'J' },
+	{ 0x11, 'v' },
+	{ 0x12, 's' },
+	{ 0x13, 'F' },
+	{ 0x14, 'i' },
+	{ 0x15, 'r' },
+	{ 0x16, 'm' },
+
+	{ 0x1B, 'D' },
+	{ 0x1C, 'o' },
+	{ 0x1D, 'w' },
+	{ 0x1E, 'n' },
+OOVPA_END;
+
+// ******************************************************************
 // * JvsFirmwareDownload
 // ******************************************************************
-OOVPA_NO_XREF(JvsFirmwareDownload, 4831, 8)
+OOVPA_XREF(JvsFirmwareDownload, 4831, 8, 
+	XRefNoSaveIndex, 
+	XRefOne)
+
+	XREF_ENTRY(0x31, XREF_JVS_JvsFirmwareDownloadString),
+
 	{ 0x03, 0x8B },
 	{ 0x04, 0x4C },
 	{ 0x05, 0x24 },
@@ -256,9 +292,48 @@ OOVPA_NO_XREF(JvsRTC_Read, 4831, 8)
 OOVPA_END;
 
 // ******************************************************************
+// * JvsFirmwareDownloadString
+// ******************************************************************
+OOVPA_XREF(JvsScFirmwareDownloadString, 4831, 21,
+	XREF_JVS_JvsScFirmwareDownloadString,
+	XRefZero)
+
+	{ 0x00, 'S' },
+	{ 0x01, 't' },
+	{ 0x02, 'a' },
+	{ 0x03, 't' },
+
+	{ 0x07, 'w' },
+	{ 0x08, 'a' },
+	{ 0x09, 'i' },
+	{ 0x0A, 't' },
+
+	{ 0x10, 'J' },
+	{ 0x11, 'v' },
+	{ 0x12, 's' },
+	{ 0x13, 'S' },
+	{ 0x14, 'c' },
+	{ 0x15, 'F' },
+	{ 0x16, 'i' },
+	{ 0x17, 'r' },
+	{ 0x18, 'm' },
+
+	{ 0x1D, 'D' },
+	{ 0x1E, 'o' },
+	{ 0x1F, 'w' },
+	{ 0x20, 'n' },
+OOVPA_END;
+
+
+// ******************************************************************
 // * JvsScFirmwareDownload
 // ******************************************************************
-OOVPA_NO_XREF(JvsScFirmwareDownload, 4831, 8)
+OOVPA_XREF(JvsScFirmwareDownload, 4831, 8,
+	XRefNoSaveIndex,
+	XRefOne)
+
+	XREF_ENTRY(0x31, XREF_JVS_JvsScFirmwareDownloadString),
+
 	{ 0x03, 0x8B },
 	{ 0x04, 0x4C },
 	{ 0x05, 0x24 },
