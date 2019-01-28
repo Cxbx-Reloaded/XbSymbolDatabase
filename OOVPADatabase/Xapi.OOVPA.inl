@@ -119,6 +119,9 @@
 #include "Xapi.1.0.5455.inl"
 #include "Xapi.1.0.5788.inl"
 
+// Note: JVS Libraries are linked in the same sections as XAPILIB, so we define them here
+#include "JVS.1.0.4831.inl"
+
 // ******************************************************************
 // * XAPILIB_OOVPA
 // ******************************************************************
@@ -175,6 +178,30 @@ OOVPATable XAPILIB_OOVPAV2[] = {
     REGISTER_OOVPAS(XapiFiberStartup, 3911),
     REGISTER_OOVPAS(timeKillEvent, 3911),
     REGISTER_OOVPAS(timeSetEvent, 3911),
+
+	// Chihiro/JVS
+	REGISTER_OOVPAS(JVS_SendCommand, 4831),
+	REGISTER_OOVPAS(JVS_SendCommand2, 4831),
+	REGISTER_OOVPAS(JvsBACKUP_Read, 4831),
+	REGISTER_OOVPAS(JvsBACKUP_Read2, 4831),
+	REGISTER_OOVPAS(JvsBACKUP_Write, 4831),
+	REGISTER_OOVPAS(JvsEEPROM_Read, 4831),
+	REGISTER_OOVPAS(JvsEEPROM_Read2, 4831),
+	REGISTER_OOVPAS(JvsEEPROM_Write, 4831),
+	REGISTER_OOVPAS(JvsEEPROM_Write2, 4831),
+	REGISTER_OOVPAS(JvsFirmwareDownload, 4831),
+	REGISTER_OOVPAS(JvsFirmwareUpload, 4831),
+	REGISTER_OOVPAS(JvsNodeReceivePacket, 4831),
+	REGISTER_OOVPAS(JvsNodeSendPacket, 4831),
+	REGISTER_OOVPAS(JvsRTC_Read, 4831),
+	REGISTER_OOVPAS(JvsScFirmwareDownload, 4831),
+	REGISTER_OOVPAS(JvsScFirmwareUpload, 4831),
+	REGISTER_OOVPAS(JvsScReceiveMidi, 4831),
+	REGISTER_OOVPAS(JvsScReceiveRs323c, 4831),
+	REGISTER_OOVPAS(JvsScSendMidi, 4831),
+	REGISTER_OOVPAS(JvsScSendRs323c, 4831),
+	//REGISTER_OOVPAS(JvsRTC_Write, 4831) // TODO: This only exists in Segaboot, and so far, doesn't seem to be used there either.
+										  // Requires more research.
 };
 
 // ******************************************************************

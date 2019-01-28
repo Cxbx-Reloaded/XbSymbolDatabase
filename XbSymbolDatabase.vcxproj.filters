@@ -300,6 +300,9 @@
     <None Include="OOVPADatabase\XOnline.OOVPA.inl">
       <Filter>OOVPA Database\XOnline</Filter>
     </None>
+    <None Include="OOVPADatabase\JVS.1.0.4831.inl">
+      <Filter>OOVPA Database\Xapi</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
