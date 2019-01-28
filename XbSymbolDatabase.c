@@ -34,6 +34,29 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <stdint.h>
+
+#ifdef _MSC_VER
+#include <intrin.h>
+static inline uint32_t BitScanReverse(uint32_t value)
+{
+    uint32_t index;
+    if (!_BitScanReverse(&index, value)) {
+        return 32;
+    }
+    return index;
+}
+#elif __GNUC__
+static inline uint32_t BitScanReverse(uint32_t value)
+{
+    if (value == 0) {
+        return 32;
+    }
+    return 31 - __builtin_clz(value);
+}
+#else
+#error Unsupported platform
+#endif
 
 // ******************************************************************
 // * Xbox Symbol Database
@@ -361,8 +384,8 @@ void* XbSymbolLocateFunction(OOVPA *Oovpa,
                 uint8_t Offset;
                 uint32_t derive_index;
 
-                // Extract an index from the indices mask :
-                _BitScanReverse(&derive_index, derive_indices); // MSVC intrinsic; GCC has __builtin_clz
+                // Extract an index from the indices mask
+                derive_index = BitScanReverse(derive_indices);
                 derive_indices ^= (1 << derive_index);
 
                 // get currently registered (un)known address
