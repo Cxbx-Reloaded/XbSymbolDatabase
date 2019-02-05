@@ -368,8 +368,24 @@ typedef enum _XRefDataBaseOffset
     XREF_XAPI_GetTypeInformation,
 
     // JVS
-    XREF_JVS_JvsFirmwareDownloadString,
-    XREF_JVS_JvsScFirmwareDownloadString,
+    XREF_JVS_SendCommand_String,
+    XREF_JvsBACKUP_Read_String,
+    XREF_JvsBACKUP_Write_String,
+    XREF_JvsEEPROM_Read_String,
+    XREF_JvsEEPROM_Write_String,
+    XREF_JvsFirmwareDownload_String,
+    XREF_JvsFirmwareUpload_String,
+    XREF_JvsNodeReceivePacket_String,
+    XREF_JvsNodeSendPacket_String,
+    XREF_JvsRTC_Read_String,
+    XREF_JvsRTC_Write_String,
+    XREF_JvsScFirmwareDownload_String,
+    XREF_JvsScFirmwareUpload_String,
+    XREF_JvsScReceiveMidi_String,
+    XREF_JvsScReceiveRs323c_String,
+    XREF_JvsScSendMidi_String,
+    XREF_JvsScSendRs323c_String,
+    
     XREF_COUNT // XREF_COUNT must always be last.
     // Also, if XREF_COUNT > sizeof(uint16), enlarge struct OOVPA.XRefSaveIndex (and Value somehow)
 } XRefDataBaseOffset;
