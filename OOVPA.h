@@ -72,8 +72,20 @@ typedef struct _LOVP
     // Both the Offset and Value are 16-bit to allow for XRefs with a
     // large offset. Value can be safely cast to 8-bit for OOVPA, but must
     // remain 16-bit for XRef entries.
-    unsigned short Offset;
-    unsigned short Value;
+    unsigned short offset;
+    union {
+        // Generic structure TODO: Remove me after replace array to macro for OOVPA database
+        unsigned short value;
+
+        struct {
+            unsigned char unused;
+            unsigned char value;
+        } byte;
+
+        struct {
+            unsigned short index;
+        } xref;
+    };
 } LOVP;
 
 // This XRefZero constant, when set in the OOVPA.XRefCount field,
@@ -96,12 +108,14 @@ typedef struct _LOVP
 
 // Macro used for storing an XRef {Offset, XREF}-Pair.
 #define XREF_ENTRY( Offset, XRef)    \
-    { Offset, XRef }
+    { Offset, .xref.index = XRef }
 
-// UNUSED Macro for storing a normal (non-XRef) {Offset, Value}-Pair
+// Macro for storing a normal (non-XRef) {Offset, Value}-Pair
 // Offsets can go up to 16 bits, values are always one byte (8 bits)
 #define OV_ENTRY(Offset, Value)    \
-    { Offset, Value }
+    { Offset, .value = Value }
+// TODO: Remove above line, then uncomment the line below for easy swap after OOVPA database has been fixed.
+//  { Offset, { .unused = 0, .value = Value } } 
 
 
 // ******************************************************************
