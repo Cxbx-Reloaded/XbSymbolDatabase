@@ -252,17 +252,16 @@ uint32_t XbSymbolLibrayToFlag(const char* library_name)
 
 // NOTE: PatrickvL state the arguments are named differently and the function does something that has another meaning,
 //       the implementation could be changed if the need ever arises.
-static inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint8_t* offset_out) 
+static inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint16_t* offset_out) 
 {
-    // Note : These are stored swapped by the XREF_ENTRY macro, hence this difference from GetOovpaEntry :
-    *xref_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Offset;
-    *offset_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
+    *xref_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Value;
+    *offset_out = ((LOOVPA*)oovpa)->Lovp[index].Offset;
 }
 
 static inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, uint8_t* value_out)
 {
     *offset_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Offset;
-    *value_out = ((LOOVPA*)oovpa)->Lovp[index].Value;
+    *value_out = (uint8_t)((LOOVPA*)oovpa)->Lovp[index].Value;
 }
 
 bool CompareOOVPAToAddress(OOVPA *Oovpa, memptr_t cur, uintptr_t xb_start_virt_addr)
@@ -272,7 +271,7 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, memptr_t cur, uintptr_t xb_start_virt_a
     // Check all XRefs, stop if any does not match
     for (; v < Oovpa->XRefCount; v++) {
         uint32_t XRef;
-        uint8_t Offset;
+        uint16_t Offset;
 
         // get currently registered (un)known address
         GetXRefEntry(Oovpa, v, &XRef, &Offset);
@@ -324,7 +323,7 @@ void* XbSymbolLocateFunction(OOVPA *Oovpa,
     // Check all XRefs are known (if not, don't do a useless scan) :
     for (unsigned int v = 0; v < Oovpa->XRefCount; v++) {
         uint32_t XRef;
-        uint8_t Offset;
+        uint16_t Offset;
 
         // get currently registered (un)known address
         GetXRefEntry(Oovpa, v, &XRef, &Offset);
@@ -358,7 +357,7 @@ void* XbSymbolLocateFunction(OOVPA *Oovpa,
 
             while (derive_indices > 0) {
                 uint32_t XRef;
-                uint8_t Offset;
+                uint16_t Offset;
                 uint32_t derive_index;
 
                 // Extract an index from the indices mask :

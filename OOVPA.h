@@ -70,7 +70,7 @@ typedef struct _OOVPA
 typedef struct _LOVP
 {
     unsigned short Offset;
-    unsigned char Value;
+    unsigned short Value;
 } LOVP;
 
 // This XRefZero constant, when set in the OOVPA.XRefCount field,
@@ -92,13 +92,8 @@ typedef struct _LOVP
 #define XRefNoSaveIndex 0xFFFF
 
 // Macro used for storing an XRef {Offset, XREF}-Pair.
-//
-// XRefs are stored with Offset and Value swapped. This is to be able
-// to store XRef values beyond 8 bits (for now limited to 16 bits).
-// The price to pay for this is that the Offset is stored using 8 bits,
-// meaning that offsets beyond 255 cannot be used, not problem for now.
 #define XREF_ENTRY( Offset, XRef)    \
-    { XRef, Offset }
+    { Offset, XRef }
 
 // UNUSED Macro for storing a normal (non-XRef) {Offset, Value}-Pair
 // Offsets can go up to 16 bits, values are always one byte (8 bits)
