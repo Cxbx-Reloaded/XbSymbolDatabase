@@ -69,6 +69,9 @@ typedef struct _OOVPA
 // {Offset, Value}-pair(s)
 typedef struct _LOVP
 {
+    // Both the Offset and Value are 16-bit to allow for XRefs with a
+    // large offset. Value can be safely cast to 8-bit for OOVPA, but must
+    // remain 16-bit for XRef entries.
     unsigned short Offset;
     unsigned short Value;
 } LOVP;
