@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->Xapi.1.0.4039.inl
+// *   OOVPADatabase->Xapi->5788.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -17,33 +17,48 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2017 jarupxx
+// *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
 // *
 // *  All rights reserved
 // *
 // ******************************************************************
 
-// Generic OOVPA as of 4039 and newer.
 // ******************************************************************
-// * XCalculateSignatureBegin
+// * GetThreadPriority
 // ******************************************************************
-OOVPA_NO_XREF(XCalculateSignatureBegin, 4039, 16)
+OOVPA_NO_XREF(GetThreadPriority, 5788, 7)
 
-        { 0x00, 0xA1 },
-        { 0x01, 0x18 },
-        { 0x02, 0x01 },
-        { 0x03, 0x01 },
-        { 0x04, 0x00 },
-        { 0x05, 0xFF },
-        { 0x06, 0x70 },
-        { 0x07, 0x08 },
-        { 0x08, 0xFF },
-        { 0x09, 0x74 },
-        { 0x0A, 0x24 },
-        { 0x0B, 0x08 },
-        { 0x0C, 0xE8 },
+        { 0x0D, 0xFF },
+        { 0x16, 0x85 },
+        { 0x1F, 0x15 },
+        { 0x2A, 0x04 },
+        { 0x35, 0xF1 },
+        { 0x40, 0x8B },
+        { 0x4B, 0xB8 },
+OOVPA_END;
 
-        { 0x11, 0xC2 },
-        { 0x12, 0x04 },
-        { 0x13, 0x00 },
+// ******************************************************************
+// * SetThreadPriorityBoost
+// ******************************************************************
+OOVPA_NO_XREF(SetThreadPriorityBoost, 5788, 7)
+
+        { 0x07, 0xFF },
+        { 0x10, 0xFF },
+        { 0x19, 0x20 },
+        { 0x22, 0x50 },
+        { 0x2C, 0x8B },
+        { 0x35, 0x33 },
+        { 0x40, 0x33 },
+OOVPA_END;
+
+// ******************************************************************
+// * XGetSectionSize
+// ******************************************************************
+OOVPA_NO_XREF(XGetSectionSize, 5788, 5)
+
+        { 0x00, 0x8B },
+        { 0x02, 0x24 },
+        { 0x04, 0x8B },
+        { 0x06, 0x08 },
+        { 0x08, 0x04 },
 OOVPA_END;

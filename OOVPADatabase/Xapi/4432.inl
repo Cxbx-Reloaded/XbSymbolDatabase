@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->Xapi.1.0.4721.inl
+// *   OOVPADatabase->Xapi->4432.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -24,26 +24,36 @@
 // ******************************************************************
 
 // ******************************************************************
-// * XLaunchNewImageA
+// * XMountUtilityDrive
 // ******************************************************************
-OOVPA_NO_XREF(XLaunchNewImageA, 4721, 15)
+OOVPA_NO_XREF(XMountUtilityDrive, 4432, 27)
 
+        { 0x00, 0x55 },
+        { 0x01, 0x8B },
+        { 0x02, 0xEC },
         { 0x03, 0x81 },
         { 0x04, 0xEC },
-        { 0x05, 0x84 },
-        { 0x06, 0x03 },
+        { 0x05, 0x14 },
+        { 0x06, 0x01 },
         { 0x07, 0x00 },
         { 0x08, 0x00 },
+        { 0x09, 0x53 },
+        { 0x0A, 0x56 },
+        { 0x0B, 0x57 },
+        { 0x0C, 0x8D },
+        { 0x0D, 0x45 },
+        { 0x0E, 0xF4 },
+        { 0x0F, 0x50 },
+        { 0x10, 0x8D },
+        { 0x11, 0x45 },
+        { 0x12, 0xFC },
+        { 0x13, 0x50 },
+        { 0x14, 0xFF },
+        { 0x15, 0x75 },
+        { 0x16, 0x08 },
+        { 0x17, 0xE8 },
 
-        { 0x33, 0x3C },
-        { 0x34, 0x44 },
-
-        { 0xA0, 0x3B },
-        { 0xA1, 0xC3 },
-        { 0xA2, 0x7C },
-        { 0xA3, 0x5A },
-        { 0xA4, 0x57 },
-        { 0xA5, 0x8D },
-
-        { 0xC1, 0x15 },
+        { 0x51, 0x68 },
+        { 0x52, 0x04 },
+        { 0x53, 0x01 },
 OOVPA_END;

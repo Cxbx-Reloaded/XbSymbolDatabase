@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->Xapi.1.0.4242.inl
+// *   OOVPADatabase->Xapi->4242.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public

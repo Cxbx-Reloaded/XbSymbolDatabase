@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->Xapi.1.0.5455.inl
+// *   OOVPADatabase->Xapi->4721.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -17,42 +17,33 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2017 jarupxx
+// *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
 // *
 // *  All rights reserved
 // *
 // ******************************************************************
 
 // ******************************************************************
-// * XInputGetState
+// * XLaunchNewImageA
 // ******************************************************************
-OOVPA_NO_XREF(XInputGetState, 5455, 7)
+OOVPA_NO_XREF(XLaunchNewImageA, 4721, 15)
 
-        { 0x0D, 0x0C },
-        { 0x1C, 0x5E },
-        { 0x2B, 0xBB },
-        { 0x3A, 0x80 },
-        { 0x49, 0x08 },
-        { 0x58, 0xF3 },
-        { 0x67, 0x15 },
-OOVPA_END;
+        { 0x03, 0x81 },
+        { 0x04, 0xEC },
+        { 0x05, 0x84 },
+        { 0x06, 0x03 },
+        { 0x07, 0x00 },
+        { 0x08, 0x00 },
 
-// ******************************************************************
-// * XMountAlternateTitleA
-// ******************************************************************
-OOVPA_NO_XREF(XMountAlternateTitleA, 5455, 11)
+        { 0x33, 0x3C },
+        { 0x34, 0x44 },
 
-        { 0x0B, 0x08 },
+        { 0xA0, 0x3B },
+        { 0xA1, 0xC3 },
+        { 0xA2, 0x7C },
+        { 0xA3, 0x5A },
+        { 0xA4, 0x57 },
+        { 0xA5, 0x8D },
 
-        { 0x18, 0x0B },
-        { 0x19, 0x57 },
-        { 0x1A, 0x33 },
-        { 0x1B, 0xFF },
-        { 0x1C, 0x80 },
-        { 0x1D, 0xE3 },
-        { 0x1E, 0xDF },
-        { 0x1F, 0x80 },
-
-        { 0xC1, 0x83 },
-        { 0xD0, 0x15 },
+        { 0xC1, 0x15 },
 OOVPA_END;

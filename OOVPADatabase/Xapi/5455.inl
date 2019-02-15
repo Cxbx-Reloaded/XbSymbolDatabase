@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->Xapi.1.0.5120.inl
+// *   OOVPADatabase->Xapi->5455.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -24,18 +24,35 @@
 // ******************************************************************
 
 // ******************************************************************
-// * XInitDevices
+// * XInputGetState
 // ******************************************************************
-// * NOTE: We are actually intercepting USBD_Init, because
-// *       XInitDevices Simply redirects to that function
-// ******************************************************************
-OOVPA_NO_XREF(XInitDevices, 5120, 7)
+OOVPA_NO_XREF(XInputGetState, 5455, 7)
 
-        { 0x0E, 0x75 },
-        { 0x20, 0xBE },
-        { 0x2E, 0xC0 },
-        { 0x3E, 0xEC },
-        { 0x50, 0x0F },
-        { 0x5F, 0xE8 },
-        { 0x70, 0x5F },
+        { 0x0D, 0x0C },
+        { 0x1C, 0x5E },
+        { 0x2B, 0xBB },
+        { 0x3A, 0x80 },
+        { 0x49, 0x08 },
+        { 0x58, 0xF3 },
+        { 0x67, 0x15 },
+OOVPA_END;
+
+// ******************************************************************
+// * XMountAlternateTitleA
+// ******************************************************************
+OOVPA_NO_XREF(XMountAlternateTitleA, 5455, 11)
+
+        { 0x0B, 0x08 },
+
+        { 0x18, 0x0B },
+        { 0x19, 0x57 },
+        { 0x1A, 0x33 },
+        { 0x1B, 0xFF },
+        { 0x1C, 0x80 },
+        { 0x1D, 0xE3 },
+        { 0x1E, 0xDF },
+        { 0x1F, 0x80 },
+
+        { 0xC1, 0x83 },
+        { 0xD0, 0x15 },
 OOVPA_END;

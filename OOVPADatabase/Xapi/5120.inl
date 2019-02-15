@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->Xapi.1.0.4432.inl
+// *   OOVPADatabase->Xapi->5120.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -17,43 +17,25 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
+// *  (c) 2017 jarupxx
 // *
 // *  All rights reserved
 // *
 // ******************************************************************
 
 // ******************************************************************
-// * XMountUtilityDrive
+// * XInitDevices
 // ******************************************************************
-OOVPA_NO_XREF(XMountUtilityDrive, 4432, 27)
+// * NOTE: We are actually intercepting USBD_Init, because
+// *       XInitDevices Simply redirects to that function
+// ******************************************************************
+OOVPA_NO_XREF(XInitDevices, 5120, 7)
 
-        { 0x00, 0x55 },
-        { 0x01, 0x8B },
-        { 0x02, 0xEC },
-        { 0x03, 0x81 },
-        { 0x04, 0xEC },
-        { 0x05, 0x14 },
-        { 0x06, 0x01 },
-        { 0x07, 0x00 },
-        { 0x08, 0x00 },
-        { 0x09, 0x53 },
-        { 0x0A, 0x56 },
-        { 0x0B, 0x57 },
-        { 0x0C, 0x8D },
-        { 0x0D, 0x45 },
-        { 0x0E, 0xF4 },
-        { 0x0F, 0x50 },
-        { 0x10, 0x8D },
-        { 0x11, 0x45 },
-        { 0x12, 0xFC },
-        { 0x13, 0x50 },
-        { 0x14, 0xFF },
-        { 0x15, 0x75 },
-        { 0x16, 0x08 },
-        { 0x17, 0xE8 },
-
-        { 0x51, 0x68 },
-        { 0x52, 0x04 },
-        { 0x53, 0x01 },
+        { 0x0E, 0x75 },
+        { 0x20, 0xBE },
+        { 0x2E, 0xC0 },
+        { 0x3E, 0xEC },
+        { 0x50, 0x0F },
+        { 0x5F, 0xE8 },
+        { 0x70, 0x5F },
 OOVPA_END;

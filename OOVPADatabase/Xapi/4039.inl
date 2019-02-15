@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->Xapi.1.0.5344.inl
+// *   OOVPADatabase->Xapi->4039.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -17,28 +17,33 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
+// *  (c) 2017 jarupxx
 // *
 // *  All rights reserved
 // *
 // ******************************************************************
 
+// Generic OOVPA as of 4039 and newer.
 // ******************************************************************
-// * XLaunchNewImageA
+// * XCalculateSignatureBegin
 // ******************************************************************
-OOVPA_NO_XREF(XLaunchNewImageA, 5344, 11)
+OOVPA_NO_XREF(XCalculateSignatureBegin, 4039, 16)
 
-        { 0x00, 0xB8 },
+        { 0x00, 0xA1 },
+        { 0x01, 0x18 },
+        { 0x02, 0x01 },
+        { 0x03, 0x01 },
+        { 0x04, 0x00 },
+        { 0x05, 0xFF },
+        { 0x06, 0x70 },
+        { 0x07, 0x08 },
+        { 0x08, 0xFF },
+        { 0x09, 0x74 },
+        { 0x0A, 0x24 },
+        { 0x0B, 0x08 },
+        { 0x0C, 0xE8 },
 
-        { 0x18, 0x75 },
-        { 0x19, 0x19 },
-        { 0x1A, 0x83 },
-        { 0x1B, 0xC1 },
-        { 0x1C, 0x04 },
-        { 0x1D, 0x3B },
-        { 0x1E, 0xC8 },
-        { 0x1F, 0x72 },
-
-        { 0x30, 0xC2 },
-        { 0x41, 0xEE },
+        { 0x11, 0xC2 },
+        { 0x12, 0x04 },
+        { 0x13, 0x00 },
 OOVPA_END;

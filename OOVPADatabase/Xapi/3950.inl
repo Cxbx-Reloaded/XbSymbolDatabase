@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->Xapi.1.0.5028.inl
+// *   OOVPADatabase->Xapi->3950.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -17,53 +17,29 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
+// *  (c) 2017 jarupxx
 // *
 // *  All rights reserved
 // *
 // ******************************************************************
 
 // ******************************************************************
-// * XMountAlternateTitleA
-// ******************************************************************
-OOVPA_NO_XREF(XMountAlternateTitleA, 5028, 14)
-
-        { 0x04, 0xEC },
-
-        { 0x0F, 0x01 },
-        { 0x10, 0x00 },
-        { 0x11, 0x53 },
-        { 0x12, 0x8A },
-        { 0x13, 0x19 },
-        { 0x14, 0x88 },
-
-        { 0x82, 0x83 },
-        { 0x83, 0xC4 },
-        { 0x84, 0x0C },
-        { 0x85, 0x8D },
-        { 0x86, 0x85 },
-        { 0x91, 0x15 },
-
-        { 0x96, 0x8D },
-OOVPA_END;
-
-// ******************************************************************
 // * XapiInitProcess
 // ******************************************************************
-OOVPA_NO_XREF(XapiInitProcess, 5028, 12)
+OOVPA_NO_XREF(XapiInitProcess, 3950, 7)
 
-        { 0x00, 0x55 },
-        { 0x01, 0x8B },
+        // XapiInitProcess+0x03 : sub esp, 30h
+        { 0x05, 0x30 },
 
-        { 0x0E, 0xF6 },
-        { 0x0F, 0x68 },
+        // XapiInitProcess+0x0F : push 0x0C
+        { 0x10, 0x6A },
+        { 0x11, 0x0C },
 
-        { 0x22, 0x6A },
-        { 0x23, 0x0C },
-        { 0x24, 0x59 },
-        { 0x25, 0x33 },
-        { 0x26, 0xC0 },
-        { 0x27, 0x8D },
-        { 0x28, 0x7D },
-        { 0x29, 0xCC },
+        // XapiInitProcess+0x17 : repe stosd
+        { 0x18, 0xF3 },
+        { 0x19, 0xAB },
+
+        // XapiInitProcess+0x42 : jnz +0x0A
+        { 0x43, 0x75 },
+        { 0x44, 0x0A },
 OOVPA_END;

@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->XAPI.OOVPA.inl
+// *   OOVPADatabase->Xapi.OOVPA.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -104,23 +104,23 @@
 
 #include "../OOVPA.h"
 
-#include "Xapi.1.0.3911.inl"
-#include "Xapi.1.0.3950.inl"
-#include "Xapi.1.0.4039.inl"
-#include "Xapi.1.0.4134.inl"
-#include "Xapi.1.0.4242.inl"
-#include "Xapi.1.0.4361.inl"
-#include "Xapi.1.0.4432.inl"
-#include "Xapi.1.0.4721.inl"
-#include "Xapi.1.0.4831.inl"
-#include "Xapi.1.0.5028.inl"
-#include "Xapi.1.0.5120.inl"
-#include "Xapi.1.0.5344.inl"
-#include "Xapi.1.0.5455.inl"
-#include "Xapi.1.0.5788.inl"
+#include "Xapi/3911.inl"
+#include "Xapi/3950.inl"
+#include "Xapi/4039.inl"
+#include "Xapi/4134.inl"
+#include "Xapi/4242.inl"
+#include "Xapi/4361.inl"
+#include "Xapi/4432.inl"
+#include "Xapi/4721.inl"
+#include "Xapi/4831.inl"
+#include "Xapi/5028.inl"
+#include "Xapi/5120.inl"
+#include "Xapi/5344.inl"
+#include "Xapi/5455.inl"
+#include "Xapi/5788.inl"
 
 // Note: JVS Libraries are linked in the same sections as XAPILIB, so we define them here
-#include "JVS.1.0.4831.inl"
+#include "XApi/JVS.r4831.inl"
 
 // ******************************************************************
 // * XAPILIB_OOVPA

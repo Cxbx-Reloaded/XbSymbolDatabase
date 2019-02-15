@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->Xapi.1.0.5788.inl
+// *   OOVPADatabase->Xapi->4134.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -24,41 +24,71 @@
 // ******************************************************************
 
 // ******************************************************************
-// * GetThreadPriority
+// * XMountUtilityDrive
 // ******************************************************************
-OOVPA_NO_XREF(GetThreadPriority, 5788, 7)
+OOVPA_NO_XREF(XMountUtilityDrive, 4134, 10)
 
-        { 0x0D, 0xFF },
-        { 0x16, 0x85 },
-        { 0x1F, 0x15 },
-        { 0x2A, 0x04 },
-        { 0x35, 0xF1 },
-        { 0x40, 0x8B },
-        { 0x4B, 0xB8 },
+        // XMountUtilityDrive+0x03 : sub esp, 0x0114
+        { 0x03, 0x81 },
+        { 0x04, 0xEC },
+        { 0x05, 0x14 },
+        { 0x06, 0x01 },
+
+        // XMountUtilityDrive+0x45 : push 0x0104
+        { 0x45, 0x68 },
+        { 0x46, 0x04 },
+        { 0x47, 0x01 },
+
+        // XMountUtilityDrive+0xAA : lea eax, [ebp-0x10]
+        { 0xAA, 0x8D },
+        { 0xAB, 0x45 },
+        { 0xAC, 0xF0 },
 OOVPA_END;
 
 // ******************************************************************
-// * SetThreadPriorityBoost
+// * XSetProcessQuantumLength
 // ******************************************************************
-OOVPA_NO_XREF(SetThreadPriorityBoost, 5788, 7)
+OOVPA_NO_XREF(XSetProcessQuantumLength, 4134, 7)
 
-        { 0x07, 0xFF },
-        { 0x10, 0xFF },
-        { 0x19, 0x20 },
-        { 0x22, 0x50 },
-        { 0x2C, 0x8B },
-        { 0x35, 0x33 },
-        { 0x40, 0x33 },
+        { 0x01, 0xA1 },
+        { 0x04, 0x00 },
+        { 0x07, 0x4C },
+        { 0x0A, 0x8B },
+        { 0x0D, 0x8D },
+        { 0x10, 0x89 },
+        { 0x13, 0xC2 },
 OOVPA_END;
 
 // ******************************************************************
-// * XGetSectionSize
+// * GetTypeInformation
 // ******************************************************************
-OOVPA_NO_XREF(XGetSectionSize, 5788, 5)
+OOVPA_XREF(GetTypeInformation, 4134, 24,
 
-        { 0x00, 0x8B },
-        { 0x02, 0x24 },
-        { 0x04, 0x8B },
-        { 0x06, 0x08 },
-        { 0x08, 0x04 },
+    XREF_XAPI_GetTypeInformation,
+    XRefZero)
+
+        { 0x00, 0xB8 },
+        { 0x05, 0x56 },
+        { 0x06, 0x8B },
+        { 0x07, 0xD0 },
+        { 0x08, 0xBE },
+        { 0x0D, 0x3B },
+        { 0x0E, 0xD6 },
+        { 0x0F, 0x73 },
+        { 0x10, 0x12 },
+        { 0x11, 0x8B },
+        { 0x12, 0x10 },
+        { 0x13, 0x85 },
+        { 0x14, 0xD2 },
+        { 0x15, 0x74 },
+        { 0x16, 0x05 },
+        { 0x17, 0x39 },
+        { 0x18, 0x4A },
+        { 0x19, 0x04 },
+        { 0x1A, 0x74 },
+        { 0x1B, 0x0B },
+        { 0x1C, 0x83 },
+        { 0x1D, 0xC0 },
+        { 0x1E, 0x04 },
+        { 0x1F, 0x3B }
 OOVPA_END;
