@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->D3D8LTCG.1.0.5028.inl
+// *   OOVPADatabase->D3D8LTCG->5028.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public

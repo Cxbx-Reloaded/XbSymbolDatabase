@@ -11,6 +11,7 @@ file(GLOB SOURCES
  "XbSymbolDatabase.c"
  "OOVPADatabase/*.inl"
  "OOVPADatabase/D3D8/*.inl"
+ "OOVPADatabase/D3D8LTCG/*.inl"
 )
 
 add_library (XbSymbolDatabase ${SOURCES})
