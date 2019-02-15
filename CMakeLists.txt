@@ -7,6 +7,9 @@ project (XbSymbolDatabase)
 
 add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 
-file(GLOB SOURCES "XbSymbolDatabase.c" "OOVPADatabase/*.inl")
+file(GLOB SOURCES
+ "XbSymbolDatabase.c"
+ "OOVPADatabase/*.inl"
+)
 
 add_library (XbSymbolDatabase ${SOURCES})
