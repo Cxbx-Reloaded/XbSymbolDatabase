@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->DSound.1.0.3936.inl
+// *   OOVPADatabase->DSound->3936.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public

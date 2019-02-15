@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->DSound.1.0.4531.inl
+// *   OOVPADatabase->DSound->5233.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -17,34 +17,27 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2017 jarupxx
+// *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
 // *
 // *  All rights reserved
 // *
 // ******************************************************************
 
 // ******************************************************************
-// * CMcpxStream_Discontinuity
+// * DirectSound::CDirectSound::EnableHeadphones
 // ******************************************************************
-OOVPA_XREF(CMcpxStream_Discontinuity, 4531, 9,
+// TODO: Need to re-evaluate. Possible false detection.
+OOVPA_XREF(CDirectSound_EnableHeadphones, 5233, 9,
 
-    XREF_CMcpxStream_Discontinuity,
+    XREF_CDirectSound_EnableHeadphones,
     XRefZero)
-
-        // CMcpxStream_Discontinuity+0x00 : push esi; push edi
-        { 0x00, 0x56 },
-        { 0x01, 0x57 },
-
-        // CMcpxStream_Discontinuity+0x12 : mov dx,0x800
-        { 0x12, 0x66 },
-        { 0x13, 0xBA },
-        { 0x14, 0x00 },
-        { 0x15, 0x08 },
-
-        // CMcpxStream_Discontinuity+0x23 : call Stop@CMcpxStream@DirectSound@@QAEJ_JK@Z
-        { 0x23, 0xE8 },
-
-        // CMcpxStream_Discontinuity+0x2D : pop esi; ret
-        { 0x2D, 0x5E },
-        { 0x2E, 0xC3 },
+        { 0x00, 0x55 },
+        { 0x16, 0x45 },
+        { 0x1D, 0x0B },
+        { 0x2A, 0x05 },
+        { 0x46, 0x95 },
+        { 0x56, 0x80 },
+        { 0x5D, 0x7F },
+        { 0x74, 0xA4 },
+        { 0x99, 0x08 },
 OOVPA_END;
