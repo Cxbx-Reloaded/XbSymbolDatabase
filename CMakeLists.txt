@@ -10,6 +10,7 @@ add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 file(GLOB SOURCES
  "XbSymbolDatabase.c"
  "OOVPADatabase/*.inl"
+ "OOVPADatabase/D3D8/*.inl"
 )
 
 add_library (XbSymbolDatabase ${SOURCES})

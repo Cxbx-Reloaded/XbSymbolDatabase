@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->D3D8.1.0.4627.inl
+// *   OOVPADatabase->D3D8->4627.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
