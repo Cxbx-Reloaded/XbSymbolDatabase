@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->XNet.1.0.4361.inl
+// *   OOVPADatabase->XNet->4361.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public

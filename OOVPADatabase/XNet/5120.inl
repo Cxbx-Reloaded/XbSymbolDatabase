@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->XNet.1.0.5455.inl
+// *   OOVPADatabase->XNet->5120.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -24,20 +24,23 @@
 // ******************************************************************
 
 // ******************************************************************
-// * CXnSock::socket
+// * CXnSock::connect
 // ******************************************************************
-//Generic OOVPA as of 5455 and newer.
-OOVPA_NO_XREF(socket, 5455, 10)
+//Generic OOVPA as of 5120 and newer.
+OOVPA_NO_XREF(connect, 5120, 12)
 
-        { 0x00, 0x51 },
-        { 0x0A, 0xB9 },
+        { 0x00, 0x55 },
+        { 0x19, 0xE8 },
 
-        { 0xB8, 0x83 },
-        { 0xB9, 0xC8 },
-        { 0xBA, 0xFF },
-        { 0xBB, 0xEB },
-        { 0xBC, 0x73 },
-        { 0xBD, 0x53 },
-        { 0xBE, 0xFF },
-        { 0xBF, 0x15 },
+        { 0x30, 0xF0 },
+        { 0x31, 0x85 },
+        { 0x32, 0xF6 },
+        { 0x33, 0x75 },
+        { 0x34, 0x08 },
+        { 0x35, 0x83 },
+        { 0x36, 0xC8 },
+        { 0x37, 0xFF },
+        { 0x38, 0xE9 },
+
+        { 0x61, 0xE8 },
 OOVPA_END;

@@ -45,11 +45,11 @@
 
 #include "../OOVPA.h"
 
-#include "XNet.1.0.3911.inl"
-#include "XNet.1.0.4361.inl"
-#include "XNet.1.0.4627.inl"
-#include "XNet.1.0.5120.inl"
-#include "XNet.1.0.5455.inl"
+#include "XNet/3911.inl"
+#include "XNet/4361.inl"
+#include "XNet/4627.inl"
+#include "XNet/5120.inl"
+#include "XNet/5455.inl"
 
 // ******************************************************************
 // * XNET_OOVPA
