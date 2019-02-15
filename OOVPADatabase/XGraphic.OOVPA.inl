@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->XG.OOVPA.inl
+// *   OOVPADatabase->XGraphic.OOVPA.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -68,9 +68,9 @@
 
 #include "../OOVPA.h"
 
-#include "XG.1.0.3911.inl"
-#include "XG.1.0.4134.inl"
-#include "XG.1.0.4361.inl"
+#include "XGraphic/3911.inl"
+#include "XGraphic/4134.inl"
+#include "XGraphic/4361.inl"
 
 // ******************************************************************
 // * XGRAPHC_OOVPA

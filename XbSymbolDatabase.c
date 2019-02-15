@@ -73,7 +73,7 @@ static inline uint32_t BitScanReverse(uint32_t value)
 #include "OOVPADatabase/D3D8.OOVPA.inl"
 #include "OOVPADatabase/D3D8LTCG.OOVPA.inl"
 #include "OOVPADatabase/DSound.OOVPA.inl"
-#include "OOVPADatabase/XG.OOVPA.inl"
+#include "OOVPADatabase/XGraphic.OOVPA.inl"
 #include "OOVPADatabase/XNet.OOVPA.inl"
 #include "OOVPADatabase/XOnline.OOVPA.inl"
 #include "OOVPADatabase/XActEng.OOVPA.inl"
