@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->XOnline.1.0.4627.inl
+// *   OOVPADatabase->XOnline->5659.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -17,7 +17,7 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
+// *  (c) 2017 jarupxx
 // *
 // *  All rights reserved
 // *
@@ -26,7 +26,7 @@
 // ******************************************************************
 // * XoUpdateLaunchNewImageInternal
 // ******************************************************************
-OOVPA_XREF(XoUpdateLaunchNewImageInternal, 4627, 11,
+OOVPA_XREF(XoUpdateLaunchNewImageInternal, 5659, 11,
 
     XREF_XoUpdateLaunchNewImageInternal,
     XRefZero)
@@ -34,39 +34,14 @@ OOVPA_XREF(XoUpdateLaunchNewImageInternal, 4627, 11,
         { 0x00, 0x55 },
         { 0x03, 0x81 },
 
-        { 0x58, 0xEB },
-        { 0x59, 0x04 },
-        { 0x5A, 0x83 },
-        { 0x5B, 0x63 },
-        { 0x5C, 0x10 },
-        { 0x5D, 0x00 },
-        { 0x5E, 0xF6 },
-        { 0x5F, 0x45 },
+        { 0x6C, 0xEB },
+        { 0x6D, 0x04 },
+        { 0x6E, 0x83 },
+        { 0x6F, 0x63 },
+        { 0x70, 0x10 },
+        { 0x71, 0x00 },
+        { 0x72, 0xF6 },
+        { 0x73, 0x45 },
 
-        { 0x65, 0xE8 },
-OOVPA_END;
-
-// ******************************************************************
-// * CXo::XOnlineLogon
-// ******************************************************************
-OOVPA_XREF(CXo_XOnlineLogon, 4627, 13,
-
-    XREF_CXo_XOnlineLogon,
-    XRefZero)
-
-        { 0x02, 0xEC },
-
-        { 0x17, 0x04 },
-        { 0x1E, 0xE8 },
-
-        { 0x3B, 0x8B },
-        { 0x3C, 0x4D },
-        { 0x3D, 0xFC },
-        { 0x3E, 0x68 },
-        { 0x3F, 0x58 },
-        { 0x40, 0x4F },
-        { 0x41, 0x4E },
-        { 0x42, 0x73 },
-        { 0x43, 0x68 },
-        { 0x44, 0x68 },
+        { 0x79, 0xE8 },
 OOVPA_END;

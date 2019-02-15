@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->XOnline.1.0.5028.inl
+// *   OOVPADatabase->XOnline->4831.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -17,7 +17,7 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
+// *  (c) 2017 jarupxx
 // *
 // *  All rights reserved
 // *
@@ -26,7 +26,7 @@
 // ******************************************************************
 // * CXo::XOnlineLogon
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineLogon, 5028, 15,
+OOVPA_XREF(CXo_XOnlineLogon, 4831, 15,
 
     XREF_CXo_XOnlineLogon,
     XRefZero)

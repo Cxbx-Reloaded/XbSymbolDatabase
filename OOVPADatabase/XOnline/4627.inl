@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->XOnline.1.0.5558.inl
+// *   OOVPADatabase->XOnline->4627.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -24,28 +24,49 @@
 // ******************************************************************
 
 // ******************************************************************
+// * XoUpdateLaunchNewImageInternal
+// ******************************************************************
+OOVPA_XREF(XoUpdateLaunchNewImageInternal, 4627, 11,
+
+    XREF_XoUpdateLaunchNewImageInternal,
+    XRefZero)
+
+        { 0x00, 0x55 },
+        { 0x03, 0x81 },
+
+        { 0x58, 0xEB },
+        { 0x59, 0x04 },
+        { 0x5A, 0x83 },
+        { 0x5B, 0x63 },
+        { 0x5C, 0x10 },
+        { 0x5D, 0x00 },
+        { 0x5E, 0xF6 },
+        { 0x5F, 0x45 },
+
+        { 0x65, 0xE8 },
+OOVPA_END;
+
+// ******************************************************************
 // * CXo::XOnlineLogon
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineLogon, 5558, 14,
+OOVPA_XREF(CXo_XOnlineLogon, 4627, 13,
 
     XREF_CXo_XOnlineLogon,
     XRefZero)
 
         { 0x02, 0xEC },
 
-        { 0x15, 0xE9 },
-        { 0x1C, 0xF0 },
+        { 0x17, 0x04 },
+        { 0x1E, 0xE8 },
 
-        { 0x27, 0xA8 },
-        { 0x28, 0x01 },
-        { 0x29, 0x75 },
-        { 0x2A, 0x0C },
-        { 0x2B, 0xC7 },
-        { 0x2C, 0x45 },
-//      { 0x2D, 0x10 },
-        { 0x2E, 0x00 },
-        { 0x2F, 0x10 },
-        { 0x30, 0x15 },
-        { 0x31, 0x80 },
-        { 0x32, 0xE9 },
+        { 0x3B, 0x8B },
+        { 0x3C, 0x4D },
+        { 0x3D, 0xFC },
+        { 0x3E, 0x68 },
+        { 0x3F, 0x58 },
+        { 0x40, 0x4F },
+        { 0x41, 0x4E },
+        { 0x42, 0x73 },
+        { 0x43, 0x68 },
+        { 0x44, 0x68 },
 OOVPA_END;

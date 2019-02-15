@@ -17,6 +17,7 @@ file(GLOB SOURCES
  "OOVPADatabase/Xapi/*.inl"
  "OOVPADatabase/XGraphic/*.inl"
  "OOVPADatabase/XNet/*.inl"
+ "OOVPADatabase/XOnline/*.inl"
 )
 
 add_library (XbSymbolDatabase ${SOURCES})

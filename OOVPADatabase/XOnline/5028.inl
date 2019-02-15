@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->XOnline.1.0.5455.inl
+// *   OOVPADatabase->XOnline->5028.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -17,7 +17,7 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2017 jarupxx
+// *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
 // *
 // *  All rights reserved
 // *
@@ -26,24 +26,26 @@
 // ******************************************************************
 // * CXo::XOnlineLogon
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineLogon, 5455, 14,
+OOVPA_XREF(CXo_XOnlineLogon, 5028, 15,
 
     XREF_CXo_XOnlineLogon,
     XRefZero)
 
         { 0x02, 0xEC },
-        { 0x15, 0xE9 },
 
-        { 0x23, 0xA8 },
-        { 0x24, 0x01 },
-        { 0x25, 0x75 },
-        { 0x26, 0x0C },
-        { 0x27, 0xC7 },
-        { 0x28, 0x45 },
+        { 0x15, 0x00 },
+        { 0x1C, 0xE8 },
+
+        { 0x21, 0xA8 },
+        { 0x22, 0x01 },
+        { 0x23, 0x75 },
+        { 0x24, 0x0C },
+        { 0x25, 0xC7 },
+        { 0x26, 0x45 },
+        { 0x27, 0xF8 },
+        { 0x28, 0x00 },
         { 0x29, 0x10 },
-        { 0x2A, 0x00 },
-        { 0x2B, 0x10 },
-        { 0x2C, 0x15 },
-        { 0x2D, 0x80 },
-        { 0x2E, 0xE9 },
+        { 0x2A, 0x15 },
+        { 0x2B, 0x80 },
+        { 0x2C, 0xE9 },
 OOVPA_END;
