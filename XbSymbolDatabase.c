@@ -76,7 +76,7 @@ static inline uint32_t BitScanReverse(uint32_t value)
 #include "OOVPADatabase/XG.OOVPA.inl"
 #include "OOVPADatabase/XNet.OOVPA.inl"
 #include "OOVPADatabase/XOnline.OOVPA.inl"
-#include "OOVPADatabase/XactEng.OOVPA.inl"
+#include "OOVPADatabase/XActEng.OOVPA.inl"
 
 #define PAIRSCANSEC_MAX 4
 

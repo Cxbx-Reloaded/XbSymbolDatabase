@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->XactEng.OOVPA.inl
+// *   OOVPADatabase->XActEng.OOVPA.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -57,12 +57,12 @@
 
 #include "../OOVPA.h"
 
-#include "XactEng.1.0.4627.inl"
-#include "XactEng.1.0.4928.inl"
-#include "XactEng.1.0.5120.inl"
-#include "XactEng.1.0.5233.inl"
-#include "XactEng.1.0.5344.inl"
-#include "XactEng.1.0.5558.inl"
+#include "XActEng/4627.inl"
+#include "XActEng/4928.inl"
+#include "XActEng/5120.inl"
+#include "XActEng/5233.inl"
+#include "XActEng/5344.inl"
+#include "XActEng/5558.inl"
 
 
 // ******************************************************************
