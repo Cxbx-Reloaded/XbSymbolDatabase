@@ -158,6 +158,11 @@ xbaddr XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEInterce
 bool bXRefFirstPass; // For search speed optimization, set in XbSymbolScan, read in XbSymbolLocateFunction
 unsigned int UnResolvedXRefs = XREF_COUNT;
 bool bStrictBuildVersionLimit = false;
+#if _DEBUG
+xb_output_message output_verbose_level = XB_OUTPUT_MESSAGE_DEBUG;
+#else
+xb_output_message output_verbose_level = XB_OUTPUT_MESSAGE_INFO;
+#endif
 
 
 // ******************************************************************
@@ -182,6 +187,16 @@ void XbSymbolSetOutputMessage(xb_output_message_t message_func)
     output_func = message_func;
 }
 
+bool XbSymbolSetOutputVerbosity(xb_output_message verbose_level)
+{
+    if (verbose_level < XB_OUTPUT_MESSAGE_MAX) {
+        output_verbose_level = verbose_level;
+        return true;
+    }
+    // Return false only when requested level is invalid.
+    return false;
+}
+
 void XbSymbolBypassBuildVersionLimit(bool bypass_limit)
 {
     bStrictBuildVersionLimit = !bypass_limit;
@@ -193,7 +208,8 @@ void XbSymbolBypassBuildVersionLimit(bool bypass_limit)
 void XbSymbolOutputMessage(xb_output_message mLevel, const char* message)
 {
     // Check if output function is set.
-    if (output_func != NULL) {
+    // Plus if pass minimum verbose level to output.
+    if (output_func != NULL && mLevel >= output_verbose_level) {
         output_func(mLevel, message);
     }
 }
@@ -204,7 +220,8 @@ void XbSymbolOutputMessageFormat(xb_output_message mLevel, const char* format, .
     char bufferTemp[2048];
 
     // Check if output function is set.
-    if (output_func != NULL) {
+    // Plus if pass minimum verbose level to output.
+    if (output_func != NULL && mLevel >= output_verbose_level) {
         va_list args;
         va_start(args, format);
         (void)vsprintf(bufferTemp, format, args);

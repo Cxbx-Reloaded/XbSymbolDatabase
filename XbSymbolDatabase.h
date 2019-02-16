@@ -395,10 +395,12 @@ typedef enum _XRefDataBaseOffset
 #define XREF_ADDR_DERIVE 1
 
 typedef enum _xb_output_message {
-    XB_OUTPUT_MESSAGE_INFO=0,
+    XB_OUTPUT_MESSAGE_DEBUG=0,
+    XB_OUTPUT_MESSAGE_INFO,
     XB_OUTPUT_MESSAGE_WARN,
     XB_OUTPUT_MESSAGE_ERROR,
-    XB_OUTPUT_MESSAGE_DEBUG
+    // Only for internal usage.
+    XB_OUTPUT_MESSAGE_MAX
 } xb_output_message;
 
 #ifndef xbaddr
@@ -488,6 +490,13 @@ unsigned int XbSymbolDataBaseTestOOVPAs();
 /// </summary>
 /// <param name="bypass_limit">Input boolean to either bypass or enable the build version limit.</param>
 void XbSymbolBypassBuildVersionLimit(bool bypass_limit);
+
+/// <summary>
+/// To set verbose level can be output message.
+/// By default, release build is set to info+ level and debug build is set to debug+ level.
+/// </summary>
+/// <param name="verbose_level">See xb_output_message enum for list of options.</param>
+bool XbSymbolSetOutputVerbosity(xb_output_message verbose_level);
 
 #ifdef __cplusplus
 }
