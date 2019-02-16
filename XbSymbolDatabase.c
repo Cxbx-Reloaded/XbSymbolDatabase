@@ -1170,6 +1170,8 @@ bool XbSymbolScan(const void* xb_header_addr,
                                 if (SymbolDBList[d2].LibSec.section[d3] != NULL && strncmp(SectionName, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
                                     pSectionScan = pSectionHeaders + s;
 
+                                    XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section", LibraryStr, SectionName);
+
                                     XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, LibraryStr, SymbolDBList[d2].LibSec.library,
                                                         pSectionScan, BuildVersion, register_func, xb_start_virt_addr);
                                     break;
