@@ -187,9 +187,30 @@ void XbSymbolBypassBuildVersionLimit(bool bypass_limit)
     bStrictBuildVersionLimit = !bypass_limit;
 }
 
-void XbSymbolOutputMessage(xb_output_message mFlag, const char* message) {
-    if (output_func != 0) {
-        output_func(mFlag, message);
+// Intended for send the message as-is without formating.
+// (To avoid corrupted string when perform a bad coding.
+//  Plus certain message need special character without format.)
+void XbSymbolOutputMessage(xb_output_message mLevel, const char* message)
+{
+    // Check if output function is set.
+    if (output_func != NULL) {
+        output_func(mLevel, message);
+    }
+}
+
+// Intended to format the message with given extra parameters.
+void XbSymbolOutputMessageFormat(xb_output_message mLevel, const char* format, ...)
+{
+    char bufferTemp[2048];
+
+    // Check if output function is set.
+    if (output_func != NULL) {
+        va_list args;
+        va_start(args, format);
+        (void)vsprintf(bufferTemp, format, args);
+        va_end(args);
+
+        output_func(mLevel, bufferTemp);
     }
 }
 
@@ -469,7 +490,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
     OOVPATable *pLastKnownSymbol = NULL;
     uint32_t pLastKnownFunc = 0;
     const char *SymbolName = NULL;
-    char output[2048];
+
     for (; pLoop < pLoopEnd; pLoop++) {
 
         if (SymbolName == NULL) {
@@ -495,14 +516,12 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
 
         if (pFunc == pLastKnownFunc && pLastKnownSymbol == pLoop - 1) {
             //if (g_SymbolAddresses[pLastKnownSymbol->szFuncName] == 0) {
-                sprintf(output, "Duplicate OOVPA signature found for %s, %hd vs %hd!", pLastKnownSymbol->szFuncName, pLastKnownSymbol->Version, pLoop->Version);
-                XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, output);
+                XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_WARN, "Duplicate OOVPA signature found for %s, %hu vs %hu!", pLastKnownSymbol->szFuncName, pLastKnownSymbol->Version, pLoop->Version);
             //}
         }
 
         if (buildVersion < pLoop->Version) {
-            sprintf(output, "OOVPA signature is too high for [%hd] %s!", pLoop->Version, pLoop->szFuncName);
-            XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, output);
+            XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_WARN, "OOVPA signature is too high for [%hu] %s!", pLoop->Version, pLoop->szFuncName);
         }
 
         pLastKnownFunc = pFunc;
@@ -1083,7 +1102,6 @@ bool XbSymbolScan(const void* xb_header_addr,
             const char* LibraryStr = pLibraryVersion[lv].szName;
             uint32_t LibraryFlag = XbSymbolLibrayToFlag(LibraryStr);
 
-
             do {
 
                 pSectionScan = NULL;
@@ -1094,7 +1112,7 @@ bool XbSymbolScan(const void* xb_header_addr,
                     // However August 2003 XDK (5659) still uses the old function.
                     // Please use updated 5788 instead.
                     if (BuildVersion >= 5558 && BuildVersion <= 5659 && QFEVersion > 1) {
-                        XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_WARN, "D3D8 version 1.0.%d.%d Title Detected: This game uses an alias version 1.0.5788");// , BuildVersion, QFEVersion);
+                        XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_WARN, "D3D8 version 1.0.%d.%d Title Detected: This game uses an alias version 1.0.5788", BuildVersion, QFEVersion);
                         BuildVersion = 5788;
                     }
                 }
