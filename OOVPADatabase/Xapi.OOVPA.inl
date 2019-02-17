@@ -120,7 +120,7 @@
 #include "Xapi/5788.inl"
 
 // Note: JVS Libraries are linked in the same sections as XAPILIB, so we define them here
-#include "XApi/JVS.r4831.inl"
+#include "JVS/4831.inl"
 
 // ******************************************************************
 // * XAPILIB_OOVPA
