@@ -12,4 +12,6 @@ file(GLOB_RECURSE SOURCES
  "OOVPADatabase/*.inl"
 )
 
+source_group(TREE ${CMAKE_CURRENT_LIST_DIR} FILES ${SOURCES})
+
 add_library (XbSymbolDatabase ${SOURCES})
