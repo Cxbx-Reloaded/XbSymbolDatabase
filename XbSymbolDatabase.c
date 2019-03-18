@@ -69,14 +69,14 @@ static inline uint32_t BitScanReverse(uint32_t value)
 // * Xbox Symbol OOVPA Database
 // ******************************************************************
 
-#include "OOVPADatabase/Xapi.OOVPA.inl"
-#include "OOVPADatabase/D3D8.OOVPA.inl"
-#include "OOVPADatabase/D3D8LTCG.OOVPA.inl"
-#include "OOVPADatabase/DSound.OOVPA.inl"
-#include "OOVPADatabase/XG.OOVPA.inl"
-#include "OOVPADatabase/XNet.OOVPA.inl"
-#include "OOVPADatabase/XOnline.OOVPA.inl"
-#include "OOVPADatabase/XactEng.OOVPA.inl"
+#include "OOVPADatabase/Xapi_OOVPA.inl"
+#include "OOVPADatabase/D3D8_OOVPA.inl"
+#include "OOVPADatabase/D3D8LTCG_OOVPA.inl"
+#include "OOVPADatabase/DSound_OOVPA.inl"
+#include "OOVPADatabase/XGraphic_OOVPA.inl"
+#include "OOVPADatabase/XNet_OOVPA.inl"
+#include "OOVPADatabase/XOnline_OOVPA.inl"
+#include "OOVPADatabase/XActEng_OOVPA.inl"
 
 #define PAIRSCANSEC_MAX 4
 

@@ -7,6 +7,11 @@ project (XbSymbolDatabase)
 
 add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 
-file(GLOB SOURCES "XbSymbolDatabase.c" "OOVPADatabase/*.inl")
+file(GLOB_RECURSE SOURCES
+ "XbSymbolDatabase.c"
+ "OOVPADatabase/*.inl"
+)
+
+source_group(TREE ${CMAKE_CURRENT_LIST_DIR} FILES ${SOURCES})
 
 add_library (XbSymbolDatabase ${SOURCES})
