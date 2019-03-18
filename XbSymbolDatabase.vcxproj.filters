@@ -75,10 +75,10 @@
     <None Include="OOVPADatabase\D3D8\5849.inl">
       <Filter>OOVPA Database\D3D8</Filter>
     </None>
-    <None Include="OOVPADatabase\D3D8.OOVPA.inl">
+    <None Include="OOVPADatabase\D3D8_OOVPA.inl">
       <Filter>OOVPA Database\D3D8</Filter>
     </None>
-    <None Include="OOVPADatabase\D3D8LTCG.OOVPA.inl">
+    <None Include="OOVPADatabase\D3D8LTCG_OOVPA.inl">
       <Filter>OOVPA Database\D3D8LTCG</Filter>
     </None>
     <None Include="OOVPADatabase\D3D8LTCG\3911.inl">
@@ -171,7 +171,7 @@
     <None Include="OOVPADatabase\DSound\5558.inl">
       <Filter>OOVPA Database\DSound</Filter>
     </None>
-    <None Include="OOVPADatabase\DSound.OOVPA.inl">
+    <None Include="OOVPADatabase\DSound_OOVPA.inl">
       <Filter>OOVPA Database\DSound</Filter>
     </None>
     <None Include="OOVPADatabase\XActEng\4627.inl">
@@ -192,7 +192,7 @@
     <None Include="OOVPADatabase\XActEng\5558.inl">
       <Filter>OOVPA Database\XActEng</Filter>
     </None>
-    <None Include="OOVPADatabase\XActEng.OOVPA.inl">
+    <None Include="OOVPADatabase\XActEng_OOVPA.inl">
       <Filter>OOVPA Database\XActEng</Filter>
     </None>
     <None Include="OOVPADatabase\Xapi\3911.inl">
@@ -237,7 +237,7 @@
     <None Include="OOVPADatabase\Xapi\5788.inl">
       <Filter>OOVPA Database\Xapi</Filter>
     </None>
-    <None Include="OOVPADatabase\Xapi.OOVPA.inl">
+    <None Include="OOVPADatabase\Xapi_OOVPA.inl">
       <Filter>OOVPA Database\Xapi</Filter>
     </None>
     <None Include="OOVPADatabase\XGraphic\3911.inl">
@@ -249,7 +249,7 @@
     <None Include="OOVPADatabase\XGraphic\4361.inl">
       <Filter>OOVPA Database\XGraphic</Filter>
     </None>
-    <None Include="OOVPADatabase\XGraphic.OOVPA.inl">
+    <None Include="OOVPADatabase\XGraphic_OOVPA.inl">
       <Filter>OOVPA Database\XGraphic</Filter>
     </None>
     <None Include="OOVPADatabase\XNet\3911.inl">
@@ -267,7 +267,7 @@
     <None Include="OOVPADatabase\XNet\5455.inl">
       <Filter>OOVPA Database\XNet</Filter>
     </None>
-    <None Include="OOVPADatabase\XNet.OOVPA.inl">
+    <None Include="OOVPADatabase\XNet_OOVPA.inl">
       <Filter>OOVPA Database\XNet</Filter>
     </None>
     <None Include="OOVPADatabase\XOnline\4361.inl">
@@ -297,7 +297,7 @@
     <None Include="OOVPADatabase\XOnline\5849.inl">
       <Filter>OOVPA Database\XOnline</Filter>
     </None>
-    <None Include="OOVPADatabase\XOnline.OOVPA.inl">
+    <None Include="OOVPADatabase\XOnline_OOVPA.inl">
       <Filter>OOVPA Database\XOnline</Filter>
     </None>
     <None Include="OOVPADatabase\JVS\4831.inl">

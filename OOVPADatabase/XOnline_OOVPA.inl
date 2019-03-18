@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->XOnline.OOVPA.inl
+// *   OOVPADatabase->XOnline_OOVPA.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
