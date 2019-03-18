@@ -387,6 +387,7 @@ void* XbSymbolLocateFunction(OOVPA *Oovpa,
         return 0;
 
     uint32_t derive_indices = 0;
+
     // Check all XRefs are known (if not, don't do a useless scan) :
     for (unsigned int v = 0; v < Oovpa->XRefCount; v++) {
         uint32_t XRef;
@@ -419,7 +420,7 @@ void* XbSymbolLocateFunction(OOVPA *Oovpa,
     }
 
     // search all of the image memory
-    for (memptr_t cur = lower; cur < upper; cur++)
+    for (memptr_t cur = lower; cur < upper; cur++) {
         if (CompareOOVPAToAddress(Oovpa, cur, xb_start_virtual_addr)) {
 
             while (derive_indices > 0) {
@@ -455,6 +456,7 @@ void* XbSymbolLocateFunction(OOVPA *Oovpa,
 
             return cur - xb_start_virtual_addr;
         }
+    }
 
     // found nothing
     return 0;
@@ -528,8 +530,9 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
 
         // Search for each function's location using the OOVPA
         xbaddr pFunc = (xbaddr)(uintptr_t)XbSymbolLocateFunction(pLoop->Oovpa, lower, upper, (uintptr_t)xb_start_virt_addr);
-        if (pFunc == 0)
+        if (pFunc == 0) {
             continue;
+        }
 
         if (pFunc == pLastKnownFunc && pLastKnownSymbol == pLoop - 1) {
             //if (g_SymbolAddresses[pLastKnownSymbol->szFuncName] == 0) {
@@ -544,6 +547,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
         pLastKnownFunc = pFunc;
         pLastKnownSymbol = pLoop;
     }
+
     if (pLastKnownSymbol != NULL) {
         XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
     }
@@ -848,7 +852,7 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
         if (BuildVersion < 3911) {
             // Not supported, currently ignored.
         }
-        if (BuildVersion < 4034) {
+        else if (BuildVersion < 4034) {
             pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_3911, lower, upper, xb_start_virt_addr);
         }
         else {
