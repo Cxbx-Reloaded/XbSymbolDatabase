@@ -498,6 +498,19 @@ void XbSymbolBypassBuildVersionLimit(bool bypass_limit);
 /// <param name="verbose_level">See xb_output_message enum for list of options.</param>
 bool XbSymbolSetOutputVerbosity(xb_output_message verbose_level);
 
+/// <summary>
+/// (Debug feature) Set to true will continue the same signature scan after first detected.
+/// </summary>
+/// <param name="enable">Input boolean to either continue with the signature scan after first symbol found or not.</param>
+void XbSymbolContinuousSigScan(bool enable);
+
+/// <summary>
+/// (Debug feature) Set to true will register first detected address only.
+/// This function can be used if XbSymbolContinuousSigScan is set to true.
+/// </summary>
+/// <param name="enable">Input boolean to use first symbol address only or not.</param>
+void XbSymbolFirstDetectAddressOnly(bool enable);
+
 #ifdef __cplusplus
 }
 #endif

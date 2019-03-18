@@ -163,6 +163,8 @@ xb_output_message output_verbose_level = XB_OUTPUT_MESSAGE_DEBUG;
 #else
 xb_output_message output_verbose_level = XB_OUTPUT_MESSAGE_INFO;
 #endif
+bool bOneTimeScan = true;
+bool bScanFirstDetect = false;
 
 
 // ******************************************************************
@@ -200,6 +202,16 @@ bool XbSymbolSetOutputVerbosity(xb_output_message verbose_level)
 void XbSymbolBypassBuildVersionLimit(bool bypass_limit)
 {
     bStrictBuildVersionLimit = !bypass_limit;
+}
+
+void XbSymbolContinuousSigScan(bool enable)
+{
+    bOneTimeScan = !enable;
+}
+
+void XbSymbolFirstDetectAddressOnly(bool enable)
+{
+    bScanFirstDetect = enable;
 }
 
 // Intended for send the message as-is without formating.
@@ -376,7 +388,9 @@ bool CompareOOVPAToAddress(OOVPA *Oovpa, memptr_t cur, uintptr_t xb_start_virt_a
 }
 
 // locate the given function, searching within lower and upper bounds
-void* XbSymbolLocateFunction(OOVPA *Oovpa,
+void* XbSymbolLocateFunction(const char* szFuncName,
+                             uint16_t version,
+                             OOVPA *Oovpa,
                              memptr_t lower,
                              memptr_t upper,
                              uintptr_t xb_start_virtual_addr)
@@ -387,6 +401,7 @@ void* XbSymbolLocateFunction(OOVPA *Oovpa,
         return 0;
 
     uint32_t derive_indices = 0;
+    void* symbol_address = NULL;
 
     // Check all XRefs are known (if not, don't do a useless scan) :
     for (unsigned int v = 0; v < Oovpa->XRefCount; v++) {
@@ -451,19 +466,33 @@ void* XbSymbolLocateFunction(OOVPA *Oovpa,
                     // save and count the derived address
                     XRefDataBase[XRef] = XRefAddr;
                 }*/
-                XRefDataBase[XRef] = XRefAddr;
+
+                if (!bScanFirstDetect || (bScanFirstDetect && symbol_address == NULL)) {
+                    XRefDataBase[XRef] = XRefAddr;
+                }
             }
 
-            return cur - xb_start_virtual_addr;
+            if (symbol_address != NULL) {
+                XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_WARN,
+                    "Duplicate symbol detection found for %s (%hu), 0x%08x vs 0x%08x",
+                    szFuncName, version, symbol_address, cur - xb_start_virtual_addr);
+            }
+
+            if (!bScanFirstDetect || (bScanFirstDetect && symbol_address == NULL)) {
+                symbol_address = cur - xb_start_virtual_addr;
+            }
+
+            if (bOneTimeScan) {
+                break;
+            }
         }
     }
 
-    // found nothing
-    return 0;
+    return symbol_address;
 }
 
-#define XbSymbolLocateFunctionCast(Oovpa, lower, upper, xb_start_virtual_addr) \
-        XbSymbolLocateFunction((OOVPA*)Oovpa, lower, upper, (uintptr_t)xb_start_virtual_addr)
+#define XbSymbolLocateFunctionCast(szFuncName, version, Oovpa, lower, upper, xb_start_virtual_addr) \
+        XbSymbolLocateFunction(szFuncName, version, (OOVPA*)Oovpa, lower, upper, (uintptr_t)xb_start_virtual_addr)
 
 void XbSymbolRegisterSymbol(OOVPATable* OovpaTable,
                             const char* LibraryName,
@@ -529,7 +558,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
             continue;
 
         // Search for each function's location using the OOVPA
-        xbaddr pFunc = (xbaddr)(uintptr_t)XbSymbolLocateFunction(pLoop->Oovpa, lower, upper, (uintptr_t)xb_start_virt_addr);
+        xbaddr pFunc = (xbaddr)(uintptr_t)XbSymbolLocateFunction(pLoop->szFuncName, pLoop->Version, pLoop->Oovpa, lower, upper, (uintptr_t)xb_start_virt_addr);
         if (pFunc == 0) {
             continue;
         }
@@ -853,10 +882,12 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
             // Not supported, currently ignored.
         }
         else if (BuildVersion < 4034) {
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_3911, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetRenderState_CullMode", 3911,
+                &D3DDevice_SetRenderState_CullMode_3911, lower, upper, xb_start_virt_addr);
         }
         else {
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_4034, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetRenderState_CullMode", 4034,
+                &D3DDevice_SetRenderState_CullMode_4034, lower, upper, xb_start_virt_addr);
         }
 
         // then locate D3DDeferredRenderState
@@ -901,20 +932,24 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
     }
     else { // XbSymbolLib_D3D8LTCG
         // locate D3DDevice_SetRenderState_CullMode first
-        pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_1045, lower, upper, xb_start_virt_addr);
+        pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetRenderState_CullMode", 1045,
+            &D3DDevice_SetRenderState_CullMode_1045, lower, upper, xb_start_virt_addr);
         pXRefOffset = 0x2D; // verified for 3925
         if (pFunc == 0) {
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_1049, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetRenderState_CullMode", 1049,
+                &D3DDevice_SetRenderState_CullMode_1049, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x31; // verified for 4039
         }
 
         if (pFunc == 0) {
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_1052, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetRenderState_CullMode", 1052,
+                &D3DDevice_SetRenderState_CullMode_1052, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x34;
         }
 
         if (pFunc == 0) {
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetRenderState_CullMode_1053, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetRenderState_CullMode", 1053,
+                &D3DDevice_SetRenderState_CullMode_1053, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x35;
         }
 
@@ -969,59 +1004,71 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
             pFunc = 0;
         }
         else if (BuildVersion < 4034) {
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_3911, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex", 3911,
+                &D3DDevice_SetTextureState_TexCoordIndex_3911, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x11;
         }
         else if (BuildVersion < 4242) {
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4034, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex", 4034,
+                &D3DDevice_SetTextureState_TexCoordIndex_4034, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x18;
         }
         else if (BuildVersion < 4627) {
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4242, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex", 4242,
+                &D3DDevice_SetTextureState_TexCoordIndex_4242, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x19;
         }
         else {
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4627, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex", 4627,
+                &D3DDevice_SetTextureState_TexCoordIndex_4627, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x19;
         }
     }
     else { // XbSymbolLib_D3D8LTCG
         // verified for 3925
-        pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_0_2039, lower, upper, xb_start_virt_addr);
+        pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex_0", 2039,
+            &D3DDevice_SetTextureState_TexCoordIndex_0_2039, lower, upper, xb_start_virt_addr);
         pXRefOffset = 0x08;
 
         if (pFunc == 0) { // verified for 4039
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4_2040, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex_4", 2040,
+                &D3DDevice_SetTextureState_TexCoordIndex_4_2040, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x14;
         }
 
         if (pFunc == 0) { // verified for 4432
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_1944, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex", 1944,
+                &D3DDevice_SetTextureState_TexCoordIndex_1944, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x19;
         }
 
         if (pFunc == 0) { // verified for 4531
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4_2045, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex_4", 2045,
+                &D3DDevice_SetTextureState_TexCoordIndex_4_2045, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x14;
         }
 
         if (pFunc == 0) { // verified for 4627 and higher
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4_2058, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex_4", 2058,
+                &D3DDevice_SetTextureState_TexCoordIndex_4_2058, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x14;
         }
 
         if (pFunc == 0) { // verified for 4627 and higher
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_1958, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex", 1958,
+                &D3DDevice_SetTextureState_TexCoordIndex_1958, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x19;
         }
 
         if (pFunc == 0) { // verified for World Series Baseball 2K3
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_4_2052, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex_4", 2052,
+                &D3DDevice_SetTextureState_TexCoordIndex_4_2052, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x15;
         }
 
         if (pFunc == 0) { // verified for Ski Racing 2006
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetTextureState_TexCoordIndex_0_2058, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex_0", 2058,
+                &D3DDevice_SetTextureState_TexCoordIndex_0_2058, lower, upper, xb_start_virt_addr);
             pXRefOffset = 0x15;
         }
     }
@@ -1041,35 +1088,41 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
     if (LibraryFlag == XbSymbolLib_D3D8) {
         if (BuildVersion >= 4034) {
             OOVPA_version = 4034;
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_4034, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetStreamSource", 4034,
+                &D3DDevice_SetStreamSource_4034, lower, upper, xb_start_virt_addr);
         }
         else {
             OOVPA_version = 3911;
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_3911, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetStreamSource", 3911,
+                &D3DDevice_SetStreamSource_3911, lower, upper, xb_start_virt_addr);
             iCodeOffsetFor_g_Stream = 0x23; // verified for 3911
         }
     }
     else { // XbSymbolLib_D3D8LTCG
         if (BuildVersion > 4039) {
             OOVPA_version = 4034; // TODO Verify
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_1044, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetStreamSource", 1044,
+                &D3DDevice_SetStreamSource_1044, lower, upper, xb_start_virt_addr);
         }
 
         if (pFunc == 0) { // LTCG specific
             OOVPA_version = 4034; // TODO Verify
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_4_2058, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetStreamSource_4", 2058,
+                &D3DDevice_SetStreamSource_4_2058, lower, upper, xb_start_virt_addr);
             iCodeOffsetFor_g_Stream = 0x1E;
         }
 
         if (pFunc == 0) { // verified for 4039
             OOVPA_version = 4034;
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_8_2040, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetStreamSource_8", 2040,
+                &D3DDevice_SetStreamSource_8_2040, lower, upper, xb_start_virt_addr);
             iCodeOffsetFor_g_Stream = 0x23;
         }
 
         if (pFunc == 0) { // verified for 3925
             OOVPA_version = 3911;
-            pFunc = XbSymbolLocateFunctionCast(&D3DDevice_SetStreamSource_1039, lower, upper, xb_start_virt_addr);
+            pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetStreamSource", 1039,
+                &D3DDevice_SetStreamSource_1039, lower, upper, xb_start_virt_addr);
             iCodeOffsetFor_g_Stream = 0x47;
         }
     }
