@@ -395,10 +395,12 @@ typedef enum _XRefDataBaseOffset
 #define XREF_ADDR_DERIVE 1
 
 typedef enum _xb_output_message {
-    XB_OUTPUT_MESSAGE_INFO=0,
+    XB_OUTPUT_MESSAGE_DEBUG=0,
+    XB_OUTPUT_MESSAGE_INFO,
     XB_OUTPUT_MESSAGE_WARN,
     XB_OUTPUT_MESSAGE_ERROR,
-    XB_OUTPUT_MESSAGE_DEBUG
+    // Only for internal usage.
+    XB_OUTPUT_MESSAGE_MAX
 } xb_output_message;
 
 #ifndef xbaddr
@@ -423,7 +425,7 @@ unsigned int XbSymbolLibraryVersion();
 bool XbSymbolRegisterLibrary(uint32_t library_flag);
 
 /// <summary>
-/// To register any detected symbol name with address and revision back to third-party program.
+/// To register any detected symbol name with address and build version back to third-party program.
 /// NOTE: Be aware of library name will be varity since some libraries are detecting in other sections as well.
 /// </summary>
 /// <param name="library_str">Name of the library in string.</param>
@@ -436,15 +438,15 @@ typedef void(*xb_output_message_t)(xb_output_message message_flag, const char* m
 void XbSymbolSetOutputMessage(xb_output_message_t message_func);
 
 /// <summary>
-/// To register any detected symbol name with address and revision back to third-party program.
+/// To register any detected symbol name with address and build version back to third-party program.
 /// NOTE: Be aware of library name will be varity since some libraries are detecting in other sections as well.
 /// </summary>
 /// <param name="library_str">Name of the library in string.</param>
 /// <param name="library_flag">Name of the library in flag.</param>
 /// <param name="symbol_str">Name of the library in symbol string.</param>
 /// <param name="address">Return xbox's virtual address.</param>
-/// <param name="revision">Found with specific revision.</param>
-typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, xbaddr address, uint32_t revision);
+/// <param name="build_verison">Found with specific build verison.</param>
+typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, xbaddr address, uint32_t build_verison);
 
 /// <summary>
 /// To scan symbols in memory of raw xbe or host's virtual xbox environment.
@@ -466,7 +468,7 @@ bool XbSymbolScan(const void* xb_header_addr, xb_symbol_register_t register_func
 /// <param name="upper_bound">Ending point of relative address base on xbeData.</param>
 /// <param name="register_func">Callback register function to be call for any detected symbols.</param>
 /// <returns>Only return true if a section name is in the database.</returns>
-bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const char* section_name, uint32_t section_virtual_address, uint32_t section_size, uint16_t revision, xb_symbol_register_t register_func);
+bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const char* section_name, uint32_t section_virtual_address, uint32_t section_size, uint16_t build_verison, xb_symbol_register_t register_func);
 */
 
 /// <summary>
@@ -477,10 +479,37 @@ bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const cha
 uint32_t XbSymbolLibrayToFlag(const char* library_name);
 
 /// <summary>
-/// By calling it will perform a self test for duplicate OOVPAs. (May will change at any time.)
+/// (Debug feature) By calling it will perform a self test for duplicate OOVPAs. (May will change at any time.)
 /// </summary>
 /// <returns>Return total count of errors.</returns>
 unsigned int XbSymbolDataBaseTestOOVPAs();
+
+/// <summary>
+/// (Debug feature) Set to true will perform full range of OOVPAs registered in current database.
+/// Or stop at xbe's build version detected.
+/// </summary>
+/// <param name="bypass_limit">Input boolean to either bypass or enable the build version limit.</param>
+void XbSymbolBypassBuildVersionLimit(bool bypass_limit);
+
+/// <summary>
+/// To set verbose level can be output message.
+/// By default, release build is set to info+ level and debug build is set to debug+ level.
+/// </summary>
+/// <param name="verbose_level">See xb_output_message enum for list of options.</param>
+bool XbSymbolSetOutputVerbosity(xb_output_message verbose_level);
+
+/// <summary>
+/// (Debug feature) Set to true will continue the same signature scan after first detected.
+/// </summary>
+/// <param name="enable">Input boolean to either continue with the signature scan after first symbol found or not.</param>
+void XbSymbolContinuousSigScan(bool enable);
+
+/// <summary>
+/// (Debug feature) Set to true will register first detected address only.
+/// This function can be used if XbSymbolContinuousSigScan is set to true.
+/// </summary>
+/// <param name="enable">Input boolean to use first symbol address only or not.</param>
+void XbSymbolFirstDetectAddressOnly(bool enable);
 
 #ifdef __cplusplus
 }
