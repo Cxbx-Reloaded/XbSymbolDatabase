@@ -106,13 +106,14 @@ typedef struct _LOVP
 // defined for the OOVPA.
 #define XRefNoSaveIndex 0xFFFF
 
+// TODO: Rename to OV_XREF.
 // Macro used for storing an XRef {Offset, XREF}-Pair.
 #define XREF_ENTRY( Offset, XRef)    \
     { Offset, .xref.index = XRef }
 
 // Macro for storing a normal (non-XRef) {Offset, Value}-Pair
 // Offsets can go up to 16 bits, values are always one byte (8 bits)
-#define OV_ENTRY(Offset, Value)    \
+#define OV_BYTE(Offset, Value)    \
     { Offset, .value = Value }
 // TODO: Remove above line, then uncomment the line below for easy swap after OOVPA database has been fixed.
 //  { Offset, { .unused = 0, .value = Value } } 
@@ -186,6 +187,27 @@ typedef struct _OOVPATable
  #define REGISTER_OOVPA_18(Symbol, Version, ...) REGISTER_OOVPA(Symbol, Version), MSVC_EXPAND(REGISTER_OOVPA_17(Symbol, __VA_ARGS__))
  #define REGISTER_OOVPA_19(Symbol, Version, ...) REGISTER_OOVPA(Symbol, Version), MSVC_EXPAND(REGISTER_OOVPA_18(Symbol, __VA_ARGS__))
 
+#define OV_BYTES_0(...)
+ #define OV_BYTES_1(Offset, Value) OV_BYTE(Offset, Value)
+ #define OV_BYTES_2(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_1(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_3(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_2(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_4(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_3(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_5(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_4(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_6(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_5(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_7(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_6(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_8(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_7(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_9(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_8(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_10(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_9(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_11(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_10(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_12(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_11(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_13(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_12(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_14(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_13(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_15(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_14(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_16(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_15(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_17(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_16(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_18(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_17(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_19(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_18(Offset+1, __VA_ARGS__))
+
 // Accept any number of args >= N, but expand to just the Nth one. In this case,
 // we have settled on 20 as N. We could pick a different number by adjusting
 // the count of throwaway args before N. Note that this macro is preceded by
@@ -203,6 +225,12 @@ typedef struct _OOVPATable
     REGISTER_OOVPA_14, REGISTER_OOVPA_13, REGISTER_OOVPA_12, REGISTER_OOVPA_11, REGISTER_OOVPA_10, \
     REGISTER_OOVPA_9, REGISTER_OOVPA_8, REGISTER_OOVPA_7, REGISTER_OOVPA_6, REGISTER_OOVPA_5, \
     REGISTER_OOVPA_4, REGISTER_OOVPA_3, REGISTER_OOVPA_2, REGISTER_OOVPA_1, REGISTER_OOVPA_0)(Symbol, __VA_ARGS__))
+
+#define OV_MATCH(Offset, ...) MSVC_EXPAND(_GET_NTH_ARG("ignored", __VA_ARGS__, \
+    OV_BYTES_19, OV_BYTES_18, OV_BYTES_17, OV_BYTES_16, OV_BYTES_15, \
+    OV_BYTES_14, OV_BYTES_13, OV_BYTES_12, OV_BYTES_11, OV_BYTES_10, \
+    OV_BYTES_9, OV_BYTES_8, OV_BYTES_7, OV_BYTES_6, OV_BYTES_5, \
+    OV_BYTES_4, OV_BYTES_3, OV_BYTES_2, OV_BYTES_1, OV_BYTES_0)(Offset, __VA_ARGS__))
 
 #pragma pack()
 
