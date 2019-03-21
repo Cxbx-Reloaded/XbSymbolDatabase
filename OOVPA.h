@@ -154,8 +154,8 @@ typedef struct _OOVPATable
 
 // http://en.cppreference.com/w/cpp/iterator/size
 //#include <iterator>
-//#define OOVPA_TABLE_COUNT(x) std::size(x)
-#define OOVPA_TABLE_COUNT(x) (sizeof(x)/sizeof(x[0]))
+//#define XBSDB_ARRAY_SIZE(x) std::size(x)
+#define XBSDB_ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
 
 #define OOVPA_TABLE_ENTRY_FULL(Oovpa, DebugName, Version) \
     { & Oovpa ## _ ## Version.Header, DebugName, Version }

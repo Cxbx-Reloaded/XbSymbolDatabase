@@ -148,7 +148,7 @@ SymbolDatabaseList SymbolDBList[] = {
 // ******************************************************************
 // * SymbolDBListCount
 // ******************************************************************
-const unsigned int SymbolDBListCount = OOVPA_TABLE_COUNT(SymbolDBList);
+const unsigned int SymbolDBListCount = XBSDB_ARRAY_SIZE(SymbolDBList);
 
 // ******************************************************************
 // * XRefDataBase

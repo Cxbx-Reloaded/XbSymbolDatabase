@@ -250,6 +250,6 @@ OOVPATable XAPILIB_OOVPAV2[] = {
 // ******************************************************************
 // * XAPILIB_OOVPA_COUNT
 // ******************************************************************
-#define XAPILIB_OOVPA_COUNT OOVPA_TABLE_COUNT(XAPILIB_OOVPAV2)
+#define XAPILIB_OOVPA_COUNT XBSDB_ARRAY_SIZE(XAPILIB_OOVPAV2)
 
 #endif

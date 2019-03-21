@@ -427,6 +427,6 @@ OOVPATable D3D8_OOVPAV2[] = {
 // ******************************************************************
 // * D3D8_OOVPA_COUNT
 // ******************************************************************
-#define D3D8_OOVPA_COUNT OOVPA_TABLE_COUNT(D3D8_OOVPAV2)
+#define D3D8_OOVPA_COUNT XBSDB_ARRAY_SIZE(D3D8_OOVPAV2)
 
 #endif

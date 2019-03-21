@@ -86,6 +86,6 @@ OOVPATable XONLINES_OOVPAV2[] = {
 // ******************************************************************
 // * XONLINES_OOVPA_COUNT
 // ******************************************************************
-#define XONLINES_OOVPA_COUNT OOVPA_TABLE_COUNT(XONLINES_OOVPAV2)
+#define XONLINES_OOVPA_COUNT XBSDB_ARRAY_SIZE(XONLINES_OOVPAV2)
 
 #endif

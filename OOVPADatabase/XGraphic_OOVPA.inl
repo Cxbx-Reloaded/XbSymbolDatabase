@@ -93,6 +93,6 @@ OOVPATable XGRAPHC_OOVPAV2[] = {
 // ******************************************************************
 // * XGRAPHC_OOVPA_COUNT
 // ******************************************************************
-#define XGRAPHC_OOVPA_COUNT OOVPA_TABLE_COUNT(XGRAPHC_OOVPAV2)
+#define XGRAPHC_OOVPA_COUNT XBSDB_ARRAY_SIZE(XGRAPHC_OOVPAV2)
 
 #endif
