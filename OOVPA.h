@@ -41,21 +41,21 @@
 // ******************************************************************
 typedef struct _OOVPA
 {
-    // This OOVPA field (uint08 Count) indicates the number of
+    // This OOVPA field, Count, indicates the number of
     // {Offset, Value}-pairs present in the Lovp array,
     // available after casting this OOVPA to LOOVPA.
     // (This Count INCLUDES optional leading {Offset, XREF_*-enum}-
     // pairs - see comment at XRefCount.)
     unsigned char Count;
 
-    // This OOVPA field (uint08 XRefCount) contains the number of
+    // This OOVPA field, XRefCount, contains the number of
     // {Offset, XREF_*-enum}-pairs that come before all other
     // {Offset, Value}-pairs.
     // (The {Offset, XREF_*-enum}-pairs are INCLUDED in OOVPA.Count)
     // (Also, see comments at XRefZero and XRefOne.)
     unsigned char XRefCount;
 
-    // This OOVPA field (uint16 XRefSaveIndex) contains either an
+    // This OOVPA field, XRefSaveIndex, contains either an
     // XREF_* enum value, or the XRefNoSaveIndex marker when there's
     // no XREF_* enum defined for this OOVPA.
     unsigned short XRefSaveIndex;
