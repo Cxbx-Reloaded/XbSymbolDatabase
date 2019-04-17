@@ -82,6 +82,13 @@ static inline uint32_t BitScanReverse(uint32_t value)
 
 typedef uint8_t* memptr_t;
 
+typedef bool (*custom_scan_func_t)(uint32_t LibraryFlag,
+                                   const xbe_section_header* pSectionHeader,
+                                   unsigned short BuildVersion,
+                                   const char* LibraryStr,
+                                   xb_symbol_register_t register_func,
+                                   memptr_t xb_start_virt_addr);
+
 typedef const struct _PairScanLibSec {
     uint32_t library;
     const char *section[PAIRSCANSEC_MAX];
@@ -1175,6 +1182,63 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
 
         XbSymbolDX8RegisterStream(LibraryFlag, LibraryStr, register_func, pFunc, iCodeOffsetFor_g_Stream);
     }
+}
+
+bool XbLibraryScan(custom_scan_func_t custom_scan_func,
+                   const void* xb_header_addr,
+                   xb_symbol_register_t register_func,
+                   bool is_raw,
+                   uint16_t BuildVersion,
+                   uint32_t LibraryFlag,
+                   const char* LibraryStr)
+{
+    const char* SectionName;
+    bool scan_ret = false;
+
+    const xbe_header* pXbeHeader = xb_header_addr;
+    memptr_t xb_start_addr = (memptr_t)xb_header_addr - pXbeHeader->dwBaseAddr;
+    memptr_t xb_start_virt_addr = xb_start_addr;
+
+    xbe_section_header* pSectionHeaders = (xbe_section_header*)(xb_start_addr + pXbeHeader->pSectionHeadersAddr);
+    xbe_section_header* pSectionScan;
+
+    for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
+
+        if (LibraryFlag == SymbolDBList[d2].LibSec.library) {
+            for (unsigned int s = 0; s < pXbeHeader->dwSections; s++) {
+                SectionName = (const char*)(xb_start_addr + pSectionHeaders[s].SectionNameAddr);
+
+                if (!is_raw) {
+                    // if an emulator did not load a section, then skip the section scan.
+                    if (pSectionHeaders[s].dwSectionRefCount == 0) {
+                        continue;
+                    }
+                }
+                else {
+                    xb_start_virt_addr = (((memptr_t)xb_header_addr + pSectionHeaders[s].dwRawAddr) - pSectionHeaders[s].dwVirtualAddr);
+                }
+
+                //Initialize a matching specific section is currently pair with library in order to scan specific section only.
+                //By doing this method will reduce false detection dramatically. If it had happened before.
+                for (unsigned int d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
+                    if (SymbolDBList[d2].LibSec.section[d3] != NULL && strncmp(SectionName, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
+                        pSectionScan = pSectionHeaders + s;
+
+                        XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section", LibraryStr, SectionName);
+
+                        scan_ret = custom_scan_func(LibraryFlag, pSectionScan, BuildVersion, LibraryStr, register_func, xb_start_virt_addr);
+
+                        if (!scan_ret) {
+                            continue;
+                        }
+                        return scan_ret;
+                    }
+                }
+            }
+            break;
+        }
+    }
+    return scan_ret;
 }
 
 bool XbSymbolScan(const void* xb_header_addr,
