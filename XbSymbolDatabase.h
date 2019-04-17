@@ -46,6 +46,8 @@ extern "C" {
 // section(s) below.
 #define Sec_text        ".text"
 #define Sec_FLASHROM    "FLASHROM"
+// DSOUND has a vtable store in .rdata section.
+#define Sec_rdata       ".rdata"
 // Individual library (yet do include group sections above)
 #define Lib_D3D8        "D3D8"
 #define Sec_D3D         "D3D"
@@ -107,6 +109,9 @@ typedef enum _XRefDataBaseOffset
     XREF_OFFSET_D3DDEVICE_M_PALETTES, // initially set to XREF_ADDR_DERIVE
     XREF_OFFSET_D3DDEVICE_M_RENDERTARGET, // initially set to XREF_ADDR_DERIVE
     XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL, // initially set to XREF_ADDR_DERIVE
+    // DSOUND variable addresses
+    XREF_DSS_VOICE_VTABLE,
+    XREF_DSS_STREAM_VTABLE,
     // Functions
     XREF_D3DDevice_SetRenderState_CullMode,
     XREF_D3DRS_STENCILENABLE,
@@ -196,10 +201,13 @@ typedef enum _XRefDataBaseOffset
     XREF_CDirectSoundBuffer_Stop,
     XREF_CDirectSoundBuffer_StopEx,
     XREF_CDirectSoundBuffer_Use3DVoiceData,
+    XREF_CDirectSoundStream_AddRef,
+    XREF_CDirectSoundStream_Constructor,
     XREF_CDirectSoundStream_FlushEx,
     XREF_CDirectSoundStream_GetVoiceProperties,
     XREF_CDirectSoundStream_Pause,
     XREF_CDirectSoundStream_PauseEx,
+    XREF_CDirectSoundStream_Release,
     XREF_CDirectSoundStream_Set3DVoiceData,
     XREF_CDirectSoundStream_SetAllParameters,
     XREF_CDirectSoundStream_SetConeAngles,

@@ -6003,3 +6003,28 @@ OOVPA_XREF(CDirectSoundBuffer_SetVolume, 3911, 1+1,
         // CDirectSoundBuffer::SetVolume+0x00 : jmp 0x........
         { 0x00, 0xE9 },
 OOVPA_END;
+
+// ******************************************************************
+// * CDirectSoundStream::Constructor
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer
+OOVPA_XREF(CDirectSoundStream_Constructor, 3911, 13,
+
+    XREF_CDirectSoundStream_Constructor,
+    XRefZero)
+
+        // CDirectSoundStream::Constructor+0x00 : push esi; mov esi, ecx; push edi
+        OV_MATCH( 0x00, 0x56, 0x8B, 0xF1, 0x57 ),
+
+        // CDirectSoundStream::Constructor+0x08 : lea edi,[esi+0x04]
+        OV_MATCH( 0x08, 0x8D, 0x7E, 0x04 ),
+
+        // CDirectSoundStream::Constructor+0x12 : mov [edi], XREF_DSS_VOICE_VTABLE
+        OV_MATCH( 0x12, 0xC7, 0x07 ),
+
+        // CDirectSoundStream::Constructor+0x19 : mov [esi], XREF_DSS_STREAM_VTABLE
+        OV_MATCH( 0x19, 0xC7, 0x06 ),
+
+        // CDirectSoundStream::Constructor+0x22 : ret 0x0004
+        OV_MATCH( 0x22, 0xC2, 0x04 ),
+OOVPA_END;

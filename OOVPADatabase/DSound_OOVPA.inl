@@ -324,17 +324,21 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSoundBuffer_Stop, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 // NOTE: Must be after CDirectSoundBuffer_StopEx for one time scan.
     REGISTER_OOVPAS(CDirectSoundBuffer_Use3DVoiceData, 5558), // Final generic OOVPA: 5558; Removed: 0 (introduced in 5558)
 
+    REGISTER_OOVPAS(CDirectSoundStream_Constructor, 3911), // NOTE: Does not need to be register in db. Using manual work instead, like D3D8 did.
+#if 0 // These signatures are no longer in use, yet preserved as documented signatures for future research usage.
+      // Instead of these signatures below, using CDirectSoundStream_Constructor signature plus manual work allow us to reduce the scan process.
     REGISTER_OOVPAS(CDirectSoundStream_AddRef, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 // NOTE: The function and CAc97MediaObject::AddRef are the same asm code.
     REGISTER_OOVPAS(CDirectSoundStream_Discontinuity, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSoundStream_Flush, 3911, 4039, 4134, 5028), // Final generic OOVPA: 5028; Removed: 0
-    REGISTER_OOVPAS(CDirectSoundStream_FlushEx, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
     REGISTER_OOVPAS(CDirectSoundStream_GetInfo, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSoundStream_GetStatus, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundStream_Process, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CDirectSoundStream_Release, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
+#endif
+    REGISTER_OOVPAS(CDirectSoundStream_FlushEx, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
     REGISTER_OOVPAS(CDirectSoundStream_GetVoiceProperties, 5028), // Final generic OOVPA: 5028; Removed: 0 (introduced in 5028)
     REGISTER_OOVPAS(CDirectSoundStream_Pause, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSoundStream_PauseEx, 4361), // Final generic OOVPA: 4361; Removed: 0 (introduced in 4361)
-    REGISTER_OOVPAS(CDirectSoundStream_Process, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
-    REGISTER_OOVPAS(CDirectSoundStream_Release, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSoundStream_Set3DVoiceData, 5455), // Final generic OOVPA: 5455; Removed: 0 (introduced in 5455)
     REGISTER_OOVPAS(CDirectSoundStream_SetAllParameters, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSoundStream_SetConeAngles, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0

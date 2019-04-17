@@ -115,7 +115,7 @@ SymbolDatabaseList SymbolDBList[] = {
 
     // NOTE: By adding FLASHROM to scan section may will lead false detection.
     // Since some symbols has very short asm codes.
-    { XbSymbolLib_DSOUND,{ Sec_DSOUND, Sec_FLASHROM }, DSound_OOVPAV2, DSound_OOVPA_COUNT },
+    { XbSymbolLib_DSOUND,{ Sec_DSOUND, Sec_rdata, Sec_FLASHROM }, DSound_OOVPAV2, DSound_OOVPA_COUNT },
 
     // DSOUNDH is just meant to define hot fix, there is no separate section
     //{ XbSymbolLib_DSOUNDH,{ Sec_DSOUND }, &DSound_OOVPAV2, DSound_OOVPA_COUNT },
@@ -1185,6 +1185,94 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
     }
 }
 
+bool XbSymbolDSoundSectionScan(uint32_t LibraryFlag,
+                               const xbe_section_header* pSectionHeader,
+                               unsigned short BuildVersion,
+                               const char* LibraryStr,
+                               xb_symbol_register_t register_func,
+                               memptr_t xb_start_virt_addr)
+{
+    // Generic usage
+    xbaddr xblower = pSectionHeader->dwVirtualAddr;
+    xbaddr xbupper = pSectionHeader->dwVirtualAddr + pSectionHeader->dwVirtualSize;
+    xbaddr xFuncAddr = 0;
+    memptr_t lower = xb_start_virt_addr + pSectionHeader->dwVirtualAddr;
+    memptr_t upper = xb_start_virt_addr + pSectionHeader->dwVirtualAddr + pSectionHeader->dwVirtualSize;
+    memptr_t pFuncAddr = 0;
+
+    /*
+    bool testRun = 1;
+    while (testRun) {
+    }//*/
+
+    // Scan for DirectSoundStream's contructor function.
+    if (XRefDataBase[XREF_CDirectSoundStream_Constructor] == XREF_ADDR_UNDETERMINED) {
+        xFuncAddr = (xbaddr)(uintptr_t)XbSymbolLocateFunctionCast("CDirectSoundStream_Constructor", 3911,
+            &CDirectSoundStream_Constructor_3911, lower, upper, xb_start_virt_addr);
+
+        // If not found, skip the rest of the scan.
+        if (xFuncAddr == 0) {
+            return false;
+        }
+
+        XbSymbolRegisterSymbol(LibraryStr, LibraryFlag, XREF_CDirectSoundStream_Constructor, 3911,
+            "CDirectSoundStream_Constructor", xFuncAddr, register_func);
+
+        // TODO: If possible, integrate into the OOVPA structure.
+        XbSymbolRegisterXRef(LibraryStr, LibraryFlag, XREF_DSS_VOICE_VTABLE, 3911,
+            NULL, *(xbaddr*)(xb_start_virt_addr + xFuncAddr + 0x14), NULL);
+        XbSymbolRegisterXRef(LibraryStr, LibraryFlag, XREF_DSS_STREAM_VTABLE, 3911,
+            NULL, *(xbaddr*)(xb_start_virt_addr + xFuncAddr + 0x1B), NULL);
+    }
+
+    // Verify both variables are already set from the scan function above.
+    if (XRefDataBase[XREF_DSS_STREAM_VTABLE] == XREF_ADDR_DERIVE ||
+        XRefDataBase[XREF_DSS_VOICE_VTABLE] == XREF_ADDR_DERIVE) {
+
+        XbSymbolOutputMessage(XB_OUTPUT_MESSAGE_ERROR, "Something went wrong with finding DSS' vtables...");
+        return false;
+    }
+
+    // Finally, manually add CDirectSoundStream's AddRef and Release functions.
+    if (XRefDataBase[XREF_CDirectSoundStream_AddRef] == XREF_ADDR_UNDETERMINED) {
+        xbaddr vtable = XRefDataBase[XREF_DSS_STREAM_VTABLE];
+
+        if (xblower <= vtable && vtable < xbupper) {
+            pFuncAddr = xb_start_virt_addr + vtable;
+
+            XbSymbolRegisterSymbol(LibraryStr, LibraryFlag, XREF_CDirectSoundStream_AddRef, 3911,
+                "CDirectSoundStream_AddRef", *(uint32_t*)(pFuncAddr + 0 * 4), register_func);
+
+            XbSymbolRegisterSymbol(LibraryStr, LibraryFlag, XREF_CDirectSoundStream_Release, 3911,
+                "CDirectSoundStream_Release", *(uint32_t*)(pFuncAddr + 1 * 4), register_func);
+
+            XbSymbolRegisterSymbol(LibraryStr, LibraryFlag, XRefNoSaveIndex, 3911,
+                "CDirectSoundStream_GetInfo", *(uint32_t*)(pFuncAddr + 2 * 4), register_func);
+
+            XbSymbolRegisterSymbol(LibraryStr, LibraryFlag, XRefNoSaveIndex, 3911,
+                "CDirectSoundStream_GetStatus", *(uint32_t*)(pFuncAddr + 3 * 4), register_func);
+
+            XbSymbolRegisterSymbol(LibraryStr, LibraryFlag, XRefNoSaveIndex, 3911,
+                "CDirectSoundStream_Process", *(uint32_t*)(pFuncAddr + 4 * 4), register_func);
+
+            XbSymbolRegisterSymbol(LibraryStr, LibraryFlag, XRefNoSaveIndex, 3911,
+                "CDirectSoundStream_Discontinuity", *(uint32_t*)(pFuncAddr + 5 * 4), register_func);
+
+            XbSymbolRegisterSymbol(LibraryStr, LibraryFlag, XRefNoSaveIndex, 3911,
+                "CDirectSoundStream_Flush", *(uint32_t*)(pFuncAddr + 6 * 4), register_func);
+
+            // NOTE: it is possible to manual add GetInfo, GetStatus, Process, Discontinuity,
+            // and Flush functions.
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    return true;
+}
+
 bool XbLibraryScan(custom_scan_func_t custom_scan_func,
                    const void* xb_header_addr,
                    xb_symbol_register_t register_func,
@@ -1324,6 +1412,17 @@ bool XbSymbolScan(const void* xb_header_addr,
                                 XbSymbolDX8SectionScan(LibraryFlag, pSectionScan, BuildVersion, LibraryStr, register_func, xb_start_virt_addr);
                                 break;
                             }
+                        }
+                    }
+                    else if ((LibraryFlag & XbSymbolLib_DSOUND) > 0) {
+                        // Perform check twice, since sections can be in different order.
+                        for (unsigned int loop = 0; loop < 2; loop++) {
+                            // Initialize a matching specific section is currently pair with library in order to scan specific section only.
+                            // By doing this method will reduce false detection dramatically. If it had happened before.
+                            if (!XbLibraryScan(XbSymbolDSoundSectionScan, xb_header_addr, register_func, is_raw, BuildVersion, LibraryFlag, LibraryStr)) {
+                                continue;
+                            }
+                            break;
                         }
                     }
                 }
