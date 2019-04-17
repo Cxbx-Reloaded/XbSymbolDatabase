@@ -56,32 +56,6 @@ OOVPA_XREF(CDirectSound_SetVelocity, 4627, 15,
 OOVPA_END;
 
 // ******************************************************************
-// * CDirectSound_SetPosition
-// ******************************************************************
-OOVPA_XREF(CDirectSound_SetPosition, 4627, 11,
-
-    XREF_CDirectSound_SetPosition,
-    XRefZero)
-
-        // CDirectSound_SetPosition+0x2B : mov ecx, [ebp+0x08]
-        { 0x2B, 0x8B },
-        { 0x2C, 0x4D },
-        { 0x2D, 0x08 },
-
-        // CDirectSound_SetPosition+0x3F : mov [edx+0x3C], edi
-        { 0x3F, 0x89 },
-        { 0x40, 0x7A },
-        { 0x41, 0x3C },
-
-        // CDirectSound_SetPosition+0x4C : or word ptr [eax+0xA4], 0x01FF
-        { 0x4C, 0x66 },
-        { 0x4D, 0x81 },
-        { 0x4E, 0x88 },
-        { 0x4F, 0xA4 },
-        { 0x53, 0xFF },
-OOVPA_END;
-
-// ******************************************************************
 // * CDirectSound_GetSpeakerConfig
 // ******************************************************************
 OOVPA_XREF(CDirectSound_GetSpeakerConfig, 4627, 14,

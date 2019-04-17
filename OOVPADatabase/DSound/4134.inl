@@ -246,7 +246,6 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound_SetPosition
 // ******************************************************************
-// Generic OOVPA as of 4134 and newer
 OOVPA_XREF(CDirectSound_SetPosition, 4134, 15,
 
     XREF_CDirectSound_SetPosition,

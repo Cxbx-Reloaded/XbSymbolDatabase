@@ -197,38 +197,26 @@ OOVPA_END;
 // * CDirectSound_SetPosition
 // ******************************************************************
 // Generic OOVPA as of 5344 and newer
-OOVPA_XREF(CDirectSound_SetPosition, 5344, 14,
+OOVPA_XREF(CDirectSound_SetPosition, 5344, 15,
 
     XREF_CDirectSound_SetPosition,
     XRefZero)
 
-        // CDirectSound_SetPosition+0x00 : push ebp
-        { 0x00, 0x55 },
+        // CDirectSound_SetPosition+0x00 : push ebp; mov ebp, esp
+        OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
 
         // CDirectSound_SetPosition+0x2B : mov ecx, [ebp+0x08]
-        { 0x2B, 0x8B },
-        { 0x2C, 0x4D },
-        { 0x2D, 0x08 },
+        OV_MATCH(0x2B, 0x8B, 0x4D, 0x08),
 
-        // CDirectSound_SetPosition+0x2E : lea eax, [ecx+0x08]
-        { 0x2E, 0x8D },
-        { 0x2F, 0x41 },
-        { 0x30, 0x08 },
+        // CDirectSound_SetPosition+0x37 : mov [edx+0x3C],edi
+        OV_MATCH(0x37, 0x89, 0x7A, 0x3C),
 
-        // CDirectSound_SetPosition+0x37 : mov [edx+0x__], edi
-        { 0x37, 0x89 },
-        { 0x38, 0x7A },
-        //{ 0x39, 0x3C }, vs 5455 0x38
+        // CDirectSound_SetPosition+0x3F : mov [edx+0x40],edi
+        OV_MATCH(0x3F, 0x89, 0x7A, 0x40),
 
-        // CDirectSound_SetPosition+0x4C : or dword ptr [eax+34h], 1
-        { 0x4C, 0x83 },
-        { 0x4D, 0x48 },
-        //{ 0x4E, 0x34 }, vs 5455 0x30
-        { 0x4F, 0x01 },
+        // CDirectSound_SetPosition+0x47 : mov [edx+0x44],edi
+        OV_MATCH(0x47, 0x89, 0x7A, 0x44),
 
-        // CDirectSound_SetPosition+0x70 : retn 0x14
-        { 0x70, 0xC2 },
-        { 0x71, 0x14 },
 OOVPA_END;
 
 // ******************************************************************
