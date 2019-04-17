@@ -494,7 +494,58 @@ void* XbSymbolLocateFunction(const char* szFuncName,
 #define XbSymbolLocateFunctionCast(szFuncName, version, Oovpa, lower, upper, xb_start_virtual_addr) \
         XbSymbolLocateFunction(szFuncName, version, (OOVPA*)Oovpa, lower, upper, (uintptr_t)xb_start_virtual_addr)
 
-void XbSymbolRegisterSymbol(OOVPATable* OovpaTable,
+static inline void XbSymbolRegisterXRef(const char* LibraryName,
+                                        uint32_t LibraryFlag,
+                                        uint32_t XRefIndex,
+                                        uint16_t version,
+                                        const char* symbol_name,
+                                        uint32_t symbol_addr,
+                                        xb_symbol_register_t register_func)
+{
+    if (XRefDataBase[XRefIndex] != XREF_ADDR_UNDETERMINED && XRefDataBase[XRefIndex] != XREF_ADDR_DERIVE) {
+
+        if (XRefDataBase[XRefIndex] != symbol_addr) {
+            XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_WARN, "Duplicate XREF address found for %s (%hu), %08X vs %08X!",
+                symbol_name, version, XRefDataBase[XRefIndex], symbol_addr);
+        }
+
+        if (bScanFirstDetect) {
+            return;
+        }
+    }
+
+    XRefDataBase[XRefIndex] = symbol_addr;
+    if (register_func != NULL) {
+        register_func(LibraryName, LibraryFlag, symbol_name, symbol_addr, version);
+    }
+}
+
+static inline void XbSymbolRegisterSymbol(const char* LibraryName,
+                                          uint32_t LibraryFlag,
+                                          uint32_t XRefIndex,
+                                          uint16_t version,
+                                          const char* symbol_name,
+                                          uint32_t symbol_addr,
+                                          xb_symbol_register_t register_func)
+{
+    // do we need to save the found address?
+    if (XRefIndex != XRefNoSaveIndex) {
+        // If XRef is not found, save it then register once.
+        if (XRefDataBase[XRefIndex] == XREF_ADDR_UNDETERMINED) {
+            UnResolvedXRefs--;
+            XRefDataBase[XRefIndex] = symbol_addr;
+            if (register_func != NULL) {
+                register_func(LibraryName, LibraryFlag, symbol_name, symbol_addr, version);
+            }
+        }
+    }
+    else if (register_func != NULL) {
+        register_func(LibraryName, LibraryFlag, symbol_name, symbol_addr, version);
+    }
+}
+
+
+void XbSymbolRegisterOOVPA(OOVPATable* OovpaTable,
                             const char* LibraryName,
                             uint32_t    LibraryFlag,
                             xbaddr address,
@@ -504,17 +555,8 @@ void XbSymbolRegisterSymbol(OOVPATable* OovpaTable,
 
         OOVPA* Oovpa = OovpaTable->Oovpa;
 
-        // do we need to save the found address?
-        if (Oovpa->XRefSaveIndex != XRefNoSaveIndex) {
-            // If XRef is not found, save it then register once.
-            if (XRefDataBase[Oovpa->XRefSaveIndex] == XREF_ADDR_UNDETERMINED) {
-                UnResolvedXRefs--;
-                XRefDataBase[Oovpa->XRefSaveIndex] = address;
-                register_func(LibraryName, LibraryFlag, OovpaTable->szFuncName, address, OovpaTable->Version);
-            }
-        } else {
-            register_func(LibraryName, LibraryFlag, OovpaTable->szFuncName, address, OovpaTable->Version);
-        }
+        XbSymbolRegisterSymbol(LibraryName, LibraryFlag, Oovpa->XRefSaveIndex, OovpaTable->Version,
+            OovpaTable->szFuncName, address, register_func);
     }
 }
 
@@ -547,7 +589,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
             SymbolName = pLoop->szFuncName;
             if (pLastKnownSymbol != NULL) {
                 // Now that we found the address, store it (regardless if we patch it or not)
-                XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
+                XbSymbolRegisterOOVPA(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
                 pLastKnownSymbol = NULL;
                 pLastKnownFunc = 0;
             }
@@ -578,7 +620,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
     }
 
     if (pLastKnownSymbol != NULL) {
-        XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
+        XbSymbolRegisterOOVPA(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
     }
 }
 
@@ -619,7 +661,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
                         if (SymbolName == NULL) {
                             SymbolName = pLoop->szFuncName;
                         } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
-                            XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
+                            XbSymbolRegisterOOVPA(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
 
                             SymbolName = pLoop->szFuncName;
                             pLastKnownSymbol = NULL;
@@ -641,7 +683,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
                         pLastKnownFunc = pFunc;
                         pLastKnownSymbol = pLoop;
                     }
-                    XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
+                    XbSymbolRegisterOOVPA(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
                     break;
                 }
             }
