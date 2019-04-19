@@ -257,7 +257,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSoundVoice_SetMode, 3911, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSoundVoice_SetOutputBuffer, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
     REGISTER_OOVPAS(CDirectSoundVoice_SetPitch, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
-    REGISTER_OOVPAS(CDirectSoundVoice_SetFrequency, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 // NOTE: Must be after CDirectSoundVoice_SetPitch for one time scan.
+    REGISTER_OOVPAS(CDirectSoundVoice_SetFrequency, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: Must be after CDirectSoundVoice_SetPitch for one time scan.
     REGISTER_OOVPAS(CDirectSoundVoice_SetPosition, 3911, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSoundVoice_SetRolloffCurve, 4361, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSoundVoice_SetRolloffFactor, 4134, 4361, 5344), // Final generic OOVPA: 5344; Removed: 0 // s+ (from 4134's comment)

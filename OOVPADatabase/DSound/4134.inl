@@ -281,49 +281,6 @@ OOVPA_XREF(CDirectSound_SetPosition, 4134, 15,
 OOVPA_END;
 
 // ******************************************************************
-// * CDirectSoundVoice::SetFrequency
-// ******************************************************************
-// Generic OOVPA as of 4134 and newer
-OOVPA_XREF(CDirectSoundVoice_SetFrequency, 4134, 2+6,
-
-    XREF_CDirectSoundVoice_SetFrequency,
-    XRefTwo)
-
-        // CDirectSoundVoice_SetFrequency+0x14 : call [XAudioCalcatePitch]
-        XREF_ENTRY( 0x15, XREF_XAudioCalculatePitch ),
-
-        // CDirectSoundVoice_SetFrequency+0x1B : call [CDirectSoundVoice::SetPitch]
-        XREF_ENTRY( 0x1C, XREF_CDirectSoundVoice_SetPitch ),
-
-        // CDirectSoundVoice_SetFrequency+0x00 : mov eax, [esp+0x08]
-        { 0x00, 0x8B },
-        { 0x01, 0x44 },
-        { 0x02, 0x24 },
-        { 0x03, 0x08 },
-
-#if 0 // 9 pairs total
-        // CDirectSoundVoice_SetFrequency+0x0D : mov eax, [esi+0x10]
-        { 0x0D, 0x8B },
-        { 0x0E, 0x46 },
-        { 0x0F, 0x10 },
-
-        // CDirectSoundVoice_SetFrequency+0x10 : mov eax, [eax+0x10]
-        { 0x10, 0x8B },
-        { 0x11, 0x40 },
-        { 0x12, 0x10 },
-
-        // CDirectSoundVoice_SetFrequency+0x14 : call [abs]; push eax; push esi
-        { 0x14, 0xE8 },
-        { 0x19, 0x50 },
-        { 0x1A, 0x56 },
-#endif
-
-        // CDirectSoundVoice_SetFrequency+0x22 : retn 0x08
-        { 0x21, 0xC2 },
-        { 0x22, 0x08 },
-OOVPA_END;
-
-// ******************************************************************
 // * CDirectSoundBuffer::SetFrequency
 // ******************************************************************
 // Generic OOVPA as of 4134 and newer
