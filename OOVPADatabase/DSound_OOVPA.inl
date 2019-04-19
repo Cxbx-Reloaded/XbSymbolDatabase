@@ -28,16 +28,17 @@
 //   [LibV] Title Name                       |  Verify   |   Comments
 //-------------------------------------------------------------------
 // * [3925] Cel Damage                       |   100%    | Contain full library.
-// * [3936] Silent Hill 2                    |   100%    | Contain full library.
+// * [3936] Silent Hill 2                    |   100%    | Contain 99% library.**
 // * [4039] Nightcaster                      |   100%    | Only has 90% of the library compiled with xbe build.
 // * [4039] Azurik PAL                       |   100%    | Contain full library.
 // * [4134] RaceX (Demo)                     |     -%    | Only has a few library.
 // * [4134] Blood Omen 2                     |    80%    | Does not have full library.
 // * [4134] JSRF                             |     1%    | Does not have Stream class. DS and Buffer might be full.
 // * [4134] Double-S.T.E.A.L                 |   100%    | Contain full library.
-// * [4242] NFL Blitz 2002                   |   100%    | Contain full library.
+// * [4242] NFL Blitz 2002                   |   100%    | Contain 99% library.**
 // * [4361] Flight Academy                   |   100%    | Only has 50%-ish of the library compiled with xbe build.
 // * [4432] RedCard 2003                     |   100%    | Contain full library.
+// * [4432] Madden NFL 2003                  |   100%    | Contain full library.
 // * [4627] MLB SlugFest 2003                |   100%    | Contain full library.
 // * [4721] Terminator Dawn of Fate          |   100%    | Contain full library.
 // * [4831] Whacked!                         |   100%    | Contain full library.
@@ -46,12 +47,18 @@
 // * [5120] N.U.D.E.@                        |   100%    | Contain full library.
 // * [5233] Evil Dead                        |   100%    | Contain full library.
 // * [5344] Gladius OXM Demo Disc 20         |   100%    | Contain full library.
-// * [5455] GR: Island Thunder               |   100%    | Only has 50%-ish of the library compiled with xbe build.
+// * [5455] NCAA Football 2004               |   100%    | Contain full library.
 // * [5455] Dinosaur Hunting                 |   100%    | Contain full library.
 // * [5558] Dino Crisis 3                    |   100%    | Contain full library.
 // * [5659] Midway Arcade Treasures Paperboy |   100%    | Contain full library.
 // * [5788] Digimon Battle Chronicle         |   100%    | Contain full library.
+// * [5788] Splinter Cell: Pandora Tomorrow  |   100%    | Contain full library.
 // * [5849] Nickelodeon Tak 2                |   100%    | Contain full library.
+// * [5849] Def Jam Fight for NY             |   100%    | Contain full library.
+
+// Note records:
+// ** Did not compile with XFileCreateMediaObject and XWaveFileCreateMediaObject
+//   * Might need further investigation.
 
 
 // TODO: Known DSound OOVPA issue list
