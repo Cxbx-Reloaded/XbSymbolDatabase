@@ -70,8 +70,6 @@
 //   * IDirectSoundStream_AddRef            (Using IUnknown_AddRef)
 //   * IDirectSoundStream_Release           (Using IUnknown_Release)
 // * 3911 to ????: These functions does not exist until newer XDK revision
-//   * IDirectSound_GetOutputLevels             (Lowest found was 4361)
-//   * IDirectSound_SynchPlayback               (Lowest found was 4831)
 //   * IDirectSoundBuffer_GetVoiceProperties    (Lowest found was 5028)
 //   * IDirectSoundBuffer_SetFormat             (Lowest found was 4039)
 //   * IDirectSoundBuffer_SetDistanceFactor     (Lowest found was 4134)
@@ -83,15 +81,14 @@
 //   * IDirectSoundBuffer_SetPlayRegion         (Introduce in 4039, last known earliest revision)
 //   * IDirectSoundStream_FlushEx               (Lowest found was 4134)
 //   * IDirectSoundStream_GetVoiceProperties    (Lowest found was 5028)
-//   * IDirectSoundStream_PauseEx               (Lowest found was 4361)
 //   * IDirectSoundStream_SetDistanceFactor     (Lowest found was 4134)
 //   * IDirectSoundStream_SetDopplerFactor      (Lowest found was 4134)
 //   * IDirectSoundStream_SetFormat             (Lowest found was 4039)
 //   * IDirectSoundStream_SetRolloffCurve       (Lowest found was 4361)
 //   * IDirectSoundStream_SetRolloffFactor      (Lowest found was 4134)
 //   * DirectSoundDumpMemoryUsage               (Lowest found was 4361)
-//   * DirectSoundGetSampleTime                 (Need verify between 4039 to 4361)
-//   * DirectSoundOverrideSpeakerConfig         (Lowest found was 4361)
+//   * DirectSoundGetSampleTime                 (Need verify between 4039 to 4134)
+//   * DirectSoundOverrideSpeakerConfig         (Lowest found was 4242)
 //   * XAudioDownloadEffectsImage               (Lowest found was 4134)
 //   * XGetAudioFlags                           (Lowest found was 3911, XAudioGetSpeakerConfig introduced later as alias, is part of Xapi section)
 //   * XAudioSetEffectData                      (Lowest found was 5344)
@@ -143,8 +140,10 @@
 //   * DirectSoundUseLightHRTF (4039 - 4134)
 //   * CHRTFSource_SetLightHRTF5Channel (4039 - 4134)
 //   * XAudioCreateAdpcmFormat (4039 - 4134)
-//   * XFileCreateMediaObject (4039 - 4242)
-//   * XWaveFileCreateMediaObject (4039 - 4242)
+//   * XFileCreateMediaObject (3936 - 4242)
+//     * Somehow is excluded?
+//   * XWaveFileCreateMediaObject (3936 - 4242)
+//     * Somehow is excluded?
 // * List of OOVPAs might need to be lower
 //   * CMcpxStream_Stop (5233)
 // * 4134 & 4361 CDirectSoundVoice_SetMaxDistance + CDirectSoundVoice_SetMinDistance
@@ -206,7 +205,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CMcpxAPU_Set3dVelocity, 3911), // Final generic OOVPA: 3911; Removed: 4134+
     REGISTER_OOVPAS(CMcpxAPU_SetI3DL2Listener, 3911), // Final generic OOVPA: 3911; Removed: 4134+
     REGISTER_OOVPAS(CMcpxAPU_SetMixBinHeadroom, 3911, 4134), // Final generic OOVPA: 4134; Removed: 0
-    REGISTER_OOVPAS(CMcpxAPU_SynchPlayback, 4831), // Final generic OOVPA: 4831; Removed: 0
+    REGISTER_OOVPAS(CMcpxAPU_SynchPlayback, 4831), // Final generic OOVPA: 4831; Removed: 0 (introduced in 4831)
 
     //========================================================
     REGISTER_OOVPAS(CDirectSound3DCalculator_Calculate3D, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
@@ -398,7 +397,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSound_SetPosition, 3911, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSound_SetRolloffFactor, 3911, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSound_SetVelocity, 3911, 4039, 4134, 4627, 5344), // Final generic OOVPA: 5344; Removed: 0
-    REGISTER_OOVPAS(CDirectSound_SynchPlayback, 4831, 5344),// Final generic OOVPA: 5344; Removed: 0
+    REGISTER_OOVPAS(CDirectSound_SynchPlayback, 4831, 5344),// Final generic OOVPA: 5344; Removed: 0 (introduced in 4831)
     REGISTER_OOVPAS(CDirectSound_UnmapBufferData, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
 
     //========================================================
@@ -548,7 +547,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(XAudioCreatePcmFormat, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: later revision changed to a jmp, and convert into class function
     REGISTER_OOVPAS(XAudioCreateAdpcmFormat, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
 
-    REGISTER_OOVPAS(XFileCreateMediaObject, 3911, 4361), // TODO: Need investigation on 3911-4242
+    REGISTER_OOVPAS(XFileCreateMediaObject, 3911, 4361), // TODO: Need investigation on 3936-4242
     REGISTER_OOVPAS(XFileCreateMediaObjectAsync, 4432), // TODO: Need investigation
     REGISTER_OOVPAS(XFileCreateMediaObjectEx, 4361), // TODO: Need investigation
 
