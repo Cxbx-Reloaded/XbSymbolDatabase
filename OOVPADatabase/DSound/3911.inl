@@ -67,28 +67,23 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxAPU_ServiceDeferredCommandsLow
 // ******************************************************************
-OOVPA_XREF(CMcpxAPU_ServiceDeferredCommandsLow, 3911, 12,
+OOVPA_XREF(CMcpxAPU_ServiceDeferredCommandsLow, 3911, 13,
 
     XREF_CMcpxAPU_ServiceDeferredCommandsLow,
     XRefZero)
 
+        // CMcpxAPU_ServiceDeferredCommandsLow+0x00 : push ebx; push ebp
+        OV_MATCH(0x00, 0x53, 0x55),
+
         // CMcpxAPU_ServiceDeferredCommandsLow+0x06 : lea edi, [ebx+0x664]
-        { 0x06, 0x8D },
-        { 0x07, 0xBB },
-        { 0x08, 0x64 },
-        { 0x09, 0x06 },
-        { 0x0A, 0x00 },
-        { 0x0B, 0x00 },
+        OV_MATCH(0x0C, 0xBD, 0x00, 0x02, 0x00, 0x00),
 
         // CMcpxAPU_ServiceDeferredCommandsLow+0x20 : mov eax, [ecx]
-        { 0x20, 0x8B },
-        { 0x21, 0x01 },
+        OV_MATCH(0x20, 0x8B, 0x01),
 
         // CMcpxAPU_ServiceDeferredCommandsLow+0x33 : add edi, 4; dec ebp
-        { 0x33, 0x83 },
-        { 0x34, 0xC7 },
-        { 0x35, 0x04 },
-        { 0x36, 0x4D },
+        OV_MATCH(0x33, 0x83, 0xC7, 0x04, 0x4D),
+
 OOVPA_END;
 
 // ******************************************************************

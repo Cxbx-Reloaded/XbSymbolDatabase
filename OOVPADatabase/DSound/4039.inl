@@ -120,8 +120,8 @@ OOVPA_XREF(CDirectSound_DoWork, 4039, 1+9,
     XREF_CDirectSound_DoWork,
     XRefOne)
 
-        // CDirectSound_DoWork+0x0F : call [CMcpxAPU::ServiceDeferredCommandsLow]
-        XREF_ENTRY( 0x10, XREF_CMcpxAPU_ServiceDeferredCommandsLow),
+        // CDirectSound_DoWork+0x18 : call [CMcpxAPU::ServiceDeferredCommandsLow]
+        XREF_ENTRY( 0x19, XREF_CMcpxAPU_ServiceDeferredCommandsLow),
 
         // CDirectSound_DoWork+0x0D : mov esi, eax
         { 0x0D, 0x8B },
@@ -3351,46 +3351,47 @@ OOVPA_XREF(CDirectSoundStream_Release, 4039, 1+11,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CFullHRTFSource::GetCenterVolume
+// * CFullHRTFSource::GetCenterVolume
 // ******************************************************************
-OOVPA_XREF(CFullHRTFSource_GetCenterVolume, 4039, 9,
+OOVPA_XREF(CFullHRTFSource_GetCenterVolume, 4039, 11,
 
     XREF_CFullHRTFSource_GetCenterVolume,
     XRefZero)
 
-        { 0x00, 0x55 },
+        // CFullHRTFSource::GetCenterVolume+0x00 : push ebp; mov ebp,esp
+        OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
 
-        { 0x22, 0xD9 },
-        { 0x63, 0xDF },
+        // CFullHRTFSource::GetCenterVolume+0x22 : fabs
+        OV_MATCH(0x22, 0xD9, 0xE1),
 
-        { 0xCB, 0xF0 },
-        { 0xCC, 0xD8 },
-        { 0xCD, 0xFF },
-        { 0xCE, 0xFF },
+        // CFullHRTFSource::GetCenterVolume+0xC8 : mov [e__+__],0xFFFFD8F0
+        OV_MATCH(0xCB, 0xF0, 0xD8, 0xFF, 0xFF),
 
-        { 0xD1, 0xC2 },
-        { 0xD2, 0x04 },
+        // CFullHRTFSource::GetCenterVolume+0xD1 : ret 0x0004
+        OV_MATCH(0xD1, 0xC2, 0x04),
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CHRTFSource::SetFullHRTF5Channel
+// * CHRTFSource::SetFullHRTF5Channel
 // ******************************************************************
 OOVPA_XREF(CHRTFSource_SetFullHRTF5Channel, 4039, 1+8,
 
     XREF_CHRTFSource_SetFullHRTF5Channel,
     XRefOne)
 
-        XREF_ENTRY( 0x38, XREF_CFullHRTFSource_GetCenterVolume ),
+        // CHRTFSource::SetFullHRTF5Channel+0x36 : mov [var],CFullHRTFSource::GetCenterVolume
+        XREF_ENTRY(0x38, XREF_CFullHRTFSource_GetCenterVolume),
 
-        { 0x00, 0xC7 },
+        OV_MATCH(0x00, 0xC7),
 
-        { 0x14, 0xC7 },
-        { 0x1E, 0xC7 },
-        { 0x28, 0xC7 },
-        { 0x32, 0xC7 },
-        { 0x3C, 0xC7 },
-        { 0x46, 0xC7 },
-        { 0x50, 0xC3 },
+        OV_MATCH(0x14, 0xC7),
+        OV_MATCH(0x1E, 0xC7),
+        OV_MATCH(0x28, 0xC7),
+        OV_MATCH(0x32, 0xC7),
+        OV_MATCH(0x3C, 0xC7),
+        OV_MATCH(0x46, 0xC7),
+
+        OV_MATCH(0x50, 0xC3),
 OOVPA_END;
 
 // ******************************************************************
@@ -3401,15 +3402,20 @@ OOVPA_XREF(DirectSoundUseFullHRTF, 4039, 1+7,
     XRefNoSaveIndex,
     XRefOne)
 
+        // DirectSoundUseFullHRTF+0x08 : call [CHRTFSource::SetFullHRTF5Channel]
         XREF_ENTRY( 0x09, XREF_CHRTFSource_SetFullHRTF5Channel ),
 
-        { 0x06, 0x8B },
-        { 0x07, 0xF0 },
-        { 0x0D, 0x85 },
-        { 0x0E, 0xF6 },
-        { 0x11, 0x0B },
-        { 0x17, 0xFF },
-        { 0x1D, 0xC3 },
+        // DirectSoundUseFullHRTF+0x06 : mov esi,eax
+        OV_MATCH(0x06, 0x8B, 0xF0),
+
+        // DirectSoundUseFullHRTF+0x0D : test, esi,esi
+        OV_MATCH(0x0D, 0x85, 0xF6),
+
+        OV_MATCH(0x11, 0x0B),
+        OV_MATCH(0x17, 0xFF),
+
+        // DirectSoundUseFullHRTF+0x1D : ret
+        OV_MATCH(0x1D, 0xC3),
 OOVPA_END;
 
 // ******************************************************************
@@ -4443,4 +4449,72 @@ OOVPA_XREF(CDirectSoundBufferSettings_SetBufferData, 4039, 12,
         // CDirectSoundBufferSettings::SetBufferData+0x78 : ret 8
         { 0x78, 0xC2 },
         { 0x79, 0x08 },
+OOVPA_END;
+
+// ******************************************************************
+// * CLightHRTFSource::GetCenterVolume
+// ******************************************************************
+OOVPA_XREF(CLightHRTFSource_GetCenterVolume, 4039, 11,
+
+    XREF_CLightHRTFSource_GetCenterVolume,
+    XRefZero)
+
+        // CLightHRTFSource::GetCenterVolume+0x00 : push ebp; mov ebp,esp
+        OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+
+        // CLightHRTFSource::GetCenterVolume+0x22 : fabs
+        OV_MATCH(0x22, 0xD9, 0xE1),
+
+        // CLightHRTFSource::GetCenterVolume+0xB0 : mov [e__+__],0xFFFFD8F0
+        OV_MATCH(0xB3, 0xF0, 0xD8, 0xFF, 0xFF),
+
+        // CLightHRTFSource::GetCenterVolume+0xB9 : ret 0x0004
+        OV_MATCH(0xB9, 0xC2, 0x04),
+OOVPA_END;
+
+// ******************************************************************
+// * CHRTFSource::SetLightHRTF5Channel
+// ******************************************************************
+OOVPA_XREF(CHRTFSource_SetLightHRTF5Channel, 4039, 1+8,
+
+    XREF_CHRTFSource_SetLightHRTF5Channel,
+    XRefOne)
+
+        // CHRTFSource::SetLightHRTF5Channel+0x36 : mov [var],CLightHRTFSource::GetCenterVolume
+        XREF_ENTRY(0x38, XREF_CLightHRTFSource_GetCenterVolume),
+
+        OV_MATCH(0x00, 0xC7),
+
+        OV_MATCH(0x14, 0xC7),
+        OV_MATCH(0x1E, 0xC7),
+        OV_MATCH(0x28, 0xC7),
+        OV_MATCH(0x32, 0xC7),
+        OV_MATCH(0x3C, 0xC7),
+        OV_MATCH(0x46, 0xC7),
+
+        OV_MATCH(0x50, 0xC3),
+OOVPA_END;
+
+// ******************************************************************
+// * DirectSoundUseLightHRTF
+// ******************************************************************
+OOVPA_XREF(DirectSoundUseLightHRTF, 4039, 1+7,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        // DirectSoundUseLightHRTF+0x08 : call [CHRTFSource::SetLightHRTF5Channel]
+        XREF_ENTRY(0x09, XREF_CHRTFSource_SetLightHRTF5Channel),
+
+        // DirectSoundUseLightHRTF+0x06 : mov esi,eax
+        OV_MATCH(0x06, 0x8B, 0xF0),
+
+        // DirectSoundUseLightHRTF+0x0D : test, esi,esi
+        OV_MATCH(0x0D, 0x85, 0xF6),
+
+        OV_MATCH(0x11, 0x0B),
+        OV_MATCH(0x17, 0xFF),
+
+        // DirectSoundUseLightHRTF+0x1D : ret
+        OV_MATCH(0x1D, 0xC3),
 OOVPA_END;

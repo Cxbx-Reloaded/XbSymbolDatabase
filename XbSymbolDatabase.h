@@ -293,6 +293,7 @@ typedef enum _XRefDataBaseOffset
     XREF_CDirectSound_SynchPlayback,
     XREF_CDirectSound_UnmapBufferData,
     XREF_CFullHRTFSource_GetCenterVolume,
+    XREF_CLightHRTFSource_GetCenterVolume,
     XREF_CFullHrtfSource_GetHrtfFilterPair,
     XREF_CHrtfSource_SetAlgorithm_FullHrtf,
     XREF_CHrtfSource_SetAlgorithm_LightHrtf,

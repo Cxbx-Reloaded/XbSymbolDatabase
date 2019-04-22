@@ -75,7 +75,6 @@
 //   * IDirectSoundBuffer_SetDistanceFactor     (Lowest found was 4134)
 //   * IDirectSoundBuffer_SetDopplerFactor      (Lowest found was 4134)
 //   * IDirectSoundBuffer_SetRolloffFactor      (Lowest found was 4134)
-//   * IDirectSoundBuffer_SetRolloffCurve       (Lowest found was 4361)
 //   * IDirectSoundBuffer_Pause                 (Lowest found was 4721)
 //   * IDirectSoundBuffer_PauseEx               (Lowest found was 4721)
 //   * IDirectSoundBuffer_SetPlayRegion         (Introduce in 4039, last known earliest revision)
@@ -92,8 +91,6 @@
 //   * XAudioDownloadEffectsImage               (Lowest found was 4134)
 //   * XGetAudioFlags                           (Lowest found was 3911, XAudioGetSpeakerConfig introduced later as alias, is part of Xapi section)
 //   * XAudioSetEffectData                      (Lowest found was 5344)
-//   * DirectSoundUseFullHRTF4Channel           (Lowest found was 5344)
-//   * DirectSoundUseLightHRTF4Channel          (Lowest found was 5344)
 // * 3911 to 3936: Following separater functions has exact asm codes as whole function are...
 //   * IDirectSoundStream_SetVolume     & CDirectSoundStream_SetVolume
 //   * IDirectSoundStream_SetPitch      & CDirectSoundStream_SetPitch
@@ -137,8 +134,8 @@
 //   * IDirectSoundBuffer_PauseEx (4721)
 //   * CDirectSoundBuffer_PauseEx (4721)
 // * Missing OOVPAs
-//   * DirectSoundUseLightHRTF (4039 - 4134)
-//   * CHRTFSource_SetLightHRTF5Channel (4039 - 4134)
+//   * DirectSoundUseLightHRTF (4134)
+//   * CHRTFSource_SetLightHRTF5Channel (4134)
 //   * XAudioCreateAdpcmFormat (4039 - 4134)
 //   * XFileCreateMediaObject (3936 - 4242)
 //     * Somehow is excluded?
@@ -519,8 +516,9 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CSensaura3d_GetFullHRTFFilterPair, 3911, 3936), // Final generic OOVPA: 3936; Removed: 4134+ // NOTE: 4039 revert back to 3911
     REGISTER_OOVPAS(CSensaura3d_GetLiteHRTFFilterPair, 3911, 3936), // Final generic OOVPA: 3936; Removed: 4134+ // NOTE: 4039 revert back to 3911
     REGISTER_OOVPAS(CFullHRTFSource_GetCenterVolume, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
+    REGISTER_OOVPAS(CLightHRTFSource_GetCenterVolume, 4039/*, 4134, 5344*/), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CHRTFSource_SetFullHRTF5Channel, 4039, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
-    REGISTER_OOVPAS(CHRTFSource_SetLightHRTF5Channel, /*4039?,*/ 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039?)
+    REGISTER_OOVPAS(CHRTFSource_SetLightHRTF5Channel, 4039, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CHRTFSource_SetFullHRTF4Channel, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
     REGISTER_OOVPAS(CHRTFSource_SetLightHRTF4Channel, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
     REGISTER_OOVPAS(CFullHrtfSource_GetHrtfFilterPair, 4242), // Final generic OOVPA: 4242; Removed: 5344+ (introduced in 4242)
@@ -534,7 +532,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(DirectSoundDoWork, 3911, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(DirectSoundGetSampleTime, 3911, 4361), // Final generic OOVPA: 4361; Removed: 0
     REGISTER_OOVPAS(DirectSoundUseFullHRTF, 3911, 4039, 4134, 4242, 5344), // Final generic OOVPA: 5344; Removed: 0
-    REGISTER_OOVPAS(DirectSoundUseLightHRTF, 3911, /*4039?, 4134?,*/ 4242, 5344), // Final generic OOVPA: 5344; Removed: 0
+    REGISTER_OOVPAS(DirectSoundUseLightHRTF, 3911, 4039,/* 4134?,*/ 4242, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(DirectSoundUseFullHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
     REGISTER_OOVPAS(DirectSoundUseLightHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
 
