@@ -176,3 +176,51 @@ OOVPA_XREF(IDirectSoundStream_GetVoiceProperties, 5028, 1+1,
         // IDirectSoundStream_GetVoiceProperties+0x00 : jmp 0x........
         { 0x00, 0xE9 },
 OOVPA_END;
+
+// ******************************************************************
+// * CMcpxVoiceClient::Commit3dSettings
+// ******************************************************************
+OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 5028, 12,
+
+    XREF_CMcpxVoiceClient_Commit3dSettings,
+    XRefZero)
+
+        { 0x00, 0x55 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x3F : cmp edi, 0x02
+        OV_MATCH(0x3F, 0x83, 0xFF, 0x02),
+
+        // CMcpxVoiceClient::Commit3dSettings+0x61 : mov e__,[e__+0x000000B4]
+        OV_MATCH(0x61, 0x8B),
+        //OV_MATCH(0x62, 0x__),
+        OV_MATCH(0x63, 0xB4, 0x00),
+        //OV_MATCH(0x65, 0x00),
+        OV_MATCH(0x66, 0x00),
+
+        // CMcpxVoiceClient::Commit3dSettings+0x70 : mov eax,[eax+0x000000B4]
+        OV_MATCH(0x70, 0x8B),
+        //OV_MATCH(0x71, 0x80),
+        OV_MATCH(0x72, 0xB4, 0x00),
+        //OV_MATCH(0x74, 0x00),
+        OV_MATCH(0x75, 0x00),
+
+OOVPA_END;
+
+// ******************************************************************
+// * CMcpxStream::Stop
+// ******************************************************************
+// Generic OOVPA as of 5028 and newer;
+OOVPA_XREF(CMcpxStream_Stop, 5028, 7,
+
+    XREF_CMcpxStream_Stop,
+    XRefZero)
+
+    // calls to CIrql_Raise, CIrql_Lower, CMcpxVoiceClient_ReleaseVoice, CMcpxVoiceClient_DeactivateVoice
+
+        // CMcpxStream_Stop+0x00 : push ebp; mov ebp,esp
+        OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+
+        // Offset is unique for this asm code.
+        // CMcpxStream_Stop+0x1F : test [ebp+8],6
+        OV_MATCH(0x1F, 0xF6, 0x45, 0x08, 0x06),
+OOVPA_END;

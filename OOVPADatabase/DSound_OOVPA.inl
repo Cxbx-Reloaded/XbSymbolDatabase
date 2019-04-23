@@ -172,7 +172,6 @@
 #include "DSound/4721.inl"
 #include "DSound/4831.inl"
 #include "DSound/5028.inl"
-#include "DSound/5233.inl"
 #include "DSound/5344.inl"
 #include "DSound/5455.inl"
 #include "DSound/5558.inl"
@@ -226,7 +225,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CMcpxVoiceClient_SetMixBins, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CMcpxVoiceClient_SetPitch, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CMcpxVoiceClient_SetVolume, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
-    REGISTER_OOVPAS(CMcpxVoiceClient_Commit3dSettings, 3911, 4039, 4134, 4242, 4627, 5233, 5344, 5455), // Final generic OOVPA: 5455; Removed: 0 // NOTE: Must be after CMcpxVoiceClient_SetVolume for one time scan.
+    REGISTER_OOVPAS(CMcpxVoiceClient_Commit3dSettings, 3911, 4039, 4134, 4242, 4627, 5028, 5344, 5455), // Final generic OOVPA: 5455; Removed: 0 // NOTE: Must be after CMcpxVoiceClient_SetVolume for one time scan.
     REGISTER_OOVPAS(CMcpxVoiceClient_Set3dParameters, 3911), // Final generic OOVPA: 3911; Removed: 4039+ // NOTE: Must be after CMcpxVoiceClient_Commit3dSettings for one time scan.
 
     REGISTER_OOVPAS(CDirectSoundVoiceSettings_SetMixBinVolumes, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4039)
@@ -275,7 +274,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CMcpxBuffer_Stop, 3911, 4134, 4242), // Final generic OOVPA: 4242; Removed: 0 // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJK@Z
     REGISTER_OOVPAS(CMcpxBuffer_Stop_Ex, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134) // NOTE: ?Stop@CMcpxBuffer@DirectSound@@QAEJ_JK@Z
 
-    REGISTER_OOVPAS(CMcpxStream_Stop, 4134, 5233), // Final generic OOVPA: 5233?; Removed: 0 (introduced in 4134)
+    REGISTER_OOVPAS(CMcpxStream_Stop, 4134, 5028), // Final generic OOVPA: 5233?; Removed: 0 (introduced in 4134)
     REGISTER_OOVPAS(CMcpxStream_Stop_Ex, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
     REGISTER_OOVPAS(CMcpxStream_Flush, 3911, 3936, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CMcpxStream_Discontinuity, 3911, 4039, 4134, 4531, 5455), // NOTE: Must be after CMcpxStream_Flush for one time scan.
