@@ -701,7 +701,7 @@ OOVPA_XREF(CDirectSound_SetRolloffFactor, 5344, 14,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CFullHRTFSource::GetCenterVolume
+// * CFullHRTFSource::GetCenterVolume
 // ******************************************************************
 // Generic OOVPA as of 5344 and newer.
 OOVPA_XREF(CFullHRTFSource_GetCenterVolume, 5344, 7,
@@ -719,7 +719,32 @@ OOVPA_XREF(CFullHRTFSource_GetCenterVolume, 5344, 7,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CHRTFSource::SetFullHRTF5Channel
+// * LightHRTFSource::GetCenterVolume
+// ******************************************************************
+// Generic OOVPA as of 5344 and newer.
+OOVPA_XREF(CLightHRTFSource_GetCenterVolume, 5344, 11,
+
+    XREF_CLightHRTFSource_GetCenterVolume,
+    XRefZero)
+    
+        // CLightHRTFSource::GetCenterVolume+0x00 : push ebp
+        OV_MATCH(0x00, 0x55),
+    
+        // CLightHRTFSource::GetCenterVolume+0x13 : fchs
+        OV_MATCH(0x13, 0xD9, 0xE0),
+    
+        // CLightHRTFSource::GetCenterVolume+0x3B : fld1
+        OV_MATCH(0x3B, 0xD9, 0xE8),
+
+        // CLightHRTFSource::GetCenterVolume+0x5F : mov [e__+__],0xFFFFD8F0
+        OV_MATCH(0x61, 0xF0, 0xD8, 0xFF, 0xFF),
+
+        // CLightHRTFSource::GetCenterVolume+0x66 : ret 0x0010
+        OV_MATCH(0x66, 0xC2, 0x10),
+OOVPA_END;
+
+// ******************************************************************
+// * CHRTFSource::SetFullHRTF5Channel
 // ******************************************************************
 // Generic OOVPA as of 5344 and newer.
 OOVPA_XREF(CHRTFSource_SetFullHRTF5Channel, 5344, 1+16,
@@ -750,13 +775,15 @@ OOVPA_XREF(CHRTFSource_SetFullHRTF5Channel, 5344, 1+16,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CHRTFSource::SetLightHRTF5Channel
+// * CHRTFSource::SetLightHRTF5Channel
 // ******************************************************************
 // Generic OOVPA as of 5344 and newer.
-OOVPA_XREF(CHRTFSource_SetLightHRTF5Channel, 5344, 16,
+OOVPA_XREF(CHRTFSource_SetLightHRTF5Channel, 5344, 1+16,
 
     XREF_CHRTFSource_SetLightHRTF5Channel,
-    XRefZero)
+    XRefOne)
+
+        XREF_ENTRY( 0x4C, XREF_CLightHRTFSource_GetCenterVolume ),
 
         { 0x00, 0xC7 },
         { 0x0A, 0xC7 },
@@ -779,7 +806,7 @@ OOVPA_XREF(CHRTFSource_SetLightHRTF5Channel, 5344, 16,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CHRTFSource::SetFullHRTF4Channel
+// * CHRTFSource::SetFullHRTF4Channel
 // ******************************************************************
 // Generic OOVPA as of 5344 and newer.
 OOVPA_XREF(CHRTFSource_SetFullHRTF4Channel, 5344, 16,
@@ -808,7 +835,7 @@ OOVPA_XREF(CHRTFSource_SetFullHRTF4Channel, 5344, 16,
 OOVPA_END;
 
 // ******************************************************************
-// * DirectSound::CHRTFSource::SetLightHRTF4Channel
+// * CHRTFSource::SetLightHRTF4Channel
 // ******************************************************************
 // Generic OOVPA as of 5344 and newer.
 OOVPA_XREF(CHRTFSource_SetLightHRTF4Channel, 5344, 16,

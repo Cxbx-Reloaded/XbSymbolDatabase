@@ -192,7 +192,7 @@ OOVPATable DSound_OOVPAV2[] = {
 
     REGISTER_OOVPAS(DSound_CMemoryManager_PoolAlloc, 4134, 4361), // For reference purpose only, does not have XREF value.
 
-    REGISTER_OOVPAS(CMcpxAPU_Commit3dSettings, 3911), // Final generic OOVPA: 3911; Removed: 4134+
+    REGISTER_OOVPAS(CMcpxAPU_Commit3dSettings, 3911), // Final generic OOVPA: 3911; Removed: 4039+
     REGISTER_OOVPAS(CMcpxAPU_ServiceDeferredCommandsLow, 3911, 4134, 5455), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS(CMcpxAPU_Set3dDistanceFactor, 3911), // Final generic OOVPA: 3911; Removed: 4134+
     REGISTER_OOVPAS(CMcpxAPU_Set3dDopplerFactor, 3911), // Final generic OOVPA: 3911; Removed: 4134+
@@ -201,7 +201,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CMcpxAPU_Set3dRolloffFactor, 3911), // Final generic OOVPA: 3911; Removed: 4134+
     REGISTER_OOVPAS(CMcpxAPU_Set3dVelocity, 3911), // Final generic OOVPA: 3911; Removed: 4134+
     REGISTER_OOVPAS(CMcpxAPU_SetI3DL2Listener, 3911), // Final generic OOVPA: 3911; Removed: 4134+
-    REGISTER_OOVPAS(CMcpxAPU_SetMixBinHeadroom, 3911, 4134), // Final generic OOVPA: 4134; Removed: 0
+    REGISTER_OOVPAS(CMcpxAPU_SetMixBinHeadroom, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
     REGISTER_OOVPAS(CMcpxAPU_SynchPlayback, 4831), // Final generic OOVPA: 4831; Removed: 0 (introduced in 4831)
 
     //========================================================
@@ -389,7 +389,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CDirectSound_SetDopplerFactor, 3911, 4039, 4134, 4627, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSound_SetEffectData, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSound_SetI3DL2Listener, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
-    REGISTER_OOVPAS(CDirectSound_SetMixBinHeadroom, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 // NOTE: 4039 could be merge into 3911 for call offset is the same.
+    REGISTER_OOVPAS(CDirectSound_SetMixBinHeadroom, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSound_SetOrientation, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSound_SetPosition, 3911, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSound_SetRolloffFactor, 3911, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 0
@@ -516,7 +516,7 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(CSensaura3d_GetFullHRTFFilterPair, 3911, 3936), // Final generic OOVPA: 3936; Removed: 4134+ // NOTE: 4039 revert back to 3911
     REGISTER_OOVPAS(CSensaura3d_GetLiteHRTFFilterPair, 3911, 3936), // Final generic OOVPA: 3936; Removed: 4134+ // NOTE: 4039 revert back to 3911
     REGISTER_OOVPAS(CFullHRTFSource_GetCenterVolume, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
-    REGISTER_OOVPAS(CLightHRTFSource_GetCenterVolume, 4039/*, 4134, 5344*/), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
+    REGISTER_OOVPAS(CLightHRTFSource_GetCenterVolume, 4039,/* 4134,*/ 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CHRTFSource_SetFullHRTF5Channel, 4039, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CHRTFSource_SetLightHRTF5Channel, 4039, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CHRTFSource_SetFullHRTF4Channel, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
@@ -536,21 +536,19 @@ OOVPATable DSound_OOVPAV2[] = {
     REGISTER_OOVPAS(DirectSoundUseFullHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
     REGISTER_OOVPAS(DirectSoundUseLightHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
 
-    REGISTER_OOVPAS(WaveFormat_CreateXboxAdpcmFormat, 4039), // Final generic OOVPA: 4039; Removed: 0 (introduced in 4039)
-
     REGISTER_OOVPAS(IsValidFormat, 3911, 4039), // Final generic OOVPA: 4039; Removed: 4361+ // NOTE: 4361+ is replace into a class function
 
     REGISTER_OOVPAS(XAudioDownloadEffectsImage, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4134)
     REGISTER_OOVPAS(XAudioSetEffectData, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
     REGISTER_OOVPAS(XAudioCreatePcmFormat, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: later revision changed to a jmp, and convert into class function
-    REGISTER_OOVPAS(XAudioCreateAdpcmFormat, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(XAudioCreateAdpcmFormat, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: later revision changed to a jmp, and convert into class function
 
-    REGISTER_OOVPAS(XFileCreateMediaObject, 3911, 4361), // TODO: Need investigation on 3936-4242
-    REGISTER_OOVPAS(XFileCreateMediaObjectAsync, 4432), // TODO: Need investigation
-    REGISTER_OOVPAS(XFileCreateMediaObjectEx, 4361), // TODO: Need investigation
+    REGISTER_OOVPAS(XFileCreateMediaObject, 3911, 4242, 4361), // TODO: Need investigation on 3936-4039
+    REGISTER_OOVPAS(XFileCreateMediaObjectAsync, 4432), // TODO: Need investigation (confirmed does not exist in 4242)
+    REGISTER_OOVPAS(XFileCreateMediaObjectEx, 4242, 4361), // TODO: Need investigation on 3936-4039
 
-    REGISTER_OOVPAS(XWaveFileCreateMediaObject, 3911, 4361), // TODO: Need investigation
-    REGISTER_OOVPAS(XWaveFileCreateMediaObjectEx, 4361), // TODO: Need investigation
+    REGISTER_OOVPAS(XWaveFileCreateMediaObject, 3911, 4242, 4361), // TODO: Need investigation on 3936-4039
+    REGISTER_OOVPAS(XWaveFileCreateMediaObjectEx, 4242, 4361), // TODO: Need investigation on 3936?-4039
 };
 
 // ******************************************************************

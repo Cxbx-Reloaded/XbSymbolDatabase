@@ -3938,37 +3938,6 @@ OOVPA_XREF(CMcpxAPU_ServiceDeferredCommandsLow, 4134, 9,
 OOVPA_END;
 
 // ******************************************************************
-// * CMcpxAPU::SetMixBinHeadroom
-// ******************************************************************
-// Generic OOVPA as of 4134 and newer
-OOVPA_XREF(CMcpxAPU_SetMixBinHeadroom, 4134, 11,
-
-    XREF_CMcpxAPU_SetMixBinHeadroom,
-    XRefZero)
-
-        // CMcpxAPU_SetMixBinHeadroom+0x00: push ebp;
-        { 0x00, 0x55 },
-
-        // CMcpxAPU_SetMixBinHeadroom+0x14: mov eax, [0xFE820010]
-        { 0x14, 0xA1 },
-        { 0x15, 0x10 },
-        { 0x16, 0x00 },
-        { 0x17, 0x82 },
-        { 0x18, 0xFE },
-
-        // CMcpxAPU_SetMixBinHeadroom+0x19: and eax,-04
-        { 0x19, 0x83 },
-        { 0x1A, 0xE0 },
-        { 0x1B, 0xFC },
-
-        // CMcpxAPU_SetMixBinHeadroom+0x42: ret
-        { 0x42, 0xC2 },
-        { 0x43, 0x04 },
-
-        // Generic support over multiple revisions end at offset 0x3A
-OOVPA_END;
-
-// ******************************************************************
 // * CMcpxVoiceClient::Commit3dSettings
 // ******************************************************************
 OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 4134, 12,

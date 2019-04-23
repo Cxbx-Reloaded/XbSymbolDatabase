@@ -4209,50 +4209,6 @@ OOVPA_XREF(CDirectSoundStream_SetI3DL2Source, 4039, 1+8,
 OOVPA_END;
 
 // ******************************************************************
-// * CDirectSound::SetMixBinHeadroom
-// ******************************************************************
-// NOTE: Might be possible to merge into 3911 since call offset is the same.
-OOVPA_XREF(CDirectSound_SetMixBinHeadroom, 4039, 1+8,
-
-    XREF_CDirectSound_SetMixBinHeadroom,
-    XRefOne)
-
-        // CDirectSound_SetMixBinHeadroom+0x18 : call [CMcpxAPU_SetMixBinHeadroom]
-        XREF_ENTRY( 0x19, XREF_CMcpxAPU_SetMixBinHeadroom),
-
-        // CDirectSound_SetMixBinHeadroom+0x00 : push esi
-        { 0x00, 0x56 },
-
-        // CDirectSound_SetMixBinHeadroom+0x20 : mov eax, 0x80004005
-        { 0x20, 0xB8 },
-        { 0x21, 0x05 },
-        { 0x22, 0x40 },
-        { 0x23, 0x00 },
-        { 0x24, 0x80 },
-
-#if 0
-        // CDirectSound_SetMixBinHeadroom+0x37 : mov [edx+ecx*4+88h], edi
-        { 0x37, 0x89 },
-        { 0x38, 0xBC },
-        { 0x39, 0x8A },
-        { 0x3A, 0x88 },
-        { 0x3B, 0x00 },
-        { 0x3C, 0x00 },
-        { 0x3D, 0x00 },
-
-        // CDirectSound_SetMixBinHeadroom+0x3E : push ecx
-        { 0x3E, 0x51 },
-
-        // CDirectSound_SetMixBinHeadroom+0x3F : mov ecx, [eax+0Ch]
-        { 0x3F, 0x8B },
-#endif
-
-        // CDirectSound_SetMixBinHeadroom+0x5C : retn 0x0C
-        { 0x5C, 0xC2 },
-        { 0x5D, 0x0C },
-OOVPA_END;
-
-// ******************************************************************
 // * CDirectSound::SetAllParameters
 // ******************************************************************
 OOVPA_XREF(CDirectSound_SetAllParameters, 4039, 15,
@@ -4285,41 +4241,23 @@ OOVPA_XREF(CDirectSound_SetAllParameters, 4039, 15,
 OOVPA_END;
 
 // ******************************************************************
-// * WaveFormat::CreateXboxAdpcmFormat
+// * XAudioCreateAdpcmFormat
 // ******************************************************************
-// Generic OOVPA as of 4039 and newer
-OOVPA_XREF(WaveFormat_CreateXboxAdpcmFormat, 4039, 12,
+// NOTE: 4134 later versions changed to a jmp, then convert into
+// class function.
+OOVPA_XREF(XAudioCreateAdpcmFormat, 4039, 12,
 
     XREF_WaveFormat_CreateXboxAdpcmFormat,
     XRefZero)
 
-        { 0x07, 0x08 },
-        { 0x10, 0xE9 },
-        { 0x19, 0x8D },
+        OV_MATCH(0x07, 0x08),
+        OV_MATCH(0x10, 0xE9),
+        OV_MATCH(0x19, 0x8D),
 
-        { 0x27, 0x66 },
-        { 0x28, 0xC7 },
-        { 0x29, 0x40 },
-        { 0x2A, 0x0E },
-        { 0x2B, 0x04 },
-        { 0x2C, 0x00 },
-        { 0x2D, 0x66 },
+        OV_MATCH(0x27, 0x66, 0xC7, 0x40, 0x0E, 0x04, 0x00, 0x66),
 
-        { 0x34, 0x66 },
-        { 0x3D, 0x12 },
-OOVPA_END;
-
-// ******************************************************************
-// * XAudioCreateAdpcmFormat
-// ******************************************************************
-OOVPA_XREF(XAudioCreateAdpcmFormat, 4039, 1+1,
-
-    XRefNoSaveIndex,
-    XRefOne)
-
-        XREF_ENTRY( 0x01, XREF_WaveFormat_CreateXboxAdpcmFormat ),
-
-        { 0x00, 0xE9 },
+        OV_MATCH(0x34, 0x66),
+        OV_MATCH(0x3D, 0x12),
 OOVPA_END;
 
 // ******************************************************************
@@ -4517,4 +4455,52 @@ OOVPA_XREF(DirectSoundUseLightHRTF, 4039, 1+7,
 
         // DirectSoundUseLightHRTF+0x1D : ret
         OV_MATCH(0x1D, 0xC3),
+OOVPA_END;
+
+// ******************************************************************
+// * CMcpxAPU::SetMixBinHeadroom
+// ******************************************************************
+// Generic OOVPA as of 4039 and newer
+OOVPA_XREF(CMcpxAPU_SetMixBinHeadroom, 4039, 12,
+
+    XREF_CMcpxAPU_SetMixBinHeadroom,
+    XRefZero)
+
+        // CMcpxAPU_SetMixBinHeadroom+0x00: push ebp;
+        OV_MATCH(0x00, 0x55),
+
+        // CMcpxAPU_SetMixBinHeadroom+0x14: mov eax, [0xFE820010]
+        OV_MATCH(0x14, 0xA1, 0x10, 0x00, 0x82, 0xFE),
+
+        // CMcpxAPU_SetMixBinHeadroom+0x19: and eax,-04
+        OV_MATCH(0x19, 0x83, 0xE0, 0xFC),
+
+        // CMcpxAPU_SetMixBinHeadroom+0x22: ret
+        OV_MATCH(0x1C, 0x83, 0xF8, 0x04),
+
+        // Generic support over multiple revisions end at offset 0x27
+OOVPA_END;
+
+// ******************************************************************
+// * CDirectSound::SetMixBinHeadroom
+// ******************************************************************
+OOVPA_XREF(CDirectSound_SetMixBinHeadroom, 4039, 1+12,
+
+    XREF_CDirectSound_SetMixBinHeadroom,
+    XRefOne)
+
+        // CDirectSound::SetMixBinHeadroom+0x42 : call [CMcpxAPU::SetMixBinHeadroom]
+        XREF_ENTRY( 0x43, XREF_CMcpxAPU_SetMixBinHeadroom),
+
+        // CDirectSound::SetMixBinHeadroom+0x00 : push esi
+        OV_MATCH(0x00, 0x56),
+
+        // CDirectSound::SetMixBinHeadroom+0x20 : mov eax, 0x80004005
+        OV_MATCH(0x20, 0xB8, 0x05, 0x40, 0x00, 0x80),
+
+        // CDirectSound::SetMixBinHeadroom+0x33 : mov edi,[esp+14]
+        OV_MATCH(0x33, 0x8B, 0x7C, 0x24, 0x14),
+
+        // CDirectSound::SetMixBinHeadroom+0x5C : retn 0x0C
+        OV_MATCH(0x5C, 0xC2, 0x0C),
 OOVPA_END;

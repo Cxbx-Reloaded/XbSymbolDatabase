@@ -5618,24 +5618,20 @@ OOVPA_END;
 // * XAudioCreatePcmFormat
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer
-// NOTE: later revision changed to a jmp, and convert into class function
+// NOTE: 4134 and later versions changed to a jmp, then convert into
+// class function
 OOVPA_NO_XREF(XAudioCreatePcmFormat, 3911, 11)
 
-        { 0x00, 0x8B },
+        OV_MATCH(0x00, 0x8B),
 
-        { 0x11, 0x02 },
-        { 0x18, 0x0E },
-        { 0x2E, 0x10 },
+        OV_MATCH(0x11, 0x02),
+        OV_MATCH(0x18, 0x0E),
+        OV_MATCH(0x2E, 0x10),
 
         //XAudioCreatePcmFormat+0x10 : mov word ptr [ecx],1
-        { 0x34, 0x66 },
-        { 0x35, 0xC7 },
-        { 0x36, 0x01 },
-        { 0x37, 0x01 },
-        { 0x38, 0x00 },
+        OV_MATCH(0x34, 0x66, 0xC7, 0x01, 0x01, 0x00),
 
-        { 0x47, 0xC2 },
-        { 0x48, 0x10 },
+        OV_MATCH(0x47, 0xC2, 0x10),
 OOVPA_END;
 
 // ******************************************************************
