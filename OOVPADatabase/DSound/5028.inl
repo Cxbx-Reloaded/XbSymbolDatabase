@@ -224,3 +224,21 @@ OOVPA_XREF(CMcpxStream_Stop, 5028, 7,
         // CMcpxStream_Stop+0x1F : test [ebp+8],6
         OV_MATCH(0x1F, 0xF6, 0x45, 0x08, 0x06),
 OOVPA_END;
+
+// ******************************************************************
+// * XAudioSetEffectData
+// ******************************************************************
+OOVPA_XREF(XAudioSetEffectData, 5028, 2+3,
+
+    XRefNoSaveIndex,
+    XRefTwo)
+
+        // XAudioSetEffectData+0x79 : call [CDirectSound::GetEffectData]
+        XREF_ENTRY(0x07A, XREF_CDirectSound_GetEffectData),
+
+        // XAudioSetEffectData+0xD0 : call [CDirectSound::SetEffectData]
+        XREF_ENTRY(0x0D1, XREF_CDirectSound_SetEffectData),
+
+        OV_MATCH(0x00, 0x55, 0x8B),
+        OV_MATCH(0x03, 0x81),
+OOVPA_END;

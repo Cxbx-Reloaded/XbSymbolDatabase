@@ -4005,7 +4005,7 @@ OOVPA_XREF(CDirectSoundBuffer_SetFormat, 4039, 1+12,
     XREF_CDirectSoundBuffer_SetFormat,
     XRefOne)
 
-        // CDirectSoundBuffer_SetFormat+0x31 : call [CDirectSoundVoice::SetFormat]
+        // CDirectSoundBuffer_SetFormat+0x30 : call [CDirectSoundVoice::SetFormat]
         XREF_ENTRY( 0x31, XREF_CDirectSoundVoice_SetFormat ), // Was 4134 Offset -0x01h
 
         // CDirectSoundBuffer_SetFormat+0x00 : push esi
@@ -4503,4 +4503,39 @@ OOVPA_XREF(CDirectSound_SetMixBinHeadroom, 4039, 1+12,
 
         // CDirectSound::SetMixBinHeadroom+0x5C : retn 0x0C
         OV_MATCH(0x5C, 0xC2, 0x0C),
+OOVPA_END;
+
+// ******************************************************************
+// * DirectSoundOverrideSpeakerConfig
+// ******************************************************************
+OOVPA_XREF(DirectSoundOverrideSpeakerConfig, 4039, 1+9,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        // DirectSoundOverrideSpeakerConfig+0x00 : call [DirectSoundEnterCriticalSection]
+        XREF_ENTRY( 0x01, XREF_DirectSoundEnterCriticalSection),
+
+        // DirectSoundOverrideSpeakerConfig+0x00 : call [DirectSoundEnterCriticalSection]
+        OV_MATCH(0x00, 0xE8),
+
+        // DirectSoundOverrideSpeakerConfig+0x09 : and ecx,0x0000FFFF
+        OV_MATCH(0x09, 0x81, 0xE1, 0xFF, 0xFF, 0x00, 0x00),
+
+        // DirectSoundOverrideSpeakerConfig+0x24 : retn 0x0004
+        OV_MATCH(0x24, 0xC2, 0x04),
+OOVPA_END;
+
+// ******************************************************************
+// * XAudioDownloadEffectsImage
+// ******************************************************************
+OOVPA_NO_XREF(XAudioDownloadEffectsImage, 4039, 10)
+
+        OV_MATCH(0x00, 0x55),
+
+        OV_MATCH(0x0A, 0x33, 0xFF, 0x89, 0x75, 0xF8, 0xE8),
+
+        OV_MATCH(0x3C, 0x83),
+        OV_MATCH(0x4E, 0xE8),
+        OV_MATCH(0x65, 0x8B),
 OOVPA_END;

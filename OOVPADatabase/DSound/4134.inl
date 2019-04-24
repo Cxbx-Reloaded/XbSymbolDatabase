@@ -3769,20 +3769,13 @@ OOVPA_END;
 // Generic OOVPA as of 4134 and newer
 OOVPA_NO_XREF(XAudioDownloadEffectsImage, 4134, 12)
 
-        { 0x00, 0x55 },
+        OV_MATCH(0x00, 0x55),
 
-        { 0x0B, 0x33 },
-        { 0x0C, 0xFF },
-        { 0x0D, 0x89 },
-        { 0x0E, 0x5D },
-        { 0x0F, 0xFC },
-        { 0x10, 0x33 },
-        { 0x11, 0xF6 },
-        { 0x12, 0xE8 },
+        OV_MATCH(0x0B, 0x33, 0xFF, 0x89, 0x5D, 0xFC, 0x33, 0xF6, 0xE8),
 
-        { 0x41, 0x83 },
-        { 0x53, 0xE8 },
-        { 0x6A, 0x8B },
+        OV_MATCH(0x41, 0x83),
+        OV_MATCH(0x53, 0xE8),
+        OV_MATCH(0x6A, 0x8B),
 OOVPA_END;
 
 // ******************************************************************
@@ -4059,4 +4052,26 @@ OOVPA_XREF(CMcpxBuffer_SetBufferData, 4134, 9,
 
         // CMcpxBuffer::SetBufferData+0x19 : ret
         { 0x19, 0xC3 },
+OOVPA_END;
+
+// ******************************************************************
+// * DirectSoundOverrideSpeakerConfig
+// ******************************************************************
+// Generic OOVPA as of 4134 and newer
+OOVPA_XREF(DirectSoundOverrideSpeakerConfig, 4134, 1+8,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        // DirectSoundOverrideSpeakerConfig+0x00 : call [DirectSoundEnterCriticalSection]
+        XREF_ENTRY( 0x01, XREF_DirectSoundEnterCriticalSection),
+
+        // DirectSoundOverrideSpeakerConfig+0x00 : call [DirectSoundEnterCriticalSection]
+        OV_MATCH(0x00, 0xE8),
+
+        // DirectSoundOverrideSpeakerConfig+0x19 : and eax,0x0000FFFF
+        OV_MATCH(0x19, 0x25, 0xFF, 0xFF, 0x00, 0x00),
+
+        // DirectSoundOverrideSpeakerConfig+0x32 : retn 0x0004
+        OV_MATCH(0x32, 0xC2, 0x04),
 OOVPA_END;
