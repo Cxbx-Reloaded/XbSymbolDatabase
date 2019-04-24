@@ -35,7 +35,7 @@
 // * [4134] Blood Omen 2                     |    80%    | Does not have full library.
 // * [4134] JSRF                             |     1%    | Does not have Stream class. DS and Buffer might be full.
 // * [4134] Double-S.T.E.A.L                 |   100%    | Contain full library.
-// * [4242] NFL Blitz 2002                   |   100%    | Contain 99% library.**
+// * [4242] NFL Blitz 2002                   |   100%    | Contain full library.
 // * [4361] Flight Academy                   |   100%    | Only has 50%-ish of the library compiled with xbe build.
 // * [4432] RedCard 2003                     |   100%    | Contain full library.
 // * [4432] Madden NFL 2003                  |   100%    | Contain full library.
@@ -70,25 +70,14 @@
 //   * IDirectSoundStream_AddRef            (Using IUnknown_AddRef)
 //   * IDirectSoundStream_Release           (Using IUnknown_Release)
 // * 3911 to ????: These functions does not exist until newer XDK revision
-//   * IDirectSoundBuffer_GetVoiceProperties    (Lowest found was 5028)
-//   * IDirectSoundBuffer_SetFormat             (Lowest found was 4039)
-//   * IDirectSoundBuffer_SetDistanceFactor     (Lowest found was 4134)
-//   * IDirectSoundBuffer_SetDopplerFactor      (Lowest found was 4134)
-//   * IDirectSoundBuffer_SetRolloffFactor      (Lowest found was 4134)
 //   * IDirectSoundBuffer_Pause                 (Lowest found was 4721)
 //   * IDirectSoundBuffer_PauseEx               (Lowest found was 4721)
 //   * IDirectSoundBuffer_SetPlayRegion         (Introduce in 4039, last known earliest revision)
 //   * IDirectSoundStream_FlushEx               (Lowest found was 4134)
-//   * IDirectSoundStream_GetVoiceProperties    (Lowest found was 5028)
-//   * IDirectSoundStream_SetDistanceFactor     (Lowest found was 4134)
-//   * IDirectSoundStream_SetDopplerFactor      (Lowest found was 4134)
-//   * IDirectSoundStream_SetFormat             (Lowest found was 4039)
-//   * IDirectSoundStream_SetRolloffCurve       (Lowest found was 4361)
-//   * IDirectSoundStream_SetRolloffFactor      (Lowest found was 4134)
 //   * DirectSoundDumpMemoryUsage               (Lowest found was 4361)
-//   * DirectSoundGetSampleTime                 (Need verify between 4039 to 4134)
+//   * DirectSoundGetSampleTime                 (Need verify in 4134)
 //   * DirectSoundOverrideSpeakerConfig         (Lowest found was 4242)
-//   * XAudioDownloadEffectsImage               (Lowest found was 4134)
+//   * XAudioDownloadEffectsImage               (Lowest found was 4039)
 //   * XGetAudioFlags                           (Lowest found was 3911, XAudioGetSpeakerConfig introduced later as alias, is part of Xapi section)
 //   * XAudioSetEffectData                      (Lowest found was 5344)
 // * 3911 to 3936: Following separater functions has exact asm codes as whole function are...
@@ -136,13 +125,11 @@
 // * Missing OOVPAs
 //   * DirectSoundUseLightHRTF (4134)
 //   * CHRTFSource_SetLightHRTF5Channel (4134)
-//   * XAudioCreateAdpcmFormat (4039 - 4134)
-//   * XFileCreateMediaObject (3936 - 4242)
+//   * XAudioCreateAdpcmFormat (4134)
+//   * XFileCreateMediaObject (3936 - 4134)
 //     * Somehow is excluded?
-//   * XWaveFileCreateMediaObject (3936 - 4242)
+//   * XWaveFileCreateMediaObject (3936 - 4134)
 //     * Somehow is excluded?
-// * List of OOVPAs might need to be lower
-//   * CMcpxStream_Stop (5233)
 // * 4134 & 4361 CDirectSoundVoice_SetMaxDistance + CDirectSoundVoice_SetMinDistance
 //   * With XREF, RadWolfie think is possible to remove 0x1F offset for ability to remove 4361 OOVPAs.
 // * 4039 (TODO)
