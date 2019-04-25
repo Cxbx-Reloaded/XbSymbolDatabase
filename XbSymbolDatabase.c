@@ -148,7 +148,7 @@ SymbolDatabaseList SymbolDBList[] = {
 // ******************************************************************
 // * SymbolDBListCount
 // ******************************************************************
-const unsigned int SymbolDBListCount = OOVPA_TABLE_COUNT(SymbolDBList);
+const unsigned int SymbolDBListCount = XBSDB_ARRAY_SIZE(SymbolDBList);
 
 // ******************************************************************
 // * XRefDataBase
@@ -333,14 +333,14 @@ uint32_t XbSymbolLibrayToFlag(const char* library_name)
 //       the implementation could be changed if the need ever arises.
 static inline void GetXRefEntry(OOVPA *oovpa, int index, uint32_t* xref_out, uint16_t* offset_out) 
 {
-    *xref_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Value;
-    *offset_out = ((LOOVPA*)oovpa)->Lovp[index].Offset;
+    *xref_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].xref.index;
+    *offset_out = ((LOOVPA*)oovpa)->Lovp[index].offset;
 }
 
 static inline void GetOovpaEntry(OOVPA *oovpa, int index, uint32_t* offset_out, uint8_t* value_out)
 {
-    *offset_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].Offset;
-    *value_out = (uint8_t)((LOOVPA*)oovpa)->Lovp[index].Value;
+    *offset_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].offset;
+    *value_out = (uint8_t)((LOOVPA*)oovpa)->Lovp[index].value;
 }
 
 bool CompareOOVPAToAddress(OOVPA *Oovpa, memptr_t cur, uintptr_t xb_start_virt_addr)

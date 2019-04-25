@@ -41,21 +41,21 @@
 // ******************************************************************
 typedef struct _OOVPA
 {
-    // This OOVPA field (uint08 Count) indicates the number of
+    // This OOVPA field, Count, indicates the number of
     // {Offset, Value}-pairs present in the Lovp array,
     // available after casting this OOVPA to LOOVPA.
     // (This Count INCLUDES optional leading {Offset, XREF_*-enum}-
     // pairs - see comment at XRefCount.)
     unsigned char Count;
 
-    // This OOVPA field (uint08 XRefCount) contains the number of
+    // This OOVPA field, XRefCount, contains the number of
     // {Offset, XREF_*-enum}-pairs that come before all other
     // {Offset, Value}-pairs.
     // (The {Offset, XREF_*-enum}-pairs are INCLUDED in OOVPA.Count)
     // (Also, see comments at XRefZero and XRefOne.)
     unsigned char XRefCount;
 
-    // This OOVPA field (uint16 XRefSaveIndex) contains either an
+    // This OOVPA field, XRefSaveIndex, contains either an
     // XREF_* enum value, or the XRefNoSaveIndex marker when there's
     // no XREF_* enum defined for this OOVPA.
     unsigned short XRefSaveIndex;
@@ -72,8 +72,20 @@ typedef struct _LOVP
     // Both the Offset and Value are 16-bit to allow for XRefs with a
     // large offset. Value can be safely cast to 8-bit for OOVPA, but must
     // remain 16-bit for XRef entries.
-    unsigned short Offset;
-    unsigned short Value;
+    unsigned short offset;
+    union {
+        // Generic structure TODO: Remove me after replace array to macro for OOVPA database
+        unsigned short value;
+
+        struct {
+            unsigned char unused;
+            unsigned char value;
+        } byte;
+
+        struct {
+            unsigned short index;
+        } xref;
+    };
 } LOVP;
 
 // This XRefZero constant, when set in the OOVPA.XRefCount field,
@@ -94,14 +106,17 @@ typedef struct _LOVP
 // defined for the OOVPA.
 #define XRefNoSaveIndex 0xFFFF
 
+// TODO: Rename to OV_XREF.
 // Macro used for storing an XRef {Offset, XREF}-Pair.
 #define XREF_ENTRY( Offset, XRef)    \
-    { Offset, XRef }
+    { Offset, .xref.index = XRef }
 
-// UNUSED Macro for storing a normal (non-XRef) {Offset, Value}-Pair
+// Macro for storing a normal (non-XRef) {Offset, Value}-Pair
 // Offsets can go up to 16 bits, values are always one byte (8 bits)
-#define OV_ENTRY(Offset, Value)    \
-    { Offset, Value }
+#define OV_BYTE(Offset, Value)    \
+    { Offset, .value = Value }
+// TODO: Remove above line, then uncomment the line below for easy swap after OOVPA database has been fixed.
+//  { Offset, { .unused = 0, .value = Value } } 
 
 
 // ******************************************************************
@@ -139,8 +154,8 @@ typedef struct _OOVPATable
 
 // http://en.cppreference.com/w/cpp/iterator/size
 //#include <iterator>
-//#define OOVPA_TABLE_COUNT(x) std::size(x)
-#define OOVPA_TABLE_COUNT(x) (sizeof(x)/sizeof(x[0]))
+//#define XBSDB_ARRAY_SIZE(x) std::size(x)
+#define XBSDB_ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
 
 #define OOVPA_TABLE_ENTRY_FULL(Oovpa, DebugName, Version) \
     { & Oovpa ## _ ## Version.Header, DebugName, Version }
@@ -172,6 +187,27 @@ typedef struct _OOVPATable
  #define REGISTER_OOVPA_18(Symbol, Version, ...) REGISTER_OOVPA(Symbol, Version), MSVC_EXPAND(REGISTER_OOVPA_17(Symbol, __VA_ARGS__))
  #define REGISTER_OOVPA_19(Symbol, Version, ...) REGISTER_OOVPA(Symbol, Version), MSVC_EXPAND(REGISTER_OOVPA_18(Symbol, __VA_ARGS__))
 
+#define OV_BYTES_0(...)
+ #define OV_BYTES_1(Offset, Value) OV_BYTE(Offset, Value)
+ #define OV_BYTES_2(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_1(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_3(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_2(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_4(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_3(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_5(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_4(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_6(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_5(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_7(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_6(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_8(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_7(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_9(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_8(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_10(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_9(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_11(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_10(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_12(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_11(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_13(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_12(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_14(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_13(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_15(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_14(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_16(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_15(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_17(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_16(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_18(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_17(Offset+1, __VA_ARGS__))
+ #define OV_BYTES_19(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_18(Offset+1, __VA_ARGS__))
+
 // Accept any number of args >= N, but expand to just the Nth one. In this case,
 // we have settled on 20 as N. We could pick a different number by adjusting
 // the count of throwaway args before N. Note that this macro is preceded by
@@ -182,13 +218,17 @@ typedef struct _OOVPATable
      _9,  _8,  _7,  _6,  _5,  _4,  _3,  _2,  _1,  _0, \
     N, ...) N
 
-// NOTE: A reminder for all of developers, TYPE argument is meant for research documentation.
-// (eventually UNPATCHED will be replace back to PATCH once LLE is fully supportive in the future)
 #define REGISTER_OOVPAS(Symbol, ...) MSVC_EXPAND(_GET_NTH_ARG("ignored", __VA_ARGS__, \
     REGISTER_OOVPA_19, REGISTER_OOVPA_18, REGISTER_OOVPA_17, REGISTER_OOVPA_16, REGISTER_OOVPA_15, \
     REGISTER_OOVPA_14, REGISTER_OOVPA_13, REGISTER_OOVPA_12, REGISTER_OOVPA_11, REGISTER_OOVPA_10, \
     REGISTER_OOVPA_9, REGISTER_OOVPA_8, REGISTER_OOVPA_7, REGISTER_OOVPA_6, REGISTER_OOVPA_5, \
     REGISTER_OOVPA_4, REGISTER_OOVPA_3, REGISTER_OOVPA_2, REGISTER_OOVPA_1, REGISTER_OOVPA_0)(Symbol, __VA_ARGS__))
+
+#define OV_MATCH(Offset, ...) MSVC_EXPAND(_GET_NTH_ARG("ignored", __VA_ARGS__, \
+    OV_BYTES_19, OV_BYTES_18, OV_BYTES_17, OV_BYTES_16, OV_BYTES_15, \
+    OV_BYTES_14, OV_BYTES_13, OV_BYTES_12, OV_BYTES_11, OV_BYTES_10, \
+    OV_BYTES_9, OV_BYTES_8, OV_BYTES_7, OV_BYTES_6, OV_BYTES_5, \
+    OV_BYTES_4, OV_BYTES_3, OV_BYTES_2, OV_BYTES_1, OV_BYTES_0)(Offset, __VA_ARGS__))
 
 #pragma pack()
 

@@ -72,6 +72,6 @@ OOVPATable XNET_OOVPAV2[] = {
 // ******************************************************************
 // * XNET_OOVPA_COUNT
 // ******************************************************************
-#define XNET_OOVPA_COUNT OOVPA_TABLE_COUNT(XNET_OOVPAV2)
+#define XNET_OOVPA_COUNT XBSDB_ARRAY_SIZE(XNET_OOVPAV2)
 
 #endif

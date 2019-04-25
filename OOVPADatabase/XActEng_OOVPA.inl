@@ -98,6 +98,6 @@ OOVPATable XACTENG_OOVPAV2[] = {
 // ******************************************************************
 // * XACTENG_OOVPA_COUNT
 // ******************************************************************
-#define XACTENG_OOVPA_COUNT OOVPA_TABLE_COUNT(XACTENG_OOVPAV2)
+#define XACTENG_OOVPA_COUNT XBSDB_ARRAY_SIZE(XACTENG_OOVPAV2)
 
 #endif

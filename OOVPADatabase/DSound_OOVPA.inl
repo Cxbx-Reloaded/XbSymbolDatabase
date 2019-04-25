@@ -513,6 +513,6 @@ OOVPATable DSound_OOVPAV2[] = {
 // ******************************************************************
 // * DSound_OOVPA_COUNT
 // ******************************************************************
-#define DSound_OOVPA_COUNT OOVPA_TABLE_COUNT(DSound_OOVPAV2)
+#define DSound_OOVPA_COUNT XBSDB_ARRAY_SIZE(DSound_OOVPAV2)
 
 #endif
