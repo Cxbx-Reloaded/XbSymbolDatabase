@@ -82,6 +82,13 @@ static inline uint32_t BitScanReverse(uint32_t value)
 
 typedef uint8_t* memptr_t;
 
+typedef bool (*custom_scan_func_t)(uint32_t LibraryFlag,
+                                   const xbe_section_header* pSectionHeader,
+                                   unsigned short BuildVersion,
+                                   const char* LibraryStr,
+                                   xb_symbol_register_t register_func,
+                                   memptr_t xb_start_virt_addr);
+
 typedef const struct _PairScanLibSec {
     uint32_t library;
     const char *section[PAIRSCANSEC_MAX];
@@ -494,7 +501,58 @@ void* XbSymbolLocateFunction(const char* szFuncName,
 #define XbSymbolLocateFunctionCast(szFuncName, version, Oovpa, lower, upper, xb_start_virtual_addr) \
         XbSymbolLocateFunction(szFuncName, version, (OOVPA*)Oovpa, lower, upper, (uintptr_t)xb_start_virtual_addr)
 
-void XbSymbolRegisterSymbol(OOVPATable* OovpaTable,
+static inline void XbSymbolRegisterXRef(const char* LibraryName,
+                                        uint32_t LibraryFlag,
+                                        uint32_t XRefIndex,
+                                        uint16_t version,
+                                        const char* symbol_name,
+                                        uint32_t symbol_addr,
+                                        xb_symbol_register_t register_func)
+{
+    if (XRefDataBase[XRefIndex] != XREF_ADDR_UNDETERMINED && XRefDataBase[XRefIndex] != XREF_ADDR_DERIVE) {
+
+        if (XRefDataBase[XRefIndex] != symbol_addr) {
+            XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_WARN, "Duplicate XREF address found for %s (%hu), %08X vs %08X!",
+                symbol_name, version, XRefDataBase[XRefIndex], symbol_addr);
+        }
+
+        if (bScanFirstDetect) {
+            return;
+        }
+    }
+
+    XRefDataBase[XRefIndex] = symbol_addr;
+    if (register_func != NULL) {
+        register_func(LibraryName, LibraryFlag, symbol_name, symbol_addr, version);
+    }
+}
+
+static inline void XbSymbolRegisterSymbol(const char* LibraryName,
+                                          uint32_t LibraryFlag,
+                                          uint32_t XRefIndex,
+                                          uint16_t version,
+                                          const char* symbol_name,
+                                          uint32_t symbol_addr,
+                                          xb_symbol_register_t register_func)
+{
+    // do we need to save the found address?
+    if (XRefIndex != XRefNoSaveIndex) {
+        // If XRef is not found, save it then register once.
+        if (XRefDataBase[XRefIndex] == XREF_ADDR_UNDETERMINED) {
+            UnResolvedXRefs--;
+            XRefDataBase[XRefIndex] = symbol_addr;
+            if (register_func != NULL) {
+                register_func(LibraryName, LibraryFlag, symbol_name, symbol_addr, version);
+            }
+        }
+    }
+    else if (register_func != NULL) {
+        register_func(LibraryName, LibraryFlag, symbol_name, symbol_addr, version);
+    }
+}
+
+
+void XbSymbolRegisterOOVPA(OOVPATable* OovpaTable,
                             const char* LibraryName,
                             uint32_t    LibraryFlag,
                             xbaddr address,
@@ -504,17 +562,8 @@ void XbSymbolRegisterSymbol(OOVPATable* OovpaTable,
 
         OOVPA* Oovpa = OovpaTable->Oovpa;
 
-        // do we need to save the found address?
-        if (Oovpa->XRefSaveIndex != XRefNoSaveIndex) {
-            // If XRef is not found, save it then register once.
-            if (XRefDataBase[Oovpa->XRefSaveIndex] == XREF_ADDR_UNDETERMINED) {
-                UnResolvedXRefs--;
-                XRefDataBase[Oovpa->XRefSaveIndex] = address;
-                register_func(LibraryName, LibraryFlag, OovpaTable->szFuncName, address, OovpaTable->Version);
-            }
-        } else {
-            register_func(LibraryName, LibraryFlag, OovpaTable->szFuncName, address, OovpaTable->Version);
-        }
+        XbSymbolRegisterSymbol(LibraryName, LibraryFlag, Oovpa->XRefSaveIndex, OovpaTable->Version,
+            OovpaTable->szFuncName, address, register_func);
     }
 }
 
@@ -547,7 +596,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
             SymbolName = pLoop->szFuncName;
             if (pLastKnownSymbol != NULL) {
                 // Now that we found the address, store it (regardless if we patch it or not)
-                XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
+                XbSymbolRegisterOOVPA(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
                 pLastKnownSymbol = NULL;
                 pLastKnownFunc = 0;
             }
@@ -578,7 +627,7 @@ void XbSymbolScanOOVPA(OOVPATable *OovpaTable,
     }
 
     if (pLastKnownSymbol != NULL) {
-        XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
+        XbSymbolRegisterOOVPA(pLastKnownSymbol, LibraryName, LibraryFlag, pLastKnownFunc, register_func);
     }
 }
 
@@ -619,7 +668,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
                         if (SymbolName == NULL) {
                             SymbolName = pLoop->szFuncName;
                         } else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
-                            XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
+                            XbSymbolRegisterOOVPA(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
 
                             SymbolName = pLoop->szFuncName;
                             pLastKnownSymbol = NULL;
@@ -641,7 +690,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
                         pLastKnownFunc = pFunc;
                         pLastKnownSymbol = pLoop;
                     }
-                    XbSymbolRegisterSymbol(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
+                    XbSymbolRegisterOOVPA(pLastKnownSymbol, LibraryName, SymbolDBList[d2].LibSec.library, pLastKnownFunc, register_func);
                     break;
                 }
             }
@@ -1133,6 +1182,63 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
 
         XbSymbolDX8RegisterStream(LibraryFlag, LibraryStr, register_func, pFunc, iCodeOffsetFor_g_Stream);
     }
+}
+
+bool XbLibraryScan(custom_scan_func_t custom_scan_func,
+                   const void* xb_header_addr,
+                   xb_symbol_register_t register_func,
+                   bool is_raw,
+                   uint16_t BuildVersion,
+                   uint32_t LibraryFlag,
+                   const char* LibraryStr)
+{
+    const char* SectionName;
+    bool scan_ret = false;
+
+    const xbe_header* pXbeHeader = xb_header_addr;
+    memptr_t xb_start_addr = (memptr_t)xb_header_addr - pXbeHeader->dwBaseAddr;
+    memptr_t xb_start_virt_addr = xb_start_addr;
+
+    xbe_section_header* pSectionHeaders = (xbe_section_header*)(xb_start_addr + pXbeHeader->pSectionHeadersAddr);
+    xbe_section_header* pSectionScan;
+
+    for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
+
+        if (LibraryFlag == SymbolDBList[d2].LibSec.library) {
+            for (unsigned int s = 0; s < pXbeHeader->dwSections; s++) {
+                SectionName = (const char*)(xb_start_addr + pSectionHeaders[s].SectionNameAddr);
+
+                if (!is_raw) {
+                    // if an emulator did not load a section, then skip the section scan.
+                    if (pSectionHeaders[s].dwSectionRefCount == 0) {
+                        continue;
+                    }
+                }
+                else {
+                    xb_start_virt_addr = (((memptr_t)xb_header_addr + pSectionHeaders[s].dwRawAddr) - pSectionHeaders[s].dwVirtualAddr);
+                }
+
+                //Initialize a matching specific section is currently pair with library in order to scan specific section only.
+                //By doing this method will reduce false detection dramatically. If it had happened before.
+                for (unsigned int d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
+                    if (SymbolDBList[d2].LibSec.section[d3] != NULL && strncmp(SectionName, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
+                        pSectionScan = pSectionHeaders + s;
+
+                        XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section", LibraryStr, SectionName);
+
+                        scan_ret = custom_scan_func(LibraryFlag, pSectionScan, BuildVersion, LibraryStr, register_func, xb_start_virt_addr);
+
+                        if (!scan_ret) {
+                            continue;
+                        }
+                        return scan_ret;
+                    }
+                }
+            }
+            break;
+        }
+    }
+    return scan_ret;
 }
 
 bool XbSymbolScan(const void* xb_header_addr,
