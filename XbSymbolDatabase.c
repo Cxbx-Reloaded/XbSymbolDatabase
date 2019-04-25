@@ -74,6 +74,7 @@ static inline uint32_t BitScanReverse(uint32_t value)
 #include "OOVPADatabase/D3D8_OOVPA.inl"
 #include "OOVPADatabase/D3D8LTCG_OOVPA.inl"
 #include "OOVPADatabase/DSound_OOVPA.inl"
+#include "OOVPADatabase/JVS_OOVPA.inl"
 #include "OOVPADatabase/XGraphic_OOVPA.inl"
 #include "OOVPADatabase/XNet_OOVPA.inl"
 #include "OOVPADatabase/XOnline_OOVPA.inl"
@@ -119,6 +120,9 @@ SymbolDatabaseList SymbolDBList[] = {
 
     // DSOUNDH is just meant to define hot fix, there is no separate section
     //{ XbSymbolLib_DSOUNDH,{ Sec_DSOUND }, &DSound_OOVPAV2, DSound_OOVPA_COUNT },
+
+    // Only used in Chihiro applications
+    { XbSymbolLib_JVS,{ Sec_text, Sec_XPP, Sec_FLASHROM }, JVSLIB_OOVPA, JVSLIB_OOVPA_COUNT },
 
     //
     { XbSymbolLib_XACTENG, { Sec_XACTENG, Sec_FLASHROM }, XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
@@ -1359,6 +1363,7 @@ bool XbSymbolScan(const void* xb_header_addr,
 
     bool bDSoundLibHeader;
     xb_xbe_type xbe_type;
+    bool bCheckJVS = false;
 
     if (!XbSymbolInit(xb_header_addr, register_func, &xbe_type, &bDSoundLibHeader)) {
         return 0;
@@ -1504,6 +1509,16 @@ bool XbSymbolScan(const void* xb_header_addr,
                         LibraryFlag = XbSymbolLib_DSOUND;
                         BuildVersion = preserveVersion;
                         bDSoundLibSection = true; // In case if third-party application exclude scan for DSOUND library.
+                        continue;
+                    }
+
+                    // Verify if xbe type is not a retail for Chihiro applications.
+                    // NOTE: segaboots does report as Chihiro except others report as debug.
+                    if (xbe_type != XB_XBE_TYPE_RETAIL && bCheckJVS == false) {
+                        LibraryStr = Lib_JVS;
+                        LibraryFlag = XbSymbolLib_JVS;
+                        BuildVersion = preserveVersion;
+                        bCheckJVS = true;
                         continue;
                     }
                 }
