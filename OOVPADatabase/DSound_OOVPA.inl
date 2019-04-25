@@ -17,7 +17,7 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2017 RadWolfie
+// *  (c) 2017-2019 RadWolfie
 // *  (c) 2017 jarupxx
 // *
 // *  All rights reserved

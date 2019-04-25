@@ -18,6 +18,7 @@
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
 // *  (c) 2017 jarupxx
+// *  (c) 2019 RadWolfie
 // *
 // *  All rights reserved
 // *
