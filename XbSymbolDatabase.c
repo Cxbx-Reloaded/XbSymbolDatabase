@@ -35,6 +35,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <stddef.h>
 
 #ifdef _MSC_VER
 #include <intrin.h>
