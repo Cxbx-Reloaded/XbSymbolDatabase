@@ -35,12 +35,13 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <stddef.h>
 
 #ifdef _MSC_VER
 #include <intrin.h>
 static inline uint32_t BitScanReverse(uint32_t value)
 {
-    uint32_t index;
+    unsigned long index;
     if (!_BitScanReverse(&index, value)) {
         return 32;
     }
