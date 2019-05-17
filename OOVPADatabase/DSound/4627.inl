@@ -18,6 +18,7 @@
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
 // *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
+// *  (c) 2019 RadWolfie
 // *
 // *  All rights reserved
 // *
@@ -56,54 +57,6 @@ OOVPA_XREF(CDirectSound_SetVelocity, 4627, 15,
 OOVPA_END;
 
 // ******************************************************************
-// * CDirectSound::SetAllParametersA
-// ******************************************************************
-OOVPA_XREF(CDirectSound_SetAllParametersA, 4627, 10,
-
-    XREF_CDirectSound_SetAllParameters,
-    XRefZero)
-
-        { 0x16, 0x68 },
-        { 0x17, 0xE8 },
-        { 0x18, 0xF7 },
-        { 0x19, 0x2D },
-
-        { 0x2F, 0xD9 },
-        { 0x30, 0x41 },
-        { 0x31, 0x04 },
-
-        { 0x87, 0x8B },
-        { 0x88, 0x50 },
-        { 0x89, 0x08 },
-OOVPA_END;
-
-// ******************************************************************
-// * CDirectSound_SetPosition
-// ******************************************************************
-OOVPA_XREF(CDirectSound_SetPosition, 4627, 11,
-
-    XREF_CDirectSound_SetPosition,
-    XRefZero)
-
-        // CDirectSound_SetPosition+0x2B : mov ecx, [ebp+0x08]
-        { 0x2B, 0x8B },
-        { 0x2C, 0x4D },
-        { 0x2D, 0x08 },
-
-        // CDirectSound_SetPosition+0x3F : mov [edx+0x3C], edi
-        { 0x3F, 0x89 },
-        { 0x40, 0x7A },
-        { 0x41, 0x3C },
-
-        // CDirectSound_SetPosition+0x4C : or word ptr [eax+0xA4], 0x01FF
-        { 0x4C, 0x66 },
-        { 0x4D, 0x81 },
-        { 0x4E, 0x88 },
-        { 0x4F, 0xA4 },
-        { 0x53, 0xFF },
-OOVPA_END;
-
-// ******************************************************************
 // * CDirectSound_GetSpeakerConfig
 // ******************************************************************
 OOVPA_XREF(CDirectSound_GetSpeakerConfig, 4627, 14,
@@ -138,7 +91,7 @@ OOVPA_END;
 #define CMcpxBuffer_Play_Ex_4627 CMcpxBuffer_Play_Ex_4361
 
 // ******************************************************************
-// * CDirectSound::SetDistanceFactorA
+// * CDirectSound::SetDistanceFactor
 // ******************************************************************
 OOVPA_XREF(CDirectSound_SetDistanceFactor, 4627, 17,
 
@@ -202,30 +155,6 @@ OOVPA_XREF(CDirectSound_SetDopplerFactor, 4627, 14,
         // CDirectSound_SetDopplerFactor+0x4F : jz +0x0B
         { 0x4F, 0x74 },
         { 0x50, 0x0B },
-OOVPA_END;
-
-// ******************************************************************
-// * DirectSound::CDirectSoundVoice::SetFormat
-// ******************************************************************
-// Generic OOVPA as of 4721 and newer
-OOVPA_XREF(CDirectSoundVoice_SetFormat, 4721, 12,
-
-    XREF_CDirectSoundVoice_SetFormat,
-    XRefZero)
-
-        { 0x00, 0x56 },
-
-        { 0x06, 0x4E },
-        { 0x0E, 0xE8 },
-        { 0x18, 0x4E },
-        { 0x25, 0xFF },
-        { 0x2E, 0x0C },
-        { 0x2F, 0xE8 }, // call CMcpxVoiceClient::SetMixBins
-        { 0x34, 0x85 },
-        { 0x38, 0x8B },
-        { 0x3B, 0xE8 }, // call CMcpxVoiceClient::SetPitch
-        { 0x41, 0xC2 },
-        { 0x42, 0x08 },
 OOVPA_END;
 
 // ******************************************************************
@@ -304,4 +233,37 @@ OOVPA_XREF(CDirectSoundVoice_SetDopplerFactor, 4627, 12,
         // CDirectSoundVoice_SetDopplerFactor+0x31 : retn 0Ch
         { 0x31, 0x0C },
         { 0x32, 0x00 }
+OOVPA_END;
+
+// ******************************************************************
+// * CMcpxVoiceClient::Commit3dSettings
+// ******************************************************************
+OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 4627, 12,
+
+    XREF_CMcpxVoiceClient_Commit3dSettings,
+    XRefZero)
+
+        { 0x00, 0x55 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x42 : cmp edi, 0x02
+        { 0x42, 0x83 },
+        { 0x43, 0xFF },
+        { 0x44, 0x02 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x68 : mov e__,[e__+0x000000B4]
+        { 0x68, 0x8B },
+        //{ 0x69, 0x__ },
+        { 0x6A, 0xB4 },
+        { 0x6B, 0x00 },
+        //{ 0x6C, 0x00 },
+        { 0x6D, 0x00 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x77 : mov eax,[eax+0x000000B4]
+        { 0x77, 0x8B },
+        //{ 0x78, 0x80 },
+        { 0x79, 0xB4 },
+        { 0x7A, 0x00 },
+        //{ 0x7B, 0x00 },
+        { 0x7C, 0x00 },
+
 OOVPA_END;

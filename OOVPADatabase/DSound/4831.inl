@@ -18,6 +18,7 @@
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
 // *  (c) 2017 jarupxx
+// *  (c) 2019 RadWolfie
 // *
 // *  All rights reserved
 // *
@@ -102,32 +103,45 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxBuffer_GetStatus
 // ******************************************************************
-OOVPA_XREF(CMcpxBuffer_GetStatus, 4831, 13,
+// Generic OOVPA as of 4831 and newer
+OOVPA_XREF(CMcpxBuffer_GetStatus, 4831, 11,
 
     XREF_CMcpxBuffer_GetStatus,
     XRefZero)
 
+        // CMcpxBuffer_GetStatus+0x00 : movzx eax,word [ecx+0x12]
         { 0x00, 0x0F },
+        { 0x01, 0xB7 },
+//        { 0x02, 0x41 },
+//        { 0x03, 0x12 },
 
-        { 0x16, 0x6A },
-        { 0x17, 0x00 },
-        { 0x18, 0x5A },
+#if 0
+        // Offset is unique for this asm code.
+        // CMcpxBuffer_GetStatus+0x06 : and ecx, 0x03
+        { 0x06, 0x83 },
+        { 0x07, 0xE1 },
+        { 0x08, 0x03 },
+#endif
 
-        { 0x1C, 0x42 },
-        { 0x1D, 0xF6 },
-        { 0x1E, 0xC4 },
-        { 0x1F, 0x02 },
+        // Offset is unique for this asm code.
+        // CMcpxBuffer_GetStatus+0x09 : cmp cl, 0x03
+        { 0x09, 0x80 },
+        { 0x0A, 0xF9 },
+        { 0x0B, 0x03 },
 
-        { 0x29, 0xB9 },
-        { 0x2A, 0x01 },
-        { 0x2B, 0x80 },
+        // This asm code is unique.
+        // CMcpxBuffer_GetStatus+0x12 : test ax, 0x0444
+        { 0x12, 0x66 },
+        { 0x13, 0xA9 },
+        { 0x14, 0x44 },
+        { 0x15, 0x04 },
 
         { 0x3F, 0xC2 },
         { 0x40, 0x04 },
 OOVPA_END;
 
 // ******************************************************************
-// * public: long __thiscall DirectSound::CMcpxBuffer::Play(unsigned long)
+// * CMcpxBuffer::Play(unsigned long)
 // ******************************************************************
 // Generic OOVPA as of 4831 and newer
 OOVPA_XREF(CMcpxBuffer_Play, 4831, 11,
@@ -158,6 +172,7 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxStream_Pause
 // ******************************************************************
+// Generic OOVPA as of ____? and newer
 OOVPA_XREF(CMcpxStream_Pause, 4831, 11,
 
     XREF_CMcpxStream_Pause,
@@ -184,40 +199,34 @@ OOVPA_XREF(CMcpxStream_Pause, 4831, 11,
 OOVPA_END;
 
 // ******************************************************************
-// * CDirectSound::SetAllParametersA
+// * CMcpxBuffer::Pause(unsigned long)
 // ******************************************************************
-OOVPA_XREF(CDirectSound_SetAllParametersA, 4831, 10,
-
-    XREF_CDirectSound_SetAllParameters,
-    XRefZero)
-
-        { 0x16, 0x68 },
-        { 0x17, 0x08 },
-        { 0x18, 0x6E },
-        { 0x19, 0x18 },
-
-        { 0x2F, 0xD9 },
-        { 0x30, 0x41 },
-        { 0x31, 0x04 },
-
-        { 0x87, 0x8B },
-        { 0x88, 0x50 },
-        { 0x89, 0x08 },
-OOVPA_END;
-
-// ******************************************************************
-// * DirectSound::CMcpxBuffer::Pause
-// ******************************************************************
-OOVPA_XREF(CMcpxBuffer_Pause, 4831, 7,
+// Generic OOVPA as of 4831 and newer
+OOVPA_XREF(CMcpxBuffer_Pause, 4831, 10,
 
     XREF_CMcpxBuffer_Pause,
     XRefZero)
 
-        { 0x0D, 0x4D },
-        { 0x1C, 0x44 },
-        { 0x2B, 0x8B },
-        { 0x3A, 0x75 },
-        { 0x49, 0x7D },
-        { 0x58, 0xEB },
-        { 0x67, 0xE8 },
+        // CMcpxBuffer::Pause+0x00 : push ebp
+        { 0x00, 0x55 },
+
+        // Offset is unique for this asm code.
+        // CMcpxBuffer::Pause+0x27 : and eax, -0xBB
+        { 0x27, 0x83 },
+        { 0x28, 0xE0 },
+        { 0x29, 0xBB },
+
+        // CMcpxBuffer::Pause+0x2D : call [?]
+        { 0x2D, 0xE8 },
+
+        // Offset is unique for this asm code.
+        // CMcpxBuffer::Pause+0x40 : and eax, -0xBF
+        { 0x40, 0x83 },
+        { 0x41, 0xE0 },
+        { 0x42, 0xBF },
+
+        // CMcpxBuffer::Pause+0x70 : ret 4
+        { 0x70, 0xC2 },
+        { 0x71, 0x04 },
+
 OOVPA_END;

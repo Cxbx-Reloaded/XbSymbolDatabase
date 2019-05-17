@@ -17,7 +17,7 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
 // *
-// *  (c) 2017 RadWolfie
+// *  (c) 2017-2019 RadWolfie
 // *
 // *  All rights reserved
 // *
@@ -286,4 +286,98 @@ OOVPA_XREF(DirectSoundUseLightHRTF, 4242, 1+8,
         { 0x1A, 0x74 },
         { 0x1B, 0x0B },
         { 0x1C, 0x68 },
+OOVPA_END;
+
+// ******************************************************************
+// * CMcpxVoiceClient::Commit3dSettings
+// ******************************************************************
+OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 4242, 12,
+
+    XREF_CMcpxVoiceClient_Commit3dSettings,
+    XRefZero)
+
+        { 0x00, 0x55 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x43 : cmp edi, 0x02
+        { 0x43, 0x83 },
+        { 0x44, 0xFF },
+        { 0x45, 0x02 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x69 : mov e__,[e__+0x000000B4]
+        { 0x69, 0x8B },
+        //{ 0x6A, 0x__ },
+        { 0x6B, 0xB4 },
+        { 0x6C, 0x00 },
+        //{ 0x6D, 0x00 },
+        { 0x6E, 0x00 },
+
+        // CMcpxVoiceClient::Commit3dSettings+0x76 : mov eax,[eax+0x000000B4]
+        { 0x76, 0x8B },
+        //{ 0x77, 0x80 },
+        { 0x78, 0xB4 },
+        { 0x79, 0x00 },
+        //{ 0x7A, 0x00 },
+        { 0x7B, 0x00 },
+
+OOVPA_END;
+
+// ******************************************************************
+// * XFileCreateMediaObject
+// ******************************************************************
+OOVPA_XREF(XFileCreateMediaObject, 4242, 10,
+
+    XRefNoSaveIndex,
+    XRefZero)
+
+        OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+
+        OV_MATCH(0x3D, 0x18),
+        OV_MATCH(0x40, 0x14),
+        OV_MATCH(0x43, 0x10),
+        OV_MATCH(0x46, 0x0C),
+        OV_MATCH(0x49, 0x08),
+
+        OV_MATCH(0x80, 0xC2, 0x18),
+OOVPA_END;
+
+// ******************************************************************
+// * XFileCreateMediaObjectEx
+// ******************************************************************
+OOVPA_NO_XREF(XFileCreateMediaObjectEx, 4242, 12)
+
+        OV_MATCH(0x00, 0x53),
+        OV_MATCH(0x28, 0x1B),
+
+        OV_MATCH(0x36, 0x78, 0x1C, 0xFF, 0x74, 0x24, 0x10, 0x57, 0xE8),
+
+        OV_MATCH(0x72, 0xC2, 0x08),
+OOVPA_END;
+
+// ******************************************************************
+// * XWaveFileCreateMediaObject
+// ******************************************************************
+OOVPA_NO_XREF(XWaveFileCreateMediaObject, 4242, 12)
+
+        OV_MATCH(0x00, 0x53),
+        OV_MATCH(0x25, 0xF7),
+
+        OV_MATCH(0x45, 0xF6, 0x7C, 0x23, 0x83, 0x7C, 0x24, 0x14, 0x00),
+
+        OV_MATCH(0x89, 0xC2, 0x0C),
+OOVPA_END;
+
+// ******************************************************************
+// * XWaveFileCreateMediaObjectEx
+// ******************************************************************
+OOVPA_XREF(XWaveFileCreateMediaObjectEx, 4242, 12,
+
+    XRefNoSaveIndex,
+    XRefZero)
+
+        OV_MATCH(0x16, 0x0B),
+        OV_MATCH(0x25, 0xF7),
+
+        OV_MATCH(0x49, 0xEB, 0x0A, 0xFF, 0x74, 0x24, 0x14, 0x57, 0xE8),
+
+        OV_MATCH(0x85, 0xC2, 0x0C),
 OOVPA_END;
