@@ -174,6 +174,24 @@ xb_output_message output_verbose_level = XB_OUTPUT_MESSAGE_INFO;
 bool bOneTimeScan = true;
 bool bScanFirstDetect = false;
 
+// ported from Dxbx's XbeExplorer
+static xb_xbe_type GetXbeType(const xbe_header *pXbeHeader)
+{
+    // Detect if the XBE is for Chihiro (Untested!) :
+    // This is based on https://github.com/radare/radare2/blob/7ffe2599a192bf5b9333560345f80dd97f096277/libr/bin/p/bin_xbe.c#L29
+    if ((pXbeHeader->dwEntryAddr & 0xf0000000) == 0x40000000) {
+        return XB_XBE_TYPE_CHIHIRO;
+    }
+
+    // Check for Debug XBE, using high bit of the kernel thunk address :
+    // (DO NOT test like https://github.com/radare/radare2/blob/7ffe2599a192bf5b9333560345f80dd97f096277/libr/bin/p/bin_xbe.c#L33 !)
+    if ((pXbeHeader->dwKernelImageThunkAddr & 0x80000000) > 0) {
+        return XB_XBE_TYPE_DEBUG;
+    }
+
+    // Otherwise, the XBE is a Retail build :
+    return XB_XBE_TYPE_RETAIL;
+}
 
 // ******************************************************************
 // * API functions to use with other projects.
@@ -703,6 +721,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address,
 
 bool XbSymbolInit(const void* xb_header_addr,
                   xb_symbol_register_t register_func,
+                  xb_xbe_type* xbe_type,
                   bool* pbDSoundLibHeader)
 {
     if (xb_header_addr == NULL || register_func == NULL) {
@@ -757,6 +776,9 @@ bool XbSymbolInit(const void* xb_header_addr,
                 break;
             }
         }
+
+        // Detect xbe type
+        *xbe_type = GetXbeType(pXbeHeader);
     }
     return 1;
 }
@@ -1336,10 +1358,13 @@ bool XbSymbolScan(const void* xb_header_addr,
 {
 
     bool bDSoundLibHeader;
+    xb_xbe_type xbe_type;
 
-    if (!XbSymbolInit(xb_header_addr, register_func, &bDSoundLibHeader)) {
+    if (!XbSymbolInit(xb_header_addr, register_func, &xbe_type, &bDSoundLibHeader)) {
         return 0;
     }
+
+    XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_DEBUG, "xbe type is %s", xbe_type_str[xbe_type]);
 
     const xbe_header* pXbeHeader = xb_header_addr;
     memptr_t xb_start_addr = (memptr_t)xb_header_addr - pXbeHeader->dwBaseAddr;
