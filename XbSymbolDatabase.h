@@ -414,6 +414,20 @@ typedef enum _xb_output_message {
     XB_OUTPUT_MESSAGE_MAX
 } xb_output_message;
 
+typedef enum _xb_xbe_type {
+    XB_XBE_TYPE_RETAIL=0,
+    XB_XBE_TYPE_DEBUG,
+    XB_XBE_TYPE_CHIHIRO,
+    // Only for internal usage.
+    XB_XBE_TYPE_MAX
+} xb_xbe_type;
+
+static const char* xbe_type_str[XB_XBE_TYPE_MAX] = {
+    "RETAIL",
+    "DEBUG",
+    "CHIHIRO"
+};
+
 #ifndef xbaddr
 typedef uint32_t xbaddr;
 #endif
