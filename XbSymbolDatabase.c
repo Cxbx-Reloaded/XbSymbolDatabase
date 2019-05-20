@@ -1374,8 +1374,11 @@ bool XbSymbolScan(const void* xb_header_addr,
             do {
 
                 // Temporary placeholder until v2.0 API's section scan function is ready or may be permanent in here.
-                // Scan specific library if third-party set to specific library or not.
-                if (g_library_flag == 0 || (g_library_flag & LibraryFlag) > 0) {
+                // Skip specific library if third-party set to specific library.
+                if (!(g_library_flag == 0 || (g_library_flag & LibraryFlag) > 0)) {
+                    XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_DEBUG, "Skipping %.8s (%hu) scan.", LibraryStr, BuildVersion);
+                }
+                else {
 
                     pSectionScan = NULL;
 
