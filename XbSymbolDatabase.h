@@ -56,6 +56,7 @@ extern "C" {
 #define Sec_D3DX        "D3DX"
 #define Lib_DSOUND      "DSOUND"
 #define Sec_DSOUND      Lib_DSOUND
+#define Lib_JVS         "JVS"
 #define Lib_XACTENG     "XACTENG"
 #define Sec_XACTENG     Lib_XACTENG
 #define Lib_XAPILIB     "XAPILIB"
@@ -74,18 +75,20 @@ extern "C" {
 #define XbSymbolLib_D3D8LTCG    (1 << 1)
 #define XbSymbolLib_D3DX8       (1 << 2)
 #define XbSymbolLib_DSOUND      (1 << 3)
-#define XbSymbolLib_XACTENG     (1 << 4)
-#define XbSymbolLib_XAPILIB     (1 << 5)
-#define XbSymbolLib_XGRAPHC     (1 << 6)
-#define XbSymbolLib_XNET        (1 << 7)
-#define XbSymbolLib_XNETN       (1 << 8)
-#define XbSymbolLib_XNETS       (1 << 9)
-#define XbSymbolLib_XONLINE     (1 << 10)
-#define XbSymbolLib_XONLINES    (1 << 11)
+#define XbSymbolLib_JVS         (1 << 4)
+#define XbSymbolLib_XACTENG     (1 << 5)
+#define XbSymbolLib_XAPILIB     (1 << 6)
+#define XbSymbolLib_XGRAPHC     (1 << 7)
+#define XbSymbolLib_XNET        (1 << 8)
+#define XbSymbolLib_XNETN       (1 << 9)
+#define XbSymbolLib_XNETS       (1 << 10)
+#define XbSymbolLib_XONLINE     (1 << 11)
+#define XbSymbolLib_XONLINES    (1 << 12)
 
 #define XbSymbolLib_ALL ( XbSymbolLib_D3D8| XbSymbolLib_D3D8LTCG| XbSymbolLib_D3DX8| XbSymbolLib_DSOUND \
-                        | XbSymbolLib_XACTENG| XbSymbolLib_XAPILIB| XbSymbolLib_XGRAPHC| XbSymbolLib_XNET \
-                        | XbSymbolLib_XNETN| XbSymbolLib_XNETS| XbSymbolLib_XONLINE| XbSymbolLib_XONLINES)
+                        | XbSymbolLib_JVS| XbSymbolLib_XACTENG| XbSymbolLib_XAPILIB| XbSymbolLib_XGRAPHC \
+                        | XbSymbolLib_XNET| XbSymbolLib_XNETN| XbSymbolLib_XNETS| XbSymbolLib_XONLINE \
+                        | XbSymbolLib_XONLINES)
 
 // ******************************************************************
 // * XRefDataBaseOffset
