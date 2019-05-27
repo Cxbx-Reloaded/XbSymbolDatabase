@@ -65,7 +65,7 @@
 // ******************************************************************
 OOVPATable D3D8LTCG_OOVPAV2[] = {
 
-    REGISTER_OOVPAS(D3D_MakeRequestedSpace, 1024, 1036, 1048),
+    REGISTER_OOVPAS(D3D_MakeRequestedSpace, 1024, 1036), //TODO: Need to verify, both versions are in 5849. Plus D3D8 symbol is detected.
     REGISTER_OOVPAS(D3D_MakeRequestedSpace, 2048),
     REGISTER_OOVPAS(D3D_SetFence, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3D_BlockOnTime, 1024, 1036, 1048),
@@ -242,6 +242,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(Lock2DSurface_16, 2048),
 
 // *********************** Copy from D3D8.OOVPA.inl *****************
+    REGISTER_OOVPAS(CDevice_MakeSpace, 3911),
     REGISTER_OOVPAS(CMiniport_CreateCtxDmaObject, 3911, 4034),
     REGISTER_OOVPAS(CMiniport_InitHardware, 3911, 4034, 5455),
     REGISTER_OOVPAS(CMiniport_IsFlipPending, 3911, 4242, 4627, 4928),
@@ -342,7 +343,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_LightEnable, 3911, 5344), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_LoadVertexShader, 3911, 4034, 4627, 5028),
     REGISTER_OOVPAS(D3DDevice_LoadVertexShaderProgram, 3911),
-    REGISTER_OOVPAS(D3DDevice_MakeSpace, 4134),
+    REGISTER_OOVPAS(D3DDevice_MakeSpace, 4034, 4134),
     REGISTER_OOVPAS(D3DDevice_PersistDisplay, 3911, 4039, 4627, 4831, 5455, 5558),
     REGISTER_OOVPAS(D3DDevice_Present, 3911),
     REGISTER_OOVPAS(D3DDevice_PrimeVertexCache, 3911, 4039),
@@ -478,7 +479,8 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(Get2DSurfaceDesc, 3911, 4034), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(Lock2DSurface, 3911),
     REGISTER_OOVPAS(Lock3DSurface, 3911),
-    REGISTER_OOVPAS(D3D_MakeRequestedSpace, 4134, 5028, 5558),
+    REGISTER_OOVPAS(D3D_MakeRequestedSpace_4, 4034),
+    REGISTER_OOVPAS(D3D_MakeRequestedSpace_8, 4134, 5558),
     REGISTER_OOVPAS(XMETAL_StartPush, 3911),
     REGISTER_OOVPAS(IDirect3DVertexBuffer8_Lock, 4627),
 };

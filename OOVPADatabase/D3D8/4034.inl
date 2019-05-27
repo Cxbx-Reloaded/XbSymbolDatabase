@@ -1698,3 +1698,51 @@ OOVPA_NO_XREF(D3DDevice_SetStateUP, 4034, 15)
         { 0x4F, 0x3B },
         { 0x50, 0xC1 },
 OOVPA_END;
+
+// ******************************************************************
+// * D3D::MakeRequestedSpace
+// ******************************************************************
+// Generic OOVPA as of 4034 and newer.
+OOVPA_XREF(D3D_MakeRequestedSpace_4, 4034, 12,
+
+    XREF_D3D_MakeRequestedSpace,
+    XRefZero)
+
+        // D3D::MakeRequestedSpace+0x00 : push ecx; push esi
+        OV_MATCH(0x00, 0x51, 0x56),
+
+        // D3D::MakeRequestedSpace+0x08 : test [esi+0x08],0x04
+        OV_MATCH(0x08, 0xF6, 0x46, 0x08, 0x04),
+
+        // D3D::MakeRequestedSpace+0x20 : sub ecx,edi; add edx,ecx
+        OV_MATCH(0x20, 0x2B, 0xCF, 0x03, 0xD1),
+
+        // D3D::MakeRequestedSpace+0x32 : ret 0x0004
+        OV_MATCH(0x32, 0xC2, 0x04),
+
+OOVPA_END;
+
+// ******************************************************************
+// * D3DDevice_MakeSpace
+// ******************************************************************
+OOVPA_XREF(D3DDevice_MakeSpace, 4034, 1+4,
+
+    XREF_D3DDevice_MakeSpace,
+    XRefOne)
+
+        // D3DDevice_MakeSpace+0x06 : call D3D::MakeRequestedSpace
+        XREF_ENTRY(0x07, XREF_D3D_MakeRequestedSpace),
+
+        // D3DDevice_MakeSpace+0x00 : mov eax,[addr]
+        OV_MATCH(0x00, 0xA1),
+
+        // D3DDevice_MakeSpace+0x05 : push eax
+        OV_MATCH(0x05, 0x50),
+
+        // D3DDevice_MakeSpace+0x06 : call D3D::MakeRequestedSpace
+        OV_MATCH(0x06, 0xE8),
+
+        // D3DDevice_MakeSpace+0x0B : ret
+        OV_MATCH(0x0B, 0xC3),
+
+OOVPA_END;

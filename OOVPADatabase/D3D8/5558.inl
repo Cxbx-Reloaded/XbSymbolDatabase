@@ -351,40 +351,24 @@ OOVPA_END;
 // ******************************************************************
 // * D3D::MakeRequestedSpace
 // ******************************************************************
-OOVPA_XREF(D3D_MakeRequestedSpace, 5558, 26, // Also for 5659
+// Generic OOVPA as of 5558 and newer.
+OOVPA_XREF(D3D_MakeRequestedSpace_8, 5558, 12,
 
     XREF_D3D_MakeRequestedSpace,
     XRefZero)
 
-        { 0x00, 0x51 },
-        { 0x01, 0x56 },
-        { 0x02, 0x8B },
-        { 0x03, 0x35 },
+        // D3D::MakeRequestedSpace+0x00 : push ecx; push esi
+        OV_MATCH(0x00, 0x51, 0x56),
 
-        { 0x08, 0xF6 },
-        { 0x09, 0x46 },
-        { 0x0A, 0x08 },
-        { 0x0B, 0x04 },
-        { 0x0C, 0x57 },
-        { 0x0D, 0x74 },
-        { 0x0E, 0x26 },
-        { 0x0F, 0x8B },
-        { 0x10, 0x86 },
-//        { 0x11, 0x60 }, // 0x64 for 5558.4
-        { 0x12, 0x07 },
-        { 0x13, 0x00 },
-        { 0x14, 0x00 },
-        { 0x15, 0x8B },
-        { 0x16, 0x78 },
-        { 0x17, 0x04 },
-        { 0x18, 0x8B },
-        { 0x19, 0x0E },
-        { 0x1A, 0x8B },
-        { 0x1B, 0x96 },
-//        { 0x1C, 0x64 }, // 0x68 for 5558.4
-        { 0x1D, 0x07 },
-        { 0x1E, 0x00 },
-        { 0x1F, 0x00 },
+        // D3D::MakeRequestedSpace+0x08 : test [esi+0x08],0x04
+        OV_MATCH(0x08, 0xF6, 0x46, 0x08, 0x04),
+
+        // D3D::MakeRequestedSpace+0x20 : sub ecx,edi; add edx,ecx
+        OV_MATCH(0x20, 0x2B, 0xCF, 0x03, 0xD1),
+
+        // D3D::MakeRequestedSpace+0x32 : ret 0x08
+        OV_MATCH(0x32, 0xC2, 0x08),
+
 OOVPA_END;
 
 // ******************************************************************

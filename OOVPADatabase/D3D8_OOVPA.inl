@@ -183,6 +183,7 @@
 // ******************************************************************
 OOVPATable D3D8_OOVPAV2[] = {
 
+    REGISTER_OOVPAS(CDevice_MakeSpace, 3911), // NOTE: has multiple rets.
     REGISTER_OOVPAS(CMiniport_CreateCtxDmaObject, 3911, 4034),
     REGISTER_OOVPAS(CMiniport_InitHardware, 3911, 4034, 5455),
     REGISTER_OOVPAS(CMiniport_IsFlipPending, 3911, 4242, 4627, 4928),
@@ -283,7 +284,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_LightEnable, 3911, 5344), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_LoadVertexShader, 3911, 4034, 4627, 5028),
     REGISTER_OOVPAS(D3DDevice_LoadVertexShaderProgram, 3911),
-    REGISTER_OOVPAS(D3DDevice_MakeSpace, 4134),
+    REGISTER_OOVPAS(D3DDevice_MakeSpace, 4034, 4134), // NOTE: LTCG has duplicate functions, need to find out how to resolve this issue with cross referencing.
     REGISTER_OOVPAS(D3DDevice_PersistDisplay, 3911, 4039, 4627, 4831, 5455, 5558),
     REGISTER_OOVPAS(D3DDevice_Present, 3911),
     REGISTER_OOVPAS(D3DDevice_PrimeVertexCache, 3911, 4039),
@@ -419,7 +420,8 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(Get2DSurfaceDesc, 3911, 4034), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(Lock2DSurface, 3911),
     REGISTER_OOVPAS(Lock3DSurface, 3911),
-    REGISTER_OOVPAS(D3D_MakeRequestedSpace, 4134, 5028, 5558),
+    REGISTER_OOVPAS(D3D_MakeRequestedSpace_4, 4034), // Final generic OOVPA: 4034??; Removed: 4134 // NOTE: has multiple rets.
+    REGISTER_OOVPAS(D3D_MakeRequestedSpace_8, 4134, 5558), // Final generic OOVPA: 5558; Removed: 0 // NOTE: has multiple rets.
     REGISTER_OOVPAS(XMETAL_StartPush, 3911),
     REGISTER_OOVPAS(IDirect3DVertexBuffer8_Lock, 4627),
 };

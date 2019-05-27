@@ -439,42 +439,28 @@ OOVPA_NO_XREF(D3DDevice_EnableOverlay, 4134, 11)
 OOVPA_END;
 
 // ******************************************************************
-// * D3D_MakeRequestedSpace
+// * D3D::MakeRequestedSpace
 // ******************************************************************
-OOVPA_XREF(D3D_MakeRequestedSpace, 4134, 28, // Also for 4361, 4627
+OOVPA_XREF(D3D_MakeRequestedSpace_8, 4134, 14,
 
     XREF_D3D_MakeRequestedSpace,
     XRefZero)
 
-        { 0x00, 0x83 },
-        { 0x01, 0xEC },
-        { 0x02, 0x08 },
-        { 0x03, 0x56 },
-        { 0x04, 0x8B },
-        { 0x05, 0x35 },
+        // D3D::MakeRequestedSpace+0x00 : sub esp,0x__
+        OV_MATCH(0x00, 0x83, 0xEC),
 
-        { 0x0A, 0xF6 },
-        { 0x0B, 0x46 },
-        { 0x0C, 0x08 },
-        { 0x0D, 0x04 },
-        { 0x0E, 0x8B },
-        { 0x0F, 0x0E },
-        { 0x10, 0x57 },
-        { 0x11, 0x74 },
-        { 0x12, 0x26 },
-        { 0x13, 0x8B },
-        { 0x14, 0x86 },
-        { 0x15, 0x50 },
-        { 0x16, 0x03 },
-        { 0x17, 0x00 },
-        { 0x18, 0x00 },
-        { 0x19, 0x8B },
-        { 0x1A, 0x78 },
-        { 0x1B, 0x04 },
-        { 0x1C, 0x8B },
-        { 0x1D, 0x96 },
-        { 0x1E, 0x54 },
-        { 0x1F, 0x03 },
+        // D3D::MakeRequestedSpace+0x0A : test [esi+0x08],0x04
+        OV_MATCH(0x0A, 0xF6, 0x46, 0x08, 0x04),
+
+        // D3D::MakeRequestedSpace+0x22 : sub ecx,edi; add edx,ecx
+        OV_MATCH(0x22, 0x2B, 0xCF, 0x03, 0xD1),
+
+        // D3D::MakeRequestedSpace+0x33 : add esp,0x__
+        OV_MATCH(0x33, 0x83, 0xC4),
+
+        // D3D::MakeRequestedSpace+0x36 : ret 0x0008
+        OV_MATCH(0x36, 0xC2, 0x08),
+
 OOVPA_END;
 
 // ******************************************************************
@@ -703,20 +689,25 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_MakeSpace
 // ******************************************************************
-OOVPA_XREF(D3DDevice_MakeSpace, 4134, 1+7,
+OOVPA_XREF(D3DDevice_MakeSpace, 4134, 1+4,
 
-    XRefNoSaveIndex,
+    XREF_D3DDevice_MakeSpace,
     XRefOne)
 
-        XREF_ENTRY( 0x0A, XREF_D3D_MakeRequestedSpace ),
+        // D3DDevice_MakeSpace+0x09 : call D3D::MakeRequestedSpace
+        XREF_ENTRY(0x0A, XREF_D3D_MakeRequestedSpace),
 
-        { 0x00, 0xA1 },
-        { 0x05, 0x50 },
-        { 0x06, 0xD1 },
-        { 0x07, 0xE8 },
-        { 0x08, 0x50 },
-        { 0x09, 0xE8 },
-        { 0x0E, 0xC3 },
+        // D3DDevice_MakeSpace+0x00 : mov eax,[addr]
+        OV_MATCH(0x00, 0xA1),
+
+        // D3DDevice_MakeSpace+0x05 : push eax
+        OV_MATCH(0x05, 0x50),
+
+        // D3DDevice_MakeSpace+0x09 : call D3D::MakeRequestedSpace
+        OV_MATCH(0x09, 0xE8),
+
+        // D3DDevice_MakeSpace+0x0E : ret
+        OV_MATCH(0x0E, 0xC3),
 OOVPA_END;
 
 // ******************************************************************

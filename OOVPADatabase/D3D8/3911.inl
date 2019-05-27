@@ -4981,3 +4981,27 @@ OOVPA_NO_XREF(CMiniport_IsFlipPending, 3911, 14)
         { 0x0C, 0x00 },
         { 0x0D, 0xC3 },
 OOVPA_END;
+
+// ******************************************************************
+// * CDevice::MakeSpace_4
+// ******************************************************************
+OOVPA_XREF(CDevice_MakeSpace, 3911, 13,
+    XREF_D3D_CDevice_MakeSpace,
+    XRefZero)
+
+        // CDevice::MakeSpace_4+0x00 : sub esp,0x__
+        OV_MATCH(0x00, 0x83, 0xEC),
+
+        // CDevice::MakeSpace_4+0x06 : test [esi+0x0C],0x04
+        OV_MATCH(0x06, 0xF6, 0x46, 0x0C, 0x04),
+
+        // CDevice::MakeSpace_4+0x1E : sub ecx,edi; add edx,ecx
+        OV_MATCH(0x1E, 0x2B, 0xCF, 0x03, 0xD1),
+
+        // CDevice::MakeSpace_4+0x2F : add esp,0x__
+        OV_MATCH(0x2F, 0x83, 0xC4),
+
+        // CDevice::MakeSpace_4+0x32 : ret
+        OV_MATCH(0x32, 0xC3),
+
+OOVPA_END;

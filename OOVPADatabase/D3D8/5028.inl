@@ -594,45 +594,6 @@ OOVPA_NO_XREF(D3DDevice_DrawIndexedVerticesUP, 5028, 17) // Also for 5120, 5233
 OOVPA_END;
 
 // ******************************************************************
-// * D3D_MakeRequestedSpace
-// ******************************************************************
-OOVPA_XREF(D3D_MakeRequestedSpace, 5028, 28, // Also for 5344
-
-    XREF_D3D_MakeRequestedSpace,
-    XRefZero)
-
-        { 0x00, 0x83 },
-        { 0x01, 0xEC },
-        { 0x02, 0x08 },
-        { 0x03, 0x56 },
-        { 0x04, 0x8B },
-        { 0x05, 0x35 },
-
-        { 0x0A, 0xF6 },
-        { 0x0B, 0x46 },
-        { 0x0C, 0x08 },
-        { 0x0D, 0x04 },
-        { 0x0E, 0x8B },
-        { 0x0F, 0x0E },
-        { 0x10, 0x57 },
-        { 0x11, 0x74 },
-        { 0x12, 0x26 },
-        { 0x13, 0x8B },
-        { 0x14, 0x86 },
-        { 0x15, 0x4C },
-        { 0x16, 0x03 },
-        { 0x17, 0x00 },
-        { 0x18, 0x00 },
-        { 0x19, 0x8B },
-        { 0x1A, 0x78 },
-        { 0x1B, 0x04 },
-        { 0x1C, 0x8B },
-        { 0x1D, 0x96 },
-        { 0x1E, 0x50 },
-        { 0x1F, 0x03 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_GetShaderConstantMode
 // ******************************************************************
 OOVPA_NO_XREF(D3DDevice_GetShaderConstantMode, 5028, 16)
