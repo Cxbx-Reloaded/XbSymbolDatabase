@@ -96,7 +96,7 @@ extern "C" {
 typedef enum _XRefDataBaseOffset
 {
     // D3D variable addresses
-    XREF_D3DDEVICE=0, // initially set to XREF_ADDR_DERIVE // TODO : Rename to XREF_GLOBAL_PDEVICE or something?
+    XREF_D3DDEVICE=0, // initially set to XREF_ADDR_DERIVE // TODO : Rename to XREF_D3D__PDEVICE or something? // NOTE: There is such thing as D3D__DEVICE except it is at different address.
     XREF_D3DRS_CULLMODE, // initially set to XREF_ADDR_DERIVE
     //XREF_D3DRS_MULTISAMPLEMODE, // Avoid; It replaced to X_D3DRS_MULTISAMPLETYPE around XDK 4361
     XREF_D3DRS_MULTISAMPLERENDERTARGETMODE, // initially set to XREF_ADDR_DERIVE

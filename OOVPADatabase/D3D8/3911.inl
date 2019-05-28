@@ -2211,33 +2211,27 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetRenderState_Simple
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_Simple, 3911, 14)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_NO_XREF(D3DDevice_SetRenderState_Simple, 3911, 12)
 
-        // D3DDevice_SetRenderState_Simple+0x00 : mov eax, [addr]
-        { 0x00, 0xA1 },
+        // D3DDevice_SetRenderState_Simple+0x00 : mov eax, [D3D__DEVICE]
+        OV_MATCH(0x00, 0xA1),
 
         // D3DDevice_SetRenderState_Simple+0x05 : add eax, 0x08
-        { 0x05, 0x83 },
-        { 0x06, 0xC0 },
-        { 0x07, 0x08 },
+        OV_MATCH(0x05, 0x83, 0xC0, 0x08),
 
-        // D3DDevice_SetRenderState_Simple+0x0E : jnb +0x0C
-        { 0x0E, 0x73 },
-        { 0x0F, 0x0C },
-
+        // Unique offset
         // D3DDevice_SetRenderState_Simple+0x15 : mov [eax-8], ecx
-        { 0x15, 0x89 },
-        { 0x16, 0x48 },
-        { 0x17, 0xF8 },
+        OV_MATCH(0x15, 0x89, 0x48, 0xF8),
 
+        // Unique offset
         // D3DDevice_SetRenderState_Simple+0x18 : mov [eax-4], ecx
-        { 0x18, 0x89 },
-        { 0x19, 0x50 },
-        { 0x1A, 0xFC },
+        OV_MATCH(0x18, 0x89, 0x50, 0xFC),
 
-        // D3DDevice_SetRenderState_Simple+0x2B : jmp +0xD3
-        { 0x2B, 0xEB },
-        { 0x2C, 0xD3 },
+        // D3DDevice_SetRenderState_Simple+0x1C : push edx; push ecx
+        OV_MATCH(0x1C, 0x52, 0x51),
+
+        // Offset 0x1E and later has shift forward in 4034
 OOVPA_END;
 
 // ******************************************************************

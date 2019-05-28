@@ -329,7 +329,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZRead, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_SampleAlpha, 4627),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ShadowFunc, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_Simple, 3911, 4034),
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_Simple, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilCullEnable, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilEnable, 3911, 4034, 5849),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilFail, 3911, 4034, 5849),
@@ -392,7 +392,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DTexture_GetSurfaceLevel2, 4627),
     REGISTER_OOVPAS(D3DTexture_LockRect, 3911),
     REGISTER_OOVPAS(D3DVertexBuffer_GetDesc, 3911),
-    REGISTER_OOVPAS(D3DVertexBuffer_Lock, 3911, 4034, 4531, 4627),
+    REGISTER_OOVPAS(D3DVertexBuffer_Lock, 3911, 4034, 4627),
     REGISTER_OOVPAS(D3DVertexBuffer_Lock2, 4627),
     REGISTER_OOVPAS(D3DVolumeTexture_LockBox, 3911), // Just calls Lock3DSurface (from 4134, 4432's comment)
     REGISTER_OOVPAS(D3D_AllocContiguousMemory, 3911, 5455), // Just calls MmAllocateContiguousMemory. Was PATCH (from 3925, 5788's comment)

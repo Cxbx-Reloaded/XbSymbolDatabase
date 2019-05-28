@@ -49,31 +49,6 @@ OOVPA_NO_XREF(D3DDevice_Swap, 4531, 11)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DVertexBuffer_Lock
-// ******************************************************************
-OOVPA_NO_XREF(D3DVertexBuffer_Lock, 4531, 11)
-
-        // D3DVertexBuffer_Lock+0x01 : mov bl, [esp+0x18]
-        { 0x01, 0x8A },
-        { 0x02, 0x5C },
-        { 0x03, 0x24 },
-        { 0x04, 0x18 },
-
-        // D3DVertexBuffer_Lock+0x09 : jnz +0x24
-        { 0x09, 0x75 },
-        { 0x0A, 0x24 },
-
-        // D3DVertexBuffer_Lock+0x2F : test bl, 0xA0
-        { 0x2F, 0xF6 },
-        { 0x30, 0xC3 },
-        { 0x31, 0xA0 },
-
-        // D3DVertexBuffer_Lock+0x50 : retn 0x14
-        { 0x54, 0xC2 },
-        { 0x55, 0x14 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_UpdateOverlay
 // ******************************************************************
 OOVPA_NO_XREF(D3DDevice_UpdateOverlay, 4531, 11) // Up to 5120

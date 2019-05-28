@@ -562,35 +562,6 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_ShadowFunc, 4034, 7)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_Simple
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_Simple, 4034, 13)
-
-        // D3DDevice_SetRenderState_Simple+0x05 : add eax, 0x08
-        { 0x05, 0x83 },
-        { 0x06, 0xC0 },
-        { 0x07, 0x08 },
-
-        // D3DDevice_SetRenderState_Simple+0x0E : jnb +0x0C
-        { 0x0E, 0x73 },
-        { 0x0F, 0x0C },
-
-        // D3DDevice_SetRenderState_Simple+0x15 : mov [eax-8], ecx
-        { 0x15, 0x89 },
-        { 0x16, 0x48 },
-        { 0x17, 0xF8 },
-
-        // D3DDevice_SetRenderState_Simple+0x18 : mov [eax-4], ecx
-        { 0x18, 0x89 },
-        { 0x19, 0x50 },
-        { 0x1A, 0xFC },
-
-        // D3DDevice_SetRenderState_Simple+0x25 : jmp +0xD9
-        { 0x25, 0xEB },
-        { 0x26, 0xD9 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_StencilEnable
 // ******************************************************************
 OOVPA_NO_XREF(D3DDevice_SetRenderState_StencilEnable, 4034, 8)
@@ -757,26 +728,28 @@ OOVPA_END;
 // ******************************************************************
 // * D3DVertexBuffer_Lock
 // ******************************************************************
-OOVPA_NO_XREF(D3DVertexBuffer_Lock, 4034, 11)
+OOVPA_XREF(D3DVertexBuffer_Lock, 4034, 1+9,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        // D3DVertexBuffer_Lock+0x0B : mov esi,[D3D__PDEVICE]
+        XREF_ENTRY(0x0D, XREF_D3DDEVICE),
+
+        // D3DVertexBuffer_Lock+0x18 : call D3DDevice_MakeSpace
+        //XREF_ENTRY(0x19, XREF_D3DDevice_MakeSpace),
 
         // D3DVertexBuffer_Lock+0x01 : mov bl, [esp+0x18]
-        { 0x01, 0x8A },
-        { 0x02, 0x5C },
-        { 0x03, 0x24 },
-        { 0x04, 0x18 },
+        OV_MATCH(0x01, 0x8A, 0x5C, 0x24, 0x18), // 4034 0x18 vs D3DVertexBuffer_Lock2 (4627) 0x0C
 
         // D3DVertexBuffer_Lock+0x09 : jnz +0x24
-        { 0x09, 0x75 },
-        { 0x0A, 0x24 },
+        OV_MATCH(0x09, 0x75, 0x24),
 
         // D3DVertexBuffer_Lock+0x2F : test bl, 0xA0
-        { 0x2F, 0xF6 },
-        { 0x30, 0xC3 },
-        { 0x31, 0xA0 },
+        OV_MATCH(0x2F, 0xF6, 0xC3, 0xA0),
 
-        // D3DVertexBuffer_Lock+0x50 : retn 0x14
-        { 0x50, 0xC2 },
-        { 0x51, 0x14 },
+        // 4034 0x50 vs 4531 0x54 : retn 0x14
+
 OOVPA_END;
 
 // ******************************************************************
