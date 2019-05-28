@@ -4146,6 +4146,7 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetRenderState_RopZCmpAlwaysRead
 // ******************************************************************
+// LTCG: 1024
 OOVPA_XREF(D3DDevice_SetRenderState_RopZCmpAlwaysRead, 3911, 1+8,
 
     XRefNoSaveIndex,
@@ -4172,6 +4173,7 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetRenderState_RopZRead
 // ******************************************************************
+// LTCG: 1024
 OOVPA_XREF(D3DDevice_SetRenderState_RopZRead, 3911, 1+8,
 
     XRefNoSaveIndex,
@@ -4198,6 +4200,7 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetRenderState_DoNotCullUncompressed
 // ******************************************************************
+// LTCG: 1024
 OOVPA_XREF(D3DDevice_SetRenderState_DoNotCullUncompressed, 3911, 1+8,
 
     XRefNoSaveIndex,
