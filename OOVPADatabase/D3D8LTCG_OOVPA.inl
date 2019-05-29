@@ -147,7 +147,6 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderStateNotInline_0, 2048),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_BackFillMode, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_CullMode, 1045, 1049, 1052, 1053),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_Dxt1NoiseEnable, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_EdgeAntiAlias, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FillMode, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FogColor, 1024, 1036, 1048, 1060),
@@ -367,7 +366,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_CullMode, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_Deferred, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_DoNotCullUncompressed, 3911),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_Dxt1NoiseEnable, 3911, 4034, 4627), // Was 5233 (from 5344's comment)
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_Dxt1NoiseEnable, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_EdgeAntiAlias, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FillMode, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FogColor, 3911, 4034),

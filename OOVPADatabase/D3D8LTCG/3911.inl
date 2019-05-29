@@ -293,24 +293,6 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_LineWidth, 1024, 7)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_Dxt1NoiseEnable
-// ******************************************************************
-//0FB6480D8A91
-OOVPA_NO_XREF(D3DDevice_SetRenderState_Dxt1NoiseEnable, 1036, 7)
-
-        // XREF_ENTRY( 0x6F, XREF_D3DRS_DXT1NOISEENABLE ),
-
-        { 0x00, 0x53 },
-
-        { 0x12, 0x0F },
-        { 0x13, 0xB6 },
-        { 0x14, 0x48 },
-        { 0x15, 0x0D },
-        { 0x16, 0x8A },
-        { 0x17, 0x91 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_StencilCullEnable
 // ******************************************************************
 OOVPA_XREF(D3DDevice_SetRenderState_StencilCullEnable, 1024, 1+7,

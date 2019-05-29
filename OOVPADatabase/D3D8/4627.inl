@@ -953,27 +953,6 @@ OOVPA_XREF(D3DDevice_SetTextureState_TexCoordIndex, 4627, 1+10,
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_Dxt1NoiseEnable
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_Dxt1NoiseEnable, 4627, 12)
-
-        { 0x0D, 0x8B },
-        { 0x0E, 0x87 },
-
-        { 0x50, 0x40 },
-        { 0x51, 0x04 },
-        { 0x52, 0x00 },
-        { 0x53, 0x00 },
-        { 0x54, 0x00 },
-        { 0x55, 0x00 },
-        { 0x56, 0xC1 },
-        { 0x57, 0xE6 },
-
-        { 0x74, 0xC2 },
-        { 0x75, 0x04 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleAntiAlias
 // ******************************************************************
 OOVPA_NO_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias, 4627, 17)

@@ -2370,27 +2370,28 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetRenderState_Dxt1NoiseEnable
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+// 1024 (4627), 1036 (3911) <-- jarupxx, this doesn't make sense.
 OOVPA_NO_XREF(D3DDevice_SetRenderState_Dxt1NoiseEnable, 3911, 12)
 
         // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x00 : push ebx
-        { 0x00, 0x53 },
+        OV_MATCH(0x00, 0x53),
 
-        // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x0C : mov eax, [esi+0x040C]
-        { 0x0C, 0x8B },
-        { 0x0D, 0x86 },
-        { 0x0E, 0x0C },
-        { 0x0F, 0x04 },
-        { 0x10, 0x00 },
-        { 0x11, 0x00 },
+        // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x01 : mov ebx,[esp+0x__]
+        OV_MATCH(0x01, 0x8B),
+
+        // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x05 : push esi
+        OV_MATCH(0x05, 0x56),
+
+        // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x1D : and dl, 0x3C
+        OV_MATCH(0x1D, 0x80, 0xE2, 0x3C),
 
         // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x22 : cmp dl, 0x20
-        { 0x22, 0x80 },
-        { 0x23, 0xFA },
-        { 0x24, 0x20 },
+        OV_MATCH(0x22, 0x80, 0xFA, 0x20),
 
-        // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x74 : retn 0x04
-        { 0x74, 0xC2 },
-        { 0x75, 0x04 },
+        // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x2E : and ecx,0x01
+        OV_MATCH(0x2E, 0x83, 0xE1, 0x01),
+
 OOVPA_END;
 
 // ******************************************************************

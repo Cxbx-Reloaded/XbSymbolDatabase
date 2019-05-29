@@ -1276,26 +1276,6 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_PSTextureModes, 4034, 10)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_Dxt1NoiseEnable
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_Dxt1NoiseEnable, 4034, 11)
-
-        { 0x01, 0x8B },
-
-        { 0x10, 0x00 },
-        { 0x11, 0x00 },
-        { 0x12, 0x0F },
-        { 0x13, 0xB6 },
-        { 0x14, 0x48 },
-        { 0x15, 0x0D },
-        { 0x16, 0x8A },
-        { 0x17, 0x91 },
-
-        { 0x49, 0xC7 },
-        { 0x76, 0x1D },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleMode
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
