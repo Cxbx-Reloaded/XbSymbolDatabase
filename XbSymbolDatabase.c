@@ -1464,7 +1464,7 @@ bool XbSymbolScan(const void* xb_header_addr,
                         }
                     }
 
-                    //Initialize library scan against HLE database we want to search for address of patches and xreferences.
+                    //Initialize library scan against symbol database we want to search for address of patches and xreferences.
                     for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
 
                         if (LibraryFlag == SymbolDBList[d2].LibSec.library) {
@@ -1614,12 +1614,12 @@ typedef struct _SymbolDatabaseVerifyContext {
     uint32_t main_index, against_index;
 } SymbolDatabaseVerifyContext;
 
-int HLEErrorString(char *bufferTemp, SymbolDatabaseList *data, uint16_t buildVersion, uint32_t index)
+int OOVPAErrorString(char *bufferTemp, SymbolDatabaseList *data, uint32_t index)
 {
-    return sprintf(bufferTemp, "OOVPATable %2u %4hu [%4u] %s", data->LibSec.library, buildVersion, index, data->OovpaTable[index].szFuncName);
+    return sprintf(bufferTemp, "OOVPATable %2u %4hu [%4u] %s", data->LibSec.library, data->OovpaTable[index].Version, index, data->OovpaTable[index].szFuncName);
 }
 
-void HLEError(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, char *format, ...)
+void OOVPAError(SymbolDatabaseVerifyContext *context, char *format, ...)
 {
     char buffer[2048] = { 0 };
     static char bufferTemp[400] = { 0 };
@@ -1627,14 +1627,14 @@ void HLEError(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, char 
 
     if (context->main_data != NULL) {
 
-        ret_str_count = HLEErrorString(bufferTemp, context->main_data, buildVersion, context->main_index);
+        ret_str_count = OOVPAErrorString(bufferTemp, context->main_data, context->main_index);
         (void)strncat(buffer, bufferTemp, ret_str_count);
     }
 
     if (context->against != NULL && context->against_data != NULL) {
         (void)strcat(buffer, ", comparing against ");
 
-        ret_str_count = HLEErrorString(bufferTemp, context->against_data, buildVersion, context->against_index);
+        ret_str_count = OOVPAErrorString(bufferTemp, context->against_data, context->against_index);
         (void)strncat(buffer, bufferTemp, ret_str_count);
     }
 
@@ -1653,7 +1653,7 @@ void HLEError(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, char 
 
 unsigned int XbSymbolDataBaseVerifyDataBaseList(SymbolDatabaseVerifyContext *context); // forward
 
-unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, uint16_t buildVersion, OOVPA *oovpa)
+unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, OOVPA *oovpa)
 {
     unsigned int error_count = 0;
     if (context->against == NULL) {
@@ -1668,7 +1668,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, u
             GetOovpaEntry(oovpa, p, &curr_offset, &dummy_value);
             if (!(curr_offset > prev_offset)) {
                 error_count++;
-                HLEError(context, buildVersion, "Lovp[%2u] : Offset (0x%03x) must be larger then previous offset (0x%03x)",
+                OOVPAError(context, "Lovp[%2u] : Offset (0x%03x) must be larger then previous offset (0x%03x)",
                          p, curr_offset, prev_offset);
             }
         }
@@ -1745,7 +1745,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, u
             // no unique OV-pairs on either side?
             if (unique_offset_left + unique_offset_right == 0) {
                 error_count++;
-                HLEError(context, buildVersion, "OOVPA's are identical",
+                OOVPAError(context, "OOVPA's are identical",
                          unique_offset_left,
                          unique_offset_right);
             } else {
@@ -1754,7 +1754,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, u
                     // not too many new OV-parirs on the right side?
                     if (unique_offset_right < 6) {
                         error_count++;
-                        HLEError(context, buildVersion, "OOVPA's are expanded (left +%d, right +%d)",
+                        OOVPAError(context, "OOVPA's are expanded (left +%d, right +%d)",
                                  unique_offset_left,
                                  unique_offset_right);
                     }
@@ -1775,7 +1775,7 @@ unsigned int XbSymbolDataBaseVerifyEntry(SymbolDatabaseVerifyContext *context, c
 
     // verify the OOVPA of this entry
     if (table[index].Oovpa != NULL) {
-        return XbSymbolDataBaseVerifyOOVPA(context, table[index].Version, table[index].Oovpa);
+        return XbSymbolDataBaseVerifyOOVPA(context, table[index].Oovpa);
     }
     return 0;
 }
