@@ -150,6 +150,7 @@ typedef enum _XRefDataBaseOffset
     XREF_D3DDevice_GetBackBuffer2,
     XREF_D3DDevice_GetDepthStencilSurface2,
     XREF_D3DDevice_GetRenderTarget2,
+    XREF_D3DDevice_SetRenderTarget,
     XREF_D3DDevice_MakeSpace,
     XREF_D3DResource_AddRef,
     XREF_D3DVertexBuffer_Lock2,

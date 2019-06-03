@@ -624,7 +624,10 @@ OOVPA_END;
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
 //5533ED3BD5565775
-OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 1048, 10)
+OOVPA_XREF(D3DDevice_SetRenderTarget, 1048, 10,
+
+    XREF_D3DDevice_SetRenderTarget,
+    XRefZero)
 
         { 0x00, 0x8B },
         { 0x01, 0x54 },

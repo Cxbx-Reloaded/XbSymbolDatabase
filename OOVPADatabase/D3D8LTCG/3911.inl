@@ -850,24 +850,31 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
-//0CC1E91483E10FBD01000000
-OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 1024, 14)
+#ifndef WIP_LessVertexPatching
+OOVPA_XREF(D3DDevice_SetRenderTarget, 1024, 11,
 
-        { 0x00, 0x83 },
-        { 0x01, 0xEC },
+    XREF_D3DDevice_SetRenderTarget,
+    XRefZero)
+#else
+OOVPA_XREF(D3DDevice_SetRenderTarget, 1024, 1+11,
 
-        { 0x24, 0x0C },
-        { 0x25, 0xC1 },
-        { 0x26, 0xE9 },
-        { 0x27, 0x14 },
-        { 0x28, 0x83 },
-        { 0x29, 0xE1 },
-        { 0x2A, 0x0F },
-        { 0x2B, 0xBD },
-        { 0x2C, 0x01 },
-        { 0x2D, 0x00 },
-        { 0x2E, 0x00 },
-        { 0x2F, 0x00 },
+    XREF_D3DDevice_SetRenderTarget,
+    XRefOne)
+
+        XREF_ENTRY( 0x17, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET ), // Derived
+#endif
+        // D3DDevice_SetRenderTarget+0x00 : sub esp, 0x20
+        OV_MATCH(0x00, 0x83, 0xEC),
+
+        // D3DDevice_SetRenderTarget+0x4A : mov eax, 0x00000001
+        OV_MATCH(0x4A, 0xB8, 0x01, 0x00),
+
+        // D3DDevice_SetRenderTarget+0x4F : and ecx, 0x0F
+        OV_MATCH(0x4F, 0x83, 0xE1, 0x0F),
+
+        // D3DDevice_SetRenderTarget+0x56 : shr eax,0x0C
+        OV_MATCH(0x56, 0xC1, 0xE8, 0x0C),
+
 OOVPA_END;
 
 // ******************************************************************

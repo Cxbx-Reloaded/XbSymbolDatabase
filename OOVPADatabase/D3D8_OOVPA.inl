@@ -339,7 +339,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_YuvEnable, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZBias, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZEnable, 3911, 4034, 4134, 4432),
-    REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 3911, 3947, 4034, 4039, 4627, 5344, 5455),
+    REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 3911, 3947, 4034, 4039, 4627, 5344, 5455), // Final generic OOVPA: 5344/5455; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderTargetFast, 5233),
     REGISTER_OOVPAS(D3DDevice_SetScissors, 3911, 5344, 5558), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 4034, 5455), // Was 5233 (from 5344's comment)
@@ -395,7 +395,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DVertexBuffer_Lock, 3911, 4034, 4627),
     REGISTER_OOVPAS(D3DVertexBuffer_Lock2, 4627),
     REGISTER_OOVPAS(D3DVolumeTexture_LockBox, 3911), // Just calls Lock3DSurface (from 4134, 4432's comment)
-    REGISTER_OOVPAS(D3D_AllocContiguousMemory, 3911, 5455), // Just calls MmAllocateContiguousMemory. Was PATCH (from 3925, 5788's comment)
+    REGISTER_OOVPAS(D3D_AllocContiguousMemory, 3911, 5455), // Final generic OOVPA: 5455; Removed: 0 // Just calls MmAllocateContiguousMemory.
     REGISTER_OOVPAS(D3D_BlockOnResource, 3911, 4034),
     REGISTER_OOVPAS(D3D_BlockOnTime, 3911, 4034, 4627, 5028, 5558),
     REGISTER_OOVPAS(D3D_CMiniport_GetDisplayCapabilities, 3911),

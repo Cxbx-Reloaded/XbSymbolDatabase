@@ -152,7 +152,7 @@ OOVPA_END;
 // ******************************************************************
 OOVPA_XREF(D3DDevice_SetRenderTarget, 4627, 1+12,
 
-    XRefNoSaveIndex,
+    XREF_D3DDevice_SetRenderTarget,
     XRefOne)
 
         // D3DDevice_SetRenderTarget+0x10 : call [D3D_CommonSetRenderTarget]

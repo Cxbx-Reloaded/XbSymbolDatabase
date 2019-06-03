@@ -170,7 +170,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_YuvEnable, 1024),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZBias, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZEnable, 1024, 1036, 1048, 1060),
-    REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 1024, 1036, 1048, 1060, 1072, 1084),
+    REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 1024, 1036, 1048, 1072, 1084),
     REGISTER_OOVPAS(D3DDevice_SetRenderTarget_0, 2048),
     REGISTER_OOVPAS(D3DDevice_SetRenderTargetFast, 1024),
     REGISTER_OOVPAS(D3DDevice_SetScissors, 1024, 1036, 1048, 1060, 1072),

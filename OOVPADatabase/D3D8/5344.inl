@@ -289,25 +289,38 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
+// Generic as of OOVPA 5344/5455 and newer.
+// The only difference between 5344/5455 is the offset shift for
+// D3DDEVICE_M_RENDERTARGET's asm code.
 #ifndef WIP_LessVertexPatching
-OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 5344, 9)
-#else
-OOVPA_XREF(D3DDevice_SetRenderTarget, 5344, 1+9,
+OOVPA_XREF(D3DDevice_SetRenderTarget, 5344, 13,
 
-    XRefNoSaveIndex,
+    XREF_D3DDevice_SetRenderTarget,
+    XRefZero)
+#else
+OOVPA_XREF(D3DDevice_SetRenderTarget, 5344, 1+13,
+
+    XREF_D3DDevice_SetRenderTarget,
     XRefOne)
 
-        XREF_ENTRY( 0x18, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET ), // Derived
+        // D3DDevice_SetRenderTarget+0x16 : mov eax,[edi+0x________]
+        XREF_ENTRY( 0x18, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET ), // Derived // NOTE 5455+ is at offset 0x19
 #endif
-        { 0x00, 0x83 },
-        { 0x08, 0x56 },
-        { 0x09, 0x33 },
-        { 0x0A, 0xF6 },
-        { 0x0B, 0x3B },
-        { 0x0C, 0xEE },
-        { 0x2A, 0xE4 },
-        { 0x30, 0x74 },
-        { 0x34, 0x14 },
+        // D3DDevice_SetRenderTarget+0x00 : sub esp, 0x0C
+        OV_MATCH(0x00, 0x83, 0xEC, 0x0C),
+
+        // D3DDevice_SetRenderTarget+0x16 : mov eax,[edi+0x________]
+        OV_MATCH(0x16, 0x8B, 0x87), // Offset 5344 0x16 vs 5455+ 0x17
+
+        // D3DDevice_SetRenderTarget+0xF1 : shr ecx,0x14
+        OV_MATCH(0xF1, 0xC1, 0xE9, 0x14),
+
+        // D3DDevice_SetRenderTarget+0xF4 : and ecx, 0x0F
+        OV_MATCH(0xF4, 0x83, 0xE1, 0x0F),
+
+        // D3DDevice_SetRenderTarget+0xFC : shl eax,cl
+        OV_MATCH(0xFC, 0xD3, 0xE0),
+
 OOVPA_END;
 
 // ******************************************************************

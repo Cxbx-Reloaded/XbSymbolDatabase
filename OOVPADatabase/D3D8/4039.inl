@@ -80,24 +80,35 @@ OOVPA_END;
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
-OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 4039, 9)
-#else
-OOVPA_XREF(D3DDevice_SetRenderTarget, 4039, 1+9,
+OOVPA_XREF(D3DDevice_SetRenderTarget, 4039, 11,
 
-    XRefNoSaveIndex,
+    XREF_D3DDevice_SetRenderTarget,
+    XRefZero)
+#else
+OOVPA_XREF(D3DDevice_SetRenderTarget, 4039, 1+11,
+
+    XREF_D3DDevice_SetRenderTarget,
     XRefOne)
 
-        XREF_ENTRY( 0x17, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET ), // Derived TODO : Verify offset
+        XREF_ENTRY( 0x18, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET ), // Derived
 #endif
-        { 0x06, 0x35 },
-        { 0x12, 0x3B },
-        { 0x13, 0xFB },
-        { 0x14, 0x75 },
-        { 0x15, 0x0C },
-        { 0x16, 0x8B },
-        { 0x1A, 0x00 },
-        { 0x1F, 0x4C },
-        { 0x32, 0x74 },
+        // D3DDevice_SetRenderTarget+0x00 : sub esp, 0xXX
+        OV_MATCH(0x00, 0x83, 0xEC),
+        //OV_MATCH(0x02, 0x30),
+
+        // Require in order to separate from CommonSetRenderTarget function.
+        // D3DDevice_SetRenderTarget+0x02 : push esi
+        OV_MATCH(0x04, 0x56),
+
+        // D3DDevice_SetRenderTarget+0x73 : shr ecx,0x14
+        OV_MATCH(0x79, 0xC1, 0xE9, 0x14),
+
+        // D3DDevice_SetRenderTarget+0x7C : and ecx, 0x0F
+        OV_MATCH(0x7C, 0x83, 0xE1, 0x0F),
+
+        // D3DDevice_SetRenderTarget+0x84 : shl eax,cl
+        OV_MATCH(0x84, 0xD3, 0xE0),
+
 OOVPA_END;
 
 // ******************************************************************

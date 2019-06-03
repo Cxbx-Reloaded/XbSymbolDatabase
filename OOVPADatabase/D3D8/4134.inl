@@ -50,37 +50,6 @@ OOVPA_NO_XREF(D3DDevice_GetBackBuffer, 4134, 12)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetRenderTarget
-// ******************************************************************
-#ifndef WIP_LessVertexPatching
-OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 4134, 9)
-#else
-OOVPA_XREF(D3DDevice_SetRenderTarget, 4134, 1+9,
-
-    XRefNoSaveIndex,
-    XRefOne)
-
-        XREF_ENTRY( 0x17, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET ), // Derived TODO : Verify offset
-#endif
-        // D3DDevice_SetRenderTarget+0x00 : sub esp, 0x3C
-        { 0x00, 0x83 },
-        { 0x01, 0xEC },
-        { 0x02, 0x3C },
-
-        // D3DDevice_SetRenderTarget+014 : jnz +0x0C
-        { 0x14, 0x75 },
-        { 0x15, 0x0C },
-
-        // D3DDevice_SetRenderTarget+0x44 : push ebp
-        { 0x44, 0x55 },
-
-        // D3DDevice_SetRenderTarget+0x79 : shr ecx, 0x14
-        { 0x79, 0xC1 },
-        { 0x7A, 0xE9 },
-        { 0x7B, 0x14 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_ZEnable
 // ******************************************************************
 OOVPA_NO_XREF(D3DDevice_SetRenderState_ZEnable, 4134, 13)

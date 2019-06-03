@@ -567,7 +567,7 @@ OOVPA_END;
 //0F85..0100008B0D
 OOVPA_XREF(D3DDevice_SetRenderTarget, 1036, 1+11,
 
-    XRefNoSaveIndex,
+    XREF_D3DDevice_SetRenderTarget,
     XRefOne)
 
         XREF_ENTRY( 0x4F, XREF_D3DRS_MULTISAMPLEMODE ),

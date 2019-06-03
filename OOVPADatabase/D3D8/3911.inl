@@ -1365,34 +1365,32 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
+// NOTE: Signature is not compatible with LTCG
 #ifndef WIP_LessVertexPatching
-OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 3911, 11)
+OOVPA_XREF(D3DDevice_SetRenderTarget, 3911, 11,
+
+    XREF_D3DDevice_SetRenderTarget,
+    XRefZero)
 #else
 OOVPA_XREF(D3DDevice_SetRenderTarget, 3911, 1+11,
 
-    XRefNoSaveIndex,
+    XREF_D3DDevice_SetRenderTarget,
     XRefOne)
 
         XREF_ENTRY( 0x17, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET ), // Derived
 #endif
         // D3DDevice_SetRenderTarget+0x00 : sub esp, 0x20
-        { 0x00, 0x83 },
-        { 0x01, 0xEC },
-        { 0x02, 0x20 },
+        OV_MATCH(0x00, 0x83, 0xEC),
 
-        // D3DDevice_SetRenderTarget+0x32 : mov [esp+0x34], ebx
-        { 0x32, 0x89 },
-        { 0x33, 0x5C },
-        { 0x34, 0x24 },
-        { 0x35, 0x34 },
+        // D3DDevice_SetRenderTarget+0x50 : mov esi, 0x00000001
+        OV_MATCH(0x50, 0xBE, 0x01, 0x00),
 
         // D3DDevice_SetRenderTarget+0x55 : and ecx, 0x0F
-        { 0x55, 0x83 },
-        { 0x56, 0xE1 },
-        { 0x57, 0x0F },
+        OV_MATCH(0x55, 0x83, 0xE1, 0x0F),
 
-        // D3DDevice_SetRenderTarget+0xDC : push edx
-        { 0xDC, 0x52 },
+        // D3DDevice_SetRenderTarget+0x60 : shr eax,0x0C
+        OV_MATCH(0x60, 0xC1, 0xE8, 0x0C),
+
 OOVPA_END;
 
 // ******************************************************************
@@ -3704,20 +3702,21 @@ OOVPA_END;
 // ******************************************************************
 OOVPA_NO_XREF(D3D_AllocContiguousMemory, 3911, 14)
 
-        { 0x00, 0x8B },
-        { 0x01, 0x44 },
-        { 0x02, 0x24 },
-        { 0x03, 0x08 },
-        { 0x04, 0x8B },
-        { 0x05, 0x4C },
-        { 0x06, 0x24 },
-        { 0x07, 0x04 },
-        { 0x08, 0x68 },
-        { 0x09, 0x04 },
-        { 0x0A, 0x04 },
-        { 0x0B, 0x00 },
-        { 0x0C, 0x00 },
-        { 0x0D, 0x50 },
+        // D3D_AllocContiguousMemory+0x00 : mov eax,[esp+0x08]
+        OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x08),
+
+        // D3D_AllocContiguousMemory+0x04 : mov ecx,[esp+0x04]
+        OV_MATCH(0x04, 0x8B, 0x4C, 0x24, 0x04),
+
+        // Unique offset
+        // D3D_AllocContiguousMemory+0x08 : push 0x00000404
+        OV_MATCH(0x08, 0x68, 0x04, 0x04, 0x00, 0x00),
+
+        // D3D_AllocContiguousMemory+0x0D : push eax
+        OV_MATCH(0x0D, 0x50),
+
+        // Offset 0x0E and later has change over time.
+
 OOVPA_END;
 
 // ******************************************************************
