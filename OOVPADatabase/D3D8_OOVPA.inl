@@ -224,11 +224,11 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_DeleteStateBlock, 3911),
     REGISTER_OOVPAS(D3DDevice_DeleteVertexShader, 3911, 5344),
     REGISTER_OOVPAS(D3DDevice_DrawIndexedVertices, 3911, 4034, 4627, 5028),
-    REGISTER_OOVPAS(D3DDevice_DrawIndexedVerticesUP, 3911, 4039, 5028, 5344),
+    REGISTER_OOVPAS(D3DDevice_DrawIndexedVerticesUP, 3911, 5028, 5344), // Final generic OOVPA: 5344; Removed: 0 // TODO: Need verify title with 4034 version.
     REGISTER_OOVPAS(D3DDevice_DrawRectPatch, 3911), // TODO: Unused? (from 4034's comment)
     REGISTER_OOVPAS(D3DDevice_DrawTriPatch, 3911),
     REGISTER_OOVPAS(D3DDevice_DrawVertices, 3911),
-    REGISTER_OOVPAS(D3DDevice_DrawVerticesUP, 3911, 4039, 5344),
+    REGISTER_OOVPAS(D3DDevice_DrawVerticesUP, 3911, 4039, 5344), // Final generic OOVPA: 5344; Removed: 0 // TODO: Need verify title with 4034 version.
     REGISTER_OOVPAS(D3DDevice_EnableOverlay, 3911, 4134),
     REGISTER_OOVPAS(D3DDevice_End, 3911, 4039, 5344),
     REGISTER_OOVPAS(D3DDevice_EndPush, 4039), // Was 4627 (from 5233's comment)

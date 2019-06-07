@@ -389,47 +389,30 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_DrawVerticesUP
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_DrawVerticesUP, 4039, 13)
+OOVPA_XREF(D3DDevice_DrawVerticesUP, 4039, 1+10,
 
-        { 0x00, 0x55 },
-        { 0x01, 0x8B },
-        { 0x02, 0xEC },
-        { 0x03, 0x83 },
-        { 0x04, 0xEC },
-        { 0x05, 0x14 },
-        { 0x06, 0x57 },
-        { 0x07, 0x8B },
-        { 0x08, 0x3D },
+    XRefNoSaveIndex,
+    XRefOne)
 
-        { 0x24, 0x4D },
-        { 0x30, 0x97 },
+        // D3DDevice_DrawVerticesUP+0x07 : mov edi,[D3D__PDEVICE]
+        XREF_ENTRY(0x09, XREF_D3DDEVICE),
 
-        { 0x62, 0x00 },
-        { 0x85, 0xB7 },
-OOVPA_END;
+        // D3DDevice_DrawVerticesUP+0x00 : push ebp
+        OV_MATCH(0x00, 0x55),
 
-// ******************************************************************
-// * D3DDevice_DrawIndexedVerticesUP
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_DrawIndexedVerticesUP, 4039, 15)
+        // D3DDevice_DrawVerticesUP+0x03 : sub esp,0x14
+        OV_MATCH(0x03, 0x83, 0xEC, 0x14),
 
-        { 0x00, 0x55 },
-        { 0x01, 0x8B },
-        { 0x02, 0xEC },
-        { 0x03, 0x83 },
-        { 0x04, 0xEC },
-        { 0x05, 0x14 },
-        { 0x06, 0x53 },
-        { 0x07, 0x56 },
-        { 0x08, 0x57 },
-        { 0x09, 0x8B },
-        { 0x0A, 0x3D },
+        // D3DDevice_DrawVerticesUP+0x07 : mov edi,[D3D__PDEVICE]
+        OV_MATCH(0x07, 0x8B, 0x3D),
 
-        { 0x25, 0x8B },
-        { 0x3D, 0x87 },
+        // D3DDevice_DrawVerticesUP+0x0D : mov ecx,edi
+        OV_MATCH(0x0D, 0x8B, 0xCF),
 
-        { 0x48, 0x00 },
-        { 0x5C, 0x8D },
+        // D3DDevice_DrawVerticesUP+0x0F : mov [ebp-0x14],e__
+        OV_MATCH(0x0F, 0x89),
+        OV_MATCH(0x11, 0xEC), // D3DDevice_DrawVerticesUP 4039 0xEC vs D3DDevice_DrawIndexedVerticesUP 5028 0xF8
+
 OOVPA_END;
 
 // ******************************************************************

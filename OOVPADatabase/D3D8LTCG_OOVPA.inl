@@ -279,7 +279,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_DeleteStateBlock, 3911),
     REGISTER_OOVPAS(D3DDevice_DeleteVertexShader, 3911, 5344),
     REGISTER_OOVPAS(D3DDevice_DrawIndexedVertices, 3911, 4034, 4627, 5028),
-    REGISTER_OOVPAS(D3DDevice_DrawIndexedVerticesUP, 3911, 4039, 5028, 5344),
+    REGISTER_OOVPAS(D3DDevice_DrawIndexedVerticesUP, 3911, 5028, 5344),
     REGISTER_OOVPAS(D3DDevice_DrawRectPatch, 3911), // TODO: Unused? (from 4034's comment)
     REGISTER_OOVPAS(D3DDevice_DrawTriPatch, 3911),
     REGISTER_OOVPAS(D3DDevice_DrawVertices, 3911),

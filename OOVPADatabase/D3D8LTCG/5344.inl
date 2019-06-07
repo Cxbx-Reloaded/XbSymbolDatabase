@@ -91,20 +91,30 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_DrawVerticesUP
 // ******************************************************************
-//EC1453568B35
-OOVPA_NO_XREF(D3DDevice_DrawVerticesUP, 1024, 9)
+OOVPA_XREF(D3DDevice_DrawVerticesUP, 1024, 1+9,
 
-        { 0x00, 0x55 },
-        { 0x01, 0x8B },
+    XRefNoSaveIndex,
+    XRefOne)
 
-        { 0x04, 0xEC },
-        { 0x05, 0x14 },
-        { 0x06, 0x53 },
-        { 0x07, 0x56 },
-        { 0x08, 0x8B },
-        { 0x09, 0x35 },
+        // D3DDevice_DrawVerticesUP+0x08 : mov esi,[D3D__PDEVICE]
+        XREF_ENTRY(0x0A, XREF_D3DDEVICE),
 
-        { 0x11, 0xEC },
+        // D3DDevice_DrawVerticesUP+0x00 : push ebp
+        OV_MATCH(0x00, 0x55),
+
+        // D3DDevice_DrawVerticesUP+0x03 : sub esp,0x14
+        OV_MATCH(0x03, 0x83, 0xEC, 0x14),
+
+        // D3DDevice_DrawVerticesUP+0x08 : mov esi,[D3D__PDEVICE]
+        OV_MATCH(0x08, 0x8B, 0x35),
+
+        // D3DDevice_DrawVerticesUP+0x0E : push edi
+        OV_MATCH(0x0E, 0x57),
+
+        // D3DDevice_DrawVerticesUP+0x0F : mov [ebp-0x14],e__
+        OV_MATCH(0x0F, 0x89),
+        OV_MATCH(0x11, 0xEC),
+
 OOVPA_END;
 
 // ******************************************************************
