@@ -201,7 +201,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_BeginStateBlock, 3911, 4134),
     REGISTER_OOVPAS(D3DDevice_BeginVisibilityTest, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_BlockOnFence, 3911),
-    REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 3911, 4034, 4134, 4242, 4432, 4627, 5028, 5233, 5344, 5455, 5558, 5788),
+    REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_CaptureStateBlock, 3911, 4134),
     REGISTER_OOVPAS(D3DDevice_Clear, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_CopyRects, 3911, 4034, 4627, 5120),
@@ -349,7 +349,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetStateVB, 3911, 4034, 4134),
     REGISTER_OOVPAS(D3DDevice_SetStipple, 4627),
     REGISTER_OOVPAS(D3DDevice_SetStreamSource, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetSwapCallback, 4039, 4134, 4242, 4432, 4627, 5028, 5233, 5344, 5455, 5558, 5788),
+    REGISTER_OOVPAS(D3DDevice_SetSwapCallback, 4039), // Final generic OOVPA: 4039; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetTexture, 3911, 4034, 4361, 4831),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BorderColor, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BumpEnv, 3911, 4034),
@@ -373,7 +373,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstantNotInlineFast, 4627),
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderInput, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderInputDirect, 4361),
-    REGISTER_OOVPAS(D3DDevice_SetVerticalBlankCallback, 3911, 4039, 4134, 4242, 4432, 4627, 5028, 5233, 5344, 5455, 5558, 5788), // Was 5233 (from 5344's comment)
+    REGISTER_OOVPAS(D3DDevice_SetVerticalBlankCallback, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetViewport, 3911, 4034, 5344, 5455), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_Swap, 4034, 4531, 4627),
     REGISTER_OOVPAS(D3DDevice_SwitchTexture, 3911),

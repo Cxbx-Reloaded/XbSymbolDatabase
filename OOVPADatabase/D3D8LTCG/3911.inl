@@ -981,3 +981,42 @@ OOVPA_NO_XREF(D3DDevice_SetPixelShader_0, 2060, 13)
 
         { 0x6A, 0xC3 },
 OOVPA_END;
+
+// ******************************************************************
+// * D3DDevice_BlockUntilVerticalBlank
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+// NOTE: Later XDK version start to use std signature.
+OOVPA_XREF(D3DDevice_BlockUntilVerticalBlank, 1024, 2+15,
+
+    XREF_D3DDevice_BlockUntilVerticalBlank,
+    XRefTwo)
+
+        // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax, [D3D__PDEVICE]
+        XREF_ENTRY(0x01, XREF_D3DDEVICE),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDEVICE_M_EVENTHANDLE
+        XREF_ENTRY(0x18, XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax,[D3D__PDEVICE]
+        OV_MATCH(0x00, 0xA1),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x05 : push 0; push 0; push 1
+        OV_MATCH(0x05, 0x6A, 0x00, 0x6A, 0x00, 0x6A, 0x01),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x0B : mov dword ptr [eax+OFFSET_D3DDEVICE_M_???],
+        OV_MATCH(0x0B, 0xC7, 0x80),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x15 : push 6
+        OV_MATCH(0x15, 0x6A, 0x06),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDEVICE_M_EVENTHANDLE
+        OV_MATCH(0x17, 0x05),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x1D : call [KeWaitForSingleObject]
+        OV_MATCH(0x1D, 0xFF, 0x15),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x23 : mov eax,[addr]
+        OV_MATCH(0x23, 0xA1), // NOTE: std has a ret here and isn't a extended function.
+
+OOVPA_END;

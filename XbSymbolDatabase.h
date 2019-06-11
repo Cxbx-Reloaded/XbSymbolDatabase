@@ -112,6 +112,9 @@ typedef enum _XRefDataBaseOffset
     XREF_OFFSET_D3DDEVICE_M_PALETTES, // initially set to XREF_ADDR_DERIVE
     XREF_OFFSET_D3DDEVICE_M_RENDERTARGET, // initially set to XREF_ADDR_DERIVE
     XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL, // initially set to XREF_ADDR_DERIVE
+    XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE, // initially set to XREF_ADDR_DERIVE
+    XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK, // initially set to XREF_ADDR_DERIVE
+    XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK, // initially set to XREF_ADDR_DERIVE
     // DSOUND variable addresses
     XREF_DSS_VOICE_VTABLE,
     XREF_DSS_STREAM_VTABLE,
@@ -144,6 +147,7 @@ typedef enum _XRefDataBaseOffset
     XREF_D3D_CDevice_MakeSpace,
     XREF_D3DPalette_Lock2,
     XREF_D3DTexture_GetSurfaceLevel2,
+    XREF_D3DDevice_BlockUntilVerticalBlank,
     XREF_D3DDevice_CreatePalette2,
     XREF_D3DDevice_CreateIndexBuffer2,
     XREF_D3DDevice_CreateVertexBuffer2,

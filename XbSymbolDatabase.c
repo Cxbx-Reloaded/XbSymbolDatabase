@@ -766,6 +766,9 @@ bool XbSymbolInit(const void* xb_header_addr,
         XRefDataBase[XREF_OFFSET_D3DDEVICE_M_PALETTES] = XREF_ADDR_DERIVE;
         XRefDataBase[XREF_OFFSET_D3DDEVICE_M_RENDERTARGET] = XREF_ADDR_DERIVE;
         XRefDataBase[XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL] = XREF_ADDR_DERIVE;
+        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE] = XREF_ADDR_DERIVE;       //In use
+        //XRefDataBase[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] = XREF_ADDR_UNDETERMINED;   //In use // Manual check only.
+        //XRefDataBase[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
 
         xbe_section_header* pSectionHeaders = (xbe_section_header*)(xb_start_addr + pXbeHeader->pSectionHeadersAddr);
         const char* SectionName;
@@ -938,6 +941,7 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
     memptr_t lower = xb_start_virt_addr + pSectionHeader->dwVirtualAddr;
     memptr_t upper = xb_start_virt_addr + pSectionHeader->dwVirtualAddr + pSectionHeader->dwVirtualSize;;
     memptr_t pFunc = 0;
+    xbaddr xSymbolAddr = 0;
     // offset for stencil cull enable render state in the deferred render state buffer
     uint32_t DerivedAddr_D3DRS_CULLMODE = 0;
     int Decrement = 0; // TODO : Rename into something understandable
@@ -1208,6 +1212,33 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
         pFunc += (uintptr_t)xb_start_virt_addr;
 
         XbSymbolDX8RegisterStream(LibraryFlag, LibraryStr, register_func, pFunc, iCodeOffsetFor_g_Stream);
+    }
+
+    // Manual check require for able to self-register these symbols:
+    // * D3DDevice_SetSwapCallback
+    // * D3DDevice_SetVerticalBlankCallback
+
+    // First, check if D3D__PDEVICE is found.
+    if (XRefDataBase[XREF_D3DDEVICE] != XREF_ADDR_DERIVE &&
+        // Then, check at least one of symbol's member variable is not found.
+        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] == XREF_ADDR_UNDETERMINED) {
+
+        // Scan if event handle variable is not yet derived.
+        if (XRefDataBase[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE] == XREF_ADDR_DERIVE) {
+            xSymbolAddr = (xbaddr)(uintptr_t)XbSymbolLocateFunctionCast("D3DDevice__ManualFindEventHandleGeneric_3911", 3911,
+                &D3DDevice__ManualFindEventHandleGeneric_3911, lower, upper, xb_start_virt_addr);
+        }
+
+        // We are not registering the D3DDevice__ManualFindEventHandleGeneric as it is NOT a symbol.
+
+
+        // If found, perform manual register.
+        if (XRefDataBase[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE] != XREF_ADDR_DERIVE) {
+            // Finally, manual register the symbol variables.
+            xSymbolAddr = XRefDataBase[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE];
+            XRefDataBase[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] = xSymbolAddr - 8;
+            XRefDataBase[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = xSymbolAddr - 4;
+        }
     }
 }
 

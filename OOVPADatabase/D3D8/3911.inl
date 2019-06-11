@@ -24,6 +24,48 @@
 // ******************************************************************
 
 // ******************************************************************
+// * D3DDevice__ManualFindEventHandleGeneric
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+// NOTE: This signature will find any generic match with D3D__PDEVICE
+//       Currently, this is the best method without rely on
+//       D3DDevice_BlockUntilVerticalBlank detection.
+//       Also, it is not a symbol.
+OOVPA_XREF(D3DDevice__ManualFindEventHandleGeneric, 3911, 2+14,
+
+    XRefNoSaveIndex,
+    XRefTwo)
+
+        // D3DDevice__ManualFindEventHandleGeneric+0x00 : mov eax, [D3D__PDEVICE]
+        XREF_ENTRY(0x01, XREF_D3DDEVICE),
+
+        // D3DDevice__ManualFindEventHandleGeneric+0x17 : add eax, OFFSET_D3DDEVICE_M_EVENTHANDLE
+        XREF_ENTRY(0x18, XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE),
+
+        // D3DDevice__ManualFindEventHandleGeneric+0x00 : mov eax,[D3D__PDEVICE]
+        OV_MATCH(0x00, 0xA1),
+
+        // D3DDevice__ManualFindEventHandleGeneric+0x05 : push 0; push 0; push 1
+        OV_MATCH(0x05, 0x6A, 0x00, 0x6A, 0x00, 0x6A, 0x01),
+
+        // D3DDevice__ManualFindEventHandleGeneric+0x0B : mov dword ptr [eax+OFFSET_D3DDEVICE_M_???],
+        OV_MATCH(0x0B, 0xC7, 0x80),
+
+        // D3DDevice__ManualFindEventHandleGeneric+0x15 : push 6
+        OV_MATCH(0x15, 0x6A, 0x06),
+
+        // D3DDevice__ManualFindEventHandleGeneric+0x17 : add eax, OFFSET_D3DDEVICE_M_EVENTHANDLE
+        OV_MATCH(0x17, 0x05),
+
+        // D3DDevice__ManualFindEventHandleGeneric+0x1D : push eax
+        OV_MATCH(0x1C, 0x50),
+
+        // D3DDevice__ManualFindEventHandleGeneric+0x1D : call e__
+        OV_MATCH(0x1D, 0xFF),
+
+OOVPA_END;
+
+// ******************************************************************
 // * Direct3D_CreateDevice
 // ******************************************************************
 OOVPA_NO_XREF(Direct3D_CreateDevice, 3911, 18) // Also for 4361, 4627, 5558, 5659, 5788, 5849, 5933 (NOT 5344!)
@@ -1312,54 +1354,65 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_BlockUntilVerticalBlank
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_BlockUntilVerticalBlank, 3911, 15)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_XREF(D3DDevice_BlockUntilVerticalBlank, 3911, 2+15,
 
-        // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax, [addr]
-        { 0x00, 0xA1 },
+    XREF_D3DDevice_BlockUntilVerticalBlank,
+    XRefTwo)
 
-        // D3DDevice_BlockUntilVerticalBlank+0x05 : push 0;push 0;push 1
-        { 0x05, 0x6A },
-        { 0x06, 0x00 },
-        { 0x07, 0x6A },
-        { 0x08, 0x00 },
-        { 0x09, 0x6A },
-        { 0x0A, 0x01 },
+        // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax, [D3D__PDEVICE]
+        XREF_ENTRY(0x01, XREF_D3DDEVICE),
 
-        // D3DDevice_BlockUntilVerticalBlank+0x0B : mov dword ptr [eax+0x24F4],
-        { 0x0B, 0xC7 },
-        { 0x0C, 0x80 },
-        { 0x0D, 0xF4 },
-        { 0x0E, 0x24 },
-        { 0x0F, 0x00 },
+        // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDEVICE_M_EVENTHANDLE
+        XREF_ENTRY(0x18, XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE),
 
-        // D3DDevice_BlockUntilVerticalBlank+0x17 : and eax, 0x24F0
-        { 0x17, 0x05 },
-        { 0x18, 0xF0 },
-        { 0x19, 0x24 },
+        // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax,[D3D__PDEVICE]
+        OV_MATCH(0x00, 0xA1),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x05 : push 0; push 0; push 1
+        OV_MATCH(0x05, 0x6A, 0x00, 0x6A, 0x00, 0x6A, 0x01),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x0B : mov dword ptr [eax+OFFSET_D3DDEVICE_M_???],
+        OV_MATCH(0x0B, 0xC7, 0x80),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x15 : push 6
+        OV_MATCH(0x15, 0x6A, 0x06),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDEVICE_M_EVENTHANDLE
+        OV_MATCH(0x17, 0x05),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x1D : call [KeWaitForSingleObject]
+        OV_MATCH(0x1D, 0xFF, 0x15),
+
+        // D3DDevice_BlockUntilVerticalBlank+0x23 : ret
+        OV_MATCH(0x23, 0xC3), // NOTE: LTCG doesn't have a ret here and is extended function.
+
 OOVPA_END;
 
 // ******************************************************************
 // * D3DDevice_SetVerticalBlankCallback
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetVerticalBlankCallback, 3911, 12)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_XREF(D3DDevice_SetVerticalBlankCallback, 3911, 2+9,
 
-        // D3DDevice_SetVerticalBlankCallback+0x00 : mov eax, [esp+0x04]
-        { 0x00, 0x8B },
-        { 0x01, 0x44 },
-        { 0x02, 0x24 },
-        { 0x03, 0x04 },
+    XRefNoSaveIndex,
+    XRefTwo)
 
-        // D3DDevice_SetVerticalBlankCallback+0x0A : mov [ecx+0x24EC], eax
-        { 0x0A, 0x89 },
-        { 0x0B, 0x81 },
-        { 0x0C, 0xEC },
-        { 0x0D, 0x24 },
-        { 0x0E, 0x00 },
+        // D3DDevice_SetVerticalBlankCallback+0x04 : mov ecx,[D3D__PDEVICE]
+        XREF_ENTRY(0x06, XREF_D3DDEVICE),
+
+        // D3DDevice_SetVerticalBlankCallback+0x0A : mov [ecx+OFFSET_D3DDEVICE_M_VBLANKCALLBACK],eax
+        XREF_ENTRY(0x0C, XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK),
+
+        // D3DDevice_SetVerticalBlankCallback+0x00 : mov eax,[esp+0x04]
+        OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+        // D3DDevice_SetVerticalBlankCallback+0x0A : mov [ecx+OFFSET_D3DDEVICE_M_VBLANKCALLBACK],eax
+        OV_MATCH(0x0A, 0x89, 0x81),
 
         // D3DDevice_SetVerticalBlankCallback+0x10 : retn 0x04
-        { 0x10, 0xC2 },
-        { 0x11, 0x04 },
-        { 0x12, 0x00 },
+        OV_MATCH(0x10, 0xC2, 0x04, 0x00),
+
 OOVPA_END;
 
 // ******************************************************************

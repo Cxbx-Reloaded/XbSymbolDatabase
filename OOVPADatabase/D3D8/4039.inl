@@ -134,53 +134,29 @@ OOVPA_NO_XREF(D3DDevice_Begin, 4039, 13)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetVerticalBlankCallback
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetVerticalBlankCallback, 4039, 12)
-
-        // D3DDevice_SetVerticalBlankCallback+0x00 : mov eax, [esp+0x04]
-        { 0x00, 0x8B },
-        { 0x01, 0x44 },
-        { 0x02, 0x24 },
-        { 0x03, 0x04 },
-
-        // D3DDevice_SetVerticalBlankCallback+0x0A : mov [ecx+0x25AC], eax
-        { 0x0A, 0x89 },
-        { 0x0B, 0x81 },
-        { 0x0C, 0xAC }, // SetSwapCallback A8 vs SetVerticalBlankCallback AC
-        { 0x0D, 0x25 },
-        { 0x0E, 0x00 },
-
-        // D3DDevice_SetVerticalBlankCallback+0x10 : retn 0x04
-        { 0x10, 0xC2 },
-        { 0x11, 0x04 },
-        { 0x12, 0x00 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetSwapCallback
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetSwapCallback, 4039, 12)
+// Generic OOVPA as of 4039 and newer.
+OOVPA_XREF(D3DDevice_SetSwapCallback, 4039, 2+9,
 
-        // D3DDevice_SetSwapCallback+0x00 : mov eax, [esp+0x04]
-        { 0x00, 0x8B },
-        { 0x01, 0x44 },
-        { 0x02, 0x24 },
-        { 0x03, 0x04 },
+    XRefNoSaveIndex,
+    XRefTwo)
 
-        // D3DDevice_SetSwapCallback+0x04 : mov ecx, [addr]
-        { 0x04, 0x8B },
-        { 0x05, 0x0D },
+        // D3DDevice_SetSwapCallback+0x04 : mov ecx,[D3D__PDEVICE]
+        XREF_ENTRY(0x06, XREF_D3DDEVICE),
 
-        // D3DDevice_SetSwapCallback+0x0A : mov [ecx+0x25A8], eax
-        { 0x0A, 0x89 },
-        { 0x0B, 0x81 },
-        { 0x0C, 0xA8 }, // SetSwapCallback A8 vs SetVerticalBlankCallback AC
-        { 0x0D, 0x25 },
+        // D3DDevice_SetSwapCallback+0x0A : mov [ecx+OFFSET_D3DDEVICE_M_SWAPCALLBACK],eax
+        XREF_ENTRY(0x0C, XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK),
+
+        // D3DDevice_SetSwapCallback+0x00 : mov eax,[esp+0x04]
+        OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+        // D3DDevice_SetSwapCallback+0x0A : mov [ecx+OFFSET_D3DDEVICE_M_SWAPCALLBACK],eax
+        OV_MATCH(0x0A, 0x89, 0x81),
 
         // D3DDevice_SetSwapCallback+0x10 : retn 0x04
-        { 0x10, 0xC2 },
-        { 0x11, 0x04 },
+        OV_MATCH(0x10, 0xC2, 0x04, 0x00),
+
 OOVPA_END;
 
 // ******************************************************************

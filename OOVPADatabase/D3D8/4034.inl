@@ -1093,31 +1093,6 @@ OOVPA_NO_XREF(D3DDevice_SelectVertexShader, 4034, 12)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_BlockUntilVerticalBlank
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_BlockUntilVerticalBlank, 4034, 11)
-
-        // D3DDevice_BlockUntilVerticalBlank+0x05 : push 0; push 0; push 1
-        { 0x05, 0x6A },
-        { 0x06, 0x00 },
-        { 0x07, 0x6A },
-        { 0x08, 0x00 },
-        { 0x09, 0x6A },
-        { 0x0A, 0x01 },
-
-        // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, 0x25B0
-        { 0x17, 0x05 },
-        { 0x18, 0xB0 },
-        { 0x19, 0x25 },
-
-        // D3DDevice_BlockUntilVerticalBlank+0x1D : call [KrnlImport]
-        { 0x1D, 0xFF },
-
-        // D3DDevice_BlockUntilVerticalBlank+0x23 : retn
-        { 0x23, 0xC3 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
