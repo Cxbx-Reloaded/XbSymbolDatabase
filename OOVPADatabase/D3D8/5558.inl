@@ -372,27 +372,6 @@ OOVPA_XREF(D3D_MakeRequestedSpace_8, 5558, 12,
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_PersistDisplay
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_PersistDisplay, 5558, 12)
-
-        { 0x00, 0x83 },
-        { 0x1B, 0x6A },
-
-        { 0x28, 0x00 },
-        { 0x29, 0x85 },
-        { 0x2A, 0xC0 },
-        { 0x2B, 0x75 },
-        { 0x2C, 0x0A },
-        { 0x2D, 0xB8 },
-        { 0x2E, 0x05 },
-        { 0x2F, 0x40 },
-
-        { 0x49, 0x85 },
-        { 0x6B, 0xE1 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_GetViewportOffsetAndScale
 // ******************************************************************
 OOVPA_NO_XREF(D3DDevice_GetViewportOffsetAndScale, 5558, 8)

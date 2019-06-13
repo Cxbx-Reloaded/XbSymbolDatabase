@@ -346,28 +346,33 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_PersistDisplay
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_PersistDisplay, 4039, 17)
+// Reused in 5455 as well.
+OOVPA_XREF(D3DDevice_PersistDisplay, 4039, 1+8,
 
-        { 0x01, 0xEC },
-        { 0x02, 0x08 },
-        { 0x03, 0x57 },
-        { 0x04, 0x8B },
-        { 0x05, 0x3D },
+    XRefNoSaveIndex,
+    XRefOne)
 
-        { 0x11, 0xC0 },
-        { 0x12, 0x89 },
-        { 0x13, 0x44 },
-        { 0x14, 0x24 },
-        { 0x15, 0x04 },
-        { 0x16, 0x74 },
-        { 0x17, 0x0F },
-        { 0x18, 0x50 },
-        { 0x19, 0xFF },
-        { 0x1A, 0x15 },
+        // D3DDevice_PersistDisplay+0x04 : mov edi,[D3D__PDEVICE]
+        XREF_ENTRY(0x06, XREF_D3DDEVICE),
 
-        { 0x1F, 0x6A },
+        // D3DDevice_PersistDisplay+0x00 : sub esp,0x__
+        OV_MATCH(0x01, 0xEC),
 
-        { 0x3F, 0xAF },
+        // D3DDevice_PersistDisplay+0x0A : call [AvGetSavedDataAddress]
+        OV_MATCH(0x0A, 0xFF, 0x15),
+
+        // D3DDevice_PersistDisplay+0x19 : call [MmFreeContiguousMemory] // NOTE: doesn't exist in 5455
+        //OV_MATCH(0x19, 0xFF, 0x15),
+
+        // D3DDevice_PersistDisplay+0x1F : push 0x00
+        OV_MATCH(0x1F, 0x6A, 0x00),
+
+        // D3DDevice_PersistDisplay+0x21 : call [AvSetSavedDataAddress]
+        OV_MATCH(0x21, 0xFF, 0x15),
+
+        // D3DDevice_PersistDisplay+0x3A : ret
+        OV_MATCH(0x3A, 0xC3),
+
 OOVPA_END;
 
 // ******************************************************************

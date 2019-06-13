@@ -113,23 +113,30 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_PersistDisplay
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_PersistDisplay, 4831, 13) // Up to 5344
+// Up to 5849, excluding 5455
+OOVPA_XREF(D3DDevice_PersistDisplay, 4831, 1+8,
 
-        { 0x00, 0x83 },
-        { 0x01, 0xEC },
-        { 0x1E, 0x15 },
+    XRefNoSaveIndex,
+    XRefOne)
 
-        { 0x28, 0x00 },
-        { 0x29, 0x85 },
-        { 0x2A, 0xC0 },
-        { 0x2B, 0x75 },
-        { 0x2C, 0x0A },
-        { 0x2D, 0xB8 },
-        { 0x2E, 0x05 },
-        { 0x2F, 0x40 },
-        { 0x30, 0x00 },
+        // D3DDevice_PersistDisplay+0x04 : mov ebx,[D3D__PDEVICE]
+        XREF_ENTRY(0x06, XREF_D3DDEVICE),
 
-        { 0x36, 0xC3 },
+        // D3DDevice_PersistDisplay+0x00 : sub esp,0x__
+        OV_MATCH(0x01, 0xEC),
+
+        // D3DDevice_PersistDisplay+0x0A : call [AvGetSavedDataAddress]
+        OV_MATCH(0x0A, 0xFF, 0x15),
+
+        // D3DDevice_PersistDisplay+0x15 : call [MmFreeContiguousMemory]
+        OV_MATCH(0x15, 0xFF, 0x15),
+
+        // D3DDevice_PersistDisplay+0x1D : call [AvSetSavedDataAddress]
+        OV_MATCH(0x1D, 0xFF, 0x15),
+
+        // D3DDevice_PersistDisplay+0x36 : ret
+        OV_MATCH(0x36, 0xC3),
+
 OOVPA_END;
 
 // ******************************************************************

@@ -285,7 +285,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_LoadVertexShader, 3911, 4034, 4627, 5028),
     REGISTER_OOVPAS(D3DDevice_LoadVertexShaderProgram, 3911),
     REGISTER_OOVPAS(D3DDevice_MakeSpace, 4034, 4134), // NOTE: LTCG has duplicate functions, need to find out how to resolve this issue with cross referencing.
-    REGISTER_OOVPAS(D3DDevice_PersistDisplay, 3911, 4039, 4627, 4831, 5455, 5558),
+    REGISTER_OOVPAS(D3DDevice_PersistDisplay, 3911, 4039, 4627, 4831),
     REGISTER_OOVPAS(D3DDevice_Present, 3911),
     REGISTER_OOVPAS(D3DDevice_PrimeVertexCache, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_Release, 3911),
@@ -425,6 +425,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(XMETAL_StartPush, 3911), // Final generic OOVPA: 3911; Removed: 4034??
     REGISTER_OOVPAS(IDirect3DVertexBuffer8_Lock, 4627),
 };
+
 
 // ******************************************************************
 // * D3D8_OOVPA_COUNT
