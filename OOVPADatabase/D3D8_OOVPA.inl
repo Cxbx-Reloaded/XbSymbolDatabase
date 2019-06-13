@@ -323,14 +323,14 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMode, 3925, 4034, 4134, 4627, 5233),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleRenderTargetMode, 4034), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_SetRenderState_NormalizeNormals, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_OcclusionCullEnable, 3911, 4034),
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_OcclusionCullEnable, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_PSTextureModes, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZCmpAlwaysRead, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZRead, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_SampleAlpha, 4627),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ShadowFunc, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_Simple, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilCullEnable, 3911, 4034),
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilCullEnable, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilEnable, 3911, 4034, 5849),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilFail, 3911, 4034, 5849),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_TextureFactor, 3911, 4034),
@@ -422,7 +422,7 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(Lock3DSurface, 3911),
     REGISTER_OOVPAS(D3D_MakeRequestedSpace_4, 4034), // Final generic OOVPA: 4034??; Removed: 4134 // NOTE: has multiple rets.
     REGISTER_OOVPAS(D3D_MakeRequestedSpace_8, 4134, 5558), // Final generic OOVPA: 5558; Removed: 0 // NOTE: has multiple rets.
-    REGISTER_OOVPAS(XMETAL_StartPush, 3911),
+    REGISTER_OOVPAS(XMETAL_StartPush, 3911), // Final generic OOVPA: 3911; Removed: 4034??
     REGISTER_OOVPAS(IDirect3DVertexBuffer8_Lock, 4627),
 };
 

@@ -1428,59 +1428,69 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetRenderState_OcclusionCullEnable
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_OcclusionCullEnable, 4034, 12)
+// Generic OOVPA as of 4034 and newer.
+// NOTE: asm codes are the same as D3DDevice_SetRenderState_StencilCullEnable
+//       except for the offset references.
+OOVPA_XREF(D3DDevice_SetRenderState_OcclusionCullEnable, 4034, 2+14,
 
-        // D3DDevice_SetRenderState_OcclusionCullEnable+0x15 : jb +0x05
-        { 0x15, 0x72 },
-        { 0x16, 0x05 },
+    XRefNoSaveIndex,
+    XRefTwo)
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D__PDEVICE]
+        XREF_ENTRY(0x07, XREF_D3DDEVICE),
+
+        // D3DDevice_SetRenderState_OcclusionCullEnable+0x0B : D3D__RenderState[D3DRS_OCCLUSIONCULLENABLE]
+        XREF_ENTRY(0x0C, XREF_D3DRS_OCCLUSIONCULLENABLE), // Derived
+
+        // D3DDevice_SetRenderState_OcclusionCullEnable+0x17 : call D3DDevice_MakeSpace
+        //XREF_ENTRY(0x18, XREF_D3DDevice_MakeSpace),
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x00 : mov eax, [esp+arg_0]
+        OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
         // D3DDevice_SetRenderState_OcclusionCullEnable+0x41 : cmp [abs], 0x1E00
-        { 0x41, 0x81 },
-        { 0x47, 0x00 },
-        { 0x48, 0x1E },
+        OV_MATCH(0x41, 0x81),
+        OV_MATCH(0x47, 0x00, 0x1E),
 
         // D3DDevice_SetRenderState_OcclusionCullEnable+0x50 : mov dword ptr [eax], 0x41D84
-        { 0x50, 0xC7 },
-        { 0x51, 0x00 },
-        { 0x52, 0x84 },
-        { 0x53, 0x1D },
-        { 0x54, 0x04 },
+        OV_MATCH(0x50, 0xC7, 0x00, 0x84, 0x1D, 0x04),
 
         // D3DDevice_SetRenderState_OcclusionCullEnable+0x5F : retn 0x04
-        { 0x5F, 0xC2 },
-        { 0x60, 0x04 },
+        OV_MATCH(0x5F, 0xC2, 0x04),
 OOVPA_END;
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_StencilCullEnable
 // ******************************************************************
-OOVPA_XREF(D3DDevice_SetRenderState_StencilCullEnable, 4034, 1+12,
+// Generic OOVPA as of 4034 and newer.
+// NOTE: asm codes are the same as D3DDevice_SetRenderState_OcclusionCullEnable
+//       except for the offset references.
+OOVPA_XREF(D3DDevice_SetRenderState_StencilCullEnable, 4034, 2+14,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefTwo)
 
-        // D3DDevice_SetRenderState_StencilCullEnable+0x0C : D3D__RenderState[D3DRS_STENCILCULLENABLE]
-        XREF_ENTRY( 0x0C, XREF_D3DRS_STENCILCULLENABLE ), // Derived
+        // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D__PDEVICE]
+        XREF_ENTRY(0x07, XREF_D3DDEVICE),
 
-        // D3DDevice_SetRenderState_StencilCullEnable+0x15 : jb +0x05
-        { 0x15, 0x72 },
-        { 0x16, 0x05 },
+        // D3DDevice_SetRenderState_StencilCullEnable+0x0B : D3D__RenderState[D3DRS_STENCILCULLENABLE]
+        XREF_ENTRY(0x0C, XREF_D3DRS_STENCILCULLENABLE), // Derived
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x17 : call D3DDevice_MakeSpace
+        //XREF_ENTRY(0x18, XREF_D3DDevice_MakeSpace),
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x00 : mov eax, [esp+arg_0]
+        OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
         // D3DDevice_SetRenderState_StencilCullEnable+0x41 : cmp [abs], 0x1E00
-        { 0x41, 0x81 },
-        { 0x47, 0x00 },
-        { 0x48, 0x1E },
+        OV_MATCH(0x41, 0x81),
+        OV_MATCH(0x47, 0x00, 0x1E),
 
         // D3DDevice_SetRenderState_StencilCullEnable+0x50 : mov dword ptr [eax], 0x41D84
-        { 0x50, 0xC7 },
-        { 0x51, 0x00 },
-        { 0x52, 0x84 },
-        { 0x53, 0x1D },
-        { 0x54, 0x04 },
+        OV_MATCH(0x50, 0xC7, 0x00, 0x84, 0x1D, 0x04),
 
         // D3DDevice_SetRenderState_StencilCullEnable+0x5F : retn 0x04
-        { 0x5F, 0xC2 },
-        { 0x60, 0x04 },
+        OV_MATCH(0x5F, 0xC2, 0x04),
 OOVPA_END;
 
 // ******************************************************************

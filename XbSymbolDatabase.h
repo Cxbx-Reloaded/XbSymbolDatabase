@@ -153,6 +153,7 @@ typedef enum _XRefDataBaseOffset
     XREF_D3DDevice_MakeSpace,
     XREF_D3DResource_AddRef,
     XREF_D3DVertexBuffer_Lock2,
+    XREF_XMETAL_StartPush,
     XREF_XnInit,
     XREF_XID_fCloseDevice,
     XREF_D3D_ClearStateBlockFlags,

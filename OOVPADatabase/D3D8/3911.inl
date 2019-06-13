@@ -3509,53 +3509,67 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetRenderState_OcclusionCullEnable
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_OcclusionCullEnable, 3911, 16)
+// NOTE: asm codes are the same as D3DDevice_SetRenderState_StencilCullEnable
+//       except for the offset references.
+OOVPA_XREF(D3DDevice_SetRenderState_OcclusionCullEnable, 3911, 2+14,
+
+    XRefNoSaveIndex,
+    XRefTwo)
+
+        // D3DDevice_SetRenderState_OcclusionCullEnable+0x05 : mov esi,[D3D__PDEVICE]
+        XREF_ENTRY(0x07, XREF_D3DDEVICE),
+
+        // D3DDevice_SetRenderState_OcclusionCullEnable+0x0C : D3D__RenderState[D3DRS_OCCLUSIONCULLENABLE]
+        XREF_ENTRY(0x0D, XREF_D3DRS_OCCLUSIONCULLENABLE), // Derived
+
+        // D3DDevice_SetRenderState_OcclusionCullEnable+0x11 : call XMETAL_StartPush
+        //XREF_ENTRY(0x12, XREF_XMETAL_StartPush),
 
         // D3DDevice_SetRenderState_OcclusionCullEnable+0x00 : mov eax, [esp+arg_0]
-        { 0x00, 0x8B },
-        { 0x01, 0x44 },
-        { 0x02, 0x24 },
-        { 0x03, 0x04 },
-
-        // D3DDevice_SetRenderState_OcclusionCullEnable+0x20 : jz +0x05
-        { 0x20, 0x74 },
-        { 0x21, 0x05 },
+        OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
         // D3DDevice_SetRenderState_OcclusionCullEnable+0x3B : cmp [abs], 0x1E00
-        { 0x3B, 0x81 },
-        { 0x41, 0x00 },
-        { 0x42, 0x1E },
+        OV_MATCH(0x3B, 0x81),
+        OV_MATCH(0x41, 0x00, 0x1E),
 
         // D3DDevice_SetRenderState_OcclusionCullEnable+0x4A : mov dword ptr [eax], 0x41D84
-        { 0x4A, 0xC7 },
-        { 0x4B, 0x00 },
-        { 0x4C, 0x84 },
-        { 0x4D, 0x1D },
-        { 0x4E, 0x04 },
+        OV_MATCH(0x4A, 0xC7, 0x00, 0x84, 0x1D, 0x04),
 
         // D3DDevice_SetRenderState_OcclusionCullEnable+0x59 : retn 0x04
-        { 0x59, 0xC2 },
-        { 0x5A, 0x04 },
+        OV_MATCH(0x59, 0xC2, 0x04),
 OOVPA_END;
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_StencilCullEnable
 // ******************************************************************
-OOVPA_XREF(D3DDevice_SetRenderState_StencilCullEnable, 3911, 1+8,
+// NOTE: asm codes are the same as D3DDevice_SetRenderState_OcclusionCullEnable
+//       except for the offset references.
+OOVPA_XREF(D3DDevice_SetRenderState_StencilCullEnable, 3911, 2+14,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefTwo)
 
-        XREF_ENTRY( 0x0D, XREF_D3DRS_STENCILCULLENABLE ), // Derived
+        // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D__PDEVICE]
+        XREF_ENTRY(0x07, XREF_D3DDEVICE),
 
-        { 0x00, 0x8B },
-        { 0x0B, 0x56 },
-        { 0x16, 0x8B },
-        { 0x22, 0xB9 },
-        { 0x2E, 0xD2 },
-        { 0x3A, 0x0C },
-        { 0x46, 0x03 },
-        { 0x52, 0x04 },
+        // D3DDevice_SetRenderState_StencilCullEnable+0x0C : D3D__RenderState[D3DRS_STENCILCULLENABLE]
+        XREF_ENTRY(0x0D, XREF_D3DRS_STENCILCULLENABLE), // Derived
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x11 : call XMETAL_StartPush
+        //XREF_ENTRY(0x12, XREF_XMETAL_StartPush),
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x00 : mov eax, [esp+arg_0]
+        OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x3B : cmp [abs], 0x1E00
+        OV_MATCH(0x3B, 0x81),
+        OV_MATCH(0x41, 0x00, 0x1E),
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x4A : mov dword ptr [eax], 0x41D84
+        OV_MATCH(0x4A, 0xC7, 0x00, 0x84, 0x1D, 0x04),
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x59 : retn 0x04
+        OV_MATCH(0x59, 0xC2, 0x04),
 OOVPA_END;
 
 // ******************************************************************
@@ -4217,7 +4231,11 @@ OOVPA_END;
 // ******************************************************************
 // * XMETAL_StartPush
 // ******************************************************************
-OOVPA_NO_XREF(XMETAL_StartPush, 3911, 11)
+// Generic OOVPA as of 3911; Removed in 4034??
+OOVPA_XREF(XMETAL_StartPush, 3911, 11,
+
+    XREF_XMETAL_StartPush,
+    XRefZero)
 
         // XMETAL_StartPush+0x00 : mov ecx, [esp+0x4]
         { 0x00, 0x8B },
