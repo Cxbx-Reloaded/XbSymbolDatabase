@@ -639,21 +639,29 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_BeginPush2
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_BeginPush2, 4039, 12)
+OOVPA_XREF(D3DDevice_BeginPush2, 4039, 1+11,
 
-        { 0x00, 0x56 },
-        { 0x07, 0x6A },
+    XRefNoSaveIndex,
+    XRefOne)
 
-        { 0x10, 0x8B },
-        { 0x11, 0x44 },
-        { 0x12, 0x24 },
-        { 0x13, 0x08 },
-        { 0x14, 0x40 },
-        { 0x15, 0x50 },
-        { 0x16, 0x56 },
-        { 0x17, 0xE8 },
-        { 0x23, 0xC2 },
-        { 0x24, 0x08 },
+        // D3DDevice_BeginPush__8+0x01 : mov esi,[D3D__PDEVICE]
+        XREF_ENTRY(0x03, XREF_D3DDEVICE),
+
+        // D3DDevice_BeginPush__8+0x00 : push esi; mov esi,[D3D__PDEVICE]
+        OV_MATCH(0x00, 0x56, 0x8B, 0x35),
+
+        // D3DDevice_BeginPush__8+0x0B : call D3DDevice_SetStateVB
+        OV_MATCH(0x0B, 0xE8),
+
+        // D3DDevice_BeginPush__8+0x1C : mov ecx,[esp+0x0C]
+        OV_MATCH(0x1C, 0x8B, 0x4C, 0x24, 0x0C),
+
+        // D3DDevice_BeginPush__8+0x17 : call XMETAL_StartPushCount
+        OV_MATCH(0x17, 0xE8),
+
+        // D3DDevice_BeginPush__8+0x23 : ret 0x0008
+        OV_MATCH(0x23, 0xC2, 0x08),
+
 OOVPA_END;
 
 // ******************************************************************

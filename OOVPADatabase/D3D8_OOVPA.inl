@@ -194,8 +194,8 @@ OOVPATable D3D8_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_AddRef, 3911, 4039, 4134, 4242, 4627, 5028, 5344, 5558, 5788),
     REGISTER_OOVPAS(D3DDevice_ApplyStateBlock, 3911, 4627),
     REGISTER_OOVPAS(D3DDevice_Begin, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_BeginPush, 4531,4627, 5028),
-    REGISTER_OOVPAS(D3DDevice_BeginPush2, 4039),
+    REGISTER_OOVPAS(D3DDevice_BeginPush, 4531, 4627, 5028), // NOTE: should be D3DDevice_BeginPush_4 and maybe include reference to D3DDevice_SetStateVB
+    REGISTER_OOVPAS(D3DDevice_BeginPush2, 4039), // NOTE: should be D3DDevice_BeginPush_8 and maybe include reference to D3DDevice_SetStateVB
     REGISTER_OOVPAS(D3DDevice_BeginPushBuffer, 3911, 4039), // Not implemented yet. (from 5788's comment)
     REGISTER_OOVPAS(D3DDevice_BeginStateBig, 5028),
     REGISTER_OOVPAS(D3DDevice_BeginStateBlock, 3911, 4134),
