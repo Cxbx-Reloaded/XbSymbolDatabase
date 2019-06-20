@@ -169,7 +169,7 @@ xbaddr XRefDataBase[XREF_COUNT] = { 0 }; // Reset and populated by EmuHLEInterce
 
 bool bXRefFirstPass; // For search speed optimization, set in XbSymbolScan, read in XbSymbolLocateFunction
 unsigned int UnResolvedXRefs = XREF_COUNT;
-bool bStrictBuildVersionLimit = false;
+bool bStrictBuildVersionLimit = true;
 #if _DEBUG
 xb_output_message output_verbose_level = XB_OUTPUT_MESSAGE_DEBUG;
 #else
