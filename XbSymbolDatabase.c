@@ -766,6 +766,9 @@ bool XbSymbolInit(const void* xb_header_addr,
         XRefDataBase[XREF_OFFSET_D3DDEVICE_M_PALETTES] = XREF_ADDR_DERIVE;
         XRefDataBase[XREF_OFFSET_D3DDEVICE_M_RENDERTARGET] = XREF_ADDR_DERIVE;
         XRefDataBase[XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL] = XREF_ADDR_DERIVE;
+        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE] = XREF_ADDR_DERIVE;       //In use
+        //XRefDataBase[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] = XREF_ADDR_UNDETERMINED;   //In use // Manual check only.
+        //XRefDataBase[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
 
         xbe_section_header* pSectionHeaders = (xbe_section_header*)(xb_start_addr + pXbeHeader->pSectionHeadersAddr);
         const char* SectionName;
@@ -927,7 +930,7 @@ void XbSymbolDX8RegisterStream(uint32_t LibraryFlag,
     register_func(LibraryStr, LibraryFlag, "g_Stream", Derived_g_Stream, 0);
 }
 
-void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
+bool XbSymbolDX8SectionScan(uint32_t LibraryFlag,
                             const xbe_section_header* pSectionHeader,
                             unsigned short BuildVersion,
                             const char* LibraryStr,
@@ -938,6 +941,7 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
     memptr_t lower = xb_start_virt_addr + pSectionHeader->dwVirtualAddr;
     memptr_t upper = xb_start_virt_addr + pSectionHeader->dwVirtualAddr + pSectionHeader->dwVirtualSize;;
     memptr_t pFunc = 0;
+    xbaddr xSymbolAddr = 0;
     // offset for stencil cull enable render state in the deferred render state buffer
     uint32_t DerivedAddr_D3DRS_CULLMODE = 0;
     int Decrement = 0; // TODO : Rename into something understandable
@@ -1209,6 +1213,42 @@ void XbSymbolDX8SectionScan(uint32_t LibraryFlag,
 
         XbSymbolDX8RegisterStream(LibraryFlag, LibraryStr, register_func, pFunc, iCodeOffsetFor_g_Stream);
     }
+
+    // Manual check require for able to self-register these symbols:
+    // * D3DDevice_SetSwapCallback
+    // * D3DDevice_SetVerticalBlankCallback
+
+    // First, check if D3D__PDEVICE is found.
+    if (XRefDataBase[XREF_D3DDEVICE] != XREF_ADDR_DERIVE &&
+        // Then, check at least one of symbol's member variable is not found.
+        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] == XREF_ADDR_UNDETERMINED) {
+
+        // Scan if event handle variable is not yet derived.
+        if (XRefDataBase[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE] == XREF_ADDR_DERIVE) {
+            xSymbolAddr = (xbaddr)(uintptr_t)XbSymbolLocateFunctionCast("D3DDevice__ManualFindEventHandleGeneric_3911", 3911,
+                &D3DDevice__ManualFindEventHandleGeneric_3911, lower, upper, xb_start_virt_addr);
+        }
+
+        // We are not registering the D3DDevice__ManualFindEventHandleGeneric as it is NOT a symbol.
+
+
+        // If not found, skip manual register.
+        if (XRefDataBase[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE] == XREF_ADDR_DERIVE) {
+            return false;
+        }
+
+        // Finally, manual register the symbol variables.
+        xSymbolAddr = XRefDataBase[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE];
+        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] = xSymbolAddr - 8;
+        XRefDataBase[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = xSymbolAddr - 4;
+    }
+    // If D3D__PDEVICE is not found, the scan is not complete
+    // and will continue scan to next given section.
+    else {
+        return false;
+    }
+
+    return true;
 }
 
 bool XbSymbolDSoundSectionScan(uint32_t LibraryFlag,
@@ -1429,27 +1469,10 @@ bool XbSymbolScan(const void* xb_header_addr,
 
                     if (bXRefFirstPass) {
                         if ((LibraryFlag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
-                            for (unsigned int s = 0; s < pXbeHeader->dwSections; s++) {
-                                SectionName = (const char*)(xb_start_addr + pSectionHeaders[s].SectionNameAddr);
-                                if (strncmp(SectionName, Sec_D3D, 8) == 0) {
-
-                                    if (!is_raw) {
-                                        // if an xbe executable did not load a section, then skip the section scan.
-                                        if (pSectionHeaders[s].dwSectionRefCount == 0) {
-                                            continue;
-                                        }
-                                    }
-                                    else {
-                                        xb_start_virt_addr = (((memptr_t)xb_header_addr + pSectionHeaders[s].dwRawAddr) - pSectionHeaders[s].dwVirtualAddr);
-                                    }
-                                    pSectionScan = pSectionHeaders + s;
-
-                                    //Initialize a matching specific section is currently pair with library in order to scan specific section only.
-                                    //By doing this method will reduce false detection dramatically. If it had happened before.
-                                    XbSymbolDX8SectionScan(LibraryFlag, pSectionScan, BuildVersion, LibraryStr, register_func, xb_start_virt_addr);
-                                    break;
-                                }
-                            }
+                            // TODO: Do we need to check twice?
+                            // Initialize a matching specific section is currently pair with library in order to scan specific section only.
+                            // By doing this method will reduce false detection dramatically. If it had happened before.
+                            XbLibraryScan(XbSymbolDX8SectionScan, xb_header_addr, register_func, is_raw, BuildVersion, LibraryFlag, LibraryStr);
                         }
                         else if ((LibraryFlag & XbSymbolLib_DSOUND) > 0) {
                             // Perform check twice, since sections can be in different order.

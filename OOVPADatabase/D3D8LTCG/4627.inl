@@ -85,24 +85,6 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_ZBias, 1060, 9)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_Dxt1NoiseEnable
-// ******************************************************************
-//0FB6480D8A91
-OOVPA_NO_XREF(D3DDevice_SetRenderState_Dxt1NoiseEnable, 1024, 7)
-
-        // XREF_ENTRY( 0x6F, XREF_D3DRS_DXT1NOISEENABLE ),
-
-        { 0x00, 0x53 },
-
-        { 0x13, 0x0F },
-        { 0x14, 0xB6 },
-        { 0x15, 0x48 },
-        { 0x16, 0x0D },
-        { 0x17, 0x8A },
-        { 0x18, 0x91 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleAntiAlias
 // ******************************************************************
 OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias, 1060, 1+7,
@@ -249,31 +231,6 @@ OOVPA_XREF(D3DDevice_SetTextureState_TexCoordIndex, 1958, 1+10,
         { 0x1D, 0x8B },
         { 0x1E, 0x06 },
         { 0x1F, 0x8B },
-OOVPA_END;
-
-//******************************************************************
-//* D3DDevice_SetRenderTarget
-//******************************************************************
-//8B4424088B4C240468
-OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 1060, 15)
-
-        { 0x00, 0x8B },
-        { 0x01, 0x44 },
-        { 0x02, 0x24 },
-        { 0x03, 0x08 },
-        { 0x04, 0x8B },
-        { 0x05, 0x4C },
-        { 0x06, 0x24 },
-        { 0x07, 0x04 },
-        { 0x08, 0x68 },
-
-        { 0x0D, 0x50 },
-        { 0x0E, 0x51 },
-        { 0x0F, 0xE8 },
-
-        { 0x14, 0xC2 },
-        { 0x15, 0x08 },
-        { 0x16, 0x00 },
 OOVPA_END;
 
 // ******************************************************************

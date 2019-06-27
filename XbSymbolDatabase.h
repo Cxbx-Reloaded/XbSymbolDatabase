@@ -96,7 +96,7 @@ extern "C" {
 typedef enum _XRefDataBaseOffset
 {
     // D3D variable addresses
-    XREF_D3DDEVICE=0, // initially set to XREF_ADDR_DERIVE // TODO : Rename to XREF_GLOBAL_PDEVICE or something?
+    XREF_D3DDEVICE=0, // initially set to XREF_ADDR_DERIVE // TODO : Rename to XREF_D3D__PDEVICE or something? // NOTE: There is such thing as D3D__DEVICE except it is at different address.
     XREF_D3DRS_CULLMODE, // initially set to XREF_ADDR_DERIVE
     //XREF_D3DRS_MULTISAMPLEMODE, // Avoid; It replaced to X_D3DRS_MULTISAMPLETYPE around XDK 4361
     XREF_D3DRS_MULTISAMPLERENDERTARGETMODE, // initially set to XREF_ADDR_DERIVE
@@ -112,6 +112,9 @@ typedef enum _XRefDataBaseOffset
     XREF_OFFSET_D3DDEVICE_M_PALETTES, // initially set to XREF_ADDR_DERIVE
     XREF_OFFSET_D3DDEVICE_M_RENDERTARGET, // initially set to XREF_ADDR_DERIVE
     XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL, // initially set to XREF_ADDR_DERIVE
+    XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE, // initially set to XREF_ADDR_DERIVE
+    XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK, // initially set to XREF_ADDR_DERIVE
+    XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK, // initially set to XREF_ADDR_DERIVE
     // DSOUND variable addresses
     XREF_DSS_VOICE_VTABLE,
     XREF_DSS_STREAM_VTABLE,
@@ -141,16 +144,21 @@ typedef enum _XRefDataBaseOffset
     XREF_D3D_KickOffAndWaitForIdle,
     XREF_D3D_MakeRequestedSpace,
     XREF_D3D_CDevice_KickOff,
+    XREF_D3D_CDevice_MakeSpace,
     XREF_D3DPalette_Lock2,
     XREF_D3DTexture_GetSurfaceLevel2,
+    XREF_D3DDevice_BlockUntilVerticalBlank,
     XREF_D3DDevice_CreatePalette2,
     XREF_D3DDevice_CreateIndexBuffer2,
     XREF_D3DDevice_CreateVertexBuffer2,
     XREF_D3DDevice_GetBackBuffer2,
     XREF_D3DDevice_GetDepthStencilSurface2,
     XREF_D3DDevice_GetRenderTarget2,
+    XREF_D3DDevice_SetRenderTarget,
+    XREF_D3DDevice_MakeSpace,
     XREF_D3DResource_AddRef,
     XREF_D3DVertexBuffer_Lock2,
+    XREF_XMETAL_StartPush,
     XREF_XnInit,
     XREF_XID_fCloseDevice,
     XREF_D3D_ClearStateBlockFlags,

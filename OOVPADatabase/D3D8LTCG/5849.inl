@@ -667,26 +667,10 @@ OOVPA_END;
 // * D3D_MakeRequestedSpace
 // ******************************************************************
 //81C5004000003BE9
-OOVPA_NO_XREF(D3D_MakeRequestedSpace, 1024, 10)
+OOVPA_NO_XREF(D3D_MakeRequestedSpace_8, 1036, 10,
 
-        { 0x00, 0x51 },
-        { 0x01, 0x53 },
-
-        { 0x57, 0x81 },
-        { 0x58, 0xC5 },
-        { 0x59, 0x00 },
-        { 0x5A, 0x40 },
-        { 0x5B, 0x00 },
-        { 0x5C, 0x00 },
-        { 0x5D, 0x3B },
-        { 0x5E, 0xE9 },
-OOVPA_END;
-
-// ******************************************************************
-// * D3D_MakeRequestedSpace
-// ******************************************************************
-//81C5004000003BE9
-OOVPA_NO_XREF(D3D_MakeRequestedSpace, 1036, 10)
+    XREF_D3D_MakeRequestedSpace,
+    XRefZero)
 
         { 0x00, 0x51 },
         { 0x01, 0x53 },

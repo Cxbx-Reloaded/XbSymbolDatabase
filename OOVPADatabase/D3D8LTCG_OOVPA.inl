@@ -65,7 +65,7 @@
 // ******************************************************************
 OOVPATable D3D8LTCG_OOVPAV2[] = {
 
-    REGISTER_OOVPAS(D3D_MakeRequestedSpace, 1024, 1036, 1048),
+    REGISTER_OOVPAS(D3D_MakeRequestedSpace_8, 1036), // NOTE: OOVPA is in 5849. In used by (5849) Manhunt title
     REGISTER_OOVPAS(D3D_MakeRequestedSpace, 2048),
     REGISTER_OOVPAS(D3D_SetFence, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3D_BlockOnTime, 1024, 1036, 1048),
@@ -79,6 +79,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_BeginPushBuffer, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_BeginPushBuffer_0, 2048, 2060),
     REGISTER_OOVPAS(D3DDevice_BeginVisibilityTest, 1024, 1048),
+    REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 1024),
     REGISTER_OOVPAS(D3DDevice_Clear, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_CopyRects, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_CreatePixelShader, 1024),
@@ -147,8 +148,6 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderStateNotInline_0, 2048),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_BackFillMode, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_CullMode, 1045, 1049, 1052, 1053),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_DoNotCullUncompressed, 1024),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_Dxt1NoiseEnable, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_EdgeAntiAlias, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FillMode, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FogColor, 1024, 1036, 1048, 1060),
@@ -161,8 +160,6 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleRenderTargetMode, 1024),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_NormalizeNormals, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_OcclusionCullEnable, 1024),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZCmpAlwaysRead, 1024),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZRead, 1024),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_SampleAlpha, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ShadowFunc, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilCullEnable, 1024),
@@ -174,7 +171,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_YuvEnable, 1024),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZBias, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZEnable, 1024, 1036, 1048, 1060),
-    REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 1024, 1036, 1048, 1060, 1072, 1084),
+    REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 1024, 1036, 1048, 1072, 1084),
     REGISTER_OOVPAS(D3DDevice_SetRenderTarget_0, 2048),
     REGISTER_OOVPAS(D3DDevice_SetRenderTargetFast, 1024),
     REGISTER_OOVPAS(D3DDevice_SetScissors, 1024, 1036, 1048, 1060, 1072),
@@ -242,6 +239,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(Lock2DSurface_16, 2048),
 
 // *********************** Copy from D3D8.OOVPA.inl *****************
+    REGISTER_OOVPAS(CDevice_MakeSpace, 3911),
     REGISTER_OOVPAS(CMiniport_CreateCtxDmaObject, 3911, 4034),
     REGISTER_OOVPAS(CMiniport_InitHardware, 3911, 4034, 5455),
     REGISTER_OOVPAS(CMiniport_IsFlipPending, 3911, 4242, 4627, 4928),
@@ -259,7 +257,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_BeginStateBlock, 3911, 4134),
     REGISTER_OOVPAS(D3DDevice_BeginVisibilityTest, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_BlockOnFence, 3911),
-    REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 3911, 4034, 4134, 4242, 4432, 4627, 5028, 5233, 5344, 5455, 5558, 5788),
+    REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 3911),
     REGISTER_OOVPAS(D3DDevice_CaptureStateBlock, 3911, 4134),
     REGISTER_OOVPAS(D3DDevice_Clear, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_CopyRects, 3911, 4034, 4627, 5120),
@@ -282,7 +280,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_DeleteStateBlock, 3911),
     REGISTER_OOVPAS(D3DDevice_DeleteVertexShader, 3911, 5344),
     REGISTER_OOVPAS(D3DDevice_DrawIndexedVertices, 3911, 4034, 4627, 5028),
-    REGISTER_OOVPAS(D3DDevice_DrawIndexedVerticesUP, 3911, 4039, 5028, 5344),
+    REGISTER_OOVPAS(D3DDevice_DrawIndexedVerticesUP, 3911, 5028, 5344),
     REGISTER_OOVPAS(D3DDevice_DrawRectPatch, 3911), // TODO: Unused? (from 4034's comment)
     REGISTER_OOVPAS(D3DDevice_DrawTriPatch, 3911),
     REGISTER_OOVPAS(D3DDevice_DrawVertices, 3911),
@@ -342,8 +340,8 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_LightEnable, 3911, 5344), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_LoadVertexShader, 3911, 4034, 4627, 5028),
     REGISTER_OOVPAS(D3DDevice_LoadVertexShaderProgram, 3911),
-    REGISTER_OOVPAS(D3DDevice_MakeSpace, 4134),
-    REGISTER_OOVPAS(D3DDevice_PersistDisplay, 3911, 4039, 4627, 4831, 5455, 5558),
+    REGISTER_OOVPAS(D3DDevice_MakeSpace, 4034, 4134),
+    REGISTER_OOVPAS(D3DDevice_PersistDisplay, 3911, 4039, 4627, 4831),
     REGISTER_OOVPAS(D3DDevice_Present, 3911),
     REGISTER_OOVPAS(D3DDevice_PrimeVertexCache, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_Release, 3911),
@@ -369,7 +367,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_CullMode, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_Deferred, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_DoNotCullUncompressed, 3911),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_Dxt1NoiseEnable, 3911, 4034, 4627), // Was 5233 (from 5344's comment)
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_Dxt1NoiseEnable, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_EdgeAntiAlias, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FillMode, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FogColor, 3911, 4034),
@@ -387,7 +385,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZRead, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_SampleAlpha, 4627),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ShadowFunc, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_Simple, 3911, 4034),
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_Simple, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilCullEnable, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilEnable, 3911, 4034, 5849),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilFail, 3911, 4034, 5849),
@@ -407,7 +405,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetStateVB, 3911, 4034, 4134),
     REGISTER_OOVPAS(D3DDevice_SetStipple, 4627),
     REGISTER_OOVPAS(D3DDevice_SetStreamSource, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetSwapCallback, 4039, 4134, 4242, 4432, 4627, 5028, 5233, 5344, 5455, 5558, 5788),
+    REGISTER_OOVPAS(D3DDevice_SetSwapCallback, 4039),
     REGISTER_OOVPAS(D3DDevice_SetTexture, 3911, 4034, 4361, 4831),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BorderColor, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BumpEnv, 3911, 4034),
@@ -431,7 +429,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstantNotInlineFast, 4627),
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderInput, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderInputDirect, 4361),
-    REGISTER_OOVPAS(D3DDevice_SetVerticalBlankCallback, 3911, 4039, 4134, 4242, 4432, 4627, 5028, 5233, 5344, 5455, 5558, 5788), // Was 5233 (from 5344's comment)
+    REGISTER_OOVPAS(D3DDevice_SetVerticalBlankCallback, 3911),
     REGISTER_OOVPAS(D3DDevice_SetViewport, 3911, 4034, 5344, 5455), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_Swap, 4034, 4531, 4627),
     REGISTER_OOVPAS(D3DDevice_SwitchTexture, 3911),
@@ -450,7 +448,7 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(D3DTexture_GetSurfaceLevel2, 4627),
     REGISTER_OOVPAS(D3DTexture_LockRect, 3911),
     REGISTER_OOVPAS(D3DVertexBuffer_GetDesc, 3911),
-    REGISTER_OOVPAS(D3DVertexBuffer_Lock, 3911, 4034, 4531, 4627),
+    REGISTER_OOVPAS(D3DVertexBuffer_Lock, 3911, 4034, 4627),
     REGISTER_OOVPAS(D3DVertexBuffer_Lock2, 4627),
     REGISTER_OOVPAS(D3DVolumeTexture_LockBox, 3911), // Just calls Lock3DSurface (from 4134, 4432's comment)
     REGISTER_OOVPAS(D3D_AllocContiguousMemory, 3911, 5455), // Just calls MmAllocateContiguousMemory. Was PATCH (from 3925, 5788's comment)
@@ -478,7 +476,8 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
     REGISTER_OOVPAS(Get2DSurfaceDesc, 3911, 4034), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(Lock2DSurface, 3911),
     REGISTER_OOVPAS(Lock3DSurface, 3911),
-    REGISTER_OOVPAS(D3D_MakeRequestedSpace, 4134, 5028, 5558),
+    REGISTER_OOVPAS(D3D_MakeRequestedSpace_4, 4034),
+    REGISTER_OOVPAS(D3D_MakeRequestedSpace_8, 4134, 5558),
     REGISTER_OOVPAS(XMETAL_StartPush, 3911),
     REGISTER_OOVPAS(IDirect3DVertexBuffer8_Lock, 4627),
 };

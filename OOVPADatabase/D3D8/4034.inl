@@ -562,35 +562,6 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_ShadowFunc, 4034, 7)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_Simple
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_Simple, 4034, 13)
-
-        // D3DDevice_SetRenderState_Simple+0x05 : add eax, 0x08
-        { 0x05, 0x83 },
-        { 0x06, 0xC0 },
-        { 0x07, 0x08 },
-
-        // D3DDevice_SetRenderState_Simple+0x0E : jnb +0x0C
-        { 0x0E, 0x73 },
-        { 0x0F, 0x0C },
-
-        // D3DDevice_SetRenderState_Simple+0x15 : mov [eax-8], ecx
-        { 0x15, 0x89 },
-        { 0x16, 0x48 },
-        { 0x17, 0xF8 },
-
-        // D3DDevice_SetRenderState_Simple+0x18 : mov [eax-4], ecx
-        { 0x18, 0x89 },
-        { 0x19, 0x50 },
-        { 0x1A, 0xFC },
-
-        // D3DDevice_SetRenderState_Simple+0x25 : jmp +0xD9
-        { 0x25, 0xEB },
-        { 0x26, 0xD9 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_StencilEnable
 // ******************************************************************
 OOVPA_NO_XREF(D3DDevice_SetRenderState_StencilEnable, 4034, 8)
@@ -757,26 +728,28 @@ OOVPA_END;
 // ******************************************************************
 // * D3DVertexBuffer_Lock
 // ******************************************************************
-OOVPA_NO_XREF(D3DVertexBuffer_Lock, 4034, 11)
+OOVPA_XREF(D3DVertexBuffer_Lock, 4034, 1+9,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        // D3DVertexBuffer_Lock+0x0B : mov esi,[D3D__PDEVICE]
+        XREF_ENTRY(0x0D, XREF_D3DDEVICE),
+
+        // D3DVertexBuffer_Lock+0x18 : call D3DDevice_MakeSpace
+        //XREF_ENTRY(0x19, XREF_D3DDevice_MakeSpace),
 
         // D3DVertexBuffer_Lock+0x01 : mov bl, [esp+0x18]
-        { 0x01, 0x8A },
-        { 0x02, 0x5C },
-        { 0x03, 0x24 },
-        { 0x04, 0x18 },
+        OV_MATCH(0x01, 0x8A, 0x5C, 0x24, 0x18), // 4034 0x18 vs D3DVertexBuffer_Lock2 (4627) 0x0C
 
         // D3DVertexBuffer_Lock+0x09 : jnz +0x24
-        { 0x09, 0x75 },
-        { 0x0A, 0x24 },
+        OV_MATCH(0x09, 0x75, 0x24),
 
         // D3DVertexBuffer_Lock+0x2F : test bl, 0xA0
-        { 0x2F, 0xF6 },
-        { 0x30, 0xC3 },
-        { 0x31, 0xA0 },
+        OV_MATCH(0x2F, 0xF6, 0xC3, 0xA0),
 
-        // D3DVertexBuffer_Lock+0x50 : retn 0x14
-        { 0x50, 0xC2 },
-        { 0x51, 0x14 },
+        // 4034 0x50 vs 4531 0x54 : retn 0x14
+
 OOVPA_END;
 
 // ******************************************************************
@@ -1120,55 +1093,34 @@ OOVPA_NO_XREF(D3DDevice_SelectVertexShader, 4034, 12)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_BlockUntilVerticalBlank
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_BlockUntilVerticalBlank, 4034, 11)
-
-        // D3DDevice_BlockUntilVerticalBlank+0x05 : push 0; push 0; push 1
-        { 0x05, 0x6A },
-        { 0x06, 0x00 },
-        { 0x07, 0x6A },
-        { 0x08, 0x00 },
-        { 0x09, 0x6A },
-        { 0x0A, 0x01 },
-
-        // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, 0x25B0
-        { 0x17, 0x05 },
-        { 0x18, 0xB0 },
-        { 0x19, 0x25 },
-
-        // D3DDevice_BlockUntilVerticalBlank+0x1D : call [KrnlImport]
-        { 0x1D, 0xFF },
-
-        // D3DDevice_BlockUntilVerticalBlank+0x23 : retn
-        { 0x23, 0xC3 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
-OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 4034, 12)
-#else
-OOVPA_XREF(D3DDevice_SetRenderTarget, 4034, 1+12,
+OOVPA_XREF(D3DDevice_SetRenderTarget, 4034, 10,
 
-    XRefNoSaveIndex,
+    XREF_D3DDevice_SetRenderTarget,
+    XRefZero)
+#else
+OOVPA_XREF(D3DDevice_SetRenderTarget, 4034, 1+10,
+
+    XREF_D3DDevice_SetRenderTarget,
     XRefOne)
 
         XREF_ENTRY( 0x17, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET ), // Derived TODO : Verify offset
 #endif
-        { 0x00, 0x83 },
-        { 0x01, 0xEC },
-        { 0x2B, 0x85 },
-        { 0x2C, 0xC9 },
-        { 0x2D, 0x89 },
-        { 0x2E, 0x44 },
-        { 0x2F, 0x24 },
-        { 0x30, 0x24 },
-        { 0x31, 0x74 },
-        { 0x32, 0x06 },
-        { 0x33, 0x51 },
-        { 0x34, 0xE8 },
+        // D3DDevice_SetRenderTarget+0x00 : sub esp, 0xXX
+        OV_MATCH(0x00, 0x83, 0xEC),
+        //OV_MATCH(0x02, 0x30),
+
+        // D3DDevice_SetRenderTarget+0x73 : shr ecx,0x14
+        OV_MATCH(0x73, 0xC1, 0xE9, 0x14),
+
+        // D3DDevice_SetRenderTarget+0x76 : and ecx, 0x0F
+        OV_MATCH(0x76, 0x83, 0xE1, 0x0F),
+
+        // D3DDevice_SetRenderTarget+0x7E : shl eax,cl
+        OV_MATCH(0x7E, 0xD3, 0xE0),
+
 OOVPA_END;
 
 // ******************************************************************
@@ -1303,26 +1255,6 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_PSTextureModes, 4034, 10)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_Dxt1NoiseEnable
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_Dxt1NoiseEnable, 4034, 11)
-
-        { 0x01, 0x8B },
-
-        { 0x10, 0x00 },
-        { 0x11, 0x00 },
-        { 0x12, 0x0F },
-        { 0x13, 0xB6 },
-        { 0x14, 0x48 },
-        { 0x15, 0x0D },
-        { 0x16, 0x8A },
-        { 0x17, 0x91 },
-
-        { 0x49, 0xC7 },
-        { 0x76, 0x1D },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleMode
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
@@ -1428,59 +1360,69 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetRenderState_OcclusionCullEnable
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_OcclusionCullEnable, 4034, 12)
+// Generic OOVPA as of 4034 and newer.
+// NOTE: asm codes are the same as D3DDevice_SetRenderState_StencilCullEnable
+//       except for the offset references.
+OOVPA_XREF(D3DDevice_SetRenderState_OcclusionCullEnable, 4034, 2+14,
 
-        // D3DDevice_SetRenderState_OcclusionCullEnable+0x15 : jb +0x05
-        { 0x15, 0x72 },
-        { 0x16, 0x05 },
+    XRefNoSaveIndex,
+    XRefTwo)
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D__PDEVICE]
+        XREF_ENTRY(0x07, XREF_D3DDEVICE),
+
+        // D3DDevice_SetRenderState_OcclusionCullEnable+0x0B : D3D__RenderState[D3DRS_OCCLUSIONCULLENABLE]
+        XREF_ENTRY(0x0C, XREF_D3DRS_OCCLUSIONCULLENABLE), // Derived
+
+        // D3DDevice_SetRenderState_OcclusionCullEnable+0x17 : call D3DDevice_MakeSpace
+        //XREF_ENTRY(0x18, XREF_D3DDevice_MakeSpace),
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x00 : mov eax, [esp+arg_0]
+        OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
         // D3DDevice_SetRenderState_OcclusionCullEnable+0x41 : cmp [abs], 0x1E00
-        { 0x41, 0x81 },
-        { 0x47, 0x00 },
-        { 0x48, 0x1E },
+        OV_MATCH(0x41, 0x81),
+        OV_MATCH(0x47, 0x00, 0x1E),
 
         // D3DDevice_SetRenderState_OcclusionCullEnable+0x50 : mov dword ptr [eax], 0x41D84
-        { 0x50, 0xC7 },
-        { 0x51, 0x00 },
-        { 0x52, 0x84 },
-        { 0x53, 0x1D },
-        { 0x54, 0x04 },
+        OV_MATCH(0x50, 0xC7, 0x00, 0x84, 0x1D, 0x04),
 
         // D3DDevice_SetRenderState_OcclusionCullEnable+0x5F : retn 0x04
-        { 0x5F, 0xC2 },
-        { 0x60, 0x04 },
+        OV_MATCH(0x5F, 0xC2, 0x04),
 OOVPA_END;
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_StencilCullEnable
 // ******************************************************************
-OOVPA_XREF(D3DDevice_SetRenderState_StencilCullEnable, 4034, 1+12,
+// Generic OOVPA as of 4034 and newer.
+// NOTE: asm codes are the same as D3DDevice_SetRenderState_OcclusionCullEnable
+//       except for the offset references.
+OOVPA_XREF(D3DDevice_SetRenderState_StencilCullEnable, 4034, 2+14,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefTwo)
 
-        // D3DDevice_SetRenderState_StencilCullEnable+0x0C : D3D__RenderState[D3DRS_STENCILCULLENABLE]
-        XREF_ENTRY( 0x0C, XREF_D3DRS_STENCILCULLENABLE ), // Derived
+        // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D__PDEVICE]
+        XREF_ENTRY(0x07, XREF_D3DDEVICE),
 
-        // D3DDevice_SetRenderState_StencilCullEnable+0x15 : jb +0x05
-        { 0x15, 0x72 },
-        { 0x16, 0x05 },
+        // D3DDevice_SetRenderState_StencilCullEnable+0x0B : D3D__RenderState[D3DRS_STENCILCULLENABLE]
+        XREF_ENTRY(0x0C, XREF_D3DRS_STENCILCULLENABLE), // Derived
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x17 : call D3DDevice_MakeSpace
+        //XREF_ENTRY(0x18, XREF_D3DDevice_MakeSpace),
+
+        // D3DDevice_SetRenderState_StencilCullEnable+0x00 : mov eax, [esp+arg_0]
+        OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
         // D3DDevice_SetRenderState_StencilCullEnable+0x41 : cmp [abs], 0x1E00
-        { 0x41, 0x81 },
-        { 0x47, 0x00 },
-        { 0x48, 0x1E },
+        OV_MATCH(0x41, 0x81),
+        OV_MATCH(0x47, 0x00, 0x1E),
 
         // D3DDevice_SetRenderState_StencilCullEnable+0x50 : mov dword ptr [eax], 0x41D84
-        { 0x50, 0xC7 },
-        { 0x51, 0x00 },
-        { 0x52, 0x84 },
-        { 0x53, 0x1D },
-        { 0x54, 0x04 },
+        OV_MATCH(0x50, 0xC7, 0x00, 0x84, 0x1D, 0x04),
 
         // D3DDevice_SetRenderState_StencilCullEnable+0x5F : retn 0x04
-        { 0x5F, 0xC2 },
-        { 0x60, 0x04 },
+        OV_MATCH(0x5F, 0xC2, 0x04),
 OOVPA_END;
 
 // ******************************************************************
@@ -1697,4 +1639,52 @@ OOVPA_NO_XREF(D3DDevice_SetStateUP, 4034, 15)
 
         { 0x4F, 0x3B },
         { 0x50, 0xC1 },
+OOVPA_END;
+
+// ******************************************************************
+// * D3D::MakeRequestedSpace
+// ******************************************************************
+// Generic OOVPA as of 4034 and newer.
+OOVPA_XREF(D3D_MakeRequestedSpace_4, 4034, 12,
+
+    XREF_D3D_MakeRequestedSpace,
+    XRefZero)
+
+        // D3D::MakeRequestedSpace+0x00 : push ecx; push esi
+        OV_MATCH(0x00, 0x51, 0x56),
+
+        // D3D::MakeRequestedSpace+0x08 : test [esi+0x08],0x04
+        OV_MATCH(0x08, 0xF6, 0x46, 0x08, 0x04),
+
+        // D3D::MakeRequestedSpace+0x20 : sub ecx,edi; add edx,ecx
+        OV_MATCH(0x20, 0x2B, 0xCF, 0x03, 0xD1),
+
+        // D3D::MakeRequestedSpace+0x32 : ret 0x0004
+        OV_MATCH(0x32, 0xC2, 0x04),
+
+OOVPA_END;
+
+// ******************************************************************
+// * D3DDevice_MakeSpace
+// ******************************************************************
+OOVPA_XREF(D3DDevice_MakeSpace, 4034, 1+4,
+
+    XREF_D3DDevice_MakeSpace,
+    XRefOne)
+
+        // D3DDevice_MakeSpace+0x06 : call D3D::MakeRequestedSpace
+        XREF_ENTRY(0x07, XREF_D3D_MakeRequestedSpace),
+
+        // D3DDevice_MakeSpace+0x00 : mov eax,[addr]
+        OV_MATCH(0x00, 0xA1),
+
+        // D3DDevice_MakeSpace+0x05 : push eax
+        OV_MATCH(0x05, 0x50),
+
+        // D3DDevice_MakeSpace+0x06 : call D3D::MakeRequestedSpace
+        OV_MATCH(0x06, 0xE8),
+
+        // D3DDevice_MakeSpace+0x0B : ret
+        OV_MATCH(0x0B, 0xC3),
+
 OOVPA_END;

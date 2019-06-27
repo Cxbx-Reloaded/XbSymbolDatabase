@@ -44,31 +44,6 @@ OOVPA_NO_XREF(D3DDevice_UpdateOverlay, 5233, 12) // Up to 5849
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_BlockUntilVerticalBlank
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_BlockUntilVerticalBlank, 5233, 11)
-
-        // D3DDevice_BlockUntilVerticalBlank+0x05 : push 0; push 0; push 1
-        { 0x05, 0x6A },
-        { 0x06, 0x00 },
-        { 0x07, 0x6A },
-        { 0x08, 0x00 },
-        { 0x09, 0x6A },
-        { 0x0A, 0x01 },
-
-        // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, 0x195C
-        { 0x17, 0x05 },
-        { 0x18, 0x5C },
-        { 0x19, 0x19 },
-
-        // D3DDevice_BlockUntilVerticalBlank+0x1D : call [KrnlImport]
-        { 0x1D, 0xFF },
-
-        // D3DDevice_BlockUntilVerticalBlank+0x23 : retn
-        { 0x23, 0xC3 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleMode
 // ******************************************************************
 OOVPA_NO_XREF(D3DDevice_SetRenderState_MultiSampleMode, 5233, 13)
@@ -97,58 +72,6 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_MultiSampleMode, 5233, 13)
         { 0x24, 0xC2 },
         { 0x25, 0x04 },
         { 0x26, 0x00 },
-OOVPA_END;
-
-// ******************************************************************
-// * D3DDevice_SetVerticalBlankCallback
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetVerticalBlankCallback, 5233, 12)
-
-        // D3DDevice_SetVerticalBlankCallback+0x00 : mov eax, [esp+0x04]
-        { 0x00, 0x8B },
-        { 0x01, 0x44 },
-        { 0x02, 0x24 },
-        { 0x03, 0x04 },
-
-        // D3DDevice_SetVerticalBlankCallback+0x04 : mov ecx, [addr]
-        { 0x04, 0x8B },
-        { 0x05, 0x0D },
-
-        // D3DDevice_SetVerticalBlankCallback+0x0A : mov [ecx+0x1958], eax
-        { 0x0A, 0x89 },
-        { 0x0B, 0x81 },
-        { 0x0C, 0x58 }, // 54 vs 58
-        { 0x0D, 0x19 },
-
-        // D3DDevice_SetVerticalBlankCallback+0x10 : retn 0x04
-        { 0x10, 0xC2 },
-        { 0x11, 0x04 },
-OOVPA_END;
-
-// ******************************************************************
-// * D3DDevice_SetSwapCallback
-// ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetSwapCallback, 5233, 12)
-
-        // D3DDevice_SetSwapCallback+0x00 : mov eax, [esp+0x04]
-        { 0x00, 0x8B },
-        { 0x01, 0x44 },
-        { 0x02, 0x24 },
-        { 0x03, 0x04 },
-
-        // D3DDevice_SetSwapCallback+0x04 : mov ecx, [addr]
-        { 0x04, 0x8B },
-        { 0x05, 0x0D },
-
-        // D3DDevice_SetSwapCallback+0x0A : mov [ecx+0x1954], eax
-        { 0x0A, 0x89 },
-        { 0x0B, 0x81 },
-        { 0x0C, 0x54 }, // 54 vs 58
-        { 0x0D, 0x19 },
-
-        // D3DDevice_SetSwapCallback+0x10 : retn 0x04
-        { 0x10, 0xC2 },
-        { 0x11, 0x04 },
 OOVPA_END;
 
 // ******************************************************************
