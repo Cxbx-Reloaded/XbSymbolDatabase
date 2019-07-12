@@ -108,9 +108,10 @@ SymbolDatabaseList SymbolDBList[] = {
     // Support inline functions in .text section
     { XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG,{ Sec_text, Sec_D3D, Sec_FLASHROM }, D3D8_OOVPAV2, D3D8_OOVPA_COUNT },
 
-    // Cannot support LTCG in HLE
+    // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
     { XbSymbolLib_D3D8LTCG,{ Sec_D3D }, D3D8LTCG_OOVPAV2, D3D8LTCG_OOVPA_COUNT },
 
+    // NOTE: Likely is a D3D Helper library.
     // Jarupxx mention this is not a requirement?
     //{ Lib_D3DX8,{ Sec_D3DX }, _OOVPAV2, _OOVPA_COUNT },
 
@@ -128,6 +129,7 @@ SymbolDatabaseList SymbolDBList[] = {
     { XbSymbolLib_XACTENG, { Sec_XACTENG, Sec_FLASHROM }, XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
 
     // test case: Power Drome (Unluckily, it use LTCG version of the library.)
+    // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
     //{ XbSymbolLib_XACTENLT,{ Sec_XACTENG }, XACTENGLT_OOVPAV2, XACTENGLT_OOVPA_COUNT },
 
     //
@@ -136,7 +138,7 @@ SymbolDatabaseList SymbolDBList[] = {
     // Support inline functions in .text section
     { XbSymbolLib_XGRAPHC,{ Sec_text, Sec_XGRPH, Sec_FLASHROM }, XGRAPHC_OOVPAV2, XGRAPHC_OOVPA_COUNT },
 
-    // Cannot support LTCG in HLE
+    // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
     //{ XbSymbolLib_XGRAPHCL ,{ Sec_XGRPH }, XGRAPHCL_OOVPAV2, XGRAPHCL_OOVPA_COUNT },
 
     // Added Sec_text and Sec_XNET just in case.
@@ -318,6 +320,8 @@ const char* XbSymbolLibraryToString(uint32_t library_flag)
     }
 }
 
+// NOTE: Library string must return only one specific flag, cannot make a mix combo flags.
+//       Otherwise, internal scan and XbSymbolLibraryToString will not function correctly.
 uint32_t XbSymbolLibrayToFlag(const char* library_name)
 {
     if (strncmp(library_name, Lib_D3D8, 8) == 0) {
