@@ -62,7 +62,7 @@
 // ******************************************************************
 // * XONLINES_OOVPA
 // ******************************************************************
-OOVPATable XONLINES_OOVPAV2[] = {
+OOVPATable XONLINES_OOVPA[] = {
 
     // XOnline section
     REGISTER_OOVPAS(CXo_XOnlineLogon, 4361, 4627, 4831, 5455, 5558, 5849),
@@ -86,6 +86,6 @@ OOVPATable XONLINES_OOVPAV2[] = {
 // ******************************************************************
 // * XONLINES_OOVPA_COUNT
 // ******************************************************************
-#define XONLINES_OOVPA_COUNT XBSDB_ARRAY_SIZE(XONLINES_OOVPAV2)
+#define XONLINES_OOVPA_COUNT XBSDB_ARRAY_SIZE(XONLINES_OOVPA)
 
 #endif

@@ -181,7 +181,7 @@
 // ******************************************************************
 // * D3D8_OOVPA
 // ******************************************************************
-OOVPATable D3D8_OOVPAV2[] = {
+OOVPATable D3D8_OOVPA[] = {
 
     REGISTER_OOVPAS(CDevice_MakeSpace, 3911), // NOTE: has multiple rets.
     REGISTER_OOVPAS(CMiniport_CreateCtxDmaObject, 3911, 4034),
@@ -430,6 +430,6 @@ OOVPATable D3D8_OOVPAV2[] = {
 // ******************************************************************
 // * D3D8_OOVPA_COUNT
 // ******************************************************************
-#define D3D8_OOVPA_COUNT XBSDB_ARRAY_SIZE(D3D8_OOVPAV2)
+#define D3D8_OOVPA_COUNT XBSDB_ARRAY_SIZE(D3D8_OOVPA)
 
 #endif

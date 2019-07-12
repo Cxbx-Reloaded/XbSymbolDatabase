@@ -165,7 +165,7 @@
 // ******************************************************************
 // * DSOUND_OOVPA
 // ******************************************************************
-OOVPATable DSound_OOVPAV2[] = {
+OOVPATable DSound_OOVPA[] = {
 
     REGISTER_OOVPAS(XAudioCalculatePitch, 3911, 4039, 5455), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS(DirectSoundEnterCriticalSection, 3911), // Final generic OOVPA: 3911; Removed: 0
@@ -539,6 +539,6 @@ OOVPATable DSound_OOVPAV2[] = {
 // ******************************************************************
 // * DSound_OOVPA_COUNT
 // ******************************************************************
-#define DSound_OOVPA_COUNT XBSDB_ARRAY_SIZE(DSound_OOVPAV2)
+#define DSound_OOVPA_COUNT XBSDB_ARRAY_SIZE(DSound_OOVPA)
 
 #endif

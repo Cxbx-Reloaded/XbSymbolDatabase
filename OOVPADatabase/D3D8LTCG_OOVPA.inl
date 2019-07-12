@@ -63,7 +63,7 @@
 // ******************************************************************
 // * D3D8LTCG_OOVPA
 // ******************************************************************
-OOVPATable D3D8LTCG_OOVPAV2[] = {
+OOVPATable D3D8LTCG_OOVPA[] = {
 
     REGISTER_OOVPAS(D3D_MakeRequestedSpace_8, 1036), // NOTE: OOVPA is in 5849. In used by (5849) Manhunt title
     REGISTER_OOVPAS(D3D_MakeRequestedSpace, 2048),
@@ -242,6 +242,6 @@ OOVPATable D3D8LTCG_OOVPAV2[] = {
 // ******************************************************************
 // * D3D8LTCG_OOVPA_COUNT
 // ******************************************************************
-#define D3D8LTCG_OOVPA_COUNT XBSDB_ARRAY_SIZE(D3D8LTCG_OOVPAV2)
+#define D3D8LTCG_OOVPA_COUNT XBSDB_ARRAY_SIZE(D3D8LTCG_OOVPA)
 
 #endif

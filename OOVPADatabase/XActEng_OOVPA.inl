@@ -68,7 +68,7 @@
 // ******************************************************************
 // * XACTENG_OOVPA
 // ******************************************************************
-OOVPATable XACTENG_OOVPAV2[] = {
+OOVPATable XACTENG_OOVPA[] = {
 
     REGISTER_OOVPAS(XACTEngineCreate, 4627, 4928, 5120),
     REGISTER_OOVPAS(XACTEngineDoWork, 4627),
@@ -98,6 +98,6 @@ OOVPATable XACTENG_OOVPAV2[] = {
 // ******************************************************************
 // * XACTENG_OOVPA_COUNT
 // ******************************************************************
-#define XACTENG_OOVPA_COUNT XBSDB_ARRAY_SIZE(XACTENG_OOVPAV2)
+#define XACTENG_OOVPA_COUNT XBSDB_ARRAY_SIZE(XACTENG_OOVPA)
 
 #endif
