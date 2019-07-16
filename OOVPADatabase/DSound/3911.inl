@@ -5018,10 +5018,11 @@ OOVPA_END;
 // * CDirectSoundStream_SetVolume
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetVolume has the same asm code as this function.
-OOVPA_XREF(CDirectSoundStream_SetVolume, 3911, 1+9,
+OOVPA_XREF_EXTEND(CDirectSoundStream_SetVolume, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectFirst)
 
         // CDirectSoundStream_SetVolume+0x0C : call [CMcpxVoiceClient_SetVolume]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetVolume ),
@@ -5046,10 +5047,11 @@ OOVPA_END;
 // * IDirectSoundStream_SetVolume
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetVolume has the same asm code as this function.
-OOVPA_XREF(IDirectSoundStream_SetVolume, 3911, 1+9,
+OOVPA_XREF_EXTEND(IDirectSoundStream_SetVolume, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectSecond)
 
         // IDirectSoundStream_SetVolume+0x0C : call [CMcpxVoiceClient_SetVolume]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetVolume ),
@@ -5074,10 +5076,11 @@ OOVPA_END;
 // * CDirectSoundStream_SetPitch
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetPitch has the same asm code as this function.
-OOVPA_XREF(CDirectSoundStream_SetPitch, 3911, 1+9,
+OOVPA_XREF_EXTEND(CDirectSoundStream_SetPitch, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectFirst)
 
         // CDirectSoundStream_SetPitch+0x0C : call [CMcpxVoiceClient_SetPitch]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetPitch ),
@@ -5102,10 +5105,11 @@ OOVPA_END;
 // * IDirectSoundStream_SetPitch
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetPitch has the same asm code as this function.
-OOVPA_XREF(IDirectSoundStream_SetPitch, 3911, 1+9,
+OOVPA_XREF_EXTEND(IDirectSoundStream_SetPitch, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectSecond)
 
         // IDirectSoundStream_SetPitch+0x0C : call [CMcpxVoiceClient_SetPitch]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetPitch ),
@@ -5130,10 +5134,11 @@ OOVPA_END;
 // * CDirectSoundStream_SetLFO
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetLFO has the same asm code as this function.
-OOVPA_XREF(CDirectSoundStream_SetLFO, 3911, 1+9,
+OOVPA_XREF_EXTEND(CDirectSoundStream_SetLFO, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectFirst)
 
         // CDirectSoundStream_SetLFO+0x0C : call [CMcpxVoiceClient_SetLFO]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetLFO ),
@@ -5158,10 +5163,11 @@ OOVPA_END;
 // * IDirectSoundStream_SetLFO
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetLFO has the same asm code as this function.
-OOVPA_XREF(IDirectSoundStream_SetLFO, 3911, 1+9,
+OOVPA_XREF_EXTEND(IDirectSoundStream_SetLFO, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectSecond)
 
         // IDirectSoundStream_SetLFO+0x0C : call [CMcpxVoiceClient_SetLFO]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetLFO ),
@@ -5186,10 +5192,11 @@ OOVPA_END;
 // * CDirectSoundStream_SetEG
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetEG has the same asm code as this function.
-OOVPA_XREF(CDirectSoundStream_SetEG, 3911, 1+9,
+OOVPA_XREF_EXTEND(CDirectSoundStream_SetEG, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectFirst)
 
         // CDirectSoundStream_SetEG+0x0C : call [CMcpxVoiceClient_SetEG]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetEG ),
@@ -5214,10 +5221,11 @@ OOVPA_END;
 // * IDirectSoundStream_SetEG
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetEG has the same asm code as this function.
-OOVPA_XREF(IDirectSoundStream_SetEG, 3911, 1+9,
+OOVPA_XREF_EXTEND(IDirectSoundStream_SetEG, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectSecond)
 
         // IDirectSoundStream_SetEG+0x0C : call [CMcpxVoiceClient_SetEG]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetEG ),
@@ -5242,10 +5250,11 @@ OOVPA_END;
 // * CDirectSoundStream_SetFilter
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetFilter has the same asm code as this function.
-OOVPA_XREF(CDirectSoundStream_SetFilter, 3911, 1+9,
+OOVPA_XREF_EXTEND(CDirectSoundStream_SetFilter, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectFirst)
 
         // CDirectSoundStream_SetFilter+0x0C : call [CMcpxVoiceClient_SetFilter]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetFilter ),
@@ -5269,10 +5278,11 @@ OOVPA_END;
 // ******************************************************************
 // * IDirectSoundStream_SetFilter
 // ******************************************************************
-OOVPA_XREF(IDirectSoundStream_SetFilter, 3911, 1+9,
+OOVPA_XREF_EXTEND(IDirectSoundStream_SetFilter, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectSecond)
 
         // IDirectSoundStream_SetFilter+0x0C : call [CMcpxVoiceClient_SetFilter]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetFilter ),
@@ -5297,10 +5307,11 @@ OOVPA_END;
 // * CDirectSoundStream_SetHeadroom
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetHeadroom has the same asm code as this function.
-OOVPA_XREF(CDirectSoundStream_SetHeadroom, 3911, 1+9,
+OOVPA_XREF_EXTEND(CDirectSoundStream_SetHeadroom, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectFirst)
 
         // CDirectSoundStream_SetHeadroom+0x0C : call [CDirectSoundVoice_SetHeadroom]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetHeadroom ),
@@ -5325,10 +5336,11 @@ OOVPA_END;
 // * IDirectSoundStream_SetHeadroom
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetHeadroom has the same asm code as this function.
-OOVPA_XREF(IDirectSoundStream_SetHeadroom, 3911, 1+9,
+OOVPA_XREF_EXTEND(IDirectSoundStream_SetHeadroom, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectSecond)
 
         // IDirectSoundStream_SetHeadroom+0x0C : call [CDirectSoundVoice_SetHeadroom]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetHeadroom ),
@@ -5353,10 +5365,11 @@ OOVPA_END;
 // * CDirectSoundStream_SetFrequency
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetFrequency has the same asm code as this function.
-OOVPA_XREF(CDirectSoundStream_SetFrequency, 3911, 1+9,
+OOVPA_XREF_EXTEND(CDirectSoundStream_SetFrequency, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectFirst)
 
         // CDirectSoundStream_SetFrequency+0x0C : call [CDirectSoundVoice_SetFrequency]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetFrequency ),
@@ -5381,10 +5394,11 @@ OOVPA_END;
 // * IDirectSoundStream_SetFrequency
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetFrequency has the same asm code as this function.
-OOVPA_XREF(IDirectSoundStream_SetFrequency, 3911, 1+9,
+OOVPA_XREF_EXTEND(IDirectSoundStream_SetFrequency, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectSecond)
 
         // IDirectSoundStream_SetFrequency+0x0C : call [CDirectSoundVoice_SetFrequency]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetFrequency ),
@@ -5409,10 +5423,11 @@ OOVPA_END;
 // * CDirectSoundStream_SetMixBins
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetMixBins has the same asm code as this function.
-OOVPA_XREF(CDirectSoundStream_SetMixBins, 3911, 1+9,
+OOVPA_XREF_EXTEND(CDirectSoundStream_SetMixBins, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectFirst)
 
         // CDirectSoundStream_SetMixBins+0x0C : call [CDirectSoundVoice_SetMixBins]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetMixBins ),
@@ -5437,10 +5452,11 @@ OOVPA_END;
 // * IDirectSoundStream_SetMixBins
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetMixBins has the same asm code as this function.
-OOVPA_XREF(IDirectSoundStream_SetMixBins, 3911, 1+9,
+OOVPA_XREF_EXTEND(IDirectSoundStream_SetMixBins, 3911, 1+9,
 
     XRefNoSaveIndex,
-    XRefOne)
+    XRefOne,
+    DetectSecond)
 
         // IDirectSoundStream_SetMixBins+0x0C : call [CDirectSoundVoice_SetMixBins]
         XREF_ENTRY( 0x0D, XREF_CDirectSoundVoice_SetMixBins ),
