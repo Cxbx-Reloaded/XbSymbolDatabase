@@ -527,7 +527,16 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetVertexShaderConstant
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetVertexShaderConstant, 4627, 13)
+OOVPA_XREF(D3DDevice_SetVertexShaderConstant, 4627, 2+13,
+
+    XRefNoSaveIndex,
+    XRefTwo)
+
+        // D3DDevice_SetVertexShaderConstant+0x08: jmp D3DDevice_SetVertexShaderConstant1
+        XREF_ENTRY( 0x09, XREF_D3DDevice_SetVertexShaderConstant1),
+
+        // D3DDevice_SetVertexShaderConstant+0x12: jmp D3DDevice_SetVertexShaderConstant4
+        XREF_ENTRY( 0x13, XREF_D3DDevice_SetVertexShaderConstant4),
 
         { 0x00, 0x83 },
         { 0x01, 0xC1 },
@@ -549,7 +558,10 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetVertexShaderConstant1
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetVertexShaderConstant1, 4627, 11)
+OOVPA_XREF(D3DDevice_SetVertexShaderConstant1, 4627, 11,
+
+    XREF_D3DDevice_SetVertexShaderConstant1,
+    XRefZero)
 
         // D3DDevice_SetVertexShaderConstant1+0x06 : add eax, 0x1C
         { 0x06, 0x83 },
@@ -576,7 +588,10 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetVertexShaderConstant4
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetVertexShaderConstant4, 4627, 12)
+OOVPA_XREF(D3DDevice_SetVertexShaderConstant4, 4627, 12,
+
+    XREF_D3DDevice_SetVertexShaderConstant4,
+    XRefZero)
 
         // D3DDevice_SetVertexShaderConstant4+0x05 : add eax, 0x4C
         { 0x05, 0x83 },
@@ -721,7 +736,10 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_CreateTexture2
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_CreateTexture2, 4627, 13)
+OOVPA_XREF(D3DDevice_CreateTexture2, 4627, 13,
+
+    XREF_D3DDevice_CreateTexture2,
+    XRefZero)
 
         // D3DDevice_CreateTexture2+0x02 : lea eax, [esp+0x20]
         { 0x02, 0x8D },
@@ -1638,7 +1656,13 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_CreateCubeTexture
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_CreateCubeTexture, 4627, 11)
+OOVPA_XREF(D3DDevice_CreateCubeTexture, 4627, 1+11,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        // D3DDevice_CreateCubeTexture0x19: call D3DDevice_CreateTexture2
+        XREF_ENTRY(0x20, XREF_D3DDevice_CreateTexture2),
 
         { 0x03, 0x10 },
         { 0x10, 0x44 },

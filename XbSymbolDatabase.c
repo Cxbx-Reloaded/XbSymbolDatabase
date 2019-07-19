@@ -106,55 +106,57 @@ typedef const struct _SymbolDatabaseList {
 
 SymbolDatabaseList SymbolDBList[] = {
     // Support inline functions in .text section
-    { XbSymbolLib_D3D8,{ Sec_text, Sec_D3D, Sec_FLASHROM }, D3D8_OOVPAV2, D3D8_OOVPA_COUNT },
+    { XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG,{ Sec_text, Sec_D3D, Sec_FLASHROM }, D3D8_OOVPA, D3D8_OOVPA_COUNT },
 
-    // Cannot support LTCG in HLE
-    { XbSymbolLib_D3D8LTCG,{ Sec_D3D }, D3D8LTCG_OOVPAV2, D3D8LTCG_OOVPA_COUNT },
+    // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
+    { XbSymbolLib_D3D8LTCG,{ Sec_D3D }, D3D8LTCG_OOVPA, D3D8LTCG_OOVPA_COUNT },
 
+    // NOTE: Likely is a D3D Helper library.
     // Jarupxx mention this is not a requirement?
-    //{ Lib_D3DX8,{ Sec_D3DX }, _OOVPAV2, _OOVPA_COUNT },
+    //{ Lib_D3DX8,{ Sec_D3DX }, _OOVPA, _OOVPA_COUNT },
 
     // NOTE: By adding FLASHROM to scan section may will lead false detection.
     // Since some symbols has very short asm codes.
-    { XbSymbolLib_DSOUND,{ Sec_DSOUND, Sec_rdata, Sec_FLASHROM }, DSound_OOVPAV2, DSound_OOVPA_COUNT },
+    { XbSymbolLib_DSOUND,{ Sec_DSOUND, Sec_rdata, Sec_FLASHROM }, DSound_OOVPA, DSound_OOVPA_COUNT },
 
     // DSOUNDH is just meant to define hot fix, there is no separate section
-    //{ XbSymbolLib_DSOUNDH,{ Sec_DSOUND }, &DSound_OOVPAV2, DSound_OOVPA_COUNT },
+    //{ XbSymbolLib_DSOUNDH,{ Sec_DSOUND }, &DSound_OOVPA, DSound_OOVPA_COUNT },
 
     // Only used in Chihiro applications
     { XbSymbolLib_JVS,{ Sec_text, Sec_XPP, Sec_FLASHROM }, JVSLIB_OOVPA, JVSLIB_OOVPA_COUNT },
 
     //
-    { XbSymbolLib_XACTENG, { Sec_XACTENG, Sec_FLASHROM }, XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
+    { XbSymbolLib_XACTENG, { Sec_XACTENG, Sec_FLASHROM }, XACTENG_OOVPA, XACTENG_OOVPA_COUNT },
 
     // test case: Power Drome (Unluckily, it use LTCG version of the library.)
-    //{ XbSymbolLib_XACTENLT,{ Sec_XACTENG }, XACTENG_OOVPAV2, XACTENG_OOVPA_COUNT },
+    // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
+    //{ XbSymbolLib_XACTENLT,{ Sec_XACTENG }, XACTENGLT_OOVPA, XACTENGLT_OOVPA_COUNT },
 
     //
-    { XbSymbolLib_XAPILIB,{ Sec_text, Sec_XPP, Sec_FLASHROM }, XAPILIB_OOVPAV2, XAPILIB_OOVPA_COUNT },
+    { XbSymbolLib_XAPILIB,{ Sec_text, Sec_XPP, Sec_FLASHROM }, XAPILIB_OOVPA, XAPILIB_OOVPA_COUNT },
 
     // Support inline functions in .text section
-    { XbSymbolLib_XGRAPHC,{ Sec_text, Sec_XGRPH, Sec_FLASHROM }, XGRAPHC_OOVPAV2, XGRAPHC_OOVPA_COUNT },
+    { XbSymbolLib_XGRAPHC,{ Sec_text, Sec_XGRPH, Sec_FLASHROM }, XGRAPHC_OOVPA, XGRAPHC_OOVPA_COUNT },
 
-    // Cannot support LTCG in HLE
-    //{ Lib_XGRAPHCL,{ Sec_XGRPH }, XGRAPHC_OOVPAV2, XGRAPHC_OOVPA_COUNT },
+    // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
+    //{ XbSymbolLib_XGRAPHCL ,{ Sec_XGRPH }, XGRAPHCL_OOVPA, XGRAPHCL_OOVPA_COUNT },
 
     // Added Sec_text and Sec_XNET just in case.
     // TODO: Need to find out which function is only part of XOnlines.
-    { XbSymbolLib_XONLINE,{ Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINES_OOVPAV2, XONLINES_OOVPA_COUNT },
+    { XbSymbolLib_XONLINE,{ Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINES_OOVPA, XONLINES_OOVPA_COUNT },
 
     // Fun fact, XONLINES are split into 2 header sections.
-    { XbSymbolLib_XONLINES,{ Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINES_OOVPAV2, XONLINES_OOVPA_COUNT },
+    { XbSymbolLib_XONLINES,{ Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINES_OOVPA, XONLINES_OOVPA_COUNT },
 
     // Added Sec_text just in case.
     // TODO: Need to find out which function is only part of XNets.
-    { XbSymbolLib_XNET,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPAV2, XNET_OOVPA_COUNT },
+    { XbSymbolLib_XNET,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPA, XNET_OOVPA_COUNT },
 
     // XNETS only has XNET, might be true.
-    { XbSymbolLib_XNETS,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPAV2, XNET_OOVPA_COUNT },
+    { XbSymbolLib_XNETS,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPA, XNET_OOVPA_COUNT },
 
     // test case: Stake
-    { XbSymbolLib_XNETN,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPAV2, XNET_OOVPA_COUNT },
+    { XbSymbolLib_XNETN,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPA, XNET_OOVPA_COUNT },
 };
 
 // ******************************************************************
@@ -318,6 +320,8 @@ const char* XbSymbolLibraryToString(uint32_t library_flag)
     }
 }
 
+// NOTE: Library string must return only one specific flag, cannot make a mix combo flags.
+//       Otherwise, internal scan and XbSymbolLibraryToString will not function correctly.
 uint32_t XbSymbolLibrayToFlag(const char* library_name)
 {
     if (strncmp(library_name, Lib_D3D8, 8) == 0) {
@@ -1010,7 +1014,7 @@ bool XbSymbolDX8SectionScan(uint32_t LibraryFlag,
             }
         }
     }
-    else { // XbSymbolLib_D3D8LTCG
+    else { // D3D8LTCG
         // locate D3DDevice_SetRenderState_CullMode first
         pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetRenderState_CullMode", 1045,
             &D3DDevice_SetRenderState_CullMode_1045, lower, upper, xb_start_virt_addr);
@@ -1104,7 +1108,7 @@ bool XbSymbolDX8SectionScan(uint32_t LibraryFlag,
             pXRefOffset = 0x19;
         }
     }
-    else { // XbSymbolLib_D3D8LTCG
+    else { // D3D8LTCG
         // verified for 3925
         pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetTextureState_TexCoordIndex_0", 2039,
             &D3DDevice_SetTextureState_TexCoordIndex_0_2039, lower, upper, xb_start_virt_addr);
@@ -1178,7 +1182,7 @@ bool XbSymbolDX8SectionScan(uint32_t LibraryFlag,
             iCodeOffsetFor_g_Stream = 0x23; // verified for 3911
         }
     }
-    else { // XbSymbolLib_D3D8LTCG
+    else { // D3D8LTCG
         if (BuildVersion > 4039) {
             OOVPA_version = 4034; // TODO Verify
             pFunc = XbSymbolLocateFunctionCast("D3DDevice_SetStreamSource", 1044,
@@ -1359,7 +1363,7 @@ bool XbLibraryScan(custom_scan_func_t custom_scan_func,
 
     for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
 
-        if (LibraryFlag == SymbolDBList[d2].LibSec.library) {
+        if ((LibraryFlag & SymbolDBList[d2].LibSec.library) > 0) {
             for (unsigned int s = 0; s < pXbeHeader->dwSections; s++) {
                 SectionName = (const char*)(xb_start_addr + pSectionHeaders[s].SectionNameAddr);
 
@@ -1383,14 +1387,17 @@ bool XbLibraryScan(custom_scan_func_t custom_scan_func,
 
                         scan_ret = custom_scan_func(LibraryFlag, pSectionScan, BuildVersion, LibraryStr, register_func, xb_start_virt_addr);
 
-                        if (!scan_ret) {
-                            continue;
+                        if (scan_ret) {
+                            // let's return true here instead of waste the loops for nothing.
+                            return scan_ret;
                         }
-                        return scan_ret;
                     }
                 }
             }
-            break;
+            // Use the break if there are 2+ bit flags set such as include LTCG flag in std flag's oovpa database like D3D8.
+            if ((SymbolDBList[d2].LibSec.library & ~LibraryFlag) == 0) {
+                break;
+            }
         }
     }
     return scan_ret;
@@ -1452,7 +1459,7 @@ bool XbSymbolScan(const void* xb_header_addr,
 
                     pSectionScan = NULL;
 
-                    if (LibraryFlag == XbSymbolLib_D3D8LTCG || LibraryFlag == XbSymbolLib_D3D8) {
+                    if ((LibraryFlag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
 
                         // Functions in this library were updated by June 2003 XDK (5558) with Integrated Hotfixes,
                         // However August 2003 XDK (5659) still uses the old function.
@@ -1490,7 +1497,7 @@ bool XbSymbolScan(const void* xb_header_addr,
                     //Initialize library scan against symbol database we want to search for address of patches and xreferences.
                     for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
 
-                        if (LibraryFlag == SymbolDBList[d2].LibSec.library) {
+                        if ((LibraryFlag & SymbolDBList[d2].LibSec.library) > 0) {
                             for (unsigned int s = 0; s < pXbeHeader->dwSections; s++) {
                                 SectionName = (const char*)(xb_start_addr + pSectionHeaders[s].SectionNameAddr);
 
@@ -1512,13 +1519,16 @@ bool XbSymbolScan(const void* xb_header_addr,
 
                                         XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section", LibraryStr, SectionName);
 
-                                        XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, LibraryStr, SymbolDBList[d2].LibSec.library,
+                                        XbSymbolScanOOVPA(SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount, LibraryStr, LibraryFlag,
                                             pSectionScan, BuildVersion, register_func, xb_start_virt_addr);
                                         break;
                                     }
                                 }
                             }
-                            break;
+                            // Use the break if there are 2+ bit flags set such as include LTCG flag in std flag's oovpa database like D3D8.
+                            if ((SymbolDBList[d2].LibSec.library & ~LibraryFlag) == 0) {
+                                break;
+                            }
                         }
                     }
                 }

@@ -122,7 +122,7 @@
 // ******************************************************************
 // * XAPILIB_OOVPA
 // ******************************************************************
-OOVPATable XAPILIB_OOVPAV2[] = {
+OOVPATable XAPILIB_OOVPA[] = {
 
     REGISTER_OOVPAS(CreateMutex, 3911), // Too High Level (from 3911's comment)
     REGISTER_OOVPAS(CreateThread, 3911), // Too High Level (from 3911's comment)
@@ -181,6 +181,6 @@ OOVPATable XAPILIB_OOVPAV2[] = {
 // ******************************************************************
 // * XAPILIB_OOVPA_COUNT
 // ******************************************************************
-#define XAPILIB_OOVPA_COUNT XBSDB_ARRAY_SIZE(XAPILIB_OOVPAV2)
+#define XAPILIB_OOVPA_COUNT XBSDB_ARRAY_SIZE(XAPILIB_OOVPA)
 
 #endif

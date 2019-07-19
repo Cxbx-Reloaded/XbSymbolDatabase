@@ -75,7 +75,7 @@
 // ******************************************************************
 // * XGRAPHC_OOVPA
 // ******************************************************************
-OOVPATable XGRAPHC_OOVPAV2[] = {
+OOVPATable XGRAPHC_OOVPA[] = {
 
     REGISTER_OOVPAS(XFONT_OpenBitmapFontFromMemory, 4361),
     REGISTER_OOVPAS(XGCompressRect, 3911), // TODO: Do we need to patch this?
@@ -93,6 +93,6 @@ OOVPATable XGRAPHC_OOVPAV2[] = {
 // ******************************************************************
 // * XGRAPHC_OOVPA_COUNT
 // ******************************************************************
-#define XGRAPHC_OOVPA_COUNT XBSDB_ARRAY_SIZE(XGRAPHC_OOVPAV2)
+#define XGRAPHC_OOVPA_COUNT XBSDB_ARRAY_SIZE(XGRAPHC_OOVPA)
 
 #endif

@@ -54,7 +54,7 @@
 // ******************************************************************
 // * XNET_OOVPA
 // ******************************************************************
-OOVPATable XNET_OOVPAV2[] = {
+OOVPATable XNET_OOVPA[] = {
 
     REGISTER_OOVPAS(XnInit, 3911, 4361), // 3911 is only XNETS library, XNET library is different OOVPA.
     REGISTER_OOVPAS(WSAStartup, 3911, 4361),
@@ -72,6 +72,6 @@ OOVPATable XNET_OOVPAV2[] = {
 // ******************************************************************
 // * XNET_OOVPA_COUNT
 // ******************************************************************
-#define XNET_OOVPA_COUNT XBSDB_ARRAY_SIZE(XNET_OOVPAV2)
+#define XNET_OOVPA_COUNT XBSDB_ARRAY_SIZE(XNET_OOVPA)
 
 #endif

@@ -26,7 +26,10 @@
 // ******************************************************************
 // * D3DDevice_CreateTexture2
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_CreateTexture2, 4831, 12)
+OOVPA_XREF(D3DDevice_CreateTexture2, 4831, 12,
+
+    XREF_D3DDevice_CreateTexture2,
+    XRefZero)
 
         { 0x00, 0x56 },
         { 0x01, 0x57 },
