@@ -1649,7 +1649,10 @@ typedef struct _SymbolDatabaseVerifyContext {
 
 int OOVPAErrorString(char *bufferTemp, SymbolDatabaseList *data, uint32_t index)
 {
-    return sprintf(bufferTemp, "OOVPATable %2u %4hu [%4u] %s", data->LibSec.library, data->OovpaTable[index].Version, index, data->OovpaTable[index].szFuncName);
+    // Convert active data pointer to an index base on starting point of SymbolDBList.
+    unsigned int db_index = (unsigned int)(data - SymbolDBList);
+
+    return sprintf(bufferTemp, "OOVPATable db=%2u, b=%4hu, i=[%4u] s=%s", db_index, data->OovpaTable[index].Version, index, data->OovpaTable[index].szFuncName);
 }
 
 void OOVPAError(SymbolDatabaseVerifyContext *context, char *format, ...)
@@ -1715,7 +1718,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, O
     }
 
     // prevent checking an oovpa against itself
-    if (context->against == oovpa) {
+    if ((context->main_data + context->main_index) == (context->against_data + context->against_index)) {
         return error_count;
     }
 
@@ -1822,12 +1825,7 @@ unsigned int XbSymbolDataBaseVerifyDatabase(SymbolDatabaseVerifyContext *context
         context->against_data = data;
     }
 
-    // Don't check a database against itself :
-    if (context->main_data == context->against_data) {
-        return error_count;
-    }
-
-    // verify each entry in this SymbolDatabaseList
+    // Verify each entry in data's OOVPA table.
     for (uint32_t e = 0; e < data->OovpaTableCount; e++) {
         error_count += XbSymbolDataBaseVerifyEntry(context, data->OovpaTable, e);
     }
