@@ -60,6 +60,10 @@ typedef struct _OOVPA
     // no XREF_* enum defined for this OOVPA.
     unsigned short XRefSaveIndex;
 
+    unsigned char DetectSelect;
+
+    unsigned char Padding[3];
+
     // Define LOVP here to reduce type definition complexity.
     // (Otherwise, if defined in the template classes, that would mean
     // that for each template instance, the type is redefined. Let's
@@ -88,18 +92,22 @@ typedef struct _LOVP
     };
 } LOVP;
 
+// Set variable's padding to 0.
+#define VARPADSET 0
+
 // This XRefZero constant, when set in the OOVPA.XRefCount field,
 // indicates there are no {offset, XREF_*-enum} present in the OOVPA.
-#define XRefZero 0x00
+#define XRefZero    0
 
 // This XRefOne constant, when set in the OOVPA.XRefCount field,
 // indicates the OOVPA contains one (1) {offset, XREF_* enum} pair.
-#define XRefOne 0x01
+#define XRefOne     1
 
 // Sometimes, there can be more than one {Offset, XREF_*-enum}
 // pair at the start of the OOVPA's.
-#define XRefTwo 0x02
-#define XRefThree 0x03
+#define XRefTwo     2
+#define XRefThree   3
+#define XRefFour    4
 
 // This XRefNoSaveIndex constant, when set in the OOVPA.XRefSaveIndex
 // field, functions as a marker indicating there's no XREF_* enum
@@ -118,6 +126,12 @@ typedef struct _LOVP
 // TODO: Remove above line, then uncomment the line below for easy swap after OOVPA database has been fixed.
 //  { Offset, { .unused = 0, .value = Value } } 
 
+// Macro for determine how the OOVPA scan will process for detection.
+#define DetectDefault 0
+#define DetectFirst   1
+#define DetectSecond  2
+#define DetectThird   3
+#define DetectFourth  4
 
 // ******************************************************************
 // * Large Optimized (Offset,Value)-Pair Array
@@ -133,11 +147,17 @@ typedef struct _LOOVPA
 } LOOVPA;
 #pragma warning(pop)
 
-#define OOVPA_XREF(Name, Version, Count, XRefSaveIndex, XRefCount)    \
-LOOVPA Name##_##Version = { Count, XRefCount, (unsigned short)XRefSaveIndex, {
+#define OOVPA_XREF_EXTEND(Name, Version, Count, XRefSaveIndex, XRefCount, DetectSelect) \
+LOOVPA Name##_##Version = { Count, XRefCount, XRefSaveIndex, DetectSelect, VARPADSET, VARPADSET, VARPADSET, {
+
+#define OOVPA_NO_XREF_DETECT(Name, Version, Count, DetectSelect) \
+OOVPA_XREF_EXTEND(Name, Version, Count, XRefNoSaveIndex, XRefZero, DetectSelect)
+
+#define OOVPA_XREF(Name, Version, Count, XRefSaveIndex, XRefCount) \
+OOVPA_XREF_EXTEND(Name, Version, Count, XRefSaveIndex, XRefCount, DetectDefault)
 
 #define OOVPA_NO_XREF(Name, Version, Count) \
-OOVPA_XREF(Name, Version, Count, XRefNoSaveIndex, XRefZero)
+OOVPA_XREF_EXTEND(Name, Version, Count, XRefNoSaveIndex, XRefZero, DetectDefault)
 
 #define OOVPA_END } }
 

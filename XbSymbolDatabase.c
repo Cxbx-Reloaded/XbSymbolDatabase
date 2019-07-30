@@ -468,9 +468,16 @@ void* XbSymbolLocateFunction(const char* szFuncName,
         upper -= Offset;
     }
 
-    // search all of the image memory
+    // 
+    unsigned int detect_selection = Oovpa->DetectSelect;
+    unsigned int counter = 0;
+
+    // search all of the buffer memory range
     for (memptr_t cur = lower; cur < upper; cur++) {
         if (CompareOOVPAToAddress(Oovpa, cur, xb_start_virtual_addr)) {
+
+            // Increase the counter whenever detected address is found.
+            counter++;
 
             while (derive_indices > 0) {
                 uint32_t XRef;
@@ -501,23 +508,55 @@ void* XbSymbolLocateFunction(const char* szFuncName,
                     XRefDataBase[XRef] = XRefAddr;
                 }*/
 
-                if (!bScanFirstDetect || (bScanFirstDetect && symbol_address == NULL)) {
-                    XRefDataBase[XRef] = XRefAddr;
+                // Check if selection is default (zero) then perform the standard procedure.
+                if (detect_selection == 0) {
+                    if (!bScanFirstDetect || (bScanFirstDetect && symbol_address == NULL)) {
+                        XRefDataBase[XRef] = XRefAddr;
+                    }
+                }
+                // Otherwise, perform a detected selection procedure.
+                else {
+                    // If counter match the target selection, then save the ref address.
+                    if (detect_selection == counter) {
+                        XRefDataBase[XRef] = XRefAddr;
+                    }
                 }
             }
 
-            if (symbol_address != NULL) {
-                XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_WARN,
-                    "Duplicate symbol detection found for %s (%hu), 0x%08x vs 0x%08x",
-                    szFuncName, version, symbol_address, cur - xb_start_virtual_addr);
-            }
+            // Check if selection is default (zero) then perform the standard procedure.
+            if (detect_selection == 0) {
 
-            if (!bScanFirstDetect || (bScanFirstDetect && symbol_address == NULL)) {
-                symbol_address = cur - xb_start_virtual_addr;
-            }
+                if (symbol_address != NULL) {
+                    XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_WARN,
+                        "Duplicate symbol detection found for %s (%hu), 0x%08x vs 0x%08x",
+                        szFuncName, version, symbol_address, cur - xb_start_virtual_addr);
+                }
 
-            if (bOneTimeScan) {
-                break;
+                if (!bScanFirstDetect || (bScanFirstDetect && symbol_address == NULL)) {
+                    symbol_address = cur - xb_start_virtual_addr;
+                }
+
+                if (bOneTimeScan) {
+                    break;
+                }
+            }
+            // Otherwise, perform a detected selection procedure.
+            else {
+                // If counter match the detected selection, then perform a force break here
+                // with address set.
+                if (detect_selection == counter) {
+                    symbol_address = cur - xb_start_virtual_addr;
+
+                    if (bOneTimeScan) {
+                        break;
+                    }
+                }
+                // Otherwise, let's log debug info about what is skipped address detection.
+                else {
+                    XbSymbolOutputMessageFormat(XB_OUTPUT_MESSAGE_DEBUG,
+                        "Skipped symbol detection found for %s (%hu), 0x%08x",
+                        szFuncName, version, cur - xb_start_virtual_addr);
+                }
             }
         }
     }
@@ -1692,6 +1731,7 @@ unsigned int XbSymbolDataBaseVerifyDataBaseList(SymbolDatabaseVerifyContext *con
 unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, OOVPA *oovpa)
 {
     unsigned int error_count = 0;
+
     if (context->against == NULL) {
         // TODO : verify XRefSaveIndex and XRef's (how?)
 
@@ -1702,6 +1742,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, O
         for (int p = oovpa->XRefCount + 1; p < oovpa->Count; p++) {
             uint32_t curr_offset;
             GetOovpaEntry(oovpa, p, &curr_offset, &dummy_value);
+
             if (!(curr_offset > prev_offset)) {
                 error_count++;
                 OOVPAError(context, "Lovp[%2u] : Offset (0x%03x) must be larger then previous offset (0x%03x)",
@@ -1733,6 +1774,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, O
     int unique_offset_right = 0;
     int equal_offset_value = 0;
     int equal_offset_different_value = 0;
+
     while (true) {
         bool left_next = true;
         bool right_next = true;
@@ -1774,25 +1816,43 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext *context, O
         }
     }
 
+    bool unique_detect_select;
+    // First, let's make sure DetectSelect is the same
+    if ((left->DetectSelect == right->DetectSelect) ||
+        // Or left OOVPA is set to default detect and is different than right detect select.
+        (left->DetectSelect == 0 && left->DetectSelect != right->DetectSelect) ||
+        // Or right OOVPA is set to default detect and is different than left detect select.
+        (right->DetectSelect == 0 && left->DetectSelect != right->DetectSelect)) {
+        unique_detect_select = false;
+    }
+    // When above checks are not found, then we know the detected selection is unique.
+    // Therefore ignore the OOVPA identical error.
+    else {
+        unique_detect_select = true;
+    }
+
     // no mismatching values on identical offsets?
     if (equal_offset_different_value == 0) {
         // enough matching OV-pairs?
         if (equal_offset_value > 4) {
             // no unique OV-pairs on either side?
             if (unique_offset_left + unique_offset_right == 0) {
-                error_count++;
-                OOVPAError(context, "OOVPA's are identical",
-                         unique_offset_left,
-                         unique_offset_right);
+                // If detect selection is not unique, then make an error report.
+                if (!unique_detect_select) {
+                    error_count++;
+                    OOVPAError(context, "OOVPA's are identical",
+                               unique_offset_left,
+                               unique_offset_right);
+                }
             } else {
                 // not too many new OV-pairs on the left side?
                 if (unique_offset_left < 6) {
-                    // not too many new OV-parirs on the right side?
+                    // not too many new OV-pairs on the right side?
                     if (unique_offset_right < 6) {
                         error_count++;
                         OOVPAError(context, "OOVPA's are expanded (left +%d, right +%d)",
-                                 unique_offset_left,
-                                 unique_offset_right);
+                                   unique_offset_left,
+                                   unique_offset_right);
                     }
                 }
             }

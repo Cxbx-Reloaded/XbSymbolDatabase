@@ -31,10 +31,11 @@
 //       Currently, this is the best method without rely on
 //       D3DDevice_BlockUntilVerticalBlank detection.
 //       Also, it is not a symbol.
-OOVPA_XREF(D3DDevice__ManualFindEventHandleGeneric, 3911, 2+14,
+OOVPA_XREF_EXTEND(D3DDevice__ManualFindEventHandleGeneric, 3911, 2+14,
 
     XRefNoSaveIndex,
-    XRefTwo)
+    XRefTwo,
+    DetectFirst)
 
         // D3DDevice__ManualFindEventHandleGeneric+0x00 : mov eax, [D3D__PDEVICE]
         XREF_ENTRY(0x01, XREF_D3DDEVICE),
