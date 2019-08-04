@@ -322,7 +322,7 @@ const char* XbSymbolLibraryToString(uint32_t library_flag)
 
 // NOTE: Library string must return only one specific flag, cannot make a mix combo flags.
 //       Otherwise, internal scan and XbSymbolLibraryToString will not function correctly.
-uint32_t XbSymbolLibrayToFlag(const char* library_name)
+uint32_t XbSymbolLibraryToFlag(const char* library_name)
 {
     if (strncmp(library_name, Lib_D3D8, 8) == 0) {
         return XbSymbolLib_D3D8;
@@ -1485,7 +1485,7 @@ bool XbSymbolScan(const void* xb_header_addr,
             }
 
             const char* LibraryStr = pLibraryVersion[lv].szName;
-            uint32_t LibraryFlag = XbSymbolLibrayToFlag(LibraryStr);
+            uint32_t LibraryFlag = XbSymbolLibraryToFlag(LibraryStr);
 
             do {
 
