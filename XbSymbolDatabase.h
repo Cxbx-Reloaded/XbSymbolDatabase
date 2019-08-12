@@ -15,7 +15,7 @@
 // *  You should have recieved a copy of the GNU General Public License
 // *  along with this program; see the file COPYING.
 // *  If not, write to the Free Software Foundation, Inc.,
-// *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
+// *  59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 // *
 // *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
 // *  (c) 2016-2017 PatrickvL
@@ -515,7 +515,7 @@ bool XbSymbolScanSection(uint32_t xbe_base_address, uint32_t xbe_size, const cha
 /// </summary>
 /// <param name="library_name">Input library name string.</param>
 /// <returns>Return 0 if does not in the database. Otherwise will return flag value.</returns>
-uint32_t XbSymbolLibrayToFlag(const char* library_name);
+uint32_t XbSymbolLibraryToFlag(const char* library_name);
 
 /// <summary>
 /// (Debug feature) By calling it will perform a self test for duplicate OOVPAs. (May will change at any time.)

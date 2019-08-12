@@ -17,7 +17,7 @@
 // *  You should have recieved a copy of the GNU General Public License
 // *  along with this program; see the file COPYING.
 // *  If not, write to the Free Software Foundation, Inc.,
-// *  59 Temple Place - Suite 330, Bostom, MA 02111-1307, USA.
+// *  59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 // *
 // *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
 // *  (c) 2016-2018 Luke Usher
@@ -322,7 +322,7 @@ const char* XbSymbolLibraryToString(uint32_t library_flag)
 
 // NOTE: Library string must return only one specific flag, cannot make a mix combo flags.
 //       Otherwise, internal scan and XbSymbolLibraryToString will not function correctly.
-uint32_t XbSymbolLibrayToFlag(const char* library_name)
+uint32_t XbSymbolLibraryToFlag(const char* library_name)
 {
     if (strncmp(library_name, Lib_D3D8, 8) == 0) {
         return XbSymbolLib_D3D8;
@@ -1485,7 +1485,7 @@ bool XbSymbolScan(const void* xb_header_addr,
             }
 
             const char* LibraryStr = pLibraryVersion[lv].szName;
-            uint32_t LibraryFlag = XbSymbolLibrayToFlag(LibraryStr);
+            uint32_t LibraryFlag = XbSymbolLibraryToFlag(LibraryStr);
 
             do {
 
