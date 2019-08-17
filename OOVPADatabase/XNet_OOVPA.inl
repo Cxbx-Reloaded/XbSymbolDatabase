@@ -59,7 +59,7 @@ OOVPATable XNET_OOVPA[] = {
     REGISTER_OOVPAS(XnInit, 3911, 4361), // 3911 is only XNETS library, XNET library is different OOVPA.
     REGISTER_OOVPAS(WSAStartup, 3911, 4361),
     REGISTER_OOVPAS(XNetStartup, 3911, 4361),
-    REGISTER_OOVPAS(XNetGetEthernetLinkStatus, 3911, 4627),
+    REGISTER_OOVPAS(XNetGetEthernetLinkStatus, 3911, 4627), //NOTE: Found in .text section, confirmed it is correct.
     REGISTER_OOVPAS(bind, 3911, 4627),
     REGISTER_OOVPAS(connect, 3911, 5120),
     REGISTER_OOVPAS(ioctlsocket, 3911, 4627),

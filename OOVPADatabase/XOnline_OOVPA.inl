@@ -60,32 +60,19 @@
 #include "XOnline/5849.inl"
 
 // ******************************************************************
-// * XONLINES_OOVPA
+// * XONLINE_OOVPA
 // ******************************************************************
-OOVPATable XONLINES_OOVPA[] = {
+OOVPATable XONLINE_OOVPA[] = {
 
     // XOnline section
     REGISTER_OOVPAS(CXo_XOnlineLogon, 4361, 4627, 4831, 5455, 5558, 5849),
     REGISTER_OOVPAS(XOnlineLogon, 4361),
     REGISTER_OOVPAS(XoUpdateLaunchNewImageInternal, 4627, 5659, 5788),
-    
-    // XNet section
-    REGISTER_OOVPAS(XnInit, 4361),
-    REGISTER_OOVPAS(WSAStartup, 4361),
-    REGISTER_OOVPAS(XNetStartup, 4361),
-    REGISTER_OOVPAS(XNetGetEthernetLinkStatus, 3911, 4627), //NOTE: Found in .text section, confirmed it is correct.
-    REGISTER_OOVPAS(bind, 3911, 4627),
-    REGISTER_OOVPAS(connect, 3911, 5120),
-    REGISTER_OOVPAS(ioctlsocket, 3911, 4627),
-    REGISTER_OOVPAS(listen, 3911, 4627),
-    REGISTER_OOVPAS(recv, 3911),
-    REGISTER_OOVPAS(send, 3911),
-    REGISTER_OOVPAS(socket, 3911, 4627, 5455),
 };
 
 // ******************************************************************
-// * XONLINES_OOVPA_COUNT
+// * XONLINE_OOVPA_COUNT
 // ******************************************************************
-#define XONLINES_OOVPA_COUNT XBSDB_ARRAY_SIZE(XONLINES_OOVPA)
+#define XONLINE_OOVPA_COUNT XBSDB_ARRAY_SIZE(XONLINE_OOVPA)
 
 #endif
