@@ -403,6 +403,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3D_ClearStateBlockFlags, 3911),
     REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 4627, 5028), // Used between 4627 to 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3D_CreateStandAloneSurface, 4034),
+    REGISTER_OOVPAS(D3D_DestroyResource, 3911),
     REGISTER_OOVPAS(D3D_EnumAdapterModes, 3911),
     REGISTER_OOVPAS(D3D_GetAdapterDisplayMode, 3911, 4627),
     REGISTER_OOVPAS(D3D_GetAdapterIdentifier, 3911),
