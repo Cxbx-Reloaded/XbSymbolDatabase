@@ -421,29 +421,32 @@ OOVPA_END;
 // * D3D_DestroyResource
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_NO_XREF(D3D_DestroyResource, 3911, 38)
-    // push edi 
-    // push eda
-    // mov edi [esp + $0C]
-    // mov eax, [edi]
-    // mov esi, eax
-    OV_MATCH(0x00, 0x56, 0x57, 0x8B, 0x7C, 0x24, 0x0C, 0x8B, 0x07, 0x8B, 0xF0),
+OOVPA_XREF(D3D_DestroyResource, 3911, 1+22,
 
-    // and esi, $70000
-    // cmp esi, $50000
-    OV_MATCH(0x0A, 0x81, 0xE6, 0x00, 0x00, 0x07, 0x00, 0x81, 0xFE, 0x00, 0x00, 0x05, 0x00),
-    
-    // jne eip + $04
-    // test eax, eax
-    // jne eip + $06
-    // push edi
-    OV_MATCH(0x16, 0x75, 0x04, 0x85, 0xC0, 0x79, 0x06, 0x57),
+    XREF_D3D_DestroyResource,
+    XRefOne)
 
-    // cmp esi, $50000
+    // D3D_DestroyResource+0x1D : D3D_BlockOnResource
+    XREF_ENTRY(0x1E, XREF_D3D_BlockOnResource),
+
+    // D3D_DestroyResource+0x00 : push esi
+    OV_MATCH(0x00, 0x56),
+
+    // D3D_DestroyResource+0x06 : mov eax, [edi]
+    OV_MATCH(0x06, 0x8B, 0x07), // STD offset 0x06 vs LTCG offset 0x00
+
+    // D3D_DestroyResource+0x0A : and esi, $70000
+    OV_MATCH(0x0A, 0x81, 0xE6, 0x00, 0x00, 0x07, 0x00),
+
+    // D3D_DestroyResource+0x10 : cmp esi, $50000
+    OV_MATCH(0x10, 0x81, 0xFE, 0x00, 0x00, 0x05, 0x00),
+
+    // D3D_DestroyResource+0x1C : push edi
+    OV_MATCH(0x1C, 0x57), // STD push edi vs LTCG mov e__,e__
+
+    // relative to 0x06; STD offset 0x22 vs LTCG offset 0x24
+    // D3D_DestroyResource+0x : cmp esi, $50000
     OV_MATCH(0x28, 0x81, 0xFE, 0x00, 0x00, 0x05, 0x00),
-
-    // mov eax, [edi + $04]
-    OV_MATCH(0x35, 0x8B, 0x47, 0x04),
 OOVPA_END;
 
 // ******************************************************************

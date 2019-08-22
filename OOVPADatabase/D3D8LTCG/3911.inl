@@ -918,7 +918,10 @@ OOVPA_END;
 // * D3D_BlockOnResource
 // ******************************************************************
 //00007800750C85 ...C3
-OOVPA_NO_XREF(D3D_BlockOnResource_0, 2024, 11)
+OOVPA_XREF(D3D_BlockOnResource_0, 2024, 11,
+
+    XREF_D3D_BlockOnResource,
+    XRefZero)
 
         { 0x00, 0x8B },
         { 0x01, 0x15 },
@@ -1019,4 +1022,33 @@ OOVPA_XREF(D3DDevice_BlockUntilVerticalBlank, 1024, 2+15,
         // D3DDevice_BlockUntilVerticalBlank+0x23 : mov eax,[addr]
         OV_MATCH(0x23, 0xA1), // NOTE: std has a ret here and isn't a extended function.
 
+OOVPA_END;
+
+// ******************************************************************
+// * D3D_DestroyResource
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_XREF(D3D_DestroyResource__LTCG, 3911, 1+21,
+
+    XREF_D3D_DestroyResource,
+    XRefOne)
+
+    // D3D_DestroyResource+0x19 : D3D_BlockOnResource
+    XREF_ENTRY(0x1A, XREF_D3D_BlockOnResource),
+
+    // D3D_DestroyResource+0x00 : mov eax, [edi]
+    OV_MATCH(0x00, 0x8B, 0x07), // LTCG offset 0x00 vs STD offset 0x06
+
+    // D3D_DestroyResource+0x05 : and esi, $70000
+    OV_MATCH(0x05, 0x81, 0xE6, 0x00, 0x00, 0x07, 0x00),
+
+    // D3D_DestroyResource+0x0B : cmp esi, $50000
+    OV_MATCH(0x0B, 0x81, 0xFE, 0x00, 0x00, 0x05, 0x00),
+
+    // D3D_DestroyResource+0x17 : mov e__,e__
+    OV_MATCH(0x17, 0x8B), // LTCG mov e__,e__ vs STD push edi
+
+    // relative to 0x00; LTCG offset 0x24 vs STD offset 0x22
+    // D3D_DestroyResource+0x24 : cmp esi, $50000
+    OV_MATCH(0x24, 0x81, 0xFE, 0x00, 0x00, 0x05, 0x00),
 OOVPA_END;
