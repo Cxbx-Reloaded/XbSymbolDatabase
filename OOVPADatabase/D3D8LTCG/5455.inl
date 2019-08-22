@@ -137,7 +137,10 @@ OOVPA_END;
 // * D3D_BlockOnResource
 // ******************************************************************
 //F7C20000780075 ...C3
-OOVPA_NO_XREF(D3D_BlockOnResource_0, 2060, 9)
+OOVPA_XREF(D3D_BlockOnResource_0, 2060, 9,
+
+    XREF_D3D_BlockOnResource,
+    XRefZero)
 
         { 0x01, 0x8B },
         { 0x02, 0x35 },

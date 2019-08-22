@@ -139,6 +139,7 @@ typedef enum _XRefDataBaseOffset
     XREF_D3D_BlockOnResource,
     XREF_D3D_BlockOnTime,
     XREF_D3D_CreateStandAloneSurface,
+    XREF_D3D_DestroyResource,
     XREF_D3D_SetFence,
     XREF_D3D_SetTileNoWait,
     XREF_D3D_KickOffAndWaitForIdle,
