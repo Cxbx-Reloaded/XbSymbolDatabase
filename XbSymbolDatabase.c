@@ -142,21 +142,17 @@ SymbolDatabaseList SymbolDBList[] = {
     //{ XbSymbolLib_XGRAPHCL ,{ Sec_XGRPH }, XGRAPHCL_OOVPA, XGRAPHCL_OOVPA_COUNT },
 
     // Added Sec_text and Sec_XNET just in case.
+    // TODO: Do we need to keep Sec_XNET in here?
     // TODO: Need to find out which function is only part of XOnlines.
-    { XbSymbolLib_XONLINE,{ Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINES_OOVPA, XONLINES_OOVPA_COUNT },
-
     // Fun fact, XONLINES are split into 2 header sections.
-    { XbSymbolLib_XONLINES,{ Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINES_OOVPA, XONLINES_OOVPA_COUNT },
+    { XbSymbolLib_XONLINE | XbSymbolLib_XONLINES, { Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINE_OOVPA, XONLINE_OOVPA_COUNT },
 
     // Added Sec_text just in case.
     // TODO: Need to find out which function is only part of XNets.
-    { XbSymbolLib_XNET,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPA, XNET_OOVPA_COUNT },
-
     // XNETS only has XNET, might be true.
-    { XbSymbolLib_XNETS,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPA, XNET_OOVPA_COUNT },
-
-    // test case: Stake
-    { XbSymbolLib_XNETN,{ Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPA, XNET_OOVPA_COUNT },
+    // XNETN's test case: Stake
+    { XbSymbolLib_XNET | XbSymbolLib_XNETS | XbSymbolLib_XNETN | XbSymbolLib_XONLINE | XbSymbolLib_XONLINES,
+        { Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPA, XNET_OOVPA_COUNT },
 };
 
 // ******************************************************************
