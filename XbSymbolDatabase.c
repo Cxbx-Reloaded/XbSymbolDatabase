@@ -1254,6 +1254,7 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE] = XREF_ADDR_DERIVE;       //In use
     //pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] = XREF_ADDR_UNDETERMINED;   //In use // Manual check only.
     //pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
+    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER] = XREF_ADDR_DERIVE;
 
     // Mark all library types as not active for scan activity.
     memset(pContext->library_active, 0, sizeof(pContext->library_active));
