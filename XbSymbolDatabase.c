@@ -1251,7 +1251,7 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_PALETTES] = XREF_ADDR_DERIVE;
     pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_RENDERTARGET] = XREF_ADDR_DERIVE;
     pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL] = XREF_ADDR_DERIVE;
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE] = XREF_ADDR_DERIVE;       //In use
+    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT] = XREF_ADDR_DERIVE;       //In use
     //pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] = XREF_ADDR_UNDETERMINED;   //In use // Manual check only.
     //pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
 
@@ -1723,21 +1723,21 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] == XREF_ADDR_UNDETERMINED) {
 
         // Scan if event handle variable is not yet derived.
-        if (pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE] == XREF_ADDR_DERIVE) {
-            xSymbolAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, "D3DDevice__ManualFindEventHandleGeneric_3911", 3911,
-                &D3DDevice__ManualFindEventHandleGeneric_3911, pSection);
+        if (pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT] == XREF_ADDR_DERIVE) {
+            xSymbolAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, "D3DDevice__m_VerticalBlankEvent__ManualFindGeneric_3911", 3911,
+                &D3DDevice__m_VerticalBlankEvent__ManualFindGeneric_3911, pSection);
         }
 
-        // We are not registering the D3DDevice__ManualFindEventHandleGeneric as it is NOT a symbol.
+        // We are not registering D3DDevice__m_VerticalBlankEvent__ManualFindGeneric itself, as it is NOT a symbol.
 
 
         // If not found, skip manual register.
-        if (pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE] == XREF_ADDR_DERIVE) {
+        if (pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT] == XREF_ADDR_DERIVE) {
             return false;
         }
 
         // Finally, manual register the symbol variables.
-        xSymbolAddr = pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE];
+        xSymbolAddr = pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT];
         pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] = xSymbolAddr - 8;
         pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = xSymbolAddr - 4;
     }

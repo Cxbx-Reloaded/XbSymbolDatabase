@@ -998,8 +998,8 @@ OOVPA_XREF(D3DDevice_BlockUntilVerticalBlank, 1024, 2+15,
         // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax, [D3D__PDEVICE]
         XREF_ENTRY(0x01, XREF_D3DDEVICE),
 
-        // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDEVICE_M_EVENTHANDLE
-        XREF_ENTRY(0x18, XREF_OFFSET_D3DDEVICE_M_EVENTHANDLE),
+        // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT
+        XREF_ENTRY(0x18, XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT),
 
         // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax,[D3D__PDEVICE]
         OV_MATCH(0x00, 0xA1),
@@ -1013,7 +1013,7 @@ OOVPA_XREF(D3DDevice_BlockUntilVerticalBlank, 1024, 2+15,
         // D3DDevice_BlockUntilVerticalBlank+0x15 : push 6
         OV_MATCH(0x15, 0x6A, 0x06),
 
-        // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDEVICE_M_EVENTHANDLE
+        // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT
         OV_MATCH(0x17, 0x05),
 
         // D3DDevice_BlockUntilVerticalBlank+0x1D : call [KeWaitForSingleObject]
