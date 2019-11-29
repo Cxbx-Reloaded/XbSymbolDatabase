@@ -2194,7 +2194,7 @@ typedef struct _SymbolDatabaseVerifyContext {
     OutputHandler output;
 } SymbolDatabaseVerifyContext;
 
-int OOVPAErrorString(char* bufferTemp, SymbolDatabaseList* data, uint32_t index)
+static int OOVPAErrorString(char* bufferTemp, SymbolDatabaseList* data, uint32_t index)
 {
     // Convert active data pointer to an index base on starting point of SymbolDBList.
     unsigned int db_index = (unsigned int)(data - SymbolDBList);
@@ -2202,7 +2202,7 @@ int OOVPAErrorString(char* bufferTemp, SymbolDatabaseList* data, uint32_t index)
     return sprintf(bufferTemp, "OOVPATable db=%2u, b=%4hu, i=[%4u] s=%s", db_index, data->OovpaTable[index].Version, index, data->OovpaTable[index].szFuncName);
 }
 
-void OOVPAError(SymbolDatabaseVerifyContext* context, char* format, ...)
+static void SymbolDatabaseVerifyContext_OOVPAError(SymbolDatabaseVerifyContext* context, char* format, ...)
 {
     char buffer[2048] = { 0 };
     static char bufferTemp[400] = { 0 };
@@ -2234,9 +2234,9 @@ void OOVPAError(SymbolDatabaseVerifyContext* context, char* format, ...)
     output_message(&context->output, XB_OUTPUT_MESSAGE_ERROR, buffer);
 }
 
-unsigned int XbSymbolDataBaseVerifyDataBaseList(SymbolDatabaseVerifyContext* context); // forward
+unsigned int SymbolDatabaseVerifyContext_VerifyDatabaseList(SymbolDatabaseVerifyContext* context); // forward
 
-unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext* context, OOVPA* oovpa)
+static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerifyContext* context, OOVPA* oovpa)
 {
     unsigned int error_count = 0;
 
@@ -2253,7 +2253,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext* context, O
 
             if (!(curr_offset > prev_offset)) {
                 error_count++;
-                OOVPAError(context, "Lovp[%2u] : Offset (0x%03x) must be larger then previous offset (0x%03x)",
+                SymbolDatabaseVerifyContext_OOVPAError(context, "Lovp[%2u] : Offset (0x%03x) must be larger then previous offset (0x%03x)",
                          p, curr_offset, prev_offset);
             }
         }
@@ -2261,7 +2261,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext* context, O
         // find duplicate OOVPA's across all other data-table-oovpa's
         context->oovpa = oovpa;
         context->against = oovpa;
-        error_count += XbSymbolDataBaseVerifyDataBaseList(context);
+        error_count += SymbolDatabaseVerifyContext_VerifyDatabaseList(context);
         context->against = NULL; // reset scanning state
         return error_count;
     }
@@ -2348,7 +2348,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext* context, O
                 // If detect selection is not unique, then make an error report.
                 if (!unique_detect_select) {
                     error_count++;
-                    OOVPAError(context, "OOVPA's are identical",
+                    SymbolDatabaseVerifyContext_OOVPAError(context, "OOVPA's are identical",
                                unique_offset_left,
                                unique_offset_right);
                 }
@@ -2358,7 +2358,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext* context, O
                     // not too many new OV-pairs on the right side?
                     if (unique_offset_right < 6) {
                         error_count++;
-                        OOVPAError(context, "OOVPA's are expanded (left +%d, right +%d)",
+                        SymbolDatabaseVerifyContext_OOVPAError(context, "OOVPA's are expanded (left +%d, right +%d)",
                                    unique_offset_left,
                                    unique_offset_right);
                     }
@@ -2369,7 +2369,7 @@ unsigned int XbSymbolDataBaseVerifyOOVPA(SymbolDatabaseVerifyContext* context, O
     return error_count;
 }
 
-unsigned int XbSymbolDataBaseVerifyEntry(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t index)
+static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t index)
 {
     if (context->against == NULL) {
         context->main_index = index;
@@ -2379,12 +2379,12 @@ unsigned int XbSymbolDataBaseVerifyEntry(SymbolDatabaseVerifyContext* context, c
 
     // verify the OOVPA of this entry
     if (table[index].Oovpa != NULL) {
-        return XbSymbolDataBaseVerifyOOVPA(context, table[index].Oovpa);
+        return SymbolDatabaseVerifyContext_VerifyOOVPA(context, table[index].Oovpa);
     }
     return 0;
 }
 
-unsigned int XbSymbolDataBaseVerifyDatabase(SymbolDatabaseVerifyContext* context, SymbolDatabaseList* data)
+static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVerifyContext* context, SymbolDatabaseList* data)
 {
     unsigned int error_count = 0;
     if (context->against == NULL) {
@@ -2395,17 +2395,17 @@ unsigned int XbSymbolDataBaseVerifyDatabase(SymbolDatabaseVerifyContext* context
 
     // Verify each entry in data's OOVPA table.
     for (uint32_t e = 0; e < data->OovpaTableCount; e++) {
-        error_count += XbSymbolDataBaseVerifyEntry(context, data->OovpaTable, e);
+        error_count += SymbolDatabaseVerifyContext_VerifyEntry(context, data->OovpaTable, e);
     }
     return error_count;
 }
 
-unsigned int XbSymbolDataBaseVerifyDataBaseList(SymbolDatabaseVerifyContext* context)
+static unsigned int SymbolDatabaseVerifyContext_VerifyDatabaseList(SymbolDatabaseVerifyContext* context)
 {
     unsigned int error_count = 0;
     // verify all SymbolDatabaseList's
     for (uint32_t d = 0; d < SymbolDBListCount; d++) {
-        error_count += XbSymbolDataBaseVerifyDatabase(context, &SymbolDBList[d]);
+        error_count += SymbolDatabaseVerifyContext_VerifyDatabase(context, &SymbolDBList[d]);
     }
     return error_count;
 }
@@ -2415,5 +2415,5 @@ unsigned int XbSymbolDatabase_TestOOVPAs()
     SymbolDatabaseVerifyContext context = { 0 };
     context.output.func = g_output_func;
     context.output.verbose_level = g_output_verbose_level;
-    return XbSymbolDataBaseVerifyDataBaseList(&context);
+    return SymbolDatabaseVerifyContext_VerifyDatabaseList(&context);
 }
