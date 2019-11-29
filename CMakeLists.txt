@@ -15,3 +15,8 @@ file(GLOB_RECURSE SOURCES
 source_group(TREE ${CMAKE_CURRENT_LIST_DIR} FILES ${SOURCES})
 
 add_library (XbSymbolDatabase ${SOURCES})
+
+set_target_properties(XbSymbolDatabase PROPERTIES
+ C_STANDARD 11
+ C_STANDARD_REQUIRED ON
+)
