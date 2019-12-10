@@ -36,8 +36,8 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <stddef.h>
-// TODO: Waiting on Visual Studio to include C11 support for multi-thread safe.
-#ifndef _MSC_VER
+// TODO: Most compilers haven't include C11's thread support for multi-thread safe.
+#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L) && !defined(__STDC_NO_THREADS__)
 #define MULTI_THREAD_SAFE true
 #include <threads.h>
 #endif
@@ -2235,7 +2235,7 @@ static void SymbolDatabaseVerifyContext_OOVPAError(SymbolDatabaseVerifyContext* 
     output_message(&context->output, XB_OUTPUT_MESSAGE_ERROR, buffer);
 }
 
-unsigned int SymbolDatabaseVerifyContext_VerifyDatabaseList(SymbolDatabaseVerifyContext* context); // forward
+static unsigned int SymbolDatabaseVerifyContext_VerifyDatabaseList(SymbolDatabaseVerifyContext* context); // forward
 
 static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerifyContext* context, OOVPA* oovpa)
 {
