@@ -317,7 +317,12 @@ OOVPA_END;
 // * D3DDevice_SetVertexShader
 // ******************************************************************
 //F6C30155568B35
-OOVPA_NO_XREF(D3DDevice_SetVertexShader, 1024, 12)
+OOVPA_XREF(D3DDevice_SetVertexShader, 1024, 1+12,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        XREF_ENTRY( 0x12, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER), // Derived (unverified, yet should be align base on existing 4 bytes in signatures)
 
         { 0x00, 0x53 },
         { 0x01, 0x8B },

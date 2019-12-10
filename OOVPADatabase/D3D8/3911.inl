@@ -1580,7 +1580,12 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SetVertexShader
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetVertexShader, 3911, 15)
+OOVPA_XREF(D3DDevice_SetVertexShader, 3911, 1+15,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        XREF_ENTRY( 0x12, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER), // Derived
 
         // D3DDevice_SetVertexShader+0x00 : push ebx
         { 0x00, 0x53 },
