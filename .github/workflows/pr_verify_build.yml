@@ -1,0 +1,50 @@
+name: PR Verify Builds
+
+on: pull_request
+
+jobs:
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+    steps:
+      - uses: actions/checkout@master
+      - name: Generate cmake files
+        shell: cmd
+        run: |
+          mkdir build && cd build
+          cmake .. -G "Visual Studio 16 2019" -A Win32
+      - name: Build
+        run: cmake --build build/ --config ${{ matrix.configuration }}
+
+  ubuntu:
+    name: Ubuntu
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+    steps:
+      - uses: actions/checkout@master
+      - name: Generate cmake files
+        run: |
+          mkdir build && cd build
+          cmake .. -G "Unix Makefiles"
+      - name: Build
+        run: cmake --build build/ --config ${{ matrix.configuration }}
+
+  macos:
+    name: macOS
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+    steps:
+      - uses: actions/checkout@master
+      - name: Generate cmake files
+        run: |
+          mkdir build && cd build
+          cmake .. -G "Xcode"
+      - name: Build
+        run: cmake --build build/ --config ${{ matrix.configuration }}
