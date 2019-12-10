@@ -2235,7 +2235,7 @@ static void SymbolDatabaseVerifyContext_OOVPAError(SymbolDatabaseVerifyContext* 
     output_message(&context->output, XB_OUTPUT_MESSAGE_ERROR, buffer);
 }
 
-unsigned int SymbolDatabaseVerifyContext_VerifyDatabaseList(SymbolDatabaseVerifyContext* context); // forward
+static unsigned int SymbolDatabaseVerifyContext_VerifyDatabaseList(SymbolDatabaseVerifyContext* context); // forward
 
 static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerifyContext* context, OOVPA* oovpa)
 {
