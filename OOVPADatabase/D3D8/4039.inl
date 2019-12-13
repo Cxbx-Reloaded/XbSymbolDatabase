@@ -653,11 +653,11 @@ OOVPA_XREF(D3DDevice_BeginPush2, 4039, 1+11,
         // D3DDevice_BeginPush__8+0x0B : call D3DDevice_SetStateVB
         OV_MATCH(0x0B, 0xE8),
 
-        // D3DDevice_BeginPush__8+0x1C : mov ecx,[esp+0x0C]
-        OV_MATCH(0x1C, 0x8B, 0x4C, 0x24, 0x0C),
-
         // D3DDevice_BeginPush__8+0x17 : call XMETAL_StartPushCount
         OV_MATCH(0x17, 0xE8),
+
+        // D3DDevice_BeginPush__8+0x1C : mov ecx,[esp+0x0C]
+        OV_MATCH(0x1C, 0x8B, 0x4C, 0x24, 0x0C),
 
         // D3DDevice_BeginPush__8+0x23 : ret 0x0008
         OV_MATCH(0x23, 0xC2, 0x08),

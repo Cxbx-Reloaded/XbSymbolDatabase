@@ -54,7 +54,7 @@ OOVPA_END;
 // * DirectSoundDoWork
 // ******************************************************************
 // Generic OOVPA as of 4134 and newer
-OOVPA_XREF(DirectSoundDoWork, 4134, 11,
+OOVPA_XREF(DirectSoundDoWork, 4134, 1+11,
 
     XRefNoSaveIndex,
     XRefOne)
