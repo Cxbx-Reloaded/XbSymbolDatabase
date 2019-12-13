@@ -125,10 +125,9 @@ OOVPA_END;
 // * D3DDevice_GetDepthStencilSurface2
 // ******************************************************************
 //000085C9750333C0C38B01A9
-OOVPA_NO_XREF(D3DDevice_GetDepthStencilSurface2, 1024, 14)
+OOVPA_NO_XREF(D3DDevice_GetDepthStencilSurface2, 1024, 13)
 
         { 0x00, 0xA1 },
-        { 0x11, 0xC3 },
 
         { 0x09, 0x00 },
         { 0x0A, 0x00 },

@@ -1134,15 +1134,15 @@ OOVPA_XREF(D3DDevice_SetRenderState_CullMode, 3911, 2+16,
         { 0x4A, 0xC0 },
         { 0x4B, 0x10 },
 
-        // D3DDevice_SetRenderState_CullMode+0x5F : retn 4
-        { 0x5F, 0xC2 },
-        { 0x60, 0x04 },
-
         // D3DDevice_SetRenderState_CullMode+0x4D : add edx, 0x404
         { 0x4D, 0x81 },
         { 0x4E, 0xC2 },
         { 0x4F, 0x04 },
         { 0x50, 0x04 },
+
+        // D3DDevice_SetRenderState_CullMode+0x5F : retn 4
+        { 0x5F, 0xC2 },
+        { 0x60, 0x04 },
 OOVPA_END;
 
 // ******************************************************************

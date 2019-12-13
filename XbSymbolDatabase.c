@@ -2257,6 +2257,7 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
                 SymbolDatabaseVerifyContext_OOVPAError(context, "Lovp[%2u] : Offset (0x%03x) must be larger then previous offset (0x%03x)",
                          p, curr_offset, prev_offset);
             }
+            prev_offset = curr_offset;
         }
 
         // find duplicate OOVPA's across all other data-table-oovpa's
