@@ -1963,10 +1963,15 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
                     }
                 }
             }
+
+            // NOTE: Do not use break since database entry can have multiple same library entries even doesn't have 2+ bit flags.
+            // Affected case: DSound's manual scan required more sections.
+#if 0
             // Use the break if there are 2+ bit flags set such as include LTCG flag in std flag's oovpa database like D3D8.
             if ((SymbolDBList[d2].LibSec.library & ~pLibrary->flag) == 0) {
                 break;
             }
+#endif
         }
     }
 
