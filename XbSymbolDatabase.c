@@ -157,6 +157,10 @@ SymbolDatabaseList SymbolDBList[] = {
     // Jarupxx mention this is not a requirement?
     //{ Lib_D3DX8,{ Sec_D3DX }, _OOVPA, _OOVPA_COUNT },
 
+    // Only used for manual scan purpose as a workaround since both FLASHROM
+    // and text section will lead to false detection for non-manual signatures, see comment below.
+    { XbSymbolLib_DSOUND,{ Sec_DSOUND, Sec_rdata, Sec_FLASHROM, Sec_text }, DSound_OOVPA_manual, DSound_OOVPA_manual_COUNT },
+
     // NOTE: By adding FLASHROM to scan section may will lead false detection.
     // Since some symbols has very short asm codes.
     { XbSymbolLib_DSOUND,{ Sec_DSOUND, Sec_rdata, Sec_FLASHROM }, DSound_OOVPA, DSound_OOVPA_COUNT },
