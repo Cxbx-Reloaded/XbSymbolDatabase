@@ -540,6 +540,8 @@ typedef enum _XRefDatabaseOffset
     XREF_D3DDevice_GetRenderTarget2,
     XREF_D3DDevice_SetRenderTarget,
     XREF_D3DDevice_MakeSpace,
+    XREF_D3DDevice_SetRenderState_Simple,
+    XREF_D3DDevice_SetRenderStateNotInline,
     XREF_D3DDevice_SetVertexShaderConstant1,
     XREF_D3DDevice_SetVertexShaderConstant4,
     XREF_D3DResource_AddRef,

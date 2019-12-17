@@ -2302,7 +2302,9 @@ OOVPA_END;
 // * D3DDevice_SetRenderState_Simple
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_NO_XREF(D3DDevice_SetRenderState_Simple, 3911, 12)
+OOVPA_XREF(D3DDevice_SetRenderState_Simple, 3911, 12,
+    XREF_D3DDevice_SetRenderState_Simple,
+    XRefZero)
 
         // D3DDevice_SetRenderState_Simple+0x00 : mov eax, [D3D__DEVICE]
         OV_MATCH(0x00, 0xA1),
@@ -5135,5 +5137,79 @@ OOVPA_XREF(CDevice_MakeSpace, 3911, 13,
 
         // CDevice::MakeSpace_4+0x32 : ret
         OV_MATCH(0x32, 0xC3),
+
+OOVPA_END;
+
+// ******************************************************************
+// * D3DDevice::SetRenderStateNotInline
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_XREF(D3DDevice_SetRenderStateNotInline, 3911, 1+6,
+    XREF_D3DDevice_SetRenderStateNotInline,
+    XRefOne)
+
+        // D3DDevice::SetRenderStateNotInline+0x18 : call D3DDevice_SetRenderState_Simple
+        XREF_ENTRY(0x19, XREF_D3DDevice_SetRenderState_Simple),
+
+        // D3DDevice::SetRenderStateNotInline+0x00 : push esi
+        OV_MATCH(0x00, 0x56),
+
+        // D3DDevice::SetRenderStateNotInline+0x06 : jge +0x__ (0x1F vs LTCG 0x21)
+        OV_MATCH(0x08, 0x7D),
+
+        // D3DDevice::SetRenderStateNotInline+0x0A : ecx,[addr]
+        OV_MATCH(0x0A, 0x8B, 0x0C, 0xB5),
+
+        // D3DDevice::SetRenderStateNotInline+0x18 : call D3DDevice_SetRenderState_Simple
+        OV_MATCH(0x18, 0xE8),
+
+        // After offset 0x24 has various instruction changes
+
+OOVPA_END;
+
+// ******************************************************************
+// * D3DDevice::SetRenderState
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_XREF_DETECT(D3DDevice_SetRenderState, 3911, 1+4,
+    XRefNoSaveIndex,
+    XRefOne,
+    DetectFirst)
+
+        // D3DDevice::SetRenderState+0x02 : call D3DDevice_SetRenderStateNotInline
+        XREF_ENTRY(0x03, XREF_D3DDevice_SetRenderStateNotInline),
+
+        // D3DDevice::SetRenderState+0x00 : push eax; push ecx
+        OV_MATCH(0x00, 0x50, 0x51),
+
+        // D3DDevice::SetRenderState+0x02 : call D3DDevice_SetRenderStateNotInline
+        OV_MATCH(0x02, 0xE8),
+
+        // D3DDevice::SetRenderState+0x07 : ret
+        OV_MATCH(0x07, 0xC3),
+
+OOVPA_END;
+
+// ******************************************************************
+// * D3DDevice::SetRenderState (duplicate)
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+// TODO: Add another macro to accept duplicates.
+OOVPA_XREF_DETECT(D3DDevice_SetRenderState2, 3911, 1+4,
+    XRefNoSaveIndex,
+    XRefOne,
+    DetectSecond)
+
+        // D3DDevice::SetRenderState+0x02 : call D3DDevice_SetRenderStateNotInline
+        XREF_ENTRY(0x03, XREF_D3DDevice_SetRenderStateNotInline),
+
+        // D3DDevice::SetRenderState+0x00 : push eax; push ecx
+        OV_MATCH(0x00, 0x50, 0x51),
+
+        // D3DDevice::SetRenderState+0x02 : call D3DDevice_SetRenderStateNotInline
+        OV_MATCH(0x02, 0xE8),
+
+        // D3DDevice::SetRenderState+0x07 : ret
+        OV_MATCH(0x07, 0xC3),
 
 OOVPA_END;
