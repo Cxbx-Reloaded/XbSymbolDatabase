@@ -157,6 +157,10 @@ SymbolDatabaseList SymbolDBList[] = {
     // Jarupxx mention this is not a requirement?
     //{ Lib_D3DX8,{ Sec_D3DX }, _OOVPA, _OOVPA_COUNT },
 
+    // Only used for manual scan purpose as a workaround since both FLASHROM
+    // and text section will lead to false detection for non-manual signatures, see comment below.
+    { XbSymbolLib_DSOUND,{ Sec_DSOUND, Sec_rdata, Sec_FLASHROM, Sec_text }, DSound_OOVPA_manual, DSound_OOVPA_manual_COUNT },
+
     // NOTE: By adding FLASHROM to scan section may will lead false detection.
     // Since some symbols has very short asm codes.
     { XbSymbolLib_DSOUND,{ Sec_DSOUND, Sec_rdata, Sec_FLASHROM }, DSound_OOVPA, DSound_OOVPA_COUNT },
@@ -1959,10 +1963,15 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
                     }
                 }
             }
+
+            // NOTE: Do not use break since database entry can have multiple same library entries even doesn't have 2+ bit flags.
+            // Affected case: DSound's manual scan required more sections.
+#if 0
             // Use the break if there are 2+ bit flags set such as include LTCG flag in std flag's oovpa database like D3D8.
             if ((SymbolDBList[d2].LibSec.library & ~pLibrary->flag) == 0) {
                 break;
             }
+#endif
         }
     }
 
