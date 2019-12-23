@@ -307,6 +307,11 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetPixelShader, 3911, 4034, 4627),
     REGISTER_OOVPAS(D3DDevice_SetPixelShaderConstant, 3911, 4831),
     REGISTER_OOVPAS(D3DDevice_SetPixelShaderProgram, 3911),
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_Simple, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderStateNotInline, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: Must be after D3DDevice_SetRenderState_Simple.
+    // NOTE: Some or most of render state signatures below must be after D3DDevice_SetRenderStateNotInline.
+    REGISTER_OOVPAS(D3DDevice_SetRenderState, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState2, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: There is a verified duplicate function.
     REGISTER_OOVPAS(D3DDevice_SetRenderState_BackFillMode, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_CullMode, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_Deferred, 3911),
@@ -329,7 +334,6 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZRead, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_SampleAlpha, 4627),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ShadowFunc, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_Simple, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilCullEnable, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilEnable, 3911, 4034, 5849),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilFail, 3911, 4034, 5849),

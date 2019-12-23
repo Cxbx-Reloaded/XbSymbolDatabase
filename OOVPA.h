@@ -150,6 +150,9 @@ typedef struct _LOOVPA
 #define OOVPA_XREF_EXTEND(Name, Version, Count, XRefSaveIndex, XRefCount, DetectSelect) \
 LOOVPA Name##_##Version = { Count, XRefCount, XRefSaveIndex, DetectSelect, VARPADSET, VARPADSET, VARPADSET, {
 
+#define OOVPA_XREF_DETECT(Name, Version, Count, XRefSaveIndex, XRefCount, DetectSelect) \
+OOVPA_XREF_EXTEND(Name, Version, Count, XRefSaveIndex, XRefCount, DetectSelect)
+
 #define OOVPA_NO_XREF_DETECT(Name, Version, Count, DetectSelect) \
 OOVPA_XREF_EXTEND(Name, Version, Count, XRefNoSaveIndex, XRefZero, DetectSelect)
 

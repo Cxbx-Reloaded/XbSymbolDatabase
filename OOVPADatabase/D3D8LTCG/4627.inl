@@ -1042,24 +1042,6 @@ OOVPA_NO_XREF(D3DDevice_SetRenderStateNotInline_0, 2048, 13)
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetRenderStateNotInline
-// ******************************************************************
-//578B7C24108BD7E8
-OOVPA_NO_XREF(D3DDevice_SetRenderStateNotInline, 1024, 9)
-
-        { 0x00, 0x56 },
-
-        { 0x11, 0x57 },
-        { 0x12, 0x8B },
-        { 0x13, 0x7C },
-        { 0x14, 0x24 },
-        { 0x15, 0x10 },
-        { 0x16, 0x8B },
-        { 0x17, 0xD7 },
-        { 0x18, 0xE8 },
-OOVPA_END;
-
-// ******************************************************************
 // * D3DDevice_SetTextureStageStateNotInline
 // ******************************************************************
 //1BC981E1F1BFFFFF81C1
