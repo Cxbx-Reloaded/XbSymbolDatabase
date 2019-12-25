@@ -97,7 +97,8 @@ typedef struct _OutputHandler {
 // Library Type is a requirement to prevent another thread
 // doing the same scan process.
 typedef enum _eLibraryType {
-    LT_D3D = 0,
+    LT_KERNEL = 0,
+    LT_D3D,
     LT_AUDIO,
     LT_JVS,
     LT_XAPI,
@@ -113,6 +114,16 @@ typedef enum _eScanStage {
     SS_2_SCAN_LIBS,
 } eScanStage;
 
+typedef struct _iXbSymbolLibraryContext {
+    uint32_t    xref_registered;
+    bool        is_active;
+} iXbSymbolLibraryContext;
+
+typedef struct _iXbSymbolLibrarySession {
+    const XbSDBLibrary* pLibrary;
+    eLibraryType iLibraryType;
+} iXbSymbolLibrarySession;
+
 typedef struct _iXbSymbolContext {
     bool                    strict_build_version_limit;
     bool                    one_time_scan;
@@ -123,15 +134,15 @@ typedef struct _iXbSymbolContext {
     xb_symbol_register_t    register_func;
     XbSDBLibraryHeader      library_input;
     XbSDBSectionHeader      section_input;
-    bool                    library_active[LT_COUNT];
     eScanStage              scan_stage;
+    iXbSymbolLibraryContext library_contexts[LT_COUNT];
 #ifdef MULTI_THREAD_SAFE
     mtx_t                   mutex;
 #endif
 } iXbSymbolContext;
 
 typedef bool (*custom_scan_func_t)(iXbSymbolContext* pContext,
-                                   const XbSDBLibrary* pLibrary,
+                                   const iXbSymbolLibrarySession* pLibrary,
                                    const XbSDBSection* pSection);
 
 typedef const struct _PairScanLibSec {
@@ -718,8 +729,32 @@ bool CompareOOVPAToAddress(iXbSymbolContext* pContext, OOVPA* Oovpa, memptr_t cu
     return true;
 }
 
+// Return if the given (XRef'erenced) address is not set yet.
+static inline bool internal_IsXRefAddrUnset(xbaddr XRefAddr)
+{
+    return (XRefAddr == XREF_ADDR_UNDETERMINED) || (XRefAddr == XREF_ADDR_DERIVE);
+}
+
+// Return if the given (XRef'erenced) address is valid.
+static bool internal_IsXRefAddrValid(xbaddr XRefAddr)
+{
+    return (XRefAddr + 1) > (XREF_ADDR_DERIVE + 1); // Implies also not equal to XREF_ADDR_UNDETERMINED (-1) nor XREF_ADDR_NOT_FOUND (0)
+}
+
+// Obligatory function for setting an address in the XRefDataBase
+// (only initialization may write to XRefDataBase outside of this function).
+static inline void internal_SetXRefDatabase(iXbSymbolContext* pContext, eLibraryType iLibraryType, uint32_t XRef, xbaddr XRefAddr)
+{
+    // Count when changing from an initial value to a valid value
+    if (internal_IsXRefAddrUnset(pContext->xref_database[XRef])) {
+        pContext->library_contexts[iLibraryType].xref_registered++;
+    }
+    pContext->xref_database[XRef] = XRefAddr; // Besides initialization, this is the only code that writes values to XRefDataBase
+}
+
 // locate the given function, searching within lower and upper bounds
 void* internal_LocateFunction(iXbSymbolContext* pContext,
+                              eLibraryType iLibraryType,
                              const char* szFuncName,
                              uint16_t version,
                              OOVPA* Oovpa,
@@ -804,20 +839,20 @@ void* internal_LocateFunction(iXbSymbolContext* pContext,
                 // Does the address seem valid?
                 /*if (XRefAddr < XBE_MAX_VA) {
                     // save and count the derived address
-                    pContext->xref_database[XRef] = XRefAddr;
+                    SetXRefDataBase(pContext, XRef, XRefAddr);
                 }*/
 
                 // Check if selection is default (zero) then perform the standard procedure.
                 if (detect_selection == 0) {
                     if (!pContext->scan_first_detect || (pContext->scan_first_detect && symbol_address == NULL)) {
-                        pContext->xref_database[XRef] = XRefAddr;
+                        internal_SetXRefDatabase(pContext, iLibraryType, XRef, XRefAddr);
                     }
                 }
                 // Otherwise, perform a detected selection procedure.
                 else {
                     // If counter match the target selection, then save the ref address.
                     if (detect_selection == counter) {
-                        pContext->xref_database[XRef] = XRefAddr;
+                        internal_SetXRefDatabase(pContext, iLibraryType, XRef, XRefAddr);
                     }
                 }
             }
@@ -863,22 +898,39 @@ void* internal_LocateFunction(iXbSymbolContext* pContext,
     return symbol_address;
 }
 
-#define LocateFunctionCast(pContext, szFuncName, version, Oovpa, pSection) \
-        internal_LocateFunction(pContext, szFuncName, version, (OOVPA*)Oovpa, pSection, false)
+#define LocateFunctionCast(pContext, iLibraryType, szFuncName, version, Oovpa, pSection) \
+        internal_LocateFunction(pContext, iLibraryType, szFuncName, version, (OOVPA*)Oovpa, pSection, false)
+
+static void internal_RegisterValidXRefAddr(iXbSymbolContext* pContext,
+                                           const char* library_name,
+                                           uint32_t library_flag,
+                                           uint32_t XRefIndex,
+                                           uint16_t version,
+                                           const char* symbol_name)
+{
+    xbaddr xSymbolAddr = pContext->xref_database[XRefIndex];
+
+    if (internal_IsXRefAddrValid(xSymbolAddr)) {
+        pContext->register_func(library_name, library_flag, symbol_name, xSymbolAddr, version);
+    }
+}
 
 static void internal_RegisterXRef(iXbSymbolContext* pContext,
-                                         const XbSDBLibrary* pLibrary,
+                                         const iXbSymbolLibrarySession* pLibrarySession,
                                          uint32_t XRefIndex,
                                          uint16_t version,
                                          const char* symbol_name,
                                          uint32_t symbol_addr,
                                          bool do_register)
 {
-    if (pContext->xref_database[XRefIndex] != XREF_ADDR_UNDETERMINED && pContext->xref_database[XRefIndex] != XREF_ADDR_DERIVE) {
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
+    xbaddr xRefAddr = pContext->xref_database[XRefIndex];
+
+    if (internal_IsXRefAddrValid(xRefAddr)) {
 
         if (pContext->xref_database[XRefIndex] != symbol_addr) {
             output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN, "Duplicate XREF address found for %s (%hu), %08X vs %08X!",
-                symbol_name, version, pContext->xref_database[XRefIndex], symbol_addr);
+                symbol_name, version, xRefAddr, symbol_addr);
         }
 
         if (pContext->scan_first_detect) {
@@ -886,27 +938,26 @@ static void internal_RegisterXRef(iXbSymbolContext* pContext,
         }
     }
 
-    pContext->xref_database[XRefIndex] = symbol_addr;
+    internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XRefIndex, symbol_addr);
     if (do_register && pContext->register_func != NULL) {
         pContext->register_func(pLibrary->name, pLibrary->flag, symbol_name, symbol_addr, version);
     }
 }
 
-static unsigned int internal_RegisterSymbol(iXbSymbolContext* pContext,
-                                    const XbSDBLibrary* pLibrary,
+static void internal_RegisterSymbol(iXbSymbolContext* pContext,
+                                    const iXbSymbolLibrarySession* pLibrarySession,
                                     uint32_t XRefIndex,
                                     uint16_t version,
                                     const char* symbol_name,
                                     uint32_t symbol_addr)
 {
-    unsigned int xref_registered = 0;
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
 
     // do we need to save the found address?
     if (XRefIndex != XRefNoSaveIndex) {
         // If XRef is not found, save it then register once.
         if (pContext->xref_database[XRefIndex] == XREF_ADDR_UNDETERMINED) {
-            xref_registered = 1;
-            pContext->xref_database[XRefIndex] = symbol_addr;
+            internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XRefIndex, symbol_addr);
             if (pContext->register_func != NULL) {
                 pContext->register_func(pLibrary->name, pLibrary->flag, symbol_name, symbol_addr, version);
             }
@@ -915,33 +966,31 @@ static unsigned int internal_RegisterSymbol(iXbSymbolContext* pContext,
     else if (pContext->register_func != NULL) {
         pContext->register_func(pLibrary->name, pLibrary->flag, symbol_name, symbol_addr, version);
     }
-
-    return xref_registered;
 }
 
-static unsigned int internal_OOVPA_register(iXbSymbolContext* pContext,
+static void internal_OOVPA_register(iXbSymbolContext* pContext,
                                     OOVPATable* OovpaTable,
-                                    const XbSDBLibrary* pLibrary,
+                                    const iXbSymbolLibrarySession* pLibrarySession,
                                     xbaddr address)
 {
     if (OovpaTable != NULL) {
 
         OOVPA* Oovpa = OovpaTable->Oovpa;
 
-        return internal_RegisterSymbol(pContext, pLibrary, Oovpa->XRefSaveIndex, OovpaTable->Version,
+        internal_RegisterSymbol(pContext, pLibrarySession, Oovpa->XRefSaveIndex, OovpaTable->Version,
                                        OovpaTable->szFuncName, address);
     }
-
-    return 0;
 }
 
-static unsigned int internal_OOVPA_scan(iXbSymbolContext* pContext,
+static void internal_OOVPA_scan(iXbSymbolContext* pContext,
                                         OOVPATable* OovpaTable,
                                         unsigned int OovpaTableCount,
-                                        const XbSDBLibrary* pLibrary,
+                                        const iXbSymbolLibrarySession* pLibrarySession,
                                         const XbSDBSection* pSection,
                                         bool xref_first_pass)
 {
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
+    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
 
     // traverse the full OOVPA table
     OOVPATable* pLoopEnd = &OovpaTable[OovpaTableCount];
@@ -949,7 +998,6 @@ static unsigned int internal_OOVPA_scan(iXbSymbolContext* pContext,
     OOVPATable* pLastKnownSymbol = NULL;
     uint32_t pLastKnownFunc = 0;
     const char* SymbolName = NULL;
-    unsigned int xref_count = 0;
 
     for (; pLoop < pLoopEnd; pLoop++) {
 
@@ -959,7 +1007,7 @@ static unsigned int internal_OOVPA_scan(iXbSymbolContext* pContext,
             SymbolName = pLoop->szFuncName;
             if (pLastKnownSymbol != NULL) {
                 // Now that we found the address, store it (regardless if we patch it or not)
-                xref_count += internal_OOVPA_register(pContext, pLastKnownSymbol, pLibrary, pLastKnownFunc);
+                internal_OOVPA_register(pContext, pLastKnownSymbol, pLibrarySession, pLastKnownFunc);
                 pLastKnownSymbol = NULL;
                 pLastKnownFunc = 0;
             }
@@ -970,7 +1018,7 @@ static unsigned int internal_OOVPA_scan(iXbSymbolContext* pContext,
             continue;
 
         // Search for each function's location using the OOVPA
-        xbaddr pFunc = (xbaddr)(uintptr_t)internal_LocateFunction(pContext, pLoop->szFuncName, pLoop->Version, pLoop->Oovpa, pSection, xref_first_pass);
+        xbaddr pFunc = (xbaddr)(uintptr_t)internal_LocateFunction(pContext, iLibraryType, pLoop->szFuncName, pLoop->Version, pLoop->Oovpa, pSection, xref_first_pass);
         if (pFunc == 0) {
             continue;
         }
@@ -990,10 +1038,8 @@ static unsigned int internal_OOVPA_scan(iXbSymbolContext* pContext,
     }
 
     if (pLastKnownSymbol != NULL) {
-        xref_count += internal_OOVPA_register(pContext, pLastKnownSymbol, pLibrary, pLastKnownFunc);
+        internal_OOVPA_register(pContext, pLastKnownSymbol, pLibrarySession, pLastKnownFunc);
     }
-
-    return xref_count;
 }
 
 static eLibraryType internal_GetLibraryType(uint32_t library)
@@ -1041,9 +1087,9 @@ static bool internal_SetLibraryTypeStart(iXbSymbolContext* pContext, eLibraryTyp
     bool ret = false;
 
     // Accept request if library type is known and is inactive.
-    if (library_type < LT_UNKNOWN && !pContext->library_active[library_type]) {
+    if (library_type < LT_UNKNOWN && !pContext->library_contexts[library_type].is_active) {
         // Then accept the scan request.
-        pContext->library_active[library_type] = true;
+        pContext->library_contexts[library_type].is_active = true;
         ret = true;
         output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Library type active: %u", library_type);
     }
@@ -1058,11 +1104,11 @@ static void internal_SetLibraryTypeEnd(iXbSymbolContext* pContext, eLibraryType 
     (void)iXbSymbolContext_Lock(pContext);
 
     // If library is active, deny the scan request.
-    if (!pContext->library_active[library_type]) {
+    if (!pContext->library_contexts[library_type].is_active) {
         output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Attempted to set already inactive library type %u.", library_type);
     }
 
-    pContext->library_active[library_type] = false;
+    pContext->library_contexts[library_type].is_active = false;
     output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Library type inactive: %u", library_type);
 
     iXbSymbolContext_Unlock(pContext);
@@ -1222,9 +1268,8 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
                 unsigned int index = *kt & 0x7FFFFFFF;
                 // Check if the index is within range, then add to the xreference database.
                 if (index > 0 && index < XREF_KT_COUNT) {
-                    pContext->xref_database[index] = kt_addr;
-                }
-                else {
+                    internal_SetXRefDatabase(pContext, LT_KERNEL, index, kt_addr);
+                } else {
                     output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
                                           "Unable to register kernel thunk: index=%u; vaddr=0x%08x", index, kt_addr);
                 }
@@ -1260,8 +1305,8 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     //pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
     pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER] = XREF_ADDR_DERIVE;
 
-    // Mark all library types as not active for scan activity.
-    memset(pContext->library_active, 0, sizeof(pContext->library_active));
+    // Mark all library contexts as zero-initialized for scan activity.
+    memset(pContext->library_contexts, 0, sizeof(pContext->library_contexts));
 
     return true;
 
@@ -1290,7 +1335,7 @@ void XbSymbolContext_Release(XbSymbolContextHandle pHandle)
 #endif
 
     for (unsigned int i = 0; i < LT_COUNT; i++) {
-        if (pContext->library_active[i]) {
+        if (pContext->library_contexts[i].is_active) {
             output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Library type is currently active: %u", i);
         }
     }
@@ -1304,7 +1349,7 @@ void XbSymbolContext_Release(XbSymbolContextHandle pHandle)
 }
 
 static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
-                                                   const XbSDBLibrary* pLibrary,
+                                                   const iXbSymbolLibrarySession* pLibrarySession,
                                                    memptr_t pFunc,
                                                    xbaddr DerivedAddr_D3DRS_CULLMODE,
                                                    uint32_t patchOffset,
@@ -1314,6 +1359,9 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
     if (pFunc == NULL) {
         return;
     }
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
+    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
+
     // Temporary verification - is XREF_D3DDEVICE derived correctly?
     xbaddr DerivedAddr_D3DDevice = *(xbaddr*)(pFunc + 0x03);
     if (pContext->xref_database[XREF_D3DDEVICE] != DerivedAddr_D3DDevice) {
@@ -1322,7 +1370,7 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
             output_message(&pContext->output, XB_OUTPUT_MESSAGE_INFO, "Second derived XREF_D3DDEVICE differs from first!");
         }
 
-        pContext->xref_database[XREF_D3DDEVICE] = DerivedAddr_D3DDevice;
+        internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XREF_D3DDEVICE, DerivedAddr_D3DDevice);
     }
     pContext->register_func(pLibrary->name, pLibrary->flag, "D3DDEVICE", DerivedAddr_D3DDevice, 0);
 
@@ -1333,7 +1381,7 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
             output_message(&pContext->output, XB_OUTPUT_MESSAGE_WARN, "Second derived XREF_D3D_RenderState_CullMode differs from first!");
         }
 
-        pContext->xref_database[XREF_D3DRS_CULLMODE] = DerivedAddr_D3DRS_CULLMODE;
+        internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XREF_D3DRS_CULLMODE, DerivedAddr_D3DRS_CULLMODE);
     }
     // Register the offset of D3DRS_CULLMODE, this can be used to programatically locate other render-states in the calling program
     pContext->register_func(pLibrary->name, pLibrary->flag, "D3DRS_CULLMODE", DerivedAddr_D3DRS_CULLMODE, 0);
@@ -1343,52 +1391,55 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
     patchOffset -= Increment;
 
     // Derive address of a few other deferred render state slots (to help xref-based function location)
-    // pContext->xref_database[XREF_D3DRS_PSTEXTUREMODES]          = DerivedAddr_D3DRS_CULLMODE - 11*4;
-    // pContext->xref_database[XREF_D3DRS_VERTEXBLEND]             = DerivedAddr_D3DRS_CULLMODE - 10*4;
-    // pContext->xref_database[XREF_D3DRS_FOGCOLOR]             = DerivedAddr_D3DRS_CULLMODE - 9*4;
-    pContext->xref_database[XREF_D3DRS_FILLMODE] = DerivedAddr_D3DRS_CULLMODE - 8 * 4;
-    pContext->xref_database[XREF_D3DRS_BACKFILLMODE] = DerivedAddr_D3DRS_CULLMODE - 7 * 4;
-    pContext->xref_database[XREF_D3DRS_TWOSIDEDLIGHTING] = DerivedAddr_D3DRS_CULLMODE - 6 * 4;
-    // pContext->xref_database[XREF_D3DRS_NORMALIZENORMALS]        = DerivedAddr_D3DRS_CULLMODE - 5*4;
-    // pContext->xref_database[XREF_D3DRS_ZENABLE]             = DerivedAddr_D3DRS_CULLMODE - 4*4;
-    // pContext->xref_database[XREF_D3DRS_STENCILENABLE]           = DerivedAddr_D3DRS_CULLMODE - 3*4;
-    // pContext->xref_database[XREF_D3DRS_STENCILFAIL]             = DerivedAddr_D3DRS_CULLMODE - 2*4;
-    // pContext->xref_database[XREF_D3DRS_FRONTFACE]             = DerivedAddr_D3DRS_CULLMODE - 1*4;
-    // pContext->xref_database[XREF_D3DRS_CULLMODE]          = DerivedAddr_D3DRS_CULLMODE - 0*4;
-    // pContext->xref_database[XREF_D3DRS_TEXTUREFACTOR]         = DerivedAddr_D3DRS_CULLMODE + 1*4;
-    pContext->xref_database[XREF_D3DRS_ZBIAS] = DerivedAddr_D3DRS_CULLMODE + 2 * 4;
-    pContext->xref_database[XREF_D3DRS_LOGICOP] = DerivedAddr_D3DRS_CULLMODE + 3 * 4;
-    // pContext->xref_database[XREF_D3DRS_EDGEANTIALIAS]         = DerivedAddr_D3DRS_CULLMODE + 4*4;
-    pContext->xref_database[XREF_D3DRS_MULTISAMPLEANTIALIAS] = DerivedAddr_D3DRS_CULLMODE + 5 * 4;
-    pContext->xref_database[XREF_D3DRS_MULTISAMPLEMASK] = DerivedAddr_D3DRS_CULLMODE + 6 * 4;
-    pContext->xref_database[XREF_D3DRS_MULTISAMPLEMODE] = DerivedAddr_D3DRS_CULLMODE + 7 * 4;
-    pContext->xref_database[XREF_D3DRS_MULTISAMPLERENDERTARGETMODE] = DerivedAddr_D3DRS_CULLMODE + 8 * 4;
-    // pContext->xref_database[XREF_D3DRS_SHADOWFUNC]            = DerivedAddr_D3DRS_CULLMODE + 9*4;
-    // pContext->xref_database[XREF_D3DRS_LINEWIDTH]             = DerivedAddr_D3DRS_CULLMODE + 10*4;
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_PSTEXTUREMODES, DerivedAddr_D3DRS_CULLMODE - 11*4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_VERTEXBLEND, DerivedAddr_D3DRS_CULLMODE - 10*4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_FOGCOLOR, DerivedAddr_D3DRS_CULLMODE - 9*4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_FILLMODE, DerivedAddr_D3DRS_CULLMODE - 8 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_BACKFILLMODE, DerivedAddr_D3DRS_CULLMODE - 7 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_TWOSIDEDLIGHTING, DerivedAddr_D3DRS_CULLMODE - 6 * 4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_NORMALIZENORMALS, DerivedAddr_D3DRS_CULLMODE - 5*4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_ZENABLE, DerivedAddr_D3DRS_CULLMODE - 4*4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_STENCILENABLE, DerivedAddr_D3DRS_CULLMODE - 3*4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_STENCILFAIL, DerivedAddr_D3DRS_CULLMODE - 2*4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_FRONTFACE, DerivedAddr_D3DRS_CULLMODE - 1*4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_CULLMODE, DerivedAddr_D3DRS_CULLMODE - 0*4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_TEXTUREFACTOR, DerivedAddr_D3DRS_CULLMODE + 1*4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_ZBIAS, DerivedAddr_D3DRS_CULLMODE + 2 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_LOGICOP, DerivedAddr_D3DRS_CULLMODE + 3 * 4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_EDGEANTIALIAS, DerivedAddr_D3DRS_CULLMODE + 4*4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_MULTISAMPLEANTIALIAS, DerivedAddr_D3DRS_CULLMODE + 5 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_MULTISAMPLEMASK, DerivedAddr_D3DRS_CULLMODE + 6 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_MULTISAMPLEMODE, DerivedAddr_D3DRS_CULLMODE + 7 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_MULTISAMPLERENDERTARGETMODE, DerivedAddr_D3DRS_CULLMODE + 8 * 4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_SHADOWFUNC, DerivedAddr_D3DRS_CULLMODE + 9*4);
+    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_LINEWIDTH, DerivedAddr_D3DRS_CULLMODE + 10*4);
 
     if (pLibrary->build_version >= 4627 && pLibrary->build_version <= 5933) {// Add XDK 4627
-        pContext->xref_database[XREF_D3DRS_SAMPLEALPHA] = DerivedAddr_D3DRS_CULLMODE + 11 * 4;
+        internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_SAMPLEALPHA, DerivedAddr_D3DRS_CULLMODE + 11 * 4);
     }
 
-    pContext->xref_database[XREF_D3DRS_DXT1NOISEENABLE] = EmuD3DDeferredRenderState + patchOffset - 3 * 4;
-    pContext->xref_database[XREF_D3DRS_YUVENABLE] = EmuD3DDeferredRenderState + patchOffset - 2 * 4;
-    pContext->xref_database[XREF_D3DRS_OCCLUSIONCULLENABLE] = EmuD3DDeferredRenderState + patchOffset - 1 * 4;
-    pContext->xref_database[XREF_D3DRS_STENCILCULLENABLE] = EmuD3DDeferredRenderState + patchOffset + 0 * 4;
-    pContext->xref_database[XREF_D3DRS_ROPZCMPALWAYSREAD] = EmuD3DDeferredRenderState + patchOffset + 1 * 4;
-    pContext->xref_database[XREF_D3DRS_ROPZREAD] = EmuD3DDeferredRenderState + patchOffset + 2 * 4;
-    pContext->xref_database[XREF_D3DRS_DONOTCULLUNCOMPRESSED] = EmuD3DDeferredRenderState + patchOffset + 3 * 4;
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_DXT1NOISEENABLE, EmuD3DDeferredRenderState + patchOffset - 3 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_YUVENABLE, EmuD3DDeferredRenderState + patchOffset - 2 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_OCCLUSIONCULLENABLE, EmuD3DDeferredRenderState + patchOffset - 1 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_STENCILCULLENABLE, EmuD3DDeferredRenderState + patchOffset + 0 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_ROPZCMPALWAYSREAD, EmuD3DDeferredRenderState + patchOffset + 1 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_ROPZREAD, EmuD3DDeferredRenderState + patchOffset + 2 * 4);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_DONOTCULLUNCOMPRESSED, EmuD3DDeferredRenderState + patchOffset + 3 * 4);
 
     pContext->register_func(pLibrary->name, pLibrary->flag, "D3DDeferredRenderState", EmuD3DDeferredRenderState, 0);
 }
 
 static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
-                                                    const XbSDBLibrary* pLibrary,
+                                                    const iXbSymbolLibrarySession* pLibrarySession,
                                                     memptr_t pFunc,
                                                     uint32_t pXRefOffset)
 {
     if (pFunc == NULL) {
         return;
     }
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
+    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
+
     xbaddr DerivedAddr_D3DTSS_TEXCOORDINDEX = 0;
     int Decrement = 0x70; // TODO : Rename into something understandable
 
@@ -1403,10 +1454,10 @@ static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
                 output_message(&pContext->output, XB_OUTPUT_MESSAGE_WARN, "Second derived XREF_D3DTSS_TEXCOORDINDEX differs from first!");
             }
 
-            //pContext->xref_database[XREF_D3DTSS_BUMPENV] = DerivedAddr_D3DTSS_TEXCOORDINDEX - 28*4;
-            pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = DerivedAddr_D3DTSS_TEXCOORDINDEX;
-            //pContext->xref_database[XREF_D3DTSS_BORDERCOLOR] = DerivedAddr_D3DTSS_TEXCOORDINDEX + 1*4;
-            //pContext->xref_database[XREF_D3DTSS_COLORKEYCOLOR] = DerivedAddr_D3DTSS_TEXCOORDINDEX + 2*4;
+            //SetXRefDataBase(pContext, iLibraryType, XREF_D3DTSS_BUMPENV, DerivedAddr_D3DTSS_TEXCOORDINDEX - 28*4);
+            internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_TEXCOORDINDEX, DerivedAddr_D3DTSS_TEXCOORDINDEX);
+            //SetXRefDataBase(pContext, iLibraryType, XREF_D3DTSS_BORDERCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 1*4);
+            //SetXRefDataBase(pContext, iLibraryType, XREF_D3DTSS_COLORKEYCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 2*4);
         }
     }
 
@@ -1416,13 +1467,15 @@ static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
 }
 
 static void manual_scan_section_dx8_register_stream(iXbSymbolContext* pContext,
-                                                    const XbSDBLibrary* pLibrary,
+                                                    const iXbSymbolLibrarySession* pLibrarySession,
                                                     memptr_t pFunc,
                                                     uint32_t iCodeOffsetFor_g_Stream)
 {
     if (pFunc == NULL) {
         return;
     }
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
+
     // Read address of Xbox_g_Stream from D3DDevice_SetStreamSource
     uint32_t Derived_g_Stream = *((uint32_t*)(pFunc + iCodeOffsetFor_g_Stream));
 
@@ -1439,7 +1492,7 @@ static void manual_scan_section_dx8_register_stream(iXbSymbolContext* pContext,
 }
 
 static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
-                                    const XbSDBLibrary* pLibrary,
+                                    const iXbSymbolLibrarySession* pLibrarySession,
                                     const XbSDBSection* pSection)
 {
     // Generic usage
@@ -1454,6 +1507,8 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     int iCodeOffsetFor_g_Stream;
     int pXRefOffset = 0; // TODO : Rename into something understandable
     uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
+    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
 
     // TODO: Why do we need this? Also, can we just scan library versions for this only?
     // Save D3D8 build version
@@ -1466,11 +1521,11 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
             // Not supported, currently ignored.
         }
         else if (pLibrary->build_version < 4034) {
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetRenderState_CullMode", 3911,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 3911,
                 &D3DDevice_SetRenderState_CullMode_3911, pSection);
         }
         else {
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetRenderState_CullMode", 4034,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 4034,
                 &D3DDevice_SetRenderState_CullMode_4034, pSection);
         }
 
@@ -1516,23 +1571,23 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     }
     else { // D3D8LTCG
         // locate D3DDevice_SetRenderState_CullMode first
-        pFunc = LocateFunctionCast(pContext, "D3DDevice_SetRenderState_CullMode", 1045,
+        pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 1045,
             &D3DDevice_SetRenderState_CullMode_1045, pSection);
         pXRefOffset = 0x2D; // verified for 3925
         if (pFunc == 0) {
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetRenderState_CullMode", 1049,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 1049,
                 &D3DDevice_SetRenderState_CullMode_1049, pSection);
             pXRefOffset = 0x31; // verified for 4039
         }
 
         if (pFunc == 0) {
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetRenderState_CullMode", 1052,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 1052,
                 &D3DDevice_SetRenderState_CullMode_1052, pSection);
             pXRefOffset = 0x34;
         }
 
         if (pFunc == 0) {
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetRenderState_CullMode", 1053,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 1053,
                 &D3DDevice_SetRenderState_CullMode_1053, pSection);
             pXRefOffset = 0x35;
         }
@@ -1578,7 +1633,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
             }
         }
     }
-    manual_scan_section_dx8_register_xrefs(pContext, pLibrary, pFunc, DerivedAddr_D3DRS_CULLMODE, patchOffset, Increment, Decrement);
+    manual_scan_section_dx8_register_xrefs(pContext, pLibrarySession, pFunc, DerivedAddr_D3DRS_CULLMODE, patchOffset, Increment, Decrement);
 
     // then locate D3DDeferredTextureState
     if (pLibrary->flag == XbSymbolLib_D3D8) {
@@ -1588,70 +1643,70 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
             pFunc = 0;
         }
         else if (pLibrary->build_version < 4034) {
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex", 3911,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 3911,
                 &D3DDevice_SetTextureState_TexCoordIndex_3911, pSection);
             pXRefOffset = 0x11;
         }
         else if (pLibrary->build_version < 4242) {
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex", 4034,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 4034,
                 &D3DDevice_SetTextureState_TexCoordIndex_4034, pSection);
             pXRefOffset = 0x18;
         }
         else if (pLibrary->build_version < 4627) {
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex", 4242,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 4242,
                 &D3DDevice_SetTextureState_TexCoordIndex_4242, pSection);
             pXRefOffset = 0x19;
         }
         else {
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex", 4627,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 4627,
                 &D3DDevice_SetTextureState_TexCoordIndex_4627, pSection);
             pXRefOffset = 0x19;
         }
     }
     else { // D3D8LTCG
         // verified for 3925
-        pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex_0", 2039,
+        pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_0", 2039,
             &D3DDevice_SetTextureState_TexCoordIndex_0_2039, pSection);
         pXRefOffset = 0x08;
 
         if (pFunc == 0) { // verified for 4039
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex_4", 2040,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4", 2040,
                 &D3DDevice_SetTextureState_TexCoordIndex_4_2040, pSection);
             pXRefOffset = 0x14;
         }
 
         if (pFunc == 0) { // verified for 4432
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex", 1944,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 1944,
                 &D3DDevice_SetTextureState_TexCoordIndex_1944, pSection);
             pXRefOffset = 0x19;
         }
 
         if (pFunc == 0) { // verified for 4531
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex_4", 2045,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4", 2045,
                 &D3DDevice_SetTextureState_TexCoordIndex_4_2045, pSection);
             pXRefOffset = 0x14;
         }
 
         if (pFunc == 0) { // verified for 4627 and higher
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex_4", 2058,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4", 2058,
                 &D3DDevice_SetTextureState_TexCoordIndex_4_2058, pSection);
             pXRefOffset = 0x14;
         }
 
         if (pFunc == 0) { // verified for 4627 and higher
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex", 1958,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 1958,
                 &D3DDevice_SetTextureState_TexCoordIndex_1958, pSection);
             pXRefOffset = 0x19;
         }
 
         if (pFunc == 0) { // verified for World Series Baseball 2K3
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex_4", 2052,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4", 2052,
                 &D3DDevice_SetTextureState_TexCoordIndex_4_2052, pSection);
             pXRefOffset = 0x15;
         }
 
         if (pFunc == 0) { // verified for Ski Racing 2006
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetTextureState_TexCoordIndex_0", 2058,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_0", 2058,
                 &D3DDevice_SetTextureState_TexCoordIndex_0_2058, pSection);
             pXRefOffset = 0x15;
         }
@@ -1660,7 +1715,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     if (pFunc != 0) {
         // NOTE: Is a requirement to align properly.
         pFunc += virt_start_relative;
-        manual_scan_section_dx8_register_D3DTSS(pContext, pLibrary, pFunc, pXRefOffset);
+        manual_scan_section_dx8_register_D3DTSS(pContext, pLibrarySession, pFunc, pXRefOffset);
     }
 
     // Locate Xbox symbol "g_Stream" and store it's address
@@ -1672,12 +1727,12 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     if (pLibrary->flag == XbSymbolLib_D3D8) {
         if (pLibrary->build_version >= 4034) {
             OOVPA_version = 4034;
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetStreamSource", 4034,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource", 4034,
                 &D3DDevice_SetStreamSource_4034, pSection);
         }
         else {
             OOVPA_version = 3911;
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetStreamSource", 3911,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource", 3911,
                 &D3DDevice_SetStreamSource_3911, pSection);
             iCodeOffsetFor_g_Stream = 0x23; // verified for 3911
         }
@@ -1685,27 +1740,27 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     else { // D3D8LTCG
         if (pLibrary->build_version > 4039) {
             OOVPA_version = 4034; // TODO Verify
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetStreamSource", 1044,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource", 1044,
                 &D3DDevice_SetStreamSource_1044, pSection);
         }
 
         if (pFunc == 0) { // LTCG specific
             OOVPA_version = 4034; // TODO Verify
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetStreamSource_4", 2058,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_4", 2058,
                 &D3DDevice_SetStreamSource_4_2058, pSection);
             iCodeOffsetFor_g_Stream = 0x1E;
         }
 
         if (pFunc == 0) { // verified for 4039
             OOVPA_version = 4034;
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetStreamSource_8", 2040,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_8", 2040,
                 &D3DDevice_SetStreamSource_8_2040, pSection);
             iCodeOffsetFor_g_Stream = 0x23;
         }
 
         if (pFunc == 0) { // verified for 3925
             OOVPA_version = 3911;
-            pFunc = LocateFunctionCast(pContext, "D3DDevice_SetStreamSource", 1039,
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource", 1039,
                 &D3DDevice_SetStreamSource_1039, pSection);
             iCodeOffsetFor_g_Stream = 0x47;
         }
@@ -1715,7 +1770,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         // NOTE: Is a requirement to align properly.
         pFunc += virt_start_relative;
 
-        manual_scan_section_dx8_register_stream(pContext, pLibrary, pFunc, iCodeOffsetFor_g_Stream);
+        manual_scan_section_dx8_register_stream(pContext, pLibrarySession, pFunc, iCodeOffsetFor_g_Stream);
     }
 
     // Manual check require for able to self-register these symbols:
@@ -1729,7 +1784,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 
         // Scan if event handle variable is not yet derived.
         if (pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT] == XREF_ADDR_DERIVE) {
-            xSymbolAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, "D3DDevice__m_VerticalBlankEvent__ManualFindGeneric_3911", 3911,
+            xSymbolAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, iLibraryType, "D3DDevice__m_VerticalBlankEvent__ManualFindGeneric_3911", 3911,
                 &D3DDevice__m_VerticalBlankEvent__ManualFindGeneric_3911, pSection);
         }
 
@@ -1743,8 +1798,8 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 
         // Finally, manual register the symbol variables.
         xSymbolAddr = pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT];
-        pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] = xSymbolAddr - 8;
-        pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = xSymbolAddr - 4;
+        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK, xSymbolAddr - 8);
+        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK, xSymbolAddr - 4);
     }
     // If D3D__PDEVICE is not found, the scan is not complete
     // and will continue scan to next given section.
@@ -1756,7 +1811,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 }
 
 static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
-                                       const XbSDBLibrary* pLibrary,
+                                       const iXbSymbolLibrarySession* pLibrarySession,
                                        const XbSDBSection* pSection)
 {
     // Generic usage
@@ -1765,15 +1820,17 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
     uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
     xbaddr xFuncAddr = 0;
     memptr_t pFuncAddr = 0;
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
+    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
 
     /*
     bool testRun = 1;
     while (testRun) {
     }//*/
 
-    // Scan for DirectSoundStream's contructor function.
+    // Scan for DirectSoundStream's constructor function.
     if (pContext->xref_database[XREF_CDirectSoundStream_Constructor] == XREF_ADDR_UNDETERMINED) {
-        xFuncAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, "CDirectSoundStream_Constructor", 3911,
+        xFuncAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, iLibraryType, "CDirectSoundStream_Constructor", 3911,
             &CDirectSoundStream_Constructor_3911, pSection);
 
         // If not found, skip the rest of the scan.
@@ -1781,13 +1838,13 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
             return false;
         }
 
-        (void)internal_RegisterSymbol(pContext, pLibrary, XREF_CDirectSoundStream_Constructor, 3911,
+        internal_RegisterSymbol(pContext, pLibrarySession, XREF_CDirectSoundStream_Constructor, 3911,
             "CDirectSoundStream_Constructor", xFuncAddr);
 
         // TODO: If possible, integrate into the OOVPA structure.
-        internal_RegisterXRef(pContext, pLibrary, XREF_DSS_VOICE_VTABLE, 3911,
+        internal_RegisterXRef(pContext, pLibrarySession, XREF_DSS_VOICE_VTABLE, 3911,
             NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x14), false);
-        internal_RegisterXRef(pContext, pLibrary, XREF_DSS_STREAM_VTABLE, 3911,
+        internal_RegisterXRef(pContext, pLibrarySession, XREF_DSS_STREAM_VTABLE, 3911,
             NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x1B), false);
     }
 
@@ -1806,25 +1863,25 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
         if (xblower <= vtable && vtable < xbupper) {
             pFuncAddr = (memptr_t)virt_start_relative + vtable;
 
-            (void)internal_RegisterSymbol(pContext, pLibrary, XREF_CDirectSoundStream_AddRef, 3911,
+            internal_RegisterSymbol(pContext, pLibrarySession, XREF_CDirectSoundStream_AddRef, 3911,
                 "CDirectSoundStream_AddRef", *(uint32_t*)(pFuncAddr + 0 * 4));
 
-            (void)internal_RegisterSymbol(pContext, pLibrary, XREF_CDirectSoundStream_Release, 3911,
+            internal_RegisterSymbol(pContext, pLibrarySession, XREF_CDirectSoundStream_Release, 3911,
                 "CDirectSoundStream_Release", *(uint32_t*)(pFuncAddr + 1 * 4));
 
-            (void)internal_RegisterSymbol(pContext, pLibrary, XRefNoSaveIndex, 3911,
+            internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
                 "CDirectSoundStream_GetInfo", *(uint32_t*)(pFuncAddr + 2 * 4));
 
-            (void)internal_RegisterSymbol(pContext, pLibrary, XRefNoSaveIndex, 3911,
+            internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
                 "CDirectSoundStream_GetStatus", *(uint32_t*)(pFuncAddr + 3 * 4));
 
-            (void)internal_RegisterSymbol(pContext, pLibrary, XRefNoSaveIndex, 3911,
+            internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
                 "CDirectSoundStream_Process", *(uint32_t*)(pFuncAddr + 4 * 4));
 
-            (void)internal_RegisterSymbol(pContext, pLibrary, XRefNoSaveIndex, 3911,
+            internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
                 "CDirectSoundStream_Discontinuity", *(uint32_t*)(pFuncAddr + 5 * 4));
 
-            (void)internal_RegisterSymbol(pContext, pLibrary, XRefNoSaveIndex, 3911,
+            internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
                 "CDirectSoundStream_Flush", *(uint32_t*)(pFuncAddr + 6 * 4));
 
             // NOTE: it is possible to manual add GetInfo, GetStatus, Process, Discontinuity,
@@ -1841,7 +1898,7 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
 
 static bool manual_scan_library_custom(iXbSymbolContext* pContext,
                                        custom_scan_func_t custom_scan_func,
-                                       const XbSDBLibrary* pLibrary)
+                                       const iXbSymbolLibrarySession* pLibSession)
 {
     bool scan_ret = false;
 
@@ -1849,7 +1906,7 @@ static bool manual_scan_library_custom(iXbSymbolContext* pContext,
 
     for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
 
-        if ((pLibrary->flag & SymbolDBList[d2].LibSec.library) > 0) {
+        if ((pLibSession->pLibrary->flag & SymbolDBList[d2].LibSec.library) > 0) {
             for (unsigned int s = 0; s < pContext->section_input.count; s++) {
 
                 // Initialize a matching specific section is currently pair with library in order to scan specific section only.
@@ -1861,9 +1918,9 @@ static bool manual_scan_library_custom(iXbSymbolContext* pContext,
                         pSectionScan = pContext->section_input.filters + s;
 
                         output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section",
-                                              pLibrary->name, pSectionScan->name);
+                                              pLibSession->pLibrary->name, pSectionScan->name);
 
-                        scan_ret = custom_scan_func(pContext, pLibrary, pSectionScan);
+                        scan_ret = custom_scan_func(pContext, pLibSession, pSectionScan);
 
                         if (scan_ret) {
                             // let's return true here instead of waste the loops for nothing.
@@ -1873,7 +1930,7 @@ static bool manual_scan_library_custom(iXbSymbolContext* pContext,
                 }
             }
             // Use the break if there are 2+ bit flags set such as include LTCG flag in std flag's oovpa database like D3D8.
-            if ((SymbolDBList[d2].LibSec.library & ~pLibrary->flag) == 0) {
+            if ((SymbolDBList[d2].LibSec.library & ~pLibSession->pLibrary->flag) == 0) {
                 break;
             }
         }
@@ -1897,20 +1954,29 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
 
     for (unsigned int lv = 0; lv < pContext->library_input.count; lv++) {
 
-        const XbSDBLibrary* library = pContext->library_input.filters + lv;
+        const XbSDBLibrary* pLibrary = pContext->library_input.filters + lv;
+        eLibraryType i_LibraryType = internal_GetLibraryType(pLibrary->flag);
 
-        if ((library->flag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
+        if (i_LibraryType >= LT_UNKNOWN) {
+            continue;
+        }
+
+        iXbSymbolLibrarySession libSession;
+        libSession.pLibrary = pLibrary;
+        libSession.iLibraryType = i_LibraryType;
+
+        if ((pLibrary->flag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
             // TODO: Do we need to check twice?
             // Initialize a matching specific section is currently pair with library in order to scan specific section only.
             // By doing this method will reduce false detection dramatically. If it had happened before.
-            manual_scan_library_custom(pContext, manual_scan_section_dx8, library);
+            manual_scan_library_custom(pContext, manual_scan_section_dx8, &libSession);
         }
-        else if ((library->flag & XbSymbolLib_DSOUND) > 0) {
+        else if ((pLibrary->flag & XbSymbolLib_DSOUND) > 0) {
             // Perform check twice, since sections can be in different order.
             for (unsigned int loop = 0; loop < 2; loop++) {
                 // Initialize a matching specific section is currently pair with library in order to scan specific section only.
                 // By doing this method will reduce false detection dramatically. If it had happened before.
-                if (!manual_scan_library_custom(pContext, manual_scan_section_dsound, library)) {
+                if (!manual_scan_library_custom(pContext, manual_scan_section_dsound, &libSession)) {
                     continue;
                 }
                 break;
@@ -1931,15 +1997,24 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
                                   bool xref_first_pass)
 {
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
-    unsigned int xref_count = 0;
-    eLibraryType library_type = internal_GetLibraryType(pLibrary->flag);
+    eLibraryType iLibraryType = internal_GetLibraryType(pLibrary->flag);
+
+    if (iLibraryType >= LT_UNKNOWN) {
+        return 0;
+    }
+
+    iXbSymbolLibrarySession librarySession;
+    librarySession.pLibrary = pLibrary;
+    librarySession.iLibraryType = iLibraryType;
+
+    unsigned int xref_count = pContext->library_contexts[iLibraryType].xref_registered;
 
     if (!iXbSymbolContext_AllowScanLibrary(pContext)) {
         return 0;
     }
 
     // If library type is active, do nothing.
-    if (!internal_SetLibraryTypeStart(pContext, library_type)) {
+    if (!internal_SetLibraryTypeStart(pContext, iLibraryType)) {
         return 0;
     }
 
@@ -1957,8 +2032,8 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
                         output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section",
                                               pLibrary->name, SymbolDBList[d2].LibSec.section[d3]);
 
-                        xref_count = internal_OOVPA_scan(pContext, SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount,
-                                                         pLibrary, pContext->section_input.filters + s, xref_first_pass);
+                        internal_OOVPA_scan(pContext, SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount,
+                                            &librarySession, pContext->section_input.filters + s, xref_first_pass);
                         break;
                     }
                 }
@@ -1975,7 +2050,9 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
         }
     }
 
-    internal_SetLibraryTypeEnd(pContext, library_type);
+    xref_count = pContext->library_contexts[iLibraryType].xref_registered - xref_count;
+
+    internal_SetLibraryTypeEnd(pContext, iLibraryType);
 
     return xref_count;
 }
@@ -1989,14 +2066,13 @@ void XbSymbolContext_ScanAllLibraryFilter(XbSymbolContextHandle pHandle)
     bool xref_first_pass = true; // Set to true for search speed optimization
 
     unsigned int LastUnResolvedXRefs = 0;
-    unsigned int CurrentUnResolvedXRefs = 1;
+    unsigned int CurrentUnResolvedXRefs = 0;
 
     if (!iXbSymbolContext_AllowScanLibrary(pContext)) {
         return;
     }
 
-    for (unsigned int p = 0; LastUnResolvedXRefs < CurrentUnResolvedXRefs; p++) {
-
+    do {
         LastUnResolvedXRefs = CurrentUnResolvedXRefs;
 
         for (unsigned int lv = 0; lv < pContext->library_input.count; lv++) {
@@ -2019,18 +2095,28 @@ void XbSymbolContext_ScanAllLibraryFilter(XbSymbolContextHandle pHandle)
         }
 
         xref_first_pass = false;
-    }
+    } while (LastUnResolvedXRefs < CurrentUnResolvedXRefs);
 }
 
+// Does individual registration of derived XRef's that are useful but not yet registered. 
+// Called after entire scan.
 void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle)
 {
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+
+    if (pContext->register_func == NULL) return;
 
     if (!iXbSymbolContext_Lock(pContext)) {
         return;
     }
 
-    // TODO: Either implement or remove. Currently is a stub.
+    xbaddr xD3D_pDeviceAddr = pContext->xref_database[XREF_D3DDEVICE];
+    if (internal_IsXRefAddrValid(xD3D_pDeviceAddr)) {
+        // Register offset of D3DDevice__m_VertexShader
+        internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER, 0, "D3DDevice__m_VertexShader_OFFSET");
+    }
+
+    // Here, others could be registered
 
     iXbSymbolContext_Unlock(pContext);
 }
