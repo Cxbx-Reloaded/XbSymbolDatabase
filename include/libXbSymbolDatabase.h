@@ -771,6 +771,7 @@ typedef enum _XRefDatabaseOffset
     XREF_XoUpdateLaunchNewImageInternal,
     XREF_CXo_XOnlineLogon,
     XREF_CXo_XOnlineMatchSearch,
+    XREF_CXo_XOnlineMatchSearchResultsLen,
 
     // XAPI
     XREF_XAPI_GetTypeInformation,
