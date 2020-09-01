@@ -49,3 +49,42 @@ OOVPA_XREF(CXo_XOnlineLogon, 4831, 15,
         { 0x2B, 0x80 },
         { 0x2C, 0xE9 },
 OOVPA_END;
+
+// ******************************************************************
+// * CXo::XOnlineMatchSearch
+// ******************************************************************
+OOVPA_XREF(CXo_XOnlineMatchSearch, 4831, 13,
+
+    XREF_CXo_XOnlineMatchSearch,
+    XRefZero)
+
+        // push ebp
+        // mov ebp, esp
+        // test ecx, ecx
+        // jnz eip + $09h
+        OV_MATCH(0x00, 0x55, 0x8B, 0xEC, 0x85, 0xC9, 0x75, 0x09),
+
+        // pop ebp
+        // ret $1Ch
+        // pop ebp
+        // jmp ...
+        OV_MATCH(0x0C, 0x5D, 0xC2, 0x1C, 0x00, 0x5D, 0xE9),
+OOVPA_END;
+
+// ******************************************************************
+// * XOnlineMatchSearch
+// ******************************************************************
+OOVPA_XREF(XOnlineMatchSearch, 4831, 1+4,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        XREF_ENTRY(0x0B, XREF_CXo_XOnlineMatchSearch),
+
+        // push ebp
+        // mov ebp, esp
+        OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+
+        // jmp ...
+        OV_MATCH(0x0A, 0xE9),
+OOVPA_END;
