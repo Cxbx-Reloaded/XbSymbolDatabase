@@ -673,7 +673,7 @@ uint32_t XbSymbolDatabase_GenerateSectionFilter(const void* xb_header_addr, XbSD
 
 // NOTE: PatrickvL state the arguments are named differently and the function does something that has another meaning,
 //       the implementation could be changed if the need ever arises.
-static inline void GetXRefEntry(OOVPA* oovpa, int index, uint32_t* xref_out, uint16_t* offset_out) 
+static inline void GetXRefEntry(OOVPA* oovpa, int index, uint32_t* xref_out, uint16_t* offset_out)
 {
     *xref_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].xref.index;
     *offset_out = ((LOOVPA*)oovpa)->Lovp[index].offset;
@@ -802,7 +802,7 @@ void* internal_LocateFunction(iXbSymbolContext* pContext,
         buffer_upper -= Offset;
     }
 
-    // 
+    //
     unsigned int detect_selection = Oovpa->DetectSelect;
     unsigned int counter = 0;
 
@@ -1212,10 +1212,7 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     iXbSymbolContext* pContext = (iXbSymbolContext*)*ppHandle;
 
 #ifdef MULTI_THREAD_SAFE
-    pContext->mutex = 0;
-    mtx_init(&pContext->mutex, mtx_plain);
-
-    if (pContext->mutex == 0) {
+    if (mtx_init(&pContext->mutex, mtx_plain) != thrd_success) {
         goto ContextCleanup;
     }
 #endif
@@ -2098,7 +2095,7 @@ void XbSymbolContext_ScanAllLibraryFilter(XbSymbolContextHandle pHandle)
     } while (LastUnResolvedXRefs < CurrentUnResolvedXRefs);
 }
 
-// Does individual registration of derived XRef's that are useful but not yet registered. 
+// Does individual registration of derived XRef's that are useful but not yet registered.
 // Called after entire scan.
 void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle)
 {

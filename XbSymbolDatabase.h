@@ -821,7 +821,7 @@ typedef enum _xb_xbe_type {
     XB_XBE_TYPE_MAX
 } xb_xbe_type;
 
-const uint32_t XB_XOR_KT[] = {
+static const uint32_t XB_XOR_KT[] = {
     0x5B6D40B6, // Kernel Thunk (Retail)
     0xEFB1F152, // Kernel Thunk (Debug)
     0x2290059D  // Kernel Thunk (Chihiro)
