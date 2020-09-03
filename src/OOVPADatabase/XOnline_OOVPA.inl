@@ -59,6 +59,7 @@
 #include "XOnline/4627.inl"
 #include "XOnline/4831.inl"
 #include "XOnline/5028.inl"
+#include "XOnline/5233.inl"
 #include "XOnline/5455.inl"
 #include "XOnline/5558.inl"
 #include "XOnline/5659.inl"
@@ -79,6 +80,8 @@ OOVPATable XONLINE_OOVPA[] = {
     REGISTER_OOVPAS(XOnlineMatchSearchResultsLen, 4831),
     REGISTER_OOVPAS(CXo_XOnlineMatchSearchGetResults, 4831),
     REGISTER_OOVPAS(XOnlineMatchSearchGetResults, 4831),
+    REGISTER_OOVPAS(CXo_XOnlineMatchSessionUpdate, 4831, 5233),
+    REGISTER_OOVPAS(XOnlineMatchSessionUpdate, 4831),
     REGISTER_OOVPAS(XoUpdateLaunchNewImageInternal, 4627, 5659, 5788),
 };
 

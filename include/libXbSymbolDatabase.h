@@ -773,6 +773,7 @@ typedef enum _XRefDatabaseOffset
     XREF_CXo_XOnlineMatchSearch,
     XREF_CXo_XOnlineMatchSearchResultsLen,
     XREF_CXo_XOnlineMatchSearchGetResults,
+    XREF_CXo_XOnlineMatchSessionUpdate,
 
     // XAPI
     XREF_XAPI_GetTypeInformation,

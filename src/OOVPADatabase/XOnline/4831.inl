@@ -166,3 +166,47 @@ OOVPA_XREF(XOnlineMatchSearchGetResults, 4831, 1+3,
         // jmp ...
         OV_MATCH(0x06, 0xE9),
 OOVPA_END;
+
+// ******************************************************************
+// * CXo::XOnlineMatchSessionUpdate
+// ******************************************************************
+OOVPA_XREF(CXo_XOnlineMatchSessionUpdate, 4831, 22,
+
+    XREF_CXo_XOnlineMatchSessionUpdate,
+    XRefZero)
+
+        // push ebp
+        // mov ebp, esp
+        // test ecx, ecx
+        // jnz eip + $07h
+        OV_MATCH(0x00, 0x55, 0x8B, 0xEC, 0x85, 0xC9, 0x75, 0x07),
+
+        // push dword ptr [ebp + param_10]
+        // push dword ptr [ebp + param_9]
+        OV_MATCH(0x0E, 0xFF, 0x75, 0x2C, 0xFF, 0x75, 0x28),
+        // push dword ptr [ebp + param_8]
+        // push dword ptr [ebp + param_7]
+        OV_MATCH(0x14, 0xFF, 0x75, 0x24, 0xFF, 0x75, 0x20),
+        // push dword ptr [ebp + param_6]
+        OV_MATCH(0x1A, 0xFF, 0x75, 0x1C),
+OOVPA_END;
+
+// ******************************************************************
+// * XOnlineMatchSessionUpdate
+// ******************************************************************
+OOVPA_XREF(XOnlineMatchSessionUpdate, 4831, 1+11,
+
+    XRefNoSaveIndex,
+    XRefOne)
+
+        XREF_ENTRY(0x28, XREF_CXo_XOnlineMatchSessionUpdate),
+
+        // push ebp
+        // mov ebp, esp
+        // push dword ptr [ebp + param_10]
+        // mov ecx, ...
+        OV_MATCH(0x00, 0x55, 0x8B, 0xEC, 0xFF, 0x75, 0x2C, 0x8B, 0x0D),
+
+        // push dword ptr [ebp + param_9]
+        OV_MATCH(0x0C, 0xFF, 0x75, 0x28),
+OOVPA_END;
