@@ -1,0 +1,83 @@
+name: GitHub CI
+
+on:
+  push:
+    paths-ignore:
+      - '.github/*'
+      - '.github/*TEMPLATE/**'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+      - '.github/*'
+      - '.github/*TEMPLATE/**'
+
+jobs:
+  build:
+    name: ${{ matrix.plat }} ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        cmake-generator:
+          # x86 arch
+          - ${{ '"Visual Studio 16 2019" -A Win32' }}
+          # x64 arch
+          - ${{ '"Visual Studio 16 2019" -A x64' }}
+          - ${{ '"Unix Makefiles"' }}
+          - Xcode
+        configuration: [Debug, Release]
+        include:
+          - cmake-generator: ${{ '"Visual Studio 16 2019" -A Win32' }}
+            plat: Windows
+            os: windows-latest
+            arch: x86
+            cmake-build-param: -j $env:NUMBER_OF_PROCESSORS
+            folder: win
+          - cmake-generator: ${{ '"Visual Studio 16 2019" -A x64' }}
+            plat: Windows
+            os: windows-latest
+            arch: x64
+            cmake-build-param: -j $env:NUMBER_OF_PROCESSORS
+            folder: win
+          - cmake-generator: ${{ '"Unix Makefiles"' }}
+            plat: Linux
+            os: ubuntu-latest
+            arch: x64
+            cmake-build-param: -j $(nproc --all)
+            folder: linux
+          - cmake-generator: Xcode
+            plat: macOS
+            os: macos-latest
+            arch: x64
+            cmake-build-param: -j $(sysctl -n hw.ncpu)
+            folder: macos
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate CMake Files
+        run: |
+          mkdir build && cd build
+          cmake .. -G ${{ matrix.cmake-generator }}
+      - name: Build
+        working-directory: build
+        run: cmake --build . --config ${{ matrix.configuration }} ${{ matrix.cmake-build-param }}
+      - name: Copy Files
+        if: matrix.configuration == 'Release'
+        working-directory: build
+        run: cmake --install . --config ${{ matrix.configuration }} --prefix ../upload/${{ matrix.folder }}_${{ matrix.arch }}
+      - name: Upload Build Artifact
+        if: matrix.configuration == 'Release'
+        uses: actions/upload-artifact@v2
+        with:
+          name: XbSymbolDatabase
+          # roughly translate to upload/<platform_arch>/<bin | lib | include>/<anything in here and after>
+          path: upload/*/*/*
+          if-no-files-found: error
+      - name: Upload Misc Artifact
+        if: matrix.cmake-generator == '"Unix Makefiles"' && matrix.configuration == 'Release'
+        uses: actions/upload-artifact@v2
+        with:
+          name: XbSymbolDatabase
+          path: |
+            README.md
+            LICENSE
+          if-no-files-found: error
