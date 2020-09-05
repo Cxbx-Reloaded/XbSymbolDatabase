@@ -355,7 +355,7 @@ bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t lib
 {
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
 
-    if (iXbSymbolContext_AllowSetParameter(pContext)) {
+    if (!iXbSymbolContext_AllowSetParameter(pContext)) {
         return false;
     }
 
@@ -388,7 +388,7 @@ void XbSymbolContext_SetBypassBuildVersionLimit(XbSymbolContextHandle pHandle, b
 {
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
 
-    if (!iXbSymbolContext_AllowSetParameter(pContext)) {
+    if (iXbSymbolContext_AllowSetParameter(pContext)) {
         pContext->strict_build_version_limit = !bypass_limit;
     }
 
