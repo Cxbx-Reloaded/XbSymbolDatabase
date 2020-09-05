@@ -355,7 +355,7 @@ bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t lib
 {
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
 
-    if (!iXbSymbolContext_AllowSetParameter(pContext)) {
+    if (iXbSymbolContext_AllowSetParameter(pContext)) {
         return false;
     }
 
