@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.plat }} ${{ matrix.arch }}
+    name: ${{ matrix.platform }} (${{ matrix.arch }}, ${{ matrix.configuration }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -28,25 +28,25 @@ jobs:
         configuration: [Debug, Release]
         include:
           - cmake-generator: ${{ '"Visual Studio 16 2019" -A Win32' }}
-            plat: Windows
+            platform: Windows
             os: windows-latest
             arch: x86
             cmake-build-param: -j $env:NUMBER_OF_PROCESSORS
             folder: win
           - cmake-generator: ${{ '"Visual Studio 16 2019" -A x64' }}
-            plat: Windows
+            platform: Windows
             os: windows-latest
             arch: x64
             cmake-build-param: -j $env:NUMBER_OF_PROCESSORS
             folder: win
           - cmake-generator: ${{ '"Unix Makefiles"' }}
-            plat: Linux
+            platform: Linux
             os: ubuntu-latest
             arch: x64
             cmake-build-param: -j $(nproc --all)
             folder: linux
           - cmake-generator: Xcode
-            plat: macOS
+            platform: macOS
             os: macos-latest
             arch: x64
             cmake-build-param: -j $(sysctl -n hw.ncpu)
