@@ -55,7 +55,7 @@
 #ifndef XACTENG_OOVPA_INL
 #define XACTENG_OOVPA_INL
 
-#include "../OOVPA.h"
+#include "OOVPA.h"
 
 #include "XActEng/4627.inl"
 #include "XActEng/4928.inl"

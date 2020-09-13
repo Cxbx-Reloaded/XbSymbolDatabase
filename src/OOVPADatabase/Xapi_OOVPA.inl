@@ -102,7 +102,7 @@
 #ifndef XAPI_OOVPA_INL
 #define XAPI_OOVPA_INL
 
-#include "../OOVPA.h"
+#include "OOVPA.h"
 
 #include "Xapi/3911.inl"
 #include "Xapi/3950.inl"

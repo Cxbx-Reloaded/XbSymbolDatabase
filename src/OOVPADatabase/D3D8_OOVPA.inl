@@ -153,7 +153,7 @@
 #ifndef D3D8_OOVPA_INL
 #define D3D8_OOVPA_INL
 
-#include "../OOVPA.h"
+#include "OOVPA.h"
 
 #include "D3D8/3911.inl"
 #include "D3D8/3925.inl"

@@ -43,7 +43,7 @@
 #ifndef D3D8LTCG_OOVPA_INL
 #define D3D8LTCG_OOVPA_INL
 
-#include "../OOVPA.h"
+#include "OOVPA.h"
 
 #include "D3D8LTCG/3911.inl"
 #include "D3D8LTCG/4039.inl"

@@ -53,7 +53,7 @@
 #ifndef XONLINES_OOVPA_INL
 #define XONLINES_OOVPA_INL
 
-#include "../OOVPA.h"
+#include "OOVPA.h"
 
 #include "XOnline/4361.inl"
 #include "XOnline/4627.inl"
