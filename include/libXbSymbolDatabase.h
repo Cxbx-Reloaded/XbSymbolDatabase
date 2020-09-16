@@ -25,8 +25,7 @@
 // *  All rights reserved
 // *
 // ******************************************************************
-#ifndef HLEDATABASE_H
-#define HLEDATABASE_H
+#pragma once
 
 #include <stdlib.h> // for size_t
 #include <stdbool.h>
@@ -35,8 +34,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "OOVPA.h"
 
 // ******************************************************************
 // * Library strings
@@ -1029,5 +1026,3 @@ void XbSymbolContext_Release(XbSymbolContextHandle pHandle);
 #ifdef __cplusplus
 }
 #endif
-
-#endif /*HLEDATABASE_H*/

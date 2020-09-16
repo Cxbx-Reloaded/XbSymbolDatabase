@@ -66,7 +66,7 @@
 #ifndef XGRAPHC_OOVPA_INL
 #define XGRAPHC_OOVPA_INL
 
-#include "../OOVPA.h"
+#include "OOVPA.h"
 
 #include "XGraphic/3911.inl"
 #include "XGraphic/4134.inl"

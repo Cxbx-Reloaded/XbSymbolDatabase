@@ -1,34 +1,38 @@
-# CMakeList.txt : CMake project for XbSymbolSymbolDatabase, include source and define
-# project specific logic here.
+# CMakeList.txt : CMake solution for XbSymbolDatabase.
 #
 cmake_minimum_required (VERSION 3.10.2)
 
 project (XbSymbolDatabase)
 
-file(GLOB_RECURSE SOURCES
- "XbSymbolDatabase.c"
- "OOVPADatabase/*.inl"
-)
+if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR )
+ option(XBSDB_INSTALL_LIB "Install libXbSymbolDatabase library" OFF)
+else()
+ set(XBSDB_INSTALL_LIB ON)
+endif()
 
-source_group(TREE ${CMAKE_CURRENT_LIST_DIR} FILES ${SOURCES})
+# For any optional tools, use list(APPEND XBSDB_INSTALL_TOOLS "tool_name")
 
-add_library (XbSymbolDatabase ${SOURCES})
-target_compile_definitions(XbSymbolDatabase PRIVATE _CRT_SECURE_NO_WARNINGS)
+if(XBSDB_INSTALL_LIB)
+ list(APPEND XBSDB_INSTALL_TOOLS "libXbSymbolDatabase")
+endif()
 
-# For any optional tools, use list(APPEND ${INSTALL_TOOLS} "tool_name")
-set(INSTALL_TOOLS "XbSymbolDatabase")
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-set_target_properties(XbSymbolDatabase PROPERTIES
- PUBLIC_HEADER XbSymbolDatabase.h
- C_STANDARD 11
- C_STANDARD_REQUIRED ON
-)
+set(XBSDB_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-install(TARGETS ${INSTALL_TOOLS}
- RUNTIME DESTINATION bin
- PUBLIC_HEADER DESTINATION include
- LIBRARY DESTINATION lib_shared
- ARCHIVE DESTINATION lib_static
-)
+add_subdirectory("${PROJECT_SOURCE_DIR}/projects")
 
-install(FILES LICENSE README.md DESTINATION .)
+if (XBSDB_INSTALL_TOOLS)
+ install(TARGETS ${XBSDB_INSTALL_TOOLS}
+  RUNTIME DESTINATION bin
+  PUBLIC_HEADER DESTINATION include
+  LIBRARY DESTINATION lib_shared
+  ARCHIVE DESTINATION lib_static
+ )
+
+ if( CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR )
+  install(FILES "LICENSE" "README.md" DESTINATION .)
+ else()
+  install(FILES "LICENSE" "README.md" DESTINATION "XbSymbolDatabase")
+ endif()
+endif()

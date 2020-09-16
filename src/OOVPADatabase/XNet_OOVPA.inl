@@ -43,7 +43,7 @@
 #ifndef XNET_OOVPA_INL
 #define XNET_OOVPA_INL
 
-#include "../OOVPA.h"
+#include "OOVPA.h"
 
 #include "XNet/3911.inl"
 #include "XNet/4361.inl"

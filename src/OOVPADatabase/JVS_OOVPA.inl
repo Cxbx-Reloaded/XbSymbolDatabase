@@ -45,7 +45,7 @@
 #ifndef JVS_OOVPA_INL
 #define JVS_OOVPA_INL
 
-#include "../OOVPA.h"
+#include "OOVPA.h"
 
 #include "JVS/4831.inl"
 

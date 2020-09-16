@@ -54,9 +54,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Generate CMake Files
+        # NOTES:
+        # -Werror=dev is used to validate CMakeLists.txt for any faults.
         run: |
           mkdir build && cd build
-          cmake .. -G ${{ matrix.cmake-generator }}
+          cmake .. -Werror=dev -G ${{ matrix.cmake-generator }}
       - name: Build
         working-directory: build
         run: cmake --build . --config ${{ matrix.configuration }} ${{ matrix.cmake-build-param }}
