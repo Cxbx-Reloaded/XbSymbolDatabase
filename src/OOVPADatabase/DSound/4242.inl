@@ -129,25 +129,32 @@ OOVPA_END;
 // ******************************************************************
 // * CDirectSound_GetSpeakerConfig
 // ******************************************************************
-OOVPA_XREF(CDirectSound_GetSpeakerConfig, 4242, 12,
+OOVPA_XREF(CDirectSound_GetSpeakerConfig, 4242, 1+19,
 
     XREF_CDirectSound_GetSpeakerConfig,
-    XRefZero)
+    XRefOne)
 
-        { 0x00, 0xE8 },
-        { 0x20, 0xB8 },
+        // call DirectSoundEnterCriticalSection
+        XREF_ENTRY(0x01, XREF_DirectSoundEnterCriticalSection),
 
-        { 0x27, 0x8B },
-        { 0x28, 0x4C },
-        { 0x29, 0x24 },
-        { 0x2A, 0x04 },
-        { 0x2B, 0x8B },
-        { 0x2C, 0x49 },
-        { 0x2D, 0x08 },
-        { 0x2E, 0x8B },
+        // call DirectSoundEnterCriticalSection
+        OV_MATCH(0x00, 0xE8),
+        // cmp dword ptr [...], 0
+        OV_MATCH(0x05, 0x83, 0x3D),
 
-        { 0x4E, 0xC2 },
-        { 0x4F, 0x08 },
+        // mov ecx, [esp+0x04]
+        OV_MATCH(0x27, 0x8B, 0x4C, 0x24, 0x04),
+        // mov ecx, [ecx+0x08]
+        // mov ecx, [ecx+0x08]
+        OV_MATCH(0x2B, 0x8B, 0x49, 0x08, 0x8B),
+
+        // and ..., 0x7FFFFFFF
+        OV_MATCH(0x35, 0x81),
+        //OV_MATCH(0x36, 0xE1), (This value has changed, commented out to expand support for later revisions.)
+        OV_MATCH(0x37, 0xFF, 0xFF, 0xFF, 0x7F),
+
+        // ret 0x0008
+        OV_MATCH(0x4E, 0xC2, 0x08, 0x00),
 OOVPA_END;
 
 // ******************************************************************

@@ -372,7 +372,7 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(CDirectSound_GetCaps, 3911, 4039, 4134, 4361), // Final generic OOVPA: 4361; Removed: 0
     REGISTER_OOVPAS(CDirectSound_GetEffectData, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSound_GetOutputLevels, 4361), // Final generic OOVPA: 4361; Removed: 0 (introduced in 4361)
-    REGISTER_OOVPAS(CDirectSound_GetSpeakerConfig, 3911, 4242, 4627, 5455), // Final generic OOVPA: 5455; Removed: 0
+    REGISTER_OOVPAS(CDirectSound_GetSpeakerConfig, 3911, 4242, 5455), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS(CDirectSound_GetTime, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(CDirectSound_MapBufferData, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
     REGISTER_OOVPAS(CDirectSound_SetAllParameters, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
