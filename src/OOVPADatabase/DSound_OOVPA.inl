@@ -47,6 +47,7 @@
 // * [5120] N.U.D.E.@                        |   100%    | Contain full library.
 // * [5233] Evil Dead                        |   100%    | Contain full library.
 // * [5344] Gladius OXM Demo Disc 20         |   100%    | Contain full library.
+// * [5344] The Hulk                         |   100%    | Contain full library.
 // * [5455] NCAA Football 2004               |   100%    | Contain full library.
 // * [5455] Dinosaur Hunting                 |   100%    | Contain full library.
 // * [5558] Dino Crisis 3                    |   100%    | Contain full library.
