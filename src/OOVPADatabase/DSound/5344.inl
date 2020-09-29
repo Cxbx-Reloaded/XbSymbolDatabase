@@ -1293,9 +1293,3 @@ OOVPA_XREF(CDirectSoundVoice_CommitDeferredSettings, 5344, 1+6,
         { 0x0D, 0xC0 },
         { 0x10, 0x00 },
 OOVPA_END;
-
-// ******************************************************************
-// * Reverted function signature
-// ******************************************************************
-// Generic OOVPA as of 5344 (aka 4134 sig) and newer
-#define DirectSoundUseFullHRTF_5344 DirectSoundUseFullHRTF_4134

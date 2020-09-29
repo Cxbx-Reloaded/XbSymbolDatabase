@@ -523,7 +523,7 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(DirectSoundDoWork, 3911, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(DirectSoundGetSampleTime, 3911, 4361), // Final generic OOVPA: 4361; Removed: 0
     REGISTER_OOVPAS(DirectSoundOverrideSpeakerConfig, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4039)
-    REGISTER_OOVPAS(DirectSoundUseFullHRTF, 3911, 4039, 4134, 4242, 5344), // Final generic OOVPA: 5344; Removed: 0
+    REGISTER_OOVPAS(DirectSoundUseFullHRTF, 3911, 4039, 4134, 4242/*, 5344=revert to 4134*/), // Final generic OOVPA: 5344 (revert to 4134); Removed: 0
     REGISTER_OOVPAS(DirectSoundUseLightHRTF, 3911, 4039,/* 4134?,*/ 4242, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(DirectSoundUseFullHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
     REGISTER_OOVPAS(DirectSoundUseLightHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
