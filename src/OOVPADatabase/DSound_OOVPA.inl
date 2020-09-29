@@ -505,7 +505,7 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(IDirectSound_UnmapBufferData, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
 
     REGISTER_OOVPAS(CSensaura3d_GetFullHRTFFilterPair, 3911, 3936), // Final generic OOVPA: 3936; Removed: 4134+ // NOTE: 4039 revert back to 3911
-    REGISTER_OOVPAS(CSensaura3d_GetLiteHRTFFilterPair, 3911, 3936), // Final generic OOVPA: 3936; Removed: 4134+ // NOTE: 4039 revert back to 3911
+    REGISTER_OOVPAS(CSensaura3d_GetLiteHRTFFilterPair, 3911), // Final generic OOVPA: 3911; Removed: 4134+
     REGISTER_OOVPAS(CFullHRTFSource_GetCenterVolume, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CLightHRTFSource_GetCenterVolume, 4039,/* 4134,*/ 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CHRTFSource_SetFullHRTF5Channel, 4039, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
