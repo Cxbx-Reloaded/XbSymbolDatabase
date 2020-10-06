@@ -944,7 +944,7 @@ OOVPA_END;
 // * D3DDevice_SetStreamSource
 // ******************************************************************
 //7406810300000800
-OOVPA_XREF(D3DDevice_SetStreamSource, 1039, 1+11,
+OOVPA_XREF(D3DDevice_SetStreamSource_8__LTCG_edx_StreamNumber, 1039, 1+11,
 
     XRefNoSaveIndex,
     XRefOne)
