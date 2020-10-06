@@ -905,18 +905,16 @@ OOVPA_END;
 // * D3DDevice_SetTexture
 // ******************************************************************
 //81C10000F8FF89 ...C20400
-OOVPA_NO_XREF(D3DDevice_SetTexture_4, 2024, 9)
+OOVPA_NO_XREF(D3DDevice_SetTexture_4__LTCG_eax_pTexture, 2024, 11)
 
-        { 0x00, 0x83 },
-        { 0x01, 0xEC },
+        // sub esp, ...
+        OV_MATCH(0x00, 0x83, 0xEC),
 
-        { 0x27, 0x81 },
-        { 0x28, 0xC1 },
-        { 0x29, 0x00 },
-        { 0x2A, 0x00 },
-        { 0x2B, 0xF8 },
-        { 0x2C, 0xFF },
-        { 0x2D, 0x89 },
+        // mov esi, eax
+        OV_MATCH(0x1A, 0x8B, 0xF0),
+
+        // add ecx, 0FFF80000h; mov ...
+        OV_MATCH(0x27, 0x81, 0xC1, 0x00, 0x00, 0xF8, 0xFF, 0x89),
 OOVPA_END;
 
 // ******************************************************************
@@ -946,7 +944,7 @@ OOVPA_END;
 // * D3DDevice_SetStreamSource
 // ******************************************************************
 //7406810300000800
-OOVPA_XREF(D3DDevice_SetStreamSource, 1039, 1+11,
+OOVPA_XREF(D3DDevice_SetStreamSource_8__LTCG_edx_StreamNumber, 1039, 1+11,
 
     XRefNoSaveIndex,
     XRefOne)

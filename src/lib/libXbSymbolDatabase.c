@@ -1757,8 +1757,8 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 
         if (pFunc == 0) { // verified for 3925
             OOVPA_version = 3911;
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource", 1039,
-                &D3DDevice_SetStreamSource_1039, pSection);
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_8__LTCG_edx_StreamNumber", 1039,
+                &D3DDevice_SetStreamSource_8__LTCG_edx_StreamNumber_1039, pSection);
             iCodeOffsetFor_g_Stream = 0x47;
         }
     }
