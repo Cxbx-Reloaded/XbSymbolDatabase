@@ -27,7 +27,7 @@
 // * D3DDevice_DrawIndexedVertices
 // ******************************************************************
 //558BEC83EC0853568B35
-OOVPA_NO_XREF(D3DDevice_DrawIndexedVertices, 1024, 10)
+OOVPA_NO_XREF(D3DDevice_DrawIndexedVertices, 1036, 10)
 
         { 0x00, 0x55 },
         { 0x01, 0x8B },
