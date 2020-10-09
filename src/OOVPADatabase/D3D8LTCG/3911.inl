@@ -696,6 +696,24 @@ OOVPA_NO_XREF(D3DDevice_DrawIndexedVerticesUP, 1024, 10)
 OOVPA_END;
 
 // ******************************************************************
+// * D3DDevice_DrawIndexedVertices
+// ******************************************************************
+OOVPA_NO_XREF(D3DDevice_DrawIndexedVertices, 1024, 15)
+
+        // push ebp
+        OV_MATCH(0x00, 0x55),
+
+        // mov eax, [esi+0x0478]
+        OV_MATCH(0x0D, 0x8B, 0x86, 0x78, 0x04, 0x00, 0x00),
+
+        // mov dword ptr [eax], 000417FC
+        OV_MATCH(0x51, 0xC7, 0x00, 0xFC, 0x17, 0x04, 0x00),
+
+        // lea ebx, [ebx+0]
+        OV_MATCH(0x15A, 0x8D, 0x9B),
+OOVPA_END;
+
+// ******************************************************************
 // * D3DDevice_SetVertexShader
 // ******************************************************************
 //F6C30155568B35 ...C3
