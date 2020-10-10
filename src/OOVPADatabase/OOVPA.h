@@ -219,17 +219,6 @@ typedef struct _OOVPATable
  #define OV_BYTES_6(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_5(Offset+1, __VA_ARGS__))
  #define OV_BYTES_7(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_6(Offset+1, __VA_ARGS__))
  #define OV_BYTES_8(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_7(Offset+1, __VA_ARGS__))
- #define OV_BYTES_9(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_8(Offset+1, __VA_ARGS__))
- #define OV_BYTES_10(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_9(Offset+1, __VA_ARGS__))
- #define OV_BYTES_11(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_10(Offset+1, __VA_ARGS__))
- #define OV_BYTES_12(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_11(Offset+1, __VA_ARGS__))
- #define OV_BYTES_13(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_12(Offset+1, __VA_ARGS__))
- #define OV_BYTES_14(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_13(Offset+1, __VA_ARGS__))
- #define OV_BYTES_15(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_14(Offset+1, __VA_ARGS__))
- #define OV_BYTES_16(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_15(Offset+1, __VA_ARGS__))
- #define OV_BYTES_17(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_16(Offset+1, __VA_ARGS__))
- #define OV_BYTES_18(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_17(Offset+1, __VA_ARGS__))
- #define OV_BYTES_19(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_18(Offset+1, __VA_ARGS__))
 
 // Accept any number of args >= N, but expand to just the Nth one. In this case,
 // we have settled on 20 as N. We could pick a different number by adjusting
@@ -247,10 +236,15 @@ typedef struct _OOVPATable
     REGISTER_OOVPA_9, REGISTER_OOVPA_8, REGISTER_OOVPA_7, REGISTER_OOVPA_6, REGISTER_OOVPA_5, \
     REGISTER_OOVPA_4, REGISTER_OOVPA_3, REGISTER_OOVPA_2, REGISTER_OOVPA_1, REGISTER_OOVPA_0)(Symbol, __VA_ARGS__))
 
-#define OV_MATCH(Offset, ...) MSVC_EXPAND(_GET_NTH_ARG("ignored", __VA_ARGS__, \
-    OV_BYTES_19, OV_BYTES_18, OV_BYTES_17, OV_BYTES_16, OV_BYTES_15, \
-    OV_BYTES_14, OV_BYTES_13, OV_BYTES_12, OV_BYTES_11, OV_BYTES_10, \
-    OV_BYTES_9, OV_BYTES_8, OV_BYTES_7, OV_BYTES_6, OV_BYTES_5, \
+// See _GET_NTH_ARG comment for details.
+// Even though x86 instructions can be anywhere from 1 to 15 bytes long,
+// we don't need to fill in whole instruction.
+#define _GET_NTH_ARG_OVP( \
+     _8,  _7,  _6,  _5,  _4,  _3,  _2,  _1,  _0, \
+    N, ...) N
+
+#define OV_MATCH(Offset, ...) MSVC_EXPAND(_GET_NTH_ARG_OVP("ignored", __VA_ARGS__, \
+    OV_BYTES_8, OV_BYTES_7, OV_BYTES_6, OV_BYTES_5, \
     OV_BYTES_4, OV_BYTES_3, OV_BYTES_2, OV_BYTES_1, OV_BYTES_0)(Offset, __VA_ARGS__))
 
 #pragma pack()
