@@ -1632,30 +1632,28 @@ OOVPA_END;
 // ******************************************************************
 // * CSensaura3d_GetLiteHRTFFilterPair
 // ******************************************************************
-OOVPA_XREF(CSensaura3d_GetLiteHRTFFilterPair, 3911, 10,
+// Generic OOVPA as of 3911 and newer
+OOVPA_XREF(CSensaura3d_GetLiteHRTFFilterPair, 3911, 11,
 
     XREF_CSensaura3d_GetLiteHRTFFilterPair,
     XRefZero)
 
-        //CSensaura3d_GetLiteHRTFFilterPair+0x00 : push ebp
-        { 0x00, 0x55 },
+        // push ebp
+        // mov ebp, esp
+        OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
 
-        //CSensaura3d_GetLiteHRTFFilterPair+0x14 : push ecx
-        { 0x15, 0x51 },
+        // push ecx
+        OV_MATCH(0x15, 0x51),
 
-        //CSensaura3d_GetLiteHRTFFilterPair+0x22 : push 3
-        { 0x1F, 0x6A },
-        { 0x20, 0x03 },
+        // call ...
+        OV_MATCH(0x19, 0xE8),
+        // cdq
+        // push 3
+        // pop ecx
+        OV_MATCH(0x1E, 0x99, 0x6A, 0x03, 0x59),
 
-        //CSensaura3d_GetLiteHRTFFilterPair+0x22 : idiv eax, ecx
-        { 0x22, 0xF7 },
-        { 0x23, 0xF9 },
-
-        //CSensaura3d_GetLiteHRTFFilterPair+0x24 : cmp dword ptr [ebp+10h], 0
-        { 0x24, 0x83 },
-        { 0x25, 0x7D },
-        { 0x26, 0x10 },
-        { 0x27, 0x00 },
+        // idiv eax, ecx
+        OV_MATCH(0x22, 0xF7, 0xF9),
 OOVPA_END;
 
 // ******************************************************************

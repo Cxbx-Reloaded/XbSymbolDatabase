@@ -47,6 +47,7 @@
 // * [5120] N.U.D.E.@                        |   100%    | Contain full library.
 // * [5233] Evil Dead                        |   100%    | Contain full library.
 // * [5344] Gladius OXM Demo Disc 20         |   100%    | Contain full library.
+// * [5344] The Hulk                         |   100%    | Contain full library.
 // * [5455] NCAA Football 2004               |   100%    | Contain full library.
 // * [5455] Dinosaur Hunting                 |   100%    | Contain full library.
 // * [5558] Dino Crisis 3                    |   100%    | Contain full library.
@@ -372,7 +373,7 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(CDirectSound_GetCaps, 3911, 4039, 4134, 4361), // Final generic OOVPA: 4361; Removed: 0
     REGISTER_OOVPAS(CDirectSound_GetEffectData, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSound_GetOutputLevels, 4361), // Final generic OOVPA: 4361; Removed: 0 (introduced in 4361)
-    REGISTER_OOVPAS(CDirectSound_GetSpeakerConfig, 3911, 4242, 4627, 5455), // Final generic OOVPA: 5455; Removed: 0
+    REGISTER_OOVPAS(CDirectSound_GetSpeakerConfig, 3911, 4242, 5455), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS(CDirectSound_GetTime, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(CDirectSound_MapBufferData, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
     REGISTER_OOVPAS(CDirectSound_SetAllParameters, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
@@ -505,7 +506,7 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(IDirectSound_UnmapBufferData, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
 
     REGISTER_OOVPAS(CSensaura3d_GetFullHRTFFilterPair, 3911, 3936), // Final generic OOVPA: 3936; Removed: 4134+ // NOTE: 4039 revert back to 3911
-    REGISTER_OOVPAS(CSensaura3d_GetLiteHRTFFilterPair, 3911, 3936), // Final generic OOVPA: 3936; Removed: 4134+ // NOTE: 4039 revert back to 3911
+    REGISTER_OOVPAS(CSensaura3d_GetLiteHRTFFilterPair, 3911), // Final generic OOVPA: 3911; Removed: 4134+
     REGISTER_OOVPAS(CFullHRTFSource_GetCenterVolume, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CLightHRTFSource_GetCenterVolume, 4039,/* 4134,*/ 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CHRTFSource_SetFullHRTF5Channel, 4039, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
@@ -523,7 +524,7 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(DirectSoundDoWork, 3911, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(DirectSoundGetSampleTime, 3911, 4361), // Final generic OOVPA: 4361; Removed: 0
     REGISTER_OOVPAS(DirectSoundOverrideSpeakerConfig, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4039)
-    REGISTER_OOVPAS(DirectSoundUseFullHRTF, 3911, 4039, 4134, 4242, 5344), // Final generic OOVPA: 5344; Removed: 0
+    REGISTER_OOVPAS(DirectSoundUseFullHRTF, 3911, 4039, 4134, 4242/*, 5344=revert to 4134*/), // Final generic OOVPA: 5344 (revert to 4134); Removed: 0
     REGISTER_OOVPAS(DirectSoundUseLightHRTF, 3911, 4039,/* 4134?,*/ 4242, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(DirectSoundUseFullHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
     REGISTER_OOVPAS(DirectSoundUseLightHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)

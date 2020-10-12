@@ -73,32 +73,3 @@ OOVPA_XREF(CMcpxStream_Flush, 3936, 15,
         { 0xA1, 0xC9 },
         { 0xA2, 0xC3 },
 OOVPA_END;
-
-// ******************************************************************
-// * CSensaura3d_GetLiteHRTFFilterPair
-// ******************************************************************
-OOVPA_XREF(CSensaura3d_GetLiteHRTFFilterPair, 3936, 10,
-
-    XREF_CSensaura3d_GetLiteHRTFFilterPair,
-    XRefZero)
-
-        //CSensaura3d_GetLiteHRTFFilterPair+0x00 : push ebp
-        { 0x00, 0x55 },
-
-        //CSensaura3d_GetLiteHRTFFilterPair+0x14 : push ecx
-        { 0x15, 0x51 },
-
-        //CSensaura3d_GetLiteHRTFFilterPair+0x22 : push 3
-        { 0x1F, 0x6A },
-        { 0x20, 0x03 },
-
-        //CSensaura3d_GetLiteHRTFFilterPair+0x22 : idiv eax, ecx
-        { 0x22, 0xF7 },
-        { 0x23, 0xF9 },
-
-        //CSensaura3d_GetLiteHRTFFilterPair+0x24 : cmp dword ptr [ebp+10h], 0
-        { 0x36, 0x83 },
-        { 0x37, 0x7D },
-        { 0x38, 0x10 },
-        { 0x39, 0x00 },
-OOVPA_END;

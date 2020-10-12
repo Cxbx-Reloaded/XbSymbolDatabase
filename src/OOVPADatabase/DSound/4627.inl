@@ -57,35 +57,6 @@ OOVPA_XREF(CDirectSound_SetVelocity, 4627, 15,
 OOVPA_END;
 
 // ******************************************************************
-// * CDirectSound_GetSpeakerConfig
-// ******************************************************************
-OOVPA_XREF(CDirectSound_GetSpeakerConfig, 4627, 14,
-
-    XREF_CDirectSound_GetSpeakerConfig,
-    XRefZero)
-
-        { 0x00, 0xE8 },
-
-        { 0x0B, 0x00 },
-        { 0x14, 0x0B },
-        { 0x20, 0xB8 },
-        { 0x2A, 0x04 },
-
-        { 0x35, 0x81 },
-        //{ 0x36, 0xE1 }, (This value has changed, commented out to expand support for later revisions.)
-        { 0x37, 0xFF },
-        { 0x38, 0xFF },
-        { 0x39, 0xFF },
-        { 0x3A, 0x7F },
-
-        { 0x40, 0x0B },
-        { 0x4C, 0x33 },
-
-        { 0x4E, 0xC2 },
-        { 0x4F, 0x08 },
-OOVPA_END;
-
-// ******************************************************************
 // * CMcpxBuffer_Play_Ex
 // ******************************************************************
 #define CMcpxBuffer_Play_Ex_4627 CMcpxBuffer_Play_Ex_4361
