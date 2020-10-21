@@ -46,6 +46,13 @@ typedef struct _xbe_s_flags {
     uint32_t Unused_b3 : 8;                     // unused (or unknown)
 } xbe_s_flags;
 
+#define XBE_SECTION_HEADER_FLAGS_WRITABLE     (1 << 0)
+#define XBE_SECTION_HEADER_FLAGS_PRELOAD      (1 << 1)
+#define XBE_SECTION_HEADER_FLAGS_EXECUTABLE   (1 << 2)
+#define XBE_SECTION_HEADER_FLAGS_INSERTEDFILE (1 << 3)
+#define XBE_SECTION_HEADER_FLAGS_HEADPAGERO   (1 << 4)
+#define XBE_SECTION_HEADER_FLAGS_TAILPAGERO   (1 << 5)
+
 typedef struct _xbe_section_header {
 
     union {

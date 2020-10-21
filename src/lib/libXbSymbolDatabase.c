@@ -644,6 +644,12 @@ uint32_t XbSymbolDatabase_GenerateSectionFilter(const void* xb_header_addr, XbSD
             SectionName = (const char*)(xb_start_addr + xb_section_headers[section_index].SectionNameAddr);
             sh_index = &xb_section_headers[section_index];
 
+            // Verify if section is preload. If not, then skip it.
+            // Intend for optimization usage and avoid false positive detection.
+            if ((sh_index->dwFlags_value & XBE_SECTION_HEADER_FLAGS_PRELOAD) == 0) {
+                continue;
+            }
+
             bool is_detected = false;
 
             for (unsigned int SectionList_index = 0; SectionList_index < SectionListTotal; SectionList_index++) {
