@@ -633,37 +633,54 @@ uint32_t XbSymbolDatabase_GenerateSectionFilter(const void* xb_header_addr, XbSD
     unsigned int section_index = 0;
     unsigned int count = 0;
     const char* SectionName;
+    uint32_t kernel_thunk_addr;
 
     if (pXbeHeader->pSectionHeadersAddr != 0) {
+
+        kernel_thunk_addr = XbSymbolDatabase_GetKernelThunkAddress(xb_header_addr);
 
         for (section_index; section_index < section_total; section_index++) {
 
             SectionName = (const char*)(xb_start_addr + xb_section_headers[section_index].SectionNameAddr);
+            sh_index = &xb_section_headers[section_index];
+
+            bool is_detected = false;
 
             for (unsigned int SectionList_index = 0; SectionList_index < SectionListTotal; SectionList_index++) {
 
                 // Once match is found, increase the count plus append to section vars.
                 if (strncmp(SectionName, SectionList[SectionList_index], 8) == 0) {
-
-                    if (section_header != NULL) {
-                        sv_index = &section_header->filters[count];
-                        sh_index = &xb_section_headers[section_index];
-
-                        memcpy(sv_index->name, SectionList[SectionList_index], 8);
-                        sv_index->xb_virt_addr = sh_index->dwVirtualAddr;
-                        sv_index->buffer_size = xb_section_headers[section_index].dwSizeofRaw;
-
-                        if (is_raw) {
-                            sv_index->buffer_lower = (memptr_t)xb_header_addr + sh_index->dwRawAddr;
-                        }
-                        else {
-                            sv_index->buffer_lower = xb_start_addr + sh_index->dwVirtualAddr;
-                        }
-                    }
-
-                    count++;
+                    is_detected = true;
                     break;
                 }
+            }
+
+            // If section is not on the filter list, check if there is kernel thunk table within section to enforce include it.
+            if (is_detected == false) {
+                if (kernel_thunk_addr >= sh_index->dwVirtualAddr && kernel_thunk_addr < (sh_index->dwVirtualAddr + sh_index->dwSizeofRaw)) {
+                    // Once found within range, then enforce add section to the filter.
+                    is_detected = true;
+                }
+            }
+
+            // If detected, then register into filter list.
+            if (is_detected == true) {
+                if (section_header != NULL) {
+                    sv_index = &section_header->filters[count];
+
+                    memcpy(sv_index->name, SectionName, 8);
+                    sv_index->xb_virt_addr = sh_index->dwVirtualAddr;
+                    sv_index->buffer_size = sh_index->dwSizeofRaw;
+
+                    if (is_raw) {
+                        sv_index->buffer_lower = (memptr_t)xb_header_addr + sh_index->dwRawAddr;
+                    }
+                    else {
+                        sv_index->buffer_lower = xb_start_addr + sh_index->dwVirtualAddr;
+                    }
+                }
+
+                count++;
             }
         }
     }
@@ -1259,7 +1276,7 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
             uint32_t* kt = (uint32_t*)(virt_start_relative + kernel_thunk);
             xbaddr kt_addr = kernel_thunk;
             kt_found = true;
-            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Kernel thunk is found in %8s section", section->name);
+            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Kernel thunk is found in %.8s section", section->name);
 
             while (*kt > 0) {
                 unsigned int index = *kt & 0x7FFFFFFF;
