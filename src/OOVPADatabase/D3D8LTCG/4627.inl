@@ -929,13 +929,13 @@ OOVPA_END;
 // * D3D_BlockOnTime
 // ******************************************************************
 //6A006A006A016A0656
-OOVPA_XREF(D3D_BlockOnTime, 1036, 11,
+OOVPA_XREF(D3D_BlockOnTime, 1036, 10,
 
     XREF_D3D_BlockOnTime,
     XRefZero)
 
         { 0x01, 0x8B },
-        { 0x02, 0x5C },
+        //{ 0x02, 0x5C }, (This value has changed, commented out to expand support for later revisions.)
 
         { 0x110, 0x6A },
         { 0x111, 0x00 },
