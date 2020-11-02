@@ -27,7 +27,7 @@
 // * Direct3D_CreateDevice
 // ******************************************************************
 //85C9750AC705 ...C21000
-OOVPA_NO_XREF(Direct3D_CreateDevice_16, 2024, 9)
+OOVPA_NO_XREF(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ebx_ppReturnedDeviceInterface, 2024, 9)
 
         { 0x00, 0x8B },
 
