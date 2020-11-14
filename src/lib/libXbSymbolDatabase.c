@@ -1892,8 +1892,14 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
             internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
                 "CDirectSoundStream_GetInfo", *(uint32_t*)(pFuncAddr + 2 * 4));
 
-            internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
-                "CDirectSoundStream_GetStatus", *(uint32_t*)(pFuncAddr + 3 * 4));
+            if (pLibrary->build_version < 4134) {
+                internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
+                    "CDirectSoundStream_GetStatus__r1", *(uint32_t*)(pFuncAddr + 3 * 4));
+            }
+            else {
+                internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 4134,
+                    "CDirectSoundStream_GetStatus__r2", *(uint32_t*)(pFuncAddr + 3 * 4));
+            }
 
             internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
                 "CDirectSoundStream_Process", *(uint32_t*)(pFuncAddr + 4 * 4));
