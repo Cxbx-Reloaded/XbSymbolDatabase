@@ -49,3 +49,28 @@ OOVPA_XREF(CXo_XOnlineLogon, 5849, 15,
         { 0x41, 0x80 },
         { 0x42, 0xE9 },
 OOVPA_END;
+
+// ******************************************************************
+// * CXo::XOnlineMatchSessionCreate
+// ******************************************************************
+OOVPA_XREF(CXo_XOnlineMatchSessionCreate, 5849, 12,
+
+    XREF_CXo_XOnlineMatchSessionCreate,
+    XRefZero)
+
+        // push ebp
+        // mov ebp, esp
+        OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+
+        // jnz eip + 0x07
+        OV_MATCH(0x0D, 0x75, 0x07),
+
+        // jmp eip + 0x5F
+        OV_MATCH(0x14, 0xEB, 0x5F),
+
+        // mov byte ptr [ebp - 0x07], bl
+        OV_MATCH(0x18, 0x88, 0x5D, 0xF9),
+
+        // jbe eip + 0x12
+        OV_MATCH(0x3E, 0x76, 0x12),
+OOVPA_END;
