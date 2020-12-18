@@ -83,3 +83,38 @@ jobs:
             README.md
             LICENSE
           if-no-files-found: error
+  release:
+    if: |
+      github.event.action != 'pull_request' &&
+      github.ref == 'refs/heads/master' &&
+      github.repository == 'Cxbx-Reloaded/XbSymbolDatabase'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: XbSymbolDatabase
+      - name: Prepare artifact for release
+        run: |
+          echo "short_commit_sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          7z a -mx1 "XbSymbolDatabase.zip" "./XbSymbolDatabase/*"
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1.1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: CI-${{ env.short_commit_sha }}
+          release_name: CI-${{ env.short_commit_sha }}
+          prerelease: true
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: XbSymbolDatabase.zip
+          asset_name: XbSymbolDatabase.zip
+          asset_content_type: application/zip
