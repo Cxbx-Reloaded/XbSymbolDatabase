@@ -1,20 +1,78 @@
 name: GitHub CI
 
 on:
+  workflow_dispatch:
   push:
     paths-ignore:
       - '.github/*'
       - '.github/*TEMPLATE/**'
+    branches:
+      - '**'
+    tags:
+      - 'v*'
   pull_request:
     paths-ignore:
       - '*.md'
       - '.github/*'
       - '.github/*TEMPLATE/**'
+  schedule:
+    - cron: '1 1 7 * *'
+env:
+  is_tag: ${{ startsWith(github.ref, 'refs/tags/') }}
+  is_pr: ${{ startsWith(github.ref, 'refs/pull/') }}
+  repo_default: 'Cxbx-Reloaded/XbSymbolDatabase'
 
 jobs:
+  semver:
+    name: Generate Semver
+    runs-on: ubuntu-latest
+    outputs:
+      ver-prev: ${{ steps.semver-output.outputs.version_previous }}
+      ver-cur: ${{ steps.semver-output.outputs.version_current }}
+      # Hack method to generate true or false for jobs.
+      # Since job's "if" doesn't support env context.
+      do-build: ${{ steps.build-cond.outputs.do-build }}
+      do-release: ${{ github.repository == env.repo_default && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || env.is_tag == 'true')}}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: RadWolfie/Semantic-Version-Action@main
+        id: semver-output
+        with:
+          repository: ${{ env.repo_default }}
+          version_major_init: 3
+          version_minor_init: 0
+      - name: Run Build Conditional
+        id: build-cond
+        run: |
+          if [ "true" == "${{ (github.event_name != 'schedule' && github.event_name != 'workflow_dispatch') || steps.semver-output.outputs.version_previous != steps.semver-output.outputs.version_current }}" ]
+          then
+            echo "::set-output name=do-build::true"
+          else
+            echo "::set-output name=do-build::false"
+          fi
+      - name: Generate Changelog
+        if: steps.build-cond.outputs.do-build == 'true'
+        run: |
+          if [ "true" == "${{ env.is_pr }}" ]
+          then
+            git log --pretty=format:"%h: %s%n%w(0,11)%-b%n" ${{ steps.semver-output.outputs.version_previous }}..HEAD > changelog
+          else
+            git log --first-parent --pretty=format:"%h: %s%n%w(0,11)%-b%n" ${{ steps.semver-output.outputs.version_previous }}..HEAD > changelog
+          fi
+      # NOTE: Require to reduce workload from CI service from fetch whole git content.
+      - name: Upload Changelog
+        if: steps.build-cond.outputs.do-build == 'true'
+        uses: actions/upload-artifact@v2
+        with:
+          name: changelog
+          path: changelog
   build:
     name: ${{ matrix.platform }} (${{ matrix.arch }}, ${{ matrix.configuration }})
     runs-on: ${{ matrix.os }}
+    needs: semver
+    if: needs.semver.outputs.do-build == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -83,3 +141,36 @@ jobs:
             README.md
             LICENSE
           if-no-files-found: error
+  release:
+    name: Generate Release
+    needs: [semver, build]
+    if: needs.semver.outputs.do-release == 'true'
+    runs-on: ubuntu-latest
+    env:
+      version_current: ${{ needs.semver.outputs.ver-cur }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get Artifacts
+        uses: actions/download-artifact@v2
+        # NOTE: We're downloading ALL artifacts.
+      - name: Prepare artifacts for release
+        run: | # download-artifact doesn't download a zip, so rezip it
+          7z a -mx1 "XbSymbolDatabase.zip" "./XbSymbolDatabase/*"
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.version_current }}
+          release_name: ${{ env.version_current }}
+          body_path: changelog/changelog
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: XbSymbolDatabase.zip
+          asset_name: XbSymbolDatabase.zip
+          asset_content_type: application/zip
