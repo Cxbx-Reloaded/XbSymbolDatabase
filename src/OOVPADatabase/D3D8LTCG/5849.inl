@@ -437,7 +437,7 @@ OOVPA_END;
 // * D3DDevice_LoadVertexShader
 // ******************************************************************
 //C7009C1E040089 ...C3
-OOVPA_NO_XREF(D3DDevice_LoadVertexShader_0, 2048, 9)
+OOVPA_NO_XREF(D3DDevice_LoadVertexShader_0__LTCG_eax_Address_edx_Handle, 2048, 9)
 
         { 0x00, 0x8B },
         { 0x01, 0x0D },
