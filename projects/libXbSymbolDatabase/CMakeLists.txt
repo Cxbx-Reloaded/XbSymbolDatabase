@@ -21,20 +21,29 @@ file(GLOB_RECURSE SOURCES
 )
 source_group(TREE ${XBSDB_ROOT_DIR} FILES ${SOURCES})
 
-add_library (libXbSymbolDatabase ${INCLUDES} ${HEADERS} ${SOURCES})
+add_library (${PROJECT_NAME} ${INCLUDES} ${HEADERS} ${SOURCES})
 
 # NOTES:
 # Using INTERFACE keyword will not work within the project. Only PUBLIC/PRIVATE keywords does.
-target_include_directories(libXbSymbolDatabase
+target_include_directories(${PROJECT_NAME}
  PUBLIC "${XBSDB_ROOT_DIR}/include"
  PRIVATE "${XBSDB_ROOT_DIR}/src/OOVPADatabase"
 )
 
-target_compile_definitions(libXbSymbolDatabase PRIVATE _CRT_SECURE_NO_WARNINGS)
+target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
 
-set_target_properties(libXbSymbolDatabase PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
  PUBLIC_HEADER "${INCLUDES}"
  C_STANDARD 11
  C_STANDARD_REQUIRED ON
  FOLDER XbSymbolDatabase
 )
+
+if(XBSDB_INSTALL_LIB)
+ install(TARGETS ${PROJECT_NAME}
+  RUNTIME DESTINATION bin
+  PUBLIC_HEADER DESTINATION include
+  LIBRARY DESTINATION lib_shared
+  ARCHIVE DESTINATION lib_static
+ )
+endif()

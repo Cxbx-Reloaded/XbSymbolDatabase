@@ -6,14 +6,20 @@ project(XbSymbolDatabaseCLI LANGUAGES C)
 
 find_package(Threads)
 
-add_executable(XbSymbolDatabaseCLI ${XBSDB_ROOT_DIR}/src/cli/main.c)
+add_executable(${PROJECT_NAME} ${XBSDB_ROOT_DIR}/src/cli/main.c)
 
-target_compile_definitions(XbSymbolDatabaseCLI PRIVATE _CRT_SECURE_NO_WARNINGS)
+target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
 
-target_link_libraries(XbSymbolDatabaseCLI libXbSymbolDatabase Threads::Threads)
+target_link_libraries(${PROJECT_NAME} libXbSymbolDatabase Threads::Threads)
 
-set_target_properties(XbSymbolDatabaseCLI PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
  C_STANDARD 11
  C_STANDARD_REQUIRED ON
  FOLDER XbSymbolDatabase
 )
+
+if(XBSDB_INSTALL_CLI)
+ install(TARGETS ${PROJECT_NAME}
+  RUNTIME DESTINATION bin
+ )
+endif()
