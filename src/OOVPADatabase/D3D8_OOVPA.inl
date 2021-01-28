@@ -206,14 +206,14 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_Clear, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_CopyRects, 3911, 4034, 4627, 5120),
     REGISTER_OOVPAS(D3DDevice_CreateCubeTexture, 3911, 4627),
-    REGISTER_OOVPAS(D3DDevice_CreateImageSurface, 3911, 4034, 4627),//TODO 4721,4928 (from 4627's comment)
+    REGISTER_OOVPAS(D3DDevice_CreateImageSurface, 3911, 4034, 4627), //TODO 4721,4928 (from 4627's comment)
     REGISTER_OOVPAS(D3DDevice_CreateIndexBuffer, 3911, 4627), // TODO: This needs to be verified on 4361
     REGISTER_OOVPAS(D3DDevice_CreateIndexBuffer2, 4627, 5344),
     REGISTER_OOVPAS(D3DDevice_CreatePalette, 3911, 4627), // Called D3DDevice_CreatePalette2 (from 4627's comment) NOTE: Use D3DDevice_CreatePalette2 for 4627 and above
     REGISTER_OOVPAS(D3DDevice_CreatePalette2, 4627, 5344, 5455),
     REGISTER_OOVPAS(D3DDevice_CreatePixelShader, 3911, 5344),
     REGISTER_OOVPAS(D3DDevice_CreateStateBlock, 3911),
-    REGISTER_OOVPAS(D3DDevice_CreateTexture, 3911, 4627),// Called D3DDevice_CreateTexture2 (from 4627's comment) NOTE: Use D3DDevice_CreateTexture2 for 4627 and above
+    REGISTER_OOVPAS(D3DDevice_CreateTexture, 3911, 4627), // Called D3DDevice_CreateTexture2 (from 4627's comment) NOTE: Use D3DDevice_CreateTexture2 for 4627 and above
     REGISTER_OOVPAS(D3DDevice_CreateTexture2, 4627, 4831), // Was 4627 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_CreateVertexBuffer, 3911, 4627),
     REGISTER_OOVPAS(D3DDevice_CreateVertexBuffer2, 4627, 5344, 5455),
@@ -254,7 +254,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_GetPersistedSurface2, 4928), // For only on Unreal Championship (from 4627's comment)
     REGISTER_OOVPAS(D3DDevice_GetPixelShader, 3911, 4039, 4134, 5028, 5558, 5788),
     REGISTER_OOVPAS(D3DDevice_GetProjectionViewportMatrix, 3911, 4134, 4627, 5344, 5558), // For 5455 (from 5558's comment)
-    REGISTER_OOVPAS(D3DDevice_GetPushBufferOffset, 3911, 4627),//TODO 4831 (from 4627's comment)
+    REGISTER_OOVPAS(D3DDevice_GetPushBufferOffset, 3911, 4627), //TODO 4831 (from 4627's comment)
     REGISTER_OOVPAS(D3DDevice_GetRenderTarget, 3911, 4627), // Called D3DDevice_GetRenderTarget2 (from 4627's comment) NOTE: Use D3DDevice_GetRenderTarget2 for 4627 and above
     REGISTER_OOVPAS(D3DDevice_GetRenderTarget2, 4627),
     REGISTER_OOVPAS(D3DDevice_GetScissors, 3911),

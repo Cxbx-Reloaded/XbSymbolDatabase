@@ -151,7 +151,7 @@ typedef struct _LOOVPA {
 #pragma warning(pop)
 
 #define OOVPA_XREF_EXTEND(Name, Version, Count, XRefSaveIndex, XRefCount, DetectSelect) \
-    LOOVPA Name##_##Version = { Count, XRefCount, XRefSaveIndex, DetectSelect, VARPADSET, VARPADSET, VARPADSET, {
+    LOOVPA Name##_##Version = { Count, XRefCount, XRefSaveIndex, DetectSelect, VARPADSET, VARPADSET, VARPADSET,
 
 #define OOVPA_XREF_DETECT(Name, Version, Count, XRefSaveIndex, XRefCount, DetectSelect) \
     OOVPA_XREF_EXTEND(Name, Version, Count, XRefSaveIndex, XRefCount, DetectSelect)
@@ -166,7 +166,7 @@ typedef struct _LOOVPA {
     OOVPA_XREF_EXTEND(Name, Version, Count, XRefNoSaveIndex, XRefZero, DetectDefault)
 
 // clang-format off
-#define OOVPA_END } }
+#define OOVPA_END }
 // clang-format on
 
 // ******************************************************************
