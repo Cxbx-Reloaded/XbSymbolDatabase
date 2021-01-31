@@ -3,7 +3,7 @@
 #include <string.h>
 #include <libXbSymbolDatabase.h>
 
-static void msg_cb(xb_output_message message_flag, const char *msg)
+static void msg_cb(xb_output_message message_flag, const char* msg)
 {
     fprintf(stderr, "XbSymbolDatabase: %s\n", msg);
 }
@@ -13,10 +13,10 @@ static void reg_cb(const char* library_str, uint32_t library_flag, const char* s
     printf("%.8s__%s = 0x%08x\n", library_str, symbol_str, address);
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char const* argv[])
 {
     int verbose = 0;
-    const char *xbe_path = NULL;
+    const char* xbe_path = NULL;
     int arg_off = 1;
 
     if (argc > 1 && strcmp(argv[1], "-verbose") == 0) {
@@ -27,7 +27,8 @@ int main(int argc, char const *argv[])
     if (arg_off >= argc) {
         fprintf(stderr, "usage: %s [-verbose] xbefile\n", argv[0]);
         return 1;
-    } else {
+    }
+    else {
         xbe_path = argv[arg_off];
     }
 
@@ -36,7 +37,7 @@ int main(int argc, char const *argv[])
         fprintf(stderr, "Database Version = %x\n", version);
     }
 
-    FILE *fd = fopen(xbe_path, "rb");
+    FILE* fd = fopen(xbe_path, "rb");
     if (fd == NULL) {
         fprintf(stderr, "failed to open %s for reading\n", xbe_path);
         return 1;
@@ -46,7 +47,7 @@ int main(int argc, char const *argv[])
     size_t size = ftell(fd);
     rewind(fd);
 
-    unsigned char *xbe = malloc(size);
+    unsigned char* xbe = malloc(size);
     assert(xbe != NULL);
     size_t num_read = fread(xbe, 1, size, fd);
     assert(num_read == size);
@@ -90,7 +91,10 @@ int main(int argc, char const *argv[])
 
     XbSymbolContextHandle ctx;
     bool status = XbSymbolDatabase_CreateXbSymbolContext(&ctx,
-        reg_cb, lib_hdr, sec_hdr, XbSymbolDatabase_GetKernelThunkAddress(xbe));
+                                                         reg_cb,
+                                                         lib_hdr,
+                                                         sec_hdr,
+                                                         XbSymbolDatabase_GetKernelThunkAddress(xbe));
     assert(status == 1);
     XbSymbolContext_ScanManual(ctx);
     XbSymbolContext_ScanAllLibraryFilter(ctx);

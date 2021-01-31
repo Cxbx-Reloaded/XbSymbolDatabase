@@ -33,17 +33,17 @@ typedef uint32_t p_xbe_string;
 
 // Xbe section header
 typedef struct _xbe_s_flags {
-    uint32_t bWritable : 1;                     // writable flag
-    uint32_t bPreload : 1;                      // preload flag
-    uint32_t bExecutable : 1;                   // executable flag
-    uint32_t bInsertedFile : 1;                 // inserted file flag
-    uint32_t bHeadPageRO : 1;                   // head page read only flag
-    uint32_t bTailPageRO : 1;                   // tail page read only flag
-    uint32_t Unused_a1 : 1;                     // unused (or unknown)
-    uint32_t Unused_a2 : 1;                     // unused (or unknown)
-    uint32_t Unused_b1 : 8;                     // unused (or unknown)
-    uint32_t Unused_b2 : 8;                     // unused (or unknown)
-    uint32_t Unused_b3 : 8;                     // unused (or unknown)
+    uint32_t bWritable : 1;     // writable flag
+    uint32_t bPreload : 1;      // preload flag
+    uint32_t bExecutable : 1;   // executable flag
+    uint32_t bInsertedFile : 1; // inserted file flag
+    uint32_t bHeadPageRO : 1;   // head page read only flag
+    uint32_t bTailPageRO : 1;   // tail page read only flag
+    uint32_t Unused_a1 : 1;     // unused (or unknown)
+    uint32_t Unused_a2 : 1;     // unused (or unknown)
+    uint32_t Unused_b1 : 8;     // unused (or unknown)
+    uint32_t Unused_b2 : 8;     // unused (or unknown)
+    uint32_t Unused_b3 : 8;     // unused (or unknown)
 } xbe_s_flags;
 
 #define XBE_SECTION_HEADER_FLAGS_WRITABLE     (1 << 0)
@@ -60,20 +60,19 @@ typedef struct _xbe_section_header {
         uint32_t dwFlags_value;
     };
 
-    uint32_t dwVirtualAddr;                     // virtual address
-    uint32_t dwVirtualSize;                     // virtual size
-    uint32_t dwRawAddr;                         // file offset to raw data
-    uint32_t dwSizeofRaw;                       // size of raw data
-    const p_xbe_string  SectionNameAddr;        // section name addr
-    uint32_t dwSectionRefCount;                 // section reference count
-    uint32_t dwHeadSharedRefCountAddr;          // head shared page reference count address
-    uint32_t dwTailSharedRefCountAddr;          // tail shared page reference count address
-    uint8_t bzSectionDigest[20];                // section digest
+    uint32_t dwVirtualAddr;             // virtual address
+    uint32_t dwVirtualSize;             // virtual size
+    uint32_t dwRawAddr;                 // file offset to raw data
+    uint32_t dwSizeofRaw;               // size of raw data
+    const p_xbe_string SectionNameAddr; // section name addr
+    uint32_t dwSectionRefCount;         // section reference count
+    uint32_t dwHeadSharedRefCountAddr;  // head shared page reference count address
+    uint32_t dwTailSharedRefCountAddr;  // tail shared page reference count address
+    uint8_t bzSectionDigest[20];        // section digest
 } xbe_section_header;
 typedef uint32_t p_xbe_section_header;
 
-typedef struct _xbe_certificate
-{
+typedef struct _xbe_certificate {
     uint32_t dwSize;                              // 0x0000 - size of certificate
     uint32_t dwTimeDate;                          // 0x0004 - timedate stamp
     uint32_t dwTitleId;                           // 0x0008 - title id
@@ -86,8 +85,7 @@ typedef struct _xbe_certificate
     uint32_t dwVersion;                           // 0x00AC - version
     uint8_t bzLanKey[16];                         // 0x00B0 - lan key
     uint8_t bzSignatureKey[16];                   // 0x00C0 - signature key
-    // NOT ALL XBEs have these fields!
-    uint8_t bzTitleAlternateSignatureKey[16][16]; // 0x00D0 - alternate signature keys
+    uint8_t bzTitleAlternateSignatureKey[16][16]; // 0x00D0 - alternate signature keys // NOTE: NOT ALL XBEs have these fields!
     uint32_t dwOriginalCertificateSize;           // 0x01D0 - Original Certificate Size?
     uint32_t dwOnlineService;                     // 0x01D4 - Online Service ID
     uint32_t dwSecurityFlags;                     // 0x01D8 - Extra Security Flags
@@ -97,15 +95,15 @@ typedef uint32_t p_xbe_certificate;
 
 // Xbe library versions
 typedef struct _xbe_lv_flags {
-    uint16_t QFEVersion : 13;                   // QFE Version
-    uint16_t Approved : 2;                      // Approved? (0:no, 1:possibly, 2:yes)
-    uint16_t bDebugBuild : 1;                   // Is this a debug build?
+    uint16_t QFEVersion : 13; // QFE Version
+    uint16_t Approved : 2;    // Approved? (0:no, 1:possibly, 2:yes)
+    uint16_t bDebugBuild : 1; // Is this a debug build?
 } xbe_lv_flags;
 typedef struct _xbe_library_version {
-    char   szName[8];                           // library name
-    uint16_t wMajorVersion;                     // major version
-    uint16_t wMinorVersion;                     // minor version
-    uint16_t wBuildVersion;                     // build version
+    char szName[8];         // library name
+    uint16_t wMajorVersion; // major version
+    uint16_t wMinorVersion; // minor version
+    uint16_t wBuildVersion; // build version
 
     union {
         xbe_lv_flags wFlags;
@@ -116,14 +114,14 @@ typedef uint32_t p_xbe_library_version;
 
 // Xbe header
 typedef struct _xbe_h_InitFlags {
-    uint32_t bMountUtilityDrive : 1;            // mount utility drive flag
-    uint32_t bFormatUtilityDrive : 1;           // format utility drive flag
-    uint32_t bLimit64MB : 1;                    // limit development kit run time memory to 64mb flag
-    uint32_t bDontSetupHarddisk : 1;            // don't setup hard disk flag
-    uint32_t Unused : 4;                        // unused (or unknown)
-    uint32_t Unused_b1 : 8;                     // unused (or unknown)
-    uint32_t Unused_b2 : 8;                     // unused (or unknown)
-    uint32_t Unused_b3 : 8;                     // unused (or unknown)
+    uint32_t bMountUtilityDrive : 1;  // mount utility drive flag
+    uint32_t bFormatUtilityDrive : 1; // format utility drive flag
+    uint32_t bLimit64MB : 1;          // limit development kit run time memory to 64mb flag
+    uint32_t bDontSetupHarddisk : 1;  // don't setup hard disk flag
+    uint32_t Unused : 4;              // unused (or unknown)
+    uint32_t Unused_b1 : 8;           // unused (or unknown)
+    uint32_t Unused_b2 : 8;           // unused (or unknown)
+    uint32_t Unused_b3 : 8;           // unused (or unknown)
 } xbe_h_InitFlags;
 
 typedef struct _xbe_header {
@@ -137,12 +135,10 @@ typedef struct _xbe_header {
     p_xbe_certificate pCertificateAddr;         // 0x0118 - certificate address
     uint32_t dwSections;                        // 0x011C - number of sections
     p_xbe_section_header pSectionHeadersAddr;   // 0x0120 - section headers address
-
     union {                                     // 0x0124 - initialization flags
-        xbe_h_InitFlags dwInitFlags;
-        uint32_t dwInitFlags_value;
-    };
-
+        xbe_h_InitFlags dwInitFlags;            //
+        uint32_t dwInitFlags_value;             //
+    };                                          //
     uint32_t dwEntryAddr;                       // 0x0128 - entry point address
     uint32_t dwTLSAddr;                         // 0x012C - thread local storage directory address
     uint32_t dwPeStackCommit;                   // 0x0130 - size of stack commit

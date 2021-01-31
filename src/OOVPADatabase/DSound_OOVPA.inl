@@ -319,9 +319,11 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(CDirectSoundBuffer_Stop, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 // NOTE: Must be after CDirectSoundBuffer_StopEx for one time scan.
     REGISTER_OOVPAS(CDirectSoundBuffer_Use3DVoiceData, 5558), // Final generic OOVPA: 5558; Removed: 0 (introduced in 5558)
 
-    // REGISTER_OOVPAS(CDirectSoundStream_Constructor, 3911), // NOTE: Does not need to be register in db. Using manual work instead, like D3D8 did.
-#if 0 // These signatures are no longer in use, yet preserved as documented signatures for future research usage.
-      // Instead of these signatures below, using CDirectSoundStream_Constructor signature plus manual work allow us to reduce the scan process.
+#if 0
+    REGISTER_OOVPAS(CDirectSoundStream_Constructor, 3911), // NOTE: Does not need to be register in db. Using manual work instead, like D3D8 did.
+#endif
+#if 0 // These signatures are no longer in use, yet preserved as documented signatures for future research usage. \
+    //   Instead of these signatures below, using CDirectSoundStream_Constructor signature plus manual work allow us to reduce the scan process.
     REGISTER_OOVPAS(CDirectSoundStream_AddRef, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 // NOTE: The function and CAc97MediaObject::AddRef are the same asm code.
     REGISTER_OOVPAS(CDirectSoundStream_Discontinuity, 3911, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(CDirectSoundStream_Flush, 3911, 4039, 4134, 5028), // Final generic OOVPA: 5028; Removed: 0
@@ -386,7 +388,7 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(CDirectSound_SetPosition, 3911, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSound_SetRolloffFactor, 3911, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(CDirectSound_SetVelocity, 3911, 4039, 4134, 4627, 5344), // Final generic OOVPA: 5344; Removed: 0
-    REGISTER_OOVPAS(CDirectSound_SynchPlayback, 4831, 5344),// Final generic OOVPA: 5344; Removed: 0 (introduced in 4831)
+    REGISTER_OOVPAS(CDirectSound_SynchPlayback, 4831, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 4831)
     REGISTER_OOVPAS(CDirectSound_UnmapBufferData, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
 
     //========================================================
@@ -508,7 +510,7 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(CSensaura3d_GetFullHRTFFilterPair, 3911, 3936), // Final generic OOVPA: 3936; Removed: 4134+ // NOTE: 4039 revert back to 3911
     REGISTER_OOVPAS(CSensaura3d_GetLiteHRTFFilterPair, 3911), // Final generic OOVPA: 3911; Removed: 4134+
     REGISTER_OOVPAS(CFullHRTFSource_GetCenterVolume, 4039, 4134, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
-    REGISTER_OOVPAS(CLightHRTFSource_GetCenterVolume, 4039,/* 4134,*/ 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
+    REGISTER_OOVPAS(CLightHRTFSource_GetCenterVolume, 4039, /*4134,*/ 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CHRTFSource_SetFullHRTF5Channel, 4039, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CHRTFSource_SetLightHRTF5Channel, 4039, 5344), // Final generic OOVPA: 5344; Removed: 4242-5233 (introduced in 4039)
     REGISTER_OOVPAS(CHRTFSource_SetFullHRTF4Channel, 5344), // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
@@ -524,8 +526,8 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(DirectSoundDoWork, 3911, 4134), // Final generic OOVPA: 4134; Removed: 0
     REGISTER_OOVPAS(DirectSoundGetSampleTime, 3911, 4361), // Final generic OOVPA: 4361; Removed: 0
     REGISTER_OOVPAS(DirectSoundOverrideSpeakerConfig, 4039, 4134), // Final generic OOVPA: 4134; Removed: 0 (introduced in 4039)
-    REGISTER_OOVPAS(DirectSoundUseFullHRTF, 3911, 4039, 4134, 4242/*, 5344=revert to 4134*/), // Final generic OOVPA: 5344 (revert to 4134); Removed: 0
-    REGISTER_OOVPAS(DirectSoundUseLightHRTF, 3911, 4039,/* 4134?,*/ 4242, 5344), // Final generic OOVPA: 5344; Removed: 0
+    REGISTER_OOVPAS(DirectSoundUseFullHRTF, 3911, 4039, 4134, 4242 /*, 5344=revert to 4134*/), // Final generic OOVPA: 5344 (revert to 4134); Removed: 0
+    REGISTER_OOVPAS(DirectSoundUseLightHRTF, 3911, 4039, /*4134?,*/ 4242, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(DirectSoundUseFullHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
     REGISTER_OOVPAS(DirectSoundUseLightHRTF4Channel, 5344), // undocument // Final generic OOVPA: 5344; Removed: 0 (introduced in 5344)
 

@@ -12,3 +12,10 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           sync-labels: true
+
+      - name: Clang-Format Lint Verify
+        uses: DoozyX/clang-format-lint-action@v0.11
+        with:
+          source: '.'
+          extensions: 'h,c,inl'
+          clangFormatVersion: 10
