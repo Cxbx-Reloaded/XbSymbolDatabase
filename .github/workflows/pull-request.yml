@@ -5,6 +5,7 @@ on:
 
 jobs:
   pr_manager:
+    name: PR Manager
     runs-on: ubuntu-latest
     steps:
       - name: Labeler
