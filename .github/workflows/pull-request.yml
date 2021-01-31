@@ -5,6 +5,7 @@ on:
 
 jobs:
   pr_manager:
+    name: PR Manager
     runs-on: ubuntu-latest
     steps:
       - name: Labeler
@@ -13,6 +14,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           sync-labels: true
 
+      - uses: actions/checkout@v2
       - name: Clang-Format Lint Verify
         uses: DoozyX/clang-format-lint-action@v0.11
         with:
