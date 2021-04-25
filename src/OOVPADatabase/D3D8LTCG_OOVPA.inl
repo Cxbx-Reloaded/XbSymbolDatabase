@@ -181,6 +181,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetSoftDisplayFilter_0, 2048),
     REGISTER_OOVPAS(D3DDevice_SetStreamSource_8__LTCG_edx_StreamNumber, 1039),
     REGISTER_OOVPAS(D3DDevice_SetStreamSource, 1044),
+    REGISTER_OOVPAS(D3DDevice_SetStreamSource_0__LTCG_eax_StreamNumber_edi_pStreamData_ebx_Stride, 2058),
     REGISTER_OOVPAS(D3DDevice_SetStreamSource_4, 2058),
     REGISTER_OOVPAS(D3DDevice_SetStreamSource_8, 2040),
     REGISTER_OOVPAS(D3DDevice_SetTexture, 1024),
