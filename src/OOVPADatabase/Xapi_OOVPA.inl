@@ -124,6 +124,8 @@
 // ******************************************************************
 OOVPATable XAPILIB_OOVPA[] = {
 
+    REGISTER_OOVPAS(XUnmountAlternateTitleA, 3911),
+
     REGISTER_OOVPAS(CreateMutex, 3911), // Too High Level (from 3911's comment)
     REGISTER_OOVPAS(CreateThread, 3911), // Too High Level (from 3911's comment)
     REGISTER_OOVPAS(ExitThread, 3911), //
@@ -171,7 +173,7 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(XMountUtilityDrive, 3911, 4432),
     REGISTER_OOVPAS(XRegisterThreadNotifyRoutine, 3911),
     REGISTER_OOVPAS(XSetProcessQuantumLength, 4134),
-    REGISTER_OOVPAS(XUnmountAlternateTitleA, 3911),
+    REGISTER_OOVPAS(XUnmountMU, 3911, 4242),
     REGISTER_OOVPAS(XapiFiberStartup, 3911),
     REGISTER_OOVPAS(timeKillEvent, 3911),
     REGISTER_OOVPAS(timeSetEvent, 3911),

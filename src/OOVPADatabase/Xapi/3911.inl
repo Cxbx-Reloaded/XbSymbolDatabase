@@ -813,7 +813,10 @@ OOVPA_NO_XREF(XMountAlternateTitleA, 3911, 13)
 // ******************************************************************
 // * XUnmountAlternateTitleA
 // ******************************************************************
-OOVPA_NO_XREF(XUnmountAlternateTitleA, 3911, 7)
+OOVPA_XREF(XUnmountAlternateTitleA, 3911, 7,
+
+           XREF_XUnmountAlternateTitleA,
+           XRefZero)
 {
 
     { 0x0A, 0x65 },
@@ -1293,4 +1296,26 @@ OOVPA_NO_XREF(XapiFiberStartup, 3911, 14)
     { 0x2F, 0xE8 },
 
     { 0x44, 0xCC },
+} OOVPA_END;
+
+// ******************************************************************
+// * XUnmountMU
+// ******************************************************************
+OOVPA_XREF(XUnmountMU, 3911, 1 + 9,
+
+           XRefNoSaveIndex,
+           XRefOne)
+{
+
+    XREF_ENTRY(0x38, XREF_XUnmountAlternateTitleA),
+
+    // push EBP
+    // mov EBP, ESP
+    OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+
+    // push 0x20
+    // push 0x01
+    // xor edi, edi
+    OV_MATCH(0x5D, 0x6A, 0x20, 0x6A, 0x01, 0x33, 0xFF),
+
 } OOVPA_END;
