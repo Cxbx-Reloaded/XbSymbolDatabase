@@ -115,6 +115,7 @@
 #include "Xapi/4831.inl"
 #include "Xapi/5028.inl"
 #include "Xapi/5120.inl"
+#include "Xapi/5233.inl"
 #include "Xapi/5344.inl"
 #include "Xapi/5455.inl"
 #include "Xapi/5788.inl"
@@ -143,6 +144,7 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(GetThreadPriority, 3911),
     REGISTER_OOVPAS(GetTimeZoneInformation, 3911),
     REGISTER_OOVPAS(GetTypeInformation, 4134), // TODO: Actually introduced in some unknown XDK between 4134 and 4361
+    REGISTER_OOVPAS(MU_Init, 3911, 4242, 5233),
     REGISTER_OOVPAS(OutputDebugStringA, 3911),
     REGISTER_OOVPAS(QueueUserAPC, 3911),
     REGISTER_OOVPAS(QueryPerformanceCounter, 3911),
