@@ -747,17 +747,17 @@ OOVPA_NO_XREF(D3DDevice_CreatePixelShader, 1024, 12)
 // ******************************************************************
 OOVPA_XREF(D3DDevice_SetStreamSource_0__LTCG_eax_StreamNumber_edi_pStreamData_ebx_Stride, 2058, 1 + 12,
 
-    XRefNoSaveIndex,
-    XRefOne)
+           XRefNoSaveIndex,
+           XRefOne)
 {
 
-        XREF_ENTRY(0x19, XREF_G_STREAM), // Derived
+    XREF_ENTRY(0x19, XREF_G_STREAM), // Derived
 
-        // test edi, edi; mov ecx, [...]
-        OV_MATCH(0x00, 0x85, 0xFF, 0x8B, 0x0D),
+    // test edi, edi; mov ecx, [...]
+    OV_MATCH(0x00, 0x85, 0xFF, 0x8B, 0x0D),
 
-        // jz ...; add dword ptr [edi], 80000h
-        OV_MATCH(0x08, 0x74, 0x06, 0x81, 0x07, 0x00, 0x00, 0x08, 0x00),
+    // jz ...; add dword ptr [edi], 80000h
+    OV_MATCH(0x08, 0x74, 0x06, 0x81, 0x07, 0x00, 0x00, 0x08, 0x00),
 } OOVPA_END;
 
 // ******************************************************************
