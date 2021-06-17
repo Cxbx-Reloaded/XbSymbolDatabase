@@ -1365,3 +1365,24 @@ OOVPA_XREF(XapiMapLetterToDirectory, 3911, 15,
     OV_MATCH(0x14, 0x6A, 0x03, 0x6A, 0x03, 0xBF, 0x80, 0x00 /*, 0x00, 0x00*/),
 
 } OOVPA_END;
+
+// ******************************************************************
+// * XapiMapLetterToDirectory
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_XREF(IUsbInit_GetMaxDeviceTypeCount, 3911, 12,
+
+           XREF_IUsbInit_GetMaxDeviceTypeCount,
+           XRefZero)
+{
+
+    // mov edx, [ecx + 0x9C]
+    OV_MATCH(0x00, 0x8B, 0x91, 0x9C, 0x00, 0x00 /*, 0x00*/),
+
+    // mov ecx, [ecx + 0x98]
+    OV_MATCH(0x0C, 0x8B, 0x89, 0x98, 0x00, 0x00 /*, 0x00*/),
+
+    // ret 0x4
+    OV_MATCH(0x2E, 0xC2, 0x04 /*, 0x00*/)
+
+} OOVPA_END;

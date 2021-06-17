@@ -783,6 +783,7 @@ typedef enum _XRefDatabaseOffset {
     XREF_CXo_XOnlineMatchSessionCreate,
 
     // XAPI
+    XREF_IUsbInit_GetMaxDeviceTypeCount,
     XREF_XAPI_GetTypeInformation,
     XREF_XapiMapLetterToDirectory,
     XREF_XUnmountAlternateTitleA,
