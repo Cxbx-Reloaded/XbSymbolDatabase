@@ -109,8 +109,13 @@ OOVPA_NO_XREF(XInputSetState, 4242, 12)
 // ******************************************************************
 // * XMountMUA
 // ******************************************************************
-OOVPA_NO_XREF(XMountMUA, 4242, 8) // generic version
+OOVPA_XREF(XMountMUA, 4242, 1 + 8,
+
+           XRefNoSaveIndex,
+           XRefOne)
 {
+
+    XREF_ENTRY(0xE7, XREF_XapiMapLetterToDirectory),
 
     { 0x22, 0x8A },
     { 0x3E, 0x89 },

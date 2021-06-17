@@ -784,6 +784,7 @@ typedef enum _XRefDatabaseOffset {
 
     // XAPI
     XREF_XAPI_GetTypeInformation,
+    XREF_XapiMapLetterToDirectory,
     XREF_XUnmountAlternateTitleA,
 
     // JVS

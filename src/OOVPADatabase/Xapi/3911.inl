@@ -831,8 +831,13 @@ OOVPA_XREF(XUnmountAlternateTitleA, 3911, 7,
 // ******************************************************************
 // * XMountMUA
 // ******************************************************************
-OOVPA_NO_XREF(XMountMUA, 3911, 7) // generic version
+OOVPA_XREF(XMountMUA, 3911, 1 + 7,
+
+           XRefNoSaveIndex,
+           XRefOne)
 {
+
+    XREF_ENTRY(0xCE, XREF_XapiMapLetterToDirectory),
 
     { 0x1E, 0x0C },
     { 0x3E, 0x66 },
@@ -1336,5 +1341,27 @@ OOVPA_NO_XREF(MU_Init, 3911, 14)
     // push 0x3A
     // lea eax, [ebp-0x10]
     OV_MATCH(0x95, 0x50, 0x6A, 0x00, 0x6A, 0x3A, 0x8D, 0x45, 0xF0),
+
+} OOVPA_END;
+
+// ******************************************************************
+// * XapiMapLetterToDirectory
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_XREF(XapiMapLetterToDirectory, 3911, 15,
+
+           XREF_XapiMapLetterToDirectory,
+           XRefZero)
+{
+
+    // push ebp
+    // mov ebp, esp
+    // sub esp, 0x284
+    OV_MATCH(0x00, 0x55, 0x8B, 0xEC, 0x81, 0xEC, 0x84, 0x02, 0x00),
+
+    // push 0x03
+    // push 0x03
+    // mov edi, 0x80
+    OV_MATCH(0x14, 0x6A, 0x03, 0x6A, 0x03, 0xBF, 0x80, 0x00 /*, 0x00, 0x00*/),
 
 } OOVPA_END;
