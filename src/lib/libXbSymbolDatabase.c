@@ -704,6 +704,16 @@ static inline void GetOovpaEntry(OOVPA* oovpa, int index, uint32_t* offset_out, 
     *value_out = (uint8_t)((LOOVPA*)oovpa)->Lovp[index].value;
 }
 
+static inline bool MatchXRefAddr(memptr_t cur, uintptr_t xb_start_virt_addr, xbaddr XRefAddr)
+{
+    xbaddr ActualAddr = *(xbaddr*)(cur);
+    // check if PC-relative or direct reference matches XRef
+    if ((ActualAddr + (xbaddr)((uintptr_t)cur - xb_start_virt_addr) + 4 != XRefAddr) && (ActualAddr != XRefAddr))
+        return false;
+
+    return true;
+}
+
 bool CompareOOVPAToAddress(iXbSymbolContext* pContext, OOVPA* Oovpa, memptr_t cur, uintptr_t xb_start_virt_addr)
 {
     uint32_t v = 0; // verification counter
@@ -726,9 +736,8 @@ bool CompareOOVPAToAddress(iXbSymbolContext* pContext, OOVPA* Oovpa, memptr_t cu
         if (XRefAddr == XREF_ADDR_DERIVE)
             continue;
 
-        xbaddr ActualAddr = *(xbaddr*)(cur + Offset);
         // check if PC-relative or direct reference matches XRef
-        if ((ActualAddr + (xbaddr)((uintptr_t)cur - xb_start_virt_addr) + Offset + 4 != XRefAddr) && (ActualAddr != XRefAddr))
+        if (!MatchXRefAddr(cur + Offset, xb_start_virt_addr, XRefAddr))
             return false;
     }
 
@@ -1312,27 +1321,32 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
                        "Kernel thunk is not found from sections input, certain symbol's OOVPAs may not be detected.");
     }
 
+    // clang-format off
     // Request a few fundamental XRefs to be derived instead of checked
-    pContext->xref_database[XREF_D3DDEVICE] = XREF_ADDR_DERIVE;                             //In use
-    pContext->xref_database[XREF_D3DRS_CULLMODE] = XREF_ADDR_DERIVE;                        //In use
-    pContext->xref_database[XREF_D3DRS_MULTISAMPLERENDERTARGETMODE] = XREF_ADDR_DERIVE;     //In use
-    pContext->xref_database[XREF_D3DRS_ROPZCMPALWAYSREAD] = XREF_ADDR_DERIVE;               //In use
-    pContext->xref_database[XREF_D3DRS_ROPZREAD] = XREF_ADDR_DERIVE;                        //In use
-    pContext->xref_database[XREF_D3DRS_DONOTCULLUNCOMPRESSED] = XREF_ADDR_DERIVE;           //In use
-    pContext->xref_database[XREF_D3DRS_STENCILCULLENABLE] = XREF_ADDR_DERIVE;               //In use
-    pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                  //In use
-    pContext->xref_database[XREF_G_STREAM] = XREF_ADDR_DERIVE;                              //In use
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_PIXELSHADER] = XREF_ADDR_DERIVE;        //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_TEXTURES] = XREF_ADDR_DERIVE;           //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_PALETTES] = XREF_ADDR_DERIVE;           //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_RENDERTARGET] = XREF_ADDR_DERIVE;       //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL] = XREF_ADDR_DERIVE;       //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT] = XREF_ADDR_DERIVE; //In use
-#if 0                                                                                       //
+    // D3D
+    pContext->xref_database[XREF_D3DDEVICE] = XREF_ADDR_DERIVE;                               //In use
+    pContext->xref_database[XREF_D3DRS_CULLMODE] = XREF_ADDR_DERIVE;                          //In use
+    pContext->xref_database[XREF_D3DRS_MULTISAMPLERENDERTARGETMODE] = XREF_ADDR_DERIVE;       //In use
+    pContext->xref_database[XREF_D3DRS_ROPZCMPALWAYSREAD] = XREF_ADDR_DERIVE;                 //In use
+    pContext->xref_database[XREF_D3DRS_ROPZREAD] = XREF_ADDR_DERIVE;                          //In use
+    pContext->xref_database[XREF_D3DRS_DONOTCULLUNCOMPRESSED] = XREF_ADDR_DERIVE;             //In use
+    pContext->xref_database[XREF_D3DRS_STENCILCULLENABLE] = XREF_ADDR_DERIVE;                 //In use
+    pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                    //In use
+    pContext->xref_database[XREF_G_STREAM] = XREF_ADDR_DERIVE;                                //In use
+    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_PIXELSHADER] = XREF_ADDR_DERIVE;          //
+    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_TEXTURES] = XREF_ADDR_DERIVE;             //
+    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_PALETTES] = XREF_ADDR_DERIVE;             //
+    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_RENDERTARGET] = XREF_ADDR_DERIVE;         //
+    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL] = XREF_ADDR_DERIVE;         //
+    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT] = XREF_ADDR_DERIVE;   //In use
+#if 0                                                                                         //
     pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] = XREF_ADDR_UNDETERMINED;   //In use // Manual check only.
     pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
-#endif                                                                                      //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER] = XREF_ADDR_DERIVE;       //In use
+#endif                                                                                        //
+    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER] = XREF_ADDR_DERIVE;         //In use
+    // XAPILIB                                                                                //
+    pContext->xref_database[XREF_g_XapiMountedMUs] = XREF_ADDR_DERIVE;                        //In use
+    // clang-format on
 
     // Mark all library contexts as zero-initialized for scan activity.
     memset(pContext->library_contexts, 0, sizeof(pContext->library_contexts));
@@ -1931,6 +1945,117 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
     return true;
 }
 
+static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
+                                        const iXbSymbolLibrarySession* pLibrarySession,
+                                        const XbSDBSection* pSection)
+{
+    // Generic usage
+    uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
+    memptr_t buffer_upper = (memptr_t)pSection->buffer_lower + pSection->buffer_size;
+    xbaddr xXbAddr = 0;
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
+    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
+
+    typedef struct {
+        uint16_t version;
+        LOOVPA* sig;
+    } sig_list;
+    sig_list list_MU_Init[] = {
+        { 3911, &MU_Init_3911 },
+        { 4242, &MU_Init_4242 },
+        { 5233, &MU_Init_5233 },
+    };
+
+    // Find MU_Init function
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_MU_Init])) {
+
+        for (unsigned i = 0; i < XBSDB_ARRAY_SIZE(list_MU_Init); i++) {
+
+            // If limit to only below sig versions, then stop if go above.
+            if (pContext->strict_build_version_limit) {
+                if (pLibrary->build_version < list_MU_Init[i].version) {
+                    break;
+                }
+            }
+
+            xXbAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, iLibraryType, "MU_Init", list_MU_Init[i].version,
+                                                            list_MU_Init[i].sig, pSection);
+
+            // If match is found then register symbol.
+            if (xXbAddr != 0) {
+
+                if (pLibrary->build_version < list_MU_Init[i].version) {
+
+                    output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
+                                          "OOVPA signature is too high for [%hu] %s!",
+                                          list_MU_Init[i].version, "MU_Init");
+                }
+
+                internal_RegisterSymbol(pContext, pLibrarySession, XREF_MU_Init, list_MU_Init[i].version,
+                                        "MU_Init", xXbAddr);
+
+                if (pContext->one_time_scan) {
+                    break;
+                }
+            }
+        }
+    }
+
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_MU_Init])) {
+        // If not found, skip the rest of the scan.
+        return false;
+    }
+
+
+    // Scan for IUsbInit::GetMaxDeviceTypeCount function.
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_IUsbInit_GetMaxDeviceTypeCount])) {
+        xXbAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, iLibraryType, "IUsbInit_GetMaxDeviceTypeCount", 3911,
+                                                        &IUsbInit_GetMaxDeviceTypeCount_3911, pSection);
+
+        // If not found, skip the rest of the scan.
+        if (xXbAddr == 0) {
+            return false;
+        }
+
+        internal_RegisterSymbol(pContext, pLibrarySession, XREF_IUsbInit_GetMaxDeviceTypeCount, 3911,
+                                "IUsbInit_GetMaxDeviceTypeCount", xXbAddr);
+    }
+
+
+    xXbAddr = 0;
+    // TODO: Move below into separate function.
+    // search all of the buffer memory range
+    for (memptr_t cur = (memptr_t)virt_start_relative + pContext->xref_database[XREF_MU_Init]; cur < buffer_upper; cur++) {
+        // We are looking for "leave; ret 0x04;" for end of function then stop searching.
+        if (cur[0] == 0xC9 && cur[1] == 0xC2 && cur[2] == 0x04) {
+            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Could not find g_DeviceType_MU from MU_Init!");
+            return false;
+        }
+
+        // Look for possible push and call next to each other.
+        if (cur[0] == 0x68 && cur[5] == 0xE8) {
+
+            // check if call is linked to IUsbInit_GetMaxDeviceTypeCount function.
+            xbaddr ActualAddr = *(xbaddr*)(cur + 6);
+            if (MatchXRefAddr(cur + 6, virt_start_relative, pContext->xref_database[XREF_IUsbInit_GetMaxDeviceTypeCount])) {
+                // this is where g_DeviceType_MU hardcode address reside in.
+                xXbAddr = *(xbaddr*)(cur + 1);
+                break;
+            }
+        }
+    }
+
+    // register if g_DeviceType_MU is not valid.
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_g_DeviceType_MU])) {
+
+        // Register g_DeviceType_MU
+        internal_RegisterSymbol(pContext, pLibrarySession, XREF_g_DeviceType_MU, 3911,
+                                "g_DeviceType_MU", xXbAddr);
+    }
+
+    return true;
+}
+
 static bool manual_scan_library_custom(iXbSymbolContext* pContext,
                                        custom_scan_func_t custom_scan_func,
                                        const iXbSymbolLibrarySession* pLibSession)
@@ -2016,6 +2141,9 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
                 }
                 break;
             }
+        }
+        else if ((pLibrary->flag & XbSymbolLib_XAPILIB) > 0) {
+            manual_scan_library_custom(pContext, manual_scan_section_xapilib, &libSession);
         }
     }
 
@@ -2151,6 +2279,12 @@ void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle)
     if (internal_IsXRefAddrValid(xD3D_pDeviceAddr)) {
         // Register offset of D3DDevice__m_VertexShader
         internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER, 0, "D3DDevice__m_VertexShader_OFFSET");
+    }
+
+    xbaddr xg_XapiMountedMUs = pContext->xref_database[XREF_g_XapiMountedMUs];
+    if (internal_IsXRefAddrValid(xg_XapiMountedMUs)) {
+        // Register g_XapiMountedMUs
+        internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs");
     }
 
     // Here, others could be registered

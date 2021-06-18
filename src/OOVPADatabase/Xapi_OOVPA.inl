@@ -125,6 +125,8 @@
 // ******************************************************************
 OOVPATable XAPILIB_OOVPA[] = {
 
+    REGISTER_OOVPAS(IUsbInit_GetMaxDeviceTypeCount, 3911),
+    REGISTER_OOVPAS(XapiMapLetterToDirectory, 3911),
     REGISTER_OOVPAS(XUnmountAlternateTitleA, 3911),
 
     REGISTER_OOVPAS(CreateMutex, 3911), // Too High Level (from 3911's comment)

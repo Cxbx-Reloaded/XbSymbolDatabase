@@ -25,7 +25,10 @@
 // * MU_Init
 // ******************************************************************
 // Generic OOVPA as of 5233 and newer.
-OOVPA_NO_XREF(MU_Init, 5233, 14)
+OOVPA_XREF(MU_Init, 5233, 14,
+
+           XREF_MU_Init,
+           XRefZero)
 {
 
     // push ebp
