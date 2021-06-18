@@ -109,12 +109,13 @@ OOVPA_NO_XREF(XInputSetState, 4242, 12)
 // ******************************************************************
 // * XMountMUA
 // ******************************************************************
-OOVPA_XREF(XMountMUA, 4242, 1 + 8,
+OOVPA_XREF(XMountMUA, 4242, 2 + 8,
 
            XRefNoSaveIndex,
-           XRefOne)
+           XRefTwo)
 {
 
+    XREF_ENTRY(0x3A, XREF_g_XapiMountedMUs), // derived
     XREF_ENTRY(0xE7, XREF_XapiMapLetterToDirectory),
 
     { 0x22, 0x8A },
@@ -152,8 +153,13 @@ OOVPA_NO_XREF(XFormatUtilityDrive, 4242, 12)
 // ******************************************************************
 // * XMountMURootA
 // ******************************************************************
-OOVPA_NO_XREF(XMountMURootA, 4242, 12)
+OOVPA_XREF(XMountMURootA, 4242, 1 + 12,
+
+           XRefNoSaveIndex,
+           XRefOne)
 {
+
+    XREF_ENTRY(0x3A, XREF_g_XapiMountedMUs), // derived
 
     { 0x16, 0xBF },
     { 0x22, 0x8A },
@@ -197,12 +203,13 @@ OOVPA_NO_XREF(XapiInitProcess, 4242, 7)
 // * XUnmountMU
 // ******************************************************************
 // Generic OOVPA as of 4242 and newer.
-OOVPA_XREF(XUnmountMU, 4242, 1 + 9,
+OOVPA_XREF(XUnmountMU, 4242, 2 + 9,
 
            XRefNoSaveIndex,
-           XRefOne)
+           XRefTwo)
 {
 
+    XREF_ENTRY(0x2C, XREF_g_XapiMountedMUs), // derived
     XREF_ENTRY(0x50, XREF_XUnmountAlternateTitleA), // Was 3911 offset 0x38
 
     // push EBP

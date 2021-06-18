@@ -785,6 +785,7 @@ typedef enum _XRefDatabaseOffset {
     // XAPI
     // derive
     XREF_g_DeviceType_MU,
+    XREF_g_XapiMountedMUs,
 
     XREF_IUsbInit_GetMaxDeviceTypeCount,
     XREF_MU_Init,

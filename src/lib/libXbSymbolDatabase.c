@@ -1344,6 +1344,8 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
 #endif                                                                                        //
     pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER] = XREF_ADDR_DERIVE;         //In use
+    // XAPILIB                                                                                //
+    pContext->xref_database[XREF_g_XapiMountedMUs] = XREF_ADDR_DERIVE;                        //In use
     // clang-format on
 
     // Mark all library contexts as zero-initialized for scan activity.
@@ -2277,6 +2279,12 @@ void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle)
     if (internal_IsXRefAddrValid(xD3D_pDeviceAddr)) {
         // Register offset of D3DDevice__m_VertexShader
         internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER, 0, "D3DDevice__m_VertexShader_OFFSET");
+    }
+
+    xbaddr xg_XapiMountedMUs = pContext->xref_database[XREF_g_XapiMountedMUs];
+    if (internal_IsXRefAddrValid(xg_XapiMountedMUs)) {
+        // Register g_XapiMountedMUs
+        internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs");
     }
 
     // Here, others could be registered

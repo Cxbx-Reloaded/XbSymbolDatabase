@@ -831,12 +831,13 @@ OOVPA_XREF(XUnmountAlternateTitleA, 3911, 7,
 // ******************************************************************
 // * XMountMUA
 // ******************************************************************
-OOVPA_XREF(XMountMUA, 3911, 1 + 7,
+OOVPA_XREF(XMountMUA, 3911, 2 + 7,
 
            XRefNoSaveIndex,
-           XRefOne)
+           XRefTwo)
 {
 
+    XREF_ENTRY(0x2E, XREF_g_XapiMountedMUs), // derived
     XREF_ENTRY(0xCE, XREF_XapiMapLetterToDirectory),
 
     { 0x1E, 0x0C },
@@ -1028,8 +1029,13 @@ OOVPA_NO_XREF(XAutoPowerDownResetTimer, 3911, 12)
 // ******************************************************************
 // * XMountMURootA
 // ******************************************************************
-OOVPA_NO_XREF(XMountMURootA, 3911, 7) // generic version
+OOVPA_XREF(XMountMURootA, 3911, 1 + 7,
+
+           XRefNoSaveIndex,
+           XRefOne)
 {
+
+    XREF_ENTRY(0x2D, XREF_g_XapiMountedMUs), // derived
 
     { 0x1E, 0x0C },
     { 0x3E, 0x00 },
@@ -1306,12 +1312,13 @@ OOVPA_NO_XREF(XapiFiberStartup, 3911, 14)
 // ******************************************************************
 // * XUnmountMU
 // ******************************************************************
-OOVPA_XREF(XUnmountMU, 3911, 1 + 9,
+OOVPA_XREF(XUnmountMU, 3911, 2 + 9,
 
            XRefNoSaveIndex,
-           XRefOne)
+           XRefTwo)
 {
 
+    XREF_ENTRY(0x1F, XREF_g_XapiMountedMUs), // derived
     XREF_ENTRY(0x38, XREF_XUnmountAlternateTitleA),
 
     // push EBP
