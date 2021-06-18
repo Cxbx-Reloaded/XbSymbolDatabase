@@ -98,6 +98,7 @@ int main(int argc, char const* argv[])
     assert(status == 1);
     XbSymbolContext_ScanManual(ctx);
     XbSymbolContext_ScanAllLibraryFilter(ctx);
+    XbSymbolContext_RegisterXRefs(ctx);
     XbSymbolContext_Release(ctx);
 
     free(lib_hdr.filters);
