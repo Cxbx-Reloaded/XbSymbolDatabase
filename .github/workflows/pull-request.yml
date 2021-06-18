@@ -15,6 +15,9 @@ jobs:
           sync-labels: true
 
       - uses: actions/checkout@v2
+        with:
+          # IMPORTANT: Make sure checkout is pulling pull request's merge commit!
+          ref: 'refs/pull/${{ github.event.number }}/merge'
       - name: Clang-Format Lint Verify
         uses: DoozyX/clang-format-lint-action@v0.11
         with:
