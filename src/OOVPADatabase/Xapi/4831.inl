@@ -193,3 +193,22 @@ OOVPA_NO_XREF(XInputGetDeviceDescription, 4831, 14)
     { 0x30, 0x45 },
     //{ 0x31, 0xF8 }, // 4831 0xF4 vs 5344 0xF8
 } OOVPA_END;
+
+// ******************************************************************
+// * XReadMUMetaData
+// ******************************************************************
+OOVPA_XREF(XReadMUMetaData, 4831, 1 + 9,
+
+           XRefNoSaveIndex,
+           XRefOne)
+{
+
+    XREF_ENTRY(0x31, XREF_g_XapiMountedMUs),
+
+    // push ebp
+    // mov ebp,esp
+    OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+
+    // mov WORD PTR [ebp-0x0E],0x3E
+    OV_MATCH(0x51, 0x66, 0xC7, 0x45, 0xF2, 0x3E, 0x00),
+} OOVPA_END;
