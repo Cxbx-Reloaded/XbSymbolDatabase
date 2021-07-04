@@ -277,7 +277,10 @@ OOVPA_XREF(D3DDevice_KickOff, 5455, 8,
            XREF_D3D_CDevice_KickOff,
            XRefZero)
 {
-    OV_MATCH( 0x00, 0x56 , 0x8B , 0xF1 , 0x8B , 0x46 , 0x08 , 0xA8 , 0x04 )
+    OV_MATCH(0x00, 0x56),                // push    esi
+    OV_MATCH(0x01, 0x8B , 0xF1),         // mov     esi, ecx     //ecx = gpCDevice
+    OV_MATCH(0x03, 0x8B , 0x46 , 0x08),  // mov     eax, [esi+8]
+    OV_MATCH(0x06, 0xA8 , 0x04)          // test    al, 4        //StateFlags & STATE_NULLHARDWARE
 } OOVPA_END;
 
 // ******************************************************************
