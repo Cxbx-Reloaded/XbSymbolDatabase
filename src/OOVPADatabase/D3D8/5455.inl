@@ -272,15 +272,27 @@ OOVPA_NO_XREF(D3DDevice_GetTile, 5455, 12)
 // ******************************************************************
 // * D3D::CDevice::KickOff
 // ******************************************************************
-OOVPA_XREF(D3DDevice_KickOff, 5455, 8,
+OOVPA_XREF(D3DDevice_KickOff, 5455, 1 + 12,
 
            XREF_D3D_CDevice_KickOff,
-           XRefZero)
+           XRefOne)
 {
-    OV_MATCH(0x00, 0x56),                // push    esi
-    OV_MATCH(0x01, 0x8B , 0xF1),         // mov     esi, ecx     //ecx = gpCDevice
-    OV_MATCH(0x03, 0x8B , 0x46 , 0x08),  // mov     eax, [esi+8]
-    OV_MATCH(0x06, 0xA8 , 0x04)          // test    al, 4        //StateFlags & STATE_NULLHARDWARE
+    // mov eax, XREF_D3DDEVICE
+    XREF_ENTRY(0x1A, XREF_D3DDEVICE), // Derived
+
+    // push esi
+    // mov esi, ecx
+    OV_MATCH(0x00, 0x56, 0x8B, 0xF1),
+    // mov eax, [esi + 8]
+    // test al, 0x04
+    OV_MATCH(0x03, 0x8B, 0x46, 0x08, 0xA8, 0x04),
+
+    // test ah, 0x20
+    OV_MATCH(0x14, 0xF6, 0xC4, 0x20),
+
+    // mov eax, XREF_D3DDEVICE
+    OV_MATCH(0x19, 0xA1),
+
 } OOVPA_END;
 
 // ******************************************************************
