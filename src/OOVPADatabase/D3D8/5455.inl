@@ -272,39 +272,27 @@ OOVPA_NO_XREF(D3DDevice_GetTile, 5455, 12)
 // ******************************************************************
 // * D3D::CDevice::KickOff
 // ******************************************************************
-OOVPA_XREF(D3DDevice_KickOff, 5455, 15,
+OOVPA_XREF(D3DDevice_KickOff, 5455, 1 + 12,
 
            XREF_D3D_CDevice_KickOff,
-           XRefZero)
+           XRefOne)
 {
+    // mov eax, XREF_D3DDEVICE
+    XREF_ENTRY(0x1A, XREF_D3DDEVICE), // Derived
 
-    { 0x06, 0xA8 },
-    { 0x07, 0x04 },
-    { 0x08, 0x74 },
-    { 0x09, 0x08 },
+    // push esi
+    // mov esi, ecx
+    OV_MATCH(0x00, 0x56, 0x8B, 0xF1),
+    // mov eax, [esi + 8]
+    // test al, 0x04
+    OV_MATCH(0x03, 0x8B, 0x46, 0x08, 0xA8, 0x04),
 
-    // D3D::CDevice::KickOff+0x0A : mov edx, [ecx+0x35C]
-    { 0x0A, 0x8B },
-    { 0x0B, 0x96 },
-    //{ 0x0C, 0x6C },
-    //{ 0x0D, 0x07 },
-    { 0x0E, 0x00 },
-    { 0x0F, 0x00 },
+    // test ah, 0x20
+    OV_MATCH(0x14, 0xF6, 0xC4, 0x20),
 
-    // D3D::CDevice::KickOff+0x14 : test ch, 0x20
-    { 0x14, 0xF6 },
-    { 0x15, 0xC4 },
-    { 0x16, 0x20 },
+    // mov eax, XREF_D3DDEVICE
+    OV_MATCH(0x19, 0xA1),
 
-    // D3D::CDevice::KickOff+0x24 : sfence
-    { 0x24, 0x0F },
-    { 0x25, 0xAE },
-    { 0x26, 0xF8 },
-
-    { 0x62, 0x74 },
-
-    // D3D::CDevice::KickOff+0xAF : retn
-    //{ 0xAF, 0xC3 },
 } OOVPA_END;
 
 // ******************************************************************
