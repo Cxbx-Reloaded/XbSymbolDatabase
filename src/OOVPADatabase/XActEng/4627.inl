@@ -26,8 +26,9 @@
 // ******************************************************************
 // * XACTEngineCreate
 // ******************************************************************
-OOVPA_NO_XREF(XACTEngineCreate, 4627, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(XACTEngineCreate,
+                         4627)
+OOVPA_SIG_MATCH(
 
     // XACTEngineCreate+0x0C : movzx ebx, al
     { 0x0C, 0x0F },
@@ -47,16 +48,18 @@ OOVPA_NO_XREF(XACTEngineCreate, 4627, 11)
     // XACTEngineCreate+0x9A : retn 0x8
     { 0x9A, 0xC2 },
     { 0x9B, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XACT::CEngine::RegisterWaveBank
 // ******************************************************************
-OOVPA_XREF(XACT_CEngine_RegisterWaveBank, 4627, 7,
+OOVPA_SIG_HEADER_XREF(XACT_CEngine_RegisterWaveBank,
+                      4627,
 
-           XREF_XACT_CEngine_RegisterWaveBank,
-           XRefZero)
-{
+                      XREF_XACT_CEngine_RegisterWaveBank,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x11, 0x33 },
     { 0x24, 0xC6 },
@@ -65,16 +68,18 @@ OOVPA_XREF(XACT_CEngine_RegisterWaveBank, 4627, 7,
     { 0x5D, 0x83 },
     { 0x70, 0x33 },
     { 0x84, 0xFF },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IXACTEngine_RegisterWaveBank
 // ******************************************************************
-OOVPA_XREF(IXACTEngine_RegisterWaveBank, 4627, 1 + 7,
+OOVPA_SIG_HEADER_XREF(IXACTEngine_RegisterWaveBank,
+                      4627,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x1D, XREF_XACT_CEngine_RegisterWaveBank),
 
@@ -85,13 +90,15 @@ OOVPA_XREF(IXACTEngine_RegisterWaveBank, 4627, 1 + 7,
     { 0x17, 0x1B },
     { 0x1C, 0xE8 },
     { 0x21, 0xC2 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XACTEngineDoWork
 // ******************************************************************
-OOVPA_NO_XREF(XACTEngineDoWork, 4627, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(XACTEngineDoWork,
+                         4627)
+OOVPA_SIG_MATCH(
 
     { 0x07, 0x8B },
     { 0x0D, 0x85 },
@@ -100,16 +107,18 @@ OOVPA_NO_XREF(XACTEngineDoWork, 4627, 7)
     { 0x21, 0xFF },
     { 0x29, 0xFF },
     { 0x2F, 0x5F },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XACT::CEngine::RegisterStreamedWaveBank
 // ******************************************************************
-OOVPA_XREF(XACT_CEngine_RegisterStreamedWaveBank, 4627, 8,
+OOVPA_SIG_HEADER_XREF(XACT_CEngine_RegisterStreamedWaveBank,
+                      4627,
 
-           XREF_XACT_CEngine_RegisterStreamedWaveBank,
-           XRefZero)
-{
+                      XREF_XACT_CEngine_RegisterStreamedWaveBank,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x10, 0x01 },
     { 0x23, 0x3B },
@@ -119,16 +128,18 @@ OOVPA_XREF(XACT_CEngine_RegisterStreamedWaveBank, 4627, 8,
     { 0x6A, 0x41 },
     { 0x7C, 0x68 },
     { 0x8E, 0x0C },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IXACTEngine_RegisterStreamedWaveBank
 // ******************************************************************
-OOVPA_XREF(IXACTEngine_RegisterStreamedWaveBank, 4627, 1 + 8,
+OOVPA_SIG_HEADER_XREF(IXACTEngine_RegisterStreamedWaveBank,
+                      4627,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x19, XREF_XACT_CEngine_RegisterStreamedWaveBank),
 
@@ -140,16 +151,18 @@ OOVPA_XREF(IXACTEngine_RegisterStreamedWaveBank, 4627, 1 + 8,
     { 0x16, 0xC8 },
     { 0x1D, 0xC2 },
     { 0x1E, 0x0C },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XACT::CEngine::CreateSoundBank
 // ******************************************************************
-OOVPA_XREF(XACT_CEngine_CreateSoundBank, 4627, 8,
+OOVPA_SIG_HEADER_XREF(XACT_CEngine_CreateSoundBank,
+                      4627,
 
-           XREF_XACT_CEngine_CreateSoundBank,
-           XRefZero)
-{
+                      XREF_XACT_CEngine_CreateSoundBank,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x0E, 0xA0 },
     { 0x1E, 0x8B },
@@ -159,16 +172,18 @@ OOVPA_XREF(XACT_CEngine_CreateSoundBank, 4627, 8,
     { 0x5E, 0xC7 },
     { 0x72, 0xFF },
     { 0x7E, 0x10 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IXACTEngine_CreateSoundBank
 // ******************************************************************
-OOVPA_XREF(IXACTEngine_CreateSoundBank, 4627, 1 + 7,
+OOVPA_SIG_HEADER_XREF(IXACTEngine_CreateSoundBank,
+                      4627,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x1D, XREF_XACT_CEngine_CreateSoundBank),
 
@@ -179,16 +194,18 @@ OOVPA_XREF(IXACTEngine_CreateSoundBank, 4627, 1 + 7,
     { 0x17, 0x1B },
     { 0x1C, 0xE8 },
     { 0x21, 0xC2 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XACT::CEngine::DownloadEffectsImage
 // ******************************************************************
-OOVPA_XREF(XACT_CEngine_DownloadEffectsImage, 4627, 7,
+OOVPA_SIG_HEADER_XREF(XACT_CEngine_DownloadEffectsImage,
+                      4627,
 
-           XREF_XACT_CEngine_DownloadEffectsImage,
-           XRefZero)
-{
+                      XREF_XACT_CEngine_DownloadEffectsImage,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     { 0x0B, 0x8B },
     { 0x12, 0xFF },
     { 0x1C, 0x46 },
@@ -196,16 +213,18 @@ OOVPA_XREF(XACT_CEngine_DownloadEffectsImage, 4627, 7,
     { 0x30, 0x89 },
     { 0x3A, 0x68 },
     { 0x45, 0x8B },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IXACTEngine_DownloadEffectsImage
 // ******************************************************************
-OOVPA_XREF(IXACTEngine_DownloadEffectsImage, 4627, 1 + 8,
+OOVPA_SIG_HEADER_XREF(IXACTEngine_DownloadEffectsImage,
+                      4627,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x1F, XREF_XACT_CEngine_DownloadEffectsImage),
 
@@ -217,16 +236,18 @@ OOVPA_XREF(IXACTEngine_DownloadEffectsImage, 4627, 1 + 8,
     { 0x1C, 0xC8 },
     { 0x23, 0x5D },
     { 0x26, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XACT::CEngine::CreateSoundSource
 // ******************************************************************
-OOVPA_XREF(XACT_CEngine_CreateSoundSource, 4627, 8,
+OOVPA_SIG_HEADER_XREF(XACT_CEngine_CreateSoundSource,
+                      4627,
 
-           XREF_XACT_CEngine_CreateSoundSource,
-           XRefZero)
-{
+                      XREF_XACT_CEngine_CreateSoundSource,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     { 0x0A, 0x0F },
     { 0x14, 0x8B },
     { 0x1F, 0x50 },
@@ -235,16 +256,18 @@ OOVPA_XREF(XACT_CEngine_CreateSoundSource, 4627, 8,
     { 0x40, 0x08 },
     { 0x4B, 0x15 },
     { 0x56, 0x0C },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IXACTEngine_CreateSoundSource
 // ******************************************************************
-OOVPA_XREF(IXACTEngine_CreateSoundSource, 4627, 1 + 8,
+OOVPA_SIG_HEADER_XREF(IXACTEngine_CreateSoundSource,
+                      4627,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x19, XREF_XACT_CEngine_CreateSoundSource),
 
@@ -256,16 +279,18 @@ OOVPA_XREF(IXACTEngine_CreateSoundSource, 4627, 1 + 8,
     { 0x16, 0xC8 },
     { 0x1D, 0xC2 },
     { 0x1E, 0x0C },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XACT::CSoundBank::GetSoundCueIndexFromFriendlyName
 // ******************************************************************
-OOVPA_XREF(XACT_CSoundBank_GetSoundCueIndexFromFriendlyName, 4627, 7,
+OOVPA_SIG_HEADER_XREF(XACT_CSoundBank_GetSoundCueIndexFromFriendlyName,
+                      4627,
 
-           XREF_XACT_CSoundBank_GetSoundCueIndexFromFriendlyName,
-           XRefZero)
-{
+                      XREF_XACT_CSoundBank_GetSoundCueIndexFromFriendlyName,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     { 0x12, 0x8B },
     { 0x22, 0x46 },
     { 0x34, 0x68 },
@@ -273,16 +298,18 @@ OOVPA_XREF(XACT_CSoundBank_GetSoundCueIndexFromFriendlyName, 4627, 7,
     { 0x58, 0x39 },
     { 0x6A, 0x45 },
     { 0x7E, 0xFF },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IXACTSoundBank_GetSoundCueIndexFromFriendlyName
 // ******************************************************************
-OOVPA_XREF(IXACTSoundBank_GetSoundCueIndexFromFriendlyName, 4627, 1 + 8,
+OOVPA_SIG_HEADER_XREF(IXACTSoundBank_GetSoundCueIndexFromFriendlyName,
+                      4627,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x19, XREF_XACT_CSoundBank_GetSoundCueIndexFromFriendlyName),
 
@@ -294,13 +321,15 @@ OOVPA_XREF(IXACTSoundBank_GetSoundCueIndexFromFriendlyName, 4627, 1 + 8,
     { 0x16, 0xC8 },
     { 0x1D, 0xC2 },
     { 0x1E, 0x0C },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IXACTSoundBank_Play
 // ******************************************************************
-OOVPA_NO_XREF(IXACTSoundBank_Play, 4627, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(IXACTSoundBank_Play,
+                         4627)
+OOVPA_SIG_MATCH(
 
     { 0x03, 0xFF },
     { 0x08, 0x08 },
@@ -310,16 +339,18 @@ OOVPA_NO_XREF(IXACTSoundBank_Play, 4627, 8)
     { 0x1C, 0xC8 },
     { 0x23, 0x5D },
     { 0x26, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XACT::CEngine::RegisterNotification
 // ******************************************************************
-OOVPA_XREF(XACT_CEngine_RegisterNotification, 4627, 7,
+OOVPA_SIG_HEADER_XREF(XACT_CEngine_RegisterNotification,
+                      4627,
 
-           XREF_XACT_CEngine_RegisterNotification,
-           XRefZero)
-{
+                      XREF_XACT_CEngine_RegisterNotification,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     { 0x07, 0x8B },
     { 0x0C, 0x01 },
     { 0x13, 0xF0 },
@@ -327,16 +358,18 @@ OOVPA_XREF(XACT_CEngine_RegisterNotification, 4627, 7,
     { 0x24, 0xFF },
     { 0x2A, 0x8B },
     { 0x2F, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IXACTEngine_RegisterNotification
 // ******************************************************************
-OOVPA_XREF(IXACTEngine_RegisterNotification, 4627, 1 + 7,
+OOVPA_SIG_HEADER_XREF(IXACTEngine_RegisterNotification,
+                      4627,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x15, XREF_XACT_CEngine_RegisterNotification),
 
@@ -347,16 +380,18 @@ OOVPA_XREF(IXACTEngine_RegisterNotification, 4627, 1 + 7,
     { 0x12, 0xC8 },
     { 0x19, 0xC2 },
     { 0x1A, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XACT::CEngine::GetNotification
 // ******************************************************************
-OOVPA_XREF(XACT_CEngine_GetNotification, 4627, 8,
+OOVPA_SIG_HEADER_XREF(XACT_CEngine_GetNotification,
+                      4627,
 
-           XREF_XACT_CEngine_GetNotification,
-           XRefZero)
-{
+                      XREF_XACT_CEngine_GetNotification,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x11, 0x8D },
     { 0x24, 0x5A },
@@ -366,16 +401,18 @@ OOVPA_XREF(XACT_CEngine_GetNotification, 4627, 8,
     { 0x74, 0x8B },
     { 0x83, 0x40 },
     { 0x96, 0x0C },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IXACTEngine_GetNotification
 // ******************************************************************
-OOVPA_XREF(IXACTEngine_GetNotification, 4627, 1 + 8,
+OOVPA_SIG_HEADER_XREF(IXACTEngine_GetNotification,
+                      4627,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x19, XREF_XACT_CEngine_GetNotification),
 
@@ -387,16 +424,18 @@ OOVPA_XREF(IXACTEngine_GetNotification, 4627, 1 + 8,
     { 0x16, 0xC8 },
     { 0x1D, 0xC2 },
     { 0x1E, 0x0C },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XACT::CEngine::UnRegisterWaveBank
 // ******************************************************************
-OOVPA_XREF(XACT_CEngine_UnRegisterWaveBank, 4627, 8,
+OOVPA_SIG_HEADER_XREF(XACT_CEngine_UnRegisterWaveBank,
+                      4627,
 
-           XREF_XACT_CEngine_UnRegisterWaveBank,
-           XRefZero)
-{
+                      XREF_XACT_CEngine_UnRegisterWaveBank,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x07, 0x8B },
     { 0x10, 0x58 },
@@ -406,16 +445,18 @@ OOVPA_XREF(XACT_CEngine_UnRegisterWaveBank, 4627, 8,
     { 0x34, 0x5F },
     { 0x3D, 0xFF },
     { 0x46, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IXACTEngine_UnRegisterWaveBank
 // ******************************************************************
-OOVPA_XREF(IXACTEngine_UnRegisterWaveBank, 4627, 1 + 7,
+OOVPA_SIG_HEADER_XREF(IXACTEngine_UnRegisterWaveBank,
+                      4627,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x15, XREF_XACT_CEngine_UnRegisterWaveBank),
 
@@ -426,4 +467,5 @@ OOVPA_XREF(IXACTEngine_UnRegisterWaveBank, 4627, 1 + 7,
     { 0x12, 0xC8 },
     { 0x19, 0xC2 },
     { 0x1A, 0x08 },
-} OOVPA_END;
+    //
+);

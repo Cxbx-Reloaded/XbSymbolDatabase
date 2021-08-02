@@ -26,11 +26,12 @@
 // ******************************************************************
 // * XACT::CSoundBank::Play
 // ******************************************************************
-OOVPA_XREF(XACT_CSoundBank_Play, 5558, 12,
+OOVPA_SIG_HEADER_XREF(XACT_CSoundBank_Play,
+                      5558,
 
-           XREF_XACT_CSoundBank_Play,
-           XRefZero)
-{
+                      XREF_XACT_CSoundBank_Play,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x06, 0x8B },
 
@@ -46,4 +47,5 @@ OOVPA_XREF(XACT_CSoundBank_Play, 5558, 12,
     { 0x27, 0x85 },
     { 0x3B, 0xE9 },
     { 0x55, 0x35 },
-} OOVPA_END;
+    //
+);
