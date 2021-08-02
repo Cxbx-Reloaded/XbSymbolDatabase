@@ -23,12 +23,12 @@
 // *
 // ******************************************************************
 
-OOVPA_XREF(JVS_SendCommand_String, 4831, 13,
+OOVPA_SIG_HEADER_XREF(JVS_SendCommand_String,
+                      4831,
 
-           XREF_JVS_SendCommand_String,
-           XRefZero)
-{
-
+                      XREF_JVS_SendCommand_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // JVS_STATUS_ERROR_DEVICE_NOT_CONNECTED2 from JVS_SendCommand
     OV_MATCH(0x00, 'J', 'V', 'S'),
     OV_MATCH(0x04, 'S'),
@@ -41,15 +41,16 @@ OOVPA_XREF(JVS_SendCommand_String, 4831, 13,
     OV_MATCH(0x2C, 'J'),
     OV_MATCH(0x30, 'S'),
     OV_MATCH(0x34, 'C'),
-} OOVPA_END;
+    //
+);
 
 
-OOVPA_XREF(JvsBACKUP_Read_String, 4831, 13,
+OOVPA_SIG_HEADER_XREF(JvsBACKUP_Read_String,
+                      4831,
 
-           XREF_JvsBACKUP_Read_String,
-           XRefZero)
-{
-
+                      XREF_JvsBACKUP_Read_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status error <JvsBACKUP_Read>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'e'),
@@ -58,14 +59,15 @@ OOVPA_XREF(JvsBACKUP_Read_String, 4831, 13,
     OV_MATCH(0x18, 'R'),
     OV_MATCH(0x1B, 'd'),
     OV_MATCH(0x1C, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsBACKUP_Write_String, 4831, 13,
+OOVPA_SIG_HEADER_XREF(JvsBACKUP_Write_String,
+                      4831,
 
-           XREF_JvsBACKUP_Write_String,
-           XRefZero)
-{
-
+                      XREF_JvsBACKUP_Write_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status error <JvsBACKUP_Write>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'e'),
@@ -74,14 +76,15 @@ OOVPA_XREF(JvsBACKUP_Write_String, 4831, 13,
     OV_MATCH(0x18, 'W'),
     OV_MATCH(0x1C, 'e'),
     OV_MATCH(0x1D, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsEEPROM_Read_String, 4831, 13,
+OOVPA_SIG_HEADER_XREF(JvsEEPROM_Read_String,
+                      4831,
 
-           XREF_JvsEEPROM_Read_String,
-           XRefZero)
-{
-
+                      XREF_JvsEEPROM_Read_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status error <JvsEEPROM_Read>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'e'),
@@ -90,14 +93,15 @@ OOVPA_XREF(JvsEEPROM_Read_String, 4831, 13,
     OV_MATCH(0x18, 'R'),
     OV_MATCH(0x1B, 'd'),
     OV_MATCH(0x1C, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsEEPROM_Write_String, 4831, 13,
+OOVPA_SIG_HEADER_XREF(JvsEEPROM_Write_String,
+                      4831,
 
-           XREF_JvsEEPROM_Write_String,
-           XRefZero)
-{
-
+                      XREF_JvsEEPROM_Write_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status error <JvsEEPROM_Write>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'e'),
@@ -106,14 +110,15 @@ OOVPA_XREF(JvsEEPROM_Write_String, 4831, 13,
     OV_MATCH(0x18, 'W'),
     OV_MATCH(0x1C, 'e'),
     OV_MATCH(0x1D, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsFirmwareDownload_String, 4831, 14,
+OOVPA_SIG_HEADER_XREF(JvsFirmwareDownload_String,
+                      4831,
 
-           XREF_JvsFirmwareDownload_String,
-           XRefZero)
-{
-
+                      XREF_JvsFirmwareDownload_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status error1 <JvsFirmwareDownload>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'e'),
@@ -123,14 +128,15 @@ OOVPA_XREF(JvsFirmwareDownload_String, 4831, 14,
     OV_MATCH(0x1A, 'D'),
     OV_MATCH(0x21, 'd'),
     OV_MATCH(0x22, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsNodeReceivePacket_String, 4831, 13,
+OOVPA_SIG_HEADER_XREF(JvsNodeReceivePacket_String,
+                      4831,
 
-           XREF_JvsNodeReceivePacket_String,
-           XRefZero)
-{
-
+                      XREF_JvsNodeReceivePacket_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status waiting <JvsNodeReceivePacket>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'w'),
@@ -139,14 +145,15 @@ OOVPA_XREF(JvsNodeReceivePacket_String, 4831, 13,
     OV_MATCH(0x17, 'R'),
     OV_MATCH(0x1E, 'P'),
     OV_MATCH(0x24, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsRTC_Read_String, 4831, 12,
+OOVPA_SIG_HEADER_XREF(JvsRTC_Read_String,
+                      4831,
 
-           XREF_JvsRTC_Read_String,
-           XRefZero)
-{
-
+                      XREF_JvsRTC_Read_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status wait <JvsRTC_Read>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'w'),
@@ -154,14 +161,15 @@ OOVPA_XREF(JvsRTC_Read_String, 4831, 12,
     OV_MATCH(0x10, 'R'),
     OV_MATCH(0x14, 'R'),
     OV_MATCH(0x18, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsRTC_Write_String, 4831, 12,
+OOVPA_SIG_HEADER_XREF(JvsRTC_Write_String,
+                      4831,
 
-           XREF_JvsRTC_Write_String,
-           XRefZero)
-{
-
+                      XREF_JvsRTC_Write_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status wait <JvsRTC_Write>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'w'),
@@ -169,14 +177,15 @@ OOVPA_XREF(JvsRTC_Write_String, 4831, 12,
     OV_MATCH(0x10, 'R'),
     OV_MATCH(0x14, 'W'),
     OV_MATCH(0x19, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsNodeSendPacket_String, 4831, 13,
+OOVPA_SIG_HEADER_XREF(JvsNodeSendPacket_String,
+                      4831,
 
-           XREF_JvsNodeSendPacket_String,
-           XRefZero)
-{
-
+                      XREF_JvsNodeSendPacket_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status waiting <JvsNodeSendPacket>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'w'),
@@ -185,14 +194,15 @@ OOVPA_XREF(JvsNodeSendPacket_String, 4831, 13,
     OV_MATCH(0x17, 'S'),
     OV_MATCH(0x1B, 'P'),
     OV_MATCH(0x21, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsFirmwareUpload_String, 4831, 14,
+OOVPA_SIG_HEADER_XREF(JvsFirmwareUpload_String,
+                      4831,
 
-           XREF_JvsFirmwareUpload_String,
-           XRefZero)
-{
-
+                      XREF_JvsFirmwareUpload_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status error1 <JvsFirmwareUpload>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'e'),
@@ -202,14 +212,15 @@ OOVPA_XREF(JvsFirmwareUpload_String, 4831, 14,
     OV_MATCH(0x1A, 'U'),
     OV_MATCH(0x1F, 'd'),
     OV_MATCH(0x20, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsScFirmwareDownload_String, 4831, 15,
+OOVPA_SIG_HEADER_XREF(JvsScFirmwareDownload_String,
+                      4831,
 
-           XREF_JvsScFirmwareDownload_String,
-           XRefZero)
-{
-
+                      XREF_JvsScFirmwareDownload_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status error1 <JvsScFirmwareDownload>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'e'),
@@ -220,14 +231,15 @@ OOVPA_XREF(JvsScFirmwareDownload_String, 4831, 15,
     OV_MATCH(0x1C, 'D'),
     OV_MATCH(0x23, 'd'),
     OV_MATCH(0x24, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsScFirmwareUpload_String, 4831, 14,
+OOVPA_SIG_HEADER_XREF(JvsScFirmwareUpload_String,
+                      4831,
 
-           XREF_JvsScFirmwareUpload_String,
-           XRefZero)
-{
-
+                      XREF_JvsScFirmwareUpload_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status waiting <JvsScFirmwareUpload>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'w'),
@@ -237,14 +249,15 @@ OOVPA_XREF(JvsScFirmwareUpload_String, 4831, 14,
     OV_MATCH(0x1D, 'U'),
     OV_MATCH(0x22, 'd'),
     OV_MATCH(0x23, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsScReceiveMidi_String, 4831, 13,
+OOVPA_SIG_HEADER_XREF(JvsScReceiveMidi_String,
+                      4831,
 
-           XREF_JvsScReceiveMidi_String,
-           XRefZero)
-{
-
+                      XREF_JvsScReceiveMidi_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status waiting <JvsScReceiveMidi>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'w'),
@@ -253,14 +266,15 @@ OOVPA_XREF(JvsScReceiveMidi_String, 4831, 13,
     OV_MATCH(0x15, 'R'),
     OV_MATCH(0x1C, 'M'),
     OV_MATCH(0x20, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsScReceiveRs323c_String, 4831, 13,
+OOVPA_SIG_HEADER_XREF(JvsScReceiveRs323c_String,
+                      4831,
 
-           XREF_JvsScReceiveRs323c_String,
-           XRefZero)
-{
-
+                      XREF_JvsScReceiveRs323c_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status error <JvsScReceiveRs323c>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'e'),
@@ -269,14 +283,15 @@ OOVPA_XREF(JvsScReceiveRs323c_String, 4831, 13,
     OV_MATCH(0x13, 'R'),
     OV_MATCH(0x1A, 'R'),
     OV_MATCH(0x20, '>'),
-} OOVPA_END;
+    //
+);
 
-OOVPA_XREF(JvsScSendMidi_String, 4831, 13,
+OOVPA_SIG_HEADER_XREF(JvsScSendMidi_String,
+                      4831,
 
-           XREF_JvsScSendMidi_String,
-           XRefZero)
-{
-
+                      XREF_JvsScSendMidi_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status waiting <JvsScSendMidi>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'w'),
@@ -285,15 +300,16 @@ OOVPA_XREF(JvsScSendMidi_String, 4831, 13,
     OV_MATCH(0x15, 'S'),
     OV_MATCH(0x19, 'M'),
     OV_MATCH(0x1D, '>'),
-} OOVPA_END;
+    //
+);
 
 
-OOVPA_XREF(JvsScSendRs323c_String, 4831, 13,
+OOVPA_SIG_HEADER_XREF(JvsScSendRs323c_String,
+                      4831,
 
-           XREF_JvsScSendRs323c_String,
-           XRefZero)
-{
-
+                      XREF_JvsScSendRs323c_String,
+                      XRefZero)
+OOVPA_SIG_MATCH(
     // Status error <JvsScSendRs323c>
     OV_MATCH(0x00, 'S', 't', 'a', 't', 'u', 's'),
     OV_MATCH(0x07, 'e'),
@@ -302,17 +318,18 @@ OOVPA_XREF(JvsScSendRs323c_String, 4831, 13,
     OV_MATCH(0x13, 'S'),
     OV_MATCH(0x17, 'R'),
     OV_MATCH(0x1D, '>'),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JVS_SendCommand
 // ******************************************************************
-OOVPA_XREF(JVS_SendCommand, 4831, 1 + 12,
+OOVPA_SIG_HEADER_XREF(JVS_SendCommand,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x250, XREF_JVS_SendCommand_String),
 
     OV_MATCH(0x00, 0x81, 0xEC),
@@ -328,51 +345,54 @@ OOVPA_XREF(JVS_SendCommand, 4831, 1 + 12,
     OV_MATCH(0x90, 0x0F),
 
     OV_MATCH(0x96, 0xA8),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JVS_SendCommand2
 // * Variation of JVS_SendCommand
 // ******************************************************************
-OOVPA_XREF(JVS_SendCommand2, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JVS_SendCommand2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x2C0, XREF_JVS_SendCommand_String),
 
     OV_MATCH(0x00, 0x83, 0xEC, 0x58, 0x53),
 
     OV_MATCH(0x86, 0x88, 0x44, 0x24, 0x70),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JVS_SendCommand3
 // * Variation of JVS_SendCommand
 // ******************************************************************
-OOVPA_XREF(JVS_SendCommand3, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JVS_SendCommand3,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x28B, XREF_JVS_SendCommand_String),
 
     OV_MATCH(0x00, 0x83, 0xEC, 0x58, 0x53),
 
     OV_MATCH(0x86, 0x88, 0x44, 0x24, 0x70),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsBACKUP_Read
 // ******************************************************************
-OOVPA_XREF(JvsBACKUP_Read, 4831, 1 + 9,
+OOVPA_SIG_HEADER_XREF(JvsBACKUP_Read,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x6E, XREF_JvsBACKUP_Read_String),
 
     OV_MATCH(0x00, 0x8B),
@@ -384,19 +404,20 @@ OOVPA_XREF(JvsBACKUP_Read, 4831, 1 + 9,
     OV_MATCH(0x43, 0xBE, 0x00),
 
     OV_MATCH(0x4C, 0x05, 0x00),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsBACKUP_Read2
 // * Seems to be specfic to Crazy Taxi: Same function as above
 // * Very different code structure, needs different signature
 // ******************************************************************
-OOVPA_XREF(JvsBACKUP_Read2, 4831, 1 + 9,
+OOVPA_SIG_HEADER_XREF(JvsBACKUP_Read2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x6F, XREF_JvsBACKUP_Read_String),
 
     OV_MATCH(0x00, 0x53),
@@ -410,17 +431,18 @@ OOVPA_XREF(JvsBACKUP_Read2, 4831, 1 + 9,
     OV_MATCH(0x43, 0x55, 0x52),
 
     OV_MATCH(0x4C, 0x8D, 0x87),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsBACKUP_Read3
 // ******************************************************************
-OOVPA_XREF(JvsBACKUP_Read3, 4831, 1 + 5,
+OOVPA_SIG_HEADER_XREF(JvsBACKUP_Read3,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x5E, XREF_JvsBACKUP_Read_String),
 
     OV_MATCH(0x00, 0x8B),
@@ -428,17 +450,18 @@ OOVPA_XREF(JvsBACKUP_Read3, 4831, 1 + 5,
     OV_MATCH(0x43, 0xBE, 0x00),
 
     OV_MATCH(0x4C, 0x05, 0x00),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsBACKUP_Write
 // ******************************************************************
-OOVPA_XREF(JvsBACKUP_Write, 4831, 1 + 15,
+OOVPA_SIG_HEADER_XREF(JvsBACKUP_Write,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x6E, XREF_JvsBACKUP_Write_String),
 
     OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
@@ -454,17 +477,18 @@ OOVPA_XREF(JvsBACKUP_Write, 4831, 1 + 15,
     OV_MATCH(0x31, 0x51, 0x6A),
 
     OV_MATCH(0x90, 0x0C, 0x2E),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsBACKUP_Write2
 // ******************************************************************
-OOVPA_XREF(JvsBACKUP_Write2, 4831, 1 + 5,
+OOVPA_SIG_HEADER_XREF(JvsBACKUP_Write2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x5E, XREF_JvsBACKUP_Write_String),
 
     OV_MATCH(0x00, 0x8B),
@@ -472,18 +496,19 @@ OOVPA_XREF(JvsBACKUP_Write2, 4831, 1 + 5,
     OV_MATCH(0x43, 0xBE, 0x00),
 
     OV_MATCH(0x4C, 0x05, 0x00),
-} OOVPA_END;
+    //
+);
 
 
 // ******************************************************************
 // * JvsEEPROM_Read
 // ******************************************************************
-OOVPA_XREF(JvsEEPROM_Read, 4831, 1 + 9,
+OOVPA_SIG_HEADER_XREF(JvsEEPROM_Read,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x188, XREF_JvsEEPROM_Read_String),
 
     OV_MATCH(0x00, 0x51),
@@ -495,18 +520,19 @@ OOVPA_XREF(JvsEEPROM_Read, 4831, 1 + 9,
     OV_MATCH(0x43, 0x6A, 0x17),
 
     OV_MATCH(0x4C, 0x6A, 0x40),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsEEPROM_Read2
 // * Almost identical to JvsEEPROM_Read, but some bytes are shifted
 // ******************************************************************
-OOVPA_XREF(JvsEEPROM_Read2, 4831, 1 + 9,
+OOVPA_SIG_HEADER_XREF(JvsEEPROM_Read2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1B0, XREF_JvsEEPROM_Read_String),
 
     OV_MATCH(0x00, 0x51),
@@ -518,17 +544,18 @@ OOVPA_XREF(JvsEEPROM_Read2, 4831, 1 + 9,
     OV_MATCH(0x43, 0x6A, 0x17),
 
     OV_MATCH(0x4C, 0x6A, 0x40),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsEEPROM_Read3
 // ******************************************************************
-OOVPA_XREF(JvsEEPROM_Read3, 4831, 1 + 5,
+OOVPA_SIG_HEADER_XREF(JvsEEPROM_Read3,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x199, XREF_JvsEEPROM_Read_String),
 
     OV_MATCH(0x00, 0x83),
@@ -540,18 +567,19 @@ OOVPA_XREF(JvsEEPROM_Read3, 4831, 1 + 5,
     OV_MATCH(0x48, 0x6A),
 
     OV_MATCH(0x4A, 0x8D),
-} OOVPA_END;
+    //
+);
 
 
 // ******************************************************************
 // * JvsEEPROM_Write
 // ******************************************************************
-OOVPA_XREF(JvsEEPROM_Write, 4831, 1 + 10,
+OOVPA_SIG_HEADER_XREF(JvsEEPROM_Write,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x18E, XREF_JvsEEPROM_Write_String),
 
     OV_MATCH(0x13, 0x08),
@@ -563,18 +591,19 @@ OOVPA_XREF(JvsEEPROM_Write, 4831, 1 + 10,
     OV_MATCH(0x6B, 0xE1, 0xFF),
 
     OV_MATCH(0x70, 0x81, 0xFA),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsEEPROM_Write2
 // * Almost identical to JvsEEPROM_Write2, but some bytes are shifted
 // ******************************************************************
-OOVPA_XREF(JvsEEPROM_Write2, 4831, 1 + 10,
+OOVPA_SIG_HEADER_XREF(JvsEEPROM_Write2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1B6, XREF_JvsEEPROM_Write_String),
     OV_MATCH(0x12, 0x08),
 
@@ -585,33 +614,35 @@ OOVPA_XREF(JvsEEPROM_Write2, 4831, 1 + 10,
     OV_MATCH(0x6B, 0xE1, 0xFF),
 
     OV_MATCH(0x70, 0x81, 0xFA),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsEEPROM_Write3
 // ******************************************************************
-OOVPA_XREF(JvsEEPROM_Write3, 4831, 1 + 3,
+OOVPA_SIG_HEADER_XREF(JvsEEPROM_Write3,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x199, XREF_JvsEEPROM_Write_String),
 
     OV_MATCH(0x00, 0x83, 0xEC),
 
     OV_MATCH(0x34, 0x8B),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsFirmwareDownload
 // ******************************************************************
-OOVPA_XREF(JvsFirmwareDownload, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JvsFirmwareDownload,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1D4, XREF_JvsFirmwareDownload_String),
 
     OV_MATCH(0x03, 0x8B, 0x4C, 0x24, 0x30, 0x53),
@@ -619,17 +650,18 @@ OOVPA_XREF(JvsFirmwareDownload, 4831, 1 + 8,
     OV_MATCH(0x0F, 0x83),
 
     OV_MATCH(0x58, 0x6A, 0x20),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsFirmwareDownload2
 // ******************************************************************
-OOVPA_XREF(JvsFirmwareDownload2, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JvsFirmwareDownload2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x203, XREF_JvsFirmwareDownload_String),
 
     OV_MATCH(0x03, 0x8B, 0x4C, 0x24, 0x30, 0x53),
@@ -637,46 +669,49 @@ OOVPA_XREF(JvsFirmwareDownload2, 4831, 1 + 8,
     OV_MATCH(0x0F, 0x83),
 
     OV_MATCH(0x58, 0x6A, 0x20),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsFirmwareDownload3
 // ******************************************************************
-OOVPA_XREF(JvsFirmwareDownload3, 4831, 1 + 5,
+OOVPA_SIG_HEADER_XREF(JvsFirmwareDownload3,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1E3, XREF_JvsFirmwareDownload_String),
 
     OV_MATCH(0x03, 0x8B, 0x44, 0x24, 0x30, 0x53),
-} OOVPA_END;
+    //
+);
 
 
 // ******************************************************************
 // * JvsFirmwareDownload4
 // ******************************************************************
-OOVPA_XREF(JvsFirmwareDownload4, 4831, 1 + 5,
+OOVPA_SIG_HEADER_XREF(JvsFirmwareDownload4,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1CF, XREF_JvsFirmwareDownload_String),
 
     OV_MATCH(0x03, 0x8B, 0x44, 0x24, 0x30, 0x53),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsFirmwareUpload
 // ******************************************************************
-OOVPA_XREF(JvsFirmwareUpload, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JvsFirmwareUpload,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1B7, XREF_JvsFirmwareUpload_String),
 
     OV_MATCH(0x00, 0x83),
@@ -684,17 +719,18 @@ OOVPA_XREF(JvsFirmwareUpload, 4831, 1 + 8,
     OV_MATCH(0x12, 0x83, 0xF9, 0x20),
 
     OV_MATCH(0x40, 0x8D, 0x44, 0x24, 0x4C),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsFirmwareUpload2
 // ******************************************************************
-OOVPA_XREF(JvsFirmwareUpload2, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JvsFirmwareUpload2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1DE, XREF_JvsFirmwareUpload_String),
 
     OV_MATCH(0x00, 0x83),
@@ -702,47 +738,50 @@ OOVPA_XREF(JvsFirmwareUpload2, 4831, 1 + 8,
     OV_MATCH(0x12, 0x83, 0xF9, 0x20),
 
     OV_MATCH(0x40, 0x8D, 0x44, 0x24, 0x4C),
-} OOVPA_END;
+    //
+);
 
 
 // ******************************************************************
 // * JvsFirmwareUpload3
 // ******************************************************************
-OOVPA_XREF(JvsFirmwareUpload3, 4831, 1 + 5,
+OOVPA_SIG_HEADER_XREF(JvsFirmwareUpload3,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1DA, XREF_JvsFirmwareUpload_String),
 
     OV_MATCH(0x03, 0x8B, 0x44, 0x24, 0x30, 0x53),
-} OOVPA_END;
+    //
+);
 
 
 // ******************************************************************
 // * JvsFirmwareUpload4
 // ******************************************************************
-OOVPA_XREF(JvsFirmwareUpload4, 4831, 1 + 5,
+OOVPA_SIG_HEADER_XREF(JvsFirmwareUpload4,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1BF, XREF_JvsFirmwareUpload_String),
 
     OV_MATCH(0x03, 0x8B, 0x44, 0x24, 0x30, 0x53),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsNodeReceivePacket
 // ******************************************************************
-OOVPA_XREF(JvsNodeReceivePacket, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JvsNodeReceivePacket,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x6D, XREF_JvsNodeReceivePacket_String),
 
     OV_MATCH(0x28, 0x6A, 0x19),
@@ -754,31 +793,33 @@ OOVPA_XREF(JvsNodeReceivePacket, 4831, 1 + 8,
     OV_MATCH(0x55, 0xC3, 0x01),
 
     OV_MATCH(0xC9, 0xC2),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsNodeReceivePacket2
 // ******************************************************************
-OOVPA_XREF(JvsNodeReceivePacket2, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsNodeReceivePacket2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x55, XREF_JvsNodeReceivePacket_String),
 
     OV_MATCH(0x00, 0x53, 0x55, 0x56, 0x57),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsNodeSendPacket
 // ******************************************************************
-OOVPA_XREF(JvsNodeSendPacket, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JvsNodeSendPacket,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x6D, XREF_JvsNodeSendPacket_String),
 
     OV_MATCH(0x23, 0x6A, 0x20),
@@ -788,31 +829,33 @@ OOVPA_XREF(JvsNodeSendPacket, 4831, 1 + 8,
     OV_MATCH(0x54, 0xF6, 0xC3, 0x01),
 
     OV_MATCH(0xC9, 0xC2),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsNodeSendPacket2
 // ******************************************************************
-OOVPA_XREF(JvsNodeSendPacket2, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsNodeSendPacket2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x55, XREF_JvsNodeSendPacket_String),
 
     OV_MATCH(0x00, 0x53, 0x55, 0x56, 0x57),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsRTC_Read
 // ******************************************************************
-OOVPA_XREF(JvsRTC_Read, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JvsRTC_Read,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x81, XREF_JvsRTC_Read_String),
 
     OV_MATCH(0x05, 0x00, 0x53),
@@ -820,17 +863,18 @@ OOVPA_XREF(JvsRTC_Read, 4831, 1 + 8,
     OV_MATCH(0x10, 0x1C, 0x8B, 0x6C, 0x24),
 
     OV_MATCH(0x2B, 0x55, 0xE8),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsRTC_Read2
 // ******************************************************************
-OOVPA_XREF(JvsRTC_Read2, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JvsRTC_Read2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x96, XREF_JvsRTC_Read_String),
 
     OV_MATCH(0x05, 0x00, 0x53),
@@ -838,17 +882,18 @@ OOVPA_XREF(JvsRTC_Read2, 4831, 1 + 8,
     OV_MATCH(0x10, 0x1C, 0x8B, 0x6C, 0x24),
 
     OV_MATCH(0x2B, 0x55, 0xE8),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsRTC_Read3
 // ******************************************************************
-OOVPA_XREF(JvsRTC_Read3, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsRTC_Read3,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x68, XREF_JvsRTC_Read_String),
 
     OV_MATCH(0x00, 0x8B),
@@ -856,17 +901,18 @@ OOVPA_XREF(JvsRTC_Read3, 4831, 1 + 4,
     OV_MATCH(0x10, 0x8B),
 
     OV_MATCH(0x14, 0x56, 0x57),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScFirmwareDownload
 // ******************************************************************
-OOVPA_XREF(JvsScFirmwareDownload, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JvsScFirmwareDownload,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1D4, XREF_JvsScFirmwareDownload_String),
 
     OV_MATCH(0x03, 0x8B, 0x4C, 0x24, 0x30, 0x53),
@@ -874,17 +920,18 @@ OOVPA_XREF(JvsScFirmwareDownload, 4831, 1 + 8,
     OV_MATCH(0x0F, 0x83),
 
     OV_MATCH(0x58, 0x6A, 0x20),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsRTC_Write
 // ******************************************************************
-OOVPA_XREF(JvsRTC_Write, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JvsRTC_Write,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x96, XREF_JvsRTC_Write_String),
 
     OV_MATCH(0x05, 0x00, 0x53),
@@ -892,17 +939,18 @@ OOVPA_XREF(JvsRTC_Write, 4831, 1 + 8,
     OV_MATCH(0x10, 0x1C, 0x8B, 0x6C, 0x24),
 
     OV_MATCH(0x2B, 0x55, 0xE8),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsRTC_Write2
 // ******************************************************************
-OOVPA_XREF(JvsRTC_Write2, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsRTC_Write2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x68, XREF_JvsRTC_Write_String),
 
     OV_MATCH(0x00, 0x8B),
@@ -910,17 +958,18 @@ OOVPA_XREF(JvsRTC_Write2, 4831, 1 + 4,
     OV_MATCH(0x10, 0x8B),
 
     OV_MATCH(0x14, 0x56, 0x57),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScFirmwareDownload2
 // ******************************************************************
-OOVPA_XREF(JvsScFirmwareDownload2, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(JvsScFirmwareDownload2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x203, XREF_JvsScFirmwareDownload_String),
 
     OV_MATCH(0x03, 0x8B, 0x4C, 0x24, 0x30, 0x53),
@@ -928,76 +977,81 @@ OOVPA_XREF(JvsScFirmwareDownload2, 4831, 1 + 8,
     OV_MATCH(0x0F, 0x83),
 
     OV_MATCH(0x58, 0x6A, 0x20),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScFirmwareDownload3
 // ******************************************************************
-OOVPA_XREF(JvsScFirmwareDownload3, 4831, 1 + 5,
+OOVPA_SIG_HEADER_XREF(JvsScFirmwareDownload3,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1E3, XREF_JvsScFirmwareDownload_String),
 
     OV_MATCH(0x03, 0x8B, 0x44, 0x24, 0x30, 0x53),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScFirmwareDownload4
 // ******************************************************************
-OOVPA_XREF(JvsScFirmwareDownload4, 4831, 1 + 5,
+OOVPA_SIG_HEADER_XREF(JvsScFirmwareDownload4,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1CF, XREF_JvsScFirmwareDownload_String),
 
     OV_MATCH(0x03, 0x8B, 0x44, 0x24, 0x30, 0x53),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScFirmwareUpload
 // ******************************************************************
-OOVPA_XREF(JvsScFirmwareUpload, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsScFirmwareUpload,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0xA9, XREF_JvsScFirmwareUpload_String),
 
     OV_MATCH(0x00, 0x51, 0x8B),
     OV_MATCH(0x05, 0x53, 0x8B),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScFirmwareUpload2
 // ******************************************************************
-OOVPA_XREF(JvsScFirmwareUpload2, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsScFirmwareUpload2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0xBE, XREF_JvsScFirmwareUpload_String),
 
     OV_MATCH(0x00, 0x51, 0x8B),
 
     OV_MATCH(0x05, 0x53, 0x8B),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScFirmwareUpload3
 // ******************************************************************
-OOVPA_XREF(JvsScFirmwareUpload3, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsScFirmwareUpload3,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x9E, XREF_JvsScFirmwareUpload_String),
 
     OV_MATCH(0x00, 0x83),
@@ -1005,116 +1059,125 @@ OOVPA_XREF(JvsScFirmwareUpload3, 4831, 1 + 4,
     OV_MATCH(0x03, 0x8B),
 
     OV_MATCH(0x07, 0x53, 0x55),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScReceiveMidi
 // ******************************************************************
-OOVPA_XREF(JvsScReceiveMidi, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsScReceiveMidi,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x7D, XREF_JvsScReceiveMidi_String),
 
     OV_MATCH(0x00, 0x83, 0xEC, 0x08, 0x53),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScReceiveMidi2
 // ******************************************************************
-OOVPA_XREF(JvsScReceiveMidi2, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsScReceiveMidi2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x65, XREF_JvsScReceiveMidi_String),
 
     OV_MATCH(0x00, 0x83, 0xEC, 0x08, 0x53),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScReceiveRs323c
 // ******************************************************************
-OOVPA_XREF(JvsScReceiveRs323c, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsScReceiveRs323c,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x63, XREF_JvsScReceiveRs323c_String),
 
     OV_MATCH(0x00, 0x83, 0xEC, 0x08, 0x56),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScReceiveRs323c2
 // ******************************************************************
-OOVPA_XREF(JvsScReceiveRs323c2, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsScReceiveRs323c2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x4F, XREF_JvsScReceiveRs323c_String),
 
     OV_MATCH(0x00, 0x83, 0xEC, 0x08, 0x56),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScSendMidi
 // ******************************************************************
-OOVPA_XREF(JvsScSendMidi, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsScSendMidi,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x7D, XREF_JvsScSendMidi_String),
 
     OV_MATCH(0x00, 0x83, 0xEC, 0x08, 0x53),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScSendMidi2
 // ******************************************************************
-OOVPA_XREF(JvsScSendMidi2, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsScSendMidi2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x5D, XREF_JvsScSendMidi_String),
 
     OV_MATCH(0x00, 0x83, 0xEC, 0x08, 0x53),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScReceiveRs323c
 // ******************************************************************
-OOVPA_XREF(JvsScSendRs323c, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsScSendRs323c,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x5E, XREF_JvsScSendRs323c_String),
 
     OV_MATCH(0x00, 0x83, 0xEC, 0x08, 0xC7),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * JvsScReceiveRs323c2
 // ******************************************************************
-OOVPA_XREF(JvsScSendRs323c2, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(JvsScSendRs323c2,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
-
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
     XREF_ENTRY(0x4D, XREF_JvsScSendRs323c_String),
 
     OV_MATCH(0x00, 0x83, 0xEC, 0x08, 0x56),
-} OOVPA_END;
+    //
+);
