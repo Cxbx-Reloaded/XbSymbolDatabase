@@ -26,8 +26,9 @@
 // ******************************************************************
 // * XGIsSwizzledFormat
 // ******************************************************************
-OOVPA_NO_XREF(XGIsSwizzledFormat, 3911, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGIsSwizzledFormat,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x07, 0x7F },
     { 0x10, 0x7C },
@@ -36,13 +37,15 @@ OOVPA_NO_XREF(XGIsSwizzledFormat, 3911, 7)
     { 0x2B, 0x83 },
     { 0x34, 0x0A },
     { 0x3D, 0x7F },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGSwizzleRect
 // ******************************************************************
-OOVPA_NO_XREF(XGSwizzleRect, 3911, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGSwizzleRect,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x1E, 0x03 },
     { 0x3E, 0x89 },
@@ -52,13 +55,15 @@ OOVPA_NO_XREF(XGSwizzleRect, 3911, 8)
     { 0xBE, 0xFF },
     { 0xDE, 0x89 },
     { 0xFE, 0x89 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGSwizzleBox
 // ******************************************************************
-OOVPA_NO_XREF(XGSwizzleBox, 3911, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGSwizzleBox,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x1E, 0x75 },
     { 0x3E, 0x4D },
@@ -68,13 +73,15 @@ OOVPA_NO_XREF(XGSwizzleBox, 3911, 8)
     { 0xC0, 0x83 },
     { 0xDE, 0xAF },
     { 0xFE, 0x45 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGUnswizzleRect
 // ******************************************************************
-OOVPA_NO_XREF(XGUnswizzleRect, 3911, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGUnswizzleRect,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x1E, 0x03 },
     { 0x3E, 0x00 },
@@ -84,13 +91,15 @@ OOVPA_NO_XREF(XGUnswizzleRect, 3911, 8)
     { 0xC1, 0xE9 },
     { 0xDE, 0x89 },
     { 0xFE, 0x60 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGWriteSurfaceOrTextureToXPR
 // ******************************************************************
-OOVPA_NO_XREF(XGWriteSurfaceOrTextureToXPR, 3911, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGWriteSurfaceOrTextureToXPR,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x0C, 0x08 },
     { 0x1E, 0x3D },
@@ -115,13 +124,15 @@ OOVPA_NO_XREF(XGWriteSurfaceOrTextureToXPR, 3911, 12)
     { 0x9E, 0xC2 },
     { 0xAE, 0x4D },
     { 0xBE, 0xF0 },*/
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGSetTextureHeader
 // ******************************************************************
-OOVPA_NO_XREF(XGSetTextureHeader, 3911, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGSetTextureHeader,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x04, 0x75 },
     { 0x0A, 0x00 },
@@ -130,13 +141,15 @@ OOVPA_NO_XREF(XGSetTextureHeader, 3911, 7)
     { 0x1C, 0x75 },
     { 0x26, 0x5D },
     { 0x28, 0x24 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGUnswizzleBox
 // ******************************************************************
-OOVPA_NO_XREF(XGUnswizzleBox, 3911, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGUnswizzleBox,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x1E, 0x26 },
     { 0x3E, 0x55 },
@@ -146,14 +159,16 @@ OOVPA_NO_XREF(XGUnswizzleBox, 3911, 8)
     { 0xBE, 0x2C },
     { 0xDE, 0x24 },
     { 0xFE, 0x20 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGCompressRect
 // ******************************************************************
 //Generic OOVPA as of 3911 and newer.
-OOVPA_NO_XREF(XGCompressRect, 3911, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGCompressRect,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8D },
@@ -169,13 +184,15 @@ OOVPA_NO_XREF(XGCompressRect, 3911, 12)
 
     { 0xC0, 0x7E },
     { 0xC1, 0x01 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGSetIndexBufferHeader
 // ******************************************************************
-OOVPA_NO_XREF(XGSetIndexBufferHeader, 3911, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGSetIndexBufferHeader,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0x44 },
     { 0x04, 0x8B },
@@ -192,13 +209,15 @@ OOVPA_NO_XREF(XGSetIndexBufferHeader, 3911, 13)
     { 0x10, 0x04 },
     { 0x11, 0xC2 },
     { 0x12, 0x18 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGSetVertexBufferHeader
 // ******************************************************************
-OOVPA_NO_XREF(XGSetVertexBufferHeader, 3911, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGSetVertexBufferHeader,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0x44 },
     { 0x04, 0x8B },
@@ -215,4 +234,5 @@ OOVPA_NO_XREF(XGSetVertexBufferHeader, 3911, 13)
     { 0x10, 0x04 },
     { 0x11, 0xC2 },
     { 0x12, 0x18 },
-} OOVPA_END;
+    //
+);

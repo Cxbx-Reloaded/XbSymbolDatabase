@@ -27,8 +27,9 @@
 // * XGSetVertexBufferHeader
 // ******************************************************************
 //Generic OOVPA as of 4134 and newer.
-OOVPA_NO_XREF(XGSetVertexBufferHeader, 4134, 15)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGSetVertexBufferHeader,
+                         4134)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0x44 },
     { 0x04, 0x8B },
@@ -46,14 +47,16 @@ OOVPA_NO_XREF(XGSetVertexBufferHeader, 4134, 15)
     { 0x14, 0x04 },
     { 0x15, 0xC2 },
     { 0x16, 0x18 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGSetIndexBufferHeader
 // ******************************************************************
 //Generic OOVPA as of 4134 and newer.
-OOVPA_NO_XREF(XGSetIndexBufferHeader, 4134, 15)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGSetIndexBufferHeader,
+                         4134)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0x44 },
     { 0x04, 0x8B },
@@ -71,4 +74,5 @@ OOVPA_NO_XREF(XGSetIndexBufferHeader, 4134, 15)
     { 0x14, 0x04 },
     { 0x15, 0xC2 },
     { 0x16, 0x18 },
-} OOVPA_END;
+    //
+);
