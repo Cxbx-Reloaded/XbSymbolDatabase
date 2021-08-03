@@ -26,8 +26,9 @@
 // ******************************************************************
 // * D3DDevice_RunPushBuffer
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_RunPushBuffer, 5120, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_RunPushBuffer,
+                         5120)
+OOVPA_SIG_MATCH(
 
     { 0x0B, 0x57 },
     { 0x10, 0xE8 },
@@ -44,13 +45,15 @@ OOVPA_NO_XREF(D3DDevice_RunPushBuffer, 5120, 13)
     { 0x93, 0x4E },
     { 0x94, 0x2C },
     { 0x95, 0x8B },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_CopyRects
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_CopyRects, 5120, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CopyRects,
+                         5120)
+OOVPA_SIG_MATCH(
 
     { 0x1E, 0xE1 },
     { 0x42, 0x84 },
@@ -60,4 +63,5 @@ OOVPA_NO_XREF(D3DDevice_CopyRects, 5120, 8)
     { 0xBE, 0x00 },
     { 0xDE, 0xBD },
     { 0xFE, 0x4C },
-} OOVPA_END;
+    //
+);

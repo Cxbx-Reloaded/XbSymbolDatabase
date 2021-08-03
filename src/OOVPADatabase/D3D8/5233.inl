@@ -26,8 +26,9 @@
 // ******************************************************************
 // * D3DDevice_UpdateOverlay
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_UpdateOverlay, 5233, 12) // Up to 5849
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_UpdateOverlay,
+                         5233) // Up to 5849
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
     { 0x13, 0x89 },
@@ -42,13 +43,15 @@ OOVPA_NO_XREF(D3DDevice_UpdateOverlay, 5233, 12) // Up to 5849
     { 0x85, 0x25 },
     { 0x86, 0xFF },
     { 0x87, 0xFF },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleMode
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_MultiSampleMode, 5233, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_MultiSampleMode,
+                         5233)
+OOVPA_SIG_MATCH(
 
     // D3DDevice_SetRenderState_MultiSampleMode+0x04 : mov ecx, ds:dword_XXXX
     { 0x04, 0x8B },
@@ -74,7 +77,8 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_MultiSampleMode, 5233, 13)
     { 0x24, 0xC2 },
     { 0x25, 0x04 },
     { 0x26, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderTargetFast
@@ -146,8 +150,9 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_GetVisibilityTestResult
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_GetVisibilityTestResult, 5233, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_GetVisibilityTestResult,
+                         5233)
+OOVPA_SIG_MATCH(
 
     { 0x0E, 0x08 },
     { 0x10, 0xFF },
@@ -156,4 +161,5 @@ OOVPA_NO_XREF(D3DDevice_GetVisibilityTestResult, 5233, 7)
     { 0x3F, 0x0C },
     { 0x51, 0x0A },
     { 0x5F, 0x0C },
-} OOVPA_END;
+    //
+);

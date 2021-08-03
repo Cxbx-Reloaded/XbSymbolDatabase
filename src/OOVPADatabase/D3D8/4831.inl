@@ -26,11 +26,12 @@
 // ******************************************************************
 // * D3DDevice_CreateTexture2
 // ******************************************************************
-OOVPA_XREF(D3DDevice_CreateTexture2, 4831, 12,
+OOVPA_SIG_HEADER_XREF(D3DDevice_CreateTexture2,
+                      4831,
 
-           XREF_D3DDevice_CreateTexture2,
-           XRefZero)
-{
+                      XREF_D3DDevice_CreateTexture2,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x01, 0x57 },
@@ -46,7 +47,8 @@ OOVPA_XREF(D3DDevice_CreateTexture2, 4831, 12,
 
     { 0x51, 0x24 },
     { 0x52, 0xF7 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetTexture
@@ -121,11 +123,12 @@ OOVPA_END;
 // * D3DDevice_PersistDisplay
 // ******************************************************************
 // Up to 5849, excluding 5455
-OOVPA_XREF(D3DDevice_PersistDisplay, 4831, 1 + 8,
+OOVPA_SIG_HEADER_XREF(D3DDevice_PersistDisplay,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     // D3DDevice_PersistDisplay+0x04 : mov ebx,[D3D__PDEVICE]
     XREF_ENTRY(0x06, XREF_D3DDEVICE),
@@ -145,13 +148,15 @@ OOVPA_XREF(D3DDevice_PersistDisplay, 4831, 1 + 8,
     // D3DDevice_PersistDisplay+0x36 : ret
     OV_MATCH(0x36, 0xC3),
 
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetPixelShaderConstant
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetPixelShaderConstant, 4831, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShaderConstant,
+                         4831)
+OOVPA_SIG_MATCH(
 
     // D3DDevice_SetPixelShaderConstant+0x1E : test eax, eax
     { 0x1E, 0x85 },
@@ -173,4 +178,5 @@ OOVPA_NO_XREF(D3DDevice_SetPixelShaderConstant, 4831, 13)
     { 0xC0, 0x0A },
     { 0xC1, 0x04 },
     { 0xC2, 0x00 },
-} OOVPA_END;
+    //
+);

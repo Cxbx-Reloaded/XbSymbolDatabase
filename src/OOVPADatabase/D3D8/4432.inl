@@ -26,8 +26,9 @@
 // ******************************************************************
 // * D3DDevice_SetRenderState_ZEnable
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_ZEnable, 4432, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_ZEnable,
+                         4432)
+OOVPA_SIG_MATCH(
 
     { 0x08, 0x06 },
     { 0x0E, 0xE8 },
@@ -43,13 +44,15 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_ZEnable, 4432, 12)
 
     { 0x5A, 0x74 },
     { 0x60, 0x2A },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_GetViewportOffsetAndScale
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_GetViewportOffsetAndScale, 4432, 12) // Up to 5849
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_GetViewportOffsetAndScale,
+                         4432) // Up to 5849
+OOVPA_SIG_MATCH(
 
     { 0x00, 0xA1 },
     { 0x19, 0x05 },
@@ -65,13 +68,15 @@ OOVPA_NO_XREF(D3DDevice_GetViewportOffsetAndScale, 4432, 12) // Up to 5849
 
     { 0x5B, 0x74 },
     { 0x5C, 0x10 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetDepthClipPlanes
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetDepthClipPlanes, 4432, 15)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetDepthClipPlanes,
+                         4432)
+OOVPA_SIG_MATCH(
 
     { 0x03, 0x0C },
     { 0x04, 0x48 },
@@ -90,4 +95,5 @@ OOVPA_NO_XREF(D3DDevice_SetDepthClipPlanes, 4432, 15)
 
     { 0x18, 0x8B },
     { 0x1F, 0x0C },
-} OOVPA_END;
+    //
+);

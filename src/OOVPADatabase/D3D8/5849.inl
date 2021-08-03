@@ -26,8 +26,9 @@
 // ******************************************************************
 // * D3DDevice_SetRenderState_StencilEnable
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_StencilEnable, 5849, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilEnable,
+                         5849)
+OOVPA_SIG_MATCH(
 
     { 0x12, 0x8B },
     { 0x24, 0x33 },
@@ -37,17 +38,19 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_StencilEnable, 5849, 8)
     { 0x70, 0xB9 },
     { 0x83, 0x40 },
     { 0x96, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3D::SetFence
 // * SOURCE: Spiderman 2
 // ******************************************************************
-OOVPA_XREF(D3D_SetFence, 5849, 7,
+OOVPA_SIG_HEADER_XREF(D3D_SetFence,
+                      5849,
 
-           XREF_D3D_SetFence,
-           XRefZero)
-{
+                      XREF_D3D_SetFence,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x0E, 0x05 },
     { 0x17, 0xC7 },
@@ -56,13 +59,15 @@ OOVPA_XREF(D3D_SetFence, 5849, 7,
     { 0x87, 0x4E },
     { 0x98, 0x83 },
     { 0xA8, 0x75 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_StencilFail
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetRenderState_StencilFail, 5849, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilFail,
+                         5849)
+OOVPA_SIG_MATCH(
 
     { 0x0C, 0x89 },
     { 0x1E, 0x8B },
@@ -72,4 +77,5 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_StencilFail, 5849, 8)
     { 0x52, 0xC7 },
     { 0x60, 0x04 },
     { 0x6E, 0x00 },
-} OOVPA_END;
+    //
+);
