@@ -26,8 +26,9 @@
 // ******************************************************************
 // * CXnSock::socket
 // ******************************************************************
-OOVPA_NO_XREF(socket, 4627, 14) // Up to 5344
-{
+OOVPA_SIG_HEADER_NO_XREF(socket,
+                         4627) // Up to 5344
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x51 },
     { 0x01, 0x85 },
@@ -44,13 +45,15 @@ OOVPA_NO_XREF(socket, 4627, 14) // Up to 5344
 
     { 0x1E, 0xC8 },
     { 0x1F, 0xFF },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXnSock::connect
 // ******************************************************************
-OOVPA_NO_XREF(connect, 4627, 24)
-{
+OOVPA_SIG_HEADER_NO_XREF(connect,
+                         4627)
+OOVPA_SIG_MATCH(
 
     // connect+0x00 : push ebp
     { 0x00, 0x55 },
@@ -91,13 +94,15 @@ OOVPA_NO_XREF(connect, 4627, 24)
     { 0xE6, 0xC2 },
     { 0xE7, 0x0C },
     { 0xE8, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXnSock::send
 // ******************************************************************
-OOVPA_NO_XREF(send, 4627, 24)
-{
+OOVPA_SIG_HEADER_NO_XREF(send,
+                         4627)
+OOVPA_SIG_MATCH(
 
     // send+0x00 : push ebp
     { 0x00, 0x55 },
@@ -138,13 +143,15 @@ OOVPA_NO_XREF(send, 4627, 24)
     { 0x92, 0xC2 },
     { 0x93, 0x10 },
     { 0x94, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXnSock::recv
 // ******************************************************************
-OOVPA_NO_XREF(recv, 4627, 24)
-{
+OOVPA_SIG_HEADER_NO_XREF(recv,
+                         4627)
+OOVPA_SIG_MATCH(
 
     // recv+0x00 : push ebp
     { 0x00, 0x55 },
@@ -185,14 +192,16 @@ OOVPA_NO_XREF(recv, 4627, 24)
     { 0x8E, 0xC2 },
     { 0x8F, 0x10 },
     { 0x90, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXnSock::ioctlsocket
 // ******************************************************************
 //Generic OOVPA as of 4627 and newer.
-OOVPA_NO_XREF(ioctlsocket, 4627, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(ioctlsocket,
+                         4627)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x0C, 0x99 },
@@ -209,14 +218,16 @@ OOVPA_NO_XREF(ioctlsocket, 4627, 13)
     { 0x38, 0x87 },
 
     { 0x57, 0x15 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXnSock::bind
 // ******************************************************************
 //Generic OOVPA as of 4627 and newer.
-OOVPA_NO_XREF(bind, 4627, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(bind,
+                         4627)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x1D, 0xE8 },
@@ -232,14 +243,16 @@ OOVPA_NO_XREF(bind, 4627, 12)
     { 0x38, 0x10 },
 
     { 0x53, 0xE8 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXnSock::listen
 // ******************************************************************
 //Generic OOVPA as of 4627 and newer.
-OOVPA_NO_XREF(listen, 4627, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(listen,
+                         4627)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x57 },
     { 0x09, 0xBF },
@@ -256,13 +269,15 @@ OOVPA_NO_XREF(listen, 4627, 13)
     { 0x38, 0xA8 },
 
     { 0x55, 0xE8 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XNetGetEthernetLinkStatus
 // ******************************************************************
-OOVPA_NO_XREF(XNetGetEthernetLinkStatus, 4627, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(XNetGetEthernetLinkStatus,
+                         4627)
+OOVPA_SIG_MATCH(
 
     { 0x08, 0x33 },
     { 0x10, 0x8A },
@@ -272,4 +287,5 @@ OOVPA_NO_XREF(XNetGetEthernetLinkStatus, 4627, 8)
     { 0x34, 0xF0 },
     { 0x3D, 0x24 },
     { 0x46, 0x5B },
-} OOVPA_END;
+    //
+);
