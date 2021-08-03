@@ -26,8 +26,9 @@
 // ******************************************************************
 // * GetExitCodeThread
 // ******************************************************************
-OOVPA_NO_XREF(GetExitCodeThread, 3911, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(GetExitCodeThread,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // GetExitCodeThread+0x03 : lea eax, [ebp+0x08]
     { 0x03, 0x8D },
@@ -47,7 +48,8 @@ OOVPA_NO_XREF(GetExitCodeThread, 3911, 11)
     // GetExitCodeThread+0x49 : retn 0x08
     { 0x49, 0xC2 },
     { 0x4A, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XInitDevices
@@ -55,8 +57,9 @@ OOVPA_NO_XREF(GetExitCodeThread, 3911, 11)
 // * NOTE: We are actually intercepting USBD_Init, because
 // *       XInitDevices Simply redirects to that function
 // ******************************************************************
-OOVPA_NO_XREF(XInitDevices, 3911, 10)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInitDevices,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XInitDevices+0x03 : push 0xB4
     { 0x03, 0x68 },
@@ -75,13 +78,15 @@ OOVPA_NO_XREF(XInitDevices, 3911, 10)
     // XInitDevices+0x8B : retn 8
     { 0x8B, 0xC2 },
     { 0x8C, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CreateMutex
 // ******************************************************************
-OOVPA_NO_XREF(CreateMutex, 3911, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(CreateMutex,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // CreateMutex+0x03 : sub esp, 0x14
     { 0x03, 0x83 },
@@ -103,13 +108,15 @@ OOVPA_NO_XREF(CreateMutex, 3911, 13)
     { 0x47, 0x8B },
     { 0x48, 0x45 },
     { 0x49, 0x10 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CreateThread
 // ******************************************************************
-OOVPA_NO_XREF(CreateThread, 3911, 21)
-{
+OOVPA_SIG_HEADER_NO_XREF(CreateThread,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -133,13 +140,15 @@ OOVPA_NO_XREF(CreateThread, 3911, 21)
 
     { 0x32, 0x50 },
     { 0x33, 0x6A },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * SetThreadPriority
 // ******************************************************************
-OOVPA_NO_XREF(SetThreadPriority, 3911, 10)
-{
+OOVPA_SIG_HEADER_NO_XREF(SetThreadPriority,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // SetThreadPriority+0x0D : push [ebp+0x08]
     { 0x0D, 0xFF },
@@ -158,13 +167,15 @@ OOVPA_NO_XREF(SetThreadPriority, 3911, 10)
     { 0x26, 0x83 },
     { 0x27, 0xF8 },
     { 0x28, 0xF1 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * OutputDebugStringA
 // ******************************************************************
-OOVPA_NO_XREF(OutputDebugStringA, 3911, 32)
-{
+OOVPA_SIG_HEADER_NO_XREF(OutputDebugStringA,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -198,13 +209,15 @@ OOVPA_NO_XREF(OutputDebugStringA, 3911, 32)
     { 0x1D, 0xF8 },
     { 0x1E, 0x40 },
     { 0x1F, 0x66 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XapiInitProcess
 // ******************************************************************
-OOVPA_NO_XREF(XapiInitProcess, 3911, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(XapiInitProcess,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XapiInitProcess+0x03 : sub esp, 30h
     { 0x05, 0x30 },
@@ -220,13 +233,15 @@ OOVPA_NO_XREF(XapiInitProcess, 3911, 7)
     // XapiInitProcess+0x42 : jnz +0x0A
     { 0x42, 0x75 },
     { 0x43, 0x0A },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XapiBootDash
 // ******************************************************************
-OOVPA_NO_XREF(XapiBootDash, 3911, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(XapiBootDash,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XapiBootDash+0x03 : sub esp, 0x0C00
     { 0x03, 0x81 },
@@ -246,13 +261,15 @@ OOVPA_NO_XREF(XapiBootDash, 3911, 11)
     // XapiBootDash+0x59 : retn 0x0C
     { 0x59, 0xC2 },
     { 0x5A, 0x0C },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XRegisterThreadNotifyRoutine
 // ******************************************************************
-OOVPA_NO_XREF(XRegisterThreadNotifyRoutine, 3911, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(XRegisterThreadNotifyRoutine,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XRegisterThreadNotifyRoutine+0x0D : cmp [esp+0x0C], 0
     { 0x0D, 0x83 },
@@ -272,13 +289,15 @@ OOVPA_NO_XREF(XRegisterThreadNotifyRoutine, 3911, 11)
     // XRegisterThreadNotifyRoutine+0x46 : retn 0x08
     { 0x46, 0xC2 },
     { 0x47, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * GetTimeZoneInformation
 // ******************************************************************
-OOVPA_NO_XREF(GetTimeZoneInformation, 3911, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(GetTimeZoneInformation,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x05, 0x28 },
     { 0x2E, 0x28 },
@@ -287,14 +306,16 @@ OOVPA_NO_XREF(GetTimeZoneInformation, 3911, 7)
     { 0x8C, 0xC0 },
     { 0xB9, 0x80 },
     { 0xF7, 0x99 },
-} OOVPA_END;
+    //
+);
 
 // not necessary?
 // ******************************************************************
 // * XCalculateSignatureBegin
 // ******************************************************************
-OOVPA_NO_XREF(XCalculateSignatureBegin, 3911, 10)
-{
+OOVPA_SIG_HEADER_NO_XREF(XCalculateSignatureBegin,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XCalculateSignatureBegin+0x01 : push 0x7C; push 0
     { 0x01, 0x6A },
@@ -313,13 +334,15 @@ OOVPA_NO_XREF(XCalculateSignatureBegin, 3911, 10)
     // XCalculateSignatureBegin+0x3B : retn 0x04
     { 0x3B, 0xC2 },
     { 0x3C, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGetDevices
 // ******************************************************************
-OOVPA_NO_XREF(XGetDevices, 3911, 14)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGetDevices,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XGetDevices+0x07 : mov edx, [esp+arg_0]
     { 0x07, 0x8B },
@@ -344,13 +367,15 @@ OOVPA_NO_XREF(XGetDevices, 3911, 14)
     // XGetDevices+0x1F : retn 4
     { 0x1F, 0xC2 },
     { 0x20, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGetDeviceChanges
 // ******************************************************************
-OOVPA_NO_XREF(XGetDeviceChanges, 3911, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGetDeviceChanges,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XGetDeviceChanges+0x07 : xor eax, eax
     { 0x07, 0x33 },
@@ -367,13 +392,15 @@ OOVPA_NO_XREF(XGetDeviceChanges, 3911, 8)
     // XGetDeviceChanges+0x51 : mov cl, al
     { 0x51, 0x8A },
     { 0x52, 0xC8 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XInputOpen
 // ******************************************************************
-OOVPA_NO_XREF(XInputOpen, 3911, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInputOpen,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XInputOpen+0x20 : jmp +0x0B
     { 0x20, 0xEB },
@@ -395,16 +422,18 @@ OOVPA_NO_XREF(XInputOpen, 3911, 11)
     // XInputOpen+0x68 : push 0x57
     { 0x68, 0x6A },
     { 0x69, 0x57 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XID_fCloseDevice
 // ******************************************************************
-OOVPA_XREF(XID_fCloseDevice, 3911, 16,
+OOVPA_SIG_HEADER_XREF(XID_fCloseDevice,
+                      3911,
 
-           XREF_XID_fCloseDevice,
-           XRefZero)
-{
+                      XREF_XID_fCloseDevice,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -424,16 +453,18 @@ OOVPA_XREF(XID_fCloseDevice, 3911, 16,
 
     { 0x44, 0x8D },
     { 0x45, 0x45 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XInputClose
 // ******************************************************************
-OOVPA_XREF(XInputClose, 3911, 1 + 7,
+OOVPA_SIG_HEADER_XREF(XInputClose,
+                      3911,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     // XInputClose+0x05 : call [fCloseDevice]
     XREF_ENTRY(0x05, XREF_XID_fCloseDevice),
@@ -450,13 +481,15 @@ OOVPA_XREF(XInputClose, 3911, 1 + 7,
     // XInputClose+0x09 : retn 0x04
     { 0x09, 0xC2 },
     { 0x0A, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XInputGetCapabilities
 // ******************************************************************
-OOVPA_NO_XREF(XInputGetCapabilities, 3911, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInputGetCapabilities,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x0F, 0x15 },
@@ -472,13 +505,15 @@ OOVPA_NO_XREF(XInputGetCapabilities, 3911, 13)
     { 0x3C, 0x46 },
     { 0x3D, 0x0B },
     { 0x3E, 0x88 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XInputGetState
 // ******************************************************************
-OOVPA_NO_XREF(XInputGetState, 3911, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInputGetState,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XInputGetState+0x0E : cmp byte ptr [edx+0x0A3], 1
     { 0x0E, 0x80 },
@@ -502,13 +537,15 @@ OOVPA_NO_XREF(XInputGetState, 3911, 13)
     // XInputGetState+0x6E : retn 8
     { 0x6E, 0xC2 },
     { 0x6F, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XInputSetState
 // ******************************************************************
-OOVPA_NO_XREF(XInputSetState, 3911, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInputSetState,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XInputSetState+0x04 : lea eax, [ecx+0x0A3]
     { 0x04, 0x8D },
@@ -531,13 +568,15 @@ OOVPA_NO_XREF(XInputSetState, 3911, 12)
     // XInputSetState+0x35 : retn 0x08
     { 0x35, 0xC2 },
     { 0x36, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * SetThreadPriorityBoost
 // ******************************************************************
-OOVPA_NO_XREF(SetThreadPriorityBoost, 3911, 10) // generic version
-{
+OOVPA_SIG_HEADER_NO_XREF(SetThreadPriorityBoost,
+                         3911) // generic version
+OOVPA_SIG_MATCH(
 
     // SetThreadPriorityBoost+0x0D : push [ebp+0x08]
     { 0x0D, 0xFF },
@@ -556,13 +595,15 @@ OOVPA_NO_XREF(SetThreadPriorityBoost, 3911, 10) // generic version
     // SetThreadPriorityBoost+0x2C : mov ecx, [ebp+0x08]
     { 0x2C, 0x8B },
     { 0x2D, 0x4D },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * GetThreadPriority
 // ******************************************************************
-OOVPA_NO_XREF(GetThreadPriority, 3911, 10)
-{
+OOVPA_SIG_HEADER_NO_XREF(GetThreadPriority,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // GetThreadPriority+0x0D : push [ebp+0x08]
     { 0x0D, 0xFF },
@@ -581,13 +622,15 @@ OOVPA_NO_XREF(GetThreadPriority, 3911, 10)
     // GetThreadPriority+0x37 : mov ecx, [ebp+0x08]
     { 0x37, 0x8B },
     { 0x38, 0x4D },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CreateFiber
 // ******************************************************************
-OOVPA_NO_XREF(CreateFiber, 3911, 32)
-{
+OOVPA_SIG_HEADER_NO_XREF(CreateFiber,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x8B },
     { 0x01, 0x44 },
@@ -621,13 +664,15 @@ OOVPA_NO_XREF(CreateFiber, 3911, 32)
     { 0x1D, 0xB0 },
     { 0x1E, 0xFF },
     { 0x1F, 0x0F },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * DeleteFiber
 // ******************************************************************
-OOVPA_NO_XREF(DeleteFiber, 3911, 15)
-{
+OOVPA_SIG_HEADER_NO_XREF(DeleteFiber,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x8B },
     { 0x01, 0x44 },
@@ -645,13 +690,15 @@ OOVPA_NO_XREF(DeleteFiber, 3911, 15)
     { 0x10, 0xC2 },
     { 0x11, 0x04 },
     { 0x12, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * SwitchToFiber
 // ******************************************************************
-OOVPA_NO_XREF(SwitchToFiber, 3911, 28)
-{
+OOVPA_SIG_HEADER_NO_XREF(SwitchToFiber,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x8B },
     { 0x01, 0x15 },
@@ -682,13 +729,15 @@ OOVPA_NO_XREF(SwitchToFiber, 3911, 28)
     { 0x1D, 0x14 },
     { 0x1E, 0x91 },
     { 0x1F, 0x8B },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * ConvertThreadToFiber
 // ******************************************************************
-OOVPA_NO_XREF(ConvertThreadToFiber, 3911, 20)
-{
+OOVPA_SIG_HEADER_NO_XREF(ConvertThreadToFiber,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0xA1 },
 
@@ -713,13 +762,15 @@ OOVPA_NO_XREF(ConvertThreadToFiber, 3911, 20)
     { 0x1D, 0x28 },
     { 0x1E, 0x00 },
     { 0x1F, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * SignalObjectAndWait
 // ******************************************************************
-OOVPA_NO_XREF(SignalObjectAndWait, 3911, 8) // generic version
-{
+OOVPA_SIG_HEADER_NO_XREF(SignalObjectAndWait,
+                         3911) // generic version
+OOVPA_SIG_MATCH(
 
     { 0x07, 0x75 },
     { 0x12, 0x8B },
@@ -729,13 +780,15 @@ OOVPA_NO_XREF(SignalObjectAndWait, 3911, 8) // generic version
     { 0x34, 0x00 },
     { 0x3F, 0x83 },
     { 0x46, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * QueueUserAPC
 // ******************************************************************
-OOVPA_NO_XREF(QueueUserAPC, 3911, 7) // generic version
-{
+OOVPA_SIG_HEADER_NO_XREF(QueueUserAPC,
+                         3911) // generic version
+OOVPA_SIG_MATCH(
 
     { 0x03, 0x74 },
     { 0x08, 0x24 },
@@ -744,13 +797,15 @@ OOVPA_NO_XREF(QueueUserAPC, 3911, 7) // generic version
     { 0x19, 0x33 },
     { 0x1C, 0xC0 },
     { 0x21, 0xC1 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * QueryPerformanceCounter
 // ******************************************************************
-OOVPA_NO_XREF(QueryPerformanceCounter, 3911, 17) // generic version
-{
+OOVPA_SIG_HEADER_NO_XREF(QueryPerformanceCounter,
+                         3911) // generic version
+OOVPA_SIG_MATCH(
     { 0x00, 0x8B },
     { 0x01, 0x4C },
     { 0x02, 0x24 },
@@ -768,13 +823,15 @@ OOVPA_NO_XREF(QueryPerformanceCounter, 3911, 17) // generic version
     { 0x0E, 0xC2 },
     { 0x0F, 0x04 },
     { 0x10, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * lstrcmpiW
 // ******************************************************************
-OOVPA_NO_XREF(lstrcmpiW, 3911, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(lstrcmpiW,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x07, 0x56 },
     { 0x0F, 0x01 },
@@ -784,13 +841,15 @@ OOVPA_NO_XREF(lstrcmpiW, 3911, 8)
     { 0x2D, 0x59 },
     { 0x34, 0xEB },
     { 0x3D, 0x03 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XMountAlternateTitleA
 // ******************************************************************
-OOVPA_NO_XREF(XMountAlternateTitleA, 3911, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(XMountAlternateTitleA,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x04, 0xEC },
 
@@ -808,16 +867,18 @@ OOVPA_NO_XREF(XMountAlternateTitleA, 3911, 13)
     { 0x34, 0x09 },
 
     { 0x3D, 0xEC },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XUnmountAlternateTitleA
 // ******************************************************************
-OOVPA_XREF(XUnmountAlternateTitleA, 3911, 7,
+OOVPA_SIG_HEADER_XREF(XUnmountAlternateTitleA,
+                      3911,
 
-           XREF_XUnmountAlternateTitleA,
-           XRefZero)
-{
+                      XREF_XUnmountAlternateTitleA,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x0A, 0x65 },
     { 0x16, 0xFF },
@@ -826,16 +887,18 @@ OOVPA_XREF(XUnmountAlternateTitleA, 3911, 7,
     { 0x3A, 0x50 },
     { 0x46, 0x0B },
     { 0x52, 0x50 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XMountMUA
 // ******************************************************************
-OOVPA_XREF(XMountMUA, 3911, 2 + 7,
+OOVPA_SIG_HEADER_XREF(XMountMUA,
+                      3911,
 
-           XRefNoSaveIndex,
-           XRefTwo)
-{
+                      XRefNoSaveIndex,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x2E, XREF_g_XapiMountedMUs), // derived
     XREF_ENTRY(0xCE, XREF_XapiMapLetterToDirectory),
@@ -847,13 +910,15 @@ OOVPA_XREF(XMountMUA, 3911, 2 + 7,
     { 0xA2, 0x0F },
     { 0xBE, 0x50 },
     { 0xDE, 0x74 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CloseHandle
 // ******************************************************************
-OOVPA_NO_XREF(CloseHandle, 3911, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(CloseHandle,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x02, 0x24 },
     { 0x03, 0x04 },
@@ -863,14 +928,16 @@ OOVPA_NO_XREF(CloseHandle, 3911, 8)
     { 0x12, 0x08 },
     { 0x19, 0x33 },
     { 0x1A, 0xC0 },
-} OOVPA_END;
+    //
+);
 
 // Generic OOVPA as of 3911 and newer.
 // ******************************************************************
 // * ExitThread
 // ******************************************************************
-OOVPA_NO_XREF(ExitThread, 3911, 10)
-{
+OOVPA_SIG_HEADER_NO_XREF(ExitThread,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x6A },
     { 0x01, 0x00 },
@@ -882,13 +949,15 @@ OOVPA_NO_XREF(ExitThread, 3911, 10)
     { 0x0B, 0xFF },
     { 0x0C, 0x15 },
     { 0x11, 0xCC },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XLaunchNewImageA
 // ******************************************************************
-OOVPA_NO_XREF(XLaunchNewImageA, 3911, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(XLaunchNewImageA,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x1E, 0x80 },
     { 0x3E, 0xC0 },
@@ -898,13 +967,15 @@ OOVPA_NO_XREF(XLaunchNewImageA, 3911, 8)
     { 0xBE, 0x50 },
     { 0xDE, 0x05 },
     { 0xFE, 0x85 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGetLaunchInfo
 // ******************************************************************
-OOVPA_NO_XREF(XGetLaunchInfo, 3911, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGetLaunchInfo,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x0B, 0x8B },
     { 0x18, 0x15 },
@@ -913,14 +984,16 @@ OOVPA_NO_XREF(XGetLaunchInfo, 3911, 7)
     { 0x3F, 0x00 },
     { 0x4C, 0x83 },
     { 0x59, 0x5E },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGetSectionHandleA
 //   558BEC83EC10538B1D........5657FF75088D45F050FFD38B351C0101008B3D
 // ******************************************************************
-OOVPA_NO_XREF(XGetSectionHandleA, 3911, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGetSectionHandleA,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -935,14 +1008,16 @@ OOVPA_NO_XREF(XGetSectionHandleA, 3911, 12)
     { 0x0D, 0x56 },
     { 0x0E, 0x57 },
     { 0x0F, 0xFF },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XLoadSectionByHandle
 //  568B74240856FF15........85C07D0A50E8........33C0EB038B46045EC204
 // ******************************************************************
-OOVPA_NO_XREF(XLoadSectionByHandle, 3911, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(XLoadSectionByHandle,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XLoadSectionByHandle+0x01 : mov esi, [esp+4+arg_0]
     { 0x01, 0x8B },
@@ -962,14 +1037,16 @@ OOVPA_NO_XREF(XLoadSectionByHandle, 3911, 11)
     // XLoadSectionByHandle+0x1E : retn 4
     { 0x1E, 0xC2 },
     { 0x1F, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XFreeSectionByHandle
 // FF742404FF15........85C07D0A50E8........33C0EB0333C040C20400....
 // ******************************************************************
-OOVPA_NO_XREF(XFreeSectionByHandle, 3911, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(XFreeSectionByHandle,
+                         3911)
+OOVPA_SIG_MATCH(
 
     // XFreeSectionByHandle+0x00 : push esp
     { 0x00, 0xFF },
@@ -991,14 +1068,16 @@ OOVPA_NO_XREF(XFreeSectionByHandle, 3911, 11)
     // XFreeSectionByHandle+0x1B : retn 4
     { 0x1B, 0xC2 },
     { 0x1C, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XAutoPowerDownResetTimer
 // ******************************************************************
 // Assembly line at 0x00 and 0x09 are unique. It will prevent any false detection it might find in the future.
-OOVPA_NO_XREF(XAutoPowerDownResetTimer, 3911, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(XAutoPowerDownResetTimer,
+                         3911)
+OOVPA_SIG_MATCH(
 
     //XAutoPowerDownResetTimer+0x00 : push 0FFFFFFCDh
     { 0x00, 0x6A },
@@ -1024,16 +1103,18 @@ OOVPA_NO_XREF(XAutoPowerDownResetTimer, 3911, 12)
 
     //XAutoPowerDownResetTimer+0x1A : ret
     { 0x1A, 0xC3 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XMountMURootA
 // ******************************************************************
-OOVPA_XREF(XMountMURootA, 3911, 1 + 7,
+OOVPA_SIG_HEADER_XREF(XMountMURootA,
+                      3911,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x2D, XREF_g_XapiMountedMUs), // derived
 
@@ -1044,13 +1125,15 @@ OOVPA_XREF(XMountMURootA, 3911, 1 + 7,
     { 0x9E, 0x00 },
     { 0xBE, 0xFF },
     { 0xDE, 0xFF },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XMountUtilityDrive
 // ******************************************************************
-OOVPA_NO_XREF(XMountUtilityDrive, 3911, 26)
-{
+OOVPA_SIG_HEADER_NO_XREF(XMountUtilityDrive,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -1079,13 +1162,15 @@ OOVPA_NO_XREF(XMountUtilityDrive, 3911, 26)
 
     { 0x56, 0x83 },
     { 0x57, 0xC4 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * ReadFileEx@20
 // ******************************************************************
-OOVPA_NO_XREF(ReadFileEx, 3911, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(ReadFileEx,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x09, 0x48 },
     { 0x14, 0x8D },
@@ -1095,13 +1180,15 @@ OOVPA_NO_XREF(ReadFileEx, 3911, 8)
     { 0x35, 0x00 },
     { 0x40, 0x50 },
     { 0x4B, 0xC0 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * WriteFileEx
 // ******************************************************************
-OOVPA_NO_XREF(WriteFileEx, 3911, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(WriteFileEx,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x09, 0x48 },
     { 0x14, 0x8D },
@@ -1111,13 +1198,15 @@ OOVPA_NO_XREF(WriteFileEx, 3911, 8)
     { 0x35, 0x00 },
     { 0x40, 0x50 },
     { 0x4B, 0xC0 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XInputPoll
 // ******************************************************************
-OOVPA_NO_XREF(XInputPoll, 3911, 14)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInputPoll,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x53 },
     { 0x01, 0x56 },
@@ -1134,13 +1223,15 @@ OOVPA_NO_XREF(XInputPoll, 3911, 14)
     { 0x1D, 0x80 },
     { 0x1E, 0xA2 },
     { 0x1F, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * timeSetEvent
 // ******************************************************************
-OOVPA_NO_XREF(timeSetEvent, 3911, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(timeSetEvent,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -1156,13 +1247,15 @@ OOVPA_NO_XREF(timeSetEvent, 3911, 12)
 
     { 0x2A, 0x45 },
     { 0x55, 0x53 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * timeKillEvent
 // ******************************************************************
-OOVPA_NO_XREF(timeKillEvent, 3911, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(timeKillEvent,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x02, 0xBF },
     { 0x13, 0x0D },
@@ -1178,13 +1271,15 @@ OOVPA_NO_XREF(timeKillEvent, 3911, 12)
 
     { 0x4A, 0x6A },
     { 0x55, 0x15 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * GetOverlappedResult
 // ******************************************************************
-OOVPA_NO_XREF(GetOverlappedResult, 3911, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(GetOverlappedResult,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x0B, 0x75 },
     { 0x18, 0xC0 },
@@ -1193,13 +1288,15 @@ OOVPA_NO_XREF(GetOverlappedResult, 3911, 7)
     { 0x3F, 0xEB },
     { 0x4C, 0x89 },
     { 0x59, 0x56 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * RaiseException
 // ******************************************************************
-OOVPA_NO_XREF(RaiseException, 3911, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(RaiseException,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x09, 0x83 },
     { 0x14, 0x8B },
@@ -1208,14 +1305,16 @@ OOVPA_NO_XREF(RaiseException, 3911, 7)
     { 0x35, 0x89 },
     { 0x40, 0x5F },
     { 0x4B, 0xFF },
-} OOVPA_END;
+    //
+);
 
 // Generic OOVPA as of 3911 and newer.
 // ******************************************************************
 // * SwitchToThread
 // ******************************************************************
-OOVPA_NO_XREF(SwitchToThread, 3911, 15)
-{
+OOVPA_SIG_HEADER_NO_XREF(SwitchToThread,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0xFF },
     { 0x01, 0x15 },
@@ -1232,14 +1331,16 @@ OOVPA_NO_XREF(SwitchToThread, 3911, 15)
     { 0x10, 0x8B },
     { 0x11, 0xC1 },
     { 0x12, 0xC3 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XapiThreadStartup
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_NO_XREF(XapiThreadStartup, 3911, 17)
-{
+OOVPA_SIG_HEADER_NO_XREF(XapiThreadStartup,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x6A },
     { 0x01, 0x18 },
@@ -1260,14 +1361,16 @@ OOVPA_NO_XREF(XapiThreadStartup, 3911, 17)
     //{ 0x18, 0xE4 }, 3911 0xE4 vs 5558 0xE0
 
     { 0x1F, 0x89 },
-} OOVPA_END;
+    //
+);
 
 // Generic OOVPA as of 3911 and newer.
 // ******************************************************************
 // * MoveFileA
 // ******************************************************************
-OOVPA_NO_XREF(MoveFileA, 3911, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(MoveFileA,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -1282,14 +1385,16 @@ OOVPA_NO_XREF(MoveFileA, 3911, 12)
     { 0x1F, 0x8D },
     { 0x93, 0xC2 },
     { 0x94, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // Generic OOVPA as of 3911 and newer.
 // ******************************************************************
 // * XapiFiberStartup
 // ******************************************************************
-OOVPA_NO_XREF(XapiFiberStartup, 3911, 14)
-{
+OOVPA_SIG_HEADER_NO_XREF(XapiFiberStartup,
+                         3911)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x6A },
     { 0x01, 0x08 },
@@ -1307,16 +1412,18 @@ OOVPA_NO_XREF(XapiFiberStartup, 3911, 14)
     { 0x2F, 0xE8 },
 
     { 0x44, 0xCC },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XUnmountMU
 // ******************************************************************
-OOVPA_XREF(XUnmountMU, 3911, 2 + 9,
+OOVPA_SIG_HEADER_XREF(XUnmountMU,
+                      3911,
 
-           XRefNoSaveIndex,
-           XRefTwo)
-{
+                      XRefNoSaveIndex,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x1F, XREF_g_XapiMountedMUs), // derived
     XREF_ENTRY(0x38, XREF_XUnmountAlternateTitleA),
@@ -1330,16 +1437,18 @@ OOVPA_XREF(XUnmountMU, 3911, 2 + 9,
     // xor edi, edi
     OV_MATCH(0x5D, 0x6A, 0x20, 0x6A, 0x01, 0x33, 0xFF),
 
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * MU_Init
 // ******************************************************************
-OOVPA_XREF(MU_Init, 3911, 14,
+OOVPA_SIG_HEADER_XREF(MU_Init,
+                      3911,
 
-           XREF_MU_Init,
-           XRefZero)
-{
+                      XREF_MU_Init,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // push ebp
     // mov ebp, esp
@@ -1352,17 +1461,19 @@ OOVPA_XREF(MU_Init, 3911, 14,
     // lea eax, [ebp-0x10]
     OV_MATCH(0x95, 0x50, 0x6A, 0x00, 0x6A, 0x3A, 0x8D, 0x45, 0xF0),
 
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XapiMapLetterToDirectory
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_XREF(XapiMapLetterToDirectory, 3911, 15,
+OOVPA_SIG_HEADER_XREF(XapiMapLetterToDirectory,
+                      3911,
 
-           XREF_XapiMapLetterToDirectory,
-           XRefZero)
-{
+                      XREF_XapiMapLetterToDirectory,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // push ebp
     // mov ebp, esp
@@ -1374,17 +1485,19 @@ OOVPA_XREF(XapiMapLetterToDirectory, 3911, 15,
     // mov edi, 0x80
     OV_MATCH(0x14, 0x6A, 0x03, 0x6A, 0x03, 0xBF, 0x80, 0x00 /*, 0x00, 0x00*/),
 
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XapiMapLetterToDirectory
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_XREF(IUsbInit_GetMaxDeviceTypeCount, 3911, 12,
+OOVPA_SIG_HEADER_XREF(IUsbInit_GetMaxDeviceTypeCount,
+                      3911,
 
-           XREF_IUsbInit_GetMaxDeviceTypeCount,
-           XRefZero)
-{
+                      XREF_IUsbInit_GetMaxDeviceTypeCount,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // mov edx, [ecx + 0x9C]
     OV_MATCH(0x00, 0x8B, 0x91, 0x9C, 0x00, 0x00 /*, 0x00*/),
@@ -1395,4 +1508,5 @@ OOVPA_XREF(IUsbInit_GetMaxDeviceTypeCount, 3911, 12,
     // ret 0x4
     OV_MATCH(0x2E, 0xC2, 0x04 /*, 0x00*/)
 
-} OOVPA_END;
+    //
+);

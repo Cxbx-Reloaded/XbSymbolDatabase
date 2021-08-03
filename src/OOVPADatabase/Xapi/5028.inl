@@ -26,8 +26,9 @@
 // ******************************************************************
 // * XMountAlternateTitleA
 // ******************************************************************
-OOVPA_NO_XREF(XMountAlternateTitleA, 5028, 14)
-{
+OOVPA_SIG_HEADER_NO_XREF(XMountAlternateTitleA,
+                         5028)
+OOVPA_SIG_MATCH(
 
     { 0x04, 0xEC },
 
@@ -46,13 +47,15 @@ OOVPA_NO_XREF(XMountAlternateTitleA, 5028, 14)
     { 0x91, 0x15 },
 
     { 0x96, 0x8D },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XapiInitProcess
 // ******************************************************************
-OOVPA_NO_XREF(XapiInitProcess, 5028, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(XapiInitProcess,
+                         5028)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -68,4 +71,5 @@ OOVPA_NO_XREF(XapiInitProcess, 5028, 12)
     { 0x27, 0x8D },
     { 0x28, 0x7D },
     { 0x29, 0xCC },
-} OOVPA_END;
+    //
+);

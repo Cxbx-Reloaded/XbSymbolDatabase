@@ -26,8 +26,9 @@
 // ******************************************************************
 // * XInputSetState
 // ******************************************************************
-OOVPA_NO_XREF(XInputSetState, 4831, 14)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInputSetState,
+                         4831)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x8B },
     { 0x01, 0x4C },
@@ -45,16 +46,18 @@ OOVPA_NO_XREF(XInputSetState, 4831, 14)
 
     { 0x30, 0xC2 },
     { 0x31, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XID_fCloseDevice
 // ******************************************************************
-OOVPA_XREF(XID_fCloseDevice, 4831, 16,
+OOVPA_SIG_HEADER_XREF(XID_fCloseDevice,
+                      4831,
 
-           XREF_XID_fCloseDevice,
-           XRefZero)
-{
+                      XREF_XID_fCloseDevice,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -74,13 +77,15 @@ OOVPA_XREF(XID_fCloseDevice, 4831, 16,
 
     { 0x38, 0x45 },
     { 0x39, 0xF4 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XInputGetState
 // ******************************************************************
-OOVPA_NO_XREF(XInputGetState, 4831, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInputGetState,
+                         4831)
+OOVPA_SIG_MATCH(
 
     { 0x0E, 0x8B },
     { 0x0F, 0x8A },
@@ -98,13 +103,15 @@ OOVPA_NO_XREF(XInputGetState, 4831, 12)
 
     { 0x69, 0xC2 },
     { 0x6A, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XInputGetCapabilities
 // ******************************************************************
-OOVPA_NO_XREF(XInputGetCapabilities, 4831, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInputGetCapabilities,
+                         4831)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x1F, 0x0F },
@@ -121,13 +128,15 @@ OOVPA_NO_XREF(XInputGetCapabilities, 4831, 13)
 
     { 0x59, 0x0F },
     { 0x5A, 0xB6 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGetDeviceEnumerationStatus
 // ******************************************************************
-OOVPA_NO_XREF(XGetDeviceEnumerationStatus, 4831, 14)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGetDeviceEnumerationStatus,
+                         4831)
+OOVPA_SIG_MATCH(
 
     { 0x04, 0x15 },
     { 0x0A, 0x35 },
@@ -145,13 +154,15 @@ OOVPA_NO_XREF(XGetDeviceEnumerationStatus, 4831, 14)
 
     { 0x25, 0x8B },
     { 0x28, 0xC3 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XapiInitProcess
 // ******************************************************************
-OOVPA_NO_XREF(XapiInitProcess, 4831, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(XapiInitProcess,
+                         4831)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -167,13 +178,15 @@ OOVPA_NO_XREF(XapiInitProcess, 4831, 12)
 
     { 0x1D, 0x8D },
     { 0x1E, 0x45 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XInputGetDeviceDescription
 // ******************************************************************
-OOVPA_NO_XREF(XInputGetDeviceDescription, 4831, 14)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInputGetDeviceDescription,
+                         4831)
+OOVPA_SIG_MATCH(
 
     { 0x04, 0xEC },
     { 0x0B, 0x15 },
@@ -192,16 +205,18 @@ OOVPA_NO_XREF(XInputGetDeviceDescription, 4831, 14)
 
     { 0x30, 0x45 },
     //{ 0x31, 0xF8 }, // 4831 0xF4 vs 5344 0xF8
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XReadMUMetaData
 // ******************************************************************
-OOVPA_XREF(XReadMUMetaData, 4831, 1 + 9,
+OOVPA_SIG_HEADER_XREF(XReadMUMetaData,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x31, XREF_g_XapiMountedMUs),
 
@@ -211,4 +226,5 @@ OOVPA_XREF(XReadMUMetaData, 4831, 1 + 9,
 
     // mov WORD PTR [ebp-0x0E],0x3E
     OV_MATCH(0x51, 0x66, 0xC7, 0x45, 0xF2, 0x3E, 0x00),
-} OOVPA_END;
+    //
+);

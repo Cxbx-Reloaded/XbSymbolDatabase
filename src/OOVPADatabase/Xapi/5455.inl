@@ -26,8 +26,9 @@
 // ******************************************************************
 // * XInputGetState
 // ******************************************************************
-OOVPA_NO_XREF(XInputGetState, 5455, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInputGetState,
+                         5455)
+OOVPA_SIG_MATCH(
 
     { 0x0D, 0x0C },
     { 0x1C, 0x5E },
@@ -36,13 +37,15 @@ OOVPA_NO_XREF(XInputGetState, 5455, 7)
     { 0x49, 0x08 },
     { 0x58, 0xF3 },
     { 0x67, 0x15 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XMountAlternateTitleA
 // ******************************************************************
-OOVPA_NO_XREF(XMountAlternateTitleA, 5455, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(XMountAlternateTitleA,
+                         5455)
+OOVPA_SIG_MATCH(
 
     { 0x0B, 0x08 },
 
@@ -57,4 +60,5 @@ OOVPA_NO_XREF(XMountAlternateTitleA, 5455, 11)
 
     { 0xC1, 0x83 },
     { 0xD0, 0x15 },
-} OOVPA_END;
+    //
+);

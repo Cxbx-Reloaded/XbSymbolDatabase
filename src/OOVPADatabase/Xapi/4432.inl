@@ -26,8 +26,9 @@
 // ******************************************************************
 // * XMountUtilityDrive
 // ******************************************************************
-OOVPA_NO_XREF(XMountUtilityDrive, 4432, 27)
-{
+OOVPA_SIG_HEADER_NO_XREF(XMountUtilityDrive,
+                         4432)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -57,4 +58,5 @@ OOVPA_NO_XREF(XMountUtilityDrive, 4432, 27)
     { 0x51, 0x68 },
     { 0x52, 0x04 },
     { 0x53, 0x01 },
-} OOVPA_END;
+    //
+);

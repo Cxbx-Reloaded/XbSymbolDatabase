@@ -26,8 +26,9 @@
 // ******************************************************************
 // * XapiInitProcess
 // ******************************************************************
-OOVPA_NO_XREF(XapiInitProcess, 3950, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(XapiInitProcess,
+                         3950)
+OOVPA_SIG_MATCH(
 
     // XapiInitProcess+0x03 : sub esp, 30h
     { 0x05, 0x30 },
@@ -43,4 +44,5 @@ OOVPA_NO_XREF(XapiInitProcess, 3950, 7)
     // XapiInitProcess+0x42 : jnz +0x0A
     { 0x43, 0x75 },
     { 0x44, 0x0A },
-} OOVPA_END;
+    //
+);

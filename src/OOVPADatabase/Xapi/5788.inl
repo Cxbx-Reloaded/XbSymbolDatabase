@@ -26,8 +26,9 @@
 // ******************************************************************
 // * GetThreadPriority
 // ******************************************************************
-OOVPA_NO_XREF(GetThreadPriority, 5788, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(GetThreadPriority,
+                         5788)
+OOVPA_SIG_MATCH(
 
     { 0x0D, 0xFF },
     { 0x16, 0x85 },
@@ -36,13 +37,15 @@ OOVPA_NO_XREF(GetThreadPriority, 5788, 7)
     { 0x35, 0xF1 },
     { 0x40, 0x8B },
     { 0x4B, 0xB8 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * SetThreadPriorityBoost
 // ******************************************************************
-OOVPA_NO_XREF(SetThreadPriorityBoost, 5788, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(SetThreadPriorityBoost,
+                         5788)
+OOVPA_SIG_MATCH(
 
     { 0x07, 0xFF },
     { 0x10, 0xFF },
@@ -51,17 +54,20 @@ OOVPA_NO_XREF(SetThreadPriorityBoost, 5788, 7)
     { 0x2C, 0x8B },
     { 0x35, 0x33 },
     { 0x40, 0x33 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XGetSectionSize
 // ******************************************************************
-OOVPA_NO_XREF(XGetSectionSize, 5788, 5)
-{
+OOVPA_SIG_HEADER_NO_XREF(XGetSectionSize,
+                         5788)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x8B },
     { 0x02, 0x24 },
     { 0x04, 0x8B },
     { 0x06, 0x08 },
     { 0x08, 0x04 },
-} OOVPA_END;
+    //
+);
