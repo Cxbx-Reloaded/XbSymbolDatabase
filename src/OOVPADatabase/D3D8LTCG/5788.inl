@@ -27,8 +27,9 @@
 // * D3DDevice_SetPalette
 // ******************************************************************
 //85C05774258B4E2C8948088BBC
-OOVPA_NO_XREF(D3DDevice_SetPalette, 1024, 15)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPalette,
+                         1024)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x53 },
     { 0x01, 0x8B },
@@ -46,14 +47,16 @@ OOVPA_NO_XREF(D3DDevice_SetPalette, 1024, 15)
     { 0x1D, 0x08 },
     { 0x1E, 0x8B },
     { 0x1F, 0xBC },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetPalette
 // ******************************************************************
 //000085C05774258B4E ...C20400
-OOVPA_NO_XREF(D3DDevice_SetPalette_4, 2024, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPalette_4,
+                         2024)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x53 },
     { 0x01, 0x55 },
@@ -67,14 +70,16 @@ OOVPA_NO_XREF(D3DDevice_SetPalette_4, 2024, 11)
     { 0x1A, 0x25 },
     { 0x1B, 0x8B },
     { 0x1C, 0x4E },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetPixelShader
 // ******************************************************************
 //C740040000210083C008
-OOVPA_NO_XREF(D3DDevice_SetPixelShader, 1024, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader,
+                         1024)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x51 },
     { 0x01, 0x53 },
@@ -89,14 +94,16 @@ OOVPA_NO_XREF(D3DDevice_SetPixelShader, 1024, 12)
     { 0x7E, 0x83 },
     { 0x7F, 0xC0 },
     { 0x80, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_CreateVertexShader
 // ******************************************************************
 //C740040000210083C008 ...C3
-OOVPA_NO_XREF(D3DDevice_SetPixelShader_0, 2048, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader_0,
+                         2048)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x51 },
     { 0x01, 0x85 },
@@ -113,14 +120,16 @@ OOVPA_NO_XREF(D3DDevice_SetPixelShader_0, 2048, 13)
     { 0x7C, 0x08 },
 
     { 0x81, 0xC3 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetPixelShaderConstant
 // ******************************************************************
 //F30F2DC0C1E0100FC6C039 ...C20400
-OOVPA_NO_XREF(D3DDevice_SetPixelShaderConstant_4, 2024, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShaderConstant_4,
+                         2024)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x04, 0xEC },
@@ -136,14 +145,16 @@ OOVPA_NO_XREF(D3DDevice_SetPixelShaderConstant_4, 2024, 13)
     { 0x54, 0xC6 },
     { 0x55, 0xC0 },
     { 0x56, 0x39 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetPixelShaderProgram
 // ******************************************************************
 //C780280900
-OOVPA_NO_XREF(D3DDevice_SetPixelShaderProgram, 1024, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShaderProgram,
+                         1024)
+OOVPA_SIG_MATCH(
 
     { 0x06, 0xA1 },
     { 0x0B, 0x74 },
@@ -154,17 +165,19 @@ OOVPA_NO_XREF(D3DDevice_SetPixelShaderProgram, 1024, 8)
     { 0x1C, 0x09 },
     { 0x1D, 0x00 },
     { 0x1E, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_CullMode
 // ******************************************************************
 //C7000803040075
-OOVPA_XREF(D3DDevice_SetRenderState_CullMode, 1053, 2 + 8,
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_CullMode,
+                      1053,
 
-           XREF_D3DDevice_SetRenderState_CullMode,
-           XRefTwo)
-{
+                      XREF_D3DDevice_SetRenderState_CullMode,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
     XREF_ENTRY(0x35, XREF_D3DRS_CULLMODE), // Derived
@@ -178,14 +191,16 @@ OOVPA_XREF(D3DDevice_SetRenderState_CullMode, 1053, 2 + 8,
     { 0x27, 0x04 },
     { 0x28, 0x00 },
     { 0x29, 0x75 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_EdgeAntiAlias
 // ******************************************************************
 //0020030800894804
-OOVPA_NO_XREF(D3DDevice_SetRenderState_EdgeAntiAlias, 1060, 10)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_EdgeAntiAlias,
+                         1060)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0x8B },
     { 0x1E, 0x4C },
@@ -198,14 +213,16 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_EdgeAntiAlias, 1060, 10)
     { 0x27, 0x89 },
     { 0x28, 0x48 },
     { 0x29, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_FillMode
 // ******************************************************************
 //C98B4C24087502
-OOVPA_NO_XREF(D3DDevice_SetRenderState_FillMode, 1060, 9)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_FillMode,
+                         1060)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x08, 0x06 },
@@ -217,14 +234,16 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_FillMode, 1060, 9)
     { 0x2E, 0x08 },
     { 0x2F, 0x75 },
     { 0x30, 0x02 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_FogColor
 // ******************************************************************
 //54240E8BF981
-OOVPA_NO_XREF(D3DDevice_SetRenderState_FogColor, 1060, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_FogColor,
+                         1060)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
 
@@ -234,14 +253,16 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_FogColor, 1060, 7)
     { 0x27, 0x8B },
     { 0x28, 0xF9 },
     { 0x29, 0x81 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_FrontFace
 // ******************************************************************
 //00a0A0304008948
-OOVPA_NO_XREF(D3DDevice_SetRenderState_FrontFace, 1060, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_FrontFace,
+                         1060)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0x8B },
 
@@ -252,14 +273,16 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_FrontFace, 1060, 8)
     { 0x26, 0x00 },
     { 0x27, 0x89 },
     { 0x28, 0x48 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_LogicOp
 // ******************************************************************
 //18C700BC1704
-OOVPA_NO_XREF(D3DDevice_SetRenderState_LogicOp, 1060, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_LogicOp,
+                         1060)
+OOVPA_SIG_MATCH(
 
     // XREF_ENTRY( 0x34, XREF_D3DRS_LOGICOP ),
 
@@ -271,14 +294,16 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_LogicOp, 1060, 7)
     { 0x27, 0xBC },
     { 0x28, 0x17 },
     { 0x29, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_NormalizeNormals
 // ******************************************************************
 //A4030400894804
-OOVPA_NO_XREF(D3DDevice_SetRenderState_NormalizeNormals, 1060, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_NormalizeNormals,
+                         1060)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
 
@@ -289,14 +314,16 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_NormalizeNormals, 1060, 8)
     { 0x27, 0x89 },
     { 0x28, 0x48 },
     { 0x29, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_ShadowFunc
 // ******************************************************************
 //6C1E04008D91
-OOVPA_NO_XREF(D3DDevice_SetRenderState_ShadowFunc, 1060, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_ShadowFunc,
+                         1060)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x07, 0x8B },
@@ -307,14 +334,16 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_ShadowFunc, 1060, 8)
     { 0x26, 0x00 },
     { 0x27, 0x8D },
     { 0x28, 0x91 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_StencilEnable
 // ******************************************************************
 //018b54240885d2c700
-OOVPA_NO_XREF(D3DDevice_SetRenderState_StencilEnable, 1060, 10)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilEnable,
+                         1060)
+OOVPA_SIG_MATCH(
 
     { 0x02, 0x35 },
 
@@ -327,14 +356,16 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_StencilEnable, 1060, 10)
     { 0x56, 0xD2 },
     { 0x57, 0xC7 },
     { 0x58, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_StencilFail
 // ******************************************************************
 //7003040089
-OOVPA_NO_XREF(D3DDevice_SetRenderState_StencilFail, 1060, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilFail,
+                         1060)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0x8B },
     { 0x23, 0x33 },
@@ -344,14 +375,16 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_StencilFail, 1060, 7)
     { 0x63, 0x04 },
     { 0x64, 0x00 },
     { 0x65, 0x89 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_ZEnable
 // ******************************************************************
 //C9C7000C0304008948048B
-OOVPA_NO_XREF(D3DDevice_SetRenderState_ZEnable, 1060, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_ZEnable,
+                         1060)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x01, 0x8B },
@@ -367,14 +400,16 @@ OOVPA_NO_XREF(D3DDevice_SetRenderState_ZEnable, 1060, 13)
     { 0x3F, 0x48 },
     { 0x40, 0x04 },
     { 0x41, 0x8B },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetTextureState_BorderColor
 // ******************************************************************
 //088BD1C1E20681C2241B
-OOVPA_NO_XREF(D3DDevice_SetTextureState_BorderColor, 1048, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_BorderColor,
+                         1048)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
 
@@ -388,14 +423,16 @@ OOVPA_NO_XREF(D3DDevice_SetTextureState_BorderColor, 1048, 11)
     { 0x27, 0xC2 },
     { 0x28, 0x24 },
     { 0x29, 0x1B },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetTextureState_BorderColor
 // ******************************************************************
 //891089580483 ...C3
-OOVPA_NO_XREF(D3DDevice_SetTextureState_BorderColor_0, 2048, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_BorderColor_0,
+                         2048)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0x57 },
 
@@ -405,14 +442,16 @@ OOVPA_NO_XREF(D3DDevice_SetTextureState_BorderColor_0, 2048, 7)
     { 0x30, 0x58 },
     { 0x31, 0x04 },
     { 0x32, 0x83 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetTextureState_ColorKeyColor
 // ******************************************************************
 //E00A040089
-OOVPA_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor, 1024, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor,
+                         1024)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0x8B },
     { 0x18, 0xE8 },
@@ -423,14 +462,16 @@ OOVPA_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor, 1024, 8)
     { 0x26, 0x04 },
     { 0x27, 0x00 },
     { 0x28, 0x89 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetTextureState_ColorKeyColor
 // ******************************************************************
 //E00A040089 ...C3
-OOVPA_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor_0, 2048, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor_0,
+                         2048)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0x57 },
     { 0x0B, 0x8B },
@@ -441,14 +482,16 @@ OOVPA_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor_0, 2048, 8)
     { 0x27, 0x04 },
     { 0x28, 0x00 },
     { 0x29, 0x89 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderTargetFast
 // ******************************************************************
 //A900007800578B
-OOVPA_NO_XREF(D3DDevice_SetRenderTargetFast, 1024, 9)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderTargetFast,
+                         1024)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x53 },
     { 0x01, 0x8B },
@@ -460,17 +503,19 @@ OOVPA_NO_XREF(D3DDevice_SetRenderTargetFast, 1024, 9)
     { 0x0B, 0x00 },
     { 0x0C, 0x57 },
     { 0x0D, 0x8B },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3D_BlockOnTime
 // ******************************************************************
 //C747101001040089
-OOVPA_XREF(D3D_BlockOnTime, 1024, 10,
+OOVPA_SIG_HEADER_XREF(D3D_BlockOnTime,
+                      1024,
 
-           XREF_D3D_BlockOnTime,
-           XRefZero)
-{
+                      XREF_D3D_BlockOnTime,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x01, 0x8B },
@@ -483,17 +528,19 @@ OOVPA_XREF(D3D_BlockOnTime, 1024, 10,
     { 0xB9, 0x04 },
     { 0xBA, 0x00 },
     { 0xBB, 0x89 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3D_BlockOnTime
 // ******************************************************************
 //C747101001040089 ...C20400
-OOVPA_XREF(D3D_BlockOnTime_4, 2048, 9,
+OOVPA_SIG_HEADER_XREF(D3D_BlockOnTime_4,
+                      2048,
 
-           XREF_D3D_BlockOnTime,
-           XRefZero)
-{
+                      XREF_D3D_BlockOnTime,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
 
@@ -505,14 +552,16 @@ OOVPA_XREF(D3D_BlockOnTime_4, 2048, 9,
     { 0xBD, 0x04 },
     { 0xBE, 0x00 },
     { 0xBF, 0x89 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3D_MakeRequestedSpace
 // ******************************************************************
 //81C5004000003BE9 ...C20400
-OOVPA_NO_XREF(D3D_MakeRequestedSpace, 2048, 10)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3D_MakeRequestedSpace,
+                         2048)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
     { 0x01, 0xEC },
@@ -525,17 +574,19 @@ OOVPA_NO_XREF(D3D_MakeRequestedSpace, 2048, 10)
     { 0x5F, 0x00 },
     { 0x60, 0x3B },
     { 0x61, 0xE9 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3D_SetFence
 // ******************************************************************
 //C70010A304008BCF
-OOVPA_XREF(D3D_SetFence, 1048, 10,
+OOVPA_SIG_HEADER_XREF(D3D_SetFence,
+                      1048,
 
-           XREF_D3D_SetFence,
-           XRefZero)
-{
+                      XREF_D3D_SetFence,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x01, 0x8B },
@@ -548,17 +599,19 @@ OOVPA_XREF(D3D_SetFence, 1048, 10,
     { 0x26, 0x00 },
     { 0x27, 0x8B },
     { 0x28, 0xCF },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3D_SetFence
 // ******************************************************************
 //C70010A304008B
-OOVPA_XREF(D3D_SetFence, 1060, 9,
+OOVPA_SIG_HEADER_XREF(D3D_SetFence,
+                      1060,
 
-           XREF_D3D_SetFence,
-           XRefZero)
-{
+                      XREF_D3D_SetFence,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x53 },
     { 0x01, 0x8A },
@@ -570,14 +623,16 @@ OOVPA_XREF(D3D_SetFence, 1060, 9,
     { 0x29, 0x04 },
     { 0x2A, 0x00 },
     { 0x2B, 0x8B },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_DrawIndexedVerticesUP
 // ******************************************************************
 //558BEC83EC1453568B35 ...C700FC17040089
-OOVPA_NO_XREF(D3DDevice_DrawIndexedVerticesUP, 1060, 17)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawIndexedVerticesUP,
+                         1060)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -597,14 +652,16 @@ OOVPA_NO_XREF(D3DDevice_DrawIndexedVerticesUP, 1060, 17)
     { 0x34, 0x04 },
     { 0x35, 0x00 },
     { 0x36, 0x89 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetTransform
 // ******************************************************************
 //568BC8C1E106578DBC ...C3
-OOVPA_NO_XREF(D3DDevice_SetTransform_0, 2072, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTransform_0,
+                         2072)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x53 },
     { 0x01, 0x8B },
@@ -621,14 +678,16 @@ OOVPA_NO_XREF(D3DDevice_SetTransform_0, 2072, 13)
     { 0x10, 0x19 },
 
     { 0x10D, 0xC3 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_RunPushBuffer
 // ******************************************************************
 //C7442410000000208B
-OOVPA_NO_XREF(D3DDevice_RunPushBuffer, 1048, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_RunPushBuffer,
+                         1048)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
     { 0x01, 0xEC },
@@ -642,14 +701,16 @@ OOVPA_NO_XREF(D3DDevice_RunPushBuffer, 1048, 11)
     { 0x51, 0x00 },
     { 0x52, 0x20 },
     { 0x53, 0x8B },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetVertexDataColor
 // ******************************************************************
 //0C8D....40190400
-OOVPA_NO_XREF(D3DDevice_SetVertexDataColor, 1048, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexDataColor,
+                         1048)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x01, 0x8B },
@@ -660,14 +721,16 @@ OOVPA_NO_XREF(D3DDevice_SetVertexDataColor, 1048, 8)
     { 0x2A, 0x19 },
     { 0x2B, 0x04 },
     { 0x2C, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetShaderConstantMode
 // ******************************************************************
 //A810538B1D ...C3
-OOVPA_NO_XREF(D3DDevice_SetShaderConstantMode_0, 2108, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetShaderConstantMode_0,
+                         2108)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0xA8 },
     { 0x01, 0x10 },
@@ -684,14 +747,16 @@ OOVPA_NO_XREF(D3DDevice_SetShaderConstantMode_0, 2108, 13)
 
     { 0x122, 0x5B },
     { 0x123, 0xC3 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetShaderConstantMode
 // ******************************************************************
 //A810538B1D ...C3
-OOVPA_NO_XREF(D3DDevice_SetShaderConstantMode_0, 2120, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetShaderConstantMode_0,
+                         2120)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0xA8 },
     { 0x01, 0x10 },
@@ -708,14 +773,16 @@ OOVPA_NO_XREF(D3DDevice_SetShaderConstantMode_0, 2120, 13)
 
     { 0x118, 0x5B },
     { 0x119, 0xC3 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetShaderConstantMode
 // ******************************************************************
 //A810538B1D ...C3
-OOVPA_NO_XREF(D3DDevice_SetShaderConstantMode_0, 2132, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetShaderConstantMode_0,
+                         2132)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0xA8 },
     { 0x01, 0x10 },
@@ -732,4 +799,5 @@ OOVPA_NO_XREF(D3DDevice_SetShaderConstantMode_0, 2132, 13)
 
     { 0x122, 0x5B },
     { 0x123, 0xC3 },
-} OOVPA_END;
+    //
+);

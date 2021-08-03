@@ -27,8 +27,9 @@
 // * D3DDevice_Swap
 // ******************************************************************
 //7505BB050000008B ...C3
-OOVPA_NO_XREF(D3DDevice_Swap_0, 2036, 9)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Swap_0,
+                         2036)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0x56 },
 
@@ -40,14 +41,16 @@ OOVPA_NO_XREF(D3DDevice_Swap_0, 2036, 9)
     { 0x2B, 0x00 },
     { 0x2C, 0x00 },
     { 0x2D, 0x8B },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetTile
 // ******************************************************************
 //C744242000000000C744241C ...C3
-OOVPA_NO_XREF(D3DDevice_SetTile_0, 2048, 14)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTile_0,
+                         2048)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
     { 0x01, 0xEC },
@@ -64,14 +67,16 @@ OOVPA_NO_XREF(D3DDevice_SetTile_0, 2048, 14)
     { 0x36, 0x44 },
     { 0x37, 0x24 },
     { 0x38, 0x1C },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetTexture
 // ******************************************************************
 //81C10000F8FF89 ...C20400
-OOVPA_NO_XREF(D3DDevice_SetTexture_4, 2036, 9)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTexture_4,
+                         2036)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
     { 0x01, 0xEC },
@@ -83,14 +88,16 @@ OOVPA_NO_XREF(D3DDevice_SetTexture_4, 2036, 9)
     { 0x2F, 0xF8 },
     { 0x30, 0xFF },
     { 0x31, 0x89 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_DrawVertices
 // ******************************************************************
 //0056576A00558B ...C20400
-OOVPA_NO_XREF(D3DDevice_DrawVertices_4, 2048, 10)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawVertices_4,
+                         2048)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x53 },
     { 0x01, 0x55 },
@@ -103,4 +110,5 @@ OOVPA_NO_XREF(D3DDevice_DrawVertices_4, 2048, 10)
     { 0x0B, 0x00 },
     { 0x0C, 0x55 },
     { 0x0D, 0x8B },
-} OOVPA_END;
+    //
+);
