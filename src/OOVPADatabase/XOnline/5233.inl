@@ -26,11 +26,12 @@
 // ******************************************************************
 // * CXo::XOnlineMatchSessionUpdate
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineMatchSessionUpdate, 5233, 19,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSessionUpdate,
+                      5233,
 
-           XREF_CXo_XOnlineMatchSessionUpdate,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineMatchSessionUpdate,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // push ebp
     // mov ebp, esp
@@ -47,4 +48,5 @@ OOVPA_XREF(CXo_XOnlineMatchSessionUpdate, 5233, 19,
     OV_MATCH(0x11, 0x6A, 0x00, 0xFF, 0x75, 0x0C, 0x8B, 0xCE),
     // push dword ptr [ebp + param_1]
     OV_MATCH(0x18, 0xFF, 0x75, 0x08),
-} OOVPA_END;
+    //
+);

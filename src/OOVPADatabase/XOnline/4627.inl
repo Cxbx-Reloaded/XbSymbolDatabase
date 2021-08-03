@@ -26,11 +26,12 @@
 // ******************************************************************
 // * XoUpdateLaunchNewImageInternal
 // ******************************************************************
-OOVPA_XREF(XoUpdateLaunchNewImageInternal, 4627, 11,
+OOVPA_SIG_HEADER_XREF(XoUpdateLaunchNewImageInternal,
+                      4627,
 
-           XREF_XoUpdateLaunchNewImageInternal,
-           XRefZero)
-{
+                      XREF_XoUpdateLaunchNewImageInternal,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x03, 0x81 },
@@ -45,16 +46,18 @@ OOVPA_XREF(XoUpdateLaunchNewImageInternal, 4627, 11,
     { 0x5F, 0x45 },
 
     { 0x65, 0xE8 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXo::XOnlineLogon
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineLogon, 4627, 13,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineLogon,
+                      4627,
 
-           XREF_CXo_XOnlineLogon,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineLogon,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x02, 0xEC },
 
@@ -71,4 +74,5 @@ OOVPA_XREF(CXo_XOnlineLogon, 4627, 13,
     { 0x42, 0x73 },
     { 0x43, 0x68 },
     { 0x44, 0x68 },
-} OOVPA_END;
+    //
+);

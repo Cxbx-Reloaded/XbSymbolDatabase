@@ -26,11 +26,12 @@
 // ******************************************************************
 // * CXo::XOnlineLogon
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineLogon, 4361, 12,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineLogon,
+                      4361,
 
-           XREF_CXo_XOnlineLogon,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineLogon,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x02, 0xEC },
 
@@ -46,16 +47,18 @@ OOVPA_XREF(CXo_XOnlineLogon, 4361, 12,
 
     { 0x24, 0xA8 },
     { 0x32, 0x33 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XOnlineLogon
 // ******************************************************************
-OOVPA_XREF(XOnlineLogon, 4361, 1 + 4,
+OOVPA_SIG_HEADER_XREF(XOnlineLogon,
+                      4361,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x0B, XREF_CXo_XOnlineLogon),
 
@@ -63,4 +66,5 @@ OOVPA_XREF(XOnlineLogon, 4361, 1 + 4,
     { 0x01, 0x8B },
     { 0x02, 0xEC },
     { 0x0A, 0xE9 },
-} OOVPA_END;
+    //
+);
