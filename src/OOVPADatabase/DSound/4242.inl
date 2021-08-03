@@ -27,11 +27,12 @@
 // * CMcpxVoiceClient::SetLFO
 // ******************************************************************
 // Generic OOVPA as of 4242 and newer
-OOVPA_XREF(CMcpxVoiceClient_SetLFO, 4242, 12,
+OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_SetLFO,
+                      4242,
 
-           XREF_CMcpxVoiceClient_SetLFO,
-           XRefZero)
-{
+                      XREF_CMcpxVoiceClient_SetLFO,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x14, 0x8B },
@@ -47,17 +48,19 @@ OOVPA_XREF(CMcpxVoiceClient_SetLFO, 4242, 12,
 
     { 0x50, 0x31 },
     { 0x51, 0x4E },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CMcpxVoiceClient::SetEG
 // ******************************************************************
 // Generic OOVPA as of 4242 and newer
-OOVPA_XREF(CMcpxVoiceClient_SetEG, 4242, 14,
+OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_SetEG,
+                      4242,
 
-           XREF_CMcpxVoiceClient_SetEG,
-           XRefZero)
-{
+                      XREF_CMcpxVoiceClient_SetEG,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x01, 0x8B },
@@ -75,17 +78,19 @@ OOVPA_XREF(CMcpxVoiceClient_SetEG, 4242, 14,
 
     { 0x50, 0x56 },
     { 0x51, 0x24 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CMcpxBuffer_Stop
 // ******************************************************************
 //Generic OOVPA as of 4242 and newer.
-OOVPA_XREF(CMcpxBuffer_Stop, 4242, 9,
+OOVPA_SIG_HEADER_XREF(CMcpxBuffer_Stop,
+                      4242,
 
-           XREF_CMcpxBuffer_Stop,
-           XRefZero)
-{
+                      XREF_CMcpxBuffer_Stop,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // CMcpxBuffer_Stop+0x0E : cmp al, 3
     { 0x0E, 0x3C },
@@ -101,16 +106,18 @@ OOVPA_XREF(CMcpxBuffer_Stop, 4242, 9,
     { 0x1B, 0x24 },
     { 0x1C, 0x10 },
     { 0x1D, 0x02 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * DirectSound::CDirectSoundBuffer::SetNotificationPositions
 // ******************************************************************
-OOVPA_XREF(CDirectSoundBuffer_SetNotificationPositions, 4242, 11,
+OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetNotificationPositions,
+                      4242,
 
-           XREF_CDirectSoundBuffer_SetNotificationPositions,
-           XRefZero)
-{
+                      XREF_CDirectSoundBuffer_SetNotificationPositions,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // CDirectSoundBuffer_SetNotificationPositions+0x00 : push ebx
     { 0x00, 0x53 },
@@ -128,16 +135,18 @@ OOVPA_XREF(CDirectSoundBuffer_SetNotificationPositions, 4242, 11,
 
     { 0x47, 0xE8 },
     { 0x5D, 0x8B },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CDirectSound_GetSpeakerConfig
 // ******************************************************************
-OOVPA_XREF(CDirectSound_GetSpeakerConfig, 4242, 1 + 19,
+OOVPA_SIG_HEADER_XREF(CDirectSound_GetSpeakerConfig,
+                      4242,
 
-           XREF_CDirectSound_GetSpeakerConfig,
-           XRefOne)
-{
+                      XREF_CDirectSound_GetSpeakerConfig,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     // call DirectSoundEnterCriticalSection
     XREF_ENTRY(0x01, XREF_DirectSoundEnterCriticalSection),
@@ -160,16 +169,18 @@ OOVPA_XREF(CDirectSound_GetSpeakerConfig, 4242, 1 + 19,
 
     // ret 0x0008
     OV_MATCH(0x4E, 0xC2, 0x08, 0x00),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CFullHrtfSource_GetHrtfFilterPair
 // ******************************************************************
-OOVPA_XREF(CFullHrtfSource_GetHrtfFilterPair, 4242, 15,
+OOVPA_SIG_HEADER_XREF(CFullHrtfSource_GetHrtfFilterPair,
+                      4242,
 
-           XREF_CFullHrtfSource_GetHrtfFilterPair,
-           XRefZero)
-{
+                      XREF_CFullHrtfSource_GetHrtfFilterPair,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x01, 0x8B },
@@ -188,16 +199,18 @@ OOVPA_XREF(CFullHrtfSource_GetHrtfFilterPair, 4242, 15,
 
     { 0x58, 0xD8 },
     { 0x59, 0x05 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CHrtfSource_SetAlgorithm_FullHrtf
 // ******************************************************************
-OOVPA_XREF(CHrtfSource_SetAlgorithm_FullHrtf, 4242, 1 + 8,
+OOVPA_SIG_HEADER_XREF(CHrtfSource_SetAlgorithm_FullHrtf,
+                      4242,
 
-           XREF_CHrtfSource_SetAlgorithm_FullHrtf,
-           XRefOne)
-{
+                      XREF_CHrtfSource_SetAlgorithm_FullHrtf,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x17, XREF_CFullHrtfSource_GetHrtfFilterPair),
 
@@ -209,16 +222,18 @@ OOVPA_XREF(CHrtfSource_SetAlgorithm_FullHrtf, 4242, 1 + 8,
     { 0x11, 0xC7 },
     { 0x12, 0x05 },
     { 0x1B, 0xC3 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * DirectSoundUseFullHRTF
 // ******************************************************************
-OOVPA_XREF(DirectSoundUseFullHRTF, 4242, 1 + 8,
+OOVPA_SIG_HEADER_XREF(DirectSoundUseFullHRTF,
+                      4242,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x13, XREF_CHrtfSource_SetAlgorithm_FullHrtf),
 
@@ -230,16 +245,18 @@ OOVPA_XREF(DirectSoundUseFullHRTF, 4242, 1 + 8,
     { 0x1A, 0x74 },
     { 0x1B, 0x0B },
     { 0x1C, 0x68 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CLightHrtfSource_GetHrtfFilterPair
 // ******************************************************************
-OOVPA_XREF(CLightHrtfSource_GetHrtfFilterPair, 4242, 16,
+OOVPA_SIG_HEADER_XREF(CLightHrtfSource_GetHrtfFilterPair,
+                      4242,
 
-           XREF_CLightHrtfSource_GetHrtfFilterPair,
-           XRefZero)
-{
+                      XREF_CLightHrtfSource_GetHrtfFilterPair,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x01, 0x8B },
@@ -259,16 +276,18 @@ OOVPA_XREF(CLightHrtfSource_GetHrtfFilterPair, 4242, 16,
     { 0x1A, 0x6A },
 
     { 0x8B, 0x89 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CHrtfSource_SetAlgorithm_LightHrtf
 // ******************************************************************
-OOVPA_XREF(CHrtfSource_SetAlgorithm_LightHrtf, 4242, 1 + 11,
+OOVPA_SIG_HEADER_XREF(CHrtfSource_SetAlgorithm_LightHrtf,
+                      4242,
 
-           XREF_CHrtfSource_SetAlgorithm_LightHrtf,
-           XRefOne)
-{
+                      XREF_CHrtfSource_SetAlgorithm_LightHrtf,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x1A, XREF_CLightHrtfSource_GetHrtfFilterPair),
 
@@ -283,16 +302,18 @@ OOVPA_XREF(CHrtfSource_SetAlgorithm_LightHrtf, 4242, 1 + 11,
     { 0x14, 0xC7 },
     { 0x15, 0x05 },
     { 0x1E, 0xC3 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * DirectSoundUseLightHRTF
 // ******************************************************************
-OOVPA_XREF(DirectSoundUseLightHRTF, 4242, 1 + 8,
+OOVPA_SIG_HEADER_XREF(DirectSoundUseLightHRTF,
+                      4242,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x13, XREF_CHrtfSource_SetAlgorithm_LightHrtf),
 
@@ -304,16 +325,18 @@ OOVPA_XREF(DirectSoundUseLightHRTF, 4242, 1 + 8,
     { 0x1A, 0x74 },
     { 0x1B, 0x0B },
     { 0x1C, 0x68 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CMcpxVoiceClient::Commit3dSettings
 // ******************************************************************
-OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 4242, 12,
+OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Commit3dSettings,
+                      4242,
 
-           XREF_CMcpxVoiceClient_Commit3dSettings,
-           XRefZero)
-{
+                      XREF_CMcpxVoiceClient_Commit3dSettings,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
 
@@ -338,16 +361,18 @@ OOVPA_XREF(CMcpxVoiceClient_Commit3dSettings, 4242, 12,
     //{ 0x7A, 0x00 },
     { 0x7B, 0x00 },
 
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XFileCreateMediaObject
 // ******************************************************************
-OOVPA_XREF(XFileCreateMediaObject, 4242, 10,
+OOVPA_SIG_HEADER_XREF(XFileCreateMediaObject,
+                      4242,
 
-           XRefNoSaveIndex,
-           XRefZero)
-{
+                      XRefNoSaveIndex,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
 
@@ -358,13 +383,15 @@ OOVPA_XREF(XFileCreateMediaObject, 4242, 10,
     OV_MATCH(0x49, 0x08),
 
     OV_MATCH(0x80, 0xC2, 0x18),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XFileCreateMediaObjectEx
 // ******************************************************************
-OOVPA_NO_XREF(XFileCreateMediaObjectEx, 4242, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(XFileCreateMediaObjectEx,
+                         4242)
+OOVPA_SIG_MATCH(
 
     OV_MATCH(0x00, 0x53),
     OV_MATCH(0x28, 0x1B),
@@ -372,13 +399,15 @@ OOVPA_NO_XREF(XFileCreateMediaObjectEx, 4242, 12)
     OV_MATCH(0x36, 0x78, 0x1C, 0xFF, 0x74, 0x24, 0x10, 0x57, 0xE8),
 
     OV_MATCH(0x72, 0xC2, 0x08),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XWaveFileCreateMediaObject
 // ******************************************************************
-OOVPA_NO_XREF(XWaveFileCreateMediaObject, 4242, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(XWaveFileCreateMediaObject,
+                         4242)
+OOVPA_SIG_MATCH(
 
     OV_MATCH(0x00, 0x53),
     OV_MATCH(0x25, 0xF7),
@@ -386,16 +415,18 @@ OOVPA_NO_XREF(XWaveFileCreateMediaObject, 4242, 12)
     OV_MATCH(0x45, 0xF6, 0x7C, 0x23, 0x83, 0x7C, 0x24, 0x14, 0x00),
 
     OV_MATCH(0x89, 0xC2, 0x0C),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XWaveFileCreateMediaObjectEx
 // ******************************************************************
-OOVPA_XREF(XWaveFileCreateMediaObjectEx, 4242, 12,
+OOVPA_SIG_HEADER_XREF(XWaveFileCreateMediaObjectEx,
+                      4242,
 
-           XRefNoSaveIndex,
-           XRefZero)
-{
+                      XRefNoSaveIndex,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     OV_MATCH(0x16, 0x0B),
     OV_MATCH(0x25, 0xF7),
@@ -403,4 +434,5 @@ OOVPA_XREF(XWaveFileCreateMediaObjectEx, 4242, 12,
     OV_MATCH(0x49, 0xEB, 0x0A, 0xFF, 0x74, 0x24, 0x14, 0x57, 0xE8),
 
     OV_MATCH(0x85, 0xC2, 0x0C),
-} OOVPA_END;
+    //
+);

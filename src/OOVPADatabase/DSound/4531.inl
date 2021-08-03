@@ -26,11 +26,12 @@
 // ******************************************************************
 // * CMcpxStream_Discontinuity
 // ******************************************************************
-OOVPA_XREF(CMcpxStream_Discontinuity, 4531, 1 + 9,
+OOVPA_SIG_HEADER_XREF(CMcpxStream_Discontinuity,
+                      4531,
 
-           XREF_CMcpxStream_Discontinuity,
-           XRefOne)
-{
+                      XREF_CMcpxStream_Discontinuity,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x24, XREF_CMcpxStream_Stop_Ex),
 
@@ -50,4 +51,5 @@ OOVPA_XREF(CMcpxStream_Discontinuity, 4531, 1 + 9,
     // CMcpxStream_Discontinuity+0x2D : pop esi; ret
     { 0x2D, 0x5E },
     { 0x2E, 0xC3 },
-} OOVPA_END;
+    //
+);
