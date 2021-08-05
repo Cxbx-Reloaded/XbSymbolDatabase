@@ -155,6 +155,35 @@ OOVPA_NO_XREF(D3DDevice_SetTransform, 4034, 13)
 } OOVPA_END;
 
 // ******************************************************************
+// * D3D::UpdateProjectionViewportTransform
+// ******************************************************************
+// Generic OOVPA as of 4034 and newer
+OOVPA_XREF(D3D_UpdateProjectionViewportTransform, 4034, 1 + 11,
+
+           XREF_D3D_UpdateProjectionViewportTransform,
+           XRefOne)
+{
+    // mov e??, XREF_D3DDEVICE
+    XREF_ENTRY(0x0B, XREF_D3DDEVICE), // Derived
+
+    // and  esp, 0FFFFFFF0h
+    // sub  esp, 58h
+    OV_MATCH(0x03, 0x83, 0xE4, 0xF0, 0x83, 0xEC, 0x5C),
+
+    // Start of assembly code group since anything afterward does change over time.
+    // mov e??,
+    OV_MATCH(0x09, 0x8B),
+    // mov eax, [e?? + 0x?]
+    OV_MATCH(0x0F, 0x8B),
+    // fild [ e?? + 0x?]
+    OV_MATCH(0x15, 0xDB),
+
+    // jge +0x06
+    OV_MATCH(0x1E, 0x7D, 0x06),
+
+} OOVPA_END;
+
+// ******************************************************************
 // * D3DDevice_MultiplyTransform
 // ******************************************************************
 OOVPA_NO_XREF(D3DDevice_MultiplyTransform, 4034, 16)
