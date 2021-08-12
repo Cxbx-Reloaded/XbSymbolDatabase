@@ -5577,7 +5577,7 @@ OOVPA_SIG_MATCH(
 // * CDirectSoundStream_SetVolume
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetVolume has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(CDirectSoundStream_SetVolume,
+OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetVolume,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5609,7 +5609,7 @@ OOVPA_SIG_MATCH(
 // * IDirectSoundStream_SetVolume
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetVolume has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(IDirectSoundStream_SetVolume,
+OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetVolume,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5641,7 +5641,7 @@ OOVPA_SIG_MATCH(
 // * CDirectSoundStream_SetPitch
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetPitch has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(CDirectSoundStream_SetPitch,
+OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetPitch,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5673,7 +5673,7 @@ OOVPA_SIG_MATCH(
 // * IDirectSoundStream_SetPitch
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetPitch has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(IDirectSoundStream_SetPitch,
+OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetPitch,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5705,7 +5705,7 @@ OOVPA_SIG_MATCH(
 // * CDirectSoundStream_SetLFO
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetLFO has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(CDirectSoundStream_SetLFO,
+OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetLFO,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5737,7 +5737,7 @@ OOVPA_SIG_MATCH(
 // * IDirectSoundStream_SetLFO
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetLFO has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(IDirectSoundStream_SetLFO,
+OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetLFO,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5769,7 +5769,7 @@ OOVPA_SIG_MATCH(
 // * CDirectSoundStream_SetEG
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetEG has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(CDirectSoundStream_SetEG,
+OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetEG,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5801,7 +5801,7 @@ OOVPA_SIG_MATCH(
 // * IDirectSoundStream_SetEG
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetEG has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(IDirectSoundStream_SetEG,
+OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetEG,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5833,7 +5833,7 @@ OOVPA_SIG_MATCH(
 // * CDirectSoundStream_SetFilter
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetFilter has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(CDirectSoundStream_SetFilter,
+OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetFilter,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5864,7 +5864,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * IDirectSoundStream_SetFilter
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF_EXTEND(IDirectSoundStream_SetFilter,
+OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetFilter,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5896,7 +5896,7 @@ OOVPA_SIG_MATCH(
 // * CDirectSoundStream_SetHeadroom
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetHeadroom has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(CDirectSoundStream_SetHeadroom,
+OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetHeadroom,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5928,7 +5928,7 @@ OOVPA_SIG_MATCH(
 // * IDirectSoundStream_SetHeadroom
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetHeadroom has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(IDirectSoundStream_SetHeadroom,
+OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetHeadroom,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5960,7 +5960,7 @@ OOVPA_SIG_MATCH(
 // * CDirectSoundStream_SetFrequency
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetFrequency has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(CDirectSoundStream_SetFrequency,
+OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetFrequency,
                              3911,
 
                              XRefNoSaveIndex,
@@ -5992,7 +5992,7 @@ OOVPA_SIG_MATCH(
 // * IDirectSoundStream_SetFrequency
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetFrequency has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(IDirectSoundStream_SetFrequency,
+OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetFrequency,
                              3911,
 
                              XRefNoSaveIndex,
@@ -6024,7 +6024,7 @@ OOVPA_SIG_MATCH(
 // * CDirectSoundStream_SetMixBins
 // ******************************************************************
 // NOTE: IDirectSoundStream_SetMixBins has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(CDirectSoundStream_SetMixBins,
+OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetMixBins,
                              3911,
 
                              XRefNoSaveIndex,
@@ -6056,7 +6056,7 @@ OOVPA_SIG_MATCH(
 // * IDirectSoundStream_SetMixBins
 // ******************************************************************
 // NOTE: CDirectSoundStream_SetMixBins has the same asm code as this function.
-OOVPA_SIG_HEADER_XREF_EXTEND(IDirectSoundStream_SetMixBins,
+OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetMixBins,
                              3911,
 
                              XRefNoSaveIndex,

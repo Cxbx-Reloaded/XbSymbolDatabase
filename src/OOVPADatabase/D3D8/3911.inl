@@ -32,7 +32,7 @@
 //       D3DDevice_BlockUntilVerticalBlank detection.
 //       So, even though it's scanning for D3DDevice_BlockUntilVerticalBlank,
 //       this OOVPA itself is not a symbol.
-OOVPA_SIG_HEADER_XREF_EXTEND(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric,
+OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric,
                              3911,
 
                              XRefNoSaveIndex,
