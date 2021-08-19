@@ -27,8 +27,9 @@
 // * Direct3D_CreateDevice
 // ******************************************************************
 //85C9750AC705 ...C21000
-OOVPA_NO_XREF(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ecx_ppReturnedDeviceInterface, 2048, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ecx_ppReturnedDeviceInterface,
+                         2048)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
 
@@ -40,17 +41,19 @@ OOVPA_NO_XREF(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ecx_ppReturnedDev
     { 0x12, 0x05 },
 
     { 0x1B, 0x8B },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetTextureState_TexCoordIndex
 // ******************************************************************
 // ...C20400
-OOVPA_XREF(D3DDevice_SetTextureState_TexCoordIndex_4, 2058, 1 + 10,
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex_4,
+                      2058,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x14, XREF_D3DTSS_TEXCOORDINDEX), // Derived
 
@@ -66,14 +69,16 @@ OOVPA_XREF(D3DDevice_SetTextureState_TexCoordIndex_4, 2058, 1 + 10,
     { 0x0F, 0xC1 },
     { 0x10, 0xE0 },
     { 0x11, 0x07 },
-} OOVPA_END;
+    //
+);
 
 //******************************************************************
 //* D3DDevice_LoadVertexShader
 //******************************************************************
 //C7009C1E040089 ...C20400
-OOVPA_NO_XREF(D3DDevice_LoadVertexShader_4, 2024, 9)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LoadVertexShader_4,
+                         2024)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x53 },
     { 0x01, 0x55 },
@@ -85,17 +90,19 @@ OOVPA_NO_XREF(D3DDevice_LoadVertexShader_4, 2024, 9)
     { 0x62, 0x04 },
     { 0x63, 0x00 },
     { 0x64, 0x89 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3D_CommonSetRenderTarget
 // ******************************************************************
 //8B490CC1E91483E10FB801
-OOVPA_XREF(D3D_CommonSetRenderTarget, 1048, 13,
+OOVPA_SIG_HEADER_XREF(D3D_CommonSetRenderTarget,
+                      1048,
 
-           XREF_D3D_CommonSetRenderTarget,
-           XRefZero)
-{
+                      XREF_D3D_CommonSetRenderTarget,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
     { 0x01, 0xEC },
@@ -111,4 +118,5 @@ OOVPA_XREF(D3D_CommonSetRenderTarget, 1048, 13,
     { 0x5F, 0x0F },
     { 0x60, 0xB8 },
     { 0x61, 0x01 },
-} OOVPA_END;
+    //
+);

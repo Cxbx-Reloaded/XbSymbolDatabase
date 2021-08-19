@@ -25,11 +25,12 @@
 // * MU_Init
 // ******************************************************************
 // Generic OOVPA as of 5233 and newer.
-OOVPA_XREF(MU_Init, 5233, 14,
+OOVPA_SIG_HEADER_XREF(MU_Init,
+                      5233,
 
-           XREF_MU_Init,
-           XRefZero)
-{
+                      XREF_MU_Init,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // push ebp
     // mov ebp, esp
@@ -42,4 +43,5 @@ OOVPA_XREF(MU_Init, 5233, 14,
     // lea eax, [ebp-0x0C]
     OV_MATCH(0x8E, 0x50, 0x6A, 0x00, 0x6A, 0x3A, 0x8D, 0x45, 0xF4), // Was 5233 offset 0x8A
 
-} OOVPA_END;
+    //
+);

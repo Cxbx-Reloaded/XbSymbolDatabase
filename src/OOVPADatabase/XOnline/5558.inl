@@ -26,11 +26,12 @@
 // ******************************************************************
 // * CXo::XOnlineLogon
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineLogon, 5558, 14,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineLogon,
+                      5558,
 
-           XREF_CXo_XOnlineLogon,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineLogon,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x02, 0xEC },
 
@@ -49,4 +50,5 @@ OOVPA_XREF(CXo_XOnlineLogon, 5558, 14,
     { 0x30, 0x15 },
     { 0x31, 0x80 },
     { 0x32, 0xE9 },
-} OOVPA_END;
+    //
+);

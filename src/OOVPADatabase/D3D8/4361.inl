@@ -26,8 +26,9 @@
 // ******************************************************************
 // * D3D_GetAdapterDisplayMode
 // ******************************************************************
-OOVPA_NO_XREF(D3D_GetAdapterDisplayMode, 4361, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3D_GetAdapterDisplayMode,
+                         4361)
+OOVPA_SIG_MATCH(
 
     // D3D_GetAdapterDisplayMode+0x08 : mov eax, 0x8876086C
     { 0x08, 0xB8 },
@@ -49,13 +50,15 @@ OOVPA_NO_XREF(D3D_GetAdapterDisplayMode, 4361, 13)
     // D3D_GetAdapterDisplayMode+0xBD : retn 0x08
     { 0xBD, 0xC2 },
     { 0xBE, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_BeginVisibilityTest@0
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_BeginVisibilityTest, 4361, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginVisibilityTest,
+                         4361)
+OOVPA_SIG_MATCH(
 
     { 0x07, 0x8B },
     { 0x0A, 0x46 },
@@ -64,7 +67,8 @@ OOVPA_NO_XREF(D3DDevice_BeginVisibilityTest, 4361, 7)
     { 0x1C, 0x00 },
     { 0x22, 0x48 },
     { 0x28, 0x06 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetTexture
@@ -118,8 +122,9 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_SelectVertexShaderDirect
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SelectVertexShaderDirect, 4361, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SelectVertexShaderDirect,
+                         4361)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x05, 0x85 },
@@ -137,13 +142,15 @@ OOVPA_NO_XREF(D3DDevice_SelectVertexShaderDirect, 4361, 13)
 
     { 0x29, 0x5E },
     { 0x32, 0xE9 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetVertexShaderInputDirect
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_SetVertexShaderInputDirect, 4361, 13)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexShaderInputDirect,
+                         4361)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x05, 0x85 },
@@ -161,4 +168,5 @@ OOVPA_NO_XREF(D3DDevice_SetVertexShaderInputDirect, 4361, 13)
 
     { 0x29, 0x5E },
     { 0x32, 0xE9 },
-} OOVPA_END;
+    //
+);

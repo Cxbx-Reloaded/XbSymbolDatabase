@@ -26,11 +26,12 @@
 // ******************************************************************
 // * CXo::XOnlineLogon
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineLogon, 4831, 15,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineLogon,
+                      4831,
 
-           XREF_CXo_XOnlineLogon,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineLogon,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x02, 0xEC },
 
@@ -49,16 +50,18 @@ OOVPA_XREF(CXo_XOnlineLogon, 4831, 15,
     { 0x2A, 0x15 },
     { 0x2B, 0x80 },
     { 0x2C, 0xE9 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXo::XOnlineMatchSearch
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineMatchSearch, 4831, 13,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSearch,
+                      4831,
 
-           XREF_CXo_XOnlineMatchSearch,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineMatchSearch,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // push ebp
     // mov ebp, esp
@@ -71,16 +74,18 @@ OOVPA_XREF(CXo_XOnlineMatchSearch, 4831, 13,
     // pop ebp
     // jmp ...
     OV_MATCH(0x0C, 0x5D, 0xC2, 0x1C, 0x00, 0x5D, 0xE9),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XOnlineMatchSearch
 // ******************************************************************
-OOVPA_XREF(XOnlineMatchSearch, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(XOnlineMatchSearch,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x0B, XREF_CXo_XOnlineMatchSearch),
 
@@ -90,16 +95,18 @@ OOVPA_XREF(XOnlineMatchSearch, 4831, 1 + 4,
 
     // jmp ...
     OV_MATCH(0x0A, 0xE9),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXo_XOnlineMatchSearchResultsLen
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineMatchSearchResultsLen, 4831, 14,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSearchResultsLen,
+                      4831,
 
-           XREF_CXo_XOnlineMatchSearchResultsLen,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineMatchSearchResultsLen,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // test ecx, ecx
     // jnz ...
@@ -115,16 +122,18 @@ OOVPA_XREF(CXo_XOnlineMatchSearchResultsLen, 4831, 14,
     // test esi, esi
     // push 54h
     OV_MATCH(0x10, 0x85, 0xF6, 0x6A, 0x54),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XOnlineMatchSearchResultsLen
 // ******************************************************************
-OOVPA_XREF(XOnlineMatchSearchResultsLen, 4831, 1 + 3,
+OOVPA_SIG_HEADER_XREF(XOnlineMatchSearchResultsLen,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x07, XREF_CXo_XOnlineMatchSearchResultsLen),
 
@@ -133,16 +142,18 @@ OOVPA_XREF(XOnlineMatchSearchResultsLen, 4831, 1 + 3,
 
     // jmp ...
     OV_MATCH(0x06, 0xE9),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXo::XOnlineMatchSearchGetResults
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineMatchSearchGetResults, 4831, 12,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSearchGetResults,
+                      4831,
 
-           XREF_CXo_XOnlineMatchSearchGetResults,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineMatchSearchGetResults,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // push ebp
     // mov ebp, esp
@@ -154,16 +165,18 @@ OOVPA_XREF(CXo_XOnlineMatchSearchGetResults, 4831, 12,
     // mov dword ptr [ebp - 0x04], ...
     OV_MATCH(0x21, 0x89),
     OV_MATCH(0x23, 0xFC),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XOnlineMatchSearchGetResults
 // ******************************************************************
-OOVPA_XREF(XOnlineMatchSearchGetResults, 4831, 1 + 3,
+OOVPA_SIG_HEADER_XREF(XOnlineMatchSearchGetResults,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x07, XREF_CXo_XOnlineMatchSearchGetResults),
 
@@ -172,16 +185,18 @@ OOVPA_XREF(XOnlineMatchSearchGetResults, 4831, 1 + 3,
 
     // jmp ...
     OV_MATCH(0x06, 0xE9),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXo::XOnlineMatchSessionUpdate
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineMatchSessionUpdate, 4831, 22,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSessionUpdate,
+                      4831,
 
-           XREF_CXo_XOnlineMatchSessionUpdate,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineMatchSessionUpdate,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // push ebp
     // mov ebp, esp
@@ -197,16 +212,18 @@ OOVPA_XREF(CXo_XOnlineMatchSessionUpdate, 4831, 22,
     OV_MATCH(0x14, 0xFF, 0x75, 0x24, 0xFF, 0x75, 0x20),
     // push dword ptr [ebp + param_6]
     OV_MATCH(0x1A, 0xFF, 0x75, 0x1C),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XOnlineMatchSessionUpdate
 // ******************************************************************
-OOVPA_XREF(XOnlineMatchSessionUpdate, 4831, 1 + 11,
+OOVPA_SIG_HEADER_XREF(XOnlineMatchSessionUpdate,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x28, XREF_CXo_XOnlineMatchSessionUpdate),
 
@@ -218,16 +235,18 @@ OOVPA_XREF(XOnlineMatchSessionUpdate, 4831, 1 + 11,
 
     // push dword ptr [ebp + param_9]
     OV_MATCH(0x0C, 0xFF, 0x75, 0x28),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXo::XOnlineMatchSessionCreate
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineMatchSessionCreate, 4831, 12,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSessionCreate,
+                      4831,
 
-           XREF_CXo_XOnlineMatchSessionCreate,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineMatchSessionCreate,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // push ebp
     // mov ebp, esp
@@ -244,16 +263,18 @@ OOVPA_XREF(CXo_XOnlineMatchSessionCreate, 4831, 12,
 
     // jbe eip + 0x14
     OV_MATCH(0x30, 0x76, 0x14),
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XOnlineMatchSessionCreate
 // ******************************************************************
-OOVPA_XREF(XOnlineMatchSessionCreate, 4831, 1 + 4,
+OOVPA_SIG_HEADER_XREF(XOnlineMatchSessionCreate,
+                      4831,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x0B, XREF_CXo_XOnlineMatchSessionCreate),
 
@@ -263,4 +284,5 @@ OOVPA_XREF(XOnlineMatchSessionCreate, 4831, 1 + 4,
 
     // jmp ...
     OV_MATCH(0x0A, 0xE9),
-} OOVPA_END;
+    //
+);

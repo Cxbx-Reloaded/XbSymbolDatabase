@@ -26,8 +26,9 @@
 // ******************************************************************
 // * D3DDevice_GetPersistedSurface2
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_GetPersistedSurface2, 4928, 6) // For only on Unreal Championship
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_GetPersistedSurface2,
+                         4928) // For only on Unreal Championship
+OOVPA_SIG_MATCH(
 
     { 0x00, 0xFF },
     { 0x01, 0x25 },
@@ -35,13 +36,15 @@ OOVPA_NO_XREF(D3DDevice_GetPersistedSurface2, 4928, 6) // For only on Unreal Cha
     { 0x03, 0xC1 },
     { 0x04, 0x3A },
     { 0x05, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CMiniport_IsFlipPending
 // ******************************************************************
-OOVPA_NO_XREF(CMiniport_IsFlipPending, 4928, 17)
-{
+OOVPA_SIG_HEADER_NO_XREF(CMiniport_IsFlipPending,
+                         4928)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x8B },
     { 0x01, 0x81 },
@@ -60,4 +63,5 @@ OOVPA_NO_XREF(CMiniport_IsFlipPending, 4928, 17)
     { 0x0E, 0x04 },
     { 0x0F, 0x81 },
     { 0x10, 0xC3 },
-} OOVPA_END;
+    //
+);

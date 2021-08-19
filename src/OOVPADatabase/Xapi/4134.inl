@@ -26,8 +26,9 @@
 // ******************************************************************
 // * XMountUtilityDrive
 // ******************************************************************
-OOVPA_NO_XREF(XMountUtilityDrive, 4134, 10)
-{
+OOVPA_SIG_HEADER_NO_XREF(XMountUtilityDrive,
+                         4134)
+OOVPA_SIG_MATCH(
 
     // XMountUtilityDrive+0x03 : sub esp, 0x0114
     { 0x03, 0x81 },
@@ -44,13 +45,15 @@ OOVPA_NO_XREF(XMountUtilityDrive, 4134, 10)
     { 0xAA, 0x8D },
     { 0xAB, 0x45 },
     { 0xAC, 0xF0 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XSetProcessQuantumLength
 // ******************************************************************
-OOVPA_NO_XREF(XSetProcessQuantumLength, 4134, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(XSetProcessQuantumLength,
+                         4134)
+OOVPA_SIG_MATCH(
 
     { 0x01, 0xA1 },
     { 0x04, 0x00 },
@@ -59,16 +62,18 @@ OOVPA_NO_XREF(XSetProcessQuantumLength, 4134, 7)
     { 0x0D, 0x8D },
     { 0x10, 0x89 },
     { 0x13, 0xC2 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * GetTypeInformation
 // ******************************************************************
-OOVPA_XREF(GetTypeInformation, 4134, 24,
+OOVPA_SIG_HEADER_XREF(GetTypeInformation,
+                      4134,
 
-           XREF_XAPI_GetTypeInformation,
-           XRefZero)
-{
+                      XREF_XAPI_GetTypeInformation,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0xB8 },
     { 0x05, 0x56 },
@@ -94,4 +99,5 @@ OOVPA_XREF(GetTypeInformation, 4134, 24,
     { 0x1D, 0xC0 },
     { 0x1E, 0x04 },
     { 0x1F, 0x3B },
-} OOVPA_END;
+    //
+);

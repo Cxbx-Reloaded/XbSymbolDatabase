@@ -28,11 +28,12 @@
 // * CMcpxStream_GetStatus
 // ******************************************************************
 // Generic OOVPA as of 4721 and newer;
-OOVPA_XREF(CMcpxStream_GetStatus, 4721, 14,
+OOVPA_SIG_HEADER_XREF(CMcpxStream_GetStatus,
+                      4721,
 
-           XREF_CMcpxStream_GetStatus,
-           XRefZero)
-{
+                      XREF_CMcpxStream_GetStatus,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x0F },
 
@@ -50,7 +51,8 @@ OOVPA_XREF(CMcpxStream_GetStatus, 4721, 14,
 
     { 0x1C, 0x80 },
     { 0x41, 0x00 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CMcpxBuffer_GetStatus
@@ -94,11 +96,12 @@ OOVPA_END;
 // ******************************************************************
 // * CMcpxBuffer::Pause(unsigned long)
 // ******************************************************************
-OOVPA_XREF(CMcpxBuffer_Pause, 4721, 12,
+OOVPA_SIG_HEADER_XREF(CMcpxBuffer_Pause,
+                      4721,
 
-           XREF_CMcpxBuffer_Pause,
-           XRefZero)
-{
+                      XREF_CMcpxBuffer_Pause,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // CMcpxBuffer::Pause+0x00 : push ebp
     { 0x00, 0x55 },
@@ -123,17 +126,19 @@ OOVPA_XREF(CMcpxBuffer_Pause, 4721, 12,
     // CMcpxBuffer::Pause+0x42 : ret 4
     { 0x42, 0xC2 },
     { 0x43, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CDirectSoundBuffer::PauseEx
 // ******************************************************************
 // Generic OOVPA as of 4721 and newer
-OOVPA_XREF(CDirectSoundBuffer_PauseEx, 4721, 1 + 10,
+OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_PauseEx,
+                      4721,
 
-           XREF_CDirectSoundBuffer_PauseEx,
-           XRefOne)
-{
+                      XREF_CDirectSoundBuffer_PauseEx,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x3D, XREF_CMcpxBuffer_Pause_Ex),
 
@@ -149,17 +154,19 @@ OOVPA_XREF(CDirectSoundBuffer_PauseEx, 4721, 1 + 10,
 
     { 0x56, 0xC2 },
     { 0x57, 0x10 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IDirectSoundBuffer_PauseEx
 // ******************************************************************
 // Generic OOVPA as of 4721 and newer
-OOVPA_XREF(IDirectSoundBuffer_PauseEx, 4721, 1 + 7,
+OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_PauseEx,
+                      4721,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x1D, XREF_CDirectSoundBuffer_PauseEx),
 
@@ -170,17 +177,19 @@ OOVPA_XREF(IDirectSoundBuffer_PauseEx, 4721, 1 + 7,
     { 0x1A, 0xC8 },
     { 0x21, 0xC2 },
     { 0x22, 0x10 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CMcpxBuffer::Pause(__int64, unsigned long)
 // ******************************************************************
 // Generic OOVPA as of 4721 and newer
-OOVPA_XREF(CMcpxBuffer_Pause_Ex, 4721, 1 + 8,
+OOVPA_SIG_HEADER_XREF(CMcpxBuffer_Pause_Ex,
+                      4721,
 
-           XREF_CMcpxBuffer_Pause_Ex,
-           XRefOne)
-{
+                      XREF_CMcpxBuffer_Pause_Ex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x2B, XREF_CMcpxBuffer_Pause),
 
@@ -197,17 +206,19 @@ OOVPA_XREF(CMcpxBuffer_Pause_Ex, 4721, 1 + 8,
 
     { 0x36, 0xC2 },
     { 0x37, 0x0C },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CDirectSoundBuffer::Pause
 // ******************************************************************
 // Generic OOVPA as of 4721 and newer
-OOVPA_XREF(CDirectSoundBuffer_Pause, 4721, 1 + 10,
+OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_Pause,
+                      4721,
 
-           XREF_CDirectSoundBuffer_Pause,
-           XRefOne)
-{
+                      XREF_CDirectSoundBuffer_Pause,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x35, XREF_CMcpxBuffer_Pause),
 
@@ -222,17 +233,19 @@ OOVPA_XREF(CDirectSoundBuffer_Pause, 4721, 1 + 10,
     { 0x4B, 0xC7 },
     { 0x4E, 0xC2 },
     { 0x4F, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * IDirectSoundBuffer_Pause
 // ******************************************************************
 // Generic OOVPA as of 4721 and newer
-OOVPA_XREF(IDirectSoundBuffer_Pause, 4721, 1 + 7,
+OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_Pause,
+                      4721,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x15, XREF_CDirectSoundBuffer_Pause),
 
@@ -243,16 +256,18 @@ OOVPA_XREF(IDirectSoundBuffer_Pause, 4721, 1 + 7,
     { 0x12, 0xC8 },
     { 0x19, 0xC2 },
     { 0x1A, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CMcpxBuffer::Play(unsigned long)
 // ******************************************************************
-OOVPA_XREF(CMcpxBuffer_Play, 4721, 11,
+OOVPA_SIG_HEADER_XREF(CMcpxBuffer_Play,
+                      4721,
 
-           XREF_CMcpxBuffer_Play,
-           XRefZero)
-{
+                      XREF_CMcpxBuffer_Play,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // CMcpxBuffer_Play+0x00 : push ebx
     { 0x00, 0x53 },
@@ -272,17 +287,19 @@ OOVPA_XREF(CMcpxBuffer_Play, 4721, 11,
     // CMcpxBuffer_Play+0x52 : xor eax, eax
     { 0x52, 0x33 },
     { 0x53, 0xC0 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * DirectSound::CDirectSoundVoice::SetFormat
 // ******************************************************************
 // Generic OOVPA as of 4721 and newer
-OOVPA_XREF(CDirectSoundVoice_SetFormat, 4721, 2 + 5,
+OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetFormat,
+                      4721,
 
-           XREF_CDirectSoundVoice_SetFormat,
-           XRefTwo)
-{
+                      XREF_CDirectSoundVoice_SetFormat,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
 
     // CDirectSoundVoice::SetFormat+0x2F : call [CMcpxVoiceClient::SetMixBins]
     XREF_ENTRY(0x30, XREF_CMcpxVoiceClient_SetMixBins),
@@ -300,4 +317,5 @@ OOVPA_XREF(CDirectSoundVoice_SetFormat, 4721, 2 + 5,
     // CDirectSoundVoice::SetFormat+0x41 : ret 0x08
     { 0x41, 0xC2 },
     { 0x42, 0x08 },
-} OOVPA_END;
+    //
+);

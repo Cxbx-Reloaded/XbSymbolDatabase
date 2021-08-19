@@ -26,8 +26,9 @@
 // ******************************************************************
 // * D3DDevice_AddRef
 // ******************************************************************
-OOVPA_NO_XREF(D3DDevice_AddRef, 4242, 10)
-{
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_AddRef,
+                         4242)
+OOVPA_SIG_MATCH(
 
     // D3DDevice_AddRef+0x00 : mov eax, [addr]
     { 0x00, 0xA1 },
@@ -46,16 +47,18 @@ OOVPA_NO_XREF(D3DDevice_AddRef, 4242, 10)
     { 0x0D, 0x88 },
     { 0x0E, 0x40 },
     { 0x0F, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetTextureState_TexCoordIndex
 // ******************************************************************
-OOVPA_XREF(D3DDevice_SetTextureState_TexCoordIndex, 4242, 1 + 10,
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex,
+                      4242,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x19, XREF_D3DTSS_TEXCOORDINDEX), // Derived
 
@@ -76,13 +79,15 @@ OOVPA_XREF(D3DDevice_SetTextureState_TexCoordIndex, 4242, 1 + 10,
     { 0xB3, 0xC1 },
     { 0xB4, 0xE2 },
     { 0xB5, 0x04 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CMiniport_IsFlipPending
 // ******************************************************************
-OOVPA_NO_XREF(CMiniport_IsFlipPending, 4242, 17)
-{
+OOVPA_SIG_HEADER_NO_XREF(CMiniport_IsFlipPending,
+                         4242)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x8B },
     { 0x01, 0x81 },
@@ -101,4 +106,5 @@ OOVPA_NO_XREF(CMiniport_IsFlipPending, 4242, 17)
     { 0x0E, 0x00 },
     { 0x0F, 0x00 },
     { 0x10, 0xC3 },
-} OOVPA_END;
+    //
+);

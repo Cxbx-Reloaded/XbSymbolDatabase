@@ -26,11 +26,12 @@
 // ******************************************************************
 // * XACT::CEngine::RegisterStreamedWaveBank
 // ******************************************************************
-OOVPA_XREF(XACT_CEngine_RegisterStreamedWaveBank, 5233, 11,
+OOVPA_SIG_HEADER_XREF(XACT_CEngine_RegisterStreamedWaveBank,
+                      5233,
 
-           XREF_XACT_CEngine_RegisterStreamedWaveBank,
-           XRefZero)
-{
+                      XREF_XACT_CEngine_RegisterStreamedWaveBank,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x04, 0x10 }, //RegisterStreamedWaveBank 0x10 vs RegisterWaveBank 0x14
     { 0x25, 0x8B },
@@ -45,16 +46,18 @@ OOVPA_XREF(XACT_CEngine_RegisterStreamedWaveBank, 5233, 11,
     { 0x41, 0xE8 },
 
     { 0x67, 0xEB },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XACT::CEngine::RegisterWaveBank
 // ******************************************************************
-OOVPA_XREF(XACT_CEngine_RegisterWaveBank, 5233, 12,
+OOVPA_SIG_HEADER_XREF(XACT_CEngine_RegisterWaveBank,
+                      5233,
 
-           XREF_XACT_CEngine_RegisterWaveBank,
-           XRefZero)
-{
+                      XREF_XACT_CEngine_RegisterWaveBank,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x04, 0x14 }, //RegisterStreamedWaveBank 0x10 vs RegisterWaveBank 0x14
     { 0x1A, 0x3B },
@@ -70,4 +73,5 @@ OOVPA_XREF(XACT_CEngine_RegisterWaveBank, 5233, 12,
 
     { 0x7C, 0xC2 },
     { 0x7D, 0x10 },
-} OOVPA_END;
+    //
+);

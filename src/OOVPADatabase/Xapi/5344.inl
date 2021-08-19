@@ -26,8 +26,9 @@
 // ******************************************************************
 // * XLaunchNewImageA
 // ******************************************************************
-OOVPA_NO_XREF(XLaunchNewImageA, 5344, 11)
-{
+OOVPA_SIG_HEADER_NO_XREF(XLaunchNewImageA,
+                         5344)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0xB8 },
 
@@ -42,4 +43,5 @@ OOVPA_NO_XREF(XLaunchNewImageA, 5344, 11)
 
     { 0x30, 0xC2 },
     { 0x41, 0xEE },
-} OOVPA_END;
+    //
+);

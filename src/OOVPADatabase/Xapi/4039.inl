@@ -27,8 +27,9 @@
 // ******************************************************************
 // * XCalculateSignatureBegin
 // ******************************************************************
-OOVPA_NO_XREF(XCalculateSignatureBegin, 4039, 16)
-{
+OOVPA_SIG_HEADER_NO_XREF(XCalculateSignatureBegin,
+                         4039)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0xA1 },
     { 0x01, 0x18 },
@@ -47,4 +48,5 @@ OOVPA_NO_XREF(XCalculateSignatureBegin, 4039, 16)
     { 0x11, 0xC2 },
     { 0x12, 0x04 },
     { 0x13, 0x00 },
-} OOVPA_END;
+    //
+);

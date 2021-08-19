@@ -26,11 +26,12 @@
 // ******************************************************************
 // * CSensaura3d::GetFullHRTFFilterPair
 // ******************************************************************
-OOVPA_XREF(CSensaura3d_GetFullHRTFFilterPair, 3936, 9,
+OOVPA_SIG_HEADER_XREF(CSensaura3d_GetFullHRTFFilterPair,
+                      3936,
 
-           XREF_CSensaura3d_GetFullHRTFFilterPair,
-           XRefZero)
-{
+                      XREF_CSensaura3d_GetFullHRTFFilterPair,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x05, 0x0C },
     { 0x0E, 0xD9 },
@@ -41,16 +42,18 @@ OOVPA_XREF(CSensaura3d_GetFullHRTFFilterPair, 3936, 9,
     { 0xAB, 0x17 },
     { 0xAC, 0xD8 },
     { 0xAD, 0x05 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CMcpxStream_Flush
 // ******************************************************************
-OOVPA_XREF(CMcpxStream_Flush, 3936, 15,
+OOVPA_SIG_HEADER_XREF(CMcpxStream_Flush,
+                      3936,
 
-           XREF_CMcpxStream_Flush,
-           XRefZero)
-{
+                      XREF_CMcpxStream_Flush,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x08, 0xF6 },
     { 0x12, 0xF6 },
@@ -74,4 +77,5 @@ OOVPA_XREF(CMcpxStream_Flush, 3936, 15,
 
     { 0xA1, 0xC9 },
     { 0xA2, 0xC3 },
-} OOVPA_END;
+    //
+);

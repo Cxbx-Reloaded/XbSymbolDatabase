@@ -26,8 +26,9 @@
 // ******************************************************************
 // * XFileCreateMediaObjectAsync
 // ******************************************************************
-OOVPA_NO_XREF(XFileCreateMediaObjectAsync, 4432, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(XFileCreateMediaObjectAsync,
+                         4432)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
     { 0x1F, 0x1B },
@@ -43,4 +44,5 @@ OOVPA_NO_XREF(XFileCreateMediaObjectAsync, 4432, 12)
 
     { 0x5D, 0xC2 },
     { 0x5E, 0x0C },
-} OOVPA_END;
+    //
+);

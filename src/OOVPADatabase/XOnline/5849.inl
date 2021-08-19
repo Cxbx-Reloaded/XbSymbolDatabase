@@ -26,11 +26,12 @@
 // ******************************************************************
 // * CXo::XOnlineLogon
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineLogon, 5849, 15,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineLogon,
+                      5849,
 
-           XREF_CXo_XOnlineLogon,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineLogon,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x02, 0xEC },
 
@@ -49,16 +50,18 @@ OOVPA_XREF(CXo_XOnlineLogon, 5849, 15,
     { 0x40, 0x15 },
     { 0x41, 0x80 },
     { 0x42, 0xE9 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * CXo::XOnlineMatchSessionCreate
 // ******************************************************************
-OOVPA_XREF(CXo_XOnlineMatchSessionCreate, 5849, 12,
+OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSessionCreate,
+                      5849,
 
-           XREF_CXo_XOnlineMatchSessionCreate,
-           XRefZero)
-{
+                      XREF_CXo_XOnlineMatchSessionCreate,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     // push ebp
     // mov ebp, esp
@@ -75,4 +78,5 @@ OOVPA_XREF(CXo_XOnlineMatchSessionCreate, 5849, 12,
 
     // jbe eip + 0x12
     OV_MATCH(0x3E, 0x76, 0x12),
-} OOVPA_END;
+    //
+);

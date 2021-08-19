@@ -27,11 +27,12 @@
 // * XnInit
 // ******************************************************************
 //Generic OOVPA as of 4361 and newer.
-OOVPA_XREF(XnInit, 4361, 15,
+OOVPA_SIG_HEADER_XREF(XnInit,
+                      4361,
 
-           XREF_XnInit,
-           XRefZero)
-{
+                      XREF_XnInit,
+                      XRefZero)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x0F, 0xB9 },
@@ -52,16 +53,18 @@ OOVPA_XREF(XnInit, 4361, 15,
     { 0x23, 0xE8 },
     { 0x28, 0xEB },
     { 0x3F, 0x54 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * WSAStartup
 // ******************************************************************
-OOVPA_XREF(WSAStartup, 4361, 1 + 8,
+OOVPA_SIG_HEADER_XREF(WSAStartup,
+                      4361,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     // WSAStartup+0x0F : call [XnInit]
     XREF_ENTRY(0x14, XREF_XnInit),
@@ -77,16 +80,18 @@ OOVPA_XREF(WSAStartup, 4361, 1 + 8,
     { 0x05, 0x74 },
     { 0x06, 0x24 },
     { 0x07, 0x08 },
-} OOVPA_END;
+    //
+);
 
 // ******************************************************************
 // * XNetStartup
 // ******************************************************************
-OOVPA_XREF(XNetStartup, 4361, 1 + 7,
+OOVPA_SIG_HEADER_XREF(XNetStartup,
+                      4361,
 
-           XRefNoSaveIndex,
-           XRefOne)
-{
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
     // XNetStartup+0x0F : call [XnInit]
     XREF_ENTRY(0x10, XREF_XnInit),
@@ -107,4 +112,5 @@ OOVPA_XREF(XNetStartup, 4361, 1 + 7,
     // XNetStartup+0x14 : retn 0x04
     { 0x14, 0xC2 },
     { 0x15, 0x04 },
-} OOVPA_END;
+    //
+);

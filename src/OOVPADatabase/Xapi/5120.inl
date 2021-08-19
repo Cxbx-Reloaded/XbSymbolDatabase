@@ -29,8 +29,9 @@
 // * NOTE: We are actually intercepting USBD_Init, because
 // *       XInitDevices Simply redirects to that function
 // ******************************************************************
-OOVPA_NO_XREF(XInitDevices, 5120, 7)
-{
+OOVPA_SIG_HEADER_NO_XREF(XInitDevices,
+                         5120)
+OOVPA_SIG_MATCH(
 
     { 0x0E, 0x75 },
     { 0x20, 0xBE },
@@ -39,4 +40,5 @@ OOVPA_NO_XREF(XInitDevices, 5120, 7)
     { 0x50, 0x0F },
     { 0x5F, 0xE8 },
     { 0x70, 0x5F },
-} OOVPA_END;
+    //
+);

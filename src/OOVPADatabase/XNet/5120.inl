@@ -27,8 +27,9 @@
 // * CXnSock::connect
 // ******************************************************************
 //Generic OOVPA as of 5120 and newer.
-OOVPA_NO_XREF(connect, 5120, 12)
-{
+OOVPA_SIG_HEADER_NO_XREF(connect,
+                         5120)
+OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
     { 0x19, 0xE8 },
@@ -44,4 +45,5 @@ OOVPA_NO_XREF(connect, 5120, 12)
     { 0x38, 0xE9 },
 
     { 0x61, 0xE8 },
-} OOVPA_END;
+    //
+);

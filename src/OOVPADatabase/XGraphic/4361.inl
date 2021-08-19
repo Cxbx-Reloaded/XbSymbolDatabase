@@ -26,8 +26,9 @@
 // ******************************************************************
 // * XFONT_OpenBitmapFontFromMemory
 // ******************************************************************
-OOVPA_NO_XREF(XFONT_OpenBitmapFontFromMemory, 4361, 8)
-{
+OOVPA_SIG_HEADER_NO_XREF(XFONT_OpenBitmapFontFromMemory,
+                         4361)
+OOVPA_SIG_MATCH(
 
     { 0x0B, 0x75 },
     { 0x1A, 0x8B },
@@ -37,4 +38,5 @@ OOVPA_NO_XREF(XFONT_OpenBitmapFontFromMemory, 4361, 8)
     { 0x4C, 0x8B },
     { 0x59, 0x45 },
     { 0x66, 0x0C },
-} OOVPA_END;
+    //
+);
