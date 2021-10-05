@@ -153,8 +153,8 @@ typedef const struct _PairScanLibSec {
 typedef const struct _SymbolDatabaseList {
     PairScanLibSec LibSec;
 
-    OOVPATable* OovpaTable;
-    unsigned int OovpaTableCount;
+    OOVPATable* SymbolsTable;
+    unsigned int SymbolsTableCount;
 } SymbolDatabaseList;
 
 SymbolDatabaseList SymbolDBList[] = {
@@ -998,22 +998,23 @@ static void internal_RegisterSymbol(iXbSymbolContext* pContext,
 }
 
 static void internal_OOVPA_register(iXbSymbolContext* pContext,
-                                    OOVPATable* OovpaTable,
+                                    const char* szFuncName,
+                                    const OOVPARevision* OovpaRevision,
                                     const iXbSymbolLibrarySession* pLibrarySession,
                                     xbaddr address)
 {
-    if (OovpaTable != NULL) {
+    if (OovpaRevision != NULL) {
 
-        OOVPA* Oovpa = OovpaTable->Oovpa;
+        OOVPA* Oovpa = OovpaRevision->Oovpa;
 
-        internal_RegisterSymbol(pContext, pLibrarySession, Oovpa->XRefSaveIndex, OovpaTable->Version,
-                                OovpaTable->szFuncName, address);
+        internal_RegisterSymbol(pContext, pLibrarySession, Oovpa->XRefSaveIndex, OovpaRevision->Version,
+                                szFuncName, address);
     }
 }
 
 static void internal_OOVPA_scan(iXbSymbolContext* pContext,
-                                OOVPATable* OovpaTable,
-                                unsigned int OovpaTableCount,
+                                OOVPATable* SymbolsTable,
+                                unsigned int SymbolsTableCount,
                                 const iXbSymbolLibrarySession* pLibrarySession,
                                 const XbSDBSection* pSection,
                                 bool xref_first_pass)
@@ -1022,57 +1023,47 @@ static void internal_OOVPA_scan(iXbSymbolContext* pContext,
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
 
     // traverse the full OOVPA table
-    OOVPATable* pLoopEnd = &OovpaTable[OovpaTableCount];
-    OOVPATable* pLoop = OovpaTable;
-    OOVPATable* pLastKnownSymbol = NULL;
-    uint32_t pLastKnownFunc = 0;
-    const char* SymbolName = NULL;
+    OOVPATable* pSymbolEnd = &SymbolsTable[SymbolsTableCount];
+    OOVPATable* pSymbol = SymbolsTable;
 
-    for (; pLoop < pLoopEnd; pLoop++) {
+    for (; pSymbol < pSymbolEnd; pSymbol++) {
+        OOVPARevision* pLastKnownRevision = NULL;
+        uint32_t pLastKnownFunc = 0;
 
-        if (SymbolName == NULL) {
-            SymbolName = pLoop->szFuncName;
-        }
-        else if (strcmp(SymbolName, pLoop->szFuncName) != 0) {
-            SymbolName = pLoop->szFuncName;
-            if (pLastKnownSymbol != NULL) {
-                // Now that we found the address, store it (regardless if we patch it or not)
-                internal_OOVPA_register(pContext, pLastKnownSymbol, pLibrarySession, pLastKnownFunc);
-                pLastKnownSymbol = NULL;
-                pLastKnownFunc = 0;
+        for (unsigned i = 0; i < pSymbol->count; i++) {
+            OOVPARevision* pRevision = &pSymbol->revisions[i];
+
+            // Skip higher build version
+            if (pContext->strict_build_version_limit && pLibrary->build_version < pRevision->Version)
+                continue;
+
+            // Search for each function's location using the OOVPA
+            xbaddr pFunc = (xbaddr)(uintptr_t)internal_LocateFunction(pContext, iLibraryType, pSymbol->szFuncName, pRevision->Version, pRevision->Oovpa, pSection, xref_first_pass);
+            if (pFunc == 0) {
+                continue;
             }
+
+            if (pFunc == pLastKnownFunc && pLastKnownRevision == pRevision - 1) {
+                //if (g_SymbolAddresses[pLastKnownRevision->szFuncName] == 0) {
+                output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
+                                      "Duplicate OOVPA signature found for %s, %hu vs %hu!",
+                                      pSymbol->szFuncName, pLastKnownRevision->Version, pRevision->Version);
+                //}
+            }
+
+            if (pLibrary->build_version < pRevision->Version) {
+                output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
+                                      "OOVPA signature is too high for [%hu] %s!",
+                                      pRevision->Version, pSymbol->szFuncName);
+            }
+
+            pLastKnownFunc = pFunc;
+            pLastKnownRevision = pRevision;
         }
 
-        // Skip higher build version
-        if (pContext->strict_build_version_limit && pLibrary->build_version < pLoop->Version)
-            continue;
-
-        // Search for each function's location using the OOVPA
-        xbaddr pFunc = (xbaddr)(uintptr_t)internal_LocateFunction(pContext, iLibraryType, pLoop->szFuncName, pLoop->Version, pLoop->Oovpa, pSection, xref_first_pass);
-        if (pFunc == 0) {
-            continue;
+        if (pLastKnownRevision != NULL) {
+            internal_OOVPA_register(pContext, pSymbol->szFuncName, pLastKnownRevision, pLibrarySession, pLastKnownFunc);
         }
-
-        if (pFunc == pLastKnownFunc && pLastKnownSymbol == pLoop - 1) {
-            //if (g_SymbolAddresses[pLastKnownSymbol->szFuncName] == 0) {
-            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
-                                  "Duplicate OOVPA signature found for %s, %hu vs %hu!",
-                                  pLastKnownSymbol->szFuncName, pLastKnownSymbol->Version, pLoop->Version);
-            //}
-        }
-
-        if (pLibrary->build_version < pLoop->Version) {
-            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
-                                  "OOVPA signature is too high for [%hu] %s!",
-                                  pLoop->Version, pLoop->szFuncName);
-        }
-
-        pLastKnownFunc = pFunc;
-        pLastKnownSymbol = pLoop;
-    }
-
-    if (pLastKnownSymbol != NULL) {
-        internal_OOVPA_register(pContext, pLastKnownSymbol, pLibrarySession, pLastKnownFunc);
     }
 }
 
@@ -2121,7 +2112,7 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
                         output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section",
                                               pLibrary->name, SymbolDBList[d2].LibSec.section[d3]);
 
-                        internal_OOVPA_scan(pContext, SymbolDBList[d2].OovpaTable, SymbolDBList[d2].OovpaTableCount,
+                        internal_OOVPA_scan(pContext, SymbolDBList[d2].SymbolsTable, SymbolDBList[d2].SymbolsTableCount,
                                             &librarySession, pContext->section_input.filters + s, xref_first_pass);
                         break;
                     }
@@ -2341,19 +2332,21 @@ void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable)
         hash_fnv1a(Hash, pTable->szFuncName, strlen(pTable->szFuncName));
     }
 
-    // Part 2: version number
-    hash_fnv1a(Hash, &pTable->Version, sizeof(pTable->Version));
+    for (unsigned i = 0; i < pTable->count; i++) {
+        // Part 2: version number
+        hash_fnv1a(Hash, &pTable->revisions[i].Version, sizeof(pTable->revisions[i].Version));
 
-    // Part 3: LOOVPA
-    if (pTable->Oovpa) {
-        HashAssumedLOOVPA(Hash, pTable->Oovpa);
+        // Part 3: LOOVPA
+        if (pTable->revisions[i].Oovpa) {
+            HashAssumedLOOVPA(Hash, pTable->revisions[i].Oovpa);
+        }
     }
 }
 
 void HashSymbolData(unsigned int* Hash, SymbolDatabaseList* pData)
 {
-    for (unsigned int i = 0; i < pData->OovpaTableCount; ++i) {
-        HashOOVPATable(Hash, &pData->OovpaTable[i]);
+    for (unsigned int i = 0; i < pData->SymbolsTableCount; ++i) {
+        HashOOVPATable(Hash, &pData->SymbolsTable[i]);
     }
 }
 
@@ -2381,20 +2374,27 @@ unsigned int XbSymbolDatabase_LibraryVersion()
 // * XbSymbolDatabase_TestOOVPAs
 // ******************************************************************
 
+typedef struct _SymbolDatabaseVerifyContextUniform {
+    SymbolDatabaseList* data;
+    OOVPA* oovpa;
+    uint32_t symbol_index;
+    uint32_t revision_index;
+} SymbolDatabaseVerifyContextUniform;
+
 typedef struct _SymbolDatabaseVerifyContext {
-    SymbolDatabaseList* main_data;
-    OOVPA *oovpa, *against;
-    SymbolDatabaseList* against_data;
-    uint32_t main_index, against_index;
+    SymbolDatabaseVerifyContextUniform main;
+    SymbolDatabaseVerifyContextUniform against;
     OutputHandler output;
 } SymbolDatabaseVerifyContext;
 
-static int OOVPAErrorString(char* bufferTemp, SymbolDatabaseList* data, uint32_t index)
+static int OOVPAErrorString(char* bufferTemp, SymbolDatabaseList* data, OOVPATable* symbol, uint32_t index)
 {
     // Convert active data pointer to an index base on starting point of SymbolDBList.
     unsigned int db_index = (unsigned int)(data - SymbolDBList);
+    // Convert active symbol pointer to an index base on starting point of SymbolsTable.
+    unsigned int sym_index = (unsigned int)(symbol - data->SymbolsTable);
 
-    return sprintf(bufferTemp, "OOVPATable db=%2u, b=%4hu, i=[%4u] s=%s", db_index, data->OovpaTable[index].Version, index, data->OovpaTable[index].szFuncName);
+    return sprintf(bufferTemp, "OOVPATable db=%2u, i=[%4u], b=%4hu s=%s[%4u]", db_index, sym_index, symbol->revisions[index].Version, symbol->szFuncName, index);
 }
 
 static void SymbolDatabaseVerifyContext_OOVPAError(SymbolDatabaseVerifyContext* context, char* format, ...)
@@ -2403,16 +2403,16 @@ static void SymbolDatabaseVerifyContext_OOVPAError(SymbolDatabaseVerifyContext* 
     static char bufferTemp[400] = { 0 };
     int ret_str_count;
 
-    if (context->main_data != NULL) {
+    if (context->main.data != NULL) {
 
-        ret_str_count = OOVPAErrorString(bufferTemp, context->main_data, context->main_index);
+        ret_str_count = OOVPAErrorString(bufferTemp, context->main.data, context->main.data->SymbolsTable + context->main.symbol_index, context->main.revision_index);
         (void)strncat(buffer, bufferTemp, ret_str_count);
     }
 
-    if (context->against != NULL && context->against_data != NULL) {
+    if (context->against.oovpa != NULL && context->against.data != NULL) {
         (void)strcat(buffer, ", comparing against ");
 
-        ret_str_count = OOVPAErrorString(bufferTemp, context->against_data, context->against_index);
+        ret_str_count = OOVPAErrorString(bufferTemp, context->against.data, context->against.data->SymbolsTable + context->against.symbol_index, context->against.revision_index);
         (void)strncat(buffer, bufferTemp, ret_str_count);
     }
 
@@ -2435,7 +2435,7 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
 {
     unsigned int error_count = 0;
 
-    if (context->against == NULL) {
+    if (context->against.oovpa == NULL) {
         // TODO : verify XRefSaveIndex and XRef's (how?)
 
         // verify offsets are in increasing order
@@ -2456,20 +2456,21 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
         }
 
         // find duplicate OOVPA's across all other data-table-oovpa's
-        context->oovpa = oovpa;
-        context->against = oovpa;
+        context->main.oovpa = oovpa;
+        context->against.oovpa = oovpa;
         error_count += SymbolDatabaseVerifyContext_VerifyDatabaseList(context);
-        context->against = NULL; // reset scanning state
+        context->against.oovpa = NULL; // reset scanning state
         return error_count;
     }
 
     // prevent checking an oovpa against itself
-    if ((context->main_data + context->main_index) == (context->against_data + context->against_index)) {
+    if ((&context->main.data->SymbolsTable[context->main.symbol_index].revisions + context->main.revision_index) ==
+        (&context->against.data->SymbolsTable[context->against.symbol_index].revisions + context->against.revision_index)) {
         return error_count;
     }
 
     // compare {Offset, Value}-pairs between two OOVPA's
-    OOVPA *left = context->against, *right = oovpa;
+    OOVPA *left = context->against.oovpa, *right = oovpa;
     int l = 0, r = 0;
     uint32_t left_offset, right_offset;
     uint8_t left_value, right_value;
@@ -2572,18 +2573,20 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
     return error_count;
 }
 
-static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t index)
+static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
 {
-    if (context->against == NULL) {
-        context->main_index = index;
+    if (context->against.oovpa == NULL) {
+        context->main.symbol_index = symbol_index;
+        context->main.revision_index = revision_index;
     }
     else {
-        context->against_index = index;
+        context->against.symbol_index = symbol_index;
+        context->against.revision_index = revision_index;
     }
 
     // verify the OOVPA of this entry
-    if (table[index].Oovpa != NULL) {
-        return SymbolDatabaseVerifyContext_VerifyOOVPA(context, table[index].Oovpa);
+    if (table[symbol_index].revisions[revision_index].Oovpa != NULL) {
+        return SymbolDatabaseVerifyContext_VerifyOOVPA(context, table[symbol_index].revisions[revision_index].Oovpa);
     }
     return 0;
 }
@@ -2591,16 +2594,18 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerify
 static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVerifyContext* context, SymbolDatabaseList* data)
 {
     unsigned int error_count = 0;
-    if (context->against == NULL) {
-        context->main_data = data;
+    if (context->against.oovpa == NULL) {
+        context->main.data = data;
     }
     else {
-        context->against_data = data;
+        context->against.data = data;
     }
 
-    // Verify each entry in data's OOVPA table.
-    for (uint32_t e = 0; e < data->OovpaTableCount; e++) {
-        error_count += SymbolDatabaseVerifyContext_VerifyEntry(context, data->OovpaTable, e);
+    // Verify each entry in data's symbol table.
+    for (uint32_t s = 0; s < data->SymbolsTableCount; s++) {
+        for (uint32_t r = 0; r < data->SymbolsTable[s].count; r++) {
+            error_count += SymbolDatabaseVerifyContext_VerifyEntry(context, data->SymbolsTable, s, r);
+        }
     }
     return error_count;
 }
