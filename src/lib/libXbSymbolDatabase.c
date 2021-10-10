@@ -1726,6 +1726,22 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         }
     }
     else { // D3D8LTCG
+
+        /*
+        // TODO: Need some reform work for this portion. Since there are mixture of suffix involved.
+        // Current listing are:
+        // - D3DDevice_SetTextureState_TexCoordIndex   (1944, 1958)
+        // - D3DDevice_SetTextureState_TexCoordIndex_0 (2039, 2058)
+        // - D3DDevice_SetTextureState_TexCoordIndex_4 (2040, 2045, 2058, 2052)
+        pFunc = internal_LocateSymbolFunction(pContext,
+                                              pLibrarySession,
+                                              pLibraryDB,
+                                              "",
+                                              pSection,
+                                              false,
+                                              pOOVPARevision);
+        //*/
+
         // verified for 3925
         pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_0", 2039,
                                    &D3DDevice_SetTextureState_TexCoordIndex_0_2039, pSection);
@@ -1786,6 +1802,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     // and verified for LTCG with 4432, 4627, 5344, 5558, 5849
     iCodeOffsetFor_g_Stream = 0x22;
 
+    // TODO: Need investigate reason for going with higher number first then lower last.
     if (pLibrary->flag == XbSymbolLib_D3D8) {
         if (pLibrary->build_version >= 4034) {
             OOVPA_version = 4034;
