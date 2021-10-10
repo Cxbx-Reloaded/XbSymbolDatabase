@@ -1720,9 +1720,6 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
             else if (pLibrary->build_version < 4242) {
                 pXRefOffset = 0x18;
             }
-            else if (pLibrary->build_version < 4627) {
-                pXRefOffset = 0x19;
-            }
             else {
                 pXRefOffset = 0x19;
             }
