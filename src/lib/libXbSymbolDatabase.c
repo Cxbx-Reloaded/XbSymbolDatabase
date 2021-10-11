@@ -1483,10 +1483,6 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
 
-    // TODO: Why do we need this? Also, can we just scan library versions for this only?
-    // Save D3D8 build version
-    //g_BuildVersion = BuildVersion;
-
     if (pLibrary->flag == XbSymbolLib_D3D8) {
 
         // locate D3DDevice_SetRenderState_CullMode first
