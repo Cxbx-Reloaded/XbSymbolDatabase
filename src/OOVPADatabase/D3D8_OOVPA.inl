@@ -183,6 +183,7 @@
 // * D3D8_OOVPA
 // ******************************************************************
 OOVPATable D3D8_OOVPA[] = {
+    REGISTER_OOVPAS_M(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric, 3911), // This OOVPA signature is not a symbol. Read its note for more details.
 
     REGISTER_OOVPAS(CDevice_MakeSpace, 3911), // NOTE: has multiple rets.
     REGISTER_OOVPAS(CMiniport_CreateCtxDmaObject, 3911, 4034),
@@ -314,7 +315,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState2, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: There is a verified duplicate function.
     REGISTER_OOVPAS(D3DDevice_SetRenderState_BackFillMode, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_CullMode, 3911, 4034),
+    REGISTER_OOVPAS_C(D3DDevice_SetRenderState_CullMode, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_Deferred, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_DoNotCullUncompressed, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_Dxt1NoiseEnable, 3911), // Final generic OOVPA: 3911; Removed: 0
@@ -359,7 +360,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BorderColor, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BumpEnv, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_ColorKeyColor, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetTextureState_TexCoordIndex, 3911, 4034, 4242, 4627),
+    REGISTER_OOVPAS_C(D3DDevice_SetTextureState_TexCoordIndex, 3911, 4034, 4242, 4627),
     REGISTER_OOVPAS(D3DDevice_SetTile, 3911, 4034, 4627), // Then it has changed calls ?SetTileNoWait@D3D@@YGXKPBU_D3DTILE@@@Z in XDK 4627 and higher.
     REGISTER_OOVPAS(D3DDevice_SetTransform, 3911, 4034, 5344, 5558), // Was 4134 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_MultiplyTransform, 3911, 4034), // TODO: Verify 4034 is correct

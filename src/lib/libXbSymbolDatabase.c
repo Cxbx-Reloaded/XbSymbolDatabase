@@ -141,10 +141,6 @@ typedef struct _iXbSymbolContext {
 #endif
 } iXbSymbolContext;
 
-typedef bool (*custom_scan_func_t)(iXbSymbolContext* pContext,
-                                   const iXbSymbolLibrarySession* pLibrary,
-                                   const XbSDBSection* pSection);
-
 typedef const struct _PairScanLibSec {
     uint32_t library;
     const char* section[PAIRSCANSEC_MAX];
@@ -156,6 +152,11 @@ typedef const struct _SymbolDatabaseList {
     OOVPATable* SymbolsTable;
     unsigned int SymbolsTableCount;
 } SymbolDatabaseList;
+
+typedef bool (*custom_scan_func_t)(iXbSymbolContext* pContext,
+                                   const iXbSymbolLibrarySession* pLibrarySession,
+                                   SymbolDatabaseList* pLibraryDB,
+                                   const XbSDBSection* pSection);
 
 SymbolDatabaseList SymbolDBList[] = {
     // Support inline functions in .text section
@@ -997,6 +998,69 @@ static void internal_RegisterSymbol(iXbSymbolContext* pContext,
     }
 }
 
+static OOVPATable* internal_OOVPATable_FindSymbolFunction(SymbolDatabaseList* LibraryDB, const char* szFuncName, unsigned scan_type)
+{
+    for (unsigned i = 0; i < LibraryDB->SymbolsTableCount; i++) {
+
+        // Intended for optimization purpose without need to search every single symbol's string.
+        if ((scan_type & LibraryDB->SymbolsTable[i].scan_type) == 0) {
+            continue;
+        }
+
+        if (strcmp(szFuncName, LibraryDB->SymbolsTable[i].szFuncName) == 0) {
+            return &LibraryDB->SymbolsTable[i];
+        }
+    }
+    return NULL;
+}
+
+static void internal_OOVPATable_scan(iXbSymbolContext* pContext,
+                                     const iXbSymbolLibrarySession* pLibrarySession,
+                                     const XbSDBSection* pSection,
+                                     bool xref_first_pass,
+                                     const OOVPATable* pSymbol,
+                                     OOVPARevision** pRevisionReturn,
+                                     void** pFuncReturn)
+{
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
+    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
+
+    OOVPARevision* pLastKnownRevision = NULL;
+    void* pLastKnownFunc = 0;
+
+    for (unsigned i = 0; i < pSymbol->count; i++) {
+        OOVPARevision* pRevision = &pSymbol->revisions[i];
+
+        // Skip higher build version
+        if (pContext->strict_build_version_limit && pLibrary->build_version < pRevision->Version)
+            continue;
+
+        // Search for each function's location using the OOVPA
+        void* pFunc = internal_LocateFunction(pContext, iLibraryType, pSymbol->szFuncName, pRevision->Version, pRevision->Oovpa, pSection, xref_first_pass);
+        if (pFunc == 0) {
+            continue;
+        }
+
+        if (pFunc == pLastKnownFunc && pLastKnownRevision == pRevision - 1) {
+            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
+                                  "Duplicate OOVPA signature found for %s, %hu vs %hu!",
+                                  pSymbol->szFuncName, pLastKnownRevision->Version, pRevision->Version);
+        }
+
+        if (pLibrary->build_version < pRevision->Version) {
+            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
+                                  "OOVPA signature is too high for [%hu] %s!",
+                                  pRevision->Version, pSymbol->szFuncName);
+        }
+
+        pLastKnownFunc = pFunc;
+        pLastKnownRevision = pRevision;
+    }
+
+    *pFuncReturn = pLastKnownFunc;
+    *pRevisionReturn = pLastKnownRevision;
+}
+
 static void internal_OOVPA_register(iXbSymbolContext* pContext,
                                     const char* szFuncName,
                                     const OOVPARevision* OovpaRevision,
@@ -1027,44 +1091,72 @@ static void internal_OOVPA_scan(iXbSymbolContext* pContext,
     OOVPATable* pSymbol = SymbolsTable;
 
     for (; pSymbol < pSymbolEnd; pSymbol++) {
-        OOVPARevision* pLastKnownRevision = NULL;
-        uint32_t pLastKnownFunc = 0;
 
-        for (unsigned i = 0; i < pSymbol->count; i++) {
-            OOVPARevision* pRevision = &pSymbol->revisions[i];
-
-            // Skip higher build version
-            if (pContext->strict_build_version_limit && pLibrary->build_version < pRevision->Version)
-                continue;
-
-            // Search for each function's location using the OOVPA
-            xbaddr pFunc = (xbaddr)(uintptr_t)internal_LocateFunction(pContext, iLibraryType, pSymbol->szFuncName, pRevision->Version, pRevision->Oovpa, pSection, xref_first_pass);
-            if (pFunc == 0) {
-                continue;
-            }
-
-            if (pFunc == pLastKnownFunc && pLastKnownRevision == pRevision - 1) {
-                //if (g_SymbolAddresses[pLastKnownRevision->szFuncName] == 0) {
-                output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
-                                      "Duplicate OOVPA signature found for %s, %hu vs %hu!",
-                                      pSymbol->szFuncName, pLastKnownRevision->Version, pRevision->Version);
-                //}
-            }
-
-            if (pLibrary->build_version < pRevision->Version) {
-                output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
-                                      "OOVPA signature is too high for [%hu] %s!",
-                                      pRevision->Version, pSymbol->szFuncName);
-            }
-
-            pLastKnownFunc = pFunc;
-            pLastKnownRevision = pRevision;
+        // We only want to do normal scan process.
+        // If there's a symbol require manual scan, skip it.
+        // Since manual scan is performed separately.
+        if ((pSymbol->scan_type & DB_ST_AUTO) == 0) {
+            continue;
         }
+
+        OOVPARevision* pLastKnownRevision = NULL;
+        void* pLastKnownFunc = 0;
+
+        internal_OOVPATable_scan(pContext,
+                                 pLibrarySession,
+                                 pSection,
+                                 xref_first_pass,
+                                 pSymbol,
+                                 &pLastKnownRevision,
+                                 &pLastKnownFunc);
 
         if (pLastKnownRevision != NULL) {
-            internal_OOVPA_register(pContext, pSymbol->szFuncName, pLastKnownRevision, pLibrarySession, pLastKnownFunc);
+            internal_OOVPA_register(pContext, pSymbol->szFuncName, pLastKnownRevision, pLibrarySession, (xbaddr)(uintptr_t)pLastKnownFunc);
         }
     }
+}
+
+static SymbolDatabaseList* internal_FindLibraryDB(uint32_t library_flag, unsigned* db_i)
+{
+    unsigned db = *db_i;
+    for (; db < SymbolDBListCount; db++) {
+        // Check if library flag match then return symbol database.
+        if ((library_flag & SymbolDBList[db].LibSec.library) > 0) {
+            *db_i = db;
+            return &SymbolDBList[db];
+        }
+    }
+    *db_i = db;
+    return NULL;
+}
+
+// Intended design for manual scan without register. Could be expand
+static void* internal_LocateSymbolFunction(iXbSymbolContext* pContext,
+                                           const iXbSymbolLibrarySession* pLibrarySession,
+                                           SymbolDatabaseList* pLibraryDB,
+                                           const char* szFuncName,
+                                           const XbSDBSection* pSection,
+                                           bool xref_first_pass,
+                                           OOVPARevision** pOOVPARevision)
+{
+    void* pFunc = 0;
+    OOVPARevision* pRevision = NULL;
+    OOVPATable* pSymbol = internal_OOVPATable_FindSymbolFunction(pLibraryDB, szFuncName, DB_ST_MANUAL);
+
+    if (pSymbol) {
+        internal_OOVPATable_scan(pContext,
+                                 pLibrarySession,
+                                 pSection,
+                                 xref_first_pass,
+                                 pSymbol,
+                                 &pRevision,
+                                 &pFunc);
+    }
+
+    if (pOOVPARevision) {
+        *pOOVPARevision = pRevision;
+    }
+    return pFunc;
 }
 
 static eLibraryType internal_GetLibraryType(uint32_t library)
@@ -1457,6 +1549,7 @@ static void manual_scan_section_dx8_register_stream(iXbSymbolContext* pContext,
 
 static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
                                     const iXbSymbolLibrarySession* pLibrarySession,
+                                    SymbolDatabaseList* pLibraryDB,
                                     const XbSDBSection* pSection)
 {
     // Generic usage
@@ -1474,19 +1567,22 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
 
+    OOVPARevision* pOOVPARevision = NULL;
+
     if (pLibrary->flag == XbSymbolLib_D3D8) {
 
         // locate D3DDevice_SetRenderState_CullMode first
         if (pLibrary->build_version < 3911) {
             // Not supported, currently ignored.
         }
-        else if (pLibrary->build_version < 4034) {
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 3911,
-                                       &D3DDevice_SetRenderState_CullMode_3911, pSection);
-        }
         else {
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 4034,
-                                       &D3DDevice_SetRenderState_CullMode_4034, pSection);
+            pFunc = internal_LocateSymbolFunction(pContext,
+                                                  pLibrarySession,
+                                                  pLibraryDB,
+                                                  "D3DDevice_SetRenderState_CullMode",
+                                                  pSection,
+                                                  false,
+                                                  NULL);
         }
 
         // then locate D3DDeferredRenderState
@@ -1531,29 +1627,35 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     }
     else { // D3D8LTCG
         // locate D3DDevice_SetRenderState_CullMode first
-        pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 1045,
-                                   &D3DDevice_SetRenderState_CullMode_1045, pSection);
-        pXRefOffset = 0x2D; // verified for 3925
-        if (pFunc == 0) {
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 1049,
-                                       &D3DDevice_SetRenderState_CullMode_1049, pSection);
-            pXRefOffset = 0x31; // verified for 4039
-        }
+        pFunc = internal_LocateSymbolFunction(pContext,
+                                              pLibrarySession,
+                                              pLibraryDB,
+                                              "D3DDevice_SetRenderState_CullMode",
+                                              pSection,
+                                              false,
+                                              &pOOVPARevision);
 
-        if (pFunc == 0) {
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 1052,
-                                       &D3DDevice_SetRenderState_CullMode_1052, pSection);
-            pXRefOffset = 0x34;
-        }
-
-        if (pFunc == 0) {
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetRenderState_CullMode", 1053,
-                                       &D3DDevice_SetRenderState_CullMode_1053, pSection);
-            pXRefOffset = 0x35;
-        }
-
-        // then locate D3DDeferredRenderState
         if (pFunc != 0) {
+
+            // D3DDevice_SetRenderState_CullMode assign pXRefOffset for D3DDeferredRenderState
+            switch (pOOVPARevision->Version) {
+                case 1045:
+                default:
+                    pXRefOffset = 0x2D; // verified for 3925
+                    break;
+                case 1049:
+                    pXRefOffset = 0x31; // verified for 4039
+                    break;
+                case 1052:
+                    pXRefOffset = 0x34;
+                    break;
+                case 1053:
+                    pXRefOffset = 0x35;
+                    break;
+            }
+
+            // then locate D3DDeferredRenderState
+
             // NOTE: Is a requirement to align properly.
             pFunc += virt_start_relative;
 
@@ -1602,25 +1704,28 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
             // Not supported, currently ignored.
             pFunc = 0;
         }
-        else if (pLibrary->build_version < 4034) {
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 3911,
-                                       &D3DDevice_SetTextureState_TexCoordIndex_3911, pSection);
-            pXRefOffset = 0x11;
-        }
-        else if (pLibrary->build_version < 4242) {
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 4034,
-                                       &D3DDevice_SetTextureState_TexCoordIndex_4034, pSection);
-            pXRefOffset = 0x18;
-        }
-        else if (pLibrary->build_version < 4627) {
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 4242,
-                                       &D3DDevice_SetTextureState_TexCoordIndex_4242, pSection);
-            pXRefOffset = 0x19;
-        }
         else {
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 4627,
-                                       &D3DDevice_SetTextureState_TexCoordIndex_4627, pSection);
-            pXRefOffset = 0x19;
+            pFunc = internal_LocateSymbolFunction(pContext,
+                                                  pLibrarySession,
+                                                  pLibraryDB,
+                                                  "D3DDevice_SetTextureState_TexCoordIndex",
+                                                  pSection,
+                                                  false,
+                                                  NULL);
+
+            // TODO: Can we integrate below into XRef?
+            if (pLibrary->build_version < 4034) {
+                pXRefOffset = 0x11;
+            }
+            else if (pLibrary->build_version < 4242) {
+                pXRefOffset = 0x18;
+            }
+            else if (pLibrary->build_version < 4627) {
+                pXRefOffset = 0x19;
+            }
+            else {
+                pXRefOffset = 0x19;
+            }
         }
     }
     else { // D3D8LTCG
@@ -1745,8 +1850,13 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 
         // Scan if event handle variable is not yet derived.
         if (pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT] == XREF_ADDR_DERIVE) {
-            xSymbolAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, iLibraryType, "D3DDevice__m_VerticalBlankEvent__ManualFindGeneric_3911", 3911,
-                                                                &D3DDevice__m_VerticalBlankEvent__ManualFindGeneric_3911, pSection);
+            xSymbolAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                           pLibrarySession,
+                                                                           pLibraryDB,
+                                                                           "D3DDevice__m_VerticalBlankEvent__ManualFindGeneric",
+                                                                           pSection,
+                                                                           false,
+                                                                           NULL);
         }
 
         // We are not registering D3DDevice__m_VerticalBlankEvent__ManualFindGeneric itself, as it is NOT a symbol.
@@ -1773,6 +1883,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 
 static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
                                        const iXbSymbolLibrarySession* pLibrarySession,
+                                       SymbolDatabaseList* pLibraryDB,
                                        const XbSDBSection* pSection)
 {
     // Generic usage
@@ -1791,8 +1902,13 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
 
     // Scan for DirectSoundStream's constructor function.
     if (pContext->xref_database[XREF_CDirectSoundStream_Constructor] == XREF_ADDR_UNDETERMINED) {
-        xFuncAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, iLibraryType, "CDirectSoundStream_Constructor", 3911,
-                                                          &CDirectSoundStream_Constructor_3911, pSection);
+        xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                     pLibrarySession,
+                                                                     pLibraryDB,
+                                                                     "CDirectSoundStream_Constructor",
+                                                                     pSection,
+                                                                     false,
+                                                                     NULL);
 
         // If not found, skip the rest of the scan.
         if (xFuncAddr == 0) {
@@ -1864,6 +1980,7 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
 
 static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
                                         const iXbSymbolLibrarySession* pLibrarySession,
+                                        SymbolDatabaseList* pLibraryDB,
                                         const XbSDBSection* pSection)
 {
     // Generic usage
@@ -1872,49 +1989,22 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
     xbaddr xXbAddr = 0;
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
-
-    typedef struct {
-        uint16_t version;
-        LOOVPA* sig;
-    } sig_list;
-    sig_list list_MU_Init[] = {
-        { 3911, &MU_Init_3911 },
-        { 4242, &MU_Init_4242 },
-        { 5233, &MU_Init_5233 },
-    };
+    OOVPARevision* pOOVPARevision = NULL;
 
     // Find MU_Init function
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_MU_Init])) {
 
-        for (unsigned i = 0; i < XBSDB_ARRAY_SIZE(list_MU_Init); i++) {
+        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                   pLibrarySession,
+                                                                   pLibraryDB,
+                                                                   "MU_Init",
+                                                                   pSection,
+                                                                   false,
+                                                                   &pOOVPARevision);
 
-            // If limit to only below sig versions, then stop if go above.
-            if (pContext->strict_build_version_limit) {
-                if (pLibrary->build_version < list_MU_Init[i].version) {
-                    break;
-                }
-            }
-
-            xXbAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, iLibraryType, "MU_Init", list_MU_Init[i].version,
-                                                            list_MU_Init[i].sig, pSection);
-
-            // If match is found then register symbol.
-            if (xXbAddr != 0) {
-
-                if (pLibrary->build_version < list_MU_Init[i].version) {
-
-                    output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
-                                          "OOVPA signature is too high for [%hu] %s!",
-                                          list_MU_Init[i].version, "MU_Init");
-                }
-
-                internal_RegisterSymbol(pContext, pLibrarySession, XREF_MU_Init, list_MU_Init[i].version,
-                                        "MU_Init", xXbAddr);
-
-                if (pContext->one_time_scan) {
-                    break;
-                }
-            }
+        if (xXbAddr) {
+            internal_RegisterSymbol(pContext, pLibrarySession, XREF_MU_Init, pOOVPARevision->Version,
+                                    "MU_Init", xXbAddr);
         }
     }
 
@@ -1926,8 +2016,13 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
 
     // Scan for IUsbInit::GetMaxDeviceTypeCount function.
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_IUsbInit_GetMaxDeviceTypeCount])) {
-        xXbAddr = (xbaddr)(uintptr_t)LocateFunctionCast(pContext, iLibraryType, "IUsbInit_GetMaxDeviceTypeCount", 3911,
-                                                        &IUsbInit_GetMaxDeviceTypeCount_3911, pSection);
+        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                   pLibrarySession,
+                                                                   pLibraryDB,
+                                                                   "IUsbInit_GetMaxDeviceTypeCount",
+                                                                   pSection,
+                                                                   false,
+                                                                   NULL);
 
         // If not found, skip the rest of the scan.
         if (xXbAddr == 0) {
@@ -1981,35 +2076,35 @@ static bool manual_scan_library_custom(iXbSymbolContext* pContext,
 
     const XbSDBSection* pSectionScan;
 
-    for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
+    SymbolDatabaseList* pLibraryDB;
+    unsigned db_i = 0;
+    while (pLibraryDB = internal_FindLibraryDB(pLibSession->pLibrary->flag, &db_i)) {
+        db_i++;
+        for (unsigned int s = 0; s < pContext->section_input.count; s++) {
 
-        if ((pLibSession->pLibrary->flag & SymbolDBList[d2].LibSec.library) > 0) {
-            for (unsigned int s = 0; s < pContext->section_input.count; s++) {
+            // Initialize a matching specific section is currently pair with library in order to scan specific section only.
+            // By doing this method will reduce false detection dramatically. If it had happened before.
+            for (unsigned int d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
+                if (pLibraryDB->LibSec.section[d3] != NULL &&
+                    strncmp(pContext->section_input.filters[s].name, pLibraryDB->LibSec.section[d3], 8) == 0) {
 
-                // Initialize a matching specific section is currently pair with library in order to scan specific section only.
-                // By doing this method will reduce false detection dramatically. If it had happened before.
-                for (unsigned int d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
-                    if (SymbolDBList[d2].LibSec.section[d3] != NULL &&
-                        strncmp(pContext->section_input.filters[s].name, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
+                    pSectionScan = pContext->section_input.filters + s;
 
-                        pSectionScan = pContext->section_input.filters + s;
+                    output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section",
+                                          pLibSession->pLibrary->name, pSectionScan->name);
 
-                        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section",
-                                              pLibSession->pLibrary->name, pSectionScan->name);
+                    scan_ret = custom_scan_func(pContext, pLibSession, pLibraryDB, pSectionScan);
 
-                        scan_ret = custom_scan_func(pContext, pLibSession, pSectionScan);
-
-                        if (scan_ret) {
-                            // let's return true here instead of waste the loops for nothing.
-                            return scan_ret;
-                        }
+                    if (scan_ret) {
+                        // let's return true here instead of waste the loops for nothing.
+                        return scan_ret;
                     }
                 }
             }
-            // Use the break if there are 2+ bit flags set such as include LTCG flag in std flag's oovpa database like D3D8.
-            if ((SymbolDBList[d2].LibSec.library & ~pLibSession->pLibrary->flag) == 0) {
-                break;
-            }
+        }
+        // Use the break if there are 2+ bit flags set such as include LTCG flag in std flag's oovpa database like D3D8.
+        if ((pLibraryDB->LibSec.library & ~pLibSession->pLibrary->flag) == 0) {
+            break;
         }
     }
     return scan_ret;
@@ -2098,24 +2193,24 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
         return 0;
     }
 
-    for (unsigned int d2 = 0; d2 < SymbolDBListCount; d2++) {
+    SymbolDatabaseList* pSymbolDB;
+    unsigned db_i = 0;
+    while (pSymbolDB = internal_FindLibraryDB(pLibrary->flag, &db_i)) {
+        db_i++;
+        for (unsigned int s = 0; s < pContext->section_input.count; s++) {
 
-        if ((pLibrary->flag & SymbolDBList[d2].LibSec.library) > 0) {
-            for (unsigned int s = 0; s < pContext->section_input.count; s++) {
+            // Initialize a matching specific section is currently pair with library in order to scan specific section only.
+            // By doing this method will reduce false detection dramatically. If it had happened before.
+            for (unsigned int d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
+                if (pSymbolDB->LibSec.section[d3] != NULL &&
+                    strncmp(pContext->section_input.filters[s].name, pSymbolDB->LibSec.section[d3], 8) == 0) {
 
-                // Initialize a matching specific section is currently pair with library in order to scan specific section only.
-                // By doing this method will reduce false detection dramatically. If it had happened before.
-                for (unsigned int d3 = 0; d3 < PAIRSCANSEC_MAX; d3++) {
-                    if (SymbolDBList[d2].LibSec.section[d3] != NULL &&
-                        strncmp(pContext->section_input.filters[s].name, SymbolDBList[d2].LibSec.section[d3], 8) == 0) {
+                    output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section",
+                                          pLibrary->name, pSymbolDB->LibSec.section[d3]);
 
-                        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section",
-                                              pLibrary->name, SymbolDBList[d2].LibSec.section[d3]);
-
-                        internal_OOVPA_scan(pContext, SymbolDBList[d2].SymbolsTable, SymbolDBList[d2].SymbolsTableCount,
-                                            &librarySession, pContext->section_input.filters + s, xref_first_pass);
-                        break;
-                    }
+                    internal_OOVPA_scan(pContext, pSymbolDB->SymbolsTable, pSymbolDB->SymbolsTableCount,
+                                        &librarySession, pContext->section_input.filters + s, xref_first_pass);
+                    break;
                 }
             }
 
