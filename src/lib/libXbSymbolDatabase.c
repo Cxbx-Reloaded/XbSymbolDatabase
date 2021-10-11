@@ -71,6 +71,9 @@ static inline uint32_t BitScanReverse(uint32_t value)
 #include "libXbSymbolDatabase.h"
 #include "Xbe.h"
 
+// __COUNTER__ is currently suppported for msvc, gcc, and clang
+#define SYMBOL_COUNTER_VALUE __COUNTER__
+
 // ******************************************************************
 // * Xbox Symbol OOVPA Database
 // ******************************************************************
@@ -350,6 +353,20 @@ static bool iXbSymbolContext_AllowScanLibrary(iXbSymbolContext* pContext)
 // ******************************************************************
 // * API functions to use with other projects.
 // ******************************************************************
+
+static SymbolDatabaseList* internal_FindLibraryDB(uint32_t library_flag, unsigned* db_i)
+{
+    unsigned db = *db_i;
+    for (; db < SymbolDBListCount; db++) {
+        // Check if library flag match then return symbol database.
+        if ((library_flag & SymbolDBList[db].LibSec.library) > 0) {
+            *db_i = db;
+            return &SymbolDBList[db];
+        }
+    }
+    *db_i = db;
+    return NULL;
+}
 
 bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t library_filter)
 {
@@ -930,6 +947,7 @@ void* internal_LocateFunction(iXbSymbolContext* pContext,
 #define LocateFunctionCast(pContext, iLibraryType, szFuncName, version, Oovpa, pSection) \
     internal_LocateFunction(pContext, iLibraryType, szFuncName, version, (OOVPA*)Oovpa, pSection, false)
 
+// NOTE: Do not use direct call to this function. Use internal_RegisterValidXRefAddr_M macro instead.
 static void internal_RegisterValidXRefAddr(iXbSymbolContext* pContext,
                                            const char* library_name,
                                            uint32_t library_flag,
@@ -943,6 +961,11 @@ static void internal_RegisterValidXRefAddr(iXbSymbolContext* pContext,
         pContext->register_func(library_name, library_flag, symbol_name, xSymbolAddr, version);
     }
 }
+
+// Always use this to be aware of manual register xrefs such as variables.
+#define internal_RegisterValidXRefAddr_M(...) \
+    SYMBOL_COUNTER_VALUE;                     \
+    internal_RegisterValidXRefAddr(__VA_ARGS__);
 
 static void internal_RegisterXRef(iXbSymbolContext* pContext,
                                   const iXbSymbolLibrarySession* pLibrarySession,
@@ -997,6 +1020,12 @@ static void internal_RegisterSymbol(iXbSymbolContext* pContext,
         pContext->register_func(pLibrary->name, pLibrary->flag, symbol_name, symbol_addr, version);
     }
 }
+
+// Use _M suffix only, if OOVPA signature is not in database.
+#define internal_RegisterSymbol_M(...) \
+    SYMBOL_COUNTER_VALUE;              \
+    internal_RegisterSymbol(__VA_ARGS__);
+
 
 static OOVPATable* internal_OOVPATable_FindSymbolFunction(SymbolDatabaseList* LibraryDB, const char* szFuncName, unsigned scan_type)
 {
@@ -1114,20 +1143,6 @@ static void internal_OOVPA_scan(iXbSymbolContext* pContext,
             internal_OOVPA_register(pContext, pSymbol->szFuncName, pLastKnownRevision, pLibrarySession, (xbaddr)(uintptr_t)pLastKnownFunc);
         }
     }
-}
-
-static SymbolDatabaseList* internal_FindLibraryDB(uint32_t library_flag, unsigned* db_i)
-{
-    unsigned db = *db_i;
-    for (; db < SymbolDBListCount; db++) {
-        // Check if library flag match then return symbol database.
-        if ((library_flag & SymbolDBList[db].LibSec.library) > 0) {
-            *db_i = db;
-            return &SymbolDBList[db];
-        }
-    }
-    *db_i = db;
-    return NULL;
 }
 
 // Intended design for manual scan without register. Could be expand
@@ -1954,32 +1969,32 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
         if (xblower <= vtable && vtable < xbupper) {
             pFuncAddr = (memptr_t)virt_start_relative + vtable;
 
-            internal_RegisterSymbol(pContext, pLibrarySession, XREF_CDirectSoundStream_AddRef, 3911,
-                                    "CDirectSoundStream_AddRef", *(uint32_t*)(pFuncAddr + 0 * 4));
+            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_AddRef, 3911,
+                                      "CDirectSoundStream_AddRef", *(uint32_t*)(pFuncAddr + 0 * 4));
 
-            internal_RegisterSymbol(pContext, pLibrarySession, XREF_CDirectSoundStream_Release, 3911,
-                                    "CDirectSoundStream_Release", *(uint32_t*)(pFuncAddr + 1 * 4));
+            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Release, 3911,
+                                      "CDirectSoundStream_Release", *(uint32_t*)(pFuncAddr + 1 * 4));
 
-            internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
-                                    "CDirectSoundStream_GetInfo", *(uint32_t*)(pFuncAddr + 2 * 4));
+            internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
+                                      "CDirectSoundStream_GetInfo", *(uint32_t*)(pFuncAddr + 2 * 4));
 
             if (pLibrary->build_version < 4134) {
-                internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
-                                        "CDirectSoundStream_GetStatus__r1", *(uint32_t*)(pFuncAddr + 3 * 4));
+                internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
+                                          "CDirectSoundStream_GetStatus__r1", *(uint32_t*)(pFuncAddr + 3 * 4));
             }
             else {
-                internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 4134,
-                                        "CDirectSoundStream_GetStatus__r2", *(uint32_t*)(pFuncAddr + 3 * 4));
+                internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 4134,
+                                          "CDirectSoundStream_GetStatus__r2", *(uint32_t*)(pFuncAddr + 3 * 4));
             }
 
-            internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
-                                    "CDirectSoundStream_Process", *(uint32_t*)(pFuncAddr + 4 * 4));
+            internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
+                                      "CDirectSoundStream_Process", *(uint32_t*)(pFuncAddr + 4 * 4));
 
-            internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
-                                    "CDirectSoundStream_Discontinuity", *(uint32_t*)(pFuncAddr + 5 * 4));
+            internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
+                                      "CDirectSoundStream_Discontinuity", *(uint32_t*)(pFuncAddr + 5 * 4));
 
-            internal_RegisterSymbol(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
-                                    "CDirectSoundStream_Flush", *(uint32_t*)(pFuncAddr + 6 * 4));
+            internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
+                                      "CDirectSoundStream_Flush", *(uint32_t*)(pFuncAddr + 6 * 4));
 
             // NOTE: it is possible to manual add GetInfo, GetStatus, Process, Discontinuity,
             // and Flush functions.
@@ -2075,8 +2090,8 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_g_DeviceType_MU])) {
 
         // Register g_DeviceType_MU
-        internal_RegisterSymbol(pContext, pLibrarySession, XREF_g_DeviceType_MU, 3911,
-                                "g_DeviceType_MU", xXbAddr);
+        internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_g_DeviceType_MU, 3911,
+                                  "g_DeviceType_MU", xXbAddr);
     }
 
     return true;
@@ -2304,13 +2319,13 @@ void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle)
     xbaddr xD3D_pDeviceAddr = pContext->xref_database[XREF_D3DDEVICE];
     if (internal_IsXRefAddrValid(xD3D_pDeviceAddr)) {
         // Register offset of D3DDevice__m_VertexShader
-        internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER, 0, "D3DDevice__m_VertexShader_OFFSET");
+        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER, 0, "D3DDevice__m_VertexShader_OFFSET");
     }
 
     xbaddr xg_XapiMountedMUs = pContext->xref_database[XREF_g_XapiMountedMUs];
     if (internal_IsXRefAddrValid(xg_XapiMountedMUs)) {
         // Register g_XapiMountedMUs
-        internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs");
+        internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs");
     }
 
     // Here, others could be registered
@@ -2404,6 +2419,18 @@ LibraryCleanup:
     free(library_input.filters);
 
     return false;
+}
+
+// Require to be at end of various functions may use manual register calls in order to count properly.
+unsigned XbSymbolDatabase_GetTotalSymbols(uint32_t library_filter)
+{
+    unsigned db_i = 0, total = SYMBOL_COUNTER_VALUE;
+    SymbolDatabaseList* pLibraryDB;
+    while (pLibraryDB = internal_FindLibraryDB(library_filter, &db_i)) {
+        db_i++;
+        total += pLibraryDB->SymbolsTableCount;
+    }
+    return total;
 }
 
 // ******************************************************************
