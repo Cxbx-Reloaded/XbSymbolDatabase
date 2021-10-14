@@ -166,9 +166,9 @@
 // * DSOUND_OOVPA_manual
 // ******************************************************************
 OOVPATable DSound_OOVPA_manual[] = {
-    REGISTER_OOVPAS(CDirectSoundStream_Constructor, 3911), // NOTE: Does not need to be register in db. Using manual work instead, like D3D8 did.
+    REGISTER_OOVPAS_M(CDirectSoundStream_Constructor, 3911), // NOTE: Does not need to be register in db. Using manual work instead, like D3D8 did.
 };
-#define DSound_OOVPA_manual_COUNT 0 // We're forcing it to be a dummy db slot to extend section scans. // XBSDB_ARRAY_SIZE(DSound_OOVPA_manual)
+#define DSound_OOVPA_manual_COUNT XBSDB_ARRAY_SIZE(DSound_OOVPA_manual)
 
 // ******************************************************************
 // * DSOUND_OOVPA
@@ -320,7 +320,7 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(CDirectSoundBuffer_Use3DVoiceData, 5558), // Final generic OOVPA: 5558; Removed: 0 (introduced in 5558)
 
 #if 0
-    REGISTER_OOVPAS(CDirectSoundStream_Constructor, 3911), // NOTE: Does not need to be register in db. Using manual work instead, like D3D8 did.
+    REGISTER_OOVPAS_M(CDirectSoundStream_Constructor, 3911), // NOTE: Does not need to be register in db. Using manual work instead, like D3D8 did.
 #endif
 #if 0 // These signatures are no longer in use, yet preserved as documented signatures for future research usage. \
     //   Instead of these signatures below, using CDirectSoundStream_Constructor signature plus manual work allow us to reduce the scan process.

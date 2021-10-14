@@ -125,7 +125,7 @@
 // ******************************************************************
 OOVPATable XAPILIB_OOVPA[] = {
 
-    REGISTER_OOVPAS(IUsbInit_GetMaxDeviceTypeCount, 3911),
+    REGISTER_OOVPAS_C(IUsbInit_GetMaxDeviceTypeCount, 3911),
     REGISTER_OOVPAS(XapiMapLetterToDirectory, 3911),
     REGISTER_OOVPAS(XUnmountAlternateTitleA, 3911),
 
@@ -146,7 +146,7 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(GetThreadPriority, 3911),
     REGISTER_OOVPAS(GetTimeZoneInformation, 3911),
     REGISTER_OOVPAS(GetTypeInformation, 4134), // TODO: Actually introduced in some unknown XDK between 4134 and 4361
-    REGISTER_OOVPAS(MU_Init, 3911, 4242, 5233),
+    REGISTER_OOVPAS_M(MU_Init, 3911, 4242, 5233),
     REGISTER_OOVPAS(OutputDebugStringA, 3911),
     REGISTER_OOVPAS(QueueUserAPC, 3911),
     REGISTER_OOVPAS(QueryPerformanceCounter, 3911),

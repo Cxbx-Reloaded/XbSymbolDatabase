@@ -1489,7 +1489,7 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * XapiMapLetterToDirectory
+// * IUsbInit::GetMaxDeviceTypeCount
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IUsbInit_GetMaxDeviceTypeCount,

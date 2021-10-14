@@ -190,13 +190,29 @@ typedef struct _LOOVPA {
 #define OOVPA_END }
 // clang-format on
 
+typedef struct _OOVPARevision {
+    OOVPA* Oovpa;
+    unsigned short Version; // : 13; // 2^13 = 8192, enough to store lowest and highest possible Library Version number in
+} OOVPARevision;
+
+#define COUNTARGS_USHORT(...) (sizeof((unsigned short[]){ __VA_ARGS__ }) / sizeof(unsigned short))
+
+typedef enum _eDBScanType {
+    DB_ST_NONE = 0,
+    DB_ST_MANUAL = (1 << 0),
+    DB_ST_AUTO = (1 << 1),
+
+    DB_ST_ALL = DB_ST_MANUAL | DB_ST_AUTO
+} eDBScanType;
+
 // ******************************************************************
 // * OOVPATable
 // ******************************************************************
 typedef struct _OOVPATable {
-    OOVPA* Oovpa;
     char* szFuncName;
-    unsigned short Version; // : 13; // 2^13 = 8192, enough to store lowest and higest possible Library Version number in
+    unsigned scan_type;
+    unsigned count;
+    OOVPARevision* revisions;
 } OOVPATable;
 
 // http://en.cppreference.com/w/cpp/iterator/size
@@ -205,13 +221,13 @@ typedef struct _OOVPATable {
 #define XBSDB_ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 
 // clang-format off
-#define OOVPA_TABLE_ENTRY_FULL(Oovpa, DebugName, Version) \
-    { &Oovpa##_##Version.Header, DebugName, Version }
+#define OOVPA_TABLE_ENTRY_FULL(Oovpa, Version) \
+    { &Oovpa##_##Version.Header, Version }
 // clang-format on
 
 // Regiser each version into one symbol table database.
 #define REGISTER_OOVPA(Symbol, Version) \
-    OOVPA_TABLE_ENTRY_FULL(Symbol, #Symbol, Version)
+    OOVPA_TABLE_ENTRY_FULL(Symbol, Version)
 
 // Based on https://codecraft.co/2014/11/25/variadic-macros-tricks/
 // and https://groups.google.com/d/msg/comp.std.c/d-6Mj5Lko_s/jqonQLK20HcJ
@@ -260,12 +276,25 @@ typedef struct _OOVPATable {
     _9, _8, _7, _6, _5, _4, _3, _2, _1, _0,           \
     N, ...) N
 
-#define REGISTER_OOVPAS(Symbol, ...)                                                                                        \
-    MSVC_EXPAND(_GET_NTH_ARG("ignored", __VA_ARGS__,                                                                        \
-                             REGISTER_OOVPA_19, REGISTER_OOVPA_18, REGISTER_OOVPA_17, REGISTER_OOVPA_16, REGISTER_OOVPA_15, \
-                             REGISTER_OOVPA_14, REGISTER_OOVPA_13, REGISTER_OOVPA_12, REGISTER_OOVPA_11, REGISTER_OOVPA_10, \
-                             REGISTER_OOVPA_9, REGISTER_OOVPA_8, REGISTER_OOVPA_7, REGISTER_OOVPA_6, REGISTER_OOVPA_5,      \
-                             REGISTER_OOVPA_4, REGISTER_OOVPA_3, REGISTER_OOVPA_2, REGISTER_OOVPA_1, REGISTER_OOVPA_0)(Symbol, __VA_ARGS__))
+#define REGISTER_OOVPAS_TYPE(Symbol, ScanType, ...)                                                                                              \
+    "" #Symbol,                                                                                                                                  \
+        ScanType,                                                                                                                                \
+        MSVC_EXPAND(COUNTARGS_USHORT(__VA_ARGS__)),                                                                                              \
+        (OOVPARevision[])                                                                                                                        \
+    {                                                                                                                                            \
+        MSVC_EXPAND(_GET_NTH_ARG("ignored", __VA_ARGS__,                                                                                         \
+                                 REGISTER_OOVPA_19, REGISTER_OOVPA_18, REGISTER_OOVPA_17, REGISTER_OOVPA_16, REGISTER_OOVPA_15,                  \
+                                 REGISTER_OOVPA_14, REGISTER_OOVPA_13, REGISTER_OOVPA_12, REGISTER_OOVPA_11, REGISTER_OOVPA_10,                  \
+                                 REGISTER_OOVPA_9, REGISTER_OOVPA_8, REGISTER_OOVPA_7, REGISTER_OOVPA_6, REGISTER_OOVPA_5,                       \
+                                 REGISTER_OOVPA_4, REGISTER_OOVPA_3, REGISTER_OOVPA_2, REGISTER_OOVPA_1, REGISTER_OOVPA_0)(Symbol, __VA_ARGS__)) \
+    }
+
+// Use REGISTER_OOVPAS for automate scan only process
+#define REGISTER_OOVPAS(Symbol, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, DB_ST_AUTO, __VA_ARGS__))
+// Use REGISTER_OOVPAS_M for manual scan only process
+#define REGISTER_OOVPAS_M(Symbol, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, DB_ST_MANUAL, __VA_ARGS__))
+// Use REGISTER_OOVPAS_C for combine manual and automate scan process
+#define REGISTER_OOVPAS_C(Symbol, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, DB_ST_ALL, __VA_ARGS__))
 
 // See _GET_NTH_ARG comment for details.
 // Even though x86 instructions can be anywhere from 1 to 15 bytes long,
