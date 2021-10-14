@@ -193,7 +193,6 @@ typedef struct _LOOVPA {
 typedef struct _OOVPARevision {
     OOVPA* Oovpa;
     unsigned short Version; // : 13; // 2^13 = 8192, enough to store lowest and highest possible Library Version number in
-    short padding;
 } OOVPARevision;
 
 #define COUNTARGS_USHORT(...) (sizeof((unsigned short[]){ __VA_ARGS__ }) / sizeof(unsigned short))
@@ -223,7 +222,7 @@ typedef struct _OOVPATable {
 
 // clang-format off
 #define OOVPA_TABLE_ENTRY_FULL(Oovpa, Version) \
-    { &Oovpa##_##Version.Header, Version, VARPADSET }
+    { &Oovpa##_##Version.Header, Version }
 // clang-format on
 
 // Regiser each version into one symbol table database.
