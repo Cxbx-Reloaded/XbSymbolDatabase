@@ -893,6 +893,7 @@ unsigned int XbSymbolDatabase_LibraryVersion();
 
 /// <summary>
 /// Total symbols return give ability to support for progress bar from third-party software. Not all symbols will be detected in every titles.
+/// <param name="library_filter">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to obtain total symbols.</param>
 /// </summary>
 /// <returns>Return total symbols in current database system.</returns>
 unsigned XbSymbolDatabase_GetTotalSymbols(uint32_t library_filter);
