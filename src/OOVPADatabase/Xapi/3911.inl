@@ -1464,8 +1464,11 @@ OOVPA_SIG_HEADER_XREF(XapiMapLetterToDirectory,
                       3911,
 
                       XREF_XapiMapLetterToDirectory,
-                      XRefZero)
+                      XRefOne)
 OOVPA_SIG_MATCH(
+
+    // call XGetSectionSize
+    XREF_ENTRY(0x243, XREF_XGetSectionSize), // derived
 
     // push ebp
     // mov ebp, esp
@@ -1476,6 +1479,9 @@ OOVPA_SIG_MATCH(
     // push 0x03
     // mov edi, 0x80
     OV_MATCH(0x14, 0x6A, 0x03, 0x6A, 0x03, 0xBF, 0x80, 0x00 /*, 0x00, 0x00*/),
+
+    // call XGetSectionSize
+    OV_MATCH(0x242, 0xE8),
 
     //
 );
@@ -1500,26 +1506,6 @@ OOVPA_SIG_MATCH(
     // ret 0x4
     OV_MATCH(0x2E, 0xC2, 0x04 /*, 0x00*/)
 
-    //
-);
-
-// ******************************************************************
-// * XGetSectionSize
-// ******************************************************************
-// TODO: Need verify with Def Jam Fight For NY (5849)
-//   * Reason: duplicate symbol detection + very weak method
-//     as it is very short function.
-//   * Actually, Splinter Cell Pandora Tomorrow (5788) has same issue
-//     except has a lot more duplicated symbols.
-OOVPA_SIG_HEADER_NO_XREF(XGetSectionSize,
-                         3911)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x8B },
-    { 0x02, 0x24 },
-    { 0x04, 0x8B },
-    { 0x06, 0x08 },
-    { 0x08, 0x04 },
     //
 );
 

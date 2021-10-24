@@ -125,7 +125,7 @@
 OOVPATable XAPILIB_OOVPA[] = {
 
     REGISTER_OOVPAS_C(IUsbInit_GetMaxDeviceTypeCount, 3911),
-    REGISTER_OOVPAS(XapiMapLetterToDirectory, 3911),
+    REGISTER_OOVPAS_M(XapiMapLetterToDirectory, 3911),
     REGISTER_OOVPAS(XUnmountAlternateTitleA, 3911),
 
     REGISTER_OOVPAS(_cinit, 3911), // Final generic OOVPA: 3911; Removed: 0
@@ -163,7 +163,6 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(XGetDeviceEnumerationStatus, 4831),
     REGISTER_OOVPAS(XGetDevices, 3911),
     REGISTER_OOVPAS(XGetLaunchInfo, 3911),
-    REGISTER_OOVPAS(XGetSectionSize, 3911), //TODO: Currently very weak OVPs.
     REGISTER_OOVPAS(XID_fCloseDevice, 3911, 4831),
     REGISTER_OOVPAS(XInitDevices, 3911, 5120),
     REGISTER_OOVPAS(XInputClose, 3911),

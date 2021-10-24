@@ -795,6 +795,7 @@ typedef enum _XRefDatabaseOffset {
     XREF_XAPI_GetTypeInformation,
     XREF_XAPI_OutputDebugStringA,
     XREF_XapiMapLetterToDirectory,
+    XREF_XGetSectionSize, // initially set to XREF_ADDR_DERIVE
     XREF_XUnmountAlternateTitleA,
 
     // JVS
