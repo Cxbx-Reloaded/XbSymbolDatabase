@@ -1139,37 +1139,30 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XMountUtilityDrive
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(XMountUtilityDrive,
-                         3911)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(XMountUtilityDrive,
+                      3911,
+
+                      XRefNoSaveIndex,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x55 },
-    { 0x01, 0x8B },
-    { 0x02, 0xEC },
-    { 0x03, 0x81 },
-    { 0x04, 0xEC },
-    { 0x05, 0x14 },
-    { 0x06, 0x01 },
-    { 0x07, 0x00 },
-    { 0x08, 0x00 },
-    { 0x09, 0x53 },
-    { 0x0A, 0x56 },
-    { 0x0B, 0x57 },
-    { 0x0C, 0x8D },
-    { 0x0D, 0x45 },
-    { 0x0E, 0xF4 },
-    { 0x0F, 0x50 },
-    { 0x10, 0x8D },
-    { 0x11, 0x45 },
-    { 0x12, 0xFC },
-    { 0x13, 0x50 },
-    { 0x14, 0xFF },
-    { 0x15, 0x75 },
-    { 0x16, 0x08 },
-    { 0x17, 0xE8 },
+    XREF_ENTRY(0x18, XREF_XapiSelectCachePartition),
 
-    { 0x56, 0x83 },
-    { 0x57, 0xC4 },
+    // push ebp
+    // mov ebp, esp
+    OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+    // sub esp, 0x114
+    OV_MATCH(0x03, 0x81, 0xEC, 0x14, 0x01),
+    // push ebx
+    // push esi
+    // push edi
+    OV_MATCH(0x09, 0x53, 0x56, 0x57),
+
+    // push eax
+    // push dword ptr [ebp+0x08]
+    // call XapiSelectCachePartition
+    OV_MATCH(0x13, 0x50, 0xFF, 0x75, 0x08, 0xE8),
     //
 );
 

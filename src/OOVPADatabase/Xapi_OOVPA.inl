@@ -403,7 +403,6 @@
 #include "Xapi/4134.inl"
 #include "Xapi/4242.inl"
 #include "Xapi/4361.inl"
-#include "Xapi/4432.inl"
 #include "Xapi/4721.inl"
 #include "Xapi/4831.inl"
 #include "Xapi/5028.inl"
@@ -480,7 +479,7 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(XMountAlternateTitleA, 3911, 5028, 5455),
     REGISTER_OOVPAS(XMountMUA, 3911, 4242),
     REGISTER_OOVPAS(XMountMURootA, 3911, 4242),
-    REGISTER_OOVPAS(XMountUtilityDrive, 3911, 4432),
+    REGISTER_OOVPAS(XMountUtilityDrive, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XReadMUMetaData, 4831),
     REGISTER_OOVPAS(XRegisterThreadNotifyRoutine, 3911),
     REGISTER_OOVPAS(XSetProcessQuantumLength, 4134),
