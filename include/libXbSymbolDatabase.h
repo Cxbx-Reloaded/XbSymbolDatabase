@@ -790,7 +790,10 @@ typedef enum _XRefDatabaseOffset {
 
     XREF_IUsbInit_GetMaxDeviceTypeCount,
     XREF_MU_Init,
+    XREF_XAPI__cinit,
+    XREF_XAPI__rtinit,
     XREF_XAPI_GetTypeInformation,
+    XREF_XAPI_OutputDebugStringA,
     XREF_XapiMapLetterToDirectory,
     XREF_XUnmountAlternateTitleA,
 

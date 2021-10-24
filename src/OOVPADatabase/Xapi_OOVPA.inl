@@ -118,7 +118,6 @@
 #include "Xapi/5233.inl"
 #include "Xapi/5344.inl"
 #include "Xapi/5455.inl"
-#include "Xapi/5788.inl"
 
 // ******************************************************************
 // * XAPILIB_OOVPA
@@ -129,6 +128,8 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(XapiMapLetterToDirectory, 3911),
     REGISTER_OOVPAS(XUnmountAlternateTitleA, 3911),
 
+    REGISTER_OOVPAS(_cinit, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(_rtinit, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(CreateMutex, 3911), // Too High Level (from 3911's comment)
     REGISTER_OOVPAS(CreateThread, 3911), // Too High Level (from 3911's comment)
     REGISTER_OOVPAS(ExitThread, 3911), //
@@ -147,7 +148,8 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(GetTimeZoneInformation, 3911),
     REGISTER_OOVPAS(GetTypeInformation, 4134), // TODO: Actually introduced in some unknown XDK between 4134 and 4361
     REGISTER_OOVPAS_M(MU_Init, 3911, 4242, 5233),
-    REGISTER_OOVPAS(OutputDebugStringA, 3911),
+    REGISTER_OOVPAS(OutputDebugStringA, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(OutputDebugStringW, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(QueueUserAPC, 3911),
     REGISTER_OOVPAS(QueryPerformanceCounter, 3911),
     REGISTER_OOVPAS(RaiseException, 3911),
@@ -157,14 +159,15 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(SwitchToFiber, 3911),
     REGISTER_OOVPAS(XAutoPowerDownResetTimer, 3911), // Just calls KeSetTimer (from 3911's comment)
     REGISTER_OOVPAS(XFormatUtilityDrive, 4242),
-    REGISTER_OOVPAS(XGetDeviceChanges, 3911), // Was PATCH (from 5788's comment)
+    REGISTER_OOVPAS(XGetDeviceChanges, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XGetDeviceEnumerationStatus, 4831),
     REGISTER_OOVPAS(XGetDevices, 3911),
     REGISTER_OOVPAS(XGetLaunchInfo, 3911),
+    REGISTER_OOVPAS(XGetSectionSize, 3911), //TODO: Currently very weak OVPs.
     REGISTER_OOVPAS(XID_fCloseDevice, 3911, 4831),
     REGISTER_OOVPAS(XInitDevices, 3911, 5120),
     REGISTER_OOVPAS(XInputClose, 3911),
-    REGISTER_OOVPAS(XInputGetCapabilities, 3911, 4831),
+    REGISTER_OOVPAS(XInputGetCapabilities, 3911, 4831), // Final generic OOVPA: 4831; Removed: 0
     REGISTER_OOVPAS(XInputGetDeviceDescription, 4831),
     REGISTER_OOVPAS(XInputGetState, 3911, 4242, 5455),
     REGISTER_OOVPAS(XInputOpen, 3911, 4242),

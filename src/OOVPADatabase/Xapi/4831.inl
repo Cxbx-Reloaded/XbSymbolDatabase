@@ -109,25 +109,24 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XInputGetCapabilities
 // ******************************************************************
+// Generic OOVPA as of 4831 and newer.
 OOVPA_SIG_HEADER_NO_XREF(XInputGetCapabilities,
                          4831)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x55 },
-    { 0x1F, 0x0F },
+    OV_MATCH(0x00, 0x55),
 
-    { 0x37, 0x8B },
-    { 0x38, 0xFA },
-    { 0x39, 0xF3 },
-    { 0x3A, 0xAB },
-    { 0x3B, 0xAA },
-    { 0x3C, 0x8A },
-    { 0x3D, 0x46 },
-    { 0x3E, 0x0B },
-    { 0x3F, 0x88 },
+    OV_MATCH(0x1F, 0x0F),
 
-    { 0x59, 0x0F },
-    { 0x5A, 0xB6 },
+    // mov edi,edx; rep stos [edi]
+    OV_MATCH(0x37, 0x8B, 0xFA, 0xF3, 0xAB),
+
+    // stos [edi]; mov al,[esi+0x0B]
+    OV_MATCH(0x3B, 0xAA, 0x8A, 0x46, 0x0B),
+
+    OV_MATCH(0x3F, 0x88),
+
+    OV_MATCH(0x59, 0x0F, 0xB6),
     //
 );
 
