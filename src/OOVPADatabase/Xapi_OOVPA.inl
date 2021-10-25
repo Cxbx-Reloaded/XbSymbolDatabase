@@ -124,25 +124,36 @@
 // ******************************************************************
 OOVPATable XAPILIB_OOVPA[] = {
 
-    REGISTER_OOVPAS_C(IUsbInit_GetMaxDeviceTypeCount, 3911),
-    REGISTER_OOVPAS_M(XapiMapLetterToDirectory, 3911),
-    REGISTER_OOVPAS(XUnmountAlternateTitleA, 3911),
-
+    // Without xrefs dependency
     REGISTER_OOVPAS(_cinit, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(_rtinit, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(CreateMutex, 3911), // Too High Level (from 3911's comment)
-    REGISTER_OOVPAS(CreateThread, 3911), // Too High Level (from 3911's comment)
-    REGISTER_OOVPAS(ExitThread, 3911), //
-    REGISTER_OOVPAS(MoveFileA, 3911),
-    REGISTER_OOVPAS(SwitchToThread, 3911),
-    REGISTER_OOVPAS(XCalculateSignatureBegin, 3911, 4039),
-    REGISTER_OOVPAS(XapiBootDash, 3911), // obsolete (from 4721's comment)
+    REGISTER_OOVPAS_C(IUsbInit_GetMaxDeviceTypeCount, 3911),
+    REGISTER_OOVPAS(XapiFormatObjectAttributes, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(XapiCallThreadNotifyRoutines, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_M(XapiMapLetterToDirectory, 3911),
+    REGISTER_OOVPAS(XLaunchNewImageA, 3911, 4721, 5344),
+    REGISTER_OOVPAS(XUnmountAlternateTitleA, 3911),
+
+    // With xrefs dependency (unorder, need to scan next before order list)
+    REGISTER_OOVPAS(GetLastError, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SetLastError, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(UnhandledExceptionFilter, 3911, 4831), // Final generic OOVPA: 4831 Removed: 0
+    REGISTER_OOVPAS(XapiBootToDash, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(XapiSetLastNTError, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(XapiThreadStartup, 3911), // Final generic OOVPA: 3911; Removed: 0
+
+    // With xrefs dependency (order)
+    REGISTER_OOVPAS(CreateMutexA, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(CreateThread, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(ExitThread, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(MoveFileA, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SwitchToThread, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XapiInitProcess, 3911, 3950, 4242, 4831, 5028), // obsolete, Too High Level (from 4721's comment)
-    REGISTER_OOVPAS(XapiThreadStartup, 3911), // obsolete? (from 4627, 5028, 5558, 5788, 5849's comment) // obsolete (from 4721's comment)
-    REGISTER_OOVPAS(ConvertThreadToFiber, 3911),
+    REGISTER_OOVPAS(ConvertThreadToFiber, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(XCalculateSignatureBegin, 3911, 4034), // Final generic OOVPA: ????; Removed: 0 // TODO: need verification for 4034 against 3950 and lower.
     REGISTER_OOVPAS(CreateFiber, 3911),
     REGISTER_OOVPAS(DeleteFiber, 3911),
-    REGISTER_OOVPAS(GetExitCodeThread, 3911),
+    REGISTER_OOVPAS(GetExitCodeThread, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(GetOverlappedResult, 3911),
     REGISTER_OOVPAS(GetThreadPriority, 3911),
     REGISTER_OOVPAS(GetTimeZoneInformation, 3911),
@@ -172,7 +183,6 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(XInputOpen, 3911, 4242),
     REGISTER_OOVPAS(XInputPoll, 3911),
     REGISTER_OOVPAS(XInputSetState, 3911, 4242, 4831),
-    REGISTER_OOVPAS(XLaunchNewImageA, 3911, 4721, 5344),
     REGISTER_OOVPAS(XMountAlternateTitleA, 3911, 5028, 5455),
     REGISTER_OOVPAS(XMountMUA, 3911, 4242),
     REGISTER_OOVPAS(XMountMURootA, 3911, 4242),

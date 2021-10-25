@@ -227,3 +227,47 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x51, 0x66, 0xC7, 0x45, 0xF2, 0x3E, 0x00),
     //
 );
+
+// ******************************************************************
+// * UnhandledExceptionFilter
+// ******************************************************************
+// Generic OOVPA as of 4831 and newer.
+// NOTE: 3911 signature is exactly the same at start of offset 0x1F
+OOVPA_SIG_HEADER_XREF(UnhandledExceptionFilter,
+                      4831,
+
+                      XREF_XAPI_UnhandledExceptionFilter,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov eax,[g_XapiCurrentTopLevelFilter]
+    XREF_ENTRY(0x20, XREF_g_XapiCurrentTopLevelFilter), // derived
+
+    // mov eax,fs:[0x20]
+    OV_MATCH(0x00, 0x64, 0xA1, 0x20, 0x00),
+
+    // mov eax,[eax+0x250]
+    OV_MATCH(0x06, 0x8B, 0x80, 0x50, 0x02, 0x00),
+
+    // mov eax,[g_XapiCurrentTopLevelFilter]
+    OV_MATCH(0x1F, 0xA1),
+
+    // push param_1
+    OV_MATCH(0x28, 0xFF, 0x74, 0x24, 0x04),
+
+    // call eax
+    OV_MATCH(0x2C, 0xFF, 0xD0),
+
+    // cmp eax,-1
+    OV_MATCH(0x2E, 0x83, 0xF8, 0xFF),
+
+    // or eax,eax
+    OV_MATCH(0x33, 0x0B, 0xC0),
+
+    // xor eax,eax
+    OV_MATCH(0x37, 0x33, 0xC0),
+
+    // ret 0x0004
+    OV_MATCH(0x39, 0xC2, 0x04),
+    //
+);

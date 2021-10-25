@@ -1407,7 +1407,14 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
 #endif                                                                                        //
     pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER] = XREF_ADDR_DERIVE;         //In use
     // XAPILIB                                                                                //
+    pContext->xref_database[XREF_g_XapiCurrentTopLevelFilter] = XREF_ADDR_DERIVE;             //In use
     pContext->xref_database[XREF_g_XapiMountedMUs] = XREF_ADDR_DERIVE;                        //In use
+    pContext->xref_database[XREF_OFFSET_XapiCurrentFiber] = XREF_ADDR_DERIVE;                 //In use
+    pContext->xref_database[XREF_OFFSET_XapiLastErrorCode] = XREF_ADDR_DERIVE;                //In use
+    pContext->xref_database[XREF_OFFSET_XapiThreadFiberData] = XREF_ADDR_DERIVE;              //In use
+    pContext->xref_database[XREF_XAPI__tls_array] = XREF_ADDR_DERIVE;                         //In use
+    pContext->xref_database[XREF_XAPI__tls_index] = XREF_ADDR_DERIVE;                         //In use
+    pContext->xref_database[XREF_XapiThreadNotifyRoutineList] = XREF_ADDR_DERIVE;             //In use
     pContext->xref_database[XREF_XGetSectionSize] = XREF_ADDR_DERIVE;                         //In use
     // clang-format on
 
@@ -2396,11 +2403,19 @@ void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle)
         internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER, 0, "D3DDevice__m_VertexShader_OFFSET");
     }
 
+    // XAPI library
     xbaddr xg_XapiMountedMUs = pContext->xref_database[XREF_g_XapiMountedMUs];
     if (internal_IsXRefAddrValid(xg_XapiMountedMUs)) {
         // Register g_XapiMountedMUs
         internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs");
     }
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiCurrentTopLevelFilter, 0, "g_XapiCurrentTopLevelFilter");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_array, 0, "_tls_array");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_index, 0, "_tls_index");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiCurrentFiber, 0, "XapiCurrentFiber_OFFSET");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiLastErrorCode, 0, "XapiLastErrorCode_OFFSET");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiThreadFiberData, 0, "XapiThreadFiberData_OFFSET");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiThreadNotifyRoutineList, 0, "XapiThreadNotifyRoutineList");
 
     // Here, others could be registered
 

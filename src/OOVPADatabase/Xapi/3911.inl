@@ -26,9 +26,13 @@
 // ******************************************************************
 // * GetExitCodeThread
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_NO_XREF(GetExitCodeThread,
                          3911)
 OOVPA_SIG_MATCH(
+
+    // GetExitCodeThread+0x00 : push ebp
+    OV_MATCH(0x00, 0x55),
 
     // GetExitCodeThread+0x03 : lea eax, [ebp+0x08]
     OV_MATCH(0x03, 0x8D, 0x45, 0x08),
@@ -36,6 +40,7 @@ OOVPA_SIG_MATCH(
     // GetExitCodeThread+0x1A : mov ecx, dword ptr [ebp+0x08]
     OV_MATCH(0x1A, 0x8B, 0x4D, 0x08),
 
+    // Unique offset for asm code.
     // GetExitCodeThread+0x2B : mov eax, 0x0103
     OV_MATCH(0x2B, 0xB8, 0x03, 0x01),
 
@@ -69,22 +74,25 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * CreateMutex
+// * CreateMutexA
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(CreateMutex,
-                         3911)
-OOVPA_SIG_MATCH(
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(CreateMutexA,
+                      3911,
 
-    // CreateMutex+0x03 : sub esp, 0x14
+                      XRefNoSaveIndex,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call XapiFormatObjectAttributes
+    XREF_ENTRY(0x18, XREF_XapiFormatObjectAttributes),
+
+    // sub esp, 0x14
     OV_MATCH(0x03, 0x83, 0xEC, 0x14),
 
-    // CreateMutex+0x32 : cmp eax, 0x40000000
-    OV_MATCH(0x32, 0x3D, 0x00, 0x00, 0x00, 0x40),
+    // push 0x000000B7
+    OV_MATCH(0x39, 0x68, 0xB7, 0x00),
 
-    // CreateMutex+0x39 : push 0xB7
-    OV_MATCH(0x39, 0x68, 0xB7),
-
-    // CreateMutex+0x47 : mov eax, [ebp+0x10]
+    // mov eax, [ebp+0x10]
     OV_MATCH(0x47, 0x8B, 0x45, 0x10),
     //
 );
@@ -92,35 +100,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CreateThread
 // ******************************************************************
-// TODO: Add XapiThreadStartup xref here to reduce the OVPs.
-//       Most of it is not really necessary.
-OOVPA_SIG_HEADER_NO_XREF(CreateThread,
-                         3911)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(CreateThread,
+                      3911,
+
+                      XREF_XAPI_CreateThread,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    // CreateThread+0x00 : push ebp; mov ebp,esp
+    // push XapiThreadStartup
+    XREF_ENTRY(0x13, XREF_XapiThreadStartup),
+
+    // push ebp; mov ebp,esp
     OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
 
-    // CreateThread+0x03 : mov eax,[ebp+0x0C]
-    OV_MATCH(0x03, 0x8B, 0x45, 0x0C),
-
-    // CreateThread+0x06 : test eax,eax
-    OV_MATCH(0x06, 0x85, 0xC0),
-
-    // CreateThread+0x08 : jne +0x05
-    OV_MATCH(0x08, 0x75, 0x05),
-
-    // CreateThread+0x0A : mov eax,[0x00010130]
+    // mov eax,[0x00010130]
     OV_MATCH(0x0A, 0xA1, 0x30, 0x01, 0x01, 0x00),
 
-    // CreateThread+0x0F : mov ecx,[ebp+0x18]
-    OV_MATCH(0x0F, 0x8B, 0x4D, 0x18),
-
-    // CreateThread+0x12 : push XapiThreadStartup
+    // push XapiThreadStartup
     OV_MATCH(0x12, 0x68),
 
-    // CreateThread+0x32 : push eax; push _
-    OV_MATCH(0x32, 0x50, 0x6A),
+    // mov ecx,0xFFFFFF01
+    OV_MATCH(0x1C, 0x81, 0xE1, 0x01, 0xFF, 0xFF),
     //
 );
 
@@ -131,20 +132,19 @@ OOVPA_SIG_MATCH(
 OOVPA_SIG_HEADER_NO_XREF(SetThreadPriority,
                          3911)
 OOVPA_SIG_MATCH(
-
-    // SetThreadPriority+0x00 : push ebp
+    // push ebp
     OV_MATCH(0x00, 0x55),
 
-    // SetThreadPriority+0x22 : push 0x10
+    // push 0x10
     OV_MATCH(0x22, 0x6A, 0x10),
 
-    // SetThreadPriority+0x26 : cmp eax, 0xFFFFFFF1
+    // cmp eax, 0xF1
     OV_MATCH(0x26, 0x83, 0xF8, 0xF1),
 
-    // SetThreadPriority+0x2B : push 0xFFFFFFF0
+    // push 0xF0
     OV_MATCH(0x2B, 0x6A, 0xF0),
 
-    // SetThreadPriority+0x4F : ret 0x0008
+    // ret 0x0008
     OV_MATCH(0x4F, 0xC2, 0x08),
     //
 );
@@ -231,30 +231,31 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * XapiBootDash
+// * XapiBootToDash
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(XapiBootDash,
-                         3911)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(XapiBootToDash,
+                      3911,
+
+                      XREF_XapiBootToDash,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    // XapiBootDash+0x03 : sub esp, 0x0C00
-    { 0x03, 0x81 },
-    { 0x04, 0xEC },
-    { 0x06, 0x0C },
+    // call XLaunchNewImageA
+    XREF_ENTRY(0x53, XREF_XLaunchNewImageA),
 
-    // XapiBootDash+0x09 : mov eax, ds:0x10118
-    { 0x09, 0xA1 },
-    { 0x0A, 0x18 },
-    { 0x0B, 0x01 },
-    { 0x0C, 0x01 },
+    // sub esp, 0x0C00
+    OV_MATCH(0x03, 0x81, 0xEC),
+    OV_MATCH(0x06, 0x0C),
 
-    // XapiBootDash+0x25 : repe stosd
-    { 0x25, 0xF3 },
-    { 0x26, 0xAB },
+    // mov eax, ds:0x10118
+    OV_MATCH(0x09, 0xA1, 0x18, 0x01, 0x01),
 
-    // XapiBootDash+0x59 : retn 0x0C
-    { 0x59, 0xC2 },
-    { 0x5A, 0x0C },
+    // repe stosd
+    OV_MATCH(0x25, 0xF3, 0xAB),
+
+    // retn 0x0C
+    OV_MATCH(0x59, 0xC2, 0x0C),
     //
 );
 
@@ -303,7 +304,6 @@ OOVPA_SIG_MATCH(
     //
 );
 
-// not necessary?
 // ******************************************************************
 // * XCalculateSignatureBegin
 // ******************************************************************
@@ -312,22 +312,16 @@ OOVPA_SIG_HEADER_NO_XREF(XCalculateSignatureBegin,
 OOVPA_SIG_MATCH(
 
     // XCalculateSignatureBegin+0x01 : push 0x7C; push 0
-    { 0x01, 0x6A },
-    { 0x02, 0x7C },
-    { 0x03, 0x6A },
-    { 0x04, 0x00 },
+    OV_MATCH(0x01, 0x6A, 0x7C, 0x6A, 0x00),
 
     // XCalculateSignatureBegin+0x10 : push 0x08
-    { 0x10, 0x6A },
-    { 0x11, 0x08 },
+    OV_MATCH(0x10, 0x6A, 0x08),
 
     // XCalculateSignatureBegin+0x2E : push 0x10
-    { 0x2E, 0x6A },
-    { 0x2F, 0x10 },
+    OV_MATCH(0x2E, 0x6A, 0x10),
 
     // XCalculateSignatureBegin+0x3B : retn 0x04
-    { 0x3B, 0xC2 },
-    { 0x3C, 0x04 },
+    OV_MATCH(0x3B, 0xC2, 0x04),
     //
 );
 
@@ -606,7 +600,7 @@ OOVPA_SIG_MATCH(
     { 0x18, 0x7C },
     { 0x19, 0x2B },
 
-    // GetThreadPriority+0x2F : cmp esi, 0xFFFFFFF0
+    // GetThreadPriority+0x2F : cmp esi, 0xF0
     { 0x2F, 0x83 },
     { 0x30, 0xFE },
     { 0x31, 0xF0 },
@@ -727,33 +721,39 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * ConvertThreadToFiber
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(ConvertThreadToFiber,
-                         3911)
+OOVPA_SIG_HEADER_XREF(ConvertThreadToFiber,
+                      3911,
+
+                      XRefNoSaveIndex,
+                      XRefFour)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0xA1 },
+    // mov eax,[_tls_index]
+    XREF_ENTRY(0x01, XREF_XAPI__tls_index), // derived
 
-    { 0x05, 0x64 },
-    { 0x06, 0x8B },
-    { 0x07, 0x0D },
+    // mov ecx,fs:[_tls_array]
+    XREF_ENTRY(0x08, XREF_XAPI__tls_array), // derived
 
-    { 0x0C, 0x8B },
-    { 0x0D, 0x14 },
-    { 0x0E, 0x81 },
-    { 0x0F, 0x8B },
-    { 0x10, 0x44 },
-    { 0x11, 0x24 },
-    { 0x12, 0x04 },
-    { 0x13, 0x8D },
-    { 0x14, 0x8A },
+    // lea ecx,[edx+XapiThreadFiberData_OFFSET]
+    XREF_ENTRY(0x15, XREF_OFFSET_XapiThreadFiberData), // derived
 
-    { 0x19, 0x89 },
-    { 0x1A, 0x01 },
-    { 0x1B, 0x64 },
-    { 0x1C, 0xA1 },
-    { 0x1D, 0x28 },
-    { 0x1E, 0x00 },
-    { 0x1F, 0x00 },
+    // mov [edx+XapiCurrentFiber_OFFSET],ecx
+    XREF_ENTRY(0x2D, XREF_OFFSET_XapiCurrentFiber), // derived
+
+    // mov eax,[_tls_index]
+    OV_MATCH(0x00, 0xA1),
+
+    // mov ecx,fs:[_tls_array]
+    OV_MATCH(0x05, 0x64, 0x8B, 0x0D),
+
+    // and [ecx+0x08],0x00
+    OV_MATCH(0x24, 0x83, 0x61, 0x08, 0x00),
+
+    // mov [ecx+0x04],eax
+    OV_MATCH(0x28, 0x89, 0x41, 0x04),
+
+    // ret 0x0004
+    OV_MATCH(0x33, 0xC2, 0x04),
     //
 );
 
@@ -923,32 +923,48 @@ OOVPA_SIG_MATCH(
     //
 );
 
-// Generic OOVPA as of 3911 and newer.
 // ******************************************************************
 // * ExitThread
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(ExitThread,
-                         3911)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(ExitThread,
+                      3911,
+
+                      XRefNoSaveIndex,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x6A },
-    { 0x01, 0x00 },
-    { 0x02, 0xE8 },
-    { 0x07, 0xFF },
-    { 0x08, 0x74 },
-    { 0x09, 0x24 },
-    { 0x0A, 0x04 },
-    { 0x0B, 0xFF },
-    { 0x0C, 0x15 },
-    { 0x11, 0xCC },
+    // call XapiCallThreadNotifyRoutines
+    XREF_ENTRY(0x03, XREF_XapiCallThreadNotifyRoutines),
+
+    // call [PsTerminateSystemThread]
+    XREF_ENTRY(0x0D, XREF_KT_FUNC_PsTerminateSystemThread),
+
+    // push 0x00
+    OV_MATCH(0x00, 0x6A, 0x00),
+
+    // call XapiCallThreadNotifyRoutines
+    OV_MATCH(0x02, 0xE8),
+
+    // push [esp+0x04]
+    OV_MATCH(0x07, 0xFF, 0x74, 0x24, 0x04),
+
+    // call [PsTerminateSystemThread]
+    OV_MATCH(0x0B, 0xFF, 0x15),
+
+    // Interrupt 3
+    OV_MATCH(0x11, 0xCC),
     //
 );
 
 // ******************************************************************
 // * XLaunchNewImageA
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(XLaunchNewImageA,
-                         3911)
+OOVPA_SIG_HEADER_XREF(XLaunchNewImageA,
+                      3911,
+
+                      XREF_XLaunchNewImageA,
+                      XRefZero)
 OOVPA_SIG_MATCH(
 
     { 0x1E, 0x80 },
@@ -1300,29 +1316,28 @@ OOVPA_SIG_MATCH(
     //
 );
 
-// Generic OOVPA as of 3911 and newer.
 // ******************************************************************
 // * SwitchToThread
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_NO_XREF(SwitchToThread,
                          3911)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0xFF },
-    { 0x01, 0x15 },
-    { 0x06, 0x33 },
-    { 0x07, 0xC9 },
-    { 0x08, 0x3D },
-    { 0x09, 0x24 },
-    { 0x0A, 0x00 },
-    { 0x0B, 0x00 },
-    { 0x0C, 0x40 },
-    { 0x0D, 0x0F },
-    { 0x0E, 0x95 },
-    { 0x0F, 0xC1 },
-    { 0x10, 0x8B },
-    { 0x11, 0xC1 },
-    { 0x12, 0xC3 },
+    // call [NtYieldExecution]
+    OV_MATCH(0x00, 0xFF, 0x15),
+
+    // xor ecx,ecx
+    OV_MATCH(0x06, 0x33, 0xC9),
+
+    // cmp eax,0x40000024
+    OV_MATCH(0x08, 0x3D, 0x24, 0x00, 0x00, 0x40),
+
+    // setne cl
+    OV_MATCH(0x0D, 0x0F, 0x95, 0xC1),
+
+    // ret
+    OV_MATCH(0x12, 0xC3),
     //
 );
 
@@ -1330,53 +1345,67 @@ OOVPA_SIG_MATCH(
 // * XapiThreadStartup
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_NO_XREF(XapiThreadStartup,
-                         3911)
+OOVPA_SIG_HEADER_XREF(XapiThreadStartup,
+                      3911,
+
+                      XREF_XapiThreadStartup,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x6A },
-    { 0x01, 0x18 },
-    { 0x02, 0x68 },
-    { 0x07, 0xE8 },
-    { 0x0C, 0x83 },
-    { 0x0D, 0x65 },
-    { 0x0E, 0xFC },
-    { 0x0F, 0x00 },
-    { 0x10, 0x64 },
-    { 0x11, 0xA1 },
-    { 0x12, 0x28 },
-    { 0x13, 0x00 },
-    { 0x14, 0x00 },
-    { 0x15, 0x00 },
-    { 0x16, 0x89 },
-    { 0x17, 0x45 },
-    //{ 0x18, 0xE4 }, 3911 0xE4 vs 5558 0xE0
+    // call XapiCallThreadNotifyRoutines
+    XREF_ENTRY(0x68, XREF_XapiCallThreadNotifyRoutines),
 
-    { 0x1F, 0x89 },
+    // call UnhandledExceptionFilter
+    XREF_ENTRY(0x82, XREF_XAPI_UnhandledExceptionFilter),
+
+    // push 0x18
+    OV_MATCH(0x00, 0x6A, 0x18),
+
+    // push ...
+    OV_MATCH(0x02, 0x68),
+
+    // shr ecx, 0x02
+    OV_MATCH(0x3C, 0xC1, 0xE9, 0x02),
+
+    // and ecx, 0x03
+    OV_MATCH(0x43, 0x83, 0xE1, 0x03),
+
+    // ret
+    OV_MATCH(0x86, 0xC3),
+
+    // Interrupt 3
+    OV_MATCH(0x97, 0xCC),
     //
 );
 
-// Generic OOVPA as of 3911 and newer.
 // ******************************************************************
 // * MoveFileA
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(MoveFileA,
-                         3911)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(MoveFileA,
+                      3911,
+
+                      XRefNoSaveIndex,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x55 },
-    { 0x01, 0x8B },
-    { 0x02, 0xEC },
-    { 0x03, 0x83 },
-    { 0x04, 0xEC },
-    { 0x05, 0x2C },
-    { 0x06, 0x56 },
-    { 0x07, 0x8B },
-    { 0x08, 0x35 },
+    // call XapiSetLastNTError
+    XREF_ENTRY(0x8A, XREF_XapiSetLastNTError),
 
-    { 0x1F, 0x8D },
-    { 0x93, 0xC2 },
-    { 0x94, 0x08 },
+    // push ebp
+    OV_MATCH(0x00, 0x55),
+
+    // push 0xFD
+    OV_MATCH(0x17, 0x6A, 0xFD),
+
+    // push 0x0A
+    OV_MATCH(0x5F, 0x6A, 0x0A),
+
+    // push 0x10
+    OV_MATCH(0x61, 0x6A, 0x10),
+
+    // ret 0x0008
+    OV_MATCH(0x93, 0xC2, 0x08),
     //
 );
 
@@ -1569,5 +1598,198 @@ OOVPA_SIG_MATCH(
 
     // ret
     OV_MATCH(0x28, 0xC3),
+    //
+);
+
+// ******************************************************************
+// * GetLastError
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(GetLastError,
+                      3911,
+
+                      XREF_XAPI_GetLastError,
+                      XRefThree)
+OOVPA_SIG_MATCH(
+
+    // mov eax,[_tls_index]
+    XREF_ENTRY(0x13, XREF_XAPI__tls_index), // derived
+
+    // mov ecx,fs:[_tls_array]
+    XREF_ENTRY(0x1A, XREF_XAPI__tls_array), // derived
+
+    // mov eax,[eax+XapiLastErrorCode_OFFSET]
+    XREF_ENTRY(0x23, XREF_OFFSET_XapiLastErrorCode), // derived
+
+    // movzx eax,fs:[0x00000024]
+    OV_MATCH(0x00, 0x64, 0x0F, 0xB6),
+
+    // cmp al,0x02
+    OV_MATCH(0x08, 0x3C, 0x02),
+
+    // mov eax,[eax+XapiLastErrorCode_OFFSET]
+    OV_MATCH(0x21, 0x8B, 0x80),
+
+    // ret
+    OV_MATCH(0x27, 0xC3),
+    //
+);
+
+// ******************************************************************
+// * SetLastError
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(SetLastError,
+                      3911,
+
+                      XREF_XAPI_SetLastError,
+                      XRefThree)
+OOVPA_SIG_MATCH(
+
+    // mov ecx,fs:[_tls_array]
+    XREF_ENTRY(0x15, XREF_XAPI__tls_array), // derived
+
+    // mov eax,[_tls_index]
+    XREF_ENTRY(0x1A, XREF_XAPI__tls_index), // derived
+
+    // mov [eax+XapiLastErrorCode_OFFSET],ecx
+    XREF_ENTRY(0x27, XREF_OFFSET_XapiLastErrorCode), // derived
+
+    // movzx eax,fs:[0x00000024]
+    OV_MATCH(0x00, 0x64, 0x0F, 0xB6),
+
+    // cmp al,0x02
+    OV_MATCH(0x08, 0x3C, 0x02),
+
+    // mov [eax+XapiLastErrorCode_OFFSET],ecx
+    OV_MATCH(0x25, 0x89, 0x88),
+
+    // ret
+    OV_MATCH(0x2B, 0xC2, 0x04),
+    //
+);
+
+// ******************************************************************
+// * XapiSetLastNTError
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(XapiSetLastNTError,
+                      3911,
+                      XREF_XapiSetLastNTError,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // call SetLastError
+    XREF_ENTRY(0x0E, XREF_XAPI_SetLastError),
+
+    // push [esp+0x04]
+    OV_MATCH(0x00, 0xFF, 0x74, 0x24, 0x04),
+
+    // mov edx,eax
+    OV_MATCH(0x0A, 0x8B, 0xD0),
+
+    // mov eax,edx
+    OV_MATCH(0x12, 0x8B, 0xC2),
+
+    // ret
+    OV_MATCH(0x14, 0xC2, 0x04),
+    //
+);
+
+// ******************************************************************
+// * XapiFormatObjectAttributes
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(XapiFormatObjectAttributes,
+                      3911,
+
+                      XREF_XapiFormatObjectAttributes,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // call [RtlInitAnsiString]
+    XREF_ENTRY(0x0C, XREF_KT_FUNC_RtlInitAnsiString),
+
+    // push esi
+    OV_MATCH(0x00, 0x56),
+
+    // push esi
+    OV_MATCH(0x09, 0x56),
+
+    // call [RtlInitAnsiString]
+    OV_MATCH(0x0A, 0xFF, 0x15),
+
+    // mov [eax],0xFFFFFFFC
+    OV_MATCH(0x17, 0xC7, 0x00, 0xFC, 0xFF, 0xFF),
+
+    // ret 0x000C
+    OV_MATCH(0x25, 0xC2, 0x0C),
+    //
+);
+
+// ******************************************************************
+// * XapiCallThreadNotifyRoutines
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(XapiCallThreadNotifyRoutines,
+                      3911,
+
+                      XREF_XapiCallThreadNotifyRoutines,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov edi,XapiThreadNotifyRoutineList
+    XREF_ENTRY(0x16, XREF_XapiThreadNotifyRoutineList), // derived
+
+    // push ebx; push esi; push edi
+    OV_MATCH(0x00, 0x53, 0x56, 0x57),
+
+    // mov ebx,XapiProcessLock
+    OV_MATCH(0x03, 0xBB),
+
+    // call [eax+0x08]
+    OV_MATCH(0x024, 0xFF, 0x50, 0x08),
+
+    // pop edi; pop esi; pop ebx
+    OV_MATCH(0x32, 0x5F, 0x5E, 0x5B),
+
+    // ret 0x0004
+    OV_MATCH(0x35, 0xC2, 0x04),
+    //
+);
+
+// ******************************************************************
+// * UnhandledExceptionFilter
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(UnhandledExceptionFilter,
+                      3911,
+
+                      XREF_XAPI_UnhandledExceptionFilter,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov eax,[g_XapiCurrentTopLevelFilter]
+    XREF_ENTRY(0x01, XREF_g_XapiCurrentTopLevelFilter), // derived
+
+    // mov eax,[g_XapiCurrentTopLevelFilter]
+    OV_MATCH(0x00, 0xA1),
+
+    // push param_1
+    OV_MATCH(0x09, 0xFF, 0x74, 0x24, 0x04),
+
+    // call eax
+    OV_MATCH(0x0D, 0xFF, 0xD0),
+
+    // cmp eax,-1
+    OV_MATCH(0x0F, 0x83, 0xF8, 0xFF),
+
+    // or eax,eax
+    OV_MATCH(0x14, 0x0B, 0xC0),
+
+    // xor eax,eax
+    OV_MATCH(0x18, 0x33, 0xC0),
+
+    // ret 0x0004
+    OV_MATCH(0x1A, 0xC2, 0x04),
     //
 );
