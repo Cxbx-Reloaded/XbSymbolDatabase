@@ -1793,3 +1793,43 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x1A, 0xC2, 0x04),
     //
 );
+
+// ******************************************************************
+// * XapiSelectCachePartition
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(XapiSelectCachePartition,
+                      3911,
+
+                      XREF_XapiSelectCachePartition,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // call [NtOpenFile]
+    XREF_ENTRY(0x3F, XREF_KT_FUNC_NtOpenFile),
+
+    // call [NtReadFile]
+    XREF_ENTRY(0x74, XREF_KT_FUNC_NtReadFile),
+
+    // push ebp
+    // mov ebp,esp
+    OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+
+    // push 0x10
+    OV_MATCH(0x12, 0x6A, 0x10),
+
+    // push 0x03
+    OV_MATCH(0x17, 0x6A, 0x03),
+    // lea eax, [ebp-0x20]
+    OV_MATCH(0x19, 0x8D, 0x45, 0xE0),
+
+    // lea eax, [ebp-0x2C]
+    OV_MATCH(0x1D, 0x8D, 0x45, 0xD4),
+
+    // call [NtOpenFile]
+    OV_MATCH(0x3D, 0xFF, 0x15),
+
+    // call [NtReadFile]
+    OV_MATCH(0x72, 0xFF, 0x15),
+    //
+);
