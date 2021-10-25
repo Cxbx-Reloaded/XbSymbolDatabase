@@ -800,6 +800,7 @@ typedef enum _XRefDatabaseOffset {
     XREF_MU_Init,
     XREF_XAPI__cinit,
     XREF_XAPI__rtinit,
+    XREF_XAPI_mainXapiStartup,
     XREF_XAPI_CreateThread,
     XREF_XAPI_GetLastError,
     XREF_XAPI_GetTypeInformation,

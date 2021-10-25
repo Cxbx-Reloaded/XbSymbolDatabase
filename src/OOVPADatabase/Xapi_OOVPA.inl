@@ -197,8 +197,6 @@
 //   * lstrcpyW
 //   * lstrlenA
 //   * lstrlenW
-//   * mainCRTStartup
-//   * mainXapiStartup      // NOTE: Currently in disabled section.
 //   * MoveFileExA
 //   * MoveFileWithProgressA
 //   * MulDiv
@@ -427,6 +425,7 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(XUnmountAlternateTitleA, 3911),
 
     // With xrefs dependency (unorder, need to scan next before order list)
+    REGISTER_OOVPAS(mainXapiStartup, 3911, 4831), // Final generic OOVPA: 4831; Removed: 0
     REGISTER_OOVPAS(GetLastError, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(SetLastError, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(UnhandledExceptionFilter, 3911, 4831), // Final generic OOVPA: 4831 Removed: 0
@@ -454,6 +453,7 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS_M(MU_Init, 3911, 4242, 5233),
     REGISTER_OOVPAS(OutputDebugStringA, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(OutputDebugStringW, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(mainCRTStartup, 3911, 4361), // Final generic OOVPA: 4361; Removed: 0
     REGISTER_OOVPAS(QueueUserAPC, 3911),
     REGISTER_OOVPAS(QueryPerformanceCounter, 3911),
     REGISTER_OOVPAS(RaiseException, 3911),

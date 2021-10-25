@@ -99,3 +99,48 @@ OOVPA_SIG_MATCH(
     { 0x53, 0x08 },
     //
 );
+
+// ******************************************************************
+// * mainCRTStartup
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(mainCRTStartup,
+                      4361,
+
+                      XRefNoSaveIndex,
+                      XRefThree)
+OOVPA_SIG_MATCH(
+
+    // push mainXapiStartup
+    XREF_ENTRY(0x4C, XREF_XAPI_mainXapiStartup),
+
+    // call CreateThread
+    XREF_ENTRY(0x55, XREF_XAPI_CreateThread),
+
+    // call XapiBootToDash
+    XREF_ENTRY(0x65, XREF_XapiBootToDash),
+
+    // mov ecx, [...]
+    OV_MATCH(0x00, 0x8B, 0x0D),
+    // sub eax, [...]
+    OV_MATCH(0x06, 0xA1),
+
+    // mov eax, [...]
+    OV_MATCH(0x18, 0xA1),
+    // sub eax, [...]
+    OV_MATCH(0x1D, 0x2B, 0x05),
+
+    // and eax, -16
+    OV_MATCH(0x2F, 0x83, 0xE0, 0xF0),
+    // push -4
+    OV_MATCH(0x32, 0x6A, 0xFC),
+
+    // push mainXapiStartup
+    OV_MATCH(0x4B, 0x68),
+
+    // call CreateThread
+    OV_MATCH(0x54, 0xE8),
+
+    // call XapiBootToDash
+    OV_MATCH(0x64, 0xE8),
+    //
+);

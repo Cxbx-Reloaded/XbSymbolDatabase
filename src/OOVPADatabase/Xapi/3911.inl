@@ -1826,3 +1826,75 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x72, 0xFF, 0x15),
     //
 );
+
+// ******************************************************************
+// * mainXapiStartup
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(mainXapiStartup,
+                      3911,
+
+                      XREF_XAPI_mainXapiStartup,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // call XapiInitProcess
+    //XREF_ENTRY(0x01, XREF_XAPI_XapiInitProcess),
+
+
+    // call _rtinit
+    XREF_ENTRY(0x48, XREF_XAPI__rtinit),
+
+    // call _cinit
+    XREF_ENTRY(0x4D, XREF_XAPI__cinit),
+
+    // call XapiInitProcess
+    OV_MATCH(0x00, 0xE8),
+    // mov eax, fs:[0x20]
+    OV_MATCH(0x05, 0x64, 0xA1, 0x20, 0x00),
+
+    // call _rtinit
+    OV_MATCH(0x47, 0xE8),
+    // call _cinit
+    OV_MATCH(0x4C, 0xE8),
+    //
+);
+
+// ******************************************************************
+// * mainCRTStartup
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(mainCRTStartup,
+                      3911,
+
+                      XRefNoSaveIndex,
+                      XRefThree)
+OOVPA_SIG_MATCH(
+
+    // push mainXapiStartup
+    XREF_ENTRY(0x34, XREF_XAPI_mainXapiStartup),
+
+    //  call CreateThread
+    XREF_ENTRY(0x3D, XREF_XAPI_CreateThread),
+
+    //  call XapiBootToDash
+    XREF_ENTRY(0x4D, XREF_XapiBootToDash),
+
+    // mov eax, [...]
+    OV_MATCH(0x00, 0xA1),
+    // sub eax, [...]
+    OV_MATCH(0x05, 0x2B, 0x05),
+
+    // and eax, -16
+    OV_MATCH(0x17, 0x83, 0xE0, 0xF0),
+    // push -4
+    OV_MATCH(0x1A, 0x6A, 0xFC),
+
+    // push mainXapiStartup
+    OV_MATCH(0x33, 0x68),
+
+    // call CreateThread
+    OV_MATCH(0x3C, 0xE8),
+
+    // call XapiBootToDash
+    OV_MATCH(0x4C, 0xE8),
+    //
+);

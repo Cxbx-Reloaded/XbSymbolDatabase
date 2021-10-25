@@ -271,3 +271,37 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x39, 0xC2, 0x04),
     //
 );
+
+// ******************************************************************
+// * mainXapiStartup
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(mainXapiStartup,
+                      4831,
+
+                      XREF_XAPI_mainXapiStartup,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // call XapiInitProcess
+    //XREF_ENTRY(0x01, XREF_XAPI_XapiInitProcess),
+
+    // call _rtinit
+    XREF_ENTRY(0x4D, XREF_XAPI__rtinit),
+
+    // call _cinit
+    XREF_ENTRY(0x52, XREF_XAPI__cinit),
+
+    // call XapiApplyKernelPatches
+    OV_MATCH(0x00, 0xE8),
+    // call XapiInitProcess
+    OV_MATCH(0x05, 0xE8),
+    // mov eax, fs:[0x20]
+    OV_MATCH(0x0A, 0x64, 0xA1, 0x20, 0x00),
+
+
+    // call _rtinit
+    OV_MATCH(0x4C, 0xE8),
+    // call _cinit
+    OV_MATCH(0x51, 0xE8),
+    //
+);
