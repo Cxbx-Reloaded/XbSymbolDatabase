@@ -787,6 +787,40 @@ static bool internal_IsXRefAddrValid(xbaddr XRefAddr)
     return (XRefAddr + 1) > (XREF_ADDR_DERIVE + 1); // Implies also not equal to XREF_ADDR_UNDETERMINED (-1) nor XREF_ADDR_NOT_FOUND (0)
 }
 
+static xbaddr internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(iXbSymbolContext* pContext,
+                                                                        const char* signature_str,
+                                                                        const OOVPARevision* pRevision,
+                                                                        const char* xref_str,
+                                                                        XRefDatabaseOffset xref_target)
+{
+    if (pRevision->Oovpa->XRefCount == 0) {
+        // Should not be triggered when there is no xref listed.
+        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "%s (%hu) signature cannot have zero XRefCount when calling %s!", signature_str, pRevision->Version, __func__);
+        return 0;
+    }
+
+    xbaddr virt_start_addr = pContext->xref_database[pRevision->Oovpa->XRefSaveIndex];
+
+    LOVP* lovp = ((LOOVPA*)pRevision->Oovpa)->Lovp;
+    int offset = -1;
+    for (unsigned i = 0; i < pRevision->Oovpa->XRefCount; i++) {
+        if (lovp->xref.index == xref_target) {
+            offset = lovp->offset;
+            break;
+        }
+    }
+
+    if (offset == -1) {
+        // If no match is found, then contributor need to verify both OOVPA revision and xref index are correct.
+        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "%s (%hu) signature does not have %s's xref entry!", signature_str, pRevision->Version, xref_str);
+        return 0;
+    }
+
+    virt_start_addr += offset + pContext->xref_database[xref_target] + 4 /*32 bit size of address space range */;
+
+    return virt_start_addr;
+}
+
 // Obligatory function for setting an address in the XRefDataBase
 // (only initialization may write to XRefDataBase outside of this function).
 static inline void internal_SetXRefDatabase(iXbSymbolContext* pContext, eLibraryType iLibraryType, uint32_t XRef, xbaddr XRefAddr)
