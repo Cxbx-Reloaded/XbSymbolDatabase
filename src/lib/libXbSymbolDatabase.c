@@ -356,22 +356,10 @@ static bool iXbSymbolContext_AllowScanLibrary(iXbSymbolContext* pContext)
 
 #include "internal_functions.h"
 
-bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t library_filter)
-{
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
 
-    if (!iXbSymbolContext_AllowSetParameter(pContext)) {
-        return false;
-    }
-
-    // Check to make sure all flags are acceptable before set.
-    if ((library_filter & ~XbSymbolLib_ALL) > 0) {
-        return false;
-    }
-
-    pContext->library_filter = library_filter;
-    return true;
-}
+// ******************************************************************
+// * global API functions
+// ******************************************************************
 
 xb_output_message_t g_output_func = NULL;
 void XbSymbolDatabase_SetOutputMessage(xb_output_message_t message_func)
@@ -387,33 +375,6 @@ bool XbSymbolDatabase_SetOutputVerbosity(xb_output_message verbose_level)
     }
     // Return false only when requested level is invalid.
     return false;
-}
-
-void XbSymbolContext_SetBypassBuildVersionLimit(XbSymbolContextHandle pHandle, bool bypass_limit)
-{
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
-
-    if (iXbSymbolContext_AllowSetParameter(pContext)) {
-        pContext->strict_build_version_limit = !bypass_limit;
-    }
-}
-
-void XbSymbolContext_SetContinuousSigScan(XbSymbolContextHandle pHandle, bool enable)
-{
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
-
-    if (iXbSymbolContext_AllowSetParameter(pContext)) {
-        pContext->one_time_scan = !enable;
-    }
-}
-
-void XbSymbolContext_SetFirstDetectAddressOnly(XbSymbolContextHandle pHandle, bool enable)
-{
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
-
-    if (iXbSymbolContext_AllowSetParameter(pContext)) {
-        pContext->scan_first_detect = enable;
-    }
 }
 
 const char* XbSymbolDatabase_LibraryToString(uint32_t library_flag)
@@ -706,6 +667,30 @@ xbaddr XbSymbolDatabase_GetKernelThunkAddress(const void* xb_header_addr)
     return kernel_thunk_addr;
 }
 
+#include "internal_db_version.h"
+unsigned int XbSymbolDatabase_LibraryVersion()
+{
+    // Calculate this just once
+    static unsigned int CalculatedHash = 0;
+    if (CalculatedHash == 0) {
+        CalculatedHash = HashSymbolDataArray(SymbolDBList, SymbolDBListCount);
+    }
+    return CalculatedHash;
+}
+
+#include "internal_tests.h"
+unsigned int XbSymbolDatabase_TestOOVPAs()
+{
+    SymbolDatabaseVerifyContext context = { 0 };
+    context.output.func = g_output_func;
+    context.output.verbose_level = g_output_verbose_level;
+    return SymbolDatabaseVerifyContext_VerifyDatabaseList(&context);
+}
+
+// ******************************************************************
+// * XbSymbolContextHandle manager functions
+// ******************************************************************
+
 bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
                                             xb_symbol_register_t register_func,
                                             XbSDBLibraryHeader library_input,
@@ -888,9 +873,55 @@ void XbSymbolContext_Release(XbSymbolContextHandle pHandle)
 }
 
 
+// ******************************************************************
+// * XbSymbolContext API functions
+// ******************************************************************
+
+void XbSymbolContext_SetBypassBuildVersionLimit(XbSymbolContextHandle pHandle, bool bypass_limit)
+{
+    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+
+    if (iXbSymbolContext_AllowSetParameter(pContext)) {
+        pContext->strict_build_version_limit = !bypass_limit;
+    }
+}
+
+void XbSymbolContext_SetContinuousSigScan(XbSymbolContextHandle pHandle, bool enable)
+{
+    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+
+    if (iXbSymbolContext_AllowSetParameter(pContext)) {
+        pContext->one_time_scan = !enable;
+    }
+}
+
+void XbSymbolContext_SetFirstDetectAddressOnly(XbSymbolContextHandle pHandle, bool enable)
+{
+    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+
+    if (iXbSymbolContext_AllowSetParameter(pContext)) {
+        pContext->scan_first_detect = enable;
+    }
+}
+
+bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t library_filter)
+{
+    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+
+    if (!iXbSymbolContext_AllowSetParameter(pContext)) {
+        return false;
+    }
+
+    // Check to make sure all flags are acceptable before set.
+    if ((library_filter & ~XbSymbolLib_ALL) > 0) {
+        return false;
+    }
+
+    pContext->library_filter = library_filter;
+    return true;
+}
 
 #include "manual_custom.h"
-
 void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
 {
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
@@ -1075,6 +1106,11 @@ void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle)
     iXbSymbolContext_Unlock(pContext);
 }
 
+
+// ******************************************************************
+// * global API functions (required to be at end of the file)
+// ******************************************************************
+
 // Aka the basic example to handle the scan process.
 bool XbSymbolScan(const void* xb_header_addr,
                   xb_symbol_register_t register_func,
@@ -1173,34 +1209,4 @@ unsigned XbSymbolDatabase_GetTotalSymbols(uint32_t library_filter)
         total += pLibraryDB->SymbolsTableCount;
     }
     return total;
-}
-
-// ******************************************************************
-// * XbSymbolDatabase_LibraryVersion
-// ******************************************************************
-
-#include "internal_db_version.h"
-
-unsigned int XbSymbolDatabase_LibraryVersion()
-{
-    // Calculate this just once
-    static unsigned int CalculatedHash = 0;
-    if (CalculatedHash == 0) {
-        CalculatedHash = HashSymbolDataArray(SymbolDBList, SymbolDBListCount);
-    }
-    return CalculatedHash;
-}
-
-// ******************************************************************
-// * XbSymbolDatabase_TestOOVPAs
-// ******************************************************************
-
-#include "internal_tests.h"
-
-unsigned int XbSymbolDatabase_TestOOVPAs()
-{
-    SymbolDatabaseVerifyContext context = { 0 };
-    context.output.func = g_output_func;
-    context.output.verbose_level = g_output_verbose_level;
-    return SymbolDatabaseVerifyContext_VerifyDatabaseList(&context);
 }
