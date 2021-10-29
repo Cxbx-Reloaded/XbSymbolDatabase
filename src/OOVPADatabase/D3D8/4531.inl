@@ -79,7 +79,7 @@ OOVPA_SIG_MATCH(
 OOVPA_SIG_HEADER_XREF(D3DDevice_KickOff,
                       4531,
 
-                      XREF_D3D_CDevice_KickOff,
+                      XREF_D3D8_CDevice_KickOff,
                       XRefZero)
 OOVPA_SIG_MATCH(
 

@@ -967,7 +967,7 @@ OOVPA_SIG_MATCH(
 OOVPA_SIG_HEADER_XREF(Lock3DSurface,
                       3911,
 
-                      XREF_Lock3DSurface,
+                      XREF_D3D8_Lock3DSurface,
                       XRefZero)
 OOVPA_SIG_MATCH(
 
@@ -1449,7 +1449,7 @@ OOVPA_SIG_MATCH(
 OOVPA_SIG_HEADER_XREF(D3DDevice_KickOff,
                       3911,
 
-                      XREF_D3D_CDevice_KickOff,
+                      XREF_D3D8_CDevice_KickOff,
                       XRefZero)
 OOVPA_SIG_MATCH(
 
@@ -3299,7 +3299,7 @@ OOVPA_SIG_HEADER_XREF(D3DVolumeTexture_LockBox,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x01, XREF_Lock3DSurface),
+    XREF_ENTRY(0x01, XREF_D3D8_Lock3DSurface),
 
     { 0x00, 0xE9 },
     //
@@ -3315,7 +3315,7 @@ OOVPA_SIG_HEADER_XREF(D3DCubeTexture_LockRect,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x01, XREF_Lock2DSurface),
+    XREF_ENTRY(0x01, XREF_D3D8_Lock2DSurface),
 
     { 0x00, 0xE9 },
     //
@@ -3363,7 +3363,7 @@ OOVPA_SIG_MATCH(
 OOVPA_SIG_HEADER_XREF(Lock2DSurface,
                       3911,
 
-                      XREF_Lock2DSurface,
+                      XREF_D3D8_Lock2DSurface,
                       XRefZero)
 OOVPA_SIG_MATCH(
 
@@ -5707,7 +5707,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_KickPushBuffer,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x07, XREF_D3D_CDevice_KickOff),
+    XREF_ENTRY(0x07, XREF_D3D8_CDevice_KickOff),
 
     { 0x00, 0x8B },
     { 0x01, 0x0D },
@@ -5744,7 +5744,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDevice_MakeSpace,
                       3911,
-                      XREF_D3D_CDevice_MakeSpace,
+                      XREF_D3D8_CDevice_MakeSpace,
                       XRefZero)
 OOVPA_SIG_MATCH(
 

@@ -1,0 +1,107 @@
+// ******************************************************************
+// *
+// *  XbSymbolDatabase is free software; you can redistribute them
+// *  and/or modify them under the terms of the GNU General Public
+// *  License as published by the Free Software Foundation; either
+// *  version 2 of the license, or (at your option) any later version.
+// *
+// *  This program is distributed in the hope that it will be useful,
+// *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+// *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// *  GNU General Public License for more details.
+// *
+// *  You should have recieved a copy of the GNU General Public License
+// *  along with this program; see the file COPYING.
+// *  If not, write to the Free Software Foundation, Inc.,
+// *  59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+// *
+// *  All rights reserved
+// *
+// ******************************************************************
+
+// Variables
+XREF_SYMBOL(XAPI__tls_array)             // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(XAPI__tls_index)             // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(g_DeviceType_MU)             // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(g_XapiCurrentTopLevelFilter) // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(g_XapiMountedMUs)            // initially set to XREF_ADDR_DERIVE
+
+// Offsets
+XREF_SYMBOL(OFFSET_XapiCurrentFiber)    // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(OFFSET_XapiLastErrorCode)   // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(OFFSET_XapiThreadFiberData) // initially set to XREF_ADDR_DERIVE
+
+// Functions
+// include XAPI prefix
+XREF_SYMBOL(IUsbInit_GetMaxDeviceTypeCount)
+XREF_SYMBOL(MU_Init)
+XREF_SYMBOL(XAPI__cinit)
+XREF_SYMBOL(XAPI__rtinit)
+XREF_SYMBOL(XAPI_ConvertThreadToFiber)
+XREF_SYMBOL(XAPI_CreateFiber)
+XREF_SYMBOL(XAPI_CreateMutexA)
+XREF_SYMBOL(XAPI_CreateThread)
+XREF_SYMBOL(XAPI_DeleteFiber)
+XREF_SYMBOL(XAPI_ExitThread)
+XREF_SYMBOL(XAPI_GetExitCodeThread)
+XREF_SYMBOL(XAPI_GetLastError)
+XREF_SYMBOL(XAPI_GetOverlappedResult)
+XREF_SYMBOL(XAPI_GetThreadPriority)
+XREF_SYMBOL(XAPI_GetTimeZoneInformation)
+XREF_SYMBOL(XAPI_GetTypeInformation)
+XREF_SYMBOL(XAPI_mainCRTStartup)
+XREF_SYMBOL(XAPI_mainXapiStartup)
+XREF_SYMBOL(XAPI_MoveFileA)
+XREF_SYMBOL(XAPI_OutputDebugStringA)
+XREF_SYMBOL(XAPI_OutputDebugStringW)
+XREF_SYMBOL(XAPI_QueueUserAPC)
+XREF_SYMBOL(XAPI_QueryPerformanceCounter)
+XREF_SYMBOL(XAPI_RaiseException)
+XREF_SYMBOL(XAPI_SetLastError)
+XREF_SYMBOL(XAPI_SetThreadPriority)
+XREF_SYMBOL(XAPI_SetThreadPriorityBoost)
+XREF_SYMBOL(XAPI_SignalObjectAndWait)
+XREF_SYMBOL(XAPI_SwitchToFiber)
+XREF_SYMBOL(XAPI_SwitchToThread)
+XREF_SYMBOL(XAPI_timeKillEvent)
+XREF_SYMBOL(XAPI_timeSetEvent)
+XREF_SYMBOL(XAPI_UnhandledExceptionFilter)
+// Xapi prefix
+XREF_SYMBOL(XapiBootToDash)
+XREF_SYMBOL(XapiCallThreadNotifyRoutines)
+XREF_SYMBOL(XapiFormatObjectAttributes)
+XREF_SYMBOL(XapiInitProcess)
+XREF_SYMBOL(XapiMapLetterToDirectory)
+XREF_SYMBOL(XapiSelectCachePartition)
+XREF_SYMBOL(XapiSetLastNTError)
+XREF_SYMBOL(XapiThreadNotifyRoutineList)
+XREF_SYMBOL(XapiThreadStartup)
+// X prefix
+XREF_SYMBOL(XAutoPowerDownResetTimer)
+XREF_SYMBOL(XCalculateSignatureBegin)
+XREF_SYMBOL(XFormatUtilityDrive)
+XREF_SYMBOL(XGetDeviceChanges)
+XREF_SYMBOL(XGetDeviceEnumerationStatus)
+XREF_SYMBOL(XGetDevices)
+XREF_SYMBOL(XGetLaunchInfo)
+XREF_SYMBOL(XGetSectionSize)
+XREF_SYMBOL(XID_fCloseDevice)
+XREF_SYMBOL(XInitDevices)
+XREF_SYMBOL(XInputClose)
+XREF_SYMBOL(XInputGetCapabilities)
+XREF_SYMBOL(XInputGetDeviceDescription)
+XREF_SYMBOL(XInputGetState)
+XREF_SYMBOL(XInputOpen)
+XREF_SYMBOL(XInputPoll)
+XREF_SYMBOL(XInputSetState)
+XREF_SYMBOL(XLaunchNewImageA)
+XREF_SYMBOL(XMountAlternateTitleA)
+XREF_SYMBOL(XMountMUA)
+XREF_SYMBOL(XMountMURootA)
+XREF_SYMBOL(XMountUtilityDrive)
+XREF_SYMBOL(XReadMUMetaData)
+XREF_SYMBOL(XRegisterThreadNotifyRoutine)
+XREF_SYMBOL(XSetProcessQuantumLength)
+XREF_SYMBOL(XUnmountAlternateTitleA)
+XREF_SYMBOL(XUnmountMU)
+XREF_SYMBOL(XapiFiberStartup)

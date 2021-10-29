@@ -178,6 +178,8 @@
 #include "D3D8/5788.inl"
 #include "D3D8/5849.inl"
 
+#define REGISTER_OOVPAS_D3D(Symbol, ...) REGISTER_OOVPAS_PREFIX(D3D, Symbol, __VA_ARGS__)
+#define REGISTER_OOVPAS_D3D8(Symbol, ...) REGISTER_OOVPAS_PREFIX(D3D8, Symbol, __VA_ARGS__)
 
 // ******************************************************************
 // * D3D8_OOVPA
@@ -185,10 +187,10 @@
 OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS_M(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric, 3911), // This OOVPA signature is not a symbol. Read its note for more details.
 
-    REGISTER_OOVPAS(CDevice_MakeSpace, 3911), // NOTE: has multiple rets.
-    REGISTER_OOVPAS(CMiniport_CreateCtxDmaObject, 3911, 4034),
-    REGISTER_OOVPAS(CMiniport_InitHardware, 3911, 4034, 5455),
-    REGISTER_OOVPAS(CMiniport_IsFlipPending, 3911, 4242, 4627, 4928),
+    REGISTER_OOVPAS_D3D8(CDevice_MakeSpace, 3911), // NOTE: has multiple rets.
+    REGISTER_OOVPAS_D3D8(CMiniport_CreateCtxDmaObject, 3911, 4034),
+    REGISTER_OOVPAS_D3D8(CMiniport_InitHardware, 3911, 4034, 5455),
+    REGISTER_OOVPAS_D3D8(CMiniport_IsFlipPending, 3911, 4242, 4627, 4928),
     REGISTER_OOVPAS(D3DBaseTexture_GetLevelCount, 3911),
     REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface, 3911, 4627), // Called D3DCubeTexture_GetCubeMapSurface2 (from 4627's comment) NOTE: Use D3DCubeTexture_GetCubeMapSurface2 for 4627 and above
     REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface2, 4627),
@@ -425,9 +427,9 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3D_UpdateProjectionViewportTransform, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(Direct3D_CheckDeviceMultiSampleType, 3911),
     REGISTER_OOVPAS(Direct3D_CreateDevice, 3911, 5028),
-    REGISTER_OOVPAS(Get2DSurfaceDesc, 3911, 4034), // Was 5233 (from 5344's comment)
-    REGISTER_OOVPAS(Lock2DSurface, 3911),
-    REGISTER_OOVPAS(Lock3DSurface, 3911),
+    REGISTER_OOVPAS_D3D8(Get2DSurfaceDesc, 3911, 4034), // Was 5233 (from 5344's comment)
+    REGISTER_OOVPAS_D3D8(Lock2DSurface, 3911),
+    REGISTER_OOVPAS_D3D8(Lock3DSurface, 3911),
     REGISTER_OOVPAS(D3D_MakeRequestedSpace_4, 4034), // Final generic OOVPA: 4034??; Removed: 4134 // NOTE: has multiple rets.
     REGISTER_OOVPAS(D3D_MakeRequestedSpace_8, 4134, 5558), // Final generic OOVPA: 5558; Removed: 0 // NOTE: has multiple rets.
     REGISTER_OOVPAS(XMETAL_StartPush, 3911), // Final generic OOVPA: 3911; Removed: 4034??
