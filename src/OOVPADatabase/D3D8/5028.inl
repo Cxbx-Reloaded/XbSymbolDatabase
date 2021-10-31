@@ -489,10 +489,10 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::CDevice::KickOff
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_KickOff,
+OOVPA_SIG_HEADER_XREF(CDevice_KickOff,
                       5028,
 
-                      XREF_D3D8_CDevice_KickOff,
+                      XREF_D3D_CDevice_KickOff,
                       XRefZero)
 OOVPA_SIG_MATCH(
 

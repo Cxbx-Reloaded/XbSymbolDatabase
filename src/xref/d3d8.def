@@ -61,7 +61,6 @@ XREF_SYMBOL(OFFSET_D3DDEVICE_M_VERTEXSHADER)       // initially set to XREF_ADDR
 
 // Functions
 // include D3D8 prefix
-XREF_SYMBOL(D3D8_CDevice_KickOff) // TODO: Need further investigation why D3DDevice_KickOff is named as D3DDevice_KickOff
 XREF_SYMBOL(D3D8_CDevice_MakeSpace)
 XREF_SYMBOL(D3D8_CMiniport_CreateCtxDmaObject)
 XREF_SYMBOL(D3D_CMiniport_GetDisplayCapabilities)
@@ -72,6 +71,7 @@ XREF_SYMBOL(D3D8_Lock3DSurface)
 XREF_SYMBOL(D3D8_Get2DSurfaceDesc)
 // D3D prefix
 XREF_SYMBOL(D3D_AllocContiguousMemory)
+XREF_SYMBOL(D3D_CDevice_KickOff)
 XREF_SYMBOL(D3D_BlockOnResource)
 XREF_SYMBOL(D3D_BlockOnTime)
 XREF_SYMBOL(D3D_CheckDeviceFormat)
@@ -86,8 +86,6 @@ XREF_SYMBOL(D3D_GetDeviceCaps)
 XREF_SYMBOL(D3D_KickOffAndWaitForIdle)
 XREF_SYMBOL(D3D_LazySetPointParams)
 XREF_SYMBOL(D3D_MakeRequestedSpace)
-XREF_SYMBOL(D3D_MakeRequestedSpace_4)
-XREF_SYMBOL(D3D_MakeRequestedSpace_8)
 XREF_SYMBOL(D3D_RecordStateBlock)
 XREF_SYMBOL(D3D_SetCommonDebugRegisters)
 XREF_SYMBOL(D3D_SetFence)
@@ -181,7 +179,6 @@ XREF_SYMBOL(D3DDevice_InsertCallback)
 XREF_SYMBOL(D3DDevice_InsertFence)
 XREF_SYMBOL(D3DDevice_IsBusy)
 XREF_SYMBOL(D3DDevice_IsFencePending)
-XREF_SYMBOL(D3DDevice_KickOff)
 XREF_SYMBOL(D3DDevice_KickPushBuffer)
 XREF_SYMBOL(D3DDevice_LazySetStateVB)
 XREF_SYMBOL(D3DDevice_LazySetStateUP)

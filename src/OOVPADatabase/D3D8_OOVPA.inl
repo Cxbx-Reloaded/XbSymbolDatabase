@@ -113,7 +113,7 @@
 //   * D3DDevice_InsertCallback (4034, 4039)
 //   * D3DDevice_InsertFence (4034)
 //   * D3DDevice_IsFencePending (4034)
-//   * D3DDevice_KickOff (5455,5849)
+//   * D3D_CDevice_KickOff (5455,5849)
 //   * D3DDevice_KickPushBuffer (4034)
 //   * D3DDevice_LoadVertexShaderProgram (4034)
 //   * D3DDevice_PersistDisplay (4034)
@@ -281,7 +281,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_InsertFence, 3911),
     REGISTER_OOVPAS(D3DDevice_IsBusy, 3911, 5028),
     REGISTER_OOVPAS(D3DDevice_IsFencePending, 3911, 4039, 5028),
-    REGISTER_OOVPAS(D3DDevice_KickOff, 3911, 4034, 4531, 5028, 5455),
+    REGISTER_OOVPAS_D3D(CDevice_KickOff, 3911, 4034, 4531, 5028, 5455),
     REGISTER_OOVPAS(D3DDevice_KickPushBuffer, 3911),
     REGISTER_OOVPAS(D3DDevice_LazySetStateVB, 5028, 5558),
     REGISTER_OOVPAS(D3DDevice_LazySetStateUP, 5028, 5558),
@@ -430,8 +430,8 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS_D3D8(Get2DSurfaceDesc, 3911, 4034), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS_D3D8(Lock2DSurface, 3911),
     REGISTER_OOVPAS_D3D8(Lock3DSurface, 3911),
-    REGISTER_OOVPAS(D3D_MakeRequestedSpace_4, 4034), // Final generic OOVPA: 4034??; Removed: 4134 // NOTE: has multiple rets.
-    REGISTER_OOVPAS(D3D_MakeRequestedSpace_8, 4134, 5558), // Final generic OOVPA: 5558; Removed: 0 // NOTE: has multiple rets.
+    REGISTER_OOVPAS_BIND_XREF(D3D_MakeRequestedSpace_4, D3D_MakeRequestedSpace, 4034), // Final generic OOVPA: 4034??; Removed: 4134 // NOTE: has multiple rets.
+    REGISTER_OOVPAS_BIND_XREF(D3D_MakeRequestedSpace_8, D3D_MakeRequestedSpace, 4134, 5558), // Final generic OOVPA: 5558; Removed: 0 // NOTE: has multiple rets.
     REGISTER_OOVPAS(XMETAL_StartPush, 3911), // Final generic OOVPA: 3911; Removed: 4034??
     REGISTER_OOVPAS(IDirect3DVertexBuffer8_Lock, 4627),
 };

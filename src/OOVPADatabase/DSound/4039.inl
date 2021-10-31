@@ -4697,11 +4697,11 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // NOTE: 4134 later versions changed to a jmp, then convert into
 // class function.
-OOVPA_SIG_HEADER_XREF(XAudioCreateAdpcmFormat,
-                      4039,
-
-                      XREF_WaveFormat_CreateXboxAdpcmFormat,
-                      XRefZero)
+// TODO: Either rename this to WaveFormat_CreateXboxAdpcmFormat
+//       or use jmp caller as XAudioCreateAdpcmFormat_(forward/jmp)
+//       Then add separate signature to include jmp to this function check.
+OOVPA_SIG_HEADER_NO_XREF(XAudioCreateAdpcmFormat,
+                         4039)
 OOVPA_SIG_MATCH(
 
     OV_MATCH(0x07, 0x08),

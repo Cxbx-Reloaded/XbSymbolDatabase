@@ -20,7 +20,6 @@
 // ******************************************************************
 
 // functions
-XREF_SYMBOL(D3D_BlockOnTime_4)
 XREF_SYMBOL(CMiniport_InitHardware)
 XREF_SYMBOL(D3DDevice_BeginPushBuffer_0)
 XREF_SYMBOL(D3DDevice_DeletePixelShader_0)
@@ -77,8 +76,6 @@ XREF_SYMBOL(D3DDevice_SetVertexShader_0)
 XREF_SYMBOL(D3DDevice_Swap_0)
 XREF_SYMBOL(D3DDevice_UpdateOverlay_16)
 XREF_SYMBOL(D3DResource_GetType_0)
-XREF_SYMBOL(D3D_BlockOnResource_0)
-XREF_SYMBOL(D3D_DestroyResource__LTCG)
 XREF_SYMBOL(D3D_KickOffAndWaitForIdle2)
 XREF_SYMBOL(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ebx_ppReturnedDeviceInterface)
 XREF_SYMBOL(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ecx_ppReturnedDeviceInterface)

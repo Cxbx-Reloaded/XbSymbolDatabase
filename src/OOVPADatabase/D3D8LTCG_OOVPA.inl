@@ -65,11 +65,11 @@
 // ******************************************************************
 OOVPATable D3D8LTCG_OOVPA[] = {
 
-    REGISTER_OOVPAS(D3D_MakeRequestedSpace_8, 1036), // NOTE: OOVPA is in 5849. In used by (5849) Manhunt title
+    REGISTER_OOVPAS_BIND_XREF(D3D_MakeRequestedSpace_8, D3D_MakeRequestedSpace, 1036), // NOTE: OOVPA is in 5849. In used by (5849) Manhunt title
     REGISTER_OOVPAS(D3D_MakeRequestedSpace, 2048),
     REGISTER_OOVPAS(D3D_SetFence, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3D_BlockOnTime, 1024, 1036, 1048),
-    REGISTER_OOVPAS(D3D_BlockOnTime_4, 2048, 2060),
+    REGISTER_OOVPAS_BIND_XREF(D3D_BlockOnTime_4, D3D_BlockOnTime, 2048, 2060),
     REGISTER_OOVPAS(D3DResource_AddRef, 3911),
 
     REGISTER_OOVPAS(CMiniport_InitHardware, 1024),
@@ -229,8 +229,8 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DTexture_GetSurfaceLevel2, 1024),
     REGISTER_OOVPAS(D3DTexture_LockRect, 1024),
     REGISTER_OOVPAS(D3DVertexBuffer_Lock2, 1024),
-    REGISTER_OOVPAS(D3D_BlockOnResource_0, 2024, 2036, 2048, 2060),
-    REGISTER_OOVPAS(D3D_DestroyResource__LTCG, 3911),
+    REGISTER_OOVPAS_BIND_XREF(D3D_BlockOnResource_0, D3D_BlockOnResource, 2024, 2036, 2048, 2060),
+    REGISTER_OOVPAS_BIND_XREF(D3D_DestroyResource__LTCG, D3D_DestroyResource, 3911),
     REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3D_KickOffAndWaitForIdle2, 1024, 1036, 1048),
     REGISTER_OOVPAS(Direct3D_CreateDevice, 1024, 1036),
