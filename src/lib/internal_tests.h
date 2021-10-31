@@ -225,22 +225,47 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
     return error_count;
 }
 
+
+static unsigned int SymbolDatabaseVerifyContext_VerifyXRefSymbolVsRevision(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
+{
+    unsigned int error_count = 0;
+    if (!internal_IsXRefUnset(table[symbol_index].xref)) {
+        LOOVPA* loovpa = (LOOVPA*)table[symbol_index].revisions[revision_index].Oovpa;
+        // Check only valid xref index
+        if (!internal_IsXRefUnset(loovpa->Header.XRefSaveIndex)) {
+            // Check for mismatch then file report.
+            if (table[symbol_index].xref != loovpa->Header.XRefSaveIndex) {
+                output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s[%hu]'s xref does not match with symbol's xref.", table[symbol_index].szFuncName, revision_index);
+                error_count++;
+
+            }
+        }
+    }
+    return error_count;
+}
+
 static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
 {
+    unsigned int error_count = 0;
     if (context->against.oovpa == NULL) {
         context->main.symbol_index = symbol_index;
         context->main.revision_index = revision_index;
+
+        error_count += SymbolDatabaseVerifyContext_VerifyXRefSymbolVsRevision(context, table, symbol_index, revision_index);
     }
     else {
         context->against.symbol_index = symbol_index;
         context->against.revision_index = revision_index;
+
     }
+
+
 
     // verify the OOVPA of this entry
     if (table[symbol_index].revisions[revision_index].Oovpa != NULL) {
-        return SymbolDatabaseVerifyContext_VerifyOOVPA(context, table[symbol_index].revisions[revision_index].Oovpa);
+        error_count += SymbolDatabaseVerifyContext_VerifyOOVPA(context, table[symbol_index].revisions[revision_index].Oovpa);
     }
-    return 0;
+    return error_count;
 }
 
 static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVerifyContext* context, SymbolDatabaseList* data)
@@ -255,6 +280,16 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVer
 
     // Verify each entry in data's symbol table.
     for (uint32_t s = 0; s < data->SymbolsTableCount; s++) {
+        // We only need to check from main, not against.
+        if (context->against.data == NULL) {
+            // For safety check purpose
+            if (internal_IsXRefUnset(data->SymbolsTable[s].xref)) {
+                output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s cannot have unset xref.", data->SymbolsTable[s].szFuncName);
+                error_count++;
+            }
+        }
+
+        // Check each revision entry in a symbol.
         for (uint32_t r = 0; r < data->SymbolsTable[s].count; r++) {
             error_count += SymbolDatabaseVerifyContext_VerifyEntry(context, data->SymbolsTable, s, r);
         }
