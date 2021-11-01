@@ -231,15 +231,6 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyXRefSymbolVsRevision(Symbo
     unsigned int error_count = 0;
     if (!internal_IsXRefUnset(table[symbol_index].xref)) {
         LOOVPA* loovpa = (LOOVPA*)table[symbol_index].revisions[revision_index].Oovpa;
-        // Check only valid xref index
-        if (!internal_IsXRefUnset(loovpa->Header.XRefSaveIndex)) {
-            // Check for mismatch then file report.
-            if (table[symbol_index].xref != loovpa->Header.XRefSaveIndex) {
-                output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s[%hu]'s xref does not match with symbol's xref.", table[symbol_index].szFuncName, revision_index);
-                error_count++;
-
-            }
-        }
     }
     return error_count;
 }
@@ -256,9 +247,7 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerify
     else {
         context->against.symbol_index = symbol_index;
         context->against.revision_index = revision_index;
-
     }
-
 
 
     // verify the OOVPA of this entry

@@ -79,8 +79,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(CreateMutexA,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
     // call XapiFormatObjectAttributes
@@ -103,8 +101,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(CreateThread,
                       3911,
-
-                      XREF_XAPI_CreateThread,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -153,11 +149,8 @@ OOVPA_SIG_MATCH(
 // * OutputDebugStringA
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(OutputDebugStringA,
-                      3911,
-
-                      XREF_XAPI_OutputDebugStringA,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(OutputDebugStringA,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // push ebp
@@ -184,8 +177,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(OutputDebugStringW,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -236,8 +227,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(XapiBootToDash,
                       3911,
-
-                      XREF_XapiBootToDash,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -417,8 +406,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XID_fCloseDevice,
                       3911,
-
-                      XREF_XID_fCloseDevice,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -443,8 +430,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XInputClose,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -718,8 +703,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(ConvertThreadToFiber,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefFour)
 OOVPA_SIG_MATCH(
 
@@ -860,11 +843,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XUnmountAlternateTitleA
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XUnmountAlternateTitleA,
-                      3911,
-
-                      XREF_XUnmountAlternateTitleA,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XUnmountAlternateTitleA,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x0A, 0x65 },
@@ -882,8 +862,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XMountMUA,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -924,8 +902,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(ExitThread,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -955,11 +931,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XLaunchNewImageA
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XLaunchNewImageA,
-                      3911,
-
-                      XREF_XLaunchNewImageA,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XLaunchNewImageA,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x1E, 0x80 },
@@ -1114,8 +1087,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XMountMURootA,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1137,8 +1108,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(XMountUtilityDrive,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1335,8 +1304,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(XapiThreadStartup,
                       3911,
-
-                      XREF_XapiThreadStartup,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -1372,8 +1339,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(MoveFileA,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1429,8 +1394,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XUnmountMU,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -1452,11 +1415,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * MU_Init
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(MU_Init,
-                      3911,
-
-                      XREF_MU_Init,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(MU_Init,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // push ebp
@@ -1479,8 +1439,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(XapiMapLetterToDirectory,
                       3911,
-
-                      XREF_XapiMapLetterToDirectory,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1507,11 +1465,8 @@ OOVPA_SIG_MATCH(
 // * IUsbInit::GetMaxDeviceTypeCount
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(IUsbInit_GetMaxDeviceTypeCount,
-                      3911,
-
-                      XREF_IUsbInit_GetMaxDeviceTypeCount,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(IUsbInit_GetMaxDeviceTypeCount,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // mov edx, [ecx + 0x9C]
@@ -1530,11 +1485,8 @@ OOVPA_SIG_MATCH(
 // * _cinit
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(_cinit,
-                      3911,
-
-                      XREF_XAPI__cinit,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(_cinit,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // mov eax,[...]
@@ -1563,11 +1515,8 @@ OOVPA_SIG_MATCH(
 // * _rtinit
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(_rtinit,
-                      3911,
-
-                      XREF_XAPI__rtinit,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(_rtinit,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // push esi; push edi
@@ -1595,8 +1544,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(GetLastError,
                       3911,
-
-                      XREF_XAPI_GetLastError,
                       XRefThree)
 OOVPA_SIG_MATCH(
 
@@ -1629,8 +1576,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(SetLastError,
                       3911,
-
-                      XREF_XAPI_SetLastError,
                       XRefThree)
 OOVPA_SIG_MATCH(
 
@@ -1663,7 +1608,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(XapiSetLastNTError,
                       3911,
-                      XREF_XapiSetLastNTError,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1690,8 +1634,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(XapiFormatObjectAttributes,
                       3911,
-
-                      XREF_XapiFormatObjectAttributes,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1721,8 +1663,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(XapiCallThreadNotifyRoutines,
                       3911,
-
-                      XREF_XapiCallThreadNotifyRoutines,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1751,8 +1691,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(UnhandledExceptionFilter,
                       3911,
-
-                      XREF_XAPI_UnhandledExceptionFilter,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1788,8 +1726,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(XapiSelectCachePartition,
                       3911,
-
-                      XREF_XapiSelectCachePartition,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -1827,8 +1763,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(mainXapiStartup,
                       3911,
-
-                      XREF_XAPI_mainXapiStartup,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -1859,8 +1793,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(mainCRTStartup,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefThree)
 OOVPA_SIG_MATCH(
 

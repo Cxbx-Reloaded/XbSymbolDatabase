@@ -76,11 +76,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::CDevice::KickOff
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDevice_KickOff,
-                      4531,
-
-                      XREF_D3D_CDevice_KickOff,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff,
+                         4531)
 OOVPA_SIG_MATCH(
 
     // D3D::CDevice::KickOff+0x0B : mov edx, [ecx+0x35C]
@@ -139,8 +136,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
                       4531,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

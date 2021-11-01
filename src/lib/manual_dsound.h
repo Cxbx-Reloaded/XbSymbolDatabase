@@ -35,6 +35,7 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
     memptr_t pFuncAddr = 0;
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
+    OOVPATable* pSymbol = NULL;
 
     /*
     bool testRun = 1;
@@ -49,6 +50,7 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
                                                                      "CDirectSoundStream_Constructor",
                                                                      pSection,
                                                                      true,
+                                                                     &pSymbol,
                                                                      NULL);
 
         // If not found, skip the rest of the scan.
@@ -56,8 +58,7 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
             return false;
         }
 
-        internal_RegisterSymbol(pContext, pLibrarySession, XREF_CDirectSoundStream_Constructor, 3911,
-                                "CDirectSoundStream_Constructor", xFuncAddr);
+        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 3911, xFuncAddr);
 
         // TODO: If possible, integrate into the OOVPA structure.
         internal_RegisterXRef(pContext, pLibrarySession, XREF_DSS_VOICE_VTABLE, 3911,
@@ -87,25 +88,25 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
             internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Release, 3911,
                                       "CDirectSoundStream_Release", *(uint32_t*)(pFuncAddr + 1 * 4));
 
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
+            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_GetInfo, 3911,
                                       "CDirectSoundStream_GetInfo", *(uint32_t*)(pFuncAddr + 2 * 4));
 
             if (pLibrary->build_version < 4134) {
-                internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
+                internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_GetStatus, 3911,
                                           "CDirectSoundStream_GetStatus__r1", *(uint32_t*)(pFuncAddr + 3 * 4));
             }
             else {
-                internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 4134,
+                internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_GetStatus, 4134,
                                           "CDirectSoundStream_GetStatus__r2", *(uint32_t*)(pFuncAddr + 3 * 4));
             }
 
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
+            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Process, 3911,
                                       "CDirectSoundStream_Process", *(uint32_t*)(pFuncAddr + 4 * 4));
 
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
+            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Discontinuity, 3911,
                                       "CDirectSoundStream_Discontinuity", *(uint32_t*)(pFuncAddr + 5 * 4));
 
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XRefNoSaveIndex, 3911,
+            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Flush, 3911,
                                       "CDirectSoundStream_Flush", *(uint32_t*)(pFuncAddr + 6 * 4));
 
             // NOTE: it is possible to manual add GetInfo, GetStatus, Process, Discontinuity,

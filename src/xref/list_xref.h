@@ -424,6 +424,9 @@ typedef enum _XRefDatabaseOffset {
     // Also, if XREF_COUNT > sizeof(uint16), enlarge struct OOVPA.XRefSaveIndex (and Value somehow)
 } XRefDatabaseOffset;
 
+// TODO: Actually, this method will not work since there are multiple symbols using same xref which has
+//       different parameters placement. I'm under consideration to remove global strings and use string from each symbol itself.
+//       Unless someone else has new idea to make this useful.
 static const char* xref_str[] = {
 #define XREF_SYMBOL(str)       #str,
 #define XREF_SYMBOL_EX(e, str) #str,

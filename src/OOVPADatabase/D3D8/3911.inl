@@ -34,8 +34,6 @@
 //       this OOVPA itself is not a symbol.
 OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefTwo,
                              DetectFirst)
 OOVPA_SIG_MATCH(
@@ -109,8 +107,6 @@ OOVPA_NO_XREF(D3DDevice_GetTexture2, 3911, 23)
     {
 #else
 OOVPA_XREF(D3DDevice_GetTexture2, 3911, 1 + 23, // Also for 3948, ?4361?
-
-           XRefNoSaveIndex,
            XRefOne)
 {
 
@@ -153,8 +149,6 @@ OOVPA_NO_XREF(D3DDevice_SetTexture, 3911, 28)
     {
 #else
 OOVPA_XREF(D3DDevice_SetTexture, 3911, 1 + 28,
-
-           XRefNoSaveIndex,
            XRefOne)
 {
 
@@ -393,8 +387,6 @@ OOVPA_NO_XREF(D3DDevice_GetDepthStencilSurface, 3911, 18)
     {
 #else
 OOVPA_XREF(D3DDevice_GetDepthStencilSurface, 3911, 1 + 18,
-
-           XRefNoSaveIndex,
            XRefOne)
 {
 
@@ -457,8 +449,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(D3D_DestroyResource,
                       3911,
-
-                      XREF_D3D_DestroyResource,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -515,8 +505,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_LightEnable,
                       3911, // valid upto at least 4627, next known difference is from 5344 onwards
-
-                      XRefNoSaveIndex,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -572,8 +560,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_GetLightEnable,
                       3911, // valid upto at least 5233, next known difference is from 5344 onwards
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -618,11 +604,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D_ClearStateBlockFlags
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_ClearStateBlockFlags,
-                      3911,
-
-                      XREF_D3D_ClearStateBlockFlags,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_ClearStateBlockFlags,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x01, 0x15 },
@@ -648,8 +631,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_BeginStateBlock,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -671,11 +652,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D_RecordStateBlock
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_RecordStateBlock,
-                      3911,
-
-                      XREF_D3D_RecordStateBlock,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_RecordStateBlock,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
@@ -707,8 +685,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_EndStateBlock,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -964,11 +940,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * Lock3DSurface
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(Lock3DSurface,
-                      3911,
-
-                      XREF_D3D8_Lock3DSurface,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(Lock3DSurface,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // D3D::PixelJar::Lock3DSurface + 0x00: sub esp, 8
@@ -1183,8 +1156,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1219,8 +1190,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_CullMode,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -1446,11 +1415,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::CDevice::KickOff
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDevice_KickOff,
-                      3911,
-
-                      XREF_D3D_CDevice_KickOff,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x01, 0xA1 },
@@ -1532,8 +1498,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_BlockUntilVerticalBlank,
                       3911,
-
-                      XREF_D3DDevice_BlockUntilVerticalBlank,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -1573,8 +1537,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetVerticalBlankCallback,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -1601,15 +1563,10 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // NOTE: Signature is not compatible with LTCG
 #ifndef WIP_LessVertexPatching
-OOVPA_XREF(D3DDevice_SetRenderTarget, 3911, 11,
-
-           XREF_D3DDevice_SetRenderTarget,
-           XRefZero)
+OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 3911, 11)
     {
 #else
 OOVPA_XREF(D3DDevice_SetRenderTarget, 3911, 1 + 11,
-
-           XREF_D3DDevice_SetRenderTarget,
            XRefOne)
 {
 
@@ -1706,8 +1663,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1741,8 +1696,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1811,8 +1764,6 @@ OOVPA_NO_XREF(D3DDevice_SetPixelShader, 3911, 11)
     {
 #else
 OOVPA_XREF(D3DDevice_SetPixelShader, 3911, 1 + 11,
-
-           XRefNoSaveIndex,
            XRefOne)
 {
 
@@ -2179,8 +2130,6 @@ OOVPA_NO_XREF(D3DDevice_SetPalette, 3911, 12)
     {
 #else
 OOVPA_XREF(D3DDevice_SetPalette, 3911, 1 + 12,
-
-           XRefNoSaveIndex,
            XRefOne)
 {
 
@@ -2534,10 +2483,8 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderState_Simple
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_Simple,
-                      3911,
-                      XREF_D3DDevice_SetRenderState_Simple,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_Simple,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // D3DDevice_SetRenderState_Simple+0x00 : mov eax, [D3D__DEVICE]
@@ -2599,8 +2546,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3D_UpdateProjectionViewportTransform,
                       3911,
-
-                      XREF_D3D_UpdateProjectionViewportTransform,
                       XRefOne)
 OOVPA_SIG_MATCH(
     // mov e??, XREF_D3DDEVICE
@@ -2928,14 +2873,10 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
 OOVPA_XREF(D3DDevice_GetRenderTarget, 3911, 1 + 19,
-
-           XRefNoSaveIndex,
            XRefOne)
     {
 #else
 OOVPA_XREF(D3DDevice_GetRenderTarget, 3911, 2 + 19,
-
-           XRefNoSaveIndex,
            XRefTwo)
 {
 
@@ -3123,11 +3064,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DResource_AddRef
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DResource_AddRef,
-                      3911,
-
-                      XREF_D3DResource_AddRef,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DResource_AddRef,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // D3DResource_AddRef+0x00 : push esi
@@ -3294,8 +3232,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DVolumeTexture_LockBox,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3310,8 +3246,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DCubeTexture_LockRect,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3360,11 +3294,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * Lock2DSurface
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(Lock2DSurface,
-                      3911,
-
-                      XREF_D3D8_Lock2DSurface,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(Lock2DSurface,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x51 },
@@ -3877,8 +3808,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_PersistDisplay,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4000,8 +3929,6 @@ OOVPA_SIG_MATCH(
 //       except for the offset references.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_OcclusionCullEnable,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -4036,8 +3963,6 @@ OOVPA_SIG_MATCH(
 //       except for the offset references.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_StencilCullEnable,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -4070,8 +3995,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVerticesUP,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4102,8 +4025,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVerticesUP,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4331,11 +4252,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetLight
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetLight,
-                      3911,
-
-                      XREF_D3DDevice_SetLight,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetLight,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
@@ -4551,11 +4469,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * This is for the real D3D::KickOffAndWaitForIdle
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_KickOffAndWaitForIdle,
-                      3911,
-
-                      XREF_D3D_KickOffAndWaitForIdle,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_KickOffAndWaitForIdle,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0xA1 },
@@ -4772,8 +4687,6 @@ OOVPA_SIG_MATCH(
 // LTCG: 1024
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_RopZCmpAlwaysRead,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4802,8 +4715,6 @@ OOVPA_SIG_MATCH(
 // LTCG: 1024
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_RopZRead,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4832,8 +4743,6 @@ OOVPA_SIG_MATCH(
 // LTCG: 1024
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_DoNotCullUncompressed,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4860,11 +4769,8 @@ OOVPA_SIG_MATCH(
 // * XMETAL_StartPush
 // ******************************************************************
 // Generic OOVPA as of 3911; Removed in 4034??
-OOVPA_SIG_HEADER_XREF(XMETAL_StartPush,
-                      3911,
-
-                      XREF_XMETAL_StartPush,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XMETAL_StartPush,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // XMETAL_StartPush+0x00 : mov ecx, [esp+0x4]
@@ -4891,11 +4797,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::SetFence
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_SetFence,
-                      3911,
-
-                      XREF_D3D_SetFence,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_SetFence,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // D3D::SetFence+0x00 : push ebx
@@ -4927,8 +4830,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_InsertFence,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4991,8 +4892,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_BlockOnFence,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5112,11 +5011,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::BlockOnTime
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_BlockOnTime,
-                      3911,
-
-                      XREF_D3D_BlockOnTime,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnTime,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // D3D::BlockOnFence+0x00 : push ebp
@@ -5142,11 +5038,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::BlockOnResource
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_BlockOnResource,
-                      3911,
-
-                      XREF_D3D_BlockOnResource,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0xA1 },
@@ -5167,8 +5060,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DResource_BlockUntilNotBusy,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5702,8 +5593,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_KickPushBuffer,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5742,10 +5631,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDevice::MakeSpace_4
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDevice_MakeSpace,
-                      3911,
-                      XREF_D3D8_CDevice_MakeSpace,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDevice_MakeSpace,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDevice::MakeSpace_4+0x00 : sub esp,0x__
@@ -5772,7 +5659,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderStateNotInline,
                       3911,
-                      XREF_D3DDevice_SetRenderStateNotInline,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5802,7 +5688,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice_SetRenderState,
                              3911,
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectFirst)
 OOVPA_SIG_MATCH(
@@ -5829,7 +5714,6 @@ OOVPA_SIG_MATCH(
 // TODO: Add another macro to accept duplicates.
 OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice_SetRenderState2,
                              3911,
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectSecond)
 OOVPA_SIG_MATCH(

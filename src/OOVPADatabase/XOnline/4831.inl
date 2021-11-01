@@ -26,11 +26,8 @@
 // ******************************************************************
 // * CXo::XOnlineLogon
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CXo_XOnlineLogon,
-                      4831,
-
-                      XREF_CXo_XOnlineLogon,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CXo_XOnlineLogon,
+                         4831)
 OOVPA_SIG_MATCH(
 
     { 0x02, 0xEC },
@@ -56,11 +53,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CXo::XOnlineMatchSearch
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSearch,
-                      4831,
-
-                      XREF_CXo_XOnlineMatchSearch,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CXo_XOnlineMatchSearch,
+                         4831)
 OOVPA_SIG_MATCH(
 
     // push ebp
@@ -82,8 +76,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XOnlineMatchSearch,
                       4831,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -101,11 +93,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CXo_XOnlineMatchSearchResultsLen
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSearchResultsLen,
-                      4831,
-
-                      XREF_CXo_XOnlineMatchSearchResultsLen,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CXo_XOnlineMatchSearchResultsLen,
+                         4831)
 OOVPA_SIG_MATCH(
 
     // test ecx, ecx
@@ -130,8 +119,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XOnlineMatchSearchResultsLen,
                       4831,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -148,11 +135,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CXo::XOnlineMatchSearchGetResults
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSearchGetResults,
-                      4831,
-
-                      XREF_CXo_XOnlineMatchSearchGetResults,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CXo_XOnlineMatchSearchGetResults,
+                         4831)
 OOVPA_SIG_MATCH(
 
     // push ebp
@@ -173,8 +157,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XOnlineMatchSearchGetResults,
                       4831,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -191,11 +173,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CXo::XOnlineMatchSessionUpdate
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSessionUpdate,
-                      4831,
-
-                      XREF_CXo_XOnlineMatchSessionUpdate,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CXo_XOnlineMatchSessionUpdate,
+                         4831)
 OOVPA_SIG_MATCH(
 
     // push ebp
@@ -220,8 +199,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XOnlineMatchSessionUpdate,
                       4831,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -241,11 +218,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CXo::XOnlineMatchSessionCreate
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSessionCreate,
-                      4831,
-
-                      XREF_CXo_XOnlineMatchSessionCreate,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CXo_XOnlineMatchSessionCreate,
+                         4831)
 OOVPA_SIG_MATCH(
 
     // push ebp
@@ -271,8 +245,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XOnlineMatchSessionCreate,
                       4831,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

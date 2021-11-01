@@ -29,8 +29,6 @@
 //51538B5C240C8BC6C1E0 ...C20400
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex_4,
                       2045,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

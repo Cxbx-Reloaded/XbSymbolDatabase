@@ -75,8 +75,6 @@ OOVPA_SIG_MATCH(
 //81E30000FFFFB901 ...C20400
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex_4,
                       2052,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -147,8 +145,6 @@ OOVPA_SIG_MATCH(
 //F6C30155568B35 ...C3
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader_0,
                       2036,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -291,11 +287,8 @@ OOVPA_SIG_MATCH(
 // * D3D_CommonSetRenderTarget
 // ******************************************************************
 //8B490CC1E91483E10FB801
-OOVPA_SIG_HEADER_XREF(D3D_CommonSetRenderTarget,
-                      1060,
-
-                      XREF_D3D_CommonSetRenderTarget,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_CommonSetRenderTarget,
+                         1060)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
@@ -320,8 +313,6 @@ OOVPA_SIG_MATCH(
 //******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderTarget_0,
                       2048,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

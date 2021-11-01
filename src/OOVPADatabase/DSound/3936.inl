@@ -26,11 +26,8 @@
 // ******************************************************************
 // * CSensaura3d::GetFullHRTFFilterPair
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CSensaura3d_GetFullHRTFFilterPair,
-                      3936,
-
-                      XREF_CSensaura3d_GetFullHRTFFilterPair,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CSensaura3d_GetFullHRTFFilterPair,
+                         3936)
 OOVPA_SIG_MATCH(
 
     { 0x05, 0x0C },
@@ -48,11 +45,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxStream_Flush
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxStream_Flush,
-                      3936,
-
-                      XREF_CMcpxStream_Flush,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxStream_Flush,
+                         3936)
 OOVPA_SIG_MATCH(
 
     { 0x08, 0xF6 },

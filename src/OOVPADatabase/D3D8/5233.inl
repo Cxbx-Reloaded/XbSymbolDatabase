@@ -88,8 +88,6 @@ OOVPA_NO_XREF(D3DDevice_SetRenderTargetFast, 5233, 27)
     {
 #else
 OOVPA_XREF(D3DDevice_SetRenderTargetFast, 5233, 1 + 27,
-
-           XRefNoSaveIndex,
            XRefOne)
 {
 

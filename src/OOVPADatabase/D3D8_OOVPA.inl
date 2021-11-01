@@ -178,7 +178,7 @@
 #include "D3D8/5788.inl"
 #include "D3D8/5849.inl"
 
-#define REGISTER_OOVPAS_D3D(Symbol, ...) REGISTER_OOVPAS_PREFIX(D3D, Symbol, __VA_ARGS__)
+#define REGISTER_OOVPAS_D3D(Symbol, ...)  REGISTER_OOVPAS_PREFIX(D3D, Symbol, __VA_ARGS__)
 #define REGISTER_OOVPAS_D3D8(Symbol, ...) REGISTER_OOVPAS_PREFIX(D3D8, Symbol, __VA_ARGS__)
 
 // ******************************************************************

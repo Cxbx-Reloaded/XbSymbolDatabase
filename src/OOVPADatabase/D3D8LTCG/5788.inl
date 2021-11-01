@@ -174,8 +174,6 @@ OOVPA_SIG_MATCH(
 //C7000803040075
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_CullMode,
                       1053,
-
-                      XREF_D3DDevice_SetRenderState_CullMode,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -510,11 +508,8 @@ OOVPA_SIG_MATCH(
 // * D3D_BlockOnTime
 // ******************************************************************
 //C747101001040089
-OOVPA_SIG_HEADER_XREF(D3D_BlockOnTime,
-                      1024,
-
-                      XREF_D3D_BlockOnTime,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnTime,
+                         1024)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
@@ -535,11 +530,8 @@ OOVPA_SIG_MATCH(
 // * D3D_BlockOnTime
 // ******************************************************************
 //C747101001040089 ...C20400
-OOVPA_SIG_HEADER_XREF(D3D_BlockOnTime_4,
-                      2048,
-
-                      XREF_D3D_BlockOnTime,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnTime_4,
+                         2048)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
@@ -581,11 +573,8 @@ OOVPA_SIG_MATCH(
 // * D3D_SetFence
 // ******************************************************************
 //C70010A304008BCF
-OOVPA_SIG_HEADER_XREF(D3D_SetFence,
-                      1048,
-
-                      XREF_D3D_SetFence,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_SetFence,
+                         1048)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
@@ -606,11 +595,8 @@ OOVPA_SIG_MATCH(
 // * D3D_SetFence
 // ******************************************************************
 //C70010A304008B
-OOVPA_SIG_HEADER_XREF(D3D_SetFence,
-                      1060,
-
-                      XREF_D3D_SetFence,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_SetFence,
+                         1060)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x53 },

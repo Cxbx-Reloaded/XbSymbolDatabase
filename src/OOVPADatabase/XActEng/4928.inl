@@ -54,11 +54,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XACT::CEngine::RegisterStreamedWaveBank
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XACT_CEngine_RegisterStreamedWaveBank,
-                      4928,
-
-                      XREF_XACT_CEngine_RegisterStreamedWaveBank,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XACT_CEngine_RegisterStreamedWaveBank,
+                         4928)
 OOVPA_SIG_MATCH(
 
     { 0x04, 0x10 }, //RegisterStreamedWaveBank 0x10 vs RegisterWaveBank 0x14
@@ -82,8 +79,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IXACTEngine_RegisterStreamedWaveBank,
                       4928,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -108,11 +103,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XACT::CEngine::CreateSoundBank
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XACT_CEngine_CreateSoundBank,
-                      4928,
-
-                      XREF_XACT_CEngine_CreateSoundBank,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XACT_CEngine_CreateSoundBank,
+                         4928)
 OOVPA_SIG_MATCH(
 
     { 0x0E, 0x85 },
@@ -135,8 +127,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IXACTEngine_CreateSoundBank,
                       4928,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -160,11 +150,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XACT::CEngine::UnRegisterWaveBank
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XACT_CEngine_UnRegisterWaveBank,
-                      4928,
-
-                      XREF_XACT_CEngine_UnRegisterWaveBank,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XACT_CEngine_UnRegisterWaveBank,
+                         4928)
 OOVPA_SIG_MATCH(
 
     // XACT_CEngine_UnRegisterWaveBank+0x06 : lea eax, [ecx+0x58]
@@ -186,8 +173,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IXACTEngine_UnRegisterWaveBank,
                       4928,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -207,11 +192,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XACT::CEngine::CreateSoundSource
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XACT_CEngine_CreateSoundSource,
-                      4928,
-
-                      XREF_XACT_CEngine_CreateSoundSource,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XACT_CEngine_CreateSoundSource,
+                         4928)
 OOVPA_SIG_MATCH(
 
     { 0x0A, 0x8B },
@@ -234,8 +216,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IXACTEngine_CreateSoundSource,
                       4928,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -257,8 +237,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IXACTEngine_GetNotification,
                       4928,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -278,11 +256,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XACT::CSoundBank::GetSoundCueIndexFromFriendlyName
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XACT_CSoundBank_GetSoundCueIndexFromFriendlyName,
-                      4928,
-
-                      XREF_XACT_CSoundBank_GetSoundCueIndexFromFriendlyName,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XACT_CSoundBank_GetSoundCueIndexFromFriendlyName,
+                         4928)
 OOVPA_SIG_MATCH(
 
     { 0x03, 0x51 },
@@ -308,8 +283,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IXACTSoundBank_GetSoundCueIndexFromFriendlyName,
                       4928,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -331,8 +304,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IXACTEngine_RegisterNotification,
                       4928,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

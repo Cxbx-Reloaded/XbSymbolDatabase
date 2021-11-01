@@ -105,8 +105,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(mainCRTStartup,
                       4361,
-
-                      XRefNoSaveIndex,
                       XRefThree)
 OOVPA_SIG_MATCH(
 

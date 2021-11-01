@@ -200,6 +200,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
                                                   "D3DDevice_SetRenderState_CullMode",
                                                   pSection,
                                                   true,
+                                                  NULL,
                                                   NULL);
         }
 
@@ -251,6 +252,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
                                               "D3DDevice_SetRenderState_CullMode",
                                               pSection,
                                               true,
+                                              NULL,
                                               &pOOVPARevision);
 
         if (pFunc != 0) {
@@ -329,6 +331,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
                                                   "D3DDevice_SetTextureState_TexCoordIndex",
                                                   pSection,
                                                   true,
+                                                  NULL,
                                                   NULL);
 
             // TODO: Can we integrate below into XRef?
@@ -488,6 +491,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
                                                                            "D3DDevice__m_VerticalBlankEvent__ManualFindGeneric",
                                                                            pSection,
                                                                            true,
+                                                                           NULL,
                                                                            NULL);
         }
 

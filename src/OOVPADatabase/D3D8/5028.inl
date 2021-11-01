@@ -97,8 +97,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader,
                       5028,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -131,11 +129,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::SetFence
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_SetFence,
-                      5028,
-
-                      XREF_D3D_SetFence,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_SetFence,
+                         5028)
 OOVPA_SIG_MATCH(
 
     { 0x0E, 0x05 },
@@ -161,11 +156,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::BlockOnTime
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_BlockOnTime,
-                      5028,
-
-                      XREF_D3D_BlockOnTime,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnTime,
+                         5028)
 OOVPA_SIG_MATCH(
 
     { 0x09, 0x30 },
@@ -349,15 +341,10 @@ OOVPA_SIG_MATCH(
 // * D3D::CommonSetRenderTarget
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
-OOVPA_XREF(D3D_CommonSetRenderTarget, 5028, 12,
-
-           XREF_D3D_CommonSetRenderTarget,
-           XRefZero)
+OOVPA_NO_XREF(D3D_CommonSetRenderTarget, 5028, 12)
     {
 #else
 OOVPA_XREF(D3D_CommonSetRenderTarget, 5028, 1 + 12,
-
-           XREF_D3D_CommonSetRenderTarget,
            XRefOne)
 {
 
@@ -383,11 +370,8 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_LazySetStateVB
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_LazySetStateVB,
-                      5028,
-
-                      XREF_D3DDevice_LazySetStateVB,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LazySetStateVB,
+                         5028)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
@@ -444,8 +428,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
                       5028,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -471,8 +453,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_IsFencePending,
                       5028,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -489,11 +469,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::CDevice::KickOff
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDevice_KickOff,
-                      5028,
-
-                      XREF_D3D_CDevice_KickOff,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff,
+                         5028)
 OOVPA_SIG_MATCH(
 
     { 0x07, 0x08 },
@@ -563,8 +540,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVerticesUP,
                       5028,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

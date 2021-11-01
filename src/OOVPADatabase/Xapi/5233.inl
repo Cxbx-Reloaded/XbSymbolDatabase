@@ -25,11 +25,8 @@
 // * MU_Init
 // ******************************************************************
 // Generic OOVPA as of 5233 and newer.
-OOVPA_SIG_HEADER_XREF(MU_Init,
-                      5233,
-
-                      XREF_MU_Init,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(MU_Init,
+                         5233)
 OOVPA_SIG_MATCH(
 
     // push ebp

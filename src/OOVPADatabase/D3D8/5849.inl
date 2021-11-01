@@ -45,11 +45,8 @@ OOVPA_SIG_MATCH(
 // * D3D::SetFence
 // * SOURCE: Spiderman 2
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_SetFence,
-                      5849,
-
-                      XREF_D3D_SetFence,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_SetFence,
+                         5849)
 OOVPA_SIG_MATCH(
 
     { 0x0E, 0x05 },

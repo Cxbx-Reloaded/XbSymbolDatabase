@@ -28,8 +28,6 @@
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CMcpxStream_Discontinuity,
                       4531,
-
-                      XREF_CMcpxStream_Discontinuity,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

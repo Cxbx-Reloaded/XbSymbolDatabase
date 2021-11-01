@@ -28,8 +28,6 @@
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XNetStartup,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -57,8 +55,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(WSAStartup,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -85,11 +81,8 @@ OOVPA_SIG_MATCH(
 // * XnInit
 // ******************************************************************
 // For only XNETS library, XNET library is different OOVPA.
-OOVPA_SIG_HEADER_XREF(XnInit,
-                      3911,
-
-                      XREF_XnInit,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XnInit,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // XnInit+0x31 : push 0x3554454E

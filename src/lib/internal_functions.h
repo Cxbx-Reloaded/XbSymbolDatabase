@@ -126,18 +126,18 @@ static bool internal_IsXRefAddrValid(xbaddr XRefAddr)
 }
 
 static xbaddr internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(iXbSymbolContext* pContext,
-                                                                        const char* signature_str,
+                                                                        const OOVPATable* pSymbol,
                                                                         const OOVPARevision* pRevision,
                                                                         const char* xref_str,
                                                                         XRefDatabaseOffset xref_target)
 {
     if (pRevision->Oovpa->XRefCount == 0) {
         // Should not be triggered when there is no xref listed.
-        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "%s (%hu) signature cannot have zero XRefCount when calling %s!", signature_str, pRevision->Version, __func__);
+        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "%s (%hu) signature cannot have zero XRefCount when calling %s!", pSymbol->szFuncName, pRevision->Version, __func__);
         return 0;
     }
 
-    xbaddr virt_start_addr = pContext->xref_database[pRevision->Oovpa->XRefSaveIndex];
+    xbaddr virt_start_addr = pContext->xref_database[pSymbol->xref];
 
     LOVP* lovp = ((LOOVPA*)pRevision->Oovpa)->Lovp;
     int offset = -1;
@@ -150,7 +150,7 @@ static xbaddr internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(iXbSymbo
 
     if (offset == -1) {
         // If no match is found, then contributor need to verify both OOVPA revision and xref index are correct.
-        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "%s (%hu) signature does not have %s's xref entry!", signature_str, pRevision->Version, xref_str);
+        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "%s (%hu) signature does not have %s's xref entry!", pSymbol->szFuncName, pRevision->Version, xref_str);
         return 0;
     }
 
@@ -183,7 +183,7 @@ static void* internal_LocateFunction(iXbSymbolContext* pContext,
     uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
 
     // skip out if this is an unnecessary search
-    if (!xref_first_pass && Oovpa->XRefCount == XRefZero && Oovpa->XRefSaveIndex == XRefNoSaveIndex)
+    if (!xref_first_pass && Oovpa->XRefCount == XRefZero)
         return 0;
 
     uint32_t derive_indices = 0;
@@ -369,34 +369,40 @@ static void internal_RegisterXRef(iXbSymbolContext* pContext,
     }
 }
 
-static void internal_RegisterSymbol(iXbSymbolContext* pContext,
-                                    const iXbSymbolLibrarySession* pLibrarySession,
-                                    uint32_t XRefIndex,
-                                    uint16_t version,
-                                    const char* symbol_name,
-                                    uint32_t symbol_addr)
+// (Old / Manual) method
+static void internal_RegisterSymbolManual(iXbSymbolContext* pContext,
+                                          const iXbSymbolLibrarySession* pLibrarySession,
+                                          const XRefDatabaseOffset xref,
+                                          uint16_t version,
+                                          const char* symbol_name,
+                                          uint32_t symbol_addr)
 {
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
 
-    // do we need to save the found address?
-    if (XRefIndex != XRefNoSaveIndex) {
-        // If XRef is not found, save it then register once.
-        if (pContext->xref_database[XRefIndex] == XREF_ADDR_UNDETERMINED) {
-            internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XRefIndex, symbol_addr);
-            if (pContext->register_func != NULL) {
-                pContext->register_func(pLibrary->name, pLibrary->flag, symbol_name, symbol_addr, version);
-            }
+    // If XRef is not found, save it then register once.
+    if (pContext->xref_database[xref] == XREF_ADDR_UNDETERMINED) {
+        internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, xref, symbol_addr);
+        if (pContext->register_func != NULL) {
+            pContext->register_func(pLibrary->name, pLibrary->flag, symbol_name, symbol_addr, version);
         }
-    }
-    else if (pContext->register_func != NULL) {
-        pContext->register_func(pLibrary->name, pLibrary->flag, symbol_name, symbol_addr, version);
     }
 }
 
 // Use _M suffix only, if OOVPA signature is not in database.
 #define internal_RegisterSymbol_M(...) \
     SYMBOL_COUNTER_VALUE;              \
-    internal_RegisterSymbol(__VA_ARGS__);
+    internal_RegisterSymbolManual(__VA_ARGS__);
+
+// New method
+static void internal_RegisterSymbol(iXbSymbolContext* pContext,
+                                    const iXbSymbolLibrarySession* pLibrarySession,
+                                    const OOVPATable* pSymbol,
+                                    uint16_t version,
+                                    uint32_t symbol_addr)
+{
+    // forward to internal_RegisterSymbolManual to avoid need to copy paste between two identical functions.
+    internal_RegisterSymbolManual(pContext, pLibrarySession, pSymbol->xref, version, pSymbol->szFuncName, symbol_addr);
+}
 
 
 static OOVPATable* internal_OOVPATable_FindSymbolFunction(SymbolDatabaseList* LibraryDB, const char* szFuncName, unsigned scan_type)
@@ -463,17 +469,14 @@ static void internal_OOVPATable_scan(iXbSymbolContext* pContext,
 }
 
 static void internal_OOVPA_register(iXbSymbolContext* pContext,
-                                    const char* szFuncName,
+                                    const OOVPATable* Symbol,
                                     const OOVPARevision* OovpaRevision,
                                     const iXbSymbolLibrarySession* pLibrarySession,
                                     xbaddr address)
 {
     if (OovpaRevision != NULL) {
 
-        OOVPA* Oovpa = OovpaRevision->Oovpa;
-
-        internal_RegisterSymbol(pContext, pLibrarySession, Oovpa->XRefSaveIndex, OovpaRevision->Version,
-                                szFuncName, address);
+        internal_RegisterSymbol(pContext, pLibrarySession, Symbol, OovpaRevision->Version, address);
     }
 }
 
@@ -512,7 +515,7 @@ static void internal_OOVPA_scan(iXbSymbolContext* pContext,
                                  &pLastKnownFunc);
 
         if (pLastKnownRevision != NULL) {
-            internal_OOVPA_register(pContext, pSymbol->szFuncName, pLastKnownRevision, pLibrarySession, (xbaddr)(uintptr_t)pLastKnownFunc);
+            internal_OOVPA_register(pContext, pSymbol, pLastKnownRevision, pLibrarySession, (xbaddr)(uintptr_t)pLastKnownFunc);
         }
     }
 }
@@ -524,24 +527,29 @@ static void* internal_LocateSymbolFunction(iXbSymbolContext* pContext,
                                            const char* szFuncName,
                                            const XbSDBSection* pSection,
                                            bool xref_first_pass,
+                                           OOVPATable** pSymbol,
                                            OOVPARevision** pOOVPARevision)
 {
     void* pFunc = 0;
-    OOVPARevision* pRevision = NULL;
-    OOVPATable* pSymbol = internal_OOVPATable_FindSymbolFunction(pLibraryDB, szFuncName, DB_ST_MANUAL);
+    OOVPARevision* pRevisionLocal = NULL;
+    OOVPATable* pSymbolLocal = internal_OOVPATable_FindSymbolFunction(pLibraryDB, szFuncName, DB_ST_MANUAL);
 
-    if (pSymbol) {
+    if (pSymbolLocal) {
         internal_OOVPATable_scan(pContext,
                                  pLibrarySession,
                                  pSection,
                                  xref_first_pass,
-                                 pSymbol,
-                                 &pRevision,
+                                 pSymbolLocal,
+                                 &pRevisionLocal,
                                  &pFunc);
     }
 
+    if (pSymbol) {
+        *pSymbol = pSymbolLocal;
+    }
+
     if (pOOVPARevision) {
-        *pOOVPARevision = pRevision;
+        *pOOVPARevision = pRevisionLocal;
     }
     return pFunc;
 }

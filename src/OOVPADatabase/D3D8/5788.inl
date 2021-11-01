@@ -26,11 +26,8 @@
 // ******************************************************************
 // * D3D::RecordStateBlock
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_RecordStateBlock,
-                      5788,
-
-                      XREF_D3D_RecordStateBlock,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_RecordStateBlock,
+                         5788)
 OOVPA_SIG_MATCH(
 
     // D3D_RecordStateBlock+0x0F : mov eax, [edi+0x07A4]
@@ -253,8 +250,6 @@ OOVPA_NO_XREF(D3DDevice_GetTexture2, 5788, 23) // Up to 5849
     {
 #else
 OOVPA_XREF(D3DDevice_GetTexture2, 5788, 1 + 23, // Up to 5849
-
-           XRefNoSaveIndex,
            XRefOne)
 {
 

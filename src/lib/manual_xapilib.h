@@ -34,6 +34,7 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
     OOVPARevision* pOOVPARevision = NULL;
+    OOVPATable* pSymbol = NULL;
 
     // Find XapiMapLetterToDirectory function
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XapiMapLetterToDirectory])) {
@@ -46,11 +47,11 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
                                                                    sig_func_str,
                                                                    pSection,
                                                                    true,
+                                                                   &pSymbol,
                                                                    &pOOVPARevision);
 
         if (xXbAddr) {
-            internal_RegisterSymbol(pContext, pLibrarySession, XREF_XapiMapLetterToDirectory, pOOVPARevision->Version,
-                                    sig_func_str, xXbAddr);
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
 
             // Register XGetSectionSize function.
             if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XGetSectionSize])) {
@@ -62,7 +63,7 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
                 return false;
             }
             // Manually translate to virtual address from relative address.
-            xXbAddr = internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(pContext, sig_func_str, pOOVPARevision, xref_str, XREF_XGetSectionSize);
+            xXbAddr = internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(pContext, pSymbol, pOOVPARevision, xref_str, XREF_XGetSectionSize);
             if (!xXbAddr) {
                 // Error message is handled by above function. No extra message necessary here.
                 return false;
@@ -83,11 +84,11 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
                                                                    "MU_Init",
                                                                    pSection,
                                                                    true,
+                                                                   &pSymbol,
                                                                    &pOOVPARevision);
 
         if (xXbAddr) {
-            internal_RegisterSymbol(pContext, pLibrarySession, XREF_MU_Init, pOOVPARevision->Version,
-                                    "MU_Init", xXbAddr);
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
         }
     }
 
@@ -105,6 +106,7 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
                                                                    "IUsbInit_GetMaxDeviceTypeCount",
                                                                    pSection,
                                                                    true,
+                                                                   &pSymbol,
                                                                    NULL);
 
         // If not found, skip the rest of the scan.
@@ -112,8 +114,7 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
             return false;
         }
 
-        internal_RegisterSymbol(pContext, pLibrarySession, XREF_IUsbInit_GetMaxDeviceTypeCount, 3911,
-                                "IUsbInit_GetMaxDeviceTypeCount", xXbAddr);
+        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 3911, xXbAddr);
     }
 
 

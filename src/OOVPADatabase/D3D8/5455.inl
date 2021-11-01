@@ -68,11 +68,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_CreateVertexBuffer2
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_CreateVertexBuffer2,
-                      5455,
-
-                      XREF_D3DDevice_CreateVertexBuffer2,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CreateVertexBuffer2,
+                         5455)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
@@ -116,8 +113,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader,
                       5455,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -139,8 +134,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_GetViewport,
                       5455,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -201,11 +194,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D_SetTileNoWait
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_SetTileNoWait,
-                      5455,
-
-                      XREF_D3D_SetTileNoWait,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_SetTileNoWait,
+                         5455)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
@@ -294,8 +284,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDevice_KickOff,
                       5455,
-
-                      XREF_D3D_CDevice_KickOff,
                       XRefOne)
 OOVPA_SIG_MATCH(
     // mov eax, XREF_D3DDEVICE
@@ -324,15 +312,10 @@ OOVPA_SIG_MATCH(
 // The only difference between 5344/5455 is the offset shift for
 // D3DDEVICE_M_RENDERTARGET's asm code.
 #ifndef WIP_LessVertexPatching
-OOVPA_XREF(D3DDevice_SetRenderTarget, 5455, 13,
-
-           XREF_D3DDevice_SetRenderTarget,
-           XRefZero)
+OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 5455, 13)
     {
 #else
 OOVPA_XREF(D3DDevice_SetRenderTarget, 5455, 1 + 13,
-
-           XREF_D3DDevice_SetRenderTarget,
            XRefOne)
 {
 

@@ -26,11 +26,8 @@
 // ******************************************************************
 // * XoUpdateLaunchNewImageInternal
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XoUpdateLaunchNewImageInternal,
-                      5788,
-
-                      XREF_XoUpdateLaunchNewImageInternal,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XoUpdateLaunchNewImageInternal,
+                         5788)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },

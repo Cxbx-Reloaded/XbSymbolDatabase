@@ -78,8 +78,6 @@ OOVPA_NO_XREF(D3DDevice_SetTexture, 4361, 28)
     {
 #else
 OOVPA_XREF(D3DDevice_SetTexture, 4361, 1 + 26,
-
-           XRefNoSaveIndex,
            XRefOne)
 {
 

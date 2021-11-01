@@ -68,11 +68,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * GetTypeInformation
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(GetTypeInformation,
-                      4134,
-
-                      XREF_XAPI_GetTypeInformation,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(GetTypeInformation,
+                         4134)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0xB8 },

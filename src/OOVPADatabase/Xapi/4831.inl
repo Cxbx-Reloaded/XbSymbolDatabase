@@ -54,8 +54,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XID_fCloseDevice,
                       4831,
-
-                      XREF_XID_fCloseDevice,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -211,8 +209,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XReadMUMetaData,
                       4831,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -234,8 +230,6 @@ OOVPA_SIG_MATCH(
 // NOTE: 3911 signature is exactly the same at start of offset 0x1F
 OOVPA_SIG_HEADER_XREF(UnhandledExceptionFilter,
                       4831,
-
-                      XREF_XAPI_UnhandledExceptionFilter,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -276,8 +270,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(mainXapiStartup,
                       4831,
-
-                      XREF_XAPI_mainXapiStartup,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 

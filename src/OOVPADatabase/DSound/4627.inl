@@ -27,11 +27,8 @@
 // ******************************************************************
 // * CDirectSound::SetVelocity
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_SetVelocity,
-                      4627,
-
-                      XREF_CDirectSound_SetVelocity,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_SetVelocity,
+                         4627)
 OOVPA_SIG_MATCH(
 
     // CDirectSound_SetVelocity+0x24 : mov eax, 0x80004005
@@ -67,11 +64,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound::SetDistanceFactor
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_SetDistanceFactor,
-                      4627,
-
-                      XREF_CDirectSound_SetDistanceFactor,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_SetDistanceFactor,
+                         4627)
 OOVPA_SIG_MATCH(
 
     // CDirectSound_SetDistanceFactor+0x21 : mov eax, 0x80004005
@@ -106,11 +100,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound::SetDopplerFactor
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_SetDopplerFactor,
-                      4627,
-
-                      XREF_CDirectSound_SetDopplerFactor,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_SetDopplerFactor,
+                         4627)
 OOVPA_SIG_MATCH(
 
     // CDirectSound_SetDopplerFactor+0x21 : mov eax, 0x80004005
@@ -165,11 +156,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSoundVoice::SetDistanceFactor
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetDistanceFactor,
-                      4627,
-
-                      XREF_CDirectSoundVoice_SetDistanceFactor,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundVoice_SetDistanceFactor,
+                         4627)
 OOVPA_SIG_MATCH(
 
     // CDirectSoundVoice_SetDistanceFactor+0x0D : mov edx, [esp+arg_4]
@@ -196,11 +184,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSoundVoice::SetDopplerFactor
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetDopplerFactor,
-                      4627,
-
-                      XREF_CDirectSoundVoice_SetDopplerFactor,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundVoice_SetDopplerFactor,
+                         4627)
 OOVPA_SIG_MATCH(
 
     // CDirectSoundVoice_SetDopplerFactor+0x0D : mov edx, [esp+arg_4]
@@ -227,11 +212,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxVoiceClient::Commit3dSettings
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Commit3dSettings,
-                      4627,
-
-                      XREF_CMcpxVoiceClient_Commit3dSettings,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Commit3dSettings,
+                         4627)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
