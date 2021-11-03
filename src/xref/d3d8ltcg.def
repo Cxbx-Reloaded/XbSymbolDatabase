@@ -19,6 +19,8 @@
 // *
 // ******************************************************************
 
+// TODO: Verify each xref's function match with d3d8.def's function xrefs.
+
 // functions
 XREF_SYMBOL(CMiniport_InitHardware)
 XREF_SYMBOL(D3DDevice_BeginPushBuffer_0)
