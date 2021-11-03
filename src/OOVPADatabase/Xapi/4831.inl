@@ -56,27 +56,26 @@ OOVPA_SIG_HEADER_XREF(XID_fCloseDevice,
                       4831,
 
                       XREF_XID_fCloseDevice,
-                      XRefZero)
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x55 },
-    { 0x01, 0x8B },
-    { 0x02, 0xEC },
-    { 0x03, 0x83 },
-    { 0x04, 0xEC },
-    { 0x05, 0x14 },
-    { 0x06, 0x53 },
-    { 0x07, 0x56 },
-    { 0x08, 0x8B },
-    { 0x09, 0xF1 },
-    { 0x0A, 0xFF },
-    { 0x0B, 0x15 },
+    // call [KeRaiseIrqlToDpcLevel]
+    OV_MATCH(0x0C, XREF_KT_FUNC_KeRaiseIrqlToDpcLevel),
 
-    { 0x1E, 0x3B },
-    { 0x1F, 0xC3 },
+    // push ebp; mov ebp,esp
+    OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
 
-    { 0x38, 0x45 },
-    { 0x39, 0xF4 },
+    // call [KeRaiseIrqlToDpcLevel]
+    OV_MATCH(0x0A, 0xFF, 0x15),
+
+    // Possible replacement for accuracy
+    // or [esi+0xA2],1
+    OV_MATCH(0x2A, 0x80, 0x8E, 0xA2),
+    OV_MATCH(0x2F, 0x00, 0x01),
+    // lea eax,[ebp-0x0C]
+    OV_MATCH(0x31, 0x8D, 0x45, 0xF4),
+    // [ebp-0x08],eax
+    OV_MATCH(0x34, 0x89, 0x45, 0xF8),
     //
 );
 
@@ -109,25 +108,24 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XInputGetCapabilities
 // ******************************************************************
+// Generic OOVPA as of 4831 and newer.
 OOVPA_SIG_HEADER_NO_XREF(XInputGetCapabilities,
                          4831)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x55 },
-    { 0x1F, 0x0F },
+    OV_MATCH(0x00, 0x55),
 
-    { 0x37, 0x8B },
-    { 0x38, 0xFA },
-    { 0x39, 0xF3 },
-    { 0x3A, 0xAB },
-    { 0x3B, 0xAA },
-    { 0x3C, 0x8A },
-    { 0x3D, 0x46 },
-    { 0x3E, 0x0B },
-    { 0x3F, 0x88 },
+    OV_MATCH(0x1F, 0x0F),
 
-    { 0x59, 0x0F },
-    { 0x5A, 0xB6 },
+    // mov edi,edx; rep stos [edi]
+    OV_MATCH(0x37, 0x8B, 0xFA, 0xF3, 0xAB),
+
+    // stos [edi]; mov al,[esi+0x0B]
+    OV_MATCH(0x3B, 0xAA, 0x8A, 0x46, 0x0B),
+
+    OV_MATCH(0x3F, 0x88),
+
+    OV_MATCH(0x59, 0x0F, 0xB6),
     //
 );
 
@@ -226,5 +224,83 @@ OOVPA_SIG_MATCH(
 
     // mov WORD PTR [ebp-0x0E],0x3E
     OV_MATCH(0x51, 0x66, 0xC7, 0x45, 0xF2, 0x3E, 0x00),
+    //
+);
+
+// ******************************************************************
+// * UnhandledExceptionFilter
+// ******************************************************************
+// Generic OOVPA as of 4831 and newer.
+// NOTE: 3911 signature is exactly the same at start of offset 0x1F
+OOVPA_SIG_HEADER_XREF(UnhandledExceptionFilter,
+                      4831,
+
+                      XREF_XAPI_UnhandledExceptionFilter,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov eax,[g_XapiCurrentTopLevelFilter]
+    XREF_ENTRY(0x20, XREF_g_XapiCurrentTopLevelFilter), // derived
+
+    // mov eax,fs:[0x20]
+    OV_MATCH(0x00, 0x64, 0xA1, 0x20, 0x00),
+
+    // mov eax,[eax+0x250]
+    OV_MATCH(0x06, 0x8B, 0x80, 0x50, 0x02, 0x00),
+
+    // mov eax,[g_XapiCurrentTopLevelFilter]
+    OV_MATCH(0x1F, 0xA1),
+
+    // push param_1
+    OV_MATCH(0x28, 0xFF, 0x74, 0x24, 0x04),
+
+    // call eax
+    OV_MATCH(0x2C, 0xFF, 0xD0),
+
+    // cmp eax,-1
+    OV_MATCH(0x2E, 0x83, 0xF8, 0xFF),
+
+    // or eax,eax
+    OV_MATCH(0x33, 0x0B, 0xC0),
+
+    // xor eax,eax
+    OV_MATCH(0x37, 0x33, 0xC0),
+
+    // ret 0x0004
+    OV_MATCH(0x39, 0xC2, 0x04),
+    //
+);
+
+// ******************************************************************
+// * mainXapiStartup
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(mainXapiStartup,
+                      4831,
+
+                      XREF_XAPI_mainXapiStartup,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // call XapiInitProcess
+    //XREF_ENTRY(0x01, XREF_XAPI_XapiInitProcess),
+
+    // call _rtinit
+    XREF_ENTRY(0x4D, XREF_XAPI__rtinit),
+
+    // call _cinit
+    XREF_ENTRY(0x52, XREF_XAPI__cinit),
+
+    // call XapiApplyKernelPatches
+    OV_MATCH(0x00, 0xE8),
+    // call XapiInitProcess
+    OV_MATCH(0x05, 0xE8),
+    // mov eax, fs:[0x20]
+    OV_MATCH(0x0A, 0x64, 0xA1, 0x20, 0x00),
+
+
+    // call _rtinit
+    OV_MATCH(0x4C, 0xE8),
+    // call _cinit
+    OV_MATCH(0x51, 0xE8),
     //
 );

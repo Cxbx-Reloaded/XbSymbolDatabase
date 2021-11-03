@@ -787,6 +787,40 @@ static bool internal_IsXRefAddrValid(xbaddr XRefAddr)
     return (XRefAddr + 1) > (XREF_ADDR_DERIVE + 1); // Implies also not equal to XREF_ADDR_UNDETERMINED (-1) nor XREF_ADDR_NOT_FOUND (0)
 }
 
+static xbaddr internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(iXbSymbolContext* pContext,
+                                                                        const char* signature_str,
+                                                                        const OOVPARevision* pRevision,
+                                                                        const char* xref_str,
+                                                                        XRefDatabaseOffset xref_target)
+{
+    if (pRevision->Oovpa->XRefCount == 0) {
+        // Should not be triggered when there is no xref listed.
+        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "%s (%hu) signature cannot have zero XRefCount when calling %s!", signature_str, pRevision->Version, __func__);
+        return 0;
+    }
+
+    xbaddr virt_start_addr = pContext->xref_database[pRevision->Oovpa->XRefSaveIndex];
+
+    LOVP* lovp = ((LOOVPA*)pRevision->Oovpa)->Lovp;
+    int offset = -1;
+    for (unsigned i = 0; i < pRevision->Oovpa->XRefCount; i++) {
+        if (lovp->xref.index == xref_target) {
+            offset = lovp->offset;
+            break;
+        }
+    }
+
+    if (offset == -1) {
+        // If no match is found, then contributor need to verify both OOVPA revision and xref index are correct.
+        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "%s (%hu) signature does not have %s's xref entry!", signature_str, pRevision->Version, xref_str);
+        return 0;
+    }
+
+    virt_start_addr += offset + pContext->xref_database[xref_target] + 4 /*32 bit size of address space range */;
+
+    return virt_start_addr;
+}
+
 // Obligatory function for setting an address in the XRefDataBase
 // (only initialization may write to XRefDataBase outside of this function).
 static inline void internal_SetXRefDatabase(iXbSymbolContext* pContext, eLibraryType iLibraryType, uint32_t XRef, xbaddr XRefAddr)
@@ -1373,7 +1407,15 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
 #endif                                                                                        //
     pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER] = XREF_ADDR_DERIVE;         //In use
     // XAPILIB                                                                                //
+    pContext->xref_database[XREF_g_XapiCurrentTopLevelFilter] = XREF_ADDR_DERIVE;             //In use
     pContext->xref_database[XREF_g_XapiMountedMUs] = XREF_ADDR_DERIVE;                        //In use
+    pContext->xref_database[XREF_OFFSET_XapiCurrentFiber] = XREF_ADDR_DERIVE;                 //In use
+    pContext->xref_database[XREF_OFFSET_XapiLastErrorCode] = XREF_ADDR_DERIVE;                //In use
+    pContext->xref_database[XREF_OFFSET_XapiThreadFiberData] = XREF_ADDR_DERIVE;              //In use
+    pContext->xref_database[XREF_XAPI__tls_array] = XREF_ADDR_DERIVE;                         //In use
+    pContext->xref_database[XREF_XAPI__tls_index] = XREF_ADDR_DERIVE;                         //In use
+    pContext->xref_database[XREF_XapiThreadNotifyRoutineList] = XREF_ADDR_DERIVE;             //In use
+    pContext->xref_database[XREF_XGetSectionSize] = XREF_ADDR_DERIVE;                         //In use
     // clang-format on
 
     // Mark all library contexts as zero-initialized for scan activity.
@@ -2020,6 +2062,45 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
     OOVPARevision* pOOVPARevision = NULL;
 
+    // Find XapiMapLetterToDirectory function
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XapiMapLetterToDirectory])) {
+        const char* sig_func_str = "XapiMapLetterToDirectory";
+        const char* xref_str = "XGetSectionSize";
+
+        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                   pLibrarySession,
+                                                                   pLibraryDB,
+                                                                   sig_func_str,
+                                                                   pSection,
+                                                                   false,
+                                                                   &pOOVPARevision);
+
+        if (xXbAddr) {
+            internal_RegisterSymbol(pContext, pLibrarySession, XREF_XapiMapLetterToDirectory, pOOVPARevision->Version,
+                                    sig_func_str, xXbAddr);
+
+            // Register XGetSectionSize function.
+            if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XGetSectionSize])) {
+                // If relative address is not recorded, then signature needs a fix.
+                output_message_format(&pContext->output,
+                                      XB_OUTPUT_MESSAGE_ERROR,
+                                      "Please verify %s (%hu) signature do contain %s's xref entry.",
+                                      sig_func_str, pOOVPARevision->Version, xref_str);
+                return false;
+            }
+            // Manually translate to virtual address from relative address.
+            xXbAddr = internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(pContext, sig_func_str, pOOVPARevision, xref_str, XREF_XGetSectionSize);
+            if (!xXbAddr) {
+                // Error message is handled by above function. No extra message necessary here.
+                return false;
+            }
+            pContext->xref_database[XREF_XGetSectionSize] = XREF_ADDR_UNDETERMINED; // Force reset to able register
+
+            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_XGetSectionSize, pOOVPARevision->Version,
+                                      xref_str, xXbAddr);
+        }
+    }
+
     // Find MU_Init function
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_MU_Init])) {
 
@@ -2322,11 +2403,19 @@ void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle)
         internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER, 0, "D3DDevice__m_VertexShader_OFFSET");
     }
 
+    // XAPI library
     xbaddr xg_XapiMountedMUs = pContext->xref_database[XREF_g_XapiMountedMUs];
     if (internal_IsXRefAddrValid(xg_XapiMountedMUs)) {
         // Register g_XapiMountedMUs
         internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs");
     }
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiCurrentTopLevelFilter, 0, "g_XapiCurrentTopLevelFilter");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_array, 0, "_tls_array");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_index, 0, "_tls_index");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiCurrentFiber, 0, "XapiCurrentFiber_OFFSET");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiLastErrorCode, 0, "XapiLastErrorCode_OFFSET");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiThreadFiberData, 0, "XapiThreadFiberData_OFFSET");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiThreadNotifyRoutineList, 0, "XapiThreadNotifyRoutineList");
 
     // Here, others could be registered
 

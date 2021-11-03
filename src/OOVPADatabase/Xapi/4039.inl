@@ -23,30 +23,29 @@
 // *
 // ******************************************************************
 
-// Generic OOVPA as of 4039 and newer.
 // ******************************************************************
 // * XCalculateSignatureBegin
 // ******************************************************************
+// TODO: Need to find out if XCalculateSignatureBegin had been changed
+//       in 3950 and lower.
+// Generic OOVPA as of 4034? and newer.
 OOVPA_SIG_HEADER_NO_XREF(XCalculateSignatureBegin,
-                         4039)
+                         4034)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0xA1 },
-    { 0x01, 0x18 },
-    { 0x02, 0x01 },
-    { 0x03, 0x01 },
-    { 0x04, 0x00 },
-    { 0x05, 0xFF },
-    { 0x06, 0x70 },
-    { 0x07, 0x08 },
-    { 0x08, 0xFF },
-    { 0x09, 0x74 },
-    { 0x0A, 0x24 },
-    { 0x0B, 0x08 },
-    { 0x0C, 0xE8 },
+    // mov eax,ds:[0x00010118]
+    OV_MATCH(0x00, 0xA1, 0x18, 0x01, 0x01, 0x00),
 
-    { 0x11, 0xC2 },
-    { 0x12, 0x04 },
-    { 0x13, 0x00 },
+    // push [eax+0x08]
+    OV_MATCH(0x05, 0xFF, 0x70, 0x08),
+
+    // push [esp+0x08]
+    OV_MATCH(0x08, 0xFF, 0x74, 0x24, 0x08),
+
+    // call XCalculateSignatureBeginEx
+    OV_MATCH(0x0C, 0xE8),
+
+    // ret 0x0004
+    OV_MATCH(0x11, 0xC2, 0x04, 0x00),
     //
 );

@@ -98,6 +98,297 @@
 //   * XSetProcessQuantumLength (4134)
 //   * XInputGetDeviceDescription (4831)
 //   * XGetDeviceEnumerationStatus (4831)
+// List of known Symbols may can be add to database (3911)
+//   * CancelWaitableTimer
+//   * CharLowerA
+//   * CharLowerW
+//   * CharUpperA
+//   * CharUpperW
+//   * CloseHandle
+//   * CompareFileTime
+//   * CopyFileA
+//   * CopyFileExA
+//   * CopyRect
+//   * CreateDirectoryA
+//   * CreateEventA
+//   * CreateFileA
+//   * CreateIoCompletionPort
+//   * CreateSemaphoreA
+//   * CreateWaitableTimerA
+//   * DebugBreak
+//   * DebugPrint
+//   * DeleteFileA
+//   * DeviceIoControl
+//   * DmGetCurrentValue
+//   * DmTell
+//   * DuplicateHandle
+//   * EqualRect
+//   * FileTimeToLocalFileTime
+//   * FileTimeToSystemTime
+//   * FindFirstFileA
+//   * FindNextFileA
+//   * FlushFileBuffers
+//   * GetCurrentThreadId
+//   * GetDiskFreeSpaceExA
+//   * GetFileAttributesA
+//   * GetFileAttributesExA
+//   * GetFileInformationByHandle
+//   * GetFileSize
+//   * GetFileSizeEx
+//   * GetFileTime
+//   * GetLocalTime
+//   * GetNextNickname
+//   * GetProcessHeap
+//   * GetQueuedCompletionStatus
+//   * GetSystemTime
+//   * GetSystemTimeAsFileTime
+//   * GetThreadPriorityBoost
+//   * GetThreadTimes
+//   * GetTickCount
+//   * GetVolumeInformationA
+//   * GlobalAlloc
+//   * GlobalMemoryStatus
+//   * GlobalReAlloc
+//   * HCD_CancelRequest
+//   * HCD_DisableRootHubPort
+//   * HCD_DriverEntry
+//   * HCD_EnumHardware
+//   * HCD_NewHostController
+//   * HCD_ResetRootHubPort
+//   * HCD_SubmitRequest
+//   * HeapCreate
+//   * HeapDestroy
+//   * HeapFree
+//   * HexDigitToChar
+//   * InflateRect
+//   * IntersectRect
+//   * IsBadCodePtr
+//   * IsBadReadPtr
+//   * IsBadStringPtrA
+//   * IsBadStringPtrW
+//   * IsBadWritePtr
+//   * IsRectEmpty
+//   * KeGetCurrentIrql
+//   * KeGetCurrentIrql
+//   * KeGetCurrentPrcb
+//   * KeGetCurrentPrcb
+//   * KeGetCurrentThread
+//   * KeGetCurrentThread
+//   * KeGetCurrentThread
+//   * KeGetCurrentThread
+//   * KeGetCurrentThread
+//   * LocalAlloc
+//   * LocalFileTimeToFileTime
+//   * LocalFree
+//   * LocalHandle
+//   * LocalLock
+//   * LocalReAlloc
+//   * LocalSize
+//   * LocalUnlock
+//   * lstrcatA
+//   * lstrcatW
+//   * lstrcmpA
+//   * lstrcmpiA
+//   * lstrcmpiW
+//   * lstrcmpW
+//   * lstrcpyA
+//   * lstrcpynA
+//   * lstrcpynW
+//   * lstrcpyW
+//   * lstrlenA
+//   * lstrlenW
+//   * MoveFileExA
+//   * MoveFileWithProgressA
+//   * MulDiv
+//   * MultiByteToWideChar
+//   * MU_AddDevice
+//   * MU_CloseDeviceObject
+//   * MU_CreateDeviceObject
+//   * MU_RemoveDevice
+//   * OffsetRect
+//   * OpenEventA
+//   * OpenMutexA
+//   * OpenSemaphoreA
+//   * OpenWaitableTimerA
+//   * PortNumberToRootHubPort
+//   * PostQueuedCompletionStatus
+//   * PtInRect
+//   * PulseEvent
+//   * QueryPerformanceFrequency
+//   * ReadFile
+//   * ReadFileEx
+//   * ReadFileScatter
+//   * ReleaseMutex
+//   * ReleaseSemaphore
+//   * RemoveDirectoryA
+//   * ResetEvent
+//   * ResumeThread
+//   * RootHubPortToPortNumber
+//   * RtlAllocateHeap
+//   * RtlAllocateHeapSlowly
+//   * RtlCreateHeap
+//   * RtlDestroyHeap
+//   * RtlFreeHeap
+//   * RtlFreeHeapSlowly
+//   * RtlpCheckBusyBlockTail
+//   * RtlpCoalesceFreeBlocks
+//   * RtlpCreateUnCommittedRange
+//   * RtlpCutoverTimeToSystemTime
+//   * RtlpDeCommitFreeBlock
+//   * RtlpDestroyHeapSegment
+//   * RtlpDestroyUnCommittedRange
+//   * RtlpExtendHeap
+//   * RtlpFindAndCommitPages
+//   * RtlpGetExtraStuffPointer
+//   * RtlpGetSizeOfBigBlock
+//   * RtlpGrowBlockInPlace
+//   * RtlpInitializeHeapSegment
+//   * RtlpInsertFreeBlock
+//   * RtlpInsertUnCommittedPages
+//   * RtlRandom
+//   * RtlReAllocateHeap
+//   * RtlSizeHeap
+//   * RtlZeroHeap
+//   * SetEndOfFile
+//   * SetEvent
+//   * SetFileAttributesA
+//   * SetFilePointer
+//   * SetFilePointerEx
+//   * SetFileTime
+//   * SetRect
+//   * SetRectEmpty
+//   * SetUnhandledExceptionFilter
+//   * SetWaitableTimer
+//   * Sleep
+//   * SleepEx
+//   * SubtractRect
+//   * SuspendThread
+//   * SystemTimeToFileTime
+//   * timeGetSystemTime
+//   * TlsAlloc
+//   * TlsFree
+//   * TlsGetValue
+//   * TlsSetValue
+//   * UnionRect
+//   * USBD_CalculateUsbBandwidth
+//   * USBD_CompleteRequest
+//   * USBD_DeviceConnected
+//   * USBD_DeviceDisconnected
+//   * USBD_Init
+//   * USBD_NewHostController
+//   * USBHUB_AddDevice
+//   * USBHUB_Init
+//   * USBHUB_RemoveDevice
+//   * VirtualAlloc
+//   * VirtualAllocEx
+//   * VirtualFree
+//   * VirtualFreeEx
+//   * VirtualProtect
+//   * VirtualProtectEx
+//   * VirtualQuery
+//   * VirtualQueryEx
+//   * WaitForMultipleObjects
+//   * WaitForMultipleObjectsEx
+//   * WaitForSingleObject
+//   * WaitForSingleObjectEx
+//   * WideCharToMultiByte
+//   * WriteFile
+//   * WriteFileEx
+//   * WriteFileGather
+//   * wsprintfA
+//   * wsprintfW
+//   * wvsprintfA
+//   * wvsprintfW
+//   * XapiAutoPowerDownTimeout
+//   * XapiConvertSignatureToNonRoamable
+//   * XapiCopySectionToFile
+//   * XapiDirectoryInformationToFindData
+//   * XapiDispatchAPC
+//   * XapiFillInSaveGameData
+//   * XapiFindValueInMetaFile
+//   * XapiFormatFATVolume
+//   * XapiFormatTimeOut
+//   * XapiGetDirectoryDisplayBlocks
+//   * XapiGetNextSoundtrack
+//   * XapiInitAutoPowerDown
+//   * XapiIsXapiThread
+//   * XapiMmTimerThread
+//   * XapiNukeDirectory
+//   * XapiNukeDirectoryFromHandle
+//   * XapiOpenStDbAndReadHeader
+//   * XapipGetTimeZoneBias
+//   * XapipQueryTimeZoneInformation
+//   * XapipUseDaylightSavingTime
+//   * XapiReadFromStDb
+//   * XapiSaveGameHashEncode
+//   * XapiSetupPerTitleDriveLetters
+//   * XapiTouchDirectoryTimestamp
+//   * XapiValidateAndSkipUnicodeSignature
+//   * XapiValidateDiskPartition
+//   * XapiVerifyGameName
+//   * XboxTimeZoneDateToSystemTime
+//   * XboxTimeZoneNameToWstr
+//   * XCalculateSignatureBeginEx
+//     * XapipCalculateContentSignatureBegin,
+//     * XapipCalculateSaveGameSignatureBegin,
+//   * XCalculateSignatureEnd
+//   * XCalculateSignatureUpdate
+//   * xCompareStringA
+//   * xCompareStringW
+//   * XCreateSaveGame
+//   * XDeleteSaveGame
+//   * XdReportDeviceInsertionRemoval
+//   * XFindClose
+//   * XFindFirstNicknameW
+//   * XFindFirstSaveGame
+//   * XFindFirstSoundtrack
+//   * XFindNextNicknameW
+//   * XFindNextSaveGame
+//   * XFindNextSoundtrack
+//   * XFreeSectionA
+//   * XFreeSectionByHandle
+//   * XGetAudioFlags
+//   * XGetAVPack
+//   * XGetDiskClusterSizeA
+//   * XGetDiskSectorSizeA
+//   * XGetDisplayBlocks
+//   * XGetFileCacheSize
+//   * XGetGameRegion
+//   * XGetLanguage
+//   * XGetParentalControlSetting
+//   * XGetSectionHandleA
+//   * XGetSoundtrackSongInfo
+//   * XGetVideoFlags
+//   * XGetVideoStandard
+//   * XID_AddDevice
+//   * XID_Init
+//   * XID_RemoveDevice
+//   * XLoadSectionA
+//   * XLoadSectionByHandle
+//   * XMUNameFromDriveLetter
+//   * XMUPortFromDriveLetterA
+//   * XMUSlotFromDriveLetterA
+//   * XOpenSoundtrackSong
+//   * XPhysicalAlloc
+//   * XPhysicalFree
+//   * XPhysicalProtect
+//   * XPhysicalSize
+//   * XQueryMemoryProtect
+//   * XQueryValue
+//   * XSetFileCacheSize
+//   * XSetNicknameW
+//   * XShaHmacComputeFinal
+//   * XShaHmacInitialize
+//   * XShaHmacUpdate
+//   * XWriteTitleInfoAndRebootA
+//   * XWriteTitleInfoNoReboot
+//   * initterm
+//   * initterm_e
+//   * InterlockedCompareExchange
+//   * InterlockedDecrement
+//   * InterlockedExchange
+//   * InterlockedExchangeAdd
+//   * InterlockedIncrement
 
 #ifndef XAPI_OOVPA_INL
 #define XAPI_OOVPA_INL
@@ -110,7 +401,6 @@
 #include "Xapi/4134.inl"
 #include "Xapi/4242.inl"
 #include "Xapi/4361.inl"
-#include "Xapi/4432.inl"
 #include "Xapi/4721.inl"
 #include "Xapi/4831.inl"
 #include "Xapi/5028.inl"
@@ -118,36 +408,52 @@
 #include "Xapi/5233.inl"
 #include "Xapi/5344.inl"
 #include "Xapi/5455.inl"
-#include "Xapi/5788.inl"
 
 // ******************************************************************
 // * XAPILIB_OOVPA
 // ******************************************************************
 OOVPATable XAPILIB_OOVPA[] = {
 
+    // Without xrefs dependency
+    REGISTER_OOVPAS(_cinit, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(_rtinit, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS_C(IUsbInit_GetMaxDeviceTypeCount, 3911),
-    REGISTER_OOVPAS(XapiMapLetterToDirectory, 3911),
+    REGISTER_OOVPAS(XapiFormatObjectAttributes, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(XapiCallThreadNotifyRoutines, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_M(XapiMapLetterToDirectory, 3911),
+    REGISTER_OOVPAS(XLaunchNewImageA, 3911, 4721, 5344),
     REGISTER_OOVPAS(XUnmountAlternateTitleA, 3911),
 
-    REGISTER_OOVPAS(CreateMutex, 3911), // Too High Level (from 3911's comment)
-    REGISTER_OOVPAS(CreateThread, 3911), // Too High Level (from 3911's comment)
-    REGISTER_OOVPAS(ExitThread, 3911), //
-    REGISTER_OOVPAS(MoveFileA, 3911),
-    REGISTER_OOVPAS(SwitchToThread, 3911),
-    REGISTER_OOVPAS(XCalculateSignatureBegin, 3911, 4039),
-    REGISTER_OOVPAS(XapiBootDash, 3911), // obsolete (from 4721's comment)
+    // With xrefs dependency (unorder, need to scan next before order list)
+    REGISTER_OOVPAS(mainXapiStartup, 3911, 4831), // Final generic OOVPA: 4831; Removed: 0
+    REGISTER_OOVPAS(GetLastError, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SetLastError, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(UnhandledExceptionFilter, 3911, 4831), // Final generic OOVPA: 4831 Removed: 0
+    REGISTER_OOVPAS(XapiBootToDash, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(XapiSelectCachePartition, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(XapiSetLastNTError, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(XapiThreadStartup, 3911), // Final generic OOVPA: 3911; Removed: 0
+
+    // With xrefs dependency (order)
+    REGISTER_OOVPAS(CreateMutexA, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(CreateThread, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(ExitThread, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(MoveFileA, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SwitchToThread, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XapiInitProcess, 3911, 3950, 4242, 4831, 5028), // obsolete, Too High Level (from 4721's comment)
-    REGISTER_OOVPAS(XapiThreadStartup, 3911), // obsolete? (from 4627, 5028, 5558, 5788, 5849's comment) // obsolete (from 4721's comment)
-    REGISTER_OOVPAS(ConvertThreadToFiber, 3911),
+    REGISTER_OOVPAS(ConvertThreadToFiber, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(XCalculateSignatureBegin, 3911, 4034), // Final generic OOVPA: ????; Removed: 0 // TODO: need verification for 4034 against 3950 and lower.
     REGISTER_OOVPAS(CreateFiber, 3911),
     REGISTER_OOVPAS(DeleteFiber, 3911),
-    REGISTER_OOVPAS(GetExitCodeThread, 3911),
+    REGISTER_OOVPAS(GetExitCodeThread, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(GetOverlappedResult, 3911),
     REGISTER_OOVPAS(GetThreadPriority, 3911),
     REGISTER_OOVPAS(GetTimeZoneInformation, 3911),
     REGISTER_OOVPAS(GetTypeInformation, 4134), // TODO: Actually introduced in some unknown XDK between 4134 and 4361
     REGISTER_OOVPAS_M(MU_Init, 3911, 4242, 5233),
-    REGISTER_OOVPAS(OutputDebugStringA, 3911),
+    REGISTER_OOVPAS(OutputDebugStringA, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(OutputDebugStringW, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(mainCRTStartup, 3911, 4361), // Final generic OOVPA: 4361; Removed: 0
     REGISTER_OOVPAS(QueueUserAPC, 3911),
     REGISTER_OOVPAS(QueryPerformanceCounter, 3911),
     REGISTER_OOVPAS(RaiseException, 3911),
@@ -157,24 +463,23 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(SwitchToFiber, 3911),
     REGISTER_OOVPAS(XAutoPowerDownResetTimer, 3911), // Just calls KeSetTimer (from 3911's comment)
     REGISTER_OOVPAS(XFormatUtilityDrive, 4242),
-    REGISTER_OOVPAS(XGetDeviceChanges, 3911), // Was PATCH (from 5788's comment)
+    REGISTER_OOVPAS(XGetDeviceChanges, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XGetDeviceEnumerationStatus, 4831),
     REGISTER_OOVPAS(XGetDevices, 3911),
     REGISTER_OOVPAS(XGetLaunchInfo, 3911),
     REGISTER_OOVPAS(XID_fCloseDevice, 3911, 4831),
     REGISTER_OOVPAS(XInitDevices, 3911, 5120),
     REGISTER_OOVPAS(XInputClose, 3911),
-    REGISTER_OOVPAS(XInputGetCapabilities, 3911, 4831),
+    REGISTER_OOVPAS(XInputGetCapabilities, 3911, 4831), // Final generic OOVPA: 4831; Removed: 0
     REGISTER_OOVPAS(XInputGetDeviceDescription, 4831),
     REGISTER_OOVPAS(XInputGetState, 3911, 4242, 5455),
     REGISTER_OOVPAS(XInputOpen, 3911, 4242),
     REGISTER_OOVPAS(XInputPoll, 3911),
     REGISTER_OOVPAS(XInputSetState, 3911, 4242, 4831),
-    REGISTER_OOVPAS(XLaunchNewImageA, 3911, 4721, 5344),
     REGISTER_OOVPAS(XMountAlternateTitleA, 3911, 5028, 5455),
     REGISTER_OOVPAS(XMountMUA, 3911, 4242),
     REGISTER_OOVPAS(XMountMURootA, 3911, 4242),
-    REGISTER_OOVPAS(XMountUtilityDrive, 3911, 4432),
+    REGISTER_OOVPAS(XMountUtilityDrive, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XReadMUMetaData, 4831),
     REGISTER_OOVPAS(XRegisterThreadNotifyRoutine, 3911),
     REGISTER_OOVPAS(XSetProcessQuantumLength, 4134),
