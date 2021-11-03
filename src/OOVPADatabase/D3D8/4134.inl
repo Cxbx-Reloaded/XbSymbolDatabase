@@ -706,7 +706,7 @@ OOVPA_END;
 // ******************************************************************
 // * D3D::CDevice::SetStateVB
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetStateVB,
+OOVPA_SIG_HEADER_NO_XREF(CDevice_SetStateVB,
                          4134)
 OOVPA_SIG_MATCH(
 
@@ -735,7 +735,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::CDevice::SetStateUP
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetStateUP,
+OOVPA_SIG_HEADER_NO_XREF(CDevice_SetStateUP,
                          4134)
 OOVPA_SIG_MATCH(
 

@@ -55,7 +55,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::CDevice::LazySetStateUP
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LazySetStateUP,
+OOVPA_SIG_HEADER_NO_XREF(CDevice_LazySetStateUP,
                          5558)
 OOVPA_SIG_MATCH(
 

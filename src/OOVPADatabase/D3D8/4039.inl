@@ -720,7 +720,7 @@ OOVPA_SIG_MATCH(
     // D3DDevice_BeginPush__8+0x00 : push esi; mov esi,[D3D__PDEVICE]
     OV_MATCH(0x00, 0x56, 0x8B, 0x35),
 
-    // D3DDevice_BeginPush__8+0x0B : call D3DDevice_SetStateVB
+    // D3DDevice_BeginPush__8+0x0B : call CDevice_SetStateVB
     OV_MATCH(0x0B, 0xE8),
 
     // D3DDevice_BeginPush__8+0x17 : call XMETAL_StartPushCount
