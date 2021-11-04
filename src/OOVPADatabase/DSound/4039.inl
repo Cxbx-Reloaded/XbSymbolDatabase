@@ -119,7 +119,9 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound_DoWork
 // ******************************************************************
-OOVPA_XREF(CDirectSound_DoWork, 4039, 1 + 9,
+OOVPA_XREF(CDirectSound_DoWork,
+           4039,
+           1 + 9,
            XRefOne)
     {
 
@@ -497,7 +499,9 @@ OOVPA_SIG_MATCH(
 // * CDirectSoundBuffer::SetBufferData
 // ******************************************************************
 // Verified with Agent Under Fire.
-OOVPA_XREF(CDirectSoundBuffer_SetBufferData, 4039, 2 + 11,
+OOVPA_XREF(CDirectSoundBuffer_SetBufferData,
+           4039,
+           2 + 11,
            XRefTwo)
     {
 

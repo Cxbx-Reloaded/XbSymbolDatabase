@@ -148,7 +148,9 @@ OOVPA_END;
 OOVPA_NO_XREF(D3DDevice_SetTexture, 3911, 28)
     {
 #else
-OOVPA_XREF(D3DDevice_SetTexture, 3911, 1 + 28,
+OOVPA_XREF(D3DDevice_SetTexture,
+           3911,
+           1 + 28,
            XRefOne)
 {
 
@@ -386,7 +388,9 @@ OOVPA_SIG_MATCH(
 OOVPA_NO_XREF(D3DDevice_GetDepthStencilSurface, 3911, 18)
     {
 #else
-OOVPA_XREF(D3DDevice_GetDepthStencilSurface, 3911, 1 + 18,
+OOVPA_XREF(D3DDevice_GetDepthStencilSurface,
+           3911,
+           1 + 18,
            XRefOne)
 {
 
@@ -1566,7 +1570,9 @@ OOVPA_SIG_MATCH(
 OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 3911, 11)
     {
 #else
-OOVPA_XREF(D3DDevice_SetRenderTarget, 3911, 1 + 11,
+OOVPA_XREF(D3DDevice_SetRenderTarget,
+           3911,
+           1 + 11,
            XRefOne)
 {
 
@@ -1763,7 +1769,9 @@ OOVPA_SIG_MATCH(
 OOVPA_NO_XREF(D3DDevice_SetPixelShader, 3911, 11)
     {
 #else
-OOVPA_XREF(D3DDevice_SetPixelShader, 3911, 1 + 11,
+OOVPA_XREF(D3DDevice_SetPixelShader,
+           3911,
+           1 + 11,
            XRefOne)
 {
 
@@ -2129,7 +2137,9 @@ OOVPA_SIG_MATCH(
 OOVPA_NO_XREF(D3DDevice_SetPalette, 3911, 12)
     {
 #else
-OOVPA_XREF(D3DDevice_SetPalette, 3911, 1 + 12,
+OOVPA_XREF(D3DDevice_SetPalette,
+           3911,
+           1 + 12,
            XRefOne)
 {
 
@@ -2872,11 +2882,15 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_GetRenderTarget
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
-OOVPA_XREF(D3DDevice_GetRenderTarget, 3911, 1 + 19,
+OOVPA_XREF(D3DDevice_GetRenderTarget,
+           3911,
+           1 + 19,
            XRefOne)
     {
 #else
-OOVPA_XREF(D3DDevice_GetRenderTarget, 3911, 2 + 19,
+OOVPA_XREF(D3DDevice_GetRenderTarget,
+           3911,
+           2 + 19,
            XRefTwo)
 {
 

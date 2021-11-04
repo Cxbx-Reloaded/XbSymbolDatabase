@@ -1081,7 +1081,9 @@ OOVPA_SIG_MATCH(
 OOVPA_NO_XREF(D3D_CommonSetRenderTarget, 1024, 10)
     {
 #else
-OOVPA_XREF(D3D_CommonSetRenderTarget, 1024, 1 + 10,
+OOVPA_XREF(D3D_CommonSetRenderTarget,
+           1024,
+           1 + 10,
            XRefOne)
 {
 

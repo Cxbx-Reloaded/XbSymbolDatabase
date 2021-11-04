@@ -981,7 +981,9 @@ OOVPA_SIG_MATCH(
 OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 1024, 11)
     {
 #else
-OOVPA_XREF(D3DDevice_SetRenderTarget, 1024, 1 + 11,
+OOVPA_XREF(D3DDevice_SetRenderTarget,
+           1024,
+           1 + 11,
            XRefOne)
 {
 

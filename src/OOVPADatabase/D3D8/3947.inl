@@ -30,7 +30,9 @@
 OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 3947, 11)
     {
 #else
-OOVPA_XREF(D3DDevice_SetRenderTarget, 3947, 1 + 11,
+OOVPA_XREF(D3DDevice_SetRenderTarget,
+           3947,
+           1 + 11,
            XRefOne)
 {
 

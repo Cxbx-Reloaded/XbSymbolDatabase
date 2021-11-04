@@ -917,7 +917,9 @@ OOVPA_END;
 OOVPA_NO_XREF(D3DDevice_SetPalette, 4034, 12)
     {
 #else
-OOVPA_XREF(D3DDevice_SetPalette, 4034, 1 + 12,
+OOVPA_XREF(D3DDevice_SetPalette,
+           4034,
+           1 + 12,
            XRefOne)
 {
 
@@ -1253,8 +1255,7 @@ OOVPA_SIG_MATCH(
 OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 4034, 10)
     {
 #else
-OOVPA_XREF(D3DDevice_SetRenderTarget, 4034, 1 + 10,
-           XRefOne)
+OOVPA_XREF(D3DDevice_SetRenderTarget, 4034, 1 + 10, XRefOne)
 {
 
     XREF_ENTRY(0x17, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived TODO : Verify offset
@@ -1281,7 +1282,9 @@ OOVPA_END;
 OOVPA_NO_XREF(D3DDevice_SetPixelShader, 4034, 12)
     {
 #else
-OOVPA_XREF(D3DDevice_SetPixelShader, 4034, 1 + 12,
+OOVPA_XREF(D3DDevice_SetPixelShader,
+           4034,
+           1 + 12,
            XRefOne)
 {
 
@@ -1425,7 +1428,9 @@ OOVPA_SIG_MATCH(
 OOVPA_NO_XREF(D3DDevice_SetRenderState_MultiSampleMode, 4034, 12)
     {
 #else
-OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleMode, 4034, 1 + 8,
+OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleMode,
+           4034,
+           1 + 8,
            XRefOne)
 {
 
@@ -1462,11 +1467,15 @@ OOVPA_END;
 // ******************************************************************
 // Generic OOVPA as of 4034 and newer.
 #ifndef WIP_LessVertexPatching
-OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleRenderTargetMode, 4034, 1 + 10,
+OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleRenderTargetMode,
+           4034,
+           1 + 10,
            XRefOne)
     {
 #else
-OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleRenderTargetMode, 4034, 2 + 10,
+OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleRenderTargetMode,
+           4034,
+           2 + 10,
            XRefTwo)
 {
 #endif
