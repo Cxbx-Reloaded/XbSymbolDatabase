@@ -428,8 +428,8 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(IDirectSoundBuffer_SetMaxDistance, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(IDirectSoundBuffer_SetMinDistance, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(IDirectSoundBuffer_SetMixBins, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetMixBinVolumes_12, 3911), // Final generic OOVPA: 3911; Removed: 4039+ // This revision is only used in 3911 to 3936.
-    REGISTER_OOVPAS(IDirectSoundBuffer_SetMixBinVolumes_8, 4039), // Final generic OOVPA: 4039; Removed: 0 // Then it has changed in 4039 and higher.
+    REGISTER_OOVPAS_BIND_XREF(IDirectSoundBuffer_SetMixBinVolumes_12, IDirectSoundBuffer_SetMixBinVolumes, 3911), // Final generic OOVPA: 3911; Removed: 4039+ // This revision is only used in 3911 to 3936.
+    REGISTER_OOVPAS_BIND_XREF(IDirectSoundBuffer_SetMixBinVolumes_8, IDirectSoundBuffer_SetMixBinVolumes, 4039), // Final generic OOVPA: 4039; Removed: 0 // Then it has changed in 4039 and higher.
     REGISTER_OOVPAS(IDirectSoundBuffer_SetMode, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0
     REGISTER_OOVPAS(IDirectSoundBuffer_SetNotificationPositions, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(IDirectSoundBuffer_SetOutputBuffer, 3911), // Final generic OOVPA: 3911; Removed: 0
@@ -466,8 +466,8 @@ OOVPATable DSound_OOVPA[] = {
     REGISTER_OOVPAS(IDirectSoundStream_SetMaxDistance, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(IDirectSoundStream_SetMinDistance, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(IDirectSoundStream_SetMixBins, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: Is require to be patch since its' calling to voice class.
-    REGISTER_OOVPAS(IDirectSoundStream_SetMixBinVolumes_12, 3911), // Final generic OOVPA: 3911; Removed: 4039+ // This revision is only used in 3911 to 3936.
-    REGISTER_OOVPAS(IDirectSoundStream_SetMixBinVolumes_8, 4039), // Final generic OOVPA: 4039; Removed: 0 // Then it has changed in 4039 and higher.
+    REGISTER_OOVPAS_BIND_XREF(IDirectSoundStream_SetMixBinVolumes_12, IDirectSoundStream_SetMixBinVolumes, 3911), // Final generic OOVPA: 3911; Removed: 4039+ // This revision is only used in 3911 to 3936.
+    REGISTER_OOVPAS_BIND_XREF(IDirectSoundStream_SetMixBinVolumes_8, IDirectSoundStream_SetMixBinVolumes, 4039), // Final generic OOVPA: 4039; Removed: 0 // Then it has changed in 4039 and higher.
     REGISTER_OOVPAS(IDirectSoundStream_SetMode, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(IDirectSoundStream_SetOutputBuffer, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(IDirectSoundStream_SetPitch, 3911, 4039), // Final generic OOVPA: 4039; Removed: 0 // NOTE: Is require to be patch since its' calling to voice class.

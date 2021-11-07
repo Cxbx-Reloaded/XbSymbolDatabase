@@ -289,11 +289,13 @@ typedef struct _OOVPATable {
 #define REGISTER_OOVPAS_PREFIX(Prefix, Symbol, ...)  MSVC_EXPAND(REGISTER_OOVPAS_TYPE_PREFIX(Symbol, Prefix, DB_ST_AUTO, __VA_ARGS__))
 #define REGISTER_OOVPAS_BIND_XREF(Symbol, XRef, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE_BIND_XREF(Symbol, XRef, DB_ST_AUTO, __VA_ARGS__))
 // Use REGISTER_OOVPAS_M for manual scan only process
-#define REGISTER_OOVPAS_M(Symbol, ...)                MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, Symbol, DB_ST_MANUAL, __VA_ARGS__))
-#define REGISTER_OOVPAS_M_PREFIX(Symbol, Prefix, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE_PREFIX(Symbol, Prefix, DB_ST_MANUAL, __VA_ARGS__))
+#define REGISTER_OOVPAS_M(Symbol, ...)                 MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, Symbol, DB_ST_MANUAL, __VA_ARGS__))
+#define REGISTER_OOVPAS_M_PREFIX(Symbol, Prefix, ...)  MSVC_EXPAND(REGISTER_OOVPAS_TYPE_PREFIX(Symbol, Prefix, DB_ST_MANUAL, __VA_ARGS__))
+#define REGISTER_OOVPAS_M_BIND_XREF(Symbol, XRef, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE_BIND_XREF(Symbol, XRef, DB_ST_MANUAL, __VA_ARGS__))
 // Use REGISTER_OOVPAS_C for combine manual and automate scan process
-#define REGISTER_OOVPAS_C(Symbol, ...)                MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, Symbol, DB_ST_ALL, __VA_ARGS__))
-#define REGISTER_OOVPAS_C_PREFIX(Symbol, Prefix, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE_PREFIX(Symbol, Prefix, DB_ST_ALL, __VA_ARGS__))
+#define REGISTER_OOVPAS_C(Symbol, ...)                 MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, Symbol, DB_ST_ALL, __VA_ARGS__))
+#define REGISTER_OOVPAS_C_PREFIX(Symbol, Prefix, ...)  MSVC_EXPAND(REGISTER_OOVPAS_TYPE_PREFIX(Symbol, Prefix, DB_ST_ALL, __VA_ARGS__))
+#define REGISTER_OOVPAS_C_BIND_XREF(Symbol, XRef, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE_BIND_XREF(Symbol, XRef, DB_ST_ALL, __VA_ARGS__))
 
 // See _GET_NTH_ARG comment for details.
 // Even though x86 instructions can be anywhere from 1 to 15 bytes long,
