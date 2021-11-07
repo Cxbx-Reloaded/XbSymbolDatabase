@@ -406,8 +406,7 @@ typedef enum _XRefDatabaseOffset {
     XREF_KT_COUNT,
 //  // END - DO NOT REARRANGE (kernel thunk)
 
-#define XREF_SYMBOL(e)         XREF_##e,
-#define XREF_SYMBOL_EX(e, str) XREF_##e,
+#define XREF_SYMBOL(e) XREF_##e,
 #include "d3d8.def"
 #include "d3d8ltcg.def"
 #include "dsound.def"
@@ -418,7 +417,6 @@ typedef enum _XRefDatabaseOffset {
 #include "xnet.def"
 #include "xonline.def"
 #undef XREF_SYMBOL
-#undef XREF_SYMBOL_EX
 
     XREF_COUNT // XREF_COUNT must always be last.
     // Also, if XREF_COUNT > sizeof(uint16), enlarge struct OOVPA.XRefSaveIndex (and Value somehow)
