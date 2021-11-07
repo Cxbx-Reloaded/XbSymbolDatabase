@@ -205,6 +205,31 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
+// * XInputSetLightgunCalibration
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(XInputSetLightgunCalibration,
+                      4831,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // call [KeRaiseIrqlToDpcLevel]
+    XREF_ENTRY(0x1C, XREF_KT_FUNC_KeRaiseIrqlToDpcLevel),
+
+    // push ebp
+    // mov ebp,esp
+    OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+
+    // rep stosd
+    // stosw
+    OV_MATCH(0x16, 0xF3, 0xAB, 0x66, 0xAB),
+
+    // cmp edx, ebx
+    // setnz cl
+    OV_MATCH(0x27, 0x3B, 0xD3, 0x0F, 0x95, 0xC1),
+    //
+);
+
+// ******************************************************************
 // * XReadMUMetaData
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XReadMUMetaData,
