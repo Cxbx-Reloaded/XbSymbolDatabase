@@ -424,25 +424,6 @@ typedef enum _XRefDatabaseOffset {
     // Also, if XREF_COUNT > sizeof(uint16), enlarge struct OOVPA.XRefSaveIndex (and Value somehow)
 } XRefDatabaseOffset;
 
-// TODO: Actually, this method will not work since there are multiple symbols using same xref which has
-//       different parameters placement. I'm under consideration to remove global strings and use string from each symbol itself.
-//       Unless someone else has new idea to make this useful.
-static const char* xref_str[] = {
-#define XREF_SYMBOL(str)       #str,
-#define XREF_SYMBOL_EX(e, str) #str,
-#include "d3d8.def"
-#include "d3d8ltcg.def"
-#include "dsound.def"
-#include "jvs.def"
-#include "xacteng.def"
-#include "xapilib.def"
-#include "xgraphic.def"
-#include "xnet.def"
-#include "xonline.def"
-#undef XREF_SYMBOL
-#undef XREF_SYMBOL_EX
-};
-
 #define XREF_ADDR_UNDETERMINED -1
 #define XREF_ADDR_NOT_FOUND    ((void*)0)
 #define XREF_ADDR_DERIVE       1
