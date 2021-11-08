@@ -242,6 +242,21 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyXRefJmp(SymbolDatabaseVeri
     return 0;
 }
 
+static unsigned int SymbolDatabaseVerifyContext_VerifySymbolDuplicate(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index)
+{
+    unsigned int error_count = 0;
+
+    if (&context->main.data->SymbolsTable[context->main.symbol_index] != &context->against.data->SymbolsTable[context->against.symbol_index] &&
+        context->main.revision_index == 0 && context->against.revision_index == 0) {
+
+        if (strcmp(table[symbol_index].szFuncName, context->main.data->SymbolsTable[context->main.symbol_index].szFuncName) == 0) {
+            SymbolDatabaseVerifyContext_OOVPAError(context, "Duplicate symbol detected");
+            error_count++;
+        }
+    }
+    return error_count;
+}
+
 static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
 {
     unsigned int error_count = 0;
@@ -260,6 +275,8 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerify
     else {
         context->against.symbol_index = symbol_index;
         context->against.revision_index = revision_index;
+
+        error_count += SymbolDatabaseVerifyContext_VerifySymbolDuplicate(context, table, symbol_index);
     }
 
 
