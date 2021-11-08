@@ -225,6 +225,23 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
     return error_count;
 }
 
+// This function will report as verbose purpose only.
+static unsigned int SymbolDatabaseVerifyContext_VerifyXRefJmp(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
+{
+    LOOVPA* loovpa = (LOOVPA*)table[symbol_index].revisions[revision_index].Oovpa;
+    // Check if signature has both xref and byte registered.
+    if (loovpa->Header.Count == 2 &&
+        loovpa->Header.XRefCount == 1) {
+        // XRefs are always stored at the top whilst byte pairs are after.
+        // Since we only check for one xref and one byte. We can safely use hardcode offset to 1.
+        // Plus we don't need to check the OOVPA's offset value is 0 or not.
+        if (loovpa->Lovp[1].value == 0xE9) {
+            output_message_format(&context->output, XB_OUTPUT_MESSAGE_DEBUG, "%s has one xref and one jump instruction", table[symbol_index].szFuncName);
+        }
+    }
+    return 0;
+}
+
 static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
 {
     unsigned int error_count = 0;
@@ -232,7 +249,7 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerify
         context->main.symbol_index = symbol_index;
         context->main.revision_index = revision_index;
 
-
+        error_count += SymbolDatabaseVerifyContext_VerifyXRefJmp(context, table, symbol_index, revision_index);
     }
     else {
         context->against.symbol_index = symbol_index;
