@@ -225,16 +225,6 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
     return error_count;
 }
 
-
-static unsigned int SymbolDatabaseVerifyContext_VerifyXRefSymbolVsRevision(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
-{
-    unsigned int error_count = 0;
-    if (!internal_IsXRefUnset(table[symbol_index].xref)) {
-        LOOVPA* loovpa = (LOOVPA*)table[symbol_index].revisions[revision_index].Oovpa;
-    }
-    return error_count;
-}
-
 static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
 {
     unsigned int error_count = 0;
@@ -242,7 +232,7 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerify
         context->main.symbol_index = symbol_index;
         context->main.revision_index = revision_index;
 
-        error_count += SymbolDatabaseVerifyContext_VerifyXRefSymbolVsRevision(context, table, symbol_index, revision_index);
+
     }
     else {
         context->against.symbol_index = symbol_index;
