@@ -26,11 +26,8 @@
 // ******************************************************************
 // * D3DDevice_LazySetStateVB
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_LazySetStateVB,
-                      5558,
-
-                      XREF_D3DDevice_LazySetStateVB,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LazySetStateVB,
+                         5558)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
@@ -58,7 +55,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::CDevice::LazySetStateUP
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LazySetStateUP,
+OOVPA_SIG_HEADER_NO_XREF(CDevice_LazySetStateUP,
                          5558)
 OOVPA_SIG_MATCH(
 
@@ -152,11 +149,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::SetFence
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_SetFence,
-                      5558,
-
-                      XREF_D3D_SetFence,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_SetFence,
+                         5558)
 OOVPA_SIG_MATCH(
 
     { 0x07, 0x8B },
@@ -175,11 +169,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::BlockOnTime
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3D_BlockOnTime,
-                      5558,
-
-                      XREF_D3D_BlockOnTime,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnTime,
+                         5558)
 OOVPA_SIG_MATCH(
 
     { 0x02, 0x35 },
@@ -338,11 +329,8 @@ OOVPA_SIG_MATCH(
 // * D3D::MakeRequestedSpace
 // ******************************************************************
 // Generic OOVPA as of 5558 and newer.
-OOVPA_SIG_HEADER_XREF(D3D_MakeRequestedSpace_8,
-                      5558,
-
-                      XREF_D3D_MakeRequestedSpace,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_MakeRequestedSpace_8,
+                         5558)
 OOVPA_SIG_MATCH(
 
     // D3D::MakeRequestedSpace+0x00 : push ecx; push esi
@@ -508,8 +496,6 @@ OOVPA_NO_XREF(D3DDevice_GetTexture2, 5558, 23) // Up to 5659
     {
 #else
 OOVPA_XREF(D3DDevice_GetTexture2, 5558, 1 + 23, // Up to 5659
-
-           XRefNoSaveIndex,
            XRefOne)
 {
 

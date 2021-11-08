@@ -41,7 +41,7 @@
 // ******************************************************************
 typedef struct _OOVPA {
 
-    unsigned char Padding;
+    unsigned char Padding[1];
 
     // This OOVPA field, XRefCount, contains the number of
     // {Offset, XREF_*-enum}-pairs that come before all other
@@ -50,14 +50,7 @@ typedef struct _OOVPA {
     // (Also, see comments at XRefZero and XRefOne.)
     unsigned char XRefCount;
 
-    // This OOVPA field, XRefSaveIndex, contains either an
-    // XREF_* enum value, or the XRefNoSaveIndex marker when there's
-    // no XREF_* enum defined for this OOVPA.
-    unsigned short XRefSaveIndex;
-
     unsigned char DetectSelect;
-
-    unsigned char Padding2[2];
 
     // This OOVPA field, Count, indicates the number of
     // {Offset, Value}-pairs present in the Lovp array,
@@ -112,11 +105,6 @@ typedef struct _LOVP {
 #define XRefThree 3
 #define XRefFour  4
 
-// This XRefNoSaveIndex constant, when set in the OOVPA.XRefSaveIndex
-// field, functions as a marker indicating there's no XREF_* enum
-// defined for the OOVPA.
-#define XRefNoSaveIndex 0xFFFF
-
 // TODO: Rename to OV_XREF.
 // Macro used for storing an XRef {Offset, XREF}-Pair.
 // clang-format off
@@ -158,33 +146,33 @@ typedef struct _LOOVPA {
 #define OOVPA_SIG_MATCH(...) MSVC_EXPAND(COUNTARGS_LOVP(__VA_ARGS__)), { __VA_ARGS__ } }
 // clang-format on
 
-#define OOVPA_SIG_HEADER_XREF_EXTEND(Name, Version, XRefSaveIndex, XRefCount, DetectSelect) \
-    LOOVPA Name##_##Version = { VARPADSET, XRefCount, XRefSaveIndex, DetectSelect, VARPADSET, VARPADSET,
+#define OOVPA_SIG_HEADER_XREF_EXTEND(Name, Version, XRefCount, DetectSelect) \
+    LOOVPA Name##_##Version = { VARPADSET, XRefCount, DetectSelect,
 
-#define OOVPA_XREF_EXTEND(Name, Version, Count, XRefSaveIndex, XRefCount, DetectSelect) \
-    LOOVPA Name##_##Version = { VARPADSET, XRefCount, XRefSaveIndex, DetectSelect, VARPADSET, VARPADSET, Count,
+#define OOVPA_XREF_EXTEND(Name, Version, Count, XRefCount, DetectSelect) \
+    LOOVPA Name##_##Version = { VARPADSET, XRefCount, DetectSelect, Count,
 
 #define OOVPA_SIG_HEADER_XREF_DETECT OOVPA_SIG_HEADER_XREF_EXTEND
 
 #define OOVPA_XREF_DETECT OOVPA_XREF_EXTEND
 
 #define OOVPA_SIG_HEADER_NO_XREF_DETECT(Name, Version, DetectSelect) \
-    OOVPA_SIG_HEADER_XREF_EXTEND(Name, Version, XRefNoSaveIndex, XRefZero, DetectSelect)
+    OOVPA_SIG_HEADER_XREF_EXTEND(Name, Version, XRefZero, DetectSelect)
 
 #define OOVPA_NO_XREF_DETECT(Name, Version, Count, DetectSelect) \
-    OOVPA_XREF_EXTEND(Name, Version, Count, XRefNoSaveIndex, XRefZero, DetectSelect)
+    OOVPA_XREF_EXTEND(Name, Version, Count, XRefZero, DetectSelect)
 
-#define OOVPA_SIG_HEADER_XREF(Name, Version, XRefSaveIndex, XRefCount) \
-    OOVPA_SIG_HEADER_XREF_EXTEND(Name, Version, XRefSaveIndex, XRefCount, DetectDefault)
+#define OOVPA_SIG_HEADER_XREF(Name, Version, XRefCount) \
+    OOVPA_SIG_HEADER_XREF_EXTEND(Name, Version, XRefCount, DetectDefault)
 
-#define OOVPA_XREF(Name, Version, Count, XRefSaveIndex, XRefCount) \
-    OOVPA_XREF_EXTEND(Name, Version, Count, XRefSaveIndex, XRefCount, DetectDefault)
+#define OOVPA_XREF(Name, Version, Count, XRefCount) \
+    OOVPA_XREF_EXTEND(Name, Version, Count, XRefCount, DetectDefault)
 
 #define OOVPA_SIG_HEADER_NO_XREF(Name, Version) \
-    OOVPA_SIG_HEADER_XREF_EXTEND(Name, Version, XRefNoSaveIndex, XRefZero, DetectDefault)
+    OOVPA_SIG_HEADER_XREF_EXTEND(Name, Version, XRefZero, DetectDefault)
 
 #define OOVPA_NO_XREF(Name, Version, Count) \
-    OOVPA_XREF_EXTEND(Name, Version, Count, XRefNoSaveIndex, XRefZero, DetectDefault)
+    OOVPA_XREF_EXTEND(Name, Version, Count, XRefZero, DetectDefault)
 
 // clang-format off
 #define OOVPA_END }
@@ -209,6 +197,7 @@ typedef enum _eDBScanType {
 // * OOVPATable
 // ******************************************************************
 typedef struct _OOVPATable {
+    uint16_t xref;
     char* szFuncName;
     unsigned scan_type;
     unsigned count;
@@ -276,8 +265,10 @@ typedef struct _OOVPATable {
     _9, _8, _7, _6, _5, _4, _3, _2, _1, _0,           \
     N, ...) N
 
-#define REGISTER_OOVPAS_TYPE(Symbol, ScanType, ...)                                                                                              \
-    "" #Symbol,                                                                                                                                  \
+
+#define REGISTER_OOVPAS_TYPE(Symbol, xref, ScanType, ...)                                                                                        \
+    XREF_##xref,                                                                                                                                 \
+        #Symbol,                                                                                                                                 \
         ScanType,                                                                                                                                \
         MSVC_EXPAND(COUNTARGS_USHORT(__VA_ARGS__)),                                                                                              \
         (OOVPARevision[])                                                                                                                        \
@@ -289,12 +280,22 @@ typedef struct _OOVPATable {
                                  REGISTER_OOVPA_4, REGISTER_OOVPA_3, REGISTER_OOVPA_2, REGISTER_OOVPA_1, REGISTER_OOVPA_0)(Symbol, __VA_ARGS__)) \
     }
 
+// TODO: Need to work on support prefix inside macro.
+#define REGISTER_OOVPAS_TYPE_BIND_XREF(Symbol, XRef, ScanType, ...) REGISTER_OOVPAS_TYPE(Symbol, XRef, ScanType, __VA_ARGS__)
+#define REGISTER_OOVPAS_TYPE_PREFIX(Symbol, prefix, ScanType, ...)  REGISTER_OOVPAS_TYPE_BIND_XREF(Symbol, prefix##_##Symbol, ScanType, __VA_ARGS__)
+
 // Use REGISTER_OOVPAS for automate scan only process
-#define REGISTER_OOVPAS(Symbol, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, DB_ST_AUTO, __VA_ARGS__))
+#define REGISTER_OOVPAS(Symbol, ...)                 MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, Symbol, DB_ST_AUTO, __VA_ARGS__))
+#define REGISTER_OOVPAS_PREFIX(Prefix, Symbol, ...)  MSVC_EXPAND(REGISTER_OOVPAS_TYPE_PREFIX(Symbol, Prefix, DB_ST_AUTO, __VA_ARGS__))
+#define REGISTER_OOVPAS_BIND_XREF(Symbol, XRef, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE_BIND_XREF(Symbol, XRef, DB_ST_AUTO, __VA_ARGS__))
 // Use REGISTER_OOVPAS_M for manual scan only process
-#define REGISTER_OOVPAS_M(Symbol, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, DB_ST_MANUAL, __VA_ARGS__))
+#define REGISTER_OOVPAS_M(Symbol, ...)                 MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, Symbol, DB_ST_MANUAL, __VA_ARGS__))
+#define REGISTER_OOVPAS_M_PREFIX(Symbol, Prefix, ...)  MSVC_EXPAND(REGISTER_OOVPAS_TYPE_PREFIX(Symbol, Prefix, DB_ST_MANUAL, __VA_ARGS__))
+#define REGISTER_OOVPAS_M_BIND_XREF(Symbol, XRef, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE_BIND_XREF(Symbol, XRef, DB_ST_MANUAL, __VA_ARGS__))
 // Use REGISTER_OOVPAS_C for combine manual and automate scan process
-#define REGISTER_OOVPAS_C(Symbol, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, DB_ST_ALL, __VA_ARGS__))
+#define REGISTER_OOVPAS_C(Symbol, ...)                 MSVC_EXPAND(REGISTER_OOVPAS_TYPE(Symbol, Symbol, DB_ST_ALL, __VA_ARGS__))
+#define REGISTER_OOVPAS_C_PREFIX(Symbol, Prefix, ...)  MSVC_EXPAND(REGISTER_OOVPAS_TYPE_PREFIX(Symbol, Prefix, DB_ST_ALL, __VA_ARGS__))
+#define REGISTER_OOVPAS_C_BIND_XREF(Symbol, XRef, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE_BIND_XREF(Symbol, XRef, DB_ST_ALL, __VA_ARGS__))
 
 // See _GET_NTH_ARG comment for details.
 // Even though x86 instructions can be anywhere from 1 to 15 bytes long,

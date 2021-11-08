@@ -26,11 +26,8 @@
 // ******************************************************************
 // * XoUpdateLaunchNewImageInternal
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XoUpdateLaunchNewImageInternal,
-                      4627,
-
-                      XREF_XoUpdateLaunchNewImageInternal,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XoUpdateLaunchNewImageInternal,
+                         4627)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
@@ -52,11 +49,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CXo::XOnlineLogon
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CXo_XOnlineLogon,
-                      4627,
-
-                      XREF_CXo_XOnlineLogon,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CXo_XOnlineLogon,
+                         4627)
 OOVPA_SIG_MATCH(
 
     { 0x02, 0xEC },

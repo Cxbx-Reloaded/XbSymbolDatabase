@@ -1,0 +1,87 @@
+// ******************************************************************
+// *
+// *  XbSymbolDatabase is free software; you can redistribute them
+// *  and/or modify them under the terms of the GNU General Public
+// *  License as published by the Free Software Foundation; either
+// *  version 2 of the license, or (at your option) any later version.
+// *
+// *  This program is distributed in the hope that it will be useful,
+// *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+// *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// *  GNU General Public License for more details.
+// *
+// *  You should have recieved a copy of the GNU General Public License
+// *  along with this program; see the file COPYING.
+// *  If not, write to the Free Software Foundation, Inc.,
+// *  59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+// *
+// *  All rights reserved
+// *
+// ******************************************************************
+
+// variables
+XREF_SYMBOL(JVS_SendCommand_String)
+XREF_SYMBOL(JvsBACKUP_Read_String)
+XREF_SYMBOL(JvsBACKUP_Write_String)
+XREF_SYMBOL(JvsEEPROM_Read_String)
+XREF_SYMBOL(JvsEEPROM_Write_String)
+XREF_SYMBOL(JvsFirmwareDownload_String)
+XREF_SYMBOL(JvsFirmwareUpload_String)
+XREF_SYMBOL(JvsNodeReceivePacket_String)
+XREF_SYMBOL(JvsNodeSendPacket_String)
+XREF_SYMBOL(JvsRTC_Read_String)
+XREF_SYMBOL(JvsRTC_Write_String)
+XREF_SYMBOL(JvsScFirmwareDownload_String)
+XREF_SYMBOL(JvsScFirmwareUpload_String)
+XREF_SYMBOL(JvsScReceiveMidi_String)
+XREF_SYMBOL(JvsScReceiveRs323c_String)
+XREF_SYMBOL(JvsScSendMidi_String)
+XREF_SYMBOL(JvsScSendRs323c_String)
+
+// functions
+XREF_SYMBOL(JVS_SendCommand)
+XREF_SYMBOL(JVS_SendCommand2)
+XREF_SYMBOL(JVS_SendCommand3)
+XREF_SYMBOL(JvsBACKUP_Read)
+XREF_SYMBOL(JvsBACKUP_Read2)
+XREF_SYMBOL(JvsBACKUP_Read3)
+XREF_SYMBOL(JvsBACKUP_Write)
+XREF_SYMBOL(JvsBACKUP_Write2)
+XREF_SYMBOL(JvsEEPROM_Read)
+XREF_SYMBOL(JvsEEPROM_Read2)
+XREF_SYMBOL(JvsEEPROM_Read3)
+XREF_SYMBOL(JvsEEPROM_Write)
+XREF_SYMBOL(JvsEEPROM_Write2)
+XREF_SYMBOL(JvsEEPROM_Write3)
+XREF_SYMBOL(JvsFirmwareDownload)
+XREF_SYMBOL(JvsFirmwareDownload2)
+XREF_SYMBOL(JvsFirmwareDownload3)
+XREF_SYMBOL(JvsFirmwareDownload4)
+XREF_SYMBOL(JvsFirmwareUpload)
+XREF_SYMBOL(JvsFirmwareUpload2)
+XREF_SYMBOL(JvsFirmwareUpload3)
+XREF_SYMBOL(JvsFirmwareUpload4)
+XREF_SYMBOL(JvsNodeReceivePacket)
+XREF_SYMBOL(JvsNodeReceivePacket2)
+XREF_SYMBOL(JvsNodeSendPacket)
+XREF_SYMBOL(JvsNodeSendPacket2)
+XREF_SYMBOL(JvsRTC_Read)
+XREF_SYMBOL(JvsRTC_Read2)
+XREF_SYMBOL(JvsRTC_Read3)
+XREF_SYMBOL(JvsRTC_Write)
+XREF_SYMBOL(JvsRTC_Write2)
+XREF_SYMBOL(JvsScFirmwareDownload)
+XREF_SYMBOL(JvsScFirmwareDownload2)
+XREF_SYMBOL(JvsScFirmwareDownload3)
+XREF_SYMBOL(JvsScFirmwareDownload4)
+XREF_SYMBOL(JvsScFirmwareUpload)
+XREF_SYMBOL(JvsScFirmwareUpload2)
+XREF_SYMBOL(JvsScFirmwareUpload3)
+XREF_SYMBOL(JvsScReceiveMidi)
+XREF_SYMBOL(JvsScReceiveMidi2)
+XREF_SYMBOL(JvsScReceiveRs323c)
+XREF_SYMBOL(JvsScReceiveRs323c2)
+XREF_SYMBOL(JvsScSendMidi)
+XREF_SYMBOL(JvsScSendMidi2)
+XREF_SYMBOL(JvsScSendRs323c)
+XREF_SYMBOL(JvsScSendRs323c2)

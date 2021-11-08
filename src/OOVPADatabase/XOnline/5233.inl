@@ -26,11 +26,8 @@
 // ******************************************************************
 // * CXo::XOnlineMatchSessionUpdate
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSessionUpdate,
-                      5233,
-
-                      XREF_CXo_XOnlineMatchSessionUpdate,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CXo_XOnlineMatchSessionUpdate,
+                         5233)
 OOVPA_SIG_MATCH(
 
     // push ebp

@@ -26,11 +26,8 @@
 // ******************************************************************
 // * D3DDevice_CreateTexture2
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_CreateTexture2,
-                      4831,
-
-                      XREF_D3DDevice_CreateTexture2,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CreateTexture2,
+                         4831)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
@@ -57,9 +54,9 @@ OOVPA_SIG_MATCH(
 OOVPA_NO_XREF(D3DDevice_SetTexture, 4831, 15)
     {
 #else
-OOVPA_XREF(D3DDevice_SetTexture, 4831, 1 + 15,
-
-           XRefNoSaveIndex,
+OOVPA_XREF(D3DDevice_SetTexture,
+           4831,
+           1 + 15,
            XRefOne)
     {
 
@@ -125,8 +122,6 @@ OOVPA_END;
 // Up to 5849, excluding 5455
 OOVPA_SIG_HEADER_XREF(D3DDevice_PersistDisplay,
                       4831,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

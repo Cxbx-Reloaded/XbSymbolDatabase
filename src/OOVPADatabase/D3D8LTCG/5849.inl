@@ -188,11 +188,8 @@ OOVPA_SIG_MATCH(
 // * D3D_BlockOnTime
 // ******************************************************************
 //C747101001040089
-OOVPA_SIG_HEADER_XREF(D3D_BlockOnTime,
-                      1048,
-
-                      XREF_D3D_BlockOnTime,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnTime,
+                         1048)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
@@ -213,11 +210,8 @@ OOVPA_SIG_MATCH(
 // * D3D_BlockOnTime
 // ******************************************************************
 //C747101001040089 ...C20400
-OOVPA_SIG_HEADER_XREF(D3D_BlockOnTime_4,
-                      2060,
-
-                      XREF_D3D_BlockOnTime,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnTime_4,
+                         2060)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
@@ -345,8 +339,6 @@ OOVPA_SIG_MATCH(
 //81E30000FFFFB901 ...C3
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex_0,
                       2058,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -769,11 +761,8 @@ OOVPA_SIG_MATCH(
 // * D3D_MakeRequestedSpace
 // ******************************************************************
 //81C5004000003BE9
-OOVPA_SIG_HEADER_XREF(D3D_MakeRequestedSpace_8,
-                      1036,
-
-                      XREF_D3D_MakeRequestedSpace,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_MakeRequestedSpace_8,
+                         1036)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x51 },
@@ -819,8 +808,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource_0__LTCG_eax_StreamNumber_edi_pStreamData_ebx_Stride,
                       2058,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -840,8 +827,6 @@ OOVPA_SIG_MATCH(
 //7406810300000800 ...C20400
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource_4,
                       2058,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

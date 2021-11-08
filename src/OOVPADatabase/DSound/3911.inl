@@ -27,11 +27,8 @@
 // * DirectSoundEnterCriticalSection
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(DirectSoundEnterCriticalSection,
-                      3911,
-
-                      XREF_DirectSoundEnterCriticalSection,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(DirectSoundEnterCriticalSection,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x02, 0xB6 },
@@ -73,11 +70,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxAPU_ServiceDeferredCommandsLow
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxAPU_ServiceDeferredCommandsLow,
-                      3911,
-
-                      XREF_CMcpxAPU_ServiceDeferredCommandsLow,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_ServiceDeferredCommandsLow,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxAPU_ServiceDeferredCommandsLow+0x00 : push ebx; push ebp
@@ -100,8 +94,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSound_DoWork,
                       3911,
-
-                      XREF_CDirectSound_DoWork,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -129,8 +121,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(DirectSoundDoWork,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -156,11 +146,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound::CreateSoundBuffer
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_CreateSoundBuffer,
-                      3911,
-
-                      XREF_CDirectSound_CreateSoundBuffer,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_CreateSoundBuffer,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDirectSound_CreateSoundBuffer+0x00 : push ebp
@@ -198,8 +185,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_CreateSoundBuffer,
                       3911,
-
-                      XREF_IDirectSound_CreateSoundBuffer,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -232,8 +217,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(DirectSoundCreateBuffer,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -263,11 +246,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound::CreateSoundStream
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_CreateSoundStream,
-                      3911,
-
-                      XREF_CDirectSound_CreateSoundStream,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_CreateSoundStream,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDirectSound_CreateSoundStream+0x2D : and esi, 0x7FF8FFF2
@@ -302,8 +282,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_CreateSoundStream,
                       3911,
-
-                      XREF_IDirectSound_CreateSoundStream,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -332,8 +310,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(DirectSoundCreateStream,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -461,11 +437,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxVoiceClient_SetVolume
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_SetVolume,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_SetVolume,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_SetVolume,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxVoiceClient_SetVolume+0x26 : mov ecx, [esi+0xE0]
@@ -492,8 +465,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetVolume,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetVolume,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -526,8 +497,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetVolume,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -554,11 +523,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxBuffer_Stop
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxBuffer_Stop,
-                      3911,
-
-                      XREF_CMcpxBuffer_Stop,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxBuffer_Stop,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxBuffer_Stop+0x08 : or eax, dword ptr [esp+10h]
@@ -586,8 +552,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_StopEx,
                       3911,
-
-                      XREF_CDirectSoundBuffer_StopEx,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -619,8 +583,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_StopEx,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -643,8 +605,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_Stop,
                       3911,
-
-                      XREF_CDirectSoundBuffer_Stop,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -676,8 +636,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_Stop,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -708,11 +666,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSoundBuffer_SetLoopRegion
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetLoopRegion,
-                      3911,
-
-                      XREF_CDirectSoundBuffer_SetLoopRegion,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundBuffer_SetLoopRegion,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDirectSoundBuffer_SetLoopRegion+0x20 : cmp edx, [ecx+0x54]
@@ -741,8 +696,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetLoopRegion,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -769,11 +722,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxBuffer_Play
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxBuffer_Play,
-                      3911,
-
-                      XREF_CMcpxBuffer_Play,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxBuffer_Play,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x06, 0x56 },
@@ -793,8 +743,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_PlayEx,
                       3911,
-
-                      XREF_CDirectSoundBuffer_PlayEx,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -819,8 +767,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_Play,
                       3911,
-
-                      XREF_CDirectSoundBuffer_Play,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -842,8 +788,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_Play,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -883,8 +827,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_PlayEx,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -903,11 +845,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxBuffer_GetCurrentPosition
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxBuffer_GetCurrentPosition,
-                      3911,
-
-                      XREF_CMcpxBuffer_GetCurrentPosition,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxBuffer_GetCurrentPosition,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxBuffer_GetCurrentPosition+0x12 : mov eax, [esi+XX]
@@ -945,8 +884,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_GetCurrentPosition,
                       3911,
-
-                      XREF_CDirectSoundBuffer_GetCurrentPosition,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -975,8 +912,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_GetCurrentPosition,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1001,11 +936,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxBuffer_GetStatus
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxBuffer_GetStatus,
-                      3911,
-
-                      XREF_CMcpxBuffer_GetStatus,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxBuffer_GetStatus,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxBuffer_GetStatus+0x10 : mov eax, [ebp+0x08]
@@ -1038,8 +970,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_GetStatus,
                       3911,
-
-                      XREF_CDirectSoundBuffer_GetStatus,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1069,8 +999,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_GetStatus,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1097,11 +1025,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxVoiceClient::SetFilter
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_SetFilter,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_SetFilter,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_SetFilter,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x0E, 0xE8 },
@@ -1126,8 +1051,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetFilter,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetFilter,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1150,8 +1073,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetFilter,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1178,11 +1099,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxVoiceClient::SetLFO
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_SetLFO,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_SetLFO,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_SetLFO,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x10, 0x8B },
@@ -1207,8 +1125,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetLFO,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetLFO,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1232,8 +1148,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetLFO,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1252,11 +1166,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxVoiceClient::SetEG
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_SetEG,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_SetEG,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_SetEG,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x10, 0x8B },
@@ -1281,8 +1192,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetEG,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetEG,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1305,8 +1214,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetEG,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1328,8 +1235,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetOutputBuffer,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1350,8 +1255,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetMixBinVolumes,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetMixBinVolumes,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1372,8 +1275,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetMixBinVolumes_12,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1395,8 +1296,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetMixBinVolumes_12,
                       3911,
-
-                      XREF_CDirectSoundStream_SetMixBinVolumes_12,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1417,11 +1316,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxAPU_Commit3dSettings
 // ******************************************************************
 // Generic OOVPA as of 3911 to 4039; 4134 and newer no longer have it.
-OOVPA_SIG_HEADER_XREF(CMcpxAPU_Commit3dSettings,
-                      3911,
-
-                      XREF_CMcpxAPU_Commit3dSettings,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_Commit3dSettings,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxAPU_Commit3dSettings+0x56 : fld dword ptr [eax+0x174]
@@ -1448,8 +1344,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSound_CommitDeferredSettings,
                       3911,
-
-                      XREF_CDirectSound_CommitDeferredSettings,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1481,8 +1375,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSound_CommitDeferredSettings,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1507,11 +1399,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound_SetOrientation
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_SetOrientation,
-                      3911,
-
-                      XREF_CDirectSound_SetOrientation,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_SetOrientation,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDirectSound_SetOrientation+0x00 : push ebp
@@ -1538,8 +1427,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSound_SetOrientation,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1637,11 +1524,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxVoiceClient_SetPitch
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_SetPitch,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_SetPitch,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_SetPitch,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxVoiceClient_SetPitch+0x21 : lea edi, [esi+0xB4]
@@ -1668,8 +1552,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetPitch,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetPitch,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1702,8 +1584,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetPitch,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1730,11 +1610,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XAudioCalculatePitch
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XAudioCalculatePitch,
-                      3911,
-
-                      XREF_XAudioCalculatePitch,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XAudioCalculatePitch,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
@@ -1779,11 +1656,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CSensaura3d::GetFullHRTFFilterPair
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CSensaura3d_GetFullHRTFFilterPair,
-                      3911,
-
-                      XREF_CSensaura3d_GetFullHRTFFilterPair,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CSensaura3d_GetFullHRTFFilterPair,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x1E, 0xEB },
@@ -1801,8 +1675,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(DirectSoundUseFullHRTF,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1822,11 +1694,8 @@ OOVPA_SIG_MATCH(
 // * CSensaura3d_GetLiteHRTFFilterPair
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer
-OOVPA_SIG_HEADER_XREF(CSensaura3d_GetLiteHRTFFilterPair,
-                      3911,
-
-                      XREF_CSensaura3d_GetLiteHRTFFilterPair,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CSensaura3d_GetLiteHRTFFilterPair,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // push ebp
@@ -1853,8 +1722,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(DirectSoundUseLightHRTF,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1875,8 +1742,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetFrequency,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetFrequency,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1904,8 +1769,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetFrequency,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -1930,11 +1793,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxVoiceClient::SetMixBins
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_SetMixBins,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_SetMixBins,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_SetMixBins,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxVoiceClient_SetMixBins+0x1D : lea eax, [esi+0x84]
@@ -1972,8 +1832,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetMixBins,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetMixBins,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2001,8 +1859,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetMixBins,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2027,11 +1883,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSoundVoice::SetOutputBuffer
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetOutputBuffer,
-                      3911,
-
-                      XREF_CDirectSoundVoice_SetOutputBuffer,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundVoice_SetOutputBuffer,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x0B, 0xF7 },
@@ -2049,8 +1902,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetOutputBuffer,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetOutputBuffer,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2086,8 +1937,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetBufferData,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetBufferData,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -2123,8 +1972,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetBufferData,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2151,11 +1998,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSoundBuffer::SetNotificationPositions
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetNotificationPositions,
-                      3911,
-
-                      XREF_CDirectSoundBuffer_SetNotificationPositions,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundBuffer_SetNotificationPositions,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x09, 0x24 },
@@ -2174,8 +2018,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetNotificationPositions,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2197,8 +2039,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetHeadroom,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetHeadroom,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2231,8 +2071,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetHeadroom,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2261,8 +2099,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_Pause,
                       3911,
-
-                      XREF_CDirectSoundStream_Pause,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2344,11 +2180,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxStream_Flush
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxStream_Flush,
-                      3911,
-
-                      XREF_CMcpxStream_Flush,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxStream_Flush,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x0D, 0x03 },
@@ -2381,8 +2214,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_Flush,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2411,8 +2242,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CMcpxStream_Discontinuity,
                       3911,
-
-                      XREF_CMcpxStream_Discontinuity,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2443,8 +2272,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_Discontinuity,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2510,11 +2337,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxVoiceClient_Set3dMaxDistance
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Set3dMaxDistance,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_Set3dMaxDistance,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Set3dMaxDistance,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxVoiceClient_Set3dMaxDistance+0x04 : or byte ptr [ecx+0x80], 0x04
@@ -2542,8 +2366,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetMaxDistance,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetMaxDistance,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2581,8 +2403,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetMaxDistance,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetMaxDistance,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2605,8 +2425,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetMaxDistance,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2627,8 +2445,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetMaxDistance,
                       3911,
-
-                      XREF_CDirectSoundStream_SetMaxDistance,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2658,8 +2474,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetMaxDistance,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2688,11 +2502,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxVoiceClient_Set3dMinDistance
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Set3dMinDistance,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_Set3dMinDistance,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Set3dMinDistance,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxVoiceClient_Set3dMinDistance+0x04 : or byte ptr [ecx+0x80], 0x04
@@ -2720,8 +2531,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetMinDistance,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetMinDistance,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2759,8 +2568,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetMinDistance,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetMinDistance,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2783,8 +2590,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetMinDistance,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2805,8 +2610,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetMinDistance,
                       3911,
-
-                      XREF_CDirectSoundStream_SetMinDistance,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2836,8 +2639,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetMinDistance,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2866,11 +2667,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxVoiceClient_Set3dConeOutsideVolume
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Set3dConeOutsideVolume,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_Set3dConeOutsideVolume,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Set3dConeOutsideVolume,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxVoiceClient_Set3dConeOutsideVolume+0x04 : or dword ptr [eax+0x80], 0x10
@@ -2898,8 +2696,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetConeOutsideVolume,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetConeOutsideVolume,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2930,8 +2726,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetConeOutsideVolume,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetConeOutsideVolume,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2948,8 +2742,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetConeOutsideVolume,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -2977,8 +2769,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetConeOutsideVolume,
                       3911,
-
-                      XREF_CDirectSoundStream_SetConeOutsideVolume,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3007,8 +2797,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Commit3dSettings,
                       3911,
-
-                      XREF_CMcpxVoiceClient_Commit3dSettings,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -3043,8 +2831,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Set3dParameters,
                       3911,
-
-                      XREF_CMcpxVoiceClient_Set3dParameters,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3069,8 +2855,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetAllParameters,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetAllParameters,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3101,8 +2885,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetAllParameters,
                       3911,
-
-                      XREF_CDirectSoundStream_SetAllParameters,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3131,8 +2913,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetAllParameters,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3152,11 +2932,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSoundVoice::SetConeAngles
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetConeAngles,
-                      3911,
-
-                      XREF_CDirectSoundVoice_SetConeAngles,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundVoice_SetConeAngles,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x07, 0x8B },
@@ -3175,8 +2952,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetConeAngles,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3197,8 +2972,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetConeAngles,
                       3911,
-
-                      XREF_CDirectSoundStream_SetConeAngles,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3226,11 +2999,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxVoiceClient_Set3dConeOrientation
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Set3dConeOrientation,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_Set3dConeOrientation,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Set3dConeOrientation,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxVoiceClient_Set3dConeOrientation+0x0C : or byte ptr [ecx+0x80], 0x18
@@ -3257,8 +3027,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetConeOrientation,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetConeOrientation,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3295,8 +3063,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetConeOrientation,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetConeOrientation,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3326,8 +3092,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetConeOrientation,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3355,8 +3119,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetConeOrientation,
                       3911,
-
-                      XREF_CDirectSoundStream_SetConeOrientation,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3384,8 +3146,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetConeOrientation,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3412,11 +3172,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxVoiceClient::Set3dMode
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Set3dMode,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_Set3dMode,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Set3dMode,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxVoiceClient_Set3dMode+0x04 : or byte ptr [ecx+0x80], 0xFF
@@ -3444,8 +3201,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetMode,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetMode,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3474,8 +3229,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetMode,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3504,8 +3257,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetMode,
                       3911,
-
-                      XREF_CDirectSoundStream_SetMode,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3530,11 +3281,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxVoiceClient_Set3dPosition
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Set3dPosition,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_Set3dPosition,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Set3dPosition,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxVoiceClient_Set3dPosition+0x0C : or byte ptr [ecx+0x80], 0xFF
@@ -3561,8 +3309,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetPosition,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetPosition,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3599,8 +3345,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetPosition,
                       3911,
-
-                      XREF_CDirectSoundStream_SetPosition,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3628,8 +3372,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetPosition,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3657,8 +3399,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetPosition,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetPosition,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3687,8 +3427,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetPosition,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3715,11 +3453,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxAPU::Set3dPosition
 // ******************************************************************
 // Generic OOVPA as of 3911 to 4039; 4134 and newer no longer have it.
-OOVPA_SIG_HEADER_XREF(CMcpxAPU_Set3dPosition,
-                      3911,
-
-                      XREF_CMcpxAPU_Set3dPosition,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_Set3dPosition,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxAPU_Set3dPosition+0x0C : movsd; movsd; movsd
@@ -3747,8 +3482,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSound_SetPosition,
                       3911,
-
-                      XREF_CDirectSound_SetPosition,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3778,8 +3511,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_SetPosition,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3810,11 +3541,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxVoiceClient_Set3dVelocity
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Set3dVelocity,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_Set3dVelocity,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Set3dVelocity,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxVoiceClient_Set3dVelocity+0x09 : movsd; movsd; movsd
@@ -3842,8 +3570,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetVelocity,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetVelocity,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3880,8 +3606,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetVelocity,
                       3911,
-
-                      XREF_CDirectSoundStream_SetVelocity,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3909,8 +3633,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetVelocity,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3938,8 +3660,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetVelocity,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetVelocity,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3968,8 +3688,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetVelocity,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -3997,8 +3715,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetOutputBuffer,
                       3911,
-
-                      XREF_CDirectSoundStream_SetOutputBuffer,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4030,11 +3746,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxVoiceClient::SetI3DL2Source
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_SetI3DL2Source,
-                      3911,
-
-                      XREF_CMcpxVoiceClient_SetI3DL2Source,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_SetI3DL2Source,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x04, 0x08 },
@@ -4052,8 +3765,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetI3DL2Source,
                       3911,
-
-                      XREF_CDirectSoundVoice_SetI3DL2Source,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4075,8 +3786,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetI3DL2Source,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4098,8 +3807,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_SetI3DL2Source,
                       3911,
-
-                      XREF_CDirectSoundStream_SetI3DL2Source,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4121,8 +3828,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_Lock,
                       3911,
-
-                      XREF_CDirectSoundBuffer_Lock,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4154,8 +3859,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_Lock,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4181,11 +3884,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxBuffer_SetCurrentPosition
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxBuffer_SetCurrentPosition,
-                      3911,
-
-                      XREF_CMcpxBuffer_SetCurrentPosition,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxBuffer_SetCurrentPosition,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxBuffer_SetCurrentPosition+0x25 : mov eax, [esi+0x148]
@@ -4212,8 +3912,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetCurrentPosition,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetCurrentPosition,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4247,8 +3945,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_SetCurrentPosition,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4275,11 +3971,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * DSound_CRefCount_AddRef
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(DSound_CRefCount_AddRef,
-                      3911,
-
-                      XREF_DSound_CRefCount_AddRef,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(DSound_CRefCount_AddRef,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // DSound_CRefCount_AddRef+0x04 : add eax, 4
@@ -4309,8 +4002,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_AddRef,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4337,11 +4028,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * DSound_CRefCount_Release
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(DSound_CRefCount_Release,
-                      3911,
-
-                      XREF_DSound_CRefCount_Release,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(DSound_CRefCount_Release,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // DSound_CRefCount_Release+0x04 : add eax, 4
@@ -4371,8 +4059,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_Release,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4399,11 +4085,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound::GetCaps
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_GetCaps,
-                      3911,
-
-                      XREF_CDirectSound_GetCaps,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_GetCaps,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x08, 0x8B },
@@ -4423,8 +4106,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_GetCaps,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4443,11 +4124,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound_GetSpeakerConfig
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_GetSpeakerConfig,
-                      3911,
-
-                      XREF_CDirectSound_GetSpeakerConfig,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_GetSpeakerConfig,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x8B },
@@ -4481,8 +4159,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_GetSpeakerConfig,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4501,11 +4177,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound_DownloadEffectsImage
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_DownloadEffectsImage,
-                      3911,
-
-                      XREF_CDirectSound_DownloadEffectsImage,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_DownloadEffectsImage,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDirectSound_DownloadEffectsImage+0x00 : push ebp
@@ -4553,8 +4226,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_DownloadEffectsImage,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4584,11 +4255,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound_GetEffectData
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_GetEffectData,
-                      3911,
-
-                      XREF_CDirectSound_GetEffectData,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_GetEffectData,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDirectSound_GetEffectData+0x00 : push ebp
@@ -4636,8 +4304,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_GetEffectData,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4667,11 +4333,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound_SetEffectData
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_SetEffectData,
-                      3911,
-
-                      XREF_CDirectSound_SetEffectData,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_SetEffectData,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDirectSound_GetEffectData+0x00 : push ebp
@@ -4724,8 +4387,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_SetEffectData,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4755,11 +4416,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound_CommitEffectData
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_CommitEffectData,
-                      3911,
-
-                      XREF_CDirectSound_CommitEffectData,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_CommitEffectData,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDirectSound_CommitEffectData+0x00 : push esi
@@ -4794,8 +4452,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_CommitEffectData,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4819,11 +4475,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSound::EnableHeadphones
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSound_EnableHeadphones,
-                      3911,
-
-                      XREF_CDirectSound_EnableHeadphones,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_EnableHeadphones,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
@@ -4857,8 +4510,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_EnableHeadphones,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4884,11 +4535,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxAPU_SetMixBinHeadroom
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxAPU_SetMixBinHeadroom,
-                      3911,
-
-                      XREF_CMcpxAPU_SetMixBinHeadroom,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_SetMixBinHeadroom,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxAPU_SetMixBinHeadroom+0x04 : cmp dword ptr ds:[0xFE820010], 4
@@ -4916,8 +4564,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSound_SetMixBinHeadroom,
                       3911,
-
-                      XREF_CDirectSound_SetMixBinHeadroom,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4946,8 +4592,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_SetMixBinHeadroom,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -4980,11 +4624,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // Generic OOVPA as of 3911 to 4039; 4134 and newer no longer have it.
 // TODO:
-OOVPA_SIG_HEADER_XREF(CMcpxAPU_Set3dParameters,
-                      3911,
-
-                      XREF_CMcpxAPU_Set3dParameters,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_Set3dParameters,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x05, 0x57 },
@@ -5002,8 +4643,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSound_SetAllParameters,
                       3911,
-
-                      XREF_CDirectSound_SetAllParameters,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5026,8 +4665,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_SetAllParameters,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5058,11 +4695,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxAPU::Set3dDistanceFactor
 // ******************************************************************
 // Generic OOVPA as of 3911 to 4039; 4134 and newer no longer have it.
-OOVPA_SIG_HEADER_XREF(CMcpxAPU_Set3dDistanceFactor,
-                      3911,
-
-                      XREF_CMcpxAPU_Set3dDistanceFactor,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_Set3dDistanceFactor,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // Unique value difference against CMcpxAPU_Set3dDopperFactor's unique value.
@@ -5093,8 +4727,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSound_SetDistanceFactor,
                       3911,
-
-                      XREF_CDirectSound_SetDistanceFactor,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5126,8 +4758,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_SetDistanceFactor,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5158,11 +4788,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxAPU::Set3dDopplerFactor
 // ******************************************************************
 // Generic OOVPA as of 3911 to 4039; 4134 and newer no longer have it.
-OOVPA_SIG_HEADER_XREF(CMcpxAPU_Set3dDopplerFactor,
-                      3911,
-
-                      XREF_CMcpxAPU_Set3dDopplerFactor,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_Set3dDopplerFactor,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // Unique value difference against CMcpxAPU_Set3dDistanceFactor's unique value.
@@ -5193,8 +4820,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSound_SetDopplerFactor,
                       3911,
-
-                      XREF_CDirectSound_SetDopplerFactor,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5217,8 +4842,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_SetDopplerFactor,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5248,11 +4871,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxAPU::Set3dVelocity
 // ******************************************************************
 // Generic OOVPA as of 3911 to 4039; 4134 and newer no longer have it.
-OOVPA_SIG_HEADER_XREF(CMcpxAPU_Set3dVelocity,
-                      3911,
-
-                      XREF_CMcpxAPU_Set3dVelocity,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_Set3dVelocity,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxAPU_Set3dVelocity+0x0C : movsd; movsd; movsd
@@ -5280,8 +4900,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSound_SetVelocity,
                       3911,
-
-                      XREF_CDirectSound_SetVelocity,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5311,8 +4929,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_SetVelocity,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5343,11 +4959,8 @@ OOVPA_SIG_MATCH(
 // * CDirectSound_GetTime
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer
-OOVPA_SIG_HEADER_XREF(CDirectSound_GetTime,
-                      3911,
-
-                      XREF_CDirectSound_GetTime,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSound_GetTime,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDirectSound_GetTime+0x00 : push dword ptr [esp+8]
@@ -5374,8 +4987,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSound_GetTime,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5401,11 +5012,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxAPU::Set3dRolloffFactor
 // ******************************************************************
 // Generic OOVPA as of 3911 to 4039; 4134 and newer no longer have it.
-OOVPA_SIG_HEADER_XREF(CMcpxAPU_Set3dRolloffFactor,
-                      3911,
-
-                      XREF_CMcpxAPU_Set3dRolloffFactor,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_Set3dRolloffFactor,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxAPU_Set3dRolloffFactor+0x04 : or dword ptr [ecx+0x01B4], 0x04
@@ -5434,8 +5042,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSound_SetRolloffFactor,
                       3911,
-
-                      XREF_CDirectSound_SetRolloffFactor,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5467,8 +5073,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSound_SetRolloffFactor,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5499,11 +5103,8 @@ OOVPA_SIG_MATCH(
 // * CMcpxAPU::SetI3DL2Listener
 // ******************************************************************
 // Generic OOVPA as of 3911 to 4039; 4134 and newer no longer have it.
-OOVPA_SIG_HEADER_XREF(CMcpxAPU_SetI3DL2Listener,
-                      3911,
-
-                      XREF_CMcpxAPU_SetI3DL2Listener,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_SetI3DL2Listener,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxAPU_SetI3DL2Listener+0x08 : push 0x0C; pop ecx
@@ -5532,8 +5133,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSound_SetI3DL2Listener,
                       3911,
-
-                      XREF_CDirectSound_SetI3DL2Listener,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5555,8 +5154,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(IDirectSound_SetI3DL2Listener,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -5579,8 +5176,6 @@ OOVPA_SIG_MATCH(
 // NOTE: IDirectSoundStream_SetVolume has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetVolume,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectFirst)
 OOVPA_SIG_MATCH(
@@ -5611,8 +5206,6 @@ OOVPA_SIG_MATCH(
 // NOTE: CDirectSoundStream_SetVolume has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetVolume,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectSecond)
 OOVPA_SIG_MATCH(
@@ -5643,8 +5236,6 @@ OOVPA_SIG_MATCH(
 // NOTE: IDirectSoundStream_SetPitch has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetPitch,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectFirst)
 OOVPA_SIG_MATCH(
@@ -5675,8 +5266,6 @@ OOVPA_SIG_MATCH(
 // NOTE: CDirectSoundStream_SetPitch has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetPitch,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectSecond)
 OOVPA_SIG_MATCH(
@@ -5707,8 +5296,6 @@ OOVPA_SIG_MATCH(
 // NOTE: IDirectSoundStream_SetLFO has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetLFO,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectFirst)
 OOVPA_SIG_MATCH(
@@ -5739,8 +5326,6 @@ OOVPA_SIG_MATCH(
 // NOTE: CDirectSoundStream_SetLFO has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetLFO,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectSecond)
 OOVPA_SIG_MATCH(
@@ -5771,8 +5356,6 @@ OOVPA_SIG_MATCH(
 // NOTE: IDirectSoundStream_SetEG has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetEG,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectFirst)
 OOVPA_SIG_MATCH(
@@ -5803,8 +5386,6 @@ OOVPA_SIG_MATCH(
 // NOTE: CDirectSoundStream_SetEG has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetEG,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectSecond)
 OOVPA_SIG_MATCH(
@@ -5835,8 +5416,6 @@ OOVPA_SIG_MATCH(
 // NOTE: IDirectSoundStream_SetFilter has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetFilter,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectFirst)
 OOVPA_SIG_MATCH(
@@ -5866,8 +5445,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetFilter,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectSecond)
 OOVPA_SIG_MATCH(
@@ -5898,8 +5475,6 @@ OOVPA_SIG_MATCH(
 // NOTE: IDirectSoundStream_SetHeadroom has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetHeadroom,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectFirst)
 OOVPA_SIG_MATCH(
@@ -5930,8 +5505,6 @@ OOVPA_SIG_MATCH(
 // NOTE: CDirectSoundStream_SetHeadroom has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetHeadroom,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectSecond)
 OOVPA_SIG_MATCH(
@@ -5962,8 +5535,6 @@ OOVPA_SIG_MATCH(
 // NOTE: IDirectSoundStream_SetFrequency has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetFrequency,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectFirst)
 OOVPA_SIG_MATCH(
@@ -5994,8 +5565,6 @@ OOVPA_SIG_MATCH(
 // NOTE: CDirectSoundStream_SetFrequency has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetFrequency,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectSecond)
 OOVPA_SIG_MATCH(
@@ -6026,8 +5595,6 @@ OOVPA_SIG_MATCH(
 // NOTE: IDirectSoundStream_SetMixBins has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(CDirectSoundStream_SetMixBins,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectFirst)
 OOVPA_SIG_MATCH(
@@ -6058,8 +5625,6 @@ OOVPA_SIG_MATCH(
 // NOTE: CDirectSoundStream_SetMixBins has the same asm code as this function.
 OOVPA_SIG_HEADER_XREF_DETECT(IDirectSoundStream_SetMixBins,
                              3911,
-
-                             XRefNoSaveIndex,
                              XRefOne,
                              DetectSecond)
 OOVPA_SIG_MATCH(
@@ -6089,8 +5654,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetOutputBuffer,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6107,8 +5670,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetMixBinVolumes_12,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6125,8 +5686,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetAllParameters,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6143,8 +5702,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetConeAngles,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6161,8 +5718,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetConeOutsideVolume,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6179,8 +5734,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetMode,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6198,8 +5751,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_SetI3DL2Source,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6217,8 +5768,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_Pause,
                       3911,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6233,11 +5782,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxStream_Pause
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxStream_Pause,
-                      3911,
-
-                      XREF_CMcpxStream_Pause,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxStream_Pause,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxStream_Pause+0x00 : push ebp
@@ -6346,11 +5892,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XFileCreateMediaObject
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XFileCreateMediaObject,
-                      3911,
-
-                      XRefNoSaveIndex,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XFileCreateMediaObject,
+                         3911)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x55 },
@@ -6404,11 +5947,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSoundBufferSettings::SetBufferData
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSoundBufferSettings_SetBufferData,
-                      3911,
-
-                      XREF_CDirectSoundBufferSettings_SetBufferData,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundBufferSettings_SetBufferData,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDirectSoundBufferSettings::SetBufferData+0x00 : push ebp
@@ -6441,11 +5981,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxBuffer::SetBufferData
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxBuffer_SetBufferData,
-                      3911,
-
-                      XREF_CMcpxBuffer_SetBufferData,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CMcpxBuffer_SetBufferData,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CMcpxBuffer::SetBufferData+0x00 : mov edx,[ecx+0x000000XX]
@@ -6476,8 +6013,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetAllParameters,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetAllParameters,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6494,8 +6029,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetConeAngles,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetConeAngles,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6512,8 +6045,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetEG,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetEG,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6530,8 +6061,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetFilter,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetFilter,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6548,8 +6077,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetHeadroom,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetHeadroom,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6566,8 +6093,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetFrequency,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetFrequency,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6584,8 +6109,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetI3DL2Source,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetI3DL2Source,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6602,8 +6125,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetLFO,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetLFO,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6620,8 +6141,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetMixBins,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetMixBins,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6638,8 +6157,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetMixBinVolumes,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetMixBinVolumes,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6656,8 +6173,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetMode,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetMode,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6674,8 +6189,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetPitch,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetPitch,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6692,8 +6205,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetVolume,
                       3911,
-
-                      XREF_CDirectSoundBuffer_SetVolume,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -6709,11 +6220,8 @@ OOVPA_SIG_MATCH(
 // * CDirectSoundStream::Constructor
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer
-OOVPA_SIG_HEADER_XREF(CDirectSoundStream_Constructor,
-                      3911,
-
-                      XREF_CDirectSoundStream_Constructor,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundStream_Constructor,
+                         3911)
 OOVPA_SIG_MATCH(
 
     // CDirectSoundStream::Constructor+0x00 : push esi; mov esi, ecx; push edi

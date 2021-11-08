@@ -167,8 +167,6 @@ OOVPA_SIG_MATCH(
 //8B88041A000085
 OOVPA_SIG_HEADER_XREF(D3DDevice_GetRenderTarget2,
                       1024,
-
-                      XREF_D3DDevice_GetRenderTarget2,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

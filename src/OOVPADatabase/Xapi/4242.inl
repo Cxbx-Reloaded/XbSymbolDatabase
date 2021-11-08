@@ -117,8 +117,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XMountMUA,
                       4242,
-
-                      XRefNoSaveIndex,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -165,8 +163,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(XMountMURootA,
                       4242,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -219,8 +215,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 4242 and newer.
 OOVPA_SIG_HEADER_XREF(XUnmountMU,
                       4242,
-
-                      XRefNoSaveIndex,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -242,11 +236,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * MU_Init
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(MU_Init,
-                      4242,
-
-                      XREF_MU_Init,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(MU_Init,
+                         4242)
 OOVPA_SIG_MATCH(
 
     // push ebp

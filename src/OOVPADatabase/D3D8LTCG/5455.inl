@@ -155,11 +155,8 @@ OOVPA_SIG_MATCH(
 // * D3D_BlockOnResource
 // ******************************************************************
 //F7C20000780075 ...C3
-OOVPA_SIG_HEADER_XREF(D3D_BlockOnResource_0,
-                      2060,
-
-                      XREF_D3D_BlockOnResource,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource_0,
+                         2060)
 OOVPA_SIG_MATCH(
 
     { 0x01, 0x8B },
@@ -204,11 +201,8 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
 //A900007800751925000007003D
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderTarget,
-                      1084,
-
-                      XREF_D3DDevice_SetRenderTarget,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderTarget,
+                         1084)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },

@@ -11,6 +11,28 @@ file(GLOB INCLUDES
 source_group(TREE ${XBSDB_ROOT_DIR} FILES ${INCLUDES})
 
 file(GLOB HEADERS
+ "${XBSDB_ROOT_DIR}/src/xref/list_xref.h"
+ "${XBSDB_ROOT_DIR}/src/xref/d3d8.def"
+ "${XBSDB_ROOT_DIR}/src/xref/d3d8ltcg.def"
+# "${XBSDB_ROOT_DIR}/src/xref/d3dx8.def" # do we need this?
+ "${XBSDB_ROOT_DIR}/src/xref/dsound.def"
+ "${XBSDB_ROOT_DIR}/src/xref/jvs.def"
+ "${XBSDB_ROOT_DIR}/src/xref/xacteng.def"
+ "${XBSDB_ROOT_DIR}/src/xref/xapilib.def"
+ "${XBSDB_ROOT_DIR}/src/xref/xgraphic.def"
+ "${XBSDB_ROOT_DIR}/src/xref/xnet.def"
+# "${XBSDB_ROOT_DIR}/src/xref/xnetn.def" # do we need this?
+# "${XBSDB_ROOT_DIR}/src/xref/xnets.def" # do we need this?
+ "${XBSDB_ROOT_DIR}/src/xref/xonline.def"
+# "${XBSDB_ROOT_DIR}/src/xref/xonlines.def" # do we need this?
+
+ "${XBSDB_ROOT_DIR}/src/lib/internal_db_version.h"
+ "${XBSDB_ROOT_DIR}/src/lib/internal_functions.h"
+ "${XBSDB_ROOT_DIR}/src/lib/internal_tests.h"
+ "${XBSDB_ROOT_DIR}/src/lib/manual_custom.h"
+ "${XBSDB_ROOT_DIR}/src/lib/manual_d3d8__ltcg.h"
+ "${XBSDB_ROOT_DIR}/src/lib/manual_dsound.h"
+ "${XBSDB_ROOT_DIR}/src/lib/manual_xapilib.h"
  "${XBSDB_ROOT_DIR}/src/OOVPADatabase/OOVPA.h"
 )
 source_group(TREE ${XBSDB_ROOT_DIR}/src PREFIX header FILES ${HEADERS})
@@ -28,6 +50,7 @@ add_library (${PROJECT_NAME} ${INCLUDES} ${HEADERS} ${SOURCES})
 target_include_directories(${PROJECT_NAME}
  PUBLIC "${XBSDB_ROOT_DIR}/include"
  PRIVATE "${XBSDB_ROOT_DIR}/src/OOVPADatabase"
+ PRIVATE "${XBSDB_ROOT_DIR}/src/xref"
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)

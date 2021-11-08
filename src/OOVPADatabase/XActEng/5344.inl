@@ -26,11 +26,8 @@
 // ******************************************************************
 // * XACT::CEngine::DownloadEffectsImage
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XACT_CEngine_DownloadEffectsImage,
-                      5344,
-
-                      XREF_XACT_CEngine_DownloadEffectsImage,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XACT_CEngine_DownloadEffectsImage,
+                         5344)
 OOVPA_SIG_MATCH(
 
     { 0x02, 0xEC },
@@ -55,8 +52,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IXACTEngine_DownloadEffectsImage,
                       5344,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -80,11 +75,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XACT::CSoundBank::Play
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XACT_CSoundBank_Play,
-                      5344,
-
-                      XREF_XACT_CSoundBank_Play,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XACT_CSoundBank_Play,
+                         5344)
 OOVPA_SIG_MATCH(
 
     { 0x08, 0x57 },
@@ -109,8 +101,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IXACTSoundBank_PlayEx,
                       5344,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

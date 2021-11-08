@@ -26,11 +26,8 @@
 // ******************************************************************
 // * CXo::XOnlineLogon
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CXo_XOnlineLogon,
-                      5849,
-
-                      XREF_CXo_XOnlineLogon,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CXo_XOnlineLogon,
+                         5849)
 OOVPA_SIG_MATCH(
 
     { 0x02, 0xEC },
@@ -56,11 +53,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CXo::XOnlineMatchSessionCreate
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CXo_XOnlineMatchSessionCreate,
-                      5849,
-
-                      XREF_CXo_XOnlineMatchSessionCreate,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CXo_XOnlineMatchSessionCreate,
+                         5849)
 OOVPA_SIG_MATCH(
 
     // push ebp

@@ -27,11 +27,8 @@
 // * D3D_SetFence
 // ******************************************************************
 //460457720EA1
-OOVPA_SIG_HEADER_XREF(D3D_SetFence,
-                      1036,
-
-                      XREF_D3D_SetFence,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_SetFence,
+                         1036)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x53 },
@@ -71,8 +68,6 @@ OOVPA_SIG_MATCH(
 //7406810300000800
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource,
                       1044,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -98,8 +93,6 @@ OOVPA_SIG_MATCH(
 //8BC3C1E007578B3D
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex,
                       1944,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -125,8 +118,6 @@ OOVPA_SIG_MATCH(
 //C7000803040075
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_CullMode,
                       1052,
-
-                      XREF_D3DDevice_SetRenderState_CullMode,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -384,8 +375,6 @@ OOVPA_SIG_MATCH(
 //C1E11083E20F
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias,
                       1048,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -408,8 +397,6 @@ OOVPA_SIG_MATCH(
 //83E10FC1E210
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMask,
                       1048,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -588,8 +575,6 @@ OOVPA_SIG_MATCH(
 //F6C30155568B35
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader,
                       1036,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -722,11 +707,8 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
 //5533ED3BD5565775
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderTarget,
-                      1048,
-
-                      XREF_D3DDevice_SetRenderTarget,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderTarget,
+                         1048)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x8B },

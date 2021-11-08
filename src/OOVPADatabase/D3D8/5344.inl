@@ -26,11 +26,8 @@
 // ******************************************************************
 // * D3DDevice_SetLight
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetLight,
-                      5344,
-
-                      XREF_D3DDevice_SetLight,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetLight,
+                         5344)
 OOVPA_SIG_MATCH(
 
     // D3DDevice_SetLight+0x1f : add REG, 0x10
@@ -98,8 +95,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_LightEnable,
                       5344,
-
-                      XRefNoSaveIndex,
                       XRefTwo) // PatrickvL : Also for 5558, 5659, 5788, 5849, 5933
 OOVPA_SIG_MATCH(
 
@@ -148,8 +143,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_GetLightEnable,
                       5344,
-
-                      XRefNoSaveIndex,
                       XRefOne) // PatrickvL : Also for 5558, 5659, 5788, 5849, 5933
 OOVPA_SIG_MATCH(
 
@@ -289,15 +282,12 @@ OOVPA_SIG_MATCH(
 // The only difference between 5344/5455 is the offset shift for
 // D3DDEVICE_M_RENDERTARGET's asm code.
 #ifndef WIP_LessVertexPatching
-OOVPA_XREF(D3DDevice_SetRenderTarget, 5344, 13,
-
-           XREF_D3DDevice_SetRenderTarget,
-           XRefZero)
+OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 5344, 13)
     {
 #else
-OOVPA_XREF(D3DDevice_SetRenderTarget, 5344, 1 + 13,
-
-           XREF_D3DDevice_SetRenderTarget,
+OOVPA_XREF(D3DDevice_SetRenderTarget,
+           5344,
+           1 + 13,
            XRefOne)
 {
 
@@ -324,11 +314,8 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_CreateVertexBuffer2
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_CreateVertexBuffer2,
-                      5344,
-
-                      XREF_D3DDevice_CreateVertexBuffer2,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CreateVertexBuffer2,
+                         5344)
 OOVPA_SIG_MATCH(
 
     { 0x08, 0xE8 },
@@ -367,8 +354,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 5344 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVerticesUP,
                       5344,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -400,8 +385,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 5344 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVerticesUP,
                       5344,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -607,11 +590,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_CreateIndexBuffer2
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_CreateIndexBuffer2,
-                      5344,
-
-                      XREF_D3DDevice_CreateIndexBuffer2,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CreateIndexBuffer2,
+                         5344)
 OOVPA_SIG_MATCH(
 
     { 0x05, 0x00 },
@@ -629,8 +609,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
                       5344,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -713,8 +691,6 @@ OOVPA_NO_XREF(D3DDevice_GetTexture2, 5344, 23)
     {
 #else
 OOVPA_XREF(D3DDevice_GetTexture2, 5344, 1 + 23, // Up to 5455
-
-           XRefNoSaveIndex,
            XRefOne)
 {
 

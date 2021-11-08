@@ -409,14 +409,16 @@
 #include "Xapi/5344.inl"
 #include "Xapi/5455.inl"
 
+#define REGISTER_OOVPAS_XAPI(Symbol, ...) REGISTER_OOVPAS_PREFIX(XAPI, Symbol, __VA_ARGS__)
+
 // ******************************************************************
 // * XAPILIB_OOVPA
 // ******************************************************************
 OOVPATable XAPILIB_OOVPA[] = {
 
     // Without xrefs dependency
-    REGISTER_OOVPAS(_cinit, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(_rtinit, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(_cinit, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(_rtinit, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS_C(IUsbInit_GetMaxDeviceTypeCount, 3911),
     REGISTER_OOVPAS(XapiFormatObjectAttributes, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XapiCallThreadNotifyRoutines, 3911), // Final generic OOVPA: 3911; Removed: 0
@@ -425,42 +427,42 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(XUnmountAlternateTitleA, 3911),
 
     // With xrefs dependency (unorder, need to scan next before order list)
-    REGISTER_OOVPAS(mainXapiStartup, 3911, 4831), // Final generic OOVPA: 4831; Removed: 0
-    REGISTER_OOVPAS(GetLastError, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(SetLastError, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(UnhandledExceptionFilter, 3911, 4831), // Final generic OOVPA: 4831 Removed: 0
+    REGISTER_OOVPAS_XAPI(mainXapiStartup, 3911, 4831), // Final generic OOVPA: 4831; Removed: 0
+    REGISTER_OOVPAS_XAPI(GetLastError, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(SetLastError, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(UnhandledExceptionFilter, 3911, 4831), // Final generic OOVPA: 4831 Removed: 0
     REGISTER_OOVPAS(XapiBootToDash, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XapiSelectCachePartition, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XapiSetLastNTError, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XapiThreadStartup, 3911), // Final generic OOVPA: 3911; Removed: 0
 
     // With xrefs dependency (order)
-    REGISTER_OOVPAS(CreateMutexA, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(CreateThread, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(ExitThread, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(MoveFileA, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(SwitchToThread, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(CreateMutexA, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(CreateThread, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(ExitThread, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(MoveFileA, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(SwitchToThread, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XapiInitProcess, 3911, 3950, 4242, 4831, 5028), // obsolete, Too High Level (from 4721's comment)
-    REGISTER_OOVPAS(ConvertThreadToFiber, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(ConvertThreadToFiber, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XCalculateSignatureBegin, 3911, 4034), // Final generic OOVPA: ????; Removed: 0 // TODO: need verification for 4034 against 3950 and lower.
-    REGISTER_OOVPAS(CreateFiber, 3911),
-    REGISTER_OOVPAS(DeleteFiber, 3911),
-    REGISTER_OOVPAS(GetExitCodeThread, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(GetOverlappedResult, 3911),
-    REGISTER_OOVPAS(GetThreadPriority, 3911),
-    REGISTER_OOVPAS(GetTimeZoneInformation, 3911),
-    REGISTER_OOVPAS(GetTypeInformation, 4134), // TODO: Actually introduced in some unknown XDK between 4134 and 4361
+    REGISTER_OOVPAS_XAPI(CreateFiber, 3911),
+    REGISTER_OOVPAS_XAPI(DeleteFiber, 3911),
+    REGISTER_OOVPAS_XAPI(GetExitCodeThread, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(GetOverlappedResult, 3911),
+    REGISTER_OOVPAS_XAPI(GetThreadPriority, 3911),
+    REGISTER_OOVPAS_XAPI(GetTimeZoneInformation, 3911),
+    REGISTER_OOVPAS_XAPI(GetTypeInformation, 4134), // TODO: Actually introduced in some unknown XDK between 4134 and 4361
     REGISTER_OOVPAS_M(MU_Init, 3911, 4242, 5233),
-    REGISTER_OOVPAS(OutputDebugStringA, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(OutputDebugStringW, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(mainCRTStartup, 3911, 4361), // Final generic OOVPA: 4361; Removed: 0
-    REGISTER_OOVPAS(QueueUserAPC, 3911),
-    REGISTER_OOVPAS(QueryPerformanceCounter, 3911),
-    REGISTER_OOVPAS(RaiseException, 3911),
-    REGISTER_OOVPAS(SetThreadPriority, 3911),
-    REGISTER_OOVPAS(SetThreadPriorityBoost, 3911),
-    REGISTER_OOVPAS(SignalObjectAndWait, 3911),
-    REGISTER_OOVPAS(SwitchToFiber, 3911),
+    REGISTER_OOVPAS_XAPI(OutputDebugStringA, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(OutputDebugStringW, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_XAPI(mainCRTStartup, 3911, 4361), // Final generic OOVPA: 4361; Removed: 0
+    REGISTER_OOVPAS_XAPI(QueueUserAPC, 3911),
+    REGISTER_OOVPAS_XAPI(QueryPerformanceCounter, 3911),
+    REGISTER_OOVPAS_XAPI(RaiseException, 3911),
+    REGISTER_OOVPAS_XAPI(SetThreadPriority, 3911),
+    REGISTER_OOVPAS_XAPI(SetThreadPriorityBoost, 3911),
+    REGISTER_OOVPAS_XAPI(SignalObjectAndWait, 3911),
+    REGISTER_OOVPAS_XAPI(SwitchToFiber, 3911),
     REGISTER_OOVPAS(XAutoPowerDownResetTimer, 3911), // Just calls KeSetTimer (from 3911's comment)
     REGISTER_OOVPAS(XFormatUtilityDrive, 4242),
     REGISTER_OOVPAS(XGetDeviceChanges, 3911), // Final generic OOVPA: 3911; Removed: 0
@@ -485,8 +487,8 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(XSetProcessQuantumLength, 4134),
     REGISTER_OOVPAS(XUnmountMU, 3911, 4242),
     REGISTER_OOVPAS(XapiFiberStartup, 3911),
-    REGISTER_OOVPAS(timeKillEvent, 3911),
-    REGISTER_OOVPAS(timeSetEvent, 3911),
+    REGISTER_OOVPAS_XAPI(timeKillEvent, 3911),
+    REGISTER_OOVPAS_XAPI(timeSetEvent, 3911),
 
 };
 

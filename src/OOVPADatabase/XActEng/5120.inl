@@ -50,11 +50,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XACT::CEngine::UnRegisterWaveBank
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XACT_CEngine_UnRegisterWaveBank,
-                      5120,
-
-                      XREF_XACT_CEngine_UnRegisterWaveBank,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XACT_CEngine_UnRegisterWaveBank,
+                         5120)
 OOVPA_SIG_MATCH(
 
     { 0x0E, 0x51 },
@@ -78,11 +75,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XACT::CEngine::RegisterWaveBank
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(XACT_CEngine_RegisterWaveBank,
-                      5120,
-
-                      XREF_XACT_CEngine_RegisterWaveBank,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(XACT_CEngine_RegisterWaveBank,
+                         5120)
 OOVPA_SIG_MATCH(
 
     { 0x04, 0x14 }, //RegisterStreamedWaveBank 0x10 vs RegisterWaveBank 0x14
@@ -107,8 +101,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(IXACTEngine_RegisterWaveBank,
                       5120,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

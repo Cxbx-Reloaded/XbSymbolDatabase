@@ -29,11 +29,8 @@
 // * DirectSound::CDirectSoundVoice::Use3DVoiceData
 // ******************************************************************
 // Generic OOVPA as of 5558 and newer
-OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_Use3DVoiceData,
-                      5558,
-
-                      XREF_CDirectSoundVoice_Use3DVoiceData,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundVoice_Use3DVoiceData,
+                         5558)
 OOVPA_SIG_MATCH(
 
     { 0x04, 0x00 },
@@ -54,8 +51,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 5558 and newer
 OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_Use3DVoiceData,
                       5558,
-
-                      XREF_CDirectSoundBuffer_Use3DVoiceData,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -78,8 +73,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 5558 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSoundBuffer_Use3DVoiceData,
                       5558,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -102,8 +95,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 5558 and newer
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_Use3DVoiceData,
                       5558,
-
-                      XREF_CDirectSoundStream_Use3DVoiceData,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -126,8 +117,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 5558 and newer
 OOVPA_SIG_HEADER_XREF(IDirectSoundStream_Use3DVoiceData,
                       5558,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

@@ -89,15 +89,12 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
-OOVPA_XREF(D3DDevice_SetRenderTarget, 4039, 11,
-
-           XREF_D3DDevice_SetRenderTarget,
-           XRefZero)
+OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 4039, 11)
     {
 #else
-OOVPA_XREF(D3DDevice_SetRenderTarget, 4039, 1 + 11,
-
-           XREF_D3DDevice_SetRenderTarget,
+OOVPA_XREF(D3DDevice_SetRenderTarget,
+           4039,
+           1 + 11,
            XRefOne)
 {
 
@@ -153,8 +150,6 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 4039 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetSwapCallback,
                       4039,
-
-                      XRefNoSaveIndex,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
@@ -377,8 +372,6 @@ OOVPA_SIG_MATCH(
 // Reused in 5455 as well.
 OOVPA_SIG_HEADER_XREF(D3DDevice_PersistDisplay,
                       4039,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -411,8 +404,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVerticesUP,
                       4039,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -597,8 +588,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_IsFencePending,
                       4039,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -724,8 +713,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush2,
                       4039,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -735,7 +722,7 @@ OOVPA_SIG_MATCH(
     // D3DDevice_BeginPush__8+0x00 : push esi; mov esi,[D3D__PDEVICE]
     OV_MATCH(0x00, 0x56, 0x8B, 0x35),
 
-    // D3DDevice_BeginPush__8+0x0B : call D3DDevice_SetStateVB
+    // D3DDevice_BeginPush__8+0x0B : call CDevice_SetStateVB
     OV_MATCH(0x0B, 0xE8),
 
     // D3DDevice_BeginPush__8+0x17 : call XMETAL_StartPushCount
@@ -755,8 +742,6 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_EndPush,
                       4039,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 

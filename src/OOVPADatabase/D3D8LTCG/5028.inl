@@ -50,8 +50,6 @@ OOVPA_SIG_MATCH(
 // ...C20400
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex_4,
                       2058,
-
-                      XRefNoSaveIndex,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
@@ -97,11 +95,8 @@ OOVPA_SIG_MATCH(
 // * D3D_CommonSetRenderTarget
 // ******************************************************************
 //8B490CC1E91483E10FB801
-OOVPA_SIG_HEADER_XREF(D3D_CommonSetRenderTarget,
-                      1048,
-
-                      XREF_D3D_CommonSetRenderTarget,
-                      XRefZero)
+OOVPA_SIG_HEADER_NO_XREF(D3D_CommonSetRenderTarget,
+                         1048)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x83 },
