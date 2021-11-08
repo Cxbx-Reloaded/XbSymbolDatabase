@@ -110,7 +110,7 @@ static bool CompareOOVPAToAddress(iXbSymbolContext* pContext, OOVPA* Oovpa, memp
 // Return if the given (XRef'erenced) is not set yet.
 static inline bool internal_IsXRefUnset(uint16_t XRef)
 {
-    return (XRef == (uint16_t)XREF_ADDR_UNDETERMINED) || (XRef == XREF_ADDR_DERIVE);
+    return (XRef == XREF_UNDETERMINED) || (XRef <= XREF_KT_COUNT);
 }
 
 // Return if the given (XRef'erenced) address is not set yet.

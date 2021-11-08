@@ -250,6 +250,12 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerify
         context->main.revision_index = revision_index;
 
         error_count += SymbolDatabaseVerifyContext_VerifyXRefJmp(context, table, symbol_index, revision_index);
+
+        // For safety check purpose
+        if (internal_IsXRefUnset(table[symbol_index].xref)) {
+            output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s cannot have unset xref.", table[symbol_index].szFuncName);
+            error_count++;
+        }
     }
     else {
         context->against.symbol_index = symbol_index;
@@ -276,15 +282,6 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVer
 
     // Verify each entry in data's symbol table.
     for (uint32_t s = 0; s < data->SymbolsTableCount; s++) {
-        // We only need to check from main, not against.
-        if (context->against.data == NULL) {
-            // For safety check purpose
-            if (internal_IsXRefUnset(data->SymbolsTable[s].xref)) {
-                output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s cannot have unset xref.", data->SymbolsTable[s].szFuncName);
-                error_count++;
-            }
-        }
-
         // Check each revision entry in a symbol.
         for (uint32_t r = 0; r < data->SymbolsTable[s].count; r++) {
             error_count += SymbolDatabaseVerifyContext_VerifyEntry(context, data->SymbolsTable, s, r);
