@@ -79,7 +79,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_BeginPushBuffer, 1024, 1036),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_BeginPushBuffer_0, D3DDevice_BeginPushBuffer, 2048, 2060),
     REGISTER_OOVPAS(D3DDevice_BeginVisibilityTest, 1024, 1048),
-    REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 1024),
+    REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 1024), // NOTE: NASCAR Heat 2002 reveal this function is inlined, need some sort of indicator which is inline or not.
     REGISTER_OOVPAS(D3DDevice_Clear, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_CopyRects, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_CreatePixelShader, 1024),

@@ -1124,6 +1124,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
 // NOTE: Later XDK version start to use std signature.
+// NOTE: NASCAR Heat 2002 reveal this function is inlined, need some sort of indicator which is inline or not.
 OOVPA_SIG_HEADER_XREF(D3DDevice_BlockUntilVerticalBlank,
                       1024,
                       XRefTwo)
