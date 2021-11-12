@@ -26,21 +26,25 @@
 // ******************************************************************
 // * D3DDevice_DeleteVertexShader
 // ******************************************************************
-//8B48FF4849890875 ...C3
+//Generic OOVPA as of 5344 and newer.
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DeleteVertexShader_0,
-                         2036)
+                         5344)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x8B },
-    { 0x01, 0x48 },
-    { 0x02, 0xFF },
-    { 0x03, 0x48 },
-    { 0x04, 0x49 },
-    { 0x05, 0x89 },
-    { 0x06, 0x08 },
-    { 0x07, 0x75 },
+    // mov ecx,[eax + -0x1]
+    OV_MATCH(0x00, 0x8B, 0x48, 0xFF),
+    // dec eax
+    // dec ecx
+    OV_MATCH(0x03, 0x48, 0x49),
+    // mov [eax],ecx
+    OV_MATCH(0x05, 0x89, 0x08),
+    // JNZ +0xB
+    OV_MATCH(0x07, 0x75, 0x0B),
 
-    { 0x14, 0xC3 },
+    // call XMemFree
+    OV_MATCH(0x0F, 0xE8),
+
+    OV_MATCH(0x14, 0xC3),
     //
 );
 

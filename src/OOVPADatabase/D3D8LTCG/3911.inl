@@ -984,6 +984,30 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
+// * D3DDevice_DeleteVertexShader
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DeleteVertexShader_0,
+                         3911)
+OOVPA_SIG_MATCH(
+
+    // mov ecx,[eax + -0x1]
+    OV_MATCH(0x00, 0x8B, 0x48, 0xFF),
+    // dec eax
+    // dec ecx
+    OV_MATCH(0x03, 0x48, 0x49),
+    // mov [eax],ecx
+    OV_MATCH(0x05, 0x89, 0x08),
+    // jnz
+    OV_MATCH(0x07, 0x75, 0x06),
+
+    // call LocalFree
+    OV_MATCH(0x0A, 0xE8),
+
+    OV_MATCH(0x0F, 0xC3),
+    //
+);
+
+// ******************************************************************
 // * D3DDevice_SetRenderTarget
 // ******************************************************************
 #ifndef WIP_LessVertexPatching
