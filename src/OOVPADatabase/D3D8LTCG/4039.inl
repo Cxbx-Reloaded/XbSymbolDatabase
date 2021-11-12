@@ -851,26 +851,31 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_GetBackBuffer
 // ******************************************************************
 //7507B801000000EB07F7 ...C20800
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_GetBackBuffer_8,
-                         2048)
+OOVPA_SIG_HEADER_XREF(D3DDevice_GetBackBuffer_8,
+                      2048,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x83 },
-    { 0x01, 0xF8 },
+    // mov e?x, [D3DDEVICE]
+    XREF_ENTRY(0x05, XREF_D3DDEVICE),
 
-    { 0x09, 0x75 },
-    { 0x0A, 0x07 },
-    { 0x0B, 0xB8 },
-    { 0x0C, 0x01 },
-    { 0x0D, 0x00 },
-    { 0x0E, 0x00 },
-    { 0x0F, 0x00 },
-    { 0x10, 0xEB },
-    { 0x11, 0x07 },
-    { 0x12, 0xF7 },
+    // call D3DResource::AddRef
+    XREF_ENTRY(0x45, XREF_D3DResource_AddRef),
 
-    { 0x4C, 0xC2 },
-    { 0x4D, 0x08 },
+    // cmp eax,0x??
+    OV_MATCH(0x00, 0x83, 0xF8),
+
+    // jnz +0x07
+    OV_MATCH(0x09, 0x75, 0x07),
+    // mov eax,0x1
+    OV_MATCH(0x0B, 0xB8, 0x01, 0x00, 0x00, 0x00),
+    // jmp +0x07
+    OV_MATCH(0x10, 0xEB, 0x07),
+    // neg e?x
+    OV_MATCH(0x12, 0xF7),
+
+    // retn 0x08
+    OV_MATCH(0x4C, 0xC2, 0x08),
     //
 );
 

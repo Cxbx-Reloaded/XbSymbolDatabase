@@ -101,9 +101,9 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_EndPushBuffer, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_EndVisibilityTest, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_EndVisibilityTest_0, D3DDevice_EndVisibilityTest, 2048),
-    REGISTER_OOVPAS(D3DDevice_GetBackBuffer2, 1024, 1036),
+    REGISTER_OOVPAS(D3DDevice_GetBackBuffer2, 4626), // Due to non-LTCG signature conflict, lowered down by one number.
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_GetBackBuffer_8, D3DDevice_GetBackBuffer, 2048),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_GetBackBuffer2_0, D3DDevice_GetBackBuffer2, 2024, 2048),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_GetBackBuffer2_0__LTCG_eax1, D3DDevice_GetBackBuffer2, 4627, 5233),
     REGISTER_OOVPAS(D3DDevice_GetDepthStencilSurface, 1024),
     REGISTER_OOVPAS(D3DDevice_GetDepthStencilSurface2, 1024, 1048),
     REGISTER_OOVPAS(D3DDevice_GetDisplayMode, 1024),

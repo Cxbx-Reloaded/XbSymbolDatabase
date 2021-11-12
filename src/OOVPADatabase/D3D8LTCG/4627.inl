@@ -496,53 +496,58 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_GetBackBuffer2
 // ******************************************************************
-//7507B801000000EB07F7
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_GetBackBuffer2,
-                         1036)
+OOVPA_SIG_HEADER_XREF(D3DDevice_GetBackBuffer2,
+                      4626, // Due to non-LTCG signature conflict, lowered down by one number.
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
+    // mov e?x,[D3DDEVICE]
+    XREF_ENTRY(0x09, XREF_D3DDEVICE),
 
-    { 0x0D, 0x75 },
-    { 0x0E, 0x07 },
-    { 0x0F, 0xB8 },
-    { 0x10, 0x01 },
-    { 0x11, 0x00 },
-    { 0x12, 0x00 },
-    { 0x13, 0x00 },
-    { 0x14, 0xEB },
-    { 0x15, 0x07 },
-    { 0x16, 0xF7 },
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    { 0x4C, 0xC2 },
-    { 0x4D, 0x04 },
-    //
+    // jnz +0x07
+    OV_MATCH(0x0D, 0x75, 0x07),
+    // mov eax, 0x1
+    OV_MATCH(0x0F, 0xB8, 0x01, 0x00 /*, 0x00, 0x00*/),
+    // jmp +0x07
+    OV_MATCH(0x14, 0xEB, 0x07), // jmp vs push esi non-LTCG 4627
+    // neg eax
+    OV_MATCH(0x16, 0xF7, 0xD8),
+    // sbb eax,eax
+    OV_MATCH(0x18, 0x1B, 0xC0),
+    // and eax,0x2
+    OV_MATCH(0x1A, 0x83, 0xE0, 0x02),
+
+    // Offset 0x1D and later has shifted by one.
 );
 
 // ******************************************************************
 // * D3DDevice_GetBackBuffer2
 // ******************************************************************
-//7507B801000000EB07F7 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_GetBackBuffer2_0,
-                         2024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_GetBackBuffer2_0__LTCG_eax1,
+                      4627,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x83 },
-    { 0x01, 0xF8 },
+    // mov e?x,[D3DDEVICE]
+    XREF_ENTRY(0x05, XREF_D3DDEVICE),
 
-    { 0x09, 0x75 },
-    { 0x0A, 0x07 },
-    { 0x0B, 0xB8 },
-    { 0x0C, 0x01 },
-    { 0x0D, 0x00 },
-    { 0x0E, 0x00 },
-    { 0x0F, 0x00 },
-    { 0x10, 0xEB },
-    { 0x11, 0x07 },
-    { 0x12, 0xF7 },
+    // cmp eax,-0x1
+    OV_MATCH(0x00, 0x83, 0xF8, 0xFF),
 
-    { 0x48, 0xC3 },
+    // jnz +0x07
+    OV_MATCH(0x09, 0x75, 0x07),
+    // mov eax,0x1
+    OV_MATCH(0x0B, 0xB8, 0x01, 0x00, 0x00, 0x00),
+    // jmp +0x07
+    OV_MATCH(0x10, 0xEB, 0x07),
+    // neg e?x
+    OV_MATCH(0x12, 0xF7),
+
+    // ret
+    OV_MATCH(0x48, 0xC3), // 0x48 vs 5233 0x46 offset
     //
 );
 

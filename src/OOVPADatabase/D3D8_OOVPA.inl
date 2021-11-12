@@ -243,7 +243,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_EndVisibilityTest, 3911),
     REGISTER_OOVPAS(D3DDevice_FlushVertexCache, 3911, 4134),
     REGISTER_OOVPAS(D3DDevice_GetBackBuffer, 3911, 4034, 4134, 4627), // Called D3DDevice_GetBackBuffer2 (from 4627's comment) NOTE: Use D3DDevice_GetBackBuffer2 for 4627 and above
-    REGISTER_OOVPAS(D3DDevice_GetBackBuffer2, 4627), // 5233 (from 5344's comment)
+    REGISTER_OOVPAS(D3DDevice_GetBackBuffer2, 4627), // Final generic OOVPA: 4627; Removed: 0
     REGISTER_OOVPAS(D3DDevice_GetBackMaterial, 3911, 4039, 4134, 4627, 5344, 5558, 5788),
     REGISTER_OOVPAS(D3DDevice_GetCreationParameters, 3911),
     REGISTER_OOVPAS(D3DDevice_GetDepthStencilSurface, 3911, 4627), // Called D3DDevice_GetDepthStencilSurface2 (from 4627's comment) NOTE: Use D3DDevice_GetDepthStencilSurface2 for 4627 and above
