@@ -260,49 +260,35 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetTransform
 // ******************************************************************
-//56578D7821C1E706
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTransform,
-                         1048)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTransform_0__LTCG_eax1_edx2,
+                      5344,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
+    // mov ebx,[D3DDEVICE]
+    XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
 
-    { 0x0F, 0x56 },
-    { 0x10, 0x57 },
-    { 0x11, 0x8D },
-    { 0x12, 0x78 },
-    { 0x13, 0x21 },
-    { 0x14, 0xC1 },
-    { 0x15, 0xE7 },
-    { 0x16, 0x06 },
+    // call D3D::UpdateProjectionViewportTransform
+    XREF_ENTRY(0xF1, XREF_D3D_UpdateProjectionViewportTransform),
 
-    { 0x107, 0xC2 },
-    { 0x108, 0x08 },
-    //
-);
+    // push ebx
+    // mov ebx,[D3DDEVICE]
+    OV_MATCH(0x00, 0x53),
+    OV_MATCH(0x01, 0x8B, 0x1D),
 
-// ******************************************************************
-// * D3DDevice_SetTransform
-// ******************************************************************
-//56578D7821C1E706 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTransform_0,
-                         2060)
-OOVPA_SIG_MATCH(
+    // lea edi,[param_1 + 0x21]
+    OV_MATCH(0x09, 0x8D, 0x78, 0x21),
+    // shl edi,0x6
+    OV_MATCH(0x0C, 0xC1, 0xE7, 0x06),
 
-    { 0x00, 0x53 },
-    { 0x01, 0x8B },
+    // mov ecx,0x10
+    OV_MATCH(0x11, 0xB9, 0x10, 0x00 /*, 0x00, 0x00*/),
 
-    { 0x07, 0x56 },
-    { 0x08, 0x57 },
-    { 0x09, 0x8D },
-    { 0x0A, 0x78 },
-    { 0x0B, 0x21 },
-    { 0x0C, 0xC1 },
-    { 0x0D, 0xE7 },
-    { 0x0E, 0x06 },
+    // call D3D::UpdateProjectionViewportTransform
+    OV_MATCH(0xF0, 0xE8),
 
-    { 0xFF, 0xC3 },
+    // ret
+    OV_MATCH(0xFF, 0xC3), // LTCG 0xC3 vs non-LTCG 0xC2
     //
 );
 

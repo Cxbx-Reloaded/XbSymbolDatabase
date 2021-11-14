@@ -46,6 +46,7 @@
 #include "OOVPA.h"
 
 #include "D3D8LTCG/3911.inl"
+#include "D3D8LTCG/4034.inl"
 #include "D3D8LTCG/4039.inl"
 #include "D3D8LTCG/4432.inl"
 #include "D3D8LTCG/4531.inl"
@@ -200,8 +201,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTexture_4__LTCG_eax_pTexture, D3DDevice_SetTexture, 2024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTexture_4, D3DDevice_SetTexture, 2036),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTile_0, D3DDevice_SetTile, 2024, 2036, 2048, 2060, 2072),
-    REGISTER_OOVPAS(D3DDevice_SetTransform, 1024, 1048),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTransform_0, D3DDevice_SetTransform, 2024, 2048, 2060, 2072, 2084),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTransform_0__LTCG_eax1_edx2, D3DDevice_SetTransform, 3911, 4034, 5344, 5455, 5558),
     REGISTER_OOVPAS(D3DDevice_SetVertexData2f, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_SetVertexData2s, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_SetVertexData4f, 1024, 1036),

@@ -861,27 +861,36 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetTransform
 // ******************************************************************
-//8D7822C1E70603FBB910000000 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTransform_0,
-                         2024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTransform_0__LTCG_eax1_edx2,
+                      3911,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x53 },
-    { 0x01, 0x8B },
+    // mov ebx,[D3DDEVICE]
+    XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
 
-    { 0x09, 0x8D },
-    { 0x0A, 0x78 },
-    { 0x0B, 0x22 },
-    { 0x0C, 0xC1 },
-    { 0x0D, 0xE7 },
-    { 0x0E, 0x06 },
-    { 0x0F, 0x03 },
-    { 0x10, 0xFB },
-    { 0x11, 0xB9 },
-    { 0x12, 0x10 },
-    { 0x13, 0x00 },
-    { 0x14, 0x00 },
-    { 0x15, 0x00 },
+    // call D3D::UpdateProjectionViewportTransform
+    // TODO: Need to fix 3925 to able detect function below
+    XREF_ENTRY(0xEB, XREF_D3D_UpdateProjectionViewportTransform),
+
+    // push ebx
+    // mov ebx,[D3DDEVICE]
+    OV_MATCH(0x00, 0x53),
+    OV_MATCH(0x01, 0x8B, 0x1D),
+
+    // lea edi, [param_1 + 0x22]
+    OV_MATCH(0x09, 0x8D, 0x78, 0x22), // 3911 0x22 vs 5344 0x21 value
+    // shl edi,0x6
+    OV_MATCH(0x0C, 0xC1, 0xE7, 0x06),
+
+    // mov ecx,0x10
+    OV_MATCH(0x11, 0xB9, 0x10, 0x00 /*, 0x00, 0x00*/),
+
+    // call D3D::UpdateProjectionViewportTransform
+    OV_MATCH(0xEA, 0xE8),
+
+    // ret
+    OV_MATCH(0xF9, 0xC3), // LTCG 0xC3 vs non-LTCG 0xC2
     //
 );
 

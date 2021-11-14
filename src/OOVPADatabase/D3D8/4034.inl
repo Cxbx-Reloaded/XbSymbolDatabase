@@ -131,43 +131,41 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetTransform
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTransform,
-                         4034)
+// Generic OOVPA as of 4034 and newer
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTransform,
+                      4034,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetTransform+0x00 : mov eax, [esp+arg_0]
-    { 0x00, 0x8B },
+    // mov ebx,[D3DDEVICE]
+    XREF_ENTRY(0x0B, XREF_D3DDEVICE), // Derived
 
-    // D3DDevice_SetTransform+0x44 : fld dword ptr [edx+0x28]
-    { 0x44, 0xD9 },
-    { 0x45, 0x42 },
-    { 0x46, 0x28 },
+    // mov eax, [esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    // D3DDevice_SetTransform+0x51 : test ah, 0x44
-    { 0x51, 0xF6 },
-    { 0x52, 0xC4 },
-    { 0x53, 0x44 },
+    // mov edx, [esp + param_2]
+    OV_MATCH(0x04, 0x8B, 0x54, 0x24, 0x08),
 
-    // D3DDevice_SetTransform+0x5F : fnstsw ax
-    { 0x5F, 0xDF },
-    { 0x60, 0xE0 },
+    // Anything after offset 0x0F changed over time.
 
-    // D3DDevice_SetTransform+0x84 : fdivp st(1), st
-    { 0x84, 0xDE },
-    { 0x85, 0xF9 },
+    // shl e??,0x6 // 4034 edi vs 5558 ecx
+    OV_MATCH(0x12, 0xC1 /*, /*0xE7*/), // 3911 0xE7 vs 5558 0xE1 value
+    OV_MATCH(0x14, 0x06),
 
-    // D3DDevice_SetTransform+0x10B : retn 8
-    { 0x10B, 0xC2 },
-    { 0x10C, 0x08 },
+    // mov ecx,0x10
+    OV_MATCH(0x1D, 0xB9, 0x10, 0x00 /*, 0x00, 0x00*/),
     //
 );
 
 // ******************************************************************
 // * D3D::UpdateProjectionViewportTransform
 // ******************************************************************
+// NOTE: NASACAR Heat 2002 (LTCG) has reconigized by this OOVPA signature.
+// Except non-LTCG titles with 4034 build and later are 100% confirmed as earlier build are using 3911 signature.
+// For now, use 39XX as signature revision for this symbol.
 // Generic OOVPA as of 4034 and newer
 OOVPA_SIG_HEADER_XREF(D3D_UpdateProjectionViewportTransform,
-                      4034,
+                      3901,
                       XRefOne)
 OOVPA_SIG_MATCH(
     // mov e??, XREF_D3DDEVICE

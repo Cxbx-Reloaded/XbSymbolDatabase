@@ -2521,41 +2521,40 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetTransform
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTransform,
-                         3911)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTransform,
+                      3911,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetTransform+0x00 : mov eax, [esp+arg_0]
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
+    // mov ebx,[D3DDEVICE]
+    XREF_ENTRY(0x0B, XREF_D3DDEVICE), // Derived
 
-    // D3DDevice_SetTransform+0x3A : fld dword ptr [edx+0x28]
-    { 0x3A, 0xD9 },
-    { 0x3B, 0x42 },
-    { 0x3C, 0x28 },
+    // mov eax, [esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+    // mov edx, [esp + param_2]
+    OV_MATCH(0x04, 0x8B, 0x54, 0x24, 0x08),
+    // push ebx
+    // mov ebx,[D3DDEVICE]
+    OV_MATCH(0x08, 0x53),
+    OV_MATCH(0x09, 0x8B, 0x1D),
 
-    // D3DDevice_SetTransform+0x47 : test ah, 0x44
-    { 0x47, 0xF6 },
-    { 0x48, 0xC4 },
-    { 0x49, 0x44 },
+    // lea edi, [param_1 + 0x22]
+    OV_MATCH(0x11, 0x8D, 0x78 /*, 0x22*/), // 3911 0x22 vs 5344 0x21 value
+    // shl edi,0x6
+    OV_MATCH(0x14, 0xC1, 0xE7, 0x06),
 
-    // D3DDevice_SetTransform+0x55 : fnstsw ax
-    { 0x55, 0xDF },
-    { 0x56, 0xE0 },
-
-    // D3DDevice_SetTransform+0x7A : fdivp st(1), st
-    { 0x7A, 0xDE },
-    { 0x7B, 0xF9 },
+    // mov ecx,0x10
+    OV_MATCH(0x19, 0xB9, 0x10, 0x00 /*, 0x00, 0x00*/),
     //
 );
 
 // ******************************************************************
 // * D3D::UpdateProjectionViewportTransform
 // ******************************************************************
+// NOTE: 4034 signature is detected in NASACAR Heat 2002 (LTCG title), compiled with 3925 build.
+// For now, use 39XX as signature revision for this symbol.
 OOVPA_SIG_HEADER_XREF(D3D_UpdateProjectionViewportTransform,
-                      3911,
+                      3900,
                       XRefOne)
 OOVPA_SIG_MATCH(
     // mov e??, XREF_D3DDEVICE

@@ -644,26 +644,33 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetTransform
 // ******************************************************************
-//568BC8C1E106578DBC ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTransform_0,
-                         2072)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTransform_0__LTCG_eax1_edx2,
+                      5558,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x53 },
-    { 0x01, 0x8B },
+    // mov ebx,[D3DDEVICE]
+    XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
 
-    { 0x07, 0x56 },
-    { 0x08, 0x8B },
-    { 0x09, 0xC8 },
-    { 0x0A, 0xC1 },
-    { 0x0B, 0xE1 },
-    { 0x0C, 0x06 },
-    { 0x0D, 0x57 },
-    { 0x0E, 0x8D },
-    { 0x0F, 0xBC },
-    { 0x10, 0x19 },
+    // call D3D::UpdateProjectionViewportTransform
+    XREF_ENTRY(0xFF, XREF_D3D_UpdateProjectionViewportTransform),
 
-    { 0x10D, 0xC3 },
+    // push ebx
+    // mov ebx,[D3DDEVICE]
+    OV_MATCH(0x00, 0x53),
+    OV_MATCH(0x01, 0x8B, 0x1D),
+
+    // shl ecx,0x6
+    OV_MATCH(0x0A, 0xC1, 0xE1, 0x06),
+
+    // mov ecx,0x10
+    OV_MATCH(0x15, 0xB9, 0x10, 0x00 /*, 0x00, 0x00*/),
+
+    // call D3D::UpdateProjectionViewportTransform
+    OV_MATCH(0xFE, 0xE8),
+
+    // ret
+    OV_MATCH(0x10D, 0xC3), // LTCG 0xC3 vs non-LTCG 0xC2
     //
 );
 
