@@ -1000,21 +1000,31 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetVertexDataColor
 // ******************************************************************
-//0C8D....40190400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexDataColor,
-                         1024)
+// TODO: Need verify with 4034 titles.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexDataColor,
+                      4038, // Due to non-LTCG signature conflict, lowered down by one offset.
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x56 },
-    { 0x01, 0x8B },
+    // mov edi,[D3DDEVICE]
+    XREF_ENTRY(0x08, XREF_D3DDEVICE),
 
-    { 0x21, 0x0C },
-    { 0x22, 0x8D },
-    { 0x25, 0x40 },
-    { 0x26, 0x19 },
-    { 0x27, 0x04 },
-    { 0x28, 0x00 },
-    //
+    // push esi
+    // mov esi,[esp + param_2]
+    OV_MATCH(0x00, 0x56, 0x8B, 0x74, 0x24, 0x0C),
+    // push edi
+    // mov edi,[D3DDEVICE]
+    OV_MATCH(0x05, 0x57, 0x8B, 0x3D),
+
+    // mov eax,[edi]
+    // cmp eax[edi + 0x04]
+    OV_MATCH(0x0C, 0x8B, 0x07, 0x3B, 0x47, 0x04),
+    // jc +0x??
+    OV_MATCH(0x11, 0x72),
+
+    // mov eax,0x????????
+    OV_MATCH(0x13, 0xA1)
+    // Offset 0x18 and later has changed
 );
 
 // ******************************************************************

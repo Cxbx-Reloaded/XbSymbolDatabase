@@ -208,7 +208,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetVertexData4f_16, D3DDevice_SetVertexData4f, 2024, 2036, 2048),
     REGISTER_OOVPAS(D3DDevice_SetVertexData4s, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_SetVertexData4ub, 1024, 1036, 1048),
-    REGISTER_OOVPAS(D3DDevice_SetVertexDataColor, 1024, 1036, 1048, 1060),
+    REGISTER_OOVPAS(D3DDevice_SetVertexDataColor, 4038),
     REGISTER_OOVPAS(D3DDevice_SetVertexShader, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstant, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetVertexShaderConstantNotInline_0, D3DDevice_SetVertexShaderConstantNotInline, 2048),
