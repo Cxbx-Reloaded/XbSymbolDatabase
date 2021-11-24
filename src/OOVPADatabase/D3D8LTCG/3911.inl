@@ -632,27 +632,27 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetShaderConstantMode
 // ******************************************************************
-//A810538B1D ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetShaderConstantMode_0,
-                         2024)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetShaderConstantMode_0__LTCG_eax1,
+                      3911,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0xA8 },
-    { 0x01, 0x10 },
-    { 0x02, 0x53 },
-    { 0x03, 0x8B },
-    { 0x04, 0x1D },
+    // mov e??,[D3DDEVICE]
+    XREF_ENTRY(0x05, XREF_D3DDEVICE),
 
-    { 0x10, 0x00 },
-    { 0x11, 0x02 },
-    { 0x12, 0x00 },
-    { 0x13, 0x00 },
-    { 0x14, 0xEB },
-    { 0x15, 0x06 },
+    // test al,0x10
+    OV_MATCH(0x00, 0xA8, 0x10),
 
-    { 0xEE, 0x5B },
-    { 0xEF, 0xC3 },
-    //
+    // mov e??,[D3DDEVICE]
+    OV_MATCH(0x03, 0x8B, 0x1D),
+
+    // or ecx,0x200
+    OV_MATCH(0x0E, 0x81, 0xC9, 0x00, 0x02, 0x00, 0x00),
+
+    // mov ???,???
+    OV_MATCH(0x2E, 0x8B), // Unique OV to determine if function is LTCG.
+    // Offset 0x2F and later had change over time.
 );
 
 // ******************************************************************
