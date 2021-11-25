@@ -353,7 +353,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderTargetFast, 5233),
     REGISTER_OOVPAS(D3DDevice_SetScissors, 3911, 5344, 5558), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 4034, 5455), // Was 5233 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode, 3911, 4034),
+    REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetSoftDisplayFilter, 3911, 4034, 4134),
     REGISTER_OOVPAS_D3D(CDevice_SetStateUP, 3911, 4034, 4134),
     REGISTER_OOVPAS_D3D(CDevice_SetStateVB, 3911, 4034, 4134),

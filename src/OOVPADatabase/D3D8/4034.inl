@@ -1305,23 +1305,6 @@ OOVPA_XREF(D3DDevice_SetPixelShader,
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_SetShaderConstantMode
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetShaderConstantMode,
-                         4034)
-OOVPA_SIG_MATCH(
-
-    OV_MATCH(0x08, 0x1D),
-
-    OV_MATCH(0x1A, 0x81, 0xE1, 0xFF, 0xFD, 0xFF, 0xFF),
-
-    OV_MATCH(0x38, 0x00),
-
-    OV_MATCH(0x43, 0xE8),
-    // At offset 0xD7 and later had changed.
-);
-
-// ******************************************************************
 // * D3D::BlockOnResource
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource,

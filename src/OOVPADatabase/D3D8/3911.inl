@@ -2818,22 +2818,26 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetShaderConstantMode
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetShaderConstantMode,
-                         3911)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetShaderConstantMode,
+                      3911,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
+    // mov e??,[D3DDEVICE]
+    XREF_ENTRY(0x09, XREF_D3DDEVICE),
+
     // mov eax,[esp + param_1]
-    OV_MATCH(0x00, 0x8B),
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+    // test al,0x10
+    OV_MATCH(0x04, 0xA8, 0x10),
 
-    // mov [ebp+0x2140], eax
-    OV_MATCH(0x26, 0x89, 0x85, 0x40, 0x21),
+    // mov e??,[D3DDEVICE]
+    OV_MATCH(0x07, 0x8B),
 
-    // mov dword ptr [ebx+0x04], 0x3C
-    OV_MATCH(0x51, 0xC7, 0x43, 0x04, 0x3C),
-
-    // add ebx, 0x0124
-    OV_MATCH(0xE4, 0x81, 0xC3, 0x24, 0x01),
-    //
+    // or ecx,0x200
+    OV_MATCH(0x12, 0x81, 0xC9, 0x00, 0x02, 0x00, 0x00),
+    // Offset 0x32 and later had change over time.
 );
 
 // ******************************************************************
