@@ -75,7 +75,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(CMiniport_InitHardware, D3D_CMiniport_InitHardware, 1024),
     REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface2, 1024),
     REGISTER_OOVPAS(D3DDevice_Begin, 1024, 1036, 1048),
-    REGISTER_OOVPAS(D3DDevice_BeginPush, 1024, 1036, 1048),
+    REGISTER_OOVPAS(D3DDevice_BeginPush, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_BeginPushBuffer, 1024, 1036),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_BeginPushBuffer_0, D3DDevice_BeginPushBuffer, 2048, 2060),
     REGISTER_OOVPAS(D3DDevice_BeginVisibilityTest, 1024, 1048),

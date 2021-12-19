@@ -26,20 +26,31 @@
 // ******************************************************************
 // * D3DDevice_BeginPush
 // ******************************************************************
-//24088B49048D
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginPush,
-                         1036)
+OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
+                      1036,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0xA1 },
-    { 0x06, 0x6A },
+    // mov eax,[D3DDEVICE]
+    XREF_ENTRY(0x01, XREF_D3DDEVICE),
 
-    { 0x18, 0x24 },
-    { 0x19, 0x08 },
-    { 0x1A, 0x8B },
-    { 0x1B, 0x49 },
-    { 0x1C, 0x04 },
-    { 0x1D, 0x8D },
+    // mov e??,[D3DDEVICE]
+    XREF_ENTRY(0x10, XREF_D3DDEVICE),
+
+    // mov eax,[D3DDEVICE]
+    OV_MATCH(0x00, 0xA1),
+
+    // push 0x00
+    OV_MATCH(0x06, 0x6A, 0x00),
+
+    // mov e??,[esp + param_1]
+    OV_MATCH(0x16, 0x8B),
+    OV_MATCH(0x18, 0x24, 0x08),
+    // mov ecx,[ecx + 0x4]
+    OV_MATCH(0x1A, 0x8B, 0x49, 0x04),
+
+    // lea ????
+    OV_MATCH(0x1D, 0x8D),
     //
 );
 
@@ -188,27 +199,6 @@ OOVPA_SIG_MATCH(
     { 0x0D, 0xC1 },
     { 0x0E, 0xE7 },
     { 0x0F, 0x04 },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_BeginPush
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginPush,
-                         1048)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0xA1 },
-
-    { 0x14, 0x8B },
-    { 0x15, 0x01 },
-    { 0x16, 0x8B },
-    { 0x17, 0x74 },
-    { 0x18, 0x24 },
-    { 0x19, 0x08 },
-    { 0x1A, 0x8B },
-    { 0x1B, 0x49 },
-    { 0x1C, 0x04 },
     //
 );
 
