@@ -187,6 +187,8 @@
 OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS_M(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric, 3911), // This OOVPA signature is not a symbol. Read its note for more details.
 
+    REGISTER_OOVPAS(D3D_UpdateProjectionViewportTransform, 3900, 3901), // Final generic OOVPA: 4034; Removed: 0 // NOTE: 3901 is 4034 signature, except LTCG title been detected in 3925.
+
     REGISTER_OOVPAS_D3D(CDevice_MakeSpace, 3911), // NOTE: has multiple rets.
     REGISTER_OOVPAS_D3D(CMiniport_CreateCtxDmaObject, 3911, 4034),
     REGISTER_OOVPAS_D3D(CMiniport_InitHardware, 3911, 4034, 5455),
@@ -226,7 +228,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_DeletePatch, 3911), // (TODO) (from 4034's comment)
     REGISTER_OOVPAS(D3DDevice_DeletePixelShader, 3911, 5344),
     REGISTER_OOVPAS(D3DDevice_DeleteStateBlock, 3911),
-    REGISTER_OOVPAS(D3DDevice_DeleteVertexShader, 3911, 5344),
+    REGISTER_OOVPAS(D3DDevice_DeleteVertexShader, 3911, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(D3DDevice_DrawIndexedVertices, 3911, 4034, 4627, 5028),
     REGISTER_OOVPAS(D3DDevice_DrawIndexedVerticesUP, 3911, 5028, 5344), // Final generic OOVPA: 5344; Removed: 0 // TODO: Need verify title with 4034 version.
     REGISTER_OOVPAS(D3DDevice_DrawRectPatch, 3911), // TODO: Unused? (from 4034's comment)
@@ -241,7 +243,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_EndVisibilityTest, 3911),
     REGISTER_OOVPAS(D3DDevice_FlushVertexCache, 3911, 4134),
     REGISTER_OOVPAS(D3DDevice_GetBackBuffer, 3911, 4034, 4134, 4627), // Called D3DDevice_GetBackBuffer2 (from 4627's comment) NOTE: Use D3DDevice_GetBackBuffer2 for 4627 and above
-    REGISTER_OOVPAS(D3DDevice_GetBackBuffer2, 4627), // 5233 (from 5344's comment)
+    REGISTER_OOVPAS(D3DDevice_GetBackBuffer2, 4627), // Final generic OOVPA: 4627; Removed: 0
     REGISTER_OOVPAS(D3DDevice_GetBackMaterial, 3911, 4039, 4134, 4627, 5344, 5558, 5788),
     REGISTER_OOVPAS(D3DDevice_GetCreationParameters, 3911),
     REGISTER_OOVPAS(D3DDevice_GetDepthStencilSurface, 3911, 4627), // Called D3DDevice_GetDepthStencilSurface2 (from 4627's comment) NOTE: Use D3DDevice_GetDepthStencilSurface2 for 4627 and above
@@ -351,7 +353,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderTargetFast, 5233),
     REGISTER_OOVPAS(D3DDevice_SetScissors, 3911, 5344, 5558), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 4034, 5455), // Was 5233 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode, 3911, 4034),
+    REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetSoftDisplayFilter, 3911, 4034, 4134),
     REGISTER_OOVPAS_D3D(CDevice_SetStateUP, 3911, 4034, 4134),
     REGISTER_OOVPAS_D3D(CDevice_SetStateVB, 3911, 4034, 4134),
@@ -364,7 +366,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetTextureState_ColorKeyColor, 3911, 4034),
     REGISTER_OOVPAS_C(D3DDevice_SetTextureState_TexCoordIndex, 3911, 4034, 4242, 4627),
     REGISTER_OOVPAS(D3DDevice_SetTile, 3911, 4034, 4627), // Then it has changed calls ?SetTileNoWait@D3D@@YGXKPBU_D3DTILE@@@Z in XDK 4627 and higher.
-    REGISTER_OOVPAS(D3DDevice_SetTransform, 3911, 4034, 5344, 5558), // Was 4134 (from 5344's comment)
+    REGISTER_OOVPAS(D3DDevice_SetTransform, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_MultiplyTransform, 3911, 4034), // TODO: Verify 4034 is correct
     REGISTER_OOVPAS(D3DDevice_SetVertexData2f, 3911, 4039), // Was 4627 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_SetVertexData2s, 3911, 4039),
@@ -424,7 +426,6 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3D_SetFence, 3911, 4034, 4134, 5028, 5558),
     REGISTER_OOVPAS(D3D_SetPushBufferSize, 3911),
     REGISTER_OOVPAS(D3D_SetTileNoWait, 4627, 5455),
-    REGISTER_OOVPAS(D3D_UpdateProjectionViewportTransform, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(Direct3D_CheckDeviceMultiSampleType, 3911),
     REGISTER_OOVPAS(Direct3D_CreateDevice, 3911, 5028),
     REGISTER_OOVPAS_D3D8(Get2DSurfaceDesc, 3911, 4034), // Was 5233 (from 5344's comment)

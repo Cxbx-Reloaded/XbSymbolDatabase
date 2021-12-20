@@ -289,24 +289,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetVertexDataColor
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexDataColor,
-                         4039)
+// TODO: Need to test and verify for 4034 titles.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexDataColor,
+                      4039,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x02, 0x35 },
+    // mov esi,[D3DDEVICE]
+    XREF_ENTRY(0x03, XREF_D3DDEVICE),
 
-    { 0x14, 0x8B },
-    { 0x15, 0x4C },
-    { 0x16, 0x24 },
-    { 0x17, 0x0C },
-    { 0x18, 0x8D },
-    { 0x19, 0x14 },
-    { 0x1A, 0x8D },
-    { 0x1B, 0x40 },
-    { 0x1C, 0x19 },
-    { 0x1D, 0x04 },
-    { 0x1E, 0x00 },
-    { 0x25, 0x0F },
+    // call D3DDevice_MakeSpace
+    XREF_ENTRY(0x10, XREF_D3DDevice_MakeSpace),
+
+    // mov esi,[D3DDEVICE]
+    OV_MATCH(0x01, 0x8B, 0x35),
+
+    // mov ecx,[esp + 0x0C]
+    OV_MATCH(0x14, 0x8B, 0x4C, 0x24, 0x0C),
+    // lea edx[ecx * 4 + 0x00041940] // 0x00041940 is hardcode value
+    OV_MATCH(0x18, 0x8D, 0x14, 0x8D, 0x40, 0x19, 0x04, 0x00),
+
+    // and ecx,0xFF00FF00
+    OV_MATCH(0x37, 0x81, 0xE1, 0x00, 0xFF, 0x00, 0xFF),
     //
 );
 

@@ -46,6 +46,7 @@
 #include "OOVPA.h"
 
 #include "D3D8LTCG/3911.inl"
+#include "D3D8LTCG/4034.inl"
 #include "D3D8LTCG/4039.inl"
 #include "D3D8LTCG/4432.inl"
 #include "D3D8LTCG/4531.inl"
@@ -70,16 +71,15 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3D_SetFence, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3D_BlockOnTime, 1024, 1036, 1048),
     REGISTER_OOVPAS_BIND_XREF(D3D_BlockOnTime_4, D3D_BlockOnTime, 2048, 2060),
-    REGISTER_OOVPAS(D3DResource_AddRef, 3911),
 
     REGISTER_OOVPAS_BIND_XREF(CMiniport_InitHardware, D3D_CMiniport_InitHardware, 1024),
     REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface2, 1024),
     REGISTER_OOVPAS(D3DDevice_Begin, 1024, 1036, 1048),
-    REGISTER_OOVPAS(D3DDevice_BeginPush, 1024, 1036, 1048),
+    REGISTER_OOVPAS(D3DDevice_BeginPush, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_BeginPushBuffer, 1024, 1036),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_BeginPushBuffer_0, D3DDevice_BeginPushBuffer, 2048, 2060),
     REGISTER_OOVPAS(D3DDevice_BeginVisibilityTest, 1024, 1048),
-    REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 1024),
+    REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 1024), // NOTE: NASCAR Heat 2002 reveal this function is inlined, need some sort of indicator which is inline or not.
     REGISTER_OOVPAS(D3DDevice_Clear, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_CopyRects, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_CreatePixelShader, 1024),
@@ -88,7 +88,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_CreateVertexShader, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_DeletePixelShader_0, D3DDevice_DeletePixelShader, 2024),
     REGISTER_OOVPAS(D3DDevice_DeleteStateBlock, 1024),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_DeleteVertexShader_0, D3DDevice_DeleteVertexShader, 2024, 2036),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_DeleteVertexShader_0, D3DDevice_DeleteVertexShader, 3911, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(D3DDevice_DrawIndexedVertices, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_DrawIndexedVerticesUP, 1024, 1036, 1048, 1060, 1072),
     REGISTER_OOVPAS(D3DDevice_DrawVertices, 1024),
@@ -101,9 +101,9 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_EndPushBuffer, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_EndVisibilityTest, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_EndVisibilityTest_0, D3DDevice_EndVisibilityTest, 2048),
-    REGISTER_OOVPAS(D3DDevice_GetBackBuffer2, 1024, 1036),
+    REGISTER_OOVPAS(D3DDevice_GetBackBuffer2, 4626), // Due to non-LTCG signature conflict, lowered down by one number.
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_GetBackBuffer_8, D3DDevice_GetBackBuffer, 2048),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_GetBackBuffer2_0, D3DDevice_GetBackBuffer2, 2024, 2048),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_GetBackBuffer2_0__LTCG_eax1, D3DDevice_GetBackBuffer2, 4627, 5233),
     REGISTER_OOVPAS(D3DDevice_GetDepthStencilSurface, 1024),
     REGISTER_OOVPAS(D3DDevice_GetDepthStencilSurface2, 1024, 1048),
     REGISTER_OOVPAS(D3DDevice_GetDisplayMode, 1024),
@@ -177,7 +177,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetScissors, 1024, 1036, 1048, 1060, 1072),
     REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 1024),
     REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode, 1024),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetShaderConstantMode_0, D3DDevice_SetShaderConstantMode, 2024, 2036, 2048, 2060, 2072, 2084, 2096, 2108, 2120, 2132, 2144, 2156),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetShaderConstantMode_0__LTCG_eax1, D3DDevice_SetShaderConstantMode, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetSoftDisplayFilter_0, D3DDevice_SetSoftDisplayFilter, 2048),
     REGISTER_OOVPAS(D3DDevice_SetStreamSource, 1044),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetStreamSource_0__LTCG_eax_StreamNumber_edi_pStreamData_ebx_Stride, D3DDevice_SetStreamSource, 2058),
@@ -201,15 +201,14 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTexture_4__LTCG_eax_pTexture, D3DDevice_SetTexture, 2024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTexture_4, D3DDevice_SetTexture, 2036),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTile_0, D3DDevice_SetTile, 2024, 2036, 2048, 2060, 2072),
-    REGISTER_OOVPAS(D3DDevice_SetTransform, 1024, 1048),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTransform_0, D3DDevice_SetTransform, 2024, 2048, 2060, 2072, 2084),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTransform_0__LTCG_eax1_edx2, D3DDevice_SetTransform, 3911, 4034, 5344, 5455, 5558),
     REGISTER_OOVPAS(D3DDevice_SetVertexData2f, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_SetVertexData2s, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_SetVertexData4f, 1024, 1036),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetVertexData4f_16, D3DDevice_SetVertexData4f, 2024, 2036, 2048),
     REGISTER_OOVPAS(D3DDevice_SetVertexData4s, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_SetVertexData4ub, 1024, 1036, 1048),
-    REGISTER_OOVPAS(D3DDevice_SetVertexDataColor, 1024, 1036, 1048, 1060),
+    REGISTER_OOVPAS(D3DDevice_SetVertexDataColor, 4038),
     REGISTER_OOVPAS(D3DDevice_SetVertexShader, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstant, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetVertexShaderConstantNotInline_0, D3DDevice_SetVertexShaderConstantNotInline, 2048),

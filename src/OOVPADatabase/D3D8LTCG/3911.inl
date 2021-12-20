@@ -632,27 +632,27 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetShaderConstantMode
 // ******************************************************************
-//A810538B1D ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetShaderConstantMode_0,
-                         2024)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetShaderConstantMode_0__LTCG_eax1,
+                      3911,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0xA8 },
-    { 0x01, 0x10 },
-    { 0x02, 0x53 },
-    { 0x03, 0x8B },
-    { 0x04, 0x1D },
+    // mov e??,[D3DDEVICE]
+    XREF_ENTRY(0x05, XREF_D3DDEVICE),
 
-    { 0x10, 0x00 },
-    { 0x11, 0x02 },
-    { 0x12, 0x00 },
-    { 0x13, 0x00 },
-    { 0x14, 0xEB },
-    { 0x15, 0x06 },
+    // test al,0x10
+    OV_MATCH(0x00, 0xA8, 0x10),
 
-    { 0xEE, 0x5B },
-    { 0xEF, 0xC3 },
-    //
+    // mov e??,[D3DDEVICE]
+    OV_MATCH(0x03, 0x8B, 0x1D),
+
+    // or ecx,0x200
+    OV_MATCH(0x0E, 0x81, 0xC9, 0x00, 0x02, 0x00, 0x00),
+
+    // mov ???,???
+    OV_MATCH(0x2E, 0x8B), // Unique OV to determine if function is LTCG.
+    // Offset 0x2F and later had change over time.
 );
 
 // ******************************************************************
@@ -861,27 +861,36 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetTransform
 // ******************************************************************
-//8D7822C1E70603FBB910000000 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTransform_0,
-                         2024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTransform_0__LTCG_eax1_edx2,
+                      3911,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x53 },
-    { 0x01, 0x8B },
+    // mov ebx,[D3DDEVICE]
+    XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
 
-    { 0x09, 0x8D },
-    { 0x0A, 0x78 },
-    { 0x0B, 0x22 },
-    { 0x0C, 0xC1 },
-    { 0x0D, 0xE7 },
-    { 0x0E, 0x06 },
-    { 0x0F, 0x03 },
-    { 0x10, 0xFB },
-    { 0x11, 0xB9 },
-    { 0x12, 0x10 },
-    { 0x13, 0x00 },
-    { 0x14, 0x00 },
-    { 0x15, 0x00 },
+    // call D3D::UpdateProjectionViewportTransform
+    // TODO: Need to fix 3925 to able detect function below
+    XREF_ENTRY(0xEB, XREF_D3D_UpdateProjectionViewportTransform),
+
+    // push ebx
+    // mov ebx,[D3DDEVICE]
+    OV_MATCH(0x00, 0x53),
+    OV_MATCH(0x01, 0x8B, 0x1D),
+
+    // lea edi, [param_1 + 0x22]
+    OV_MATCH(0x09, 0x8D, 0x78, 0x22), // 3911 0x22 vs 5344 0x21 value
+    // shl edi,0x6
+    OV_MATCH(0x0C, 0xC1, 0xE7, 0x06),
+
+    // mov ecx,0x10
+    OV_MATCH(0x11, 0xB9, 0x10, 0x00 /*, 0x00, 0x00*/),
+
+    // call D3D::UpdateProjectionViewportTransform
+    OV_MATCH(0xEA, 0xE8),
+
+    // ret
+    OV_MATCH(0xF9, 0xC3), // LTCG 0xC3 vs non-LTCG 0xC2
     //
 );
 
@@ -971,6 +980,30 @@ OOVPA_SIG_MATCH(
     { 0x4B, 0x00 },
     { 0x4C, 0x00 },
     { 0x4D, 0x83 },
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_DeleteVertexShader
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DeleteVertexShader_0,
+                         3911)
+OOVPA_SIG_MATCH(
+
+    // mov ecx,[eax + -0x1]
+    OV_MATCH(0x00, 0x8B, 0x48, 0xFF),
+    // dec eax
+    // dec ecx
+    OV_MATCH(0x03, 0x48, 0x49),
+    // mov [eax],ecx
+    OV_MATCH(0x05, 0x89, 0x08),
+    // jnz
+    OV_MATCH(0x07, 0x75, 0x06),
+
+    // call LocalFree
+    OV_MATCH(0x0A, 0xE8),
+
+    OV_MATCH(0x0F, 0xC3),
     //
 );
 
@@ -1124,6 +1157,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
 // NOTE: Later XDK version start to use std signature.
+// NOTE: NASCAR Heat 2002 reveal this function is inlined, need some sort of indicator which is inline or not.
 OOVPA_SIG_HEADER_XREF(D3DDevice_BlockUntilVerticalBlank,
                       1024,
                       XRefTwo)

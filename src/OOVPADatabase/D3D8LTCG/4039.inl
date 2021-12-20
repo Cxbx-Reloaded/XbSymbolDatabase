@@ -662,30 +662,6 @@ OOVPA_SIG_MATCH(
     //
 );
 
-// ******************************************************************
-// * D3DDevice_DeleteVertexShader
-// ******************************************************************
-//FF08750D8B480485C9740650E8 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DeleteVertexShader_0,
-                         2024)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x8B },
-    { 0x01, 0x48 },
-    { 0x02, 0xFF },
-    { 0x03, 0x48 },
-    { 0x04, 0x49 },
-    { 0x05, 0x89 },
-    { 0x06, 0x08 },
-    { 0x07, 0x75 },
-    { 0x08, 0x06 },
-    { 0x09, 0x50 },
-    { 0x0A, 0xE8 },
-
-    { 0x0F, 0xC3 },
-    //
-);
-
 //******************************************************************
 //* D3DSurface_GetDesc
 //******************************************************************
@@ -746,32 +722,6 @@ OOVPA_SIG_MATCH(
     { 0x09, 0xC3 },
     { 0x0A, 0x20 },
     { 0x0B, 0x55 },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_SetTransform
-// ******************************************************************
-//568BC8C1E106578DBC ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTransform_0,
-                         2048)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x53 },
-    { 0x01, 0x8B },
-
-    { 0x07, 0x56 },
-    { 0x08, 0x8B },
-    { 0x09, 0xC8 },
-    { 0x0A, 0xC1 },
-    { 0x0B, 0xE1 },
-    { 0x0C, 0x06 },
-    { 0x0D, 0x57 },
-    { 0x0E, 0x8D },
-    { 0x0F, 0xBC },
-    { 0x10, 0x19 },
-
-    { 0x103, 0xC3 },
     //
 );
 
@@ -901,26 +851,31 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_GetBackBuffer
 // ******************************************************************
 //7507B801000000EB07F7 ...C20800
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_GetBackBuffer_8,
-                         2048)
+OOVPA_SIG_HEADER_XREF(D3DDevice_GetBackBuffer_8,
+                      2048,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x83 },
-    { 0x01, 0xF8 },
+    // mov e?x, [D3DDEVICE]
+    XREF_ENTRY(0x05, XREF_D3DDEVICE),
 
-    { 0x09, 0x75 },
-    { 0x0A, 0x07 },
-    { 0x0B, 0xB8 },
-    { 0x0C, 0x01 },
-    { 0x0D, 0x00 },
-    { 0x0E, 0x00 },
-    { 0x0F, 0x00 },
-    { 0x10, 0xEB },
-    { 0x11, 0x07 },
-    { 0x12, 0xF7 },
+    // call D3DResource::AddRef
+    XREF_ENTRY(0x45, XREF_D3DResource_AddRef),
 
-    { 0x4C, 0xC2 },
-    { 0x4D, 0x08 },
+    // cmp eax,0x??
+    OV_MATCH(0x00, 0x83, 0xF8),
+
+    // jnz +0x07
+    OV_MATCH(0x09, 0x75, 0x07),
+    // mov eax,0x1
+    OV_MATCH(0x0B, 0xB8, 0x01, 0x00, 0x00, 0x00),
+    // jmp +0x07
+    OV_MATCH(0x10, 0xEB, 0x07),
+    // neg e?x
+    OV_MATCH(0x12, 0xF7),
+
+    // retn 0x08
+    OV_MATCH(0x4C, 0xC2, 0x08),
     //
 );
 
@@ -1026,21 +981,31 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetVertexDataColor
 // ******************************************************************
-//0C8D....40190400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexDataColor,
-                         1024)
+// TODO: Need verify with 4034 titles.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexDataColor,
+                      4038, // Due to non-LTCG signature conflict, lowered down by one offset.
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x56 },
-    { 0x01, 0x8B },
+    // mov edi,[D3DDEVICE]
+    XREF_ENTRY(0x08, XREF_D3DDEVICE),
 
-    { 0x21, 0x0C },
-    { 0x22, 0x8D },
-    { 0x25, 0x40 },
-    { 0x26, 0x19 },
-    { 0x27, 0x04 },
-    { 0x28, 0x00 },
-    //
+    // push esi
+    // mov esi,[esp + param_2]
+    OV_MATCH(0x00, 0x56, 0x8B, 0x74, 0x24, 0x0C),
+    // push edi
+    // mov edi,[D3DDEVICE]
+    OV_MATCH(0x05, 0x57, 0x8B, 0x3D),
+
+    // mov eax,[edi]
+    // cmp eax[edi + 0x04]
+    OV_MATCH(0x0C, 0x8B, 0x07, 0x3B, 0x47, 0x04),
+    // jc +0x??
+    OV_MATCH(0x11, 0x72),
+
+    // mov eax,0x????????
+    OV_MATCH(0x13, 0xA1)
+    // Offset 0x18 and later has changed
 );
 
 // ******************************************************************
@@ -1324,31 +1289,5 @@ OOVPA_SIG_MATCH(
     { 0x62, 0xFF },
     { 0x63, 0x00 },
     { 0x64, 0x01 },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_SetShaderConstantMode
-// ******************************************************************
-//A810538B1D ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetShaderConstantMode_0,
-                         2036)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0xA8 },
-    { 0x01, 0x10 },
-    { 0x02, 0x53 },
-    { 0x03, 0x8B },
-    { 0x04, 0x1D },
-
-    { 0x10, 0x00 },
-    { 0x11, 0x02 },
-    { 0x12, 0x00 },
-    { 0x13, 0x00 },
-    { 0x14, 0xEB },
-    { 0x15, 0x06 },
-
-    { 0xFB, 0x5B },
-    { 0xFC, 0xC3 },
     //
 );

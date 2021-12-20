@@ -294,31 +294,30 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_GetBackBuffer2
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_GetBackBuffer2,
-                         4627)
+// Generic OOVPA as of 4627 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_GetBackBuffer2,
+                      4627,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_GetBackBuffer2+0x04 : cmp eax, 0xFFFFFFFF
-    { 0x04, 0x83 },
-    { 0x05, 0xF8 },
-    { 0x06, 0xFF },
+    // mov e??,[D3DDEVICE]
+    XREF_ENTRY(0x09, XREF_D3DDEVICE),
 
-    // D3DDevice_GetBackBuffer2+0x0D : jnz +0x19
-    { 0x0D, 0x75 },
-    { 0x0E, 0x19 },
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    // D3DDevice_GetBackBuffer2+0x12 : mov eax, 1
-    { 0x0F, 0xB8 },
-    { 0x13, 0x00 },
+    // jnz +0x19 // difference between LTCG is jump's value
+    OV_MATCH(0x0D, 0x75, 0x19),
 
-    // D3DDevice_GetBackBuffer2+0x15 : mov esi, [ecx+eax*4+0xXXXX]
-    { 0x15, 0x8B },
-    { 0x16, 0xB4 },
-    { 0x17, 0x81 },
+    // mov eax,1
+    OV_MATCH(0x0F, 0xB8, 0x01, 0x00 /*, 0x00, 0x00*/),
+    // push esi
+    OV_MATCH(0x14, 0x56), // push esi vs jmp LTCG 4626
+    // mov esi,[ecx + eax * 4 + 0xXXXX]
+    OV_MATCH(0x15, 0x8B, 0xB4, 0x81), // difference between LTCG is offset location
 
-    // D3DDevice_GetBackBuffer2+0x40 : retn 0x04
-    { 0x40, 0xC2 },
-    { 0x41, 0x04 },
+    // retn 0x04 // sometimes at different location for LTCG
+    OV_MATCH(0x40, 0xC2, 0x04),
     //
 );
 
