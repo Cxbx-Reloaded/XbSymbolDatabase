@@ -573,6 +573,7 @@ static eLibraryType internal_GetLibraryType(uint32_t library)
             return LT_GRAPHIC;
         case XbSymbolLib_XONLINE:
         case XbSymbolLib_XONLINES:
+        case XbSymbolLib_XONLINLS:
         case XbSymbolLib_XNET:
         case XbSymbolLib_XNETS:
         case XbSymbolLib_XNETN:

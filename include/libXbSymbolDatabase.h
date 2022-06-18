@@ -70,6 +70,7 @@ extern "C" {
 #define Lib_XONLINE  "XONLINE"
 #define Sec_XONLINE  Lib_XONLINE
 #define Lib_XONLINES "XONLINES"
+#define Lib_XONLINLS "XONLINLS"
 #define Sec_XNET     "XNET"
 
 #define XbSymbolLib_D3D8     (1 << 0)
@@ -85,13 +86,14 @@ extern "C" {
 #define XbSymbolLib_XNETS    (1 << 10)
 #define XbSymbolLib_XONLINE  (1 << 11)
 #define XbSymbolLib_XONLINES (1 << 12)
+#define XbSymbolLib_XONLINLS (1 << 13)
 
 // clang-format off
 // TODO: Need to find a way keep below intact.
 #define XbSymbolLib_ALL ( XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG | XbSymbolLib_D3DX8 | XbSymbolLib_DSOUND \
                         | XbSymbolLib_JVS | XbSymbolLib_XACTENG | XbSymbolLib_XAPILIB | XbSymbolLib_XGRAPHC \
                         | XbSymbolLib_XNET | XbSymbolLib_XNETN | XbSymbolLib_XNETS | XbSymbolLib_XONLINE \
-                        | XbSymbolLib_XONLINES)
+                        | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS)
 // clang-format on
 
 typedef enum _xb_output_message {
