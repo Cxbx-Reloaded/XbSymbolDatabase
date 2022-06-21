@@ -207,13 +207,13 @@ SymbolDatabaseList SymbolDBList[] = {
     // TODO: Do we need to keep Sec_XNET in here?
     // TODO: Need to find out which function is only part of XOnlines.
     // Fun fact, XONLINES are split into 2 header sections.
-    { XbSymbolLib_XONLINE | XbSymbolLib_XONLINES, { Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINE_OOVPA, XONLINE_OOVPA_COUNT },
+    { XbSymbolLib_XONLINE | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS, { Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINE_OOVPA, XONLINE_OOVPA_COUNT },
 
     // Added Sec_text just in case.
     // TODO: Need to find out which function is only part of XNets.
     // XNETS only has XNET, might be true.
     // XNETN's test case: Stake
-    { XbSymbolLib_XNET | XbSymbolLib_XNETS | XbSymbolLib_XNETN | XbSymbolLib_XONLINE | XbSymbolLib_XONLINES, { Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPA, XNET_OOVPA_COUNT },
+    { XbSymbolLib_XNET | XbSymbolLib_XNETS | XbSymbolLib_XNETN | XbSymbolLib_XONLINE | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS, { Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPA, XNET_OOVPA_COUNT },
 };
 
 // ******************************************************************
@@ -417,6 +417,9 @@ const char* XbSymbolDatabase_LibraryToString(uint32_t library_flag)
         case XbSymbolLib_XONLINES: {
             return Lib_XONLINES;
         }
+        case XbSymbolLib_XONLINLS: {
+            return Lib_XONLINLS;
+        }
         default: {
             return Lib_UNKNOWN;
         }
@@ -462,6 +465,9 @@ uint32_t XbSymbolDatabase_LibraryToFlag(const char* library_name)
     }
     if (strncmp(library_name, Lib_XONLINES, 8) == 0) {
         return XbSymbolLib_XONLINES;
+    }
+    if (strncmp(library_name, Lib_XONLINLS, 8) == 0) {
+        return XbSymbolLib_XONLINLS;
     }
     return 0;
 }
