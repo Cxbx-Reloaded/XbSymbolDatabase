@@ -1,6 +1,12 @@
 name: GitHub CI
 
 on:
+  workflow_call:
+    outputs:
+      do-release:
+        value: ${{ jobs.semver.outputs.do-build && jobs.semver.outputs.do-release}}
+      ver-cur:
+        value: ${{ jobs.semver.outputs.ver-cur }}
   workflow_dispatch:
   push:
     paths-ignore:
@@ -8,17 +14,12 @@ on:
       - '.github/*TEMPLATE/**'
     branches:
       - '**'
-    tags:
-      - 'v*'
   pull_request:
     paths-ignore:
       - '*.md'
       - '.github/*'
       - '.github/*TEMPLATE/**'
-  schedule:
-    - cron: '1 1 7 * *'
 env:
-  is_tag: ${{ startsWith(github.ref, 'refs/tags/') }}
   is_pr: ${{ startsWith(github.ref, 'refs/pull/') }}
   repo_default: 'Cxbx-Reloaded/XbSymbolDatabase'
 
@@ -32,7 +33,7 @@ jobs:
       # Hack method to generate true or false for jobs.
       # Since job's "if" doesn't support env context.
       do-build: ${{ steps.build-cond.outputs.do-build }}
-      do-release: ${{ github.repository == env.repo_default && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || env.is_tag == 'true')}}
+      do-release: ${{ github.repository == env.repo_default }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -78,32 +79,32 @@ jobs:
       matrix:
         cmake-generator:
           # x86 arch
-          - ${{ '"Visual Studio 16 2019" -A Win32' }}
+          - -A Win32 # Visual Studio (latest IDE)
           # x64 arch
-          - ${{ '"Visual Studio 16 2019" -A x64' }}
-          - ${{ '"Unix Makefiles"' }}
-          - Xcode
+          - -A x64 # Visual Studio (latest IDE)
+          - -G "Unix Makefiles"
+          - -G Xcode
         configuration: [Debug, Release]
         include:
-          - cmake-generator: ${{ '"Visual Studio 16 2019" -A Win32' }}
+          - cmake-generator: -A Win32
             platform: Windows
             os: windows-latest
             arch: x86
             cmake-build-param: -j $env:NUMBER_OF_PROCESSORS
             folder: win
-          - cmake-generator: ${{ '"Visual Studio 16 2019" -A x64' }}
+          - cmake-generator: -A x64
             platform: Windows
             os: windows-latest
             arch: x64
             cmake-build-param: -j $env:NUMBER_OF_PROCESSORS
             folder: win
-          - cmake-generator: ${{ '"Unix Makefiles"' }}
+          - cmake-generator: -G "Unix Makefiles"
             platform: Linux
             os: ubuntu-latest
             arch: x64
             cmake-build-param: -j $(nproc --all)
             folder: linux
-          - cmake-generator: Xcode
+          - cmake-generator: -G Xcode
             platform: macOS
             os: macos-latest
             arch: x64
@@ -114,16 +115,12 @@ jobs:
       - name: Generate CMake Files
         # NOTES:
         # -Werror=dev is used to validate CMakeLists.txt for any faults.
-        run: |
-          mkdir build && cd build
-          cmake .. -Werror=dev -G ${{ matrix.cmake-generator }}
+        run: cmake -B build -Werror=dev ${{ matrix.cmake-generator }}
       - name: Build
-        working-directory: build
-        run: cmake --build . --config ${{ matrix.configuration }} ${{ matrix.cmake-build-param }}
+        run: cmake --build build --config ${{ matrix.configuration }} ${{ matrix.cmake-build-param }}
       - name: Copy Files
         if: matrix.configuration == 'Release'
-        working-directory: build
-        run: cmake --install . --config ${{ matrix.configuration }} --prefix ../upload/${{ matrix.folder }}_${{ matrix.arch }}
+        run: cmake --install build --config ${{ matrix.configuration }} --prefix upload/${{ matrix.folder }}_${{ matrix.arch }}
       - name: Upload Build Artifact
         if: matrix.configuration == 'Release'
         uses: actions/upload-artifact@v2
@@ -133,7 +130,7 @@ jobs:
           path: upload/*/*/*
           if-no-files-found: error
       - name: Upload Misc Artifact
-        if: matrix.cmake-generator == '"Unix Makefiles"' && matrix.configuration == 'Release'
+        if: matrix.cmake-generator == '-G "Unix Makefiles"' && matrix.configuration == 'Release'
         uses: actions/upload-artifact@v2
         with:
           name: XbSymbolDatabase
@@ -141,36 +138,3 @@ jobs:
             README.md
             LICENSE
           if-no-files-found: error
-  release:
-    name: Generate Release
-    needs: [semver, build]
-    if: needs.semver.outputs.do-release == 'true'
-    runs-on: ubuntu-latest
-    env:
-      version_current: ${{ needs.semver.outputs.ver-cur }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: Get Artifacts
-        uses: actions/download-artifact@v2
-        # NOTE: We're downloading ALL artifacts.
-      - name: Prepare artifacts for release
-        run: | # download-artifact doesn't download a zip, so rezip it
-          7z a -mx1 "XbSymbolDatabase.zip" "./XbSymbolDatabase/*"
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.version_current }}
-          release_name: ${{ env.version_current }}
-          body_path: changelog/changelog
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: XbSymbolDatabase.zip
-          asset_name: XbSymbolDatabase.zip
-          asset_content_type: application/zip

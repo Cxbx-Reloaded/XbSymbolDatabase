@@ -1,0 +1,50 @@
+name: Schedule Release
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - '.github/*'
+      - '.github/*TEMPLATE/**'
+    tags:
+      - 'v*'
+  schedule:
+    - cron: '1 1 7 * *'
+
+jobs:
+  build:
+    name: GitHub CI
+    uses: ./.github/workflows/ci.yml
+  release:
+    name: Generate Release
+    needs: [build]
+    if: needs.build.outputs.do-release == 'true'
+    runs-on: ubuntu-latest
+    env:
+      version_current: ${{ needs.build.outputs.ver-cur }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get Artifacts
+        uses: actions/download-artifact@v2
+        # NOTE: We're downloading ALL artifacts.
+      - name: Prepare artifacts for release
+        run: | # download-artifact doesn't download a zip, so rezip it
+          7z a -mx1 "XbSymbolDatabase.zip" "./XbSymbolDatabase/*"
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.version_current }}
+          release_name: ${{ env.version_current }}
+          body_path: changelog/changelog
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: XbSymbolDatabase.zip
+          asset_name: XbSymbolDatabase.zip
+          asset_content_type: application/zip
