@@ -214,10 +214,17 @@ typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_f
 bool XbSymbolScan(const void* xb_header_addr, xb_symbol_register_t register_func, bool is_raw);
 
 /// <summary>
+/// To convert library flag into string format.
+/// </summary>
+/// <param name="library_flag">Input specific library flag.</param>
+/// <returns>Return "UNKNOWN" string if does not exist in the database. Otherwise will return library name string.</returns>
+const char* XbSymbolDatabase_LibraryToString(uint32_t library_flag);
+
+/// <summary>
 /// To convert library name string into flag format.
 /// </summary>
 /// <param name="library_name">Input library name string.</param>
-/// <returns>Return 0 if does not in the database. Otherwise will return flag value.</returns>
+/// <returns>Return 0 if does not exist in the database. Otherwise will return flag value.</returns>
 uint32_t XbSymbolDatabase_LibraryToFlag(const char* library_name);
 
 /// <summary>
