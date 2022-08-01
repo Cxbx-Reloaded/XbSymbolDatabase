@@ -129,7 +129,7 @@ static xbaddr internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(iXbSymbo
                                                                         const OOVPATable* pSymbol,
                                                                         const OOVPARevision* pRevision,
                                                                         const char* xref_str,
-                                                                        XRefDatabaseOffset xref_target)
+                                                                        XRefDatabase xref_target)
 {
     if (pRevision->Oovpa->XRefCount == 0) {
         // Should not be triggered when there is no xref listed.
@@ -330,7 +330,7 @@ static void internal_RegisterValidXRefAddr(iXbSymbolContext* pContext,
     xbaddr xSymbolAddr = pContext->xref_database[XRefIndex];
 
     if (internal_IsXRefAddrValid(xSymbolAddr)) {
-        pContext->register_func(library_name, library_flag, symbol_name, xSymbolAddr, version);
+        pContext->register_func(library_name, library_flag, XRefIndex, symbol_name, xSymbolAddr, version);
     }
 }
 
@@ -365,14 +365,14 @@ static void internal_RegisterXRef(iXbSymbolContext* pContext,
 
     internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XRefIndex, symbol_addr);
     if (do_register && pContext->register_func != NULL) {
-        pContext->register_func(pLibrary->name, pLibrary->flag, symbol_name, symbol_addr, version);
+        pContext->register_func(pLibrary->name, pLibrary->flag, XRefIndex, symbol_name, symbol_addr, version);
     }
 }
 
 // (Old / Manual) method
 static void internal_RegisterSymbolManual(iXbSymbolContext* pContext,
                                           const iXbSymbolLibrarySession* pLibrarySession,
-                                          const XRefDatabaseOffset xref,
+                                          const XRefDatabase xref,
                                           uint16_t version,
                                           const char* symbol_name,
                                           uint32_t symbol_addr)
@@ -383,7 +383,7 @@ static void internal_RegisterSymbolManual(iXbSymbolContext* pContext,
     if (pContext->xref_database[xref] == XREF_ADDR_UNDETERMINED) {
         internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, xref, symbol_addr);
         if (pContext->register_func != NULL) {
-            pContext->register_func(pLibrary->name, pLibrary->flag, symbol_name, symbol_addr, version);
+            pContext->register_func(pLibrary->name, pLibrary->flag, xref, symbol_name, symbol_addr, version);
         }
     }
 }

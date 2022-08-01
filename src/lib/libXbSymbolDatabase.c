@@ -804,36 +804,36 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     // clang-format off
     // Request a few fundamental XRefs to be derived instead of checked
     // D3D
-    pContext->xref_database[XREF_D3DDEVICE] = XREF_ADDR_DERIVE;                               //In use
-    pContext->xref_database[XREF_D3DRS_CULLMODE] = XREF_ADDR_DERIVE;                          //In use
-    pContext->xref_database[XREF_D3DRS_MULTISAMPLERENDERTARGETMODE] = XREF_ADDR_DERIVE;       //In use
-    pContext->xref_database[XREF_D3DRS_ROPZCMPALWAYSREAD] = XREF_ADDR_DERIVE;                 //In use
-    pContext->xref_database[XREF_D3DRS_ROPZREAD] = XREF_ADDR_DERIVE;                          //In use
-    pContext->xref_database[XREF_D3DRS_DONOTCULLUNCOMPRESSED] = XREF_ADDR_DERIVE;             //In use
-    pContext->xref_database[XREF_D3DRS_STENCILCULLENABLE] = XREF_ADDR_DERIVE;                 //In use
-    pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                    //In use
-    pContext->xref_database[XREF_G_STREAM] = XREF_ADDR_DERIVE;                                //In use
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_PIXELSHADER] = XREF_ADDR_DERIVE;          //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_TEXTURES] = XREF_ADDR_DERIVE;             //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_PALETTES] = XREF_ADDR_DERIVE;             //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_RENDERTARGET] = XREF_ADDR_DERIVE;         //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL] = XREF_ADDR_DERIVE;         //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT] = XREF_ADDR_DERIVE;   //In use
-#if 0                                                                                         //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] = XREF_ADDR_UNDETERMINED;   //In use // Manual check only.
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
-#endif                                                                                        //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER] = XREF_ADDR_DERIVE;         //In use
-    // XAPILIB                                                                                //
-    pContext->xref_database[XREF_g_XapiCurrentTopLevelFilter] = XREF_ADDR_DERIVE;             //In use
-    pContext->xref_database[XREF_g_XapiMountedMUs] = XREF_ADDR_DERIVE;                        //In use
-    pContext->xref_database[XREF_OFFSET_XapiCurrentFiber] = XREF_ADDR_DERIVE;                 //In use
-    pContext->xref_database[XREF_OFFSET_XapiLastErrorCode] = XREF_ADDR_DERIVE;                //In use
-    pContext->xref_database[XREF_OFFSET_XapiThreadFiberData] = XREF_ADDR_DERIVE;              //In use
-    pContext->xref_database[XREF_XAPI__tls_array] = XREF_ADDR_DERIVE;                         //In use
-    pContext->xref_database[XREF_XAPI__tls_index] = XREF_ADDR_DERIVE;                         //In use
-    pContext->xref_database[XREF_XapiThreadNotifyRoutineList] = XREF_ADDR_DERIVE;             //In use
-    pContext->xref_database[XREF_XGetSectionSize] = XREF_ADDR_DERIVE;                         //In use
+    pContext->xref_database[XREF_D3D_g_pDevice] = XREF_ADDR_DERIVE;                            //In use
+    pContext->xref_database[XREF_D3DRS_CULLMODE] = XREF_ADDR_DERIVE;                           //In use
+    pContext->xref_database[XREF_D3DRS_MULTISAMPLERENDERTARGETMODE] = XREF_ADDR_DERIVE;        //In use
+    pContext->xref_database[XREF_D3DRS_ROPZCMPALWAYSREAD] = XREF_ADDR_DERIVE;                  //In use
+    pContext->xref_database[XREF_D3DRS_ROPZREAD] = XREF_ADDR_DERIVE;                           //In use
+    pContext->xref_database[XREF_D3DRS_DONOTCULLUNCOMPRESSED] = XREF_ADDR_DERIVE;              //In use
+    pContext->xref_database[XREF_D3DRS_STENCILCULLENABLE] = XREF_ADDR_DERIVE;                  //In use
+    pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                     //In use
+    pContext->xref_database[XREF_D3D_g_Stream] = XREF_ADDR_DERIVE;                             //In use
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_PixelShader] = XREF_ADDR_DERIVE;          //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_Textures] = XREF_ADDR_DERIVE;             //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_Palettes] = XREF_ADDR_DERIVE;             //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_RenderTarget] = XREF_ADDR_DERIVE;         //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_DepthStencil] = XREF_ADDR_DERIVE;         //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent] = XREF_ADDR_DERIVE;   //In use
+#if 0                                                                                          //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_SwapCallback] = XREF_ADDR_UNDETERMINED;   //In use // Manual check only.
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_VBlankCallback] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
+#endif                                                                                         //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_VertexShader] = XREF_ADDR_DERIVE;         //In use
+    // XAPILIB                                                                                 //
+    pContext->xref_database[XREF_g_XapiCurrentTopLevelFilter] = XREF_ADDR_DERIVE;              //In use
+    pContext->xref_database[XREF_g_XapiMountedMUs] = XREF_ADDR_DERIVE;                         //In use
+    pContext->xref_database[XREF_OFFSET_XapiCurrentFiber] = XREF_ADDR_DERIVE;                  //In use
+    pContext->xref_database[XREF_OFFSET_XapiLastErrorCode] = XREF_ADDR_DERIVE;                 //In use
+    pContext->xref_database[XREF_OFFSET_XapiThreadFiberData] = XREF_ADDR_DERIVE;               //In use
+    pContext->xref_database[XREF_XAPI__tls_array] = XREF_ADDR_DERIVE;                          //In use
+    pContext->xref_database[XREF_XAPI__tls_index] = XREF_ADDR_DERIVE;                          //In use
+    pContext->xref_database[XREF_XapiThreadNotifyRoutineList] = XREF_ADDR_DERIVE;              //In use
+    pContext->xref_database[XREF_XGetSectionSize] = XREF_ADDR_DERIVE;                          //In use
     // clang-format on
 
     // Mark all library contexts as zero-initialized for scan activity.

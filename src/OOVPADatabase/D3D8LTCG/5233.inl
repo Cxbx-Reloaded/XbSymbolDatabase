@@ -31,13 +31,13 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // mov eax,[D3DDEVICE]
-    XREF_ENTRY(0x01, XREF_D3DDEVICE),
+    // mov eax,[D3D_g_pDevice]
+    XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
-    // mov e??,[D3DDEVICE]
-    XREF_ENTRY(0x10, XREF_D3DDEVICE),
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x10, XREF_D3D_g_pDevice),
 
-    // mov eax,[D3DDEVICE]
+    // mov eax,[D3D_g_pDevice]
     OV_MATCH(0x00, 0xA1),
 
     // push 0x00
@@ -62,8 +62,8 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_GetBackBuffer2_0__LTCG_eax1,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // mov e?x,[D3DDEVICE]
-    XREF_ENTRY(0x05, XREF_D3DDEVICE),
+    // mov e?x,[D3D_g_pDevice]
+    XREF_ENTRY(0x05, XREF_D3D_g_pDevice),
 
     // call D3DResource::AddRef
     XREF_ENTRY(0x3E, XREF_D3DResource_AddRef),
@@ -164,7 +164,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader_0,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER), // Derived (unverified, yet should be align base on existing 4 bytes in signatures)
+    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived (unverified, yet should be align base on existing 4 bytes in signatures)
 
     { 0x00, 0x51 },
 

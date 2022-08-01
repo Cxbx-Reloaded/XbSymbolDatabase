@@ -36,7 +36,7 @@ OOVPA_XREF(D3DDevice_SetRenderTarget,
            XRefOne)
 {
 
-    XREF_ENTRY(0x1D, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived
+    XREF_ENTRY(0x1D, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
 #endif
         // D3DDevice_SetRenderTarget+0x00 : sub esp, 0xXX
         OV_MATCH(0x00, 0x83, 0xEC),

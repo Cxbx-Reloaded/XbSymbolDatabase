@@ -147,7 +147,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_CullMode,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // Derived
     XREF_ENTRY(0x31, XREF_D3DRS_CULLMODE), // Derived
 
     { 0x00, 0x56 },
@@ -363,7 +363,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x12, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER), // Derived (unverified, yet should be align base on existing 4 bytes in signatures)
+    XREF_ENTRY(0x12, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived (unverified, yet should be align base on existing 4 bytes in signatures)
 
     { 0x00, 0x53 },
     { 0x01, 0x8B },
@@ -856,8 +856,8 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_GetBackBuffer_8,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // mov e?x, [D3DDEVICE]
-    XREF_ENTRY(0x05, XREF_D3DDEVICE),
+    // mov e?x, [D3D_g_pDevice]
+    XREF_ENTRY(0x05, XREF_D3D_g_pDevice),
 
     // call D3DResource::AddRef
     XREF_ENTRY(0x45, XREF_D3DResource_AddRef),
@@ -987,14 +987,14 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexDataColor,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // mov edi,[D3DDEVICE]
-    XREF_ENTRY(0x08, XREF_D3DDEVICE),
+    // mov edi,[D3D_g_pDevice]
+    XREF_ENTRY(0x08, XREF_D3D_g_pDevice),
 
     // push esi
     // mov esi,[esp + param_2]
     OV_MATCH(0x00, 0x56, 0x8B, 0x74, 0x24, 0x0C),
     // push edi
-    // mov edi,[D3DDEVICE]
+    // mov edi,[D3D_g_pDevice]
     OV_MATCH(0x05, 0x57, 0x8B, 0x3D),
 
     // mov eax,[edi]
@@ -1094,7 +1094,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource_8,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x23, XREF_G_STREAM), // Derived
+    XREF_ENTRY(0x23, XREF_D3D_g_Stream), // Derived
 
     { 0x00, 0x8B },
     { 0x01, 0x0D },

@@ -60,7 +60,7 @@ OOVPA_XREF(D3DDevice_SetTexture,
            XRefOne)
     {
 
-        XREF_ENTRY(0x13, XREF_OFFSET_D3DDEVICE_M_TEXTURES), // Derived
+        XREF_ENTRY(0x13, XREF_OFFSET_D3DDevice__m_Textures), // Derived
 #endif
 #if 0 // PatrickvL preparations // 1+31,
         { 0x00, 0x83 },
@@ -126,7 +126,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_PersistDisplay,
 OOVPA_SIG_MATCH(
 
     // D3DDevice_PersistDisplay+0x04 : mov ebx,[D3D__PDEVICE]
-    XREF_ENTRY(0x06, XREF_D3DDEVICE),
+    XREF_ENTRY(0x06, XREF_D3D_g_pDevice),
 
     // D3DDevice_PersistDisplay+0x00 : sub esp,0x__
     OV_MATCH(0x01, 0xEC),

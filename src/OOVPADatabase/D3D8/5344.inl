@@ -98,7 +98,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_LightEnable,
                       XRefTwo) // PatrickvL : Also for 5558, 5659, 5788, 5849, 5933
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0B, XREF_D3DDEVICE), // Derived
+    XREF_ENTRY(0x0B, XREF_D3D_g_pDevice), // Derived
     XREF_ENTRY(0x67, XREF_D3DDevice_SetLight),
 
     { 0x00, 0x83 },
@@ -146,7 +146,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_GetLightEnable,
                       XRefOne) // PatrickvL : Also for 5558, 5659, 5788, 5849, 5933
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x06, XREF_D3DDEVICE), // Derived
+    XREF_ENTRY(0x06, XREF_D3D_g_pDevice), // Derived
 
     { 0x00, 0x8B },
     { 0x01, 0x44 },
@@ -253,7 +253,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // Generic as of OOVPA 5344/5455 and newer.
 // The only difference between 5344/5455 is the offset shift for
-// D3DDEVICE_M_RENDERTARGET's asm code.
+// D3DDevice__m_RenderTarget's asm code.
 #ifndef WIP_LessVertexPatching
 OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 5344, 13)
     {
@@ -265,7 +265,7 @@ OOVPA_XREF(D3DDevice_SetRenderTarget,
 {
 
     // D3DDevice_SetRenderTarget+0x16 : mov eax,[edi+0x________]
-    XREF_ENTRY(0x18, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived // NOTE 5455+ is at offset 0x19
+    XREF_ENTRY(0x18, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived // NOTE 5455+ is at offset 0x19
 #endif
         // D3DDevice_SetRenderTarget+0x00 : sub esp, 0x0C
         OV_MATCH(0x00, 0x83, 0xEC, 0x0C),
@@ -331,7 +331,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVerticesUP,
 OOVPA_SIG_MATCH(
 
     // D3DDevice_DrawVerticesUP+0x09 : mov edi,[D3D__PDEVICE]
-    XREF_ENTRY(0x0B, XREF_D3DDEVICE),
+    XREF_ENTRY(0x0B, XREF_D3D_g_pDevice),
 
     // D3DDevice_DrawVerticesUP+0x00 : push ebp
     OV_MATCH(0x00, 0x55),
@@ -362,7 +362,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVerticesUP,
 OOVPA_SIG_MATCH(
 
     // D3DDevice_DrawIndexedVerticesUP+0x08 : mov edi,[D3D__PDEVICE]
-    XREF_ENTRY(0x0A, XREF_D3DDEVICE),
+    XREF_ENTRY(0x0A, XREF_D3D_g_pDevice),
 
     // D3DDevice_DrawIndexedVerticesUP+0x00 : push ebp
     OV_MATCH(0x00, 0x55),
@@ -672,7 +672,7 @@ OOVPA_XREF(D3DDevice_GetTexture2, 5344, 1 + 23, // Up to 5455
            XRefOne)
 {
 
-    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDEVICE_M_TEXTURES), // Derived
+    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDevice__m_Textures), // Derived
 #endif
         { 0x00, 0x8B },
             { 0x01, 0x44 },

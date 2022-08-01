@@ -8,7 +8,7 @@ static void msg_cb(xb_output_message message_flag, const char* msg)
     fprintf(stderr, "XbSymbolDatabase: %s\n", msg);
 }
 
-static void reg_cb(const char* library_str, uint32_t library_flag, const char* symbol_str, xbaddr address, uint32_t build_verison)
+static void reg_cb(const char* library_str, uint32_t library_flag, uint32_t xref_index, const char* symbol_str, xbaddr address, uint32_t build_verison)
 {
     printf("%.8s__%s = 0x%08x\n", library_str, symbol_str, address);
 }

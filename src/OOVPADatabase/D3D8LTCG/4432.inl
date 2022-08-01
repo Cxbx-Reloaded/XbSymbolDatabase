@@ -71,7 +71,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x22, XREF_G_STREAM), // Derived
+    XREF_ENTRY(0x22, XREF_D3D_g_Stream), // Derived
 
     { 0x00, 0x8B },
     { 0x01, 0x0D },
@@ -121,7 +121,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_CullMode,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // Derived
     XREF_ENTRY(0x34, XREF_D3DRS_CULLMODE), // Derived
 
     { 0x00, 0x56 },
@@ -578,7 +578,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x13, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER), // Derived (OK, yet unverified)
+    XREF_ENTRY(0x13, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived (OK, yet unverified)
 
     { 0x00, 0x51 },
     { 0x01, 0x53 },

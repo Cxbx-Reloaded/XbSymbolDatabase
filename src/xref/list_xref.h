@@ -21,9 +21,9 @@
 #pragma once
 
 // ******************************************************************
-// * XRefDatabaseOffset
+// * XRefDatabase
 // ******************************************************************
-typedef enum _XRefDatabaseOffset {
+typedef enum _XRefDatabase {
     // BEGIN - DO NOT REARRANGE (kernel thunk)
     XREF_KT_FUNC_AvGetSavedDataAddress = 1,           // 0x0001 (001)
     XREF_KT_FUNC_AvSendTVEncoderOption,               // 0x0002 (002)
@@ -420,7 +420,7 @@ typedef enum _XRefDatabaseOffset {
 
     XREF_COUNT // XREF_COUNT must always be last.
     // Also, if XREF_COUNT > sizeof(uint16), enlarge struct OOVPA.XRefSaveIndex (and Value somehow)
-} XRefDatabaseOffset;
+} XRefDatabase;
 
 #define XREF_ADDR_UNDETERMINED -1
 #define XREF_ADDR_NOT_FOUND    ((void*)0)

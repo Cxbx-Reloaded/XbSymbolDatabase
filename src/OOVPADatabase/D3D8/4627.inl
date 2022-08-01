@@ -135,7 +135,7 @@ OOVPA_XREF(D3D_CommonSetRenderTarget,
            XRefOne)
 {
 
-    XREF_ENTRY(0x18, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived
+    XREF_ENTRY(0x18, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
 #endif
         // D3D_CommonSetRenderTarget+0x00 : sub esp, 0x20
         { 0x00, 0x83 },
@@ -300,8 +300,8 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_GetBackBuffer2,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // mov e??,[D3DDEVICE]
-    XREF_ENTRY(0x09, XREF_D3DDEVICE),
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x09, XREF_D3D_g_pDevice),
 
     // mov eax,[esp + param_1]
     OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
@@ -372,9 +372,9 @@ OOVPA_XREF(D3DDevice_GetRenderTarget2,
            XRefThree)
 {
 #endif
-        XREF_ENTRY(0x01, XREF_D3DDEVICE), // Derived
+        XREF_ENTRY(0x01, XREF_D3D_g_pDevice), // Derived
 #ifdef WIP_LessVertexPatching
-            XREF_ENTRY(0x08, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived
+            XREF_ENTRY(0x08, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
 #endif
             XREF_ENTRY(0x12, XREF_D3DResource_AddRef),
 
@@ -439,7 +439,7 @@ OOVPA_XREF(D3DDevice_GetDepthStencilSurface2,
            XRefOne)
 {
 
-    XREF_ENTRY(0x08, XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL), // Derived
+    XREF_ENTRY(0x08, XREF_OFFSET_D3DDevice__m_DepthStencil), // Derived
 #endif
         { 0x00, 0xA1 },
 
@@ -752,7 +752,7 @@ OOVPA_XREF(D3DDevice_SetPixelShader,
            XRefOne)
 {
 
-    XREF_ENTRY(0x0A, XREF_OFFSET_D3DDEVICE_M_PIXELSHADER), // Derived
+    XREF_ENTRY(0x0A, XREF_OFFSET_D3DDevice__m_PixelShader), // Derived
 #endif
         { 0x03, 0x1D },
 
@@ -1334,7 +1334,7 @@ OOVPA_XREF(D3DDevice_GetTexture2, 4627, 1 + 23, // Up to 5233. Also for 5344, 55
            XRefOne)
 {
 
-    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDEVICE_M_TEXTURES), // Derived
+    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDevice__m_Textures), // Derived
 #endif
         { 0x00, 0x8B },
             { 0x01, 0x44 },
@@ -1418,7 +1418,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_PersistDisplay,
 OOVPA_SIG_MATCH(
 
     // D3DDevice_PersistDisplay+0x02 : mov ebx,[D3D__PDEVICE]
-    XREF_ENTRY(0x04, XREF_D3DDEVICE),
+    XREF_ENTRY(0x04, XREF_D3D_g_pDevice),
 
     // D3DDevice_PersistDisplay+0x00 : push ecx
     OV_MATCH(0x00, 0x51),

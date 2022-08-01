@@ -36,17 +36,17 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
 
-    // Temporary verification - is XREF_D3DDEVICE derived correctly?
+    // Temporary verification - is XREF_D3D_g_pDevice derived correctly?
     xbaddr DerivedAddr_D3DDevice = *(xbaddr*)(pFunc + 0x03);
-    if (pContext->xref_database[XREF_D3DDEVICE] != DerivedAddr_D3DDevice) {
+    if (pContext->xref_database[XREF_D3D_g_pDevice] != DerivedAddr_D3DDevice) {
 
-        if (pContext->xref_database[XREF_D3DDEVICE] != XREF_ADDR_DERIVE) {
-            output_message(&pContext->output, XB_OUTPUT_MESSAGE_INFO, "Second derived XREF_D3DDEVICE differs from first!");
+        if (pContext->xref_database[XREF_D3D_g_pDevice] != XREF_ADDR_DERIVE) {
+            output_message(&pContext->output, XB_OUTPUT_MESSAGE_INFO, "Second derived XREF_D3D_g_pDevice differs from first!");
         }
 
-        internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XREF_D3DDEVICE, DerivedAddr_D3DDevice);
+        internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XREF_D3D_g_pDevice, DerivedAddr_D3DDevice);
     }
-    pContext->register_func(pLibrary->name, pLibrary->flag, "D3DDEVICE", DerivedAddr_D3DDevice, 0);
+    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_pDevice, "D3D_g_pDevice", DerivedAddr_D3DDevice, 0);
 
     // Temporary verification - is XREF_D3D_RenderState_CullMode derived correctly?
     if (pContext->xref_database[XREF_D3DRS_CULLMODE] != DerivedAddr_D3DRS_CULLMODE) {
@@ -58,7 +58,7 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
         internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XREF_D3DRS_CULLMODE, DerivedAddr_D3DRS_CULLMODE);
     }
     // Register the offset of D3DRS_CULLMODE, this can be used to programatically locate other render-states in the calling program
-    pContext->register_func(pLibrary->name, pLibrary->flag, "D3DRS_CULLMODE", DerivedAddr_D3DRS_CULLMODE, 0);
+    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3DRS_CULLMODE, "D3DRS_CULLMODE", DerivedAddr_D3DRS_CULLMODE, 0);
 
     // Derive address of EmuD3DDeferredRenderState from D3DRS_CULLMODE
     xbaddr EmuD3DDeferredRenderState = DerivedAddr_D3DRS_CULLMODE - Decrement + Increment;
@@ -100,7 +100,7 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
     internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_ROPZREAD, EmuD3DDeferredRenderState + patchOffset + 2 * 4);
     internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_DONOTCULLUNCOMPRESSED, EmuD3DDeferredRenderState + patchOffset + 3 * 4);
 
-    pContext->register_func(pLibrary->name, pLibrary->flag, "D3DDeferredRenderState", EmuD3DDeferredRenderState, 0);
+    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_DeferredRenderState, "D3D_g_DeferredRenderState", EmuD3DDeferredRenderState, 0);
 }
 
 static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
@@ -137,7 +137,7 @@ static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
 
     uint32_t EmuD3DDeferredTextureState = DerivedAddr_D3DTSS_TEXCOORDINDEX - Decrement;
 
-    pContext->register_func(pLibrary->name, pLibrary->flag, "D3DDeferredTextureState", EmuD3DDeferredTextureState, 0);
+    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_DeferredTextureState, "D3D_g_DeferredTextureState", EmuD3DDeferredTextureState, 0);
 }
 
 static void manual_scan_section_dx8_register_stream(iXbSymbolContext* pContext,
@@ -153,16 +153,16 @@ static void manual_scan_section_dx8_register_stream(iXbSymbolContext* pContext,
     // Read address of Xbox_g_Stream from D3DDevice_SetStreamSource
     uint32_t Derived_g_Stream = *((uint32_t*)(pFunc + iCodeOffsetFor_g_Stream));
 
-    // Temporary verification - is XREF_G_STREAM derived correctly?
-    // TODO : Remove this when XREF_G_STREAM derivation is deemed stable
+    // Temporary verification - is XREF_D3D_g_Stream derived correctly?
+    // TODO : Remove this when XREF_D3D_g_Stream derivation is deemed stable
 #if 0 // TODO: How can we enforce it for callback?
-    VerifySymbolAddressAgainstXRef("g_Stream", Derived_g_Stream, XREF_G_STREAM);
+    VerifySymbolAddressAgainstXRef("g_Stream", Derived_g_Stream, XREF_D3D_g_Stream);
 #endif
 
     // Now that both Derived XREF and OOVPA-based function-contents match,
     // correct base-address (because "g_Stream" is actually "g_Stream"+8") :
     Derived_g_Stream -= 8;
-    pContext->register_func(pLibrary->name, pLibrary->flag, "g_Stream", Derived_g_Stream, 0);
+    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_Stream, "D3D_g_Stream", Derived_g_Stream, 0);
 }
 
 static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
@@ -479,12 +479,12 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     // * D3DDevice_SetVerticalBlankCallback
 
     // First, check if D3D__PDEVICE is found.
-    if (pContext->xref_database[XREF_D3DDEVICE] != XREF_ADDR_DERIVE &&
+    if (pContext->xref_database[XREF_D3D_g_pDevice] != XREF_ADDR_DERIVE &&
         // Then, check at least one of symbol's member variable is not found.
-        pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] == XREF_ADDR_UNDETERMINED) {
+        pContext->xref_database[XREF_OFFSET_D3DDevice__m_SwapCallback] == XREF_ADDR_UNDETERMINED) {
 
         // Scan if event handle variable is not yet derived.
-        if (pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT] == XREF_ADDR_DERIVE) {
+        if (pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent] == XREF_ADDR_DERIVE) {
             xSymbolAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
                                                                            pLibrarySession,
                                                                            pLibraryDB,
@@ -499,14 +499,14 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 
 
         // If not found, skip manual register.
-        if (pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT] == XREF_ADDR_DERIVE) {
+        if (pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent] == XREF_ADDR_DERIVE) {
             return false;
         }
 
         // Finally, manual register the symbol variables.
-        xSymbolAddr = pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT];
-        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK, xSymbolAddr - 8);
-        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK, xSymbolAddr - 4);
+        xSymbolAddr = pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent];
+        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDevice__m_SwapCallback, xSymbolAddr - 8);
+        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDevice__m_VBlankCallback, xSymbolAddr - 4);
     }
     // If D3D__PDEVICE is not found, the scan is not complete
     // and will continue scan to next given section.
@@ -519,9 +519,9 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 
 static inline void manual_register_d3d8__ltcg(iXbSymbolContext* pContext)
 {
-    xbaddr xD3D_pDeviceAddr = pContext->xref_database[XREF_D3DDEVICE];
+    xbaddr xD3D_pDeviceAddr = pContext->xref_database[XREF_D3D_g_pDevice];
     if (internal_IsXRefAddrValid(xD3D_pDeviceAddr)) {
         // Register offset of D3DDevice__m_VertexShader
-        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER, 0, "D3DDevice__m_VertexShader_OFFSET");
+        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VertexShader, 0, "D3DDevice__m_VertexShader_OFFSET");
     }
 }

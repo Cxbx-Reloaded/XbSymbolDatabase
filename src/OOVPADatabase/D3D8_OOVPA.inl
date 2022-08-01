@@ -408,7 +408,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3D_AllocContiguousMemory, 3911, 5455), // Final generic OOVPA: 5455; Removed: 0 // Just calls MmAllocateContiguousMemory.
     REGISTER_OOVPAS(D3D_BlockOnResource, 3911, 4034),
     REGISTER_OOVPAS(D3D_BlockOnTime, 3911, 4034, 4627, 5028, 5558),
-    REGISTER_OOVPAS(D3D_CMiniport_GetDisplayCapabilities, 3911),
+    REGISTER_OOVPAS_D3D(CMiniport_GetDisplayCapabilities, 3911),
     REGISTER_OOVPAS(D3D_CheckDeviceFormat, 3911),
     REGISTER_OOVPAS(D3D_ClearStateBlockFlags, 3911),
     REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 4627, 5028), // Used between 4627 to 5233 (from 5344's comment)
