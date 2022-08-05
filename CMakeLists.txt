@@ -1,8 +1,8 @@
 # CMakeList.txt : CMake solution for XbSymbolDatabase.
 #
-cmake_minimum_required (VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.10.2)
 
-project (XbSymbolDatabase)
+project(XbSymbolDatabase)
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
  set(XBSDB_DEFAULT_CONFIGS ON)
@@ -32,9 +32,9 @@ set(XBSDB_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/projects")
 
-if (XBSDB_INSTALL_TOOLS)
+if(XBSDB_INSTALL_TOOLS)
 
- if( CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR )
+ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
   install(FILES "LICENSE" "README.md" DESTINATION .)
  else()
   install(FILES "LICENSE" "README.md" DESTINATION "XbSymbolDatabase")

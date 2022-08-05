@@ -1,8 +1,8 @@
 # CMakeList.txt : CMake project for libXbSymbolDatabase.
 #
-cmake_minimum_required (VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.10.2)
 
-project (libXbSymbolDatabase LANGUAGES C)
+project(libXbSymbolDatabase LANGUAGES C)
 
 file(GLOB INCLUDES
  "${XBSDB_ROOT_DIR}/include/Xbe.h"
@@ -45,7 +45,7 @@ file(GLOB_RECURSE SOURCES
 )
 source_group(TREE ${XBSDB_ROOT_DIR} FILES ${SOURCES})
 
-add_library (${PROJECT_NAME} ${INCLUDES} ${HEADERS} ${SOURCES})
+add_library(${PROJECT_NAME} ${INCLUDES} ${HEADERS} ${SOURCES})
 
 # NOTES:
 # Using INTERFACE keyword will not work within the project. Only PUBLIC/PRIVATE keywords does.
