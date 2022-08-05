@@ -78,7 +78,7 @@ static inline uint32_t BitScanReverse(uint32_t value)
 // * Xbox Symbol OOVPA Database
 // ******************************************************************
 
-#include "list_xref.h"
+#include <xref/list_xref.h>
 #include "Xapi_OOVPA.inl"
 #include "D3D8_OOVPA.inl"
 #include "D3D8LTCG_OOVPA.inl"
