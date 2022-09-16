@@ -149,7 +149,7 @@ OOVPA_SIG_MATCH(
     // Anything after offset 0x0F changed over time.
 
     // shl e??,0x6 // 4034 edi vs 5558 ecx
-    OV_MATCH(0x12, 0xC1 /*, /*0xE7*/), // 3911 0xE7 vs 5558 0xE1 value
+    OV_MATCH(0x12, 0xC1 /*, 0xE7*/), // 3911 0xE7 vs 5558 0xE1 value
     OV_MATCH(0x14, 0x06),
 
     // mov ecx,0x10

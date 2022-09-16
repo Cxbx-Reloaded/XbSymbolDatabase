@@ -501,10 +501,6 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
     const memptr_t xb_start_addr = (memptr_t)xb_header_addr - pXbeHeader->dwBaseAddr;
     const xbe_library_version* xb_library_versions = (xbe_library_version*)(xb_start_addr + pXbeHeader->pLibraryVersionsAddr);
     unsigned int library_total = pXbeHeader->dwLibraryVersions;
-    unsigned int library_index = 0;
-    const xbe_section_header* xb_section_headers = (xbe_section_header*)(xb_start_addr + pXbeHeader->pSectionHeadersAddr);
-    unsigned int section_total = pXbeHeader->dwSections;
-    unsigned int section_index = 0;
     unsigned int count = 0;
     uint16_t build_version = 0;
     bool has_dsound_library = false;
@@ -516,7 +512,7 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
     // Only process XDK applications.
     if (pXbeHeader->pLibraryVersionsAddr != 0) {
 
-        for (library_index; library_index < library_total; library_index++) {
+        for (unsigned library_index = 0; library_index < library_total; library_index++) {
 
             library_flag = XbSymbolDatabase_LibraryToFlag(xb_library_versions[library_index].szName);
 
@@ -600,7 +596,6 @@ uint32_t XbSymbolDatabase_GenerateSectionFilter(const void* xb_header_addr, XbSD
     const xbe_section_header* sh_index;
     XbSDBSection* sv_index;
     unsigned int section_total = pXbeHeader->dwSections;
-    unsigned int section_index = 0;
     unsigned int count = 0;
     const char* SectionName;
     uint32_t kernel_thunk_addr;
@@ -609,7 +604,7 @@ uint32_t XbSymbolDatabase_GenerateSectionFilter(const void* xb_header_addr, XbSD
 
         kernel_thunk_addr = XbSymbolDatabase_GetKernelThunkAddress(xb_header_addr);
 
-        for (section_index; section_index < section_total; section_index++) {
+        for (unsigned section_index = 0; section_index < section_total; section_index++) {
 
             SectionName = (const char*)(xb_start_addr + xb_section_headers[section_index].SectionNameAddr);
             sh_index = &xb_section_headers[section_index];
@@ -1014,7 +1009,7 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
 
     SymbolDatabaseList* pSymbolDB;
     unsigned db_i = 0;
-    while (pSymbolDB = internal_FindLibraryDB(pLibrary->flag, &db_i)) {
+    while ((pSymbolDB = internal_FindLibraryDB(pLibrary->flag, &db_i))) {
         db_i++;
         for (unsigned int s = 0; s < pContext->section_input.count; s++) {
 
@@ -1211,7 +1206,7 @@ unsigned XbSymbolDatabase_GetTotalSymbols(uint32_t library_filter)
 {
     unsigned db_i = 0, total = SYMBOL_COUNTER_VALUE;
     SymbolDatabaseList* pLibraryDB;
-    while (pLibraryDB = internal_FindLibraryDB(library_filter, &db_i)) {
+    while ((pLibraryDB = internal_FindLibraryDB(library_filter, &db_i))) {
         db_i++;
         total += pLibraryDB->SymbolsTableCount;
     }
