@@ -521,7 +521,10 @@ static inline void manual_register_d3d8__ltcg(iXbSymbolContext* pContext)
 {
     xbaddr xD3D_pDeviceAddr = pContext->xref_database[XREF_D3D_g_pDevice];
     if (internal_IsXRefAddrValid(xD3D_pDeviceAddr)) {
-        // Register offset of D3DDevice__m_VertexShader
+        // Register offsets of D3DDevice's members
+        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_SwapCallback, 0, "D3DDevice__m_SwapCallback_OFFSET");
+        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VBlankCallback, 0, "D3DDevice__m_VBlankCallback_OFFSET");
         internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VertexShader, 0, "D3DDevice__m_VertexShader_OFFSET");
+        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VerticalBlankEvent, 0, "D3DDevice__m_VerticalBlankEvent_OFFSET");
     }
 }
