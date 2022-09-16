@@ -101,6 +101,7 @@ typedef struct _OutputHandler {
 // Library Type is a requirement to prevent another thread
 // doing the same scan process.
 typedef enum _eLibraryType {
+    LT_UNKNOWN = -1,
     LT_KERNEL = 0,
     LT_D3D,
     LT_AUDIO,
@@ -108,8 +109,8 @@ typedef enum _eLibraryType {
     LT_XAPI,
     LT_GRAPHIC,
     LT_NETWORK,
-    LT_UNKNOWN,
-    LT_COUNT = LT_UNKNOWN
+    LT_MAX,
+    LT_COUNT = LT_MAX
 } eLibraryType;
 
 typedef enum _eScanStage {
@@ -505,9 +506,10 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
     uint16_t build_version = 0;
     bool has_dsound_library = false;
     xb_xbe_type XbeType = GetXbeType(xb_header_addr);
-    OutputHandler output;
-    output.func = g_output_func;
-    output.verbose_level = g_output_verbose_level;
+    OutputHandler output = {
+        .func = g_output_func,
+        .verbose_level = g_output_verbose_level
+    };
 
     // Only process XDK applications.
     if (pXbeHeader->pLibraryVersionsAddr != 0) {
@@ -943,13 +945,14 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
         const XbSDBLibrary* pLibrary = pContext->library_input.filters + lv;
         eLibraryType i_LibraryType = internal_GetLibraryType(pLibrary->flag);
 
-        if (i_LibraryType >= LT_UNKNOWN) {
+        if (i_LibraryType <= LT_UNKNOWN || LT_MAX <= i_LibraryType) {
             continue;
         }
 
-        iXbSymbolLibrarySession libSession;
-        libSession.pLibrary = pLibrary;
-        libSession.iLibraryType = i_LibraryType;
+        iXbSymbolLibrarySession libSession = {
+            .pLibrary = pLibrary,
+            .iLibraryType = i_LibraryType
+        };
 
         if ((pLibrary->flag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
             // TODO: Do we need to check twice?
@@ -988,13 +991,14 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
     eLibraryType iLibraryType = internal_GetLibraryType(pLibrary->flag);
 
-    if (iLibraryType >= LT_UNKNOWN) {
+    if (iLibraryType <= LT_UNKNOWN || LT_MAX <= iLibraryType) {
         return 0;
     }
 
-    iXbSymbolLibrarySession librarySession;
-    librarySession.pLibrary = pLibrary;
-    librarySession.iLibraryType = iLibraryType;
+    iXbSymbolLibrarySession librarySession = {
+        .pLibrary = pLibrary,
+        .iLibraryType = iLibraryType
+    };
 
     unsigned int xref_count = pContext->library_contexts[iLibraryType].xref_registered;
 
@@ -1122,8 +1126,8 @@ bool XbSymbolScan(const void* xb_header_addr,
 
     XbSymbolContextHandle pHandle;
     iXbSymbolContext* iContext;
-    XbSDBLibraryHeader library_input;
-    XbSDBSectionHeader section_input;
+    XbSDBLibraryHeader library_input = { 0 };
+    XbSDBSectionHeader section_input = { 0 };
 
     // Step 1, let's get the total sum of array to allocate library input.
     library_input.count = XbSymbolDatabase_GenerateLibraryFilter(xb_header_addr, NULL);

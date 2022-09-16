@@ -587,10 +587,15 @@ static bool internal_SetLibraryTypeStart(iXbSymbolContext* pContext, eLibraryTyp
         return false;
     }
 
+    // Don't accept request if library type is unknown.
+    if (library_type <= LT_UNKNOWN || LT_MAX <= library_type) {
+        return false;
+    }
+
     bool ret = false;
 
-    // Accept request if library type is known and is inactive.
-    if (library_type < LT_UNKNOWN && !pContext->library_contexts[library_type].is_active) {
+    // Accept request if library type is inactive.
+    if (!pContext->library_contexts[library_type].is_active) {
         // Then accept the scan request.
         pContext->library_contexts[library_type].is_active = true;
         ret = true;
