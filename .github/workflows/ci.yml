@@ -4,7 +4,7 @@ on:
   workflow_call:
     outputs:
       do-release:
-        value: ${{ jobs.semver.outputs.do-build && jobs.semver.outputs.do-release}}
+        value: ${{ jobs.semver.outputs.do-build == 'true' && jobs.semver.outputs.do-release == 'true' }}
       ver-cur:
         value: ${{ jobs.semver.outputs.ver-cur }}
   workflow_dispatch:
