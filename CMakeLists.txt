@@ -1,8 +1,29 @@
 # CMakeList.txt : CMake solution for XbSymbolDatabase.
 #
-cmake_minimum_required (VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.10.2)
 
-project (XbSymbolDatabase)
+project(XbSymbolDatabase)
+
+# Enforce warnings as errors to verify projects are in sync and doesn't have hidden warnings.
+if(${CMAKE_VERSION} VERSION_LESS "3.24.0")
+ if(MSVC)
+  set(COMPILE_WARNING_AS_ERROR "/WX")
+ else()
+  include(CheckCCompilerFlag)
+  check_c_compiler_flag("-Werror-all" WERRALL)
+  check_c_compiler_flag("-Werror" WERR)
+  if(WERRALL)
+   set(COMPILE_WARNING_AS_ERROR "-Werror-all")
+  elseif(WERR)
+   set(COMPILE_WARNING_AS_ERROR "-Werror")
+  else()
+   message(WARNING "Unable enforce compile warnings as errors.")
+  endif()
+ endif()
+ add_compile_options(${COMPILE_WARNING_AS_ERROR})
+else()
+ set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
+endif()
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
  set(XBSDB_DEFAULT_CONFIGS ON)
@@ -32,9 +53,9 @@ set(XBSDB_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/projects")
 
-if (XBSDB_INSTALL_TOOLS)
+if(XBSDB_INSTALL_TOOLS)
 
- if( CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR )
+ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
   install(FILES "LICENSE" "README.md" DESTINATION .)
  else()
   install(FILES "LICENSE" "README.md" DESTINATION "XbSymbolDatabase")

@@ -93,7 +93,7 @@ OOVPA_XREF(D3DDevice_SetRenderTargetFast,
            XRefOne)
 {
 
-    XREF_ENTRY(0x15, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived
+    XREF_ENTRY(0x15, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
 #endif
         // D3DDevice_SetRenderTargetFast+0x00 : push ebp
         { 0x00, 0x55 },

@@ -475,7 +475,7 @@ OOVPA_XREF(D3DDevice_GetTexture2, 5558, 1 + 23, // Up to 5659
            XRefOne)
 {
 
-    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDEVICE_M_TEXTURES), // Derived
+    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDevice__m_Textures), // Derived
 #endif
         { 0x00, 0x8B },
             { 0x01, 0x44 },

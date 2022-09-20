@@ -78,7 +78,7 @@ static inline uint32_t BitScanReverse(uint32_t value)
 // * Xbox Symbol OOVPA Database
 // ******************************************************************
 
-#include "list_xref.h"
+#include <xref/list_xref.h>
 #include "Xapi_OOVPA.inl"
 #include "D3D8_OOVPA.inl"
 #include "D3D8LTCG_OOVPA.inl"
@@ -101,6 +101,7 @@ typedef struct _OutputHandler {
 // Library Type is a requirement to prevent another thread
 // doing the same scan process.
 typedef enum _eLibraryType {
+    LT_UNKNOWN = -1,
     LT_KERNEL = 0,
     LT_D3D,
     LT_AUDIO,
@@ -108,8 +109,8 @@ typedef enum _eLibraryType {
     LT_XAPI,
     LT_GRAPHIC,
     LT_NETWORK,
-    LT_UNKNOWN,
-    LT_COUNT = LT_UNKNOWN
+    LT_MAX,
+    LT_COUNT = LT_MAX
 } eLibraryType;
 
 typedef enum _eScanStage {
@@ -501,22 +502,19 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
     const memptr_t xb_start_addr = (memptr_t)xb_header_addr - pXbeHeader->dwBaseAddr;
     const xbe_library_version* xb_library_versions = (xbe_library_version*)(xb_start_addr + pXbeHeader->pLibraryVersionsAddr);
     unsigned int library_total = pXbeHeader->dwLibraryVersions;
-    unsigned int library_index = 0;
-    const xbe_section_header* xb_section_headers = (xbe_section_header*)(xb_start_addr + pXbeHeader->pSectionHeadersAddr);
-    unsigned int section_total = pXbeHeader->dwSections;
-    unsigned int section_index = 0;
     unsigned int count = 0;
     uint16_t build_version = 0;
     bool has_dsound_library = false;
     xb_xbe_type XbeType = GetXbeType(xb_header_addr);
-    OutputHandler output;
-    output.func = g_output_func;
-    output.verbose_level = g_output_verbose_level;
+    OutputHandler output = {
+        .func = g_output_func,
+        .verbose_level = g_output_verbose_level
+    };
 
     // Only process XDK applications.
     if (pXbeHeader->pLibraryVersionsAddr != 0) {
 
-        for (library_index; library_index < library_total; library_index++) {
+        for (unsigned library_index = 0; library_index < library_total; library_index++) {
 
             library_flag = XbSymbolDatabase_LibraryToFlag(xb_library_versions[library_index].szName);
 
@@ -600,7 +598,6 @@ uint32_t XbSymbolDatabase_GenerateSectionFilter(const void* xb_header_addr, XbSD
     const xbe_section_header* sh_index;
     XbSDBSection* sv_index;
     unsigned int section_total = pXbeHeader->dwSections;
-    unsigned int section_index = 0;
     unsigned int count = 0;
     const char* SectionName;
     uint32_t kernel_thunk_addr;
@@ -609,7 +606,7 @@ uint32_t XbSymbolDatabase_GenerateSectionFilter(const void* xb_header_addr, XbSD
 
         kernel_thunk_addr = XbSymbolDatabase_GetKernelThunkAddress(xb_header_addr);
 
-        for (section_index; section_index < section_total; section_index++) {
+        for (unsigned section_index = 0; section_index < section_total; section_index++) {
 
             SectionName = (const char*)(xb_start_addr + xb_section_headers[section_index].SectionNameAddr);
             sh_index = &xb_section_headers[section_index];
@@ -804,36 +801,36 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     // clang-format off
     // Request a few fundamental XRefs to be derived instead of checked
     // D3D
-    pContext->xref_database[XREF_D3DDEVICE] = XREF_ADDR_DERIVE;                               //In use
-    pContext->xref_database[XREF_D3DRS_CULLMODE] = XREF_ADDR_DERIVE;                          //In use
-    pContext->xref_database[XREF_D3DRS_MULTISAMPLERENDERTARGETMODE] = XREF_ADDR_DERIVE;       //In use
-    pContext->xref_database[XREF_D3DRS_ROPZCMPALWAYSREAD] = XREF_ADDR_DERIVE;                 //In use
-    pContext->xref_database[XREF_D3DRS_ROPZREAD] = XREF_ADDR_DERIVE;                          //In use
-    pContext->xref_database[XREF_D3DRS_DONOTCULLUNCOMPRESSED] = XREF_ADDR_DERIVE;             //In use
-    pContext->xref_database[XREF_D3DRS_STENCILCULLENABLE] = XREF_ADDR_DERIVE;                 //In use
-    pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                    //In use
-    pContext->xref_database[XREF_G_STREAM] = XREF_ADDR_DERIVE;                                //In use
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_PIXELSHADER] = XREF_ADDR_DERIVE;          //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_TEXTURES] = XREF_ADDR_DERIVE;             //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_PALETTES] = XREF_ADDR_DERIVE;             //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_RENDERTARGET] = XREF_ADDR_DERIVE;         //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_DEPTHSTENCIL] = XREF_ADDR_DERIVE;         //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT] = XREF_ADDR_DERIVE;   //In use
-#if 0                                                                                         //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_SWAPCALLBACK] = XREF_ADDR_UNDETERMINED;   //In use // Manual check only.
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VBLANKCALLBACK] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
-#endif                                                                                        //
-    pContext->xref_database[XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER] = XREF_ADDR_DERIVE;         //In use
-    // XAPILIB                                                                                //
-    pContext->xref_database[XREF_g_XapiCurrentTopLevelFilter] = XREF_ADDR_DERIVE;             //In use
-    pContext->xref_database[XREF_g_XapiMountedMUs] = XREF_ADDR_DERIVE;                        //In use
-    pContext->xref_database[XREF_OFFSET_XapiCurrentFiber] = XREF_ADDR_DERIVE;                 //In use
-    pContext->xref_database[XREF_OFFSET_XapiLastErrorCode] = XREF_ADDR_DERIVE;                //In use
-    pContext->xref_database[XREF_OFFSET_XapiThreadFiberData] = XREF_ADDR_DERIVE;              //In use
-    pContext->xref_database[XREF_XAPI__tls_array] = XREF_ADDR_DERIVE;                         //In use
-    pContext->xref_database[XREF_XAPI__tls_index] = XREF_ADDR_DERIVE;                         //In use
-    pContext->xref_database[XREF_XapiThreadNotifyRoutineList] = XREF_ADDR_DERIVE;             //In use
-    pContext->xref_database[XREF_XGetSectionSize] = XREF_ADDR_DERIVE;                         //In use
+    pContext->xref_database[XREF_D3D_g_pDevice] = XREF_ADDR_DERIVE;                            //In use
+    pContext->xref_database[XREF_D3DRS_CULLMODE] = XREF_ADDR_DERIVE;                           //In use
+    pContext->xref_database[XREF_D3DRS_MULTISAMPLERENDERTARGETMODE] = XREF_ADDR_DERIVE;        //In use
+    pContext->xref_database[XREF_D3DRS_ROPZCMPALWAYSREAD] = XREF_ADDR_DERIVE;                  //In use
+    pContext->xref_database[XREF_D3DRS_ROPZREAD] = XREF_ADDR_DERIVE;                           //In use
+    pContext->xref_database[XREF_D3DRS_DONOTCULLUNCOMPRESSED] = XREF_ADDR_DERIVE;              //In use
+    pContext->xref_database[XREF_D3DRS_STENCILCULLENABLE] = XREF_ADDR_DERIVE;                  //In use
+    pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                     //In use
+    pContext->xref_database[XREF_D3D_g_Stream] = XREF_ADDR_DERIVE;                             //In use
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_PixelShader] = XREF_ADDR_DERIVE;          //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_Textures] = XREF_ADDR_DERIVE;             //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_Palettes] = XREF_ADDR_DERIVE;             //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_RenderTarget] = XREF_ADDR_DERIVE;         //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_DepthStencil] = XREF_ADDR_DERIVE;         //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent] = XREF_ADDR_DERIVE;   //In use
+#if 0                                                                                          //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_SwapCallback] = XREF_ADDR_UNDETERMINED;   //In use // Manual check only.
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_VBlankCallback] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
+#endif                                                                                         //
+    pContext->xref_database[XREF_OFFSET_D3DDevice__m_VertexShader] = XREF_ADDR_DERIVE;         //In use
+    // XAPILIB                                                                                 //
+    pContext->xref_database[XREF_g_XapiCurrentTopLevelFilter] = XREF_ADDR_DERIVE;              //In use
+    pContext->xref_database[XREF_g_XapiMountedMUs] = XREF_ADDR_DERIVE;                         //In use
+    pContext->xref_database[XREF_OFFSET_XapiCurrentFiber] = XREF_ADDR_DERIVE;                  //In use
+    pContext->xref_database[XREF_OFFSET_XapiLastErrorCode] = XREF_ADDR_DERIVE;                 //In use
+    pContext->xref_database[XREF_OFFSET_XapiThreadFiberData] = XREF_ADDR_DERIVE;               //In use
+    pContext->xref_database[XREF_XAPI__tls_array] = XREF_ADDR_DERIVE;                          //In use
+    pContext->xref_database[XREF_XAPI__tls_index] = XREF_ADDR_DERIVE;                          //In use
+    pContext->xref_database[XREF_XapiThreadNotifyRoutineList] = XREF_ADDR_DERIVE;              //In use
+    pContext->xref_database[XREF_XGetSectionSize] = XREF_ADDR_DERIVE;                          //In use
     // clang-format on
 
     // Mark all library contexts as zero-initialized for scan activity.
@@ -948,13 +945,14 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
         const XbSDBLibrary* pLibrary = pContext->library_input.filters + lv;
         eLibraryType i_LibraryType = internal_GetLibraryType(pLibrary->flag);
 
-        if (i_LibraryType >= LT_UNKNOWN) {
+        if (i_LibraryType <= LT_UNKNOWN || LT_MAX <= i_LibraryType) {
             continue;
         }
 
-        iXbSymbolLibrarySession libSession;
-        libSession.pLibrary = pLibrary;
-        libSession.iLibraryType = i_LibraryType;
+        iXbSymbolLibrarySession libSession = {
+            .pLibrary = pLibrary,
+            .iLibraryType = i_LibraryType
+        };
 
         if ((pLibrary->flag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
             // TODO: Do we need to check twice?
@@ -993,13 +991,14 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
     eLibraryType iLibraryType = internal_GetLibraryType(pLibrary->flag);
 
-    if (iLibraryType >= LT_UNKNOWN) {
+    if (iLibraryType <= LT_UNKNOWN || LT_MAX <= iLibraryType) {
         return 0;
     }
 
-    iXbSymbolLibrarySession librarySession;
-    librarySession.pLibrary = pLibrary;
-    librarySession.iLibraryType = iLibraryType;
+    iXbSymbolLibrarySession librarySession = {
+        .pLibrary = pLibrary,
+        .iLibraryType = iLibraryType
+    };
 
     unsigned int xref_count = pContext->library_contexts[iLibraryType].xref_registered;
 
@@ -1014,7 +1013,7 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
 
     SymbolDatabaseList* pSymbolDB;
     unsigned db_i = 0;
-    while (pSymbolDB = internal_FindLibraryDB(pLibrary->flag, &db_i)) {
+    while ((pSymbolDB = internal_FindLibraryDB(pLibrary->flag, &db_i))) {
         db_i++;
         for (unsigned int s = 0; s < pContext->section_input.count; s++) {
 
@@ -1127,8 +1126,8 @@ bool XbSymbolScan(const void* xb_header_addr,
 
     XbSymbolContextHandle pHandle;
     iXbSymbolContext* iContext;
-    XbSDBLibraryHeader library_input;
-    XbSDBSectionHeader section_input;
+    XbSDBLibraryHeader library_input = { 0 };
+    XbSDBSectionHeader section_input = { 0 };
 
     // Step 1, let's get the total sum of array to allocate library input.
     library_input.count = XbSymbolDatabase_GenerateLibraryFilter(xb_header_addr, NULL);
@@ -1211,7 +1210,7 @@ unsigned XbSymbolDatabase_GetTotalSymbols(uint32_t library_filter)
 {
     unsigned db_i = 0, total = SYMBOL_COUNTER_VALUE;
     SymbolDatabaseList* pLibraryDB;
-    while (pLibraryDB = internal_FindLibraryDB(library_filter, &db_i)) {
+    while ((pLibraryDB = internal_FindLibraryDB(library_filter, &db_i))) {
         db_i++;
         total += pLibraryDB->SymbolsTableCount;
     }

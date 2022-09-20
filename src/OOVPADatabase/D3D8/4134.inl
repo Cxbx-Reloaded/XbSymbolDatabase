@@ -90,7 +90,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x13, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER), // Derived
+    XREF_ENTRY(0x13, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived
 
     // D3DDevice_SetVertexShader+0x06 : test bl, 1
     { 0x06, 0xF6 },
@@ -672,7 +672,7 @@ OOVPA_XREF(D3DDevice_GetTexture2, 4134, 1 + 23, // Up to 4531
            XRefOne)
 {
 
-    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDEVICE_M_TEXTURES), // Derived
+    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDevice__m_Textures), // Derived
 #endif
         { 0x00, 0x8B },
             { 0x01, 0x44 },

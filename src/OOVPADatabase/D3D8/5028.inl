@@ -100,7 +100,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x13, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER), // Derived
+    XREF_ENTRY(0x13, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived
 
     // D3DDevice_SetVertexShader+0x06 : test bl, 1
     { 0x06, 0xF6 },
@@ -350,7 +350,7 @@ OOVPA_XREF(D3D_CommonSetRenderTarget,
            XRefOne)
 {
 
-    XREF_ENTRY(0x18, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived TODO : Verify offset
+    XREF_ENTRY(0x18, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived TODO : Verify offset
 #endif
         { 0x02, 0x1C },
             { 0x1A, 0x15 },
@@ -458,7 +458,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_IsFencePending,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x01, XREF_D3DDEVICE), // Derived
+    XREF_ENTRY(0x01, XREF_D3D_g_pDevice), // Derived
 
     { 0x07, 0x30 },
     { 0x0A, 0x2C },
@@ -546,7 +546,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVerticesUP,
 OOVPA_SIG_MATCH(
 
     // D3DDevice_DrawIndexedVerticesUP+0x07 : mov esi,[D3D__PDEVICE]
-    XREF_ENTRY(0x09, XREF_D3DDEVICE),
+    XREF_ENTRY(0x09, XREF_D3D_g_pDevice),
 
     // D3DDevice_DrawIndexedVerticesUP+0x00 : push ebp
     OV_MATCH(0x00, 0x55),

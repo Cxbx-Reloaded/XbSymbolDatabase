@@ -137,8 +137,8 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetTransform,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // mov ebx,[D3DDEVICE]
-    XREF_ENTRY(0x0B, XREF_D3DDEVICE), // Derived
+    // mov ebx,[D3D_g_pDevice]
+    XREF_ENTRY(0x0B, XREF_D3D_g_pDevice), // Derived
 
     // mov eax, [esp + param_1]
     OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
@@ -149,7 +149,7 @@ OOVPA_SIG_MATCH(
     // Anything after offset 0x0F changed over time.
 
     // shl e??,0x6 // 4034 edi vs 5558 ecx
-    OV_MATCH(0x12, 0xC1 /*, /*0xE7*/), // 3911 0xE7 vs 5558 0xE1 value
+    OV_MATCH(0x12, 0xC1 /*, 0xE7*/), // 3911 0xE7 vs 5558 0xE1 value
     OV_MATCH(0x14, 0x06),
 
     // mov ecx,0x10
@@ -168,8 +168,8 @@ OOVPA_SIG_HEADER_XREF(D3D_UpdateProjectionViewportTransform,
                       3901,
                       XRefOne)
 OOVPA_SIG_MATCH(
-    // mov e??, XREF_D3DDEVICE
-    XREF_ENTRY(0x0B, XREF_D3DDEVICE), // Derived
+    // mov e??, XREF_D3D_g_pDevice
+    XREF_ENTRY(0x0B, XREF_D3D_g_pDevice), // Derived
 
     // and  esp, 0FFFFFFF0h
     // sub  esp, 58h
@@ -224,7 +224,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_CullMode,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // Derived
 
     XREF_ENTRY(0x2B, XREF_D3DRS_CULLMODE), // Derived
 
@@ -324,7 +324,7 @@ OOVPA_XREF(D3DDevice_SetStreamSource, 4034, 1 + 14, // 1+28
            XRefOne)
     {
 
-        XREF_ENTRY(0x22, XREF_G_STREAM), // Derived
+        XREF_ENTRY(0x22, XREF_D3D_g_Stream), // Derived
 
 #if 0
         { 0x00, 0x8B },
@@ -854,7 +854,7 @@ OOVPA_SIG_HEADER_XREF(D3DVertexBuffer_Lock,
 OOVPA_SIG_MATCH(
 
     // D3DVertexBuffer_Lock+0x0B : mov esi,[D3D__PDEVICE]
-    XREF_ENTRY(0x0D, XREF_D3DDEVICE),
+    XREF_ENTRY(0x0D, XREF_D3D_g_pDevice),
 
     // D3DVertexBuffer_Lock+0x18 : call D3DDevice_MakeSpace
     //XREF_ENTRY(0x19, XREF_D3DDevice_MakeSpace),
@@ -884,7 +884,7 @@ OOVPA_XREF(D3DDevice_SetTexture, 4034, 1 + 10, // TODO : Alias 3911 instead ?
            XRefOne)
 {
 
-    XREF_ENTRY(0x13, XREF_OFFSET_D3DDEVICE_M_TEXTURES), // Derived - verified for 4432 DolphinClassic 0x00021D10(SetTexture)+0x10=00021D20 : 8B 84 B7 78 0A 00 00 mov eax,[edi+esi*4+$00000A78]
+    XREF_ENTRY(0x13, XREF_OFFSET_D3DDevice__m_Textures), // Derived - verified for 4432 DolphinClassic 0x00021D10(SetTexture)+0x10=00021D20 : 8B 84 B7 78 0A 00 00 mov eax,[edi+esi*4+$00000A78]
 #endif
         // D3DDevice_SetTexture+0x09 : push edi
         { 0x09, 0x57 },
@@ -921,7 +921,7 @@ OOVPA_XREF(D3DDevice_SetPalette,
            XRefOne)
 {
 
-    XREF_ENTRY(0x10, XREF_OFFSET_D3DDEVICE_M_PALETTES), // Derived
+    XREF_ENTRY(0x10, XREF_OFFSET_D3DDevice__m_Palettes), // Derived
 #endif
         { 0x00, 0x53 },
             { 0x08, 0x57 },
@@ -1006,7 +1006,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x13, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER), // Derived
+    XREF_ENTRY(0x13, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived
 
     // D3DDevice_SetVertexShader+0x06 : test bl, 1
     { 0x06, 0xF6 },
@@ -1256,7 +1256,7 @@ OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 4034, 10)
 OOVPA_XREF(D3DDevice_SetRenderTarget, 4034, 1 + 10, XRefOne)
 {
 
-    XREF_ENTRY(0x17, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived TODO : Verify offset
+    XREF_ENTRY(0x17, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived TODO : Verify offset
 #endif
         // D3DDevice_SetRenderTarget+0x00 : sub esp, 0xXX
         OV_MATCH(0x00, 0x83, 0xEC),
@@ -1286,7 +1286,7 @@ OOVPA_XREF(D3DDevice_SetPixelShader,
            XRefOne)
 {
 
-    XREF_ENTRY(0x10, XREF_OFFSET_D3DDEVICE_M_PIXELSHADER), // Derived
+    XREF_ENTRY(0x10, XREF_OFFSET_D3DDevice__m_PixelShader), // Derived
 #endif
         { 0x00, 0x8B },
             { 0x01, 0x44 },
@@ -1413,7 +1413,7 @@ OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleMode,
            XRefOne)
 {
 
-    XREF_ENTRY(0x11, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived
+    XREF_ENTRY(0x11, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
 #endif
         // D3DDevice_SetRenderState_MultiSampleMode+0x0F : mov ecx, [eax+0x21F0]
         { 0x0F, 0x8B },
@@ -1461,7 +1461,7 @@ OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleRenderTargetMode,
         XREF_ENTRY(0x0B, XREF_D3DRS_MULTISAMPLERENDERTARGETMODE), // Derived
 
 #ifdef WIP_LessVertexPatching
-            XREF_ENTRY(0x11, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived
+            XREF_ENTRY(0x11, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
 #endif
 
             { 0x00, 0x8B },
@@ -1524,7 +1524,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_OcclusionCullEnable,
 OOVPA_SIG_MATCH(
 
     // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D__PDEVICE]
-    XREF_ENTRY(0x07, XREF_D3DDEVICE),
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
     // D3DDevice_SetRenderState_OcclusionCullEnable+0x0B : D3D__RenderState[D3DRS_OCCLUSIONCULLENABLE]
     XREF_ENTRY(0x0C, XREF_D3DRS_OCCLUSIONCULLENABLE), // Derived
@@ -1559,7 +1559,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_StencilCullEnable,
 OOVPA_SIG_MATCH(
 
     // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D__PDEVICE]
-    XREF_ENTRY(0x07, XREF_D3DDEVICE),
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
     // D3DDevice_SetRenderState_StencilCullEnable+0x0B : D3D__RenderState[D3DRS_STENCILCULLENABLE]
     XREF_ENTRY(0x0C, XREF_D3DRS_STENCILCULLENABLE), // Derived

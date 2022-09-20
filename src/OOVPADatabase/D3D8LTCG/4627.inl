@@ -501,8 +501,8 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_GetBackBuffer2,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // mov e?x,[D3DDEVICE]
-    XREF_ENTRY(0x09, XREF_D3DDEVICE),
+    // mov e?x,[D3D_g_pDevice]
+    XREF_ENTRY(0x09, XREF_D3D_g_pDevice),
 
     // mov eax,[esp + param_1]
     OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
@@ -531,8 +531,8 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_GetBackBuffer2_0__LTCG_eax1,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // mov e?x,[D3DDEVICE]
-    XREF_ENTRY(0x05, XREF_D3DDEVICE),
+    // mov e?x,[D3D_g_pDevice]
+    XREF_ENTRY(0x05, XREF_D3D_g_pDevice),
 
     // cmp eax,-0x1
     OV_MATCH(0x00, 0x83, 0xF8, 0xFF),
@@ -1065,7 +1065,7 @@ OOVPA_XREF(D3D_CommonSetRenderTarget,
            XRefOne)
 {
 
-    XREF_ENTRY(0x18, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived
+    XREF_ENTRY(0x18, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
 #endif
 
         { 0x00, 0x83 },
@@ -1207,12 +1207,12 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // mov e??,[D3DDEVICE]
-    XREF_ENTRY(0x03, XREF_D3DDEVICE),
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
     // push esi
     OV_MATCH(0x00, 0x56),
-    // mov e??,[D3DDEVICE]
+    // mov e??,[D3D_g_pDevice]
     OV_MATCH(0x01, 0x8B),
 
     // mov eax,[esi]

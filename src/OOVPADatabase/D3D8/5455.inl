@@ -116,7 +116,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x13, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER), // Derived (confirmed)
+    XREF_ENTRY(0x13, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived (confirmed)
 
     { 0x1E, 0x89 },
     { 0x3E, 0x5F },
@@ -137,7 +137,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_GetViewport,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x01, XREF_D3DDEVICE), // Derived
+    XREF_ENTRY(0x01, XREF_D3D_g_pDevice), // Derived
 
     { 0x00, 0xA1 },
 
@@ -286,8 +286,8 @@ OOVPA_SIG_HEADER_XREF(CDevice_KickOff,
                       5455,
                       XRefOne)
 OOVPA_SIG_MATCH(
-    // mov eax, XREF_D3DDEVICE
-    XREF_ENTRY(0x1A, XREF_D3DDEVICE), // Derived
+    // mov eax, XREF_D3D_g_pDevice
+    XREF_ENTRY(0x1A, XREF_D3D_g_pDevice), // Derived
 
     // push esi
     // mov esi, ecx
@@ -299,7 +299,7 @@ OOVPA_SIG_MATCH(
     // test ah, 0x20
     OV_MATCH(0x14, 0xF6, 0xC4, 0x20),
 
-    // mov eax, XREF_D3DDEVICE
+    // mov eax, XREF_D3D_g_pDevice
     OV_MATCH(0x19, 0xA1),
 
     //
@@ -310,7 +310,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // Generic as of OOVPA 5344/5455 and newer.
 // The only difference between 5344/5455 is the offset shift for
-// D3DDEVICE_M_RENDERTARGET's asm code.
+// D3DDevice__m_RenderTarget's asm code.
 #ifndef WIP_LessVertexPatching
 OOVPA_NO_XREF(D3DDevice_SetRenderTarget, 5455, 13)
     {
@@ -322,7 +322,7 @@ OOVPA_XREF(D3DDevice_SetRenderTarget,
 {
 
     // D3DDevice_SetRenderTarget+0x17 : mov eax,[edi+0x________]
-    XREF_ENTRY(0x19, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived // NOTE 5344 is at offset 0x18
+    XREF_ENTRY(0x19, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived // NOTE 5344 is at offset 0x18
 #endif
         // D3DDevice_SetRenderTarget+0x00 : sub esp, 0x0C
         OV_MATCH(0x00, 0x83, 0xEC, 0x0C),

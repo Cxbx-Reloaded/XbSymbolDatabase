@@ -41,7 +41,7 @@ static bool manual_scan_library_custom(iXbSymbolContext* pContext,
 
     SymbolDatabaseList* pLibraryDB;
     unsigned db_i = 0;
-    while (pLibraryDB = internal_FindLibraryDB(pLibSession->pLibrary->flag, &db_i)) {
+    while ((pLibraryDB = internal_FindLibraryDB(pLibSession->pLibrary->flag, &db_i))) {
         db_i++;
         for (unsigned int s = 0; s < pContext->section_input.count; s++) {
 

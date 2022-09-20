@@ -23,7 +23,10 @@
 XREF_SYMBOL(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric)
 
 // variable addresses
-XREF_SYMBOL(D3DDEVICE)
+XREF_SYMBOL(D3D_g_DeferredRenderState)
+XREF_SYMBOL(D3D_g_DeferredTextureState)
+XREF_SYMBOL(D3D_g_pDevice)
+XREF_SYMBOL(D3D_g_Stream)
 XREF_SYMBOL(D3DRS_BACKFILLMODE)
 XREF_SYMBOL(D3DRS_CULLMODE)
 XREF_SYMBOL(D3DRS_DXT1NOISEENABLE)
@@ -45,19 +48,18 @@ XREF_SYMBOL(D3DRS_TWOSIDEDLIGHTING)
 XREF_SYMBOL(D3DRS_YUVENABLE)
 XREF_SYMBOL(D3DRS_ZBIAS)
 XREF_SYMBOL(D3DTSS_TEXCOORDINDEX)
-XREF_SYMBOL(G_STREAM)
 
 
 // Offsets :
-XREF_SYMBOL(OFFSET_D3DDEVICE_M_PIXELSHADER)        // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDEVICE_M_TEXTURES)           // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDEVICE_M_PALETTES)           // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDEVICE_M_RENDERTARGET)       // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDEVICE_M_DEPTHSTENCIL)       // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT) // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDEVICE_M_SWAPCALLBACK)       // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDEVICE_M_VBLANKCALLBACK)     // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDEVICE_M_VERTEXSHADER)       // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(OFFSET_D3DDevice__m_PixelShader)        // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(OFFSET_D3DDevice__m_Textures)           // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(OFFSET_D3DDevice__m_Palettes)           // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(OFFSET_D3DDevice__m_RenderTarget)       // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(OFFSET_D3DDevice__m_DepthStencil)       // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(OFFSET_D3DDevice__m_VerticalBlankEvent) // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(OFFSET_D3DDevice__m_SwapCallback)       // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(OFFSET_D3DDevice__m_VBlankCallback)     // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(OFFSET_D3DDevice__m_VertexShader)       // initially set to XREF_ADDR_DERIVE
 
 // Functions
 // include D3D8 prefix
@@ -80,6 +82,7 @@ XREF_SYMBOL(D3D_BlockOnResource)
 XREF_SYMBOL(D3D_BlockOnTime)
 XREF_SYMBOL(D3D_CheckDeviceFormat)
 XREF_SYMBOL(D3D_ClearStateBlockFlags)
+XREF_SYMBOL(D3D_CommonSetRenderTarget)
 XREF_SYMBOL(D3D_CreateStandAloneSurface)
 XREF_SYMBOL(D3D_DestroyResource)
 XREF_SYMBOL(D3D_EnumAdapterModes)
@@ -288,7 +291,6 @@ XREF_SYMBOL(D3DBaseTexture_GetLevelCount)
 XREF_SYMBOL(D3DCubeTexture_GetCubeMapSurface)
 XREF_SYMBOL(D3DCubeTexture_GetCubeMapSurface2)
 XREF_SYMBOL(D3DCubeTexture_LockRect)
-XREF_SYMBOL()
 // D3DResource prefix
 XREF_SYMBOL(D3DResource_AddRef)
 XREF_SYMBOL(D3DResource_BlockUntilNotBusy)

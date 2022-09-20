@@ -54,7 +54,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_CullMode,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // Derived
     XREF_ENTRY(0x2D, XREF_D3DRS_CULLMODE), // Derived
 
     { 0x00, 0x56 },
@@ -145,7 +145,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_TextureFactor,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // Derived
 
     { 0x00, 0x56 },
     { 0x07, 0x8B },
@@ -638,13 +638,13 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetShaderConstantMode_0__LTCG_eax1,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // mov e??,[D3DDEVICE]
-    XREF_ENTRY(0x05, XREF_D3DDEVICE),
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x05, XREF_D3D_g_pDevice),
 
     // test al,0x10
     OV_MATCH(0x00, 0xA8, 0x10),
 
-    // mov e??,[D3DDEVICE]
+    // mov e??,[D3D_g_pDevice]
     OV_MATCH(0x03, 0x8B, 0x1D),
 
     // or ecx,0x200
@@ -807,7 +807,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader_0,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0D, XREF_OFFSET_D3DDEVICE_M_VERTEXSHADER), // Derived (confirmed)
+    XREF_ENTRY(0x0D, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived (confirmed)
 
     { 0x00, 0xF6 },
     { 0x01, 0xC3 },
@@ -866,15 +866,15 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetTransform_0__LTCG_eax1_edx2,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // mov ebx,[D3DDEVICE]
-    XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
+    // mov ebx,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // Derived
 
     // call D3D::UpdateProjectionViewportTransform
     // TODO: Need to fix 3925 to able detect function below
     XREF_ENTRY(0xEB, XREF_D3D_UpdateProjectionViewportTransform),
 
     // push ebx
-    // mov ebx,[D3DDEVICE]
+    // mov ebx,[D3D_g_pDevice]
     OV_MATCH(0x00, 0x53),
     OV_MATCH(0x01, 0x8B, 0x1D),
 
@@ -1020,7 +1020,7 @@ OOVPA_XREF(D3DDevice_SetRenderTarget,
            XRefOne)
 {
 
-    XREF_ENTRY(0x17, XREF_OFFSET_D3DDEVICE_M_RENDERTARGET), // Derived
+    XREF_ENTRY(0x17, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
 #endif
         // D3DDevice_SetRenderTarget+0x00 : sub esp, 0x20
         OV_MATCH(0x00, 0x83, 0xEC),
@@ -1109,7 +1109,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource_8__LTCG_edx_StreamNumber,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x47, XREF_G_STREAM), // Derived
+    XREF_ENTRY(0x47, XREF_D3D_g_Stream), // Derived
 
     { 0x00, 0x53 },
     { 0x01, 0x8B },
@@ -1164,10 +1164,10 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_BlockUntilVerticalBlank,
 OOVPA_SIG_MATCH(
 
     // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax, [D3D__PDEVICE]
-    XREF_ENTRY(0x01, XREF_D3DDEVICE),
+    XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
-    // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT
-    XREF_ENTRY(0x18, XREF_OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT),
+    // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDevice__m_VerticalBlankEvent
+    XREF_ENTRY(0x18, XREF_OFFSET_D3DDevice__m_VerticalBlankEvent),
 
     // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax,[D3D__PDEVICE]
     OV_MATCH(0x00, 0xA1),
@@ -1181,7 +1181,7 @@ OOVPA_SIG_MATCH(
     // D3DDevice_BlockUntilVerticalBlank+0x15 : push 6
     OV_MATCH(0x15, 0x6A, 0x06),
 
-    // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDEVICE_M_VERTICALBLANKEVENT
+    // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDevice__m_VerticalBlankEvent
     OV_MATCH(0x17, 0x05),
 
     // D3DDevice_BlockUntilVerticalBlank+0x1D : call [KeWaitForSingleObject]

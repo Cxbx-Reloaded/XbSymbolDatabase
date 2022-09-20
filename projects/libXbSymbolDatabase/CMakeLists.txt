@@ -1,30 +1,32 @@
 # CMakeList.txt : CMake project for libXbSymbolDatabase.
 #
-cmake_minimum_required (VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.10.2)
 
-project (libXbSymbolDatabase LANGUAGES C)
+project(libXbSymbolDatabase LANGUAGES C)
 
 file(GLOB INCLUDES
  "${XBSDB_ROOT_DIR}/include/Xbe.h"
  "${XBSDB_ROOT_DIR}/include/libXbSymbolDatabase.h"
+
+# Include xrefs for ABI feature support.
+ "${XBSDB_ROOT_DIR}/include/xref/list_xref.h"
+ "${XBSDB_ROOT_DIR}/include/xref/d3d8.def"
+ "${XBSDB_ROOT_DIR}/include/xref/d3d8ltcg.def"
+# "${XBSDB_ROOT_DIR}/include/xref/d3dx8.def" # do we need this?
+ "${XBSDB_ROOT_DIR}/include/xref/dsound.def"
+ "${XBSDB_ROOT_DIR}/include/xref/jvs.def"
+ "${XBSDB_ROOT_DIR}/include/xref/xacteng.def"
+ "${XBSDB_ROOT_DIR}/include/xref/xapilib.def"
+ "${XBSDB_ROOT_DIR}/include/xref/xgraphic.def"
+ "${XBSDB_ROOT_DIR}/include/xref/xnet.def"
+# "${XBSDB_ROOT_DIR}/include/xref/xnetn.def" # do we need this?
+# "${XBSDB_ROOT_DIR}/include/xref/xnets.def" # do we need this?
+ "${XBSDB_ROOT_DIR}/include/xref/xonline.def"
+# "${XBSDB_ROOT_DIR}/include/xref/xonlines.def" # do we need this?
 )
 source_group(TREE ${XBSDB_ROOT_DIR} FILES ${INCLUDES})
 
 file(GLOB HEADERS
- "${XBSDB_ROOT_DIR}/src/xref/list_xref.h"
- "${XBSDB_ROOT_DIR}/src/xref/d3d8.def"
- "${XBSDB_ROOT_DIR}/src/xref/d3d8ltcg.def"
-# "${XBSDB_ROOT_DIR}/src/xref/d3dx8.def" # do we need this?
- "${XBSDB_ROOT_DIR}/src/xref/dsound.def"
- "${XBSDB_ROOT_DIR}/src/xref/jvs.def"
- "${XBSDB_ROOT_DIR}/src/xref/xacteng.def"
- "${XBSDB_ROOT_DIR}/src/xref/xapilib.def"
- "${XBSDB_ROOT_DIR}/src/xref/xgraphic.def"
- "${XBSDB_ROOT_DIR}/src/xref/xnet.def"
-# "${XBSDB_ROOT_DIR}/src/xref/xnetn.def" # do we need this?
-# "${XBSDB_ROOT_DIR}/src/xref/xnets.def" # do we need this?
- "${XBSDB_ROOT_DIR}/src/xref/xonline.def"
-# "${XBSDB_ROOT_DIR}/src/xref/xonlines.def" # do we need this?
 
  "${XBSDB_ROOT_DIR}/src/lib/internal_db_version.h"
  "${XBSDB_ROOT_DIR}/src/lib/internal_functions.h"
@@ -43,29 +45,30 @@ file(GLOB_RECURSE SOURCES
 )
 source_group(TREE ${XBSDB_ROOT_DIR} FILES ${SOURCES})
 
-add_library (${PROJECT_NAME} ${INCLUDES} ${HEADERS} ${SOURCES})
+add_library(${PROJECT_NAME} ${INCLUDES} ${HEADERS} ${SOURCES})
 
 # NOTES:
 # Using INTERFACE keyword will not work within the project. Only PUBLIC/PRIVATE keywords does.
 target_include_directories(${PROJECT_NAME}
- PUBLIC "${XBSDB_ROOT_DIR}/include"
+ PUBLIC "$<BUILD_INTERFACE:${XBSDB_ROOT_DIR}/include>"
+ PUBLIC "$<INSTALL_INTERFACE:include>"
  PRIVATE "${XBSDB_ROOT_DIR}/src/OOVPADatabase"
- PRIVATE "${XBSDB_ROOT_DIR}/src/xref"
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
- PUBLIC_HEADER "${INCLUDES}"
  C_STANDARD 11
  C_STANDARD_REQUIRED ON
  FOLDER XbSymbolDatabase
 )
 
 if(XBSDB_INSTALL_LIB)
- install(TARGETS ${PROJECT_NAME}
+ install(DIRECTORY ${XBSDB_ROOT_DIR}/include/
+  TYPE INCLUDE
+ )
+ install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Targets
   RUNTIME DESTINATION bin
-  PUBLIC_HEADER DESTINATION include
   LIBRARY DESTINATION lib_shared
   ARCHIVE DESTINATION lib_static
  )

@@ -83,7 +83,7 @@ OOVPA_XREF(D3DDevice_SetTexture,
            XRefOne)
 {
 
-    XREF_ENTRY(0x13, XREF_OFFSET_D3DDEVICE_M_TEXTURES), // Derived
+    XREF_ENTRY(0x13, XREF_OFFSET_D3DDevice__m_Textures), // Derived
 #endif
         { 0x00, 0x83 },
             { 0x01, 0xEC },

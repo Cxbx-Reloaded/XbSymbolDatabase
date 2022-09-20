@@ -811,7 +811,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource_0__LTCG_eax_StreamNumber_edi_pSt
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x19, XREF_G_STREAM), // Derived
+    XREF_ENTRY(0x19, XREF_D3D_g_Stream), // Derived
 
     // test edi, edi; mov ecx, [...]
     OV_MATCH(0x00, 0x85, 0xFF, 0x8B, 0x0D),
@@ -830,7 +830,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource_4,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x1E, XREF_G_STREAM), // Derived
+    XREF_ENTRY(0x1E, XREF_D3D_g_Stream), // Derived
 
     { 0x00, 0x85 },
     { 0x01, 0xDB },

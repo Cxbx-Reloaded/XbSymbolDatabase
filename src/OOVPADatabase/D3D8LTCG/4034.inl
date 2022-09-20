@@ -29,14 +29,14 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetTransform_0__LTCG_eax1_edx2,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // mov ebx,[D3DDEVICE]
-    XREF_ENTRY(0x03, XREF_D3DDEVICE), // Derived
+    // mov ebx,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // Derived
 
     // call D3D::UpdateProjectionViewportTransform
     XREF_ENTRY(0xF5, XREF_D3D_UpdateProjectionViewportTransform),
 
     // push ebx
-    // mov ebx,[D3DDEVICE]
+    // mov ebx,[D3D_g_pDevice]
     OV_MATCH(0x00, 0x53),
     OV_MATCH(0x01, 0x8B, 0x1D),
 

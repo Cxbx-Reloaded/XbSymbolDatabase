@@ -199,10 +199,11 @@ void XbSymbolDatabase_SetOutputMessage(xb_output_message_t message_func);
 /// </summary>
 /// <param name="library_str">Name of the library in string.</param>
 /// <param name="library_flag">Name of the library in flag.</param>
+/// <param name="xref_index">Output unique xreference of symbol name.</param>
 /// <param name="symbol_str">Name of the library in symbol string.</param>
 /// <param name="address">Return xbox's virtual address.</param>
 /// <param name="build_verison">Found with specific build verison.</param>
-typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, const char* symbol_str, xbaddr address, uint32_t build_verison);
+typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, uint32_t xref_index, const char* symbol_str, xbaddr address, uint32_t build_verison);
 
 /// <summary>
 /// DEPRECATED: To scan symbols in memory of raw xbe or host's virtual xbox environment.
@@ -214,10 +215,17 @@ typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_f
 bool XbSymbolScan(const void* xb_header_addr, xb_symbol_register_t register_func, bool is_raw);
 
 /// <summary>
+/// To convert library flag into string format.
+/// </summary>
+/// <param name="library_flag">Input specific library flag.</param>
+/// <returns>Return "UNKNOWN" string if does not exist in the database. Otherwise will return library name string.</returns>
+const char* XbSymbolDatabase_LibraryToString(uint32_t library_flag);
+
+/// <summary>
 /// To convert library name string into flag format.
 /// </summary>
 /// <param name="library_name">Input library name string.</param>
-/// <returns>Return 0 if does not in the database. Otherwise will return flag value.</returns>
+/// <returns>Return 0 if does not exist in the database. Otherwise will return flag value.</returns>
 uint32_t XbSymbolDatabase_LibraryToFlag(const char* library_name);
 
 /// <summary>
@@ -292,7 +300,7 @@ xbaddr XbSymbolDatabase_GetKernelThunkAddress(const void* xb_header_addr);
 bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle, xb_symbol_register_t register_func, XbSDBLibraryHeader library_input, XbSDBSectionHeader section_input, xbaddr kernel_thunk);
 
 /// <summary>
-/// Step 5: Perform a manual scan to set references, XRefDatabaseOffset, manually by requirement.
+/// Step 5: Perform a manual scan to set references, XRefDatabase, manually by requirement.
 /// </summary>
 /// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
 void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle);
@@ -313,7 +321,7 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle, const Xb
 void XbSymbolContext_ScanAllLibraryFilter(XbSymbolContextHandle pHandle);
 
 /// <summary>
-/// Step 7: Register any references, XRefDatabaseOffset, may not had been output during the scan process.
+/// Step 7: Register any references, XRefDatabase, may not had been output during the scan process.
 /// NOTE: Currently a stub at the moment.
 /// </summary>
 /// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
