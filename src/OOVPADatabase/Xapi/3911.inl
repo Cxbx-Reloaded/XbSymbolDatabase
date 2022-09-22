@@ -1829,6 +1829,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XMUNameFromDriveLetter
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(XMUNameFromDriveLetter,
                       3911,
                       XRefThree)
@@ -1863,6 +1864,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XMUWriteNameToDriveLetter
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(XMUWriteNameToDriveLetter,
                       3911,
                       XRefThree)
