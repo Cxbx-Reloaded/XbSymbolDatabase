@@ -1895,3 +1895,51 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0xAC, 0xFF, 0x15),
     //
 );
+
+// ******************************************************************
+// * XMUPortFromDriveLetterA
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_NO_XREF(XMUPortFromDriveLetterA,
+                         3911)
+OOVPA_SIG_MATCH(
+
+    // mov al, byte [esp + 4]
+    OV_MATCH(0x00, 0x8A, 0x44, 0x24, 0x04),
+    // cmp al, 0x46
+    OV_MATCH(0x04, 0x3C, 0x46),
+
+    // cdq
+    OV_MATCH(0x12, 0x99),
+
+    // sar eax, 1
+    OV_MATCH(0x15, 0xD1, 0xF8),
+
+    // ret
+    OV_MATCH(0x1C, 0xC2, 0x04),
+    //
+);
+
+// ******************************************************************
+// * XMUSlotFromDriveLetterA
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_NO_XREF(XMUSlotFromDriveLetterA,
+                         3911)
+OOVPA_SIG_MATCH(
+
+    // mov al, byte [esp + 4]
+    OV_MATCH(0x00, 0x8A, 0x44, 0x24, 0x04),
+    // cmp al, 0x46
+    OV_MATCH(0x04, 0x3C, 0x46),
+
+    // cdq
+    OV_MATCH(0x12, 0x99),
+
+    // idiv eax, ecx
+    OV_MATCH(0x16, 0xF7, 0xF9),
+
+    // ret
+    OV_MATCH(0x1F, 0xC2, 0x04),
+    //
+);
