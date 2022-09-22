@@ -77,6 +77,7 @@
 //   * XapiFiberStartup (3950, 4034, 4039, 4134, 4531, 4721, 5028, 5455)
 //   * timeKillEvent (3950, 4034, 5028, 5233)
 //   * timeSetEvent (4034, 5233)
+//   * XReadMUMetaData (3911, 3950, 4034, 4039, 4134)
 // * Following OOVPA are invalid
 //   * CloseHandle (3911) // Has exact asm codes _ResetEvent@4
 //   * ReadFileEx (3911) // Has exact asm codes _WriteFileEx@20
@@ -483,7 +484,7 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(XMountMUA, 3911, 4242),
     REGISTER_OOVPAS(XMountMURootA, 3911, 4242),
     REGISTER_OOVPAS(XMountUtilityDrive, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(XReadMUMetaData, 4831),
+    REGISTER_OOVPAS(XReadMUMetaData, 4242),
     REGISTER_OOVPAS(XRegisterThreadNotifyRoutine, 3911),
     REGISTER_OOVPAS(XSetProcessQuantumLength, 4134),
     REGISTER_OOVPAS(XUnmountMU, 3911, 4242),

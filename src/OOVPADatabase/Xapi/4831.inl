@@ -230,25 +230,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * XReadMUMetaData
-// ******************************************************************
-OOVPA_SIG_HEADER_XREF(XReadMUMetaData,
-                      4831,
-                      XRefOne)
-OOVPA_SIG_MATCH(
-
-    XREF_ENTRY(0x31, XREF_g_XapiMountedMUs),
-
-    // push ebp
-    // mov ebp,esp
-    OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
-
-    // mov WORD PTR [ebp-0x0E],0x3E
-    OV_MATCH(0x51, 0x66, 0xC7, 0x45, 0xF2, 0x3E, 0x00),
-    //
-);
-
-// ******************************************************************
 // * UnhandledExceptionFilter
 // ******************************************************************
 // Generic OOVPA as of 4831 and newer.
