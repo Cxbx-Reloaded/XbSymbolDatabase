@@ -1825,3 +1825,71 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x4C, 0xE8),
     //
 );
+
+// ******************************************************************
+// * XMUNameFromDriveLetter
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(XMUNameFromDriveLetter,
+                      3911,
+                      XRefThree)
+OOVPA_SIG_MATCH(
+
+    // test [g_XapiMountedMUs], edx
+    XREF_ENTRY(0x14, XREF_g_XapiMountedMUs),
+
+    // call NtOpenFile
+    XREF_ENTRY(0x6C, XREF_KT_FUNC_NtOpenFile),
+
+    // call NtFsControlFile
+    XREF_ENTRY(0xA0, XREF_KT_FUNC_NtFsControlFile),
+
+    // push ebp
+    OV_MATCH(0x00, 0x55),
+
+    // sub esp, 0x74
+    OV_MATCH(0x03, 0x83, 0xEC, 0x74),
+
+    // push 0x80100000 // GENERIC_READ | SYNCHRONIZE
+    OV_MATCH(0x59, 0x68, 0x00, 0x00, 0x10, 0x80),
+
+    // call NtOpenFile
+    OV_MATCH(0x6A, 0xFF, 0x15),
+
+    // call NtFsControlFile
+    OV_MATCH(0x9E, 0xFF, 0x15),
+    //
+);
+
+// ******************************************************************
+// * XMUWriteNameToDriveLetter
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(XMUWriteNameToDriveLetter,
+                      3911,
+                      XRefThree)
+OOVPA_SIG_MATCH(
+
+    // test [g_XapiMountedMUs], edx
+    XREF_ENTRY(0x14, XREF_g_XapiMountedMUs),
+
+    // call NtOpenFile
+    XREF_ENTRY(0x6C, XREF_KT_FUNC_NtOpenFile),
+
+    // call NtFsControlFile
+    XREF_ENTRY(0xAE, XREF_KT_FUNC_NtFsControlFile),
+
+    // push ebp
+    OV_MATCH(0x00, 0x55),
+
+    // sub esp, 0x74
+    OV_MATCH(0x03, 0x83, 0xEC, 0x74),
+
+    // push 0x40100000 // GENERIC_WRITE | SYNCHRONIZE
+    OV_MATCH(0x59, 0x68, 0x00, 0x00, 0x10, 0x40),
+
+    // call NtOpenFile
+    OV_MATCH(0x6A, 0xFF, 0x15),
+
+    // call NtFsControlFile
+    OV_MATCH(0xAC, 0xFF, 0x15),
+    //
+);
