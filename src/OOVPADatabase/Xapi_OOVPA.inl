@@ -366,8 +366,6 @@
 //   * XID_RemoveDevice
 //   * XLoadSectionA
 //   * XLoadSectionByHandle
-//   * XMUPortFromDriveLetterA
-//   * XMUSlotFromDriveLetterA
 //   * XOpenSoundtrackSong
 //   * XPhysicalAlloc
 //   * XPhysicalFree
@@ -484,6 +482,8 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(XMountMURootA, 3911, 4242),
     REGISTER_OOVPAS(XMountUtilityDrive, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XMUNameFromDriveLetter, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(XMUPortFromDriveLetterA, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(XMUSlotFromDriveLetterA, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XMUWriteNameToDriveLetter, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(XReadMUMetaData, 4242),
     REGISTER_OOVPAS(XRegisterThreadNotifyRoutine, 3911),
