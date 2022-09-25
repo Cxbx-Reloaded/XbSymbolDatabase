@@ -374,9 +374,19 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XInputOpen
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(XInputOpen,
-                         3911)
+OOVPA_SIG_HEADER_XREF(XInputOpen,
+                      3911,
+                      XRefThree)
 OOVPA_SIG_MATCH(
+
+    // cmp dword [ebp + 0x08],g_DeviceType_Gamepad
+    XREF_ENTRY(0x0B, XREF_g_DeviceType_Gamepad), // derived
+
+    // cmp dword [ebp + 0x08],g_DeviceType_Keyboard
+    XREF_ENTRY(0x18, XREF_g_DeviceType_Keyboard), // derived
+
+    // cmp dword [ebp + 0x08],g_DeviceType_IRDongle
+    XREF_ENTRY(0x25, XREF_g_DeviceType_IRDongle), // derived
 
     // jmp +0x0B
     OV_MATCH(0x20, 0xEB, 0x0B),

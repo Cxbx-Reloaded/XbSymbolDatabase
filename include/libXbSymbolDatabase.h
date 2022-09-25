@@ -61,7 +61,9 @@ extern "C" {
 #define Lib_XACTENG  "XACTENG"
 #define Sec_XACTENG  Lib_XACTENG
 #define Lib_XAPILIB  "XAPILIB"
+#define Sec_XID      ".XID"
 #define Sec_XPP      "XPP"
+#define Sec_XPPDat   ".XPP&Dat"
 #define Lib_XGRAPHC  "XGRAPHC"
 #define Sec_XGRPH    "XGRPH"
 #define Lib_XNET     "XNET"
