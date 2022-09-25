@@ -26,9 +26,17 @@
 // ******************************************************************
 // * XInputOpen
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(XInputOpen,
-                         4242)
+// Generic OOVPA as of 4242 and newer.
+OOVPA_SIG_HEADER_XREF(XInputOpen,
+                      4242,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
+
+    // call GetTypeInformation
+    XREF_ENTRY(0x0C, XREF_XAPI_GetTypeInformation),
+
+    // call SetLastError
+    XREF_ENTRY(0x17, XREF_XAPI_SetLastError),
 
     // push 0x57
     OV_MATCH(0x14, 0x6A, 0x57),
@@ -270,6 +278,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * GetTypeInformation
 // ******************************************************************
+// Generic OOVPA as of 4242 and newer.
 OOVPA_SIG_HEADER_XREF(GetTypeInformation,
                       4242,
                       XRefTwo)
@@ -295,15 +304,18 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x11, 0x8B, 0x10),
     // test edx,edx
     OV_MATCH(0x13, 0x85, 0xD2),
-    // JZ +0x05
-    OV_MATCH(0x15, 0x74, 0x05),
+
     // cmp dword [edx + 0x04],ecx
     OV_MATCH(0x17, 0x39, 0x4A, 0x04),
     // JZ +0x0B
     OV_MATCH(0x1A, 0x74, 0x0B),
     // add eax,0x04
     OV_MATCH(0x1C, 0x83, 0xC0, 0x04),
-    // cmp eax,esi
-    OV_MATCH(0x1F, 0x3B),
+
+    // ret
+    OV_MATCH(0x26, 0xC3),
+
+    // ret
+    OV_MATCH(0x2A, 0xC3),
     //
 );
