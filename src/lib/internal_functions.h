@@ -621,3 +621,31 @@ static void internal_SetLibraryTypeEnd(iXbSymbolContext* pContext, eLibraryType 
 
     iXbSymbolContext_Unlock(pContext);
 }
+
+static memptr_t internal_section_VirtToHostAddress(iXbSymbolContext* pContext, xbaddr virt_addr)
+{
+    memptr_t host_addr = NULL;
+    XbSDBSection* section_filter = pContext->section_input.filters;
+    for (unsigned i = 0; i < pContext->section_input.count; i++, section_filter++) {
+        // Check if virt_addr match within specific section range, then convert to host address.
+        if (section_filter->xb_virt_addr <= virt_addr && virt_addr <= section_filter->xb_virt_addr + section_filter->buffer_size) {
+            host_addr = (memptr_t)section_filter->buffer_lower - section_filter->xb_virt_addr + virt_addr;
+            break;
+        }
+    }
+    return host_addr;
+}
+
+static xbaddr internal_section_HostToVirtAddress(iXbSymbolContext* pContext, memptr_t host_addr)
+{
+    xbaddr virt_addr = 0;
+    XbSDBSection* section_filter = pContext->section_input.filters;
+    for (unsigned i = 0; i < pContext->section_input.count; i++, section_filter++) {
+        // Check if host_addr match within specific section range, then convert to virtual address.
+        if ((memptr_t)section_filter->buffer_lower <= host_addr && host_addr <= (memptr_t)section_filter->buffer_lower + section_filter->buffer_size) {
+            virt_addr = (xbaddr)(host_addr - (memptr_t)section_filter->buffer_lower + section_filter->xb_virt_addr);
+            break;
+        }
+    }
+    return virt_addr;
+}
