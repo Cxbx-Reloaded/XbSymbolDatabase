@@ -22,6 +22,58 @@
 // ******************************************************************
 #pragma once
 
+static bool internal_xapi_find_XGetSectionSize(iXbSymbolContext* pContext,
+                                               const iXbSymbolLibrarySession* pLibrarySession,
+                                               SymbolDatabaseList* pLibraryDB,
+                                               const XbSDBSection* pSection,
+                                               uintptr_t virt_start_relative)
+{
+    xbaddr xXbAddr = 0;
+    OOVPARevision* pOOVPARevision = NULL;
+    OOVPATable* pSymbol = NULL;
+
+    // Find XapiMapLetterToDirectory function
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XapiMapLetterToDirectory])) {
+        const char* sig_func_str = "XapiMapLetterToDirectory";
+        const char* xref_str = "XGetSectionSize";
+
+        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                   pLibrarySession,
+                                                                   pLibraryDB,
+                                                                   sig_func_str,
+                                                                   pSection,
+                                                                   true,
+                                                                   &pSymbol,
+                                                                   &pOOVPARevision);
+
+        if (xXbAddr) {
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
+
+            // Register XGetSectionSize function.
+            if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XGetSectionSize])) {
+                // If relative address is not recorded, then signature needs a fix.
+                output_message_format(&pContext->output,
+                                      XB_OUTPUT_MESSAGE_ERROR,
+                                      "Please verify %s (%hu) signature do contain %s's xref entry.",
+                                      sig_func_str, pOOVPARevision->Version, xref_str);
+                return false;
+            }
+            // Manually translate to virtual address from relative address.
+            xXbAddr = internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(pContext, pSymbol, pOOVPARevision, xref_str, XREF_XGetSectionSize);
+            if (!xXbAddr) {
+                // Error message is handled by above function. No extra message necessary here.
+                return false;
+            }
+            // Update to use virtual address instead of relative address.
+            pContext->xref_database[XREF_XGetSectionSize] = xXbAddr;
+
+            internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XGetSectionSize, pOOVPARevision->Version, xref_str);
+        }
+    }
+
+    return true;
+}
+
 static bool internal_xapi_find_DeviceType_MU(iXbSymbolContext* pContext,
                                              const iXbSymbolLibrarySession* pLibrarySession,
                                              SymbolDatabaseList* pLibraryDB,
@@ -202,55 +254,14 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
 {
     // Generic usage
     uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
-    memptr_t buffer_upper = (memptr_t)pSection->buffer_lower + pSection->buffer_size;
-    xbaddr xXbAddr = 0;
-    OOVPARevision* pOOVPARevision = NULL;
-    OOVPATable* pSymbol = NULL;
 
-    // Find XapiMapLetterToDirectory function
-    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XapiMapLetterToDirectory])) {
-        const char* sig_func_str = "XapiMapLetterToDirectory";
-        const char* xref_str = "XGetSectionSize";
-
-        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
-                                                                   pLibrarySession,
-                                                                   pLibraryDB,
-                                                                   sig_func_str,
-                                                                   pSection,
-                                                                   true,
-                                                                   &pSymbol,
-                                                                   &pOOVPARevision);
-
-        if (xXbAddr) {
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
-
-            // Register XGetSectionSize function.
-            if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XGetSectionSize])) {
-                // If relative address is not recorded, then signature needs a fix.
-                output_message_format(&pContext->output,
-                                      XB_OUTPUT_MESSAGE_ERROR,
-                                      "Please verify %s (%hu) signature do contain %s's xref entry.",
-                                      sig_func_str, pOOVPARevision->Version, xref_str);
-                return false;
-            }
-            // Manually translate to virtual address from relative address.
-            xXbAddr = internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(pContext, pSymbol, pOOVPARevision, xref_str, XREF_XGetSectionSize);
-            if (!xXbAddr) {
-                // Error message is handled by above function. No extra message necessary here.
-                return false;
-            }
-            pContext->xref_database[XREF_XGetSectionSize] = XREF_ADDR_UNDETERMINED; // Force reset to able register
-
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_XGetSectionSize, pOOVPARevision->Version,
-                                      xref_str, xXbAddr);
-        }
-    }
+    bool foundXGetSectionSize = internal_xapi_find_XGetSectionSize(pContext, pLibrarySession, pLibraryDB, pSection, virt_start_relative);
 
     bool foundMURefs = internal_xapi_find_DeviceType_MU(pContext, pLibrarySession, pLibraryDB, pSection, virt_start_relative);
 
     bool foundDeviceTypes = internal_xapi_find_device_types(pContext, pLibrarySession, pLibraryDB, pSection, virt_start_relative);
 
-    return foundMURefs && foundDeviceTypes;
+    return foundXGetSectionSize && foundMURefs && foundDeviceTypes;
 }
 
 static inline void manual_register_xapilib(iXbSymbolContext* pContext)
