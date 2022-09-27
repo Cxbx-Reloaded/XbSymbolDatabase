@@ -171,16 +171,30 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
     OOVPARevision* pOOVPARevision = NULL;
     OOVPATable* pSymbol = NULL;
 
-    // Find GetTypeInformation function
-    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XAPI_GetTypeInformation])) {
+    // Find GetTypeInformation_4 function
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XAPI_GetTypeInformation_4])) {
         xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
                                                                    pLibrarySession,
                                                                    pLibraryDB,
-                                                                   "GetTypeInformation",
+                                                                   "GetTypeInformation_4",
                                                                    pSection,
                                                                    true,
                                                                    &pSymbol,
                                                                    &pOOVPARevision);
+
+        // If GetTypeInformation_4 is not found, then try find GetTypeInformation_8
+        if (!xXbAddr) {
+            xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                       pLibrarySession,
+                                                                       pLibraryDB,
+                                                                       "GetTypeInformation_8",
+                                                                       pSection,
+                                                                       true,
+                                                                       &pSymbol,
+                                                                       &pOOVPARevision);
+        }
+
+        // If either GetTypeInformation overload is found, start look up in DeviceTypeInfo table's entires.
         if (xXbAddr) {
             internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
 

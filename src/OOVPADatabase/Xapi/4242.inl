@@ -32,8 +32,8 @@ OOVPA_SIG_HEADER_XREF(XInputOpen,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // call GetTypeInformation
-    XREF_ENTRY(0x0C, XREF_XAPI_GetTypeInformation),
+    // call GetTypeInformation_4
+    XREF_ENTRY(0x0C, XREF_XAPI_GetTypeInformation_4),
 
     // call SetLastError
     XREF_ENTRY(0x17, XREF_XAPI_SetLastError),
@@ -276,10 +276,10 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * GetTypeInformation
+// * GetTypeInformation_4
 // ******************************************************************
 // Generic OOVPA as of 4242 and newer.
-OOVPA_SIG_HEADER_XREF(GetTypeInformation,
+OOVPA_SIG_HEADER_XREF(GetTypeInformation_4,
                       4242,
                       XRefTwo)
 OOVPA_SIG_MATCH(
@@ -317,5 +317,52 @@ OOVPA_SIG_MATCH(
 
     // ret
     OV_MATCH(0x2A, 0xC3),
+    //
+);
+
+// ******************************************************************
+// * GetTypeInformation_8
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(GetTypeInformation_8,
+                      4242,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // mov eax,g_DeviceTypeInfoTableBegin
+    XREF_ENTRY(0x06, XREF_g_DeviceTypeInfoTableBegin), // derived
+
+    // mov esi,g_DeviceTypeInfoTableEnd
+    XREF_ENTRY(0x0E, XREF_g_DeviceTypeInfoTableEnd), // derived
+
+    // mov eax,g_DeviceTypeInfoTableBegin
+    OV_MATCH(0x05, 0xB8),
+    // push edi
+    // mov edi,eax
+    // mov esi,g_DeviceTypeInfoTableEnd
+    OV_MATCH(0x0A, 0x57, 0x8B, 0xF8, 0xBE),
+
+    // cmp edi,esi
+    OV_MATCH(0x14, 0x3B, 0xFE),
+    // jnc +0x13
+    OV_MATCH(0x16, 0x73, 0x13),
+
+    // mov edi,dword [eax]
+    OV_MATCH(0x18, 0x8B, 0x38),
+    // test edi,edi
+    OV_MATCH(0x1A, 0x85, 0xFF),
+
+    // cmp dword [edi],cl
+    OV_MATCH(0x1E, 0x38, 0x0F),
+    // JZ +0x0F
+    OV_MATCH(0x20, 0x74, 0x0F),
+
+    // add eax,0x04
+    OV_MATCH(0x24, 0x83, 0xC0, 0x04),
+
+    // ret
+    OV_MATCH(0x30, 0xC3),
+
+    // jmp -0x0A
+    OV_MATCH(0x35, 0xEB, 0xF6),
     //
 );

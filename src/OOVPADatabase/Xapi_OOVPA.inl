@@ -448,7 +448,8 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS_XAPI(GetOverlappedResult, 3911),
     REGISTER_OOVPAS_XAPI(GetThreadPriority, 3911),
     REGISTER_OOVPAS_XAPI(GetTimeZoneInformation, 3911),
-    REGISTER_OOVPAS_M_PREFIX(GetTypeInformation, XAPI, 4242), // Final generic OOVPA: 4242; Removed: 0
+    REGISTER_OOVPAS_M_PREFIX(GetTypeInformation_4, XAPI, 4242), // Final generic OOVPA: 4242; Removed: 0
+    REGISTER_OOVPAS_C_PREFIX(GetTypeInformation_8, XAPI, 4242, 5455), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS_M(MU_Init, 3911, 4242, 5233),
     REGISTER_OOVPAS_XAPI(OutputDebugStringA, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS_XAPI(OutputDebugStringW, 3911), // Final generic OOVPA: 3911; Removed: 0
