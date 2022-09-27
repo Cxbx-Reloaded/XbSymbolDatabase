@@ -22,6 +22,93 @@
 // ******************************************************************
 #pragma once
 
+static bool internal_xapi_find_DeviceType_MU(iXbSymbolContext* pContext,
+                                             const iXbSymbolLibrarySession* pLibrarySession,
+                                             SymbolDatabaseList* pLibraryDB,
+                                             const XbSDBSection* pSection,
+                                             uintptr_t virt_start_relative)
+{
+    xbaddr xXbAddr = 0;
+    OOVPARevision* pOOVPARevision = NULL;
+    OOVPATable* pSymbol = NULL;
+    memptr_t buffer_upper = (memptr_t)pSection->buffer_lower + pSection->buffer_size;
+
+    // Find MU_Init function
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_MU_Init])) {
+
+        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                   pLibrarySession,
+                                                                   pLibraryDB,
+                                                                   "MU_Init",
+                                                                   pSection,
+                                                                   true,
+                                                                   &pSymbol,
+                                                                   &pOOVPARevision);
+
+        if (xXbAddr) {
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
+        }
+    }
+
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_MU_Init])) {
+        // If not found, skip the rest of the scan.
+        return false;
+    }
+
+
+    // Scan for IUsbInit::GetMaxDeviceTypeCount function.
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_IUsbInit_GetMaxDeviceTypeCount])) {
+        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                   pLibrarySession,
+                                                                   pLibraryDB,
+                                                                   "IUsbInit_GetMaxDeviceTypeCount",
+                                                                   pSection,
+                                                                   true,
+                                                                   &pSymbol,
+                                                                   NULL);
+
+        // If not found, skip the rest of the scan.
+        if (xXbAddr == 0) {
+            return false;
+        }
+
+        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 3911, xXbAddr);
+    }
+
+    xXbAddr = 0;
+    // TODO: Move below into separate function.
+    // search all of the buffer memory range
+    for (memptr_t cur = (memptr_t)virt_start_relative + pContext->xref_database[XREF_MU_Init]; cur < buffer_upper; cur++) {
+        // We are looking for "leave; ret 0x04;" for end of function then stop searching.
+        if (cur[0] == 0xC9 && cur[1] == 0xC2 && cur[2] == 0x04) {
+            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Could not find g_DeviceType_MU from MU_Init!");
+            return false;
+        }
+
+        // Look for possible push and call next to each other.
+        if (cur[0] == 0x68 && cur[5] == 0xE8) {
+
+            // check if call is linked to IUsbInit_GetMaxDeviceTypeCount function.
+            xbaddr ActualAddr = *(xbaddr*)(cur + 6);
+            if (MatchXRefAddr(cur + 6, virt_start_relative, pContext->xref_database[XREF_IUsbInit_GetMaxDeviceTypeCount])) {
+                // this is where g_DeviceType_MU hardcode address reside in.
+                xXbAddr = *(xbaddr*)(cur + 1);
+                break;
+            }
+        }
+    }
+
+    // register if g_DeviceType_MU is not valid.
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_g_DeviceType_MU])) {
+
+        // Register g_DeviceType_MU
+        internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_g_DeviceType_MU, 3911,
+                                  "g_DeviceType_MU", xXbAddr);
+    }
+
+    return true;
+}
+
 static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
                                             const iXbSymbolLibrarySession* pLibrarySession,
                                             SymbolDatabaseList* pLibraryDB,
@@ -117,11 +204,8 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
     uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
     memptr_t buffer_upper = (memptr_t)pSection->buffer_lower + pSection->buffer_size;
     xbaddr xXbAddr = 0;
-    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
-    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
     OOVPARevision* pOOVPARevision = NULL;
     OOVPATable* pSymbol = NULL;
-
 
     // Find XapiMapLetterToDirectory function
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XapiMapLetterToDirectory])) {
@@ -162,83 +246,11 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
         }
     }
 
-    // Find MU_Init function
-    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_MU_Init])) {
-
-        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
-                                                                   pLibrarySession,
-                                                                   pLibraryDB,
-                                                                   "MU_Init",
-                                                                   pSection,
-                                                                   true,
-                                                                   &pSymbol,
-                                                                   &pOOVPARevision);
-
-        if (xXbAddr) {
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
-        }
-    }
-
-    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_MU_Init])) {
-        // If not found, skip the rest of the scan.
-        return false;
-    }
-
-
-    // Scan for IUsbInit::GetMaxDeviceTypeCount function.
-    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_IUsbInit_GetMaxDeviceTypeCount])) {
-        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
-                                                                   pLibrarySession,
-                                                                   pLibraryDB,
-                                                                   "IUsbInit_GetMaxDeviceTypeCount",
-                                                                   pSection,
-                                                                   true,
-                                                                   &pSymbol,
-                                                                   NULL);
-
-        // If not found, skip the rest of the scan.
-        if (xXbAddr == 0) {
-            return false;
-        }
-
-        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 3911, xXbAddr);
-    }
-
-
-    xXbAddr = 0;
-    // TODO: Move below into separate function.
-    // search all of the buffer memory range
-    for (memptr_t cur = (memptr_t)virt_start_relative + pContext->xref_database[XREF_MU_Init]; cur < buffer_upper; cur++) {
-        // We are looking for "leave; ret 0x04;" for end of function then stop searching.
-        if (cur[0] == 0xC9 && cur[1] == 0xC2 && cur[2] == 0x04) {
-            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Could not find g_DeviceType_MU from MU_Init!");
-            return false;
-        }
-
-        // Look for possible push and call next to each other.
-        if (cur[0] == 0x68 && cur[5] == 0xE8) {
-
-            // check if call is linked to IUsbInit_GetMaxDeviceTypeCount function.
-            xbaddr ActualAddr = *(xbaddr*)(cur + 6);
-            if (MatchXRefAddr(cur + 6, virt_start_relative, pContext->xref_database[XREF_IUsbInit_GetMaxDeviceTypeCount])) {
-                // this is where g_DeviceType_MU hardcode address reside in.
-                xXbAddr = *(xbaddr*)(cur + 1);
-                break;
-            }
-        }
-    }
-
-    // register if g_DeviceType_MU is not valid.
-    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_g_DeviceType_MU])) {
-
-        // Register g_DeviceType_MU
-        internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_g_DeviceType_MU, 3911,
-                                  "g_DeviceType_MU", xXbAddr);
-    }
+    bool foundMURefs = internal_xapi_find_DeviceType_MU(pContext, pLibrarySession, pLibraryDB, pSection, virt_start_relative);
 
     bool foundDeviceTypes = internal_xapi_find_device_types(pContext, pLibrarySession, pLibraryDB, pSection, virt_start_relative);
 
-    return true && foundDeviceTypes;
+    return foundMURefs && foundDeviceTypes;
 }
 
 static inline void manual_register_xapilib(iXbSymbolContext* pContext)
