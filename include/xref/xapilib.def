@@ -30,6 +30,7 @@ XREF_SYMBOL(g_DeviceType_SBC)            //
 XREF_SYMBOL(g_DeviceTypeInfoTableBegin)  // initially set to XREF_ADDR_DERIVE
 XREF_SYMBOL(g_DeviceTypeInfoTableEnd)    // initially set to XREF_ADDR_DERIVE
 XREF_SYMBOL(g_XapiCurrentTopLevelFilter) // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(g_XapiAltLett_MU)            // initially set to XREF_ADDR_DERIVE
 XREF_SYMBOL(g_XapiMountedMUs)            // initially set to XREF_ADDR_DERIVE
 
 // Offsets

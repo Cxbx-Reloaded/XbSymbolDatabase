@@ -830,6 +830,7 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     pContext->xref_database[XREF_g_DeviceType_IRDongle] = XREF_ADDR_DERIVE;                    //In use
     pContext->xref_database[XREF_g_DeviceTypeInfoTableBegin] = XREF_ADDR_DERIVE;               //In use
     pContext->xref_database[XREF_g_DeviceTypeInfoTableEnd] = XREF_ADDR_DERIVE;                 //In use
+    pContext->xref_database[XREF_g_XapiAltLett_MU] = XREF_ADDR_DERIVE;                         //In use
     pContext->xref_database[XREF_g_XapiMountedMUs] = XREF_ADDR_DERIVE;                         //In use
     pContext->xref_database[XREF_OFFSET_XapiCurrentFiber] = XREF_ADDR_DERIVE;                  //In use
     pContext->xref_database[XREF_OFFSET_XapiLastErrorCode] = XREF_ADDR_DERIVE;                 //In use

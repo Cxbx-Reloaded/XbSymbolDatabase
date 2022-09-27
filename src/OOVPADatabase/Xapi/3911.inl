@@ -847,17 +847,31 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XUnmountAlternateTitleA
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(XUnmountAlternateTitleA,
-                         3911)
+OOVPA_SIG_HEADER_XREF(XUnmountAlternateTitleA,
+                      3911,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
+
+    // call [IoDeleteSymbolicLink]
+    XREF_ENTRY(0x3D, XREF_KT_FUNC_IoDeleteSymbolicLink),
+
+    // mov byte [g_XapiAltLett_MU],0x00
+    XREF_ENTRY(0x4D, XREF_g_XapiAltLett_MU), // derived
 
     { 0x0A, 0x65 },
     { 0x16, 0xFF },
     { 0x23, 0x83 },
     { 0x2E, 0x45 },
-    { 0x3A, 0x50 },
+
+    // call [IoDeleteSymbolicLink]
+    OV_MATCH(0x3B, 0xFF, 0x15),
+
     { 0x46, 0x0B },
     { 0x52, 0x50 },
+
+    // leave
+    // ret 0x04
+    OV_MATCH(0x59, 0xC9, 0xC2, 0x04)
     //
 );
 
