@@ -374,30 +374,34 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XInputOpen
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(XInputOpen,
-                         3911)
+OOVPA_SIG_HEADER_XREF(XInputOpen,
+                      3911,
+                      XRefThree)
 OOVPA_SIG_MATCH(
 
-    // XInputOpen+0x20 : jmp +0x0B
-    { 0x20, 0xEB },
-    { 0x21, 0x0B },
+    // cmp dword [ebp + 0x08],g_DeviceType_Gamepad
+    XREF_ENTRY(0x0B, XREF_g_DeviceType_Gamepad), // derived
 
-    // XInputOpen+0x29 : jnz +0x3D
-    { 0x29, 0x75 },
-    { 0x2A, 0x3D },
+    // cmp dword [ebp + 0x08],g_DeviceType_Keyboard
+    XREF_ENTRY(0x18, XREF_g_DeviceType_Keyboard), // derived
 
-    // XInputOpen+0x4A : add edx, 0x10
-    { 0x4A, 0x83 },
-    { 0x4B, 0xC2 },
-    { 0x4C, 0x10 },
+    // cmp dword [ebp + 0x08],g_DeviceType_IRDongle
+    XREF_ENTRY(0x25, XREF_g_DeviceType_IRDongle), // derived
 
-    // XInputOpen+0x66 : jmp +0x09
-    { 0x66, 0xEB },
-    { 0x67, 0x09 },
+    // jmp +0x0B
+    OV_MATCH(0x20, 0xEB, 0x0B),
 
-    // XInputOpen+0x68 : push 0x57
-    { 0x68, 0x6A },
-    { 0x69, 0x57 },
+    // jnz +0x3D
+    OV_MATCH(0x29, 0x75, 0x3D),
+
+    // add edx,0x10
+    OV_MATCH(0x4A, 0x83, 0xC2, 0x10),
+
+    // jmp +0x09
+    OV_MATCH(0x66, 0xEB, 0x09),
+
+    // push 0x57
+    OV_MATCH(0x68, 0x6A, 0x57),
     //
 );
 
@@ -843,17 +847,31 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * XUnmountAlternateTitleA
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(XUnmountAlternateTitleA,
-                         3911)
+OOVPA_SIG_HEADER_XREF(XUnmountAlternateTitleA,
+                      3911,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
+
+    // call [IoDeleteSymbolicLink]
+    XREF_ENTRY(0x3D, XREF_KT_FUNC_IoDeleteSymbolicLink),
+
+    // mov byte [g_XapiAltLett_MU],0x00
+    XREF_ENTRY(0x4D, XREF_g_XapiAltLett_MU), // derived
 
     { 0x0A, 0x65 },
     { 0x16, 0xFF },
     { 0x23, 0x83 },
     { 0x2E, 0x45 },
-    { 0x3A, 0x50 },
+
+    // call [IoDeleteSymbolicLink]
+    OV_MATCH(0x3B, 0xFF, 0x15),
+
     { 0x46, 0x0B },
     { 0x52, 0x50 },
+
+    // leave
+    // ret 0x04
+    OV_MATCH(0x59, 0xC9, 0xC2, 0x04)
     //
 );
 

@@ -26,33 +26,35 @@
 // ******************************************************************
 // * XInputOpen
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(XInputOpen,
-                         4242)
+// Generic OOVPA as of 4242 and newer.
+OOVPA_SIG_HEADER_XREF(XInputOpen,
+                      4242,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // XInputOpen+0x14 : push 0x57
-    { 0x14, 0x6A },
-    { 0x15, 0x57 },
+    // call GetTypeInformation_4
+    XREF_ENTRY(0x0C, XREF_XAPI_GetTypeInformation_4),
 
-    // XInputOpen+0x1D : jmp +0x33
-    { 0x1D, 0xEB },
-    { 0x1E, 0x33 },
+    // call SetLastError
+    XREF_ENTRY(0x17, XREF_XAPI_SetLastError),
 
-    // XInputOpen+0x33 : add edx, 0x10
-    { 0x33, 0x83 },
-    { 0x34, 0xC2 },
-    { 0x35, 0x10 },
+    // push 0x57
+    OV_MATCH(0x14, 0x6A, 0x57),
 
-    // XInputOpen+0x47 : jmp +0x06
-    { 0x47, 0x75 },
-    { 0x48, 0x06 },
+    // jmp +0x33
+    OV_MATCH(0x1D, 0xEB, 0x33),
 
-    // XInputOpen+0x52 : leave
-    { 0x52, 0xC9 },
+    // add edx, 0x10
+    OV_MATCH(0x33, 0x83, 0xC2, 0x10),
 
-    // XInputOpen+0x53 : retn 0x10
-    { 0x53, 0xC2 },
-    { 0x54, 0x10 },
+    // jmp +0x06
+    OV_MATCH(0x47, 0x75, 0x06),
+
+    // leave
+    OV_MATCH(0x52, 0xC9),
+
+    // retn 0x10
+    OV_MATCH(0x53, 0xC2, 0x10),
     //
 );
 
@@ -270,5 +272,97 @@ OOVPA_SIG_MATCH(
 
     // mov WORD PTR [ebp-0x0E],0x3E
     OV_MATCH(0x51, 0x66, 0xC7, 0x45, 0xF2, 0x3E, 0x00),
+    //
+);
+
+// ******************************************************************
+// * GetTypeInformation_4
+// ******************************************************************
+// Generic OOVPA as of 4242 and newer.
+OOVPA_SIG_HEADER_XREF(GetTypeInformation_4,
+                      4242,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // mov eax,g_DeviceTypeInfoTableBegin
+    XREF_ENTRY(0x01, XREF_g_DeviceTypeInfoTableBegin), // derived
+
+    // mov esi,g_DeviceTypeInfoTableEnd
+    XREF_ENTRY(0x09, XREF_g_DeviceTypeInfoTableEnd), // derived
+
+    // mov eax,g_DeviceTypeInfoTableBegin
+    OV_MATCH(0x00, 0xB8),
+    // push esi
+    // mov edx,eax
+    // mov esi,g_DeviceTypeInfoTableEnd
+    OV_MATCH(0x05, 0x56, 0x8B, 0xD0, 0xBE),
+    // cmp edx,esi
+    OV_MATCH(0x0D, 0x3B, 0xD6),
+    // jnc +0x12
+    OV_MATCH(0x0F, 0x73, 0x12),
+    // mov edx,dword [eax]
+    OV_MATCH(0x11, 0x8B, 0x10),
+    // test edx,edx
+    OV_MATCH(0x13, 0x85, 0xD2),
+
+    // cmp dword [edx + 0x04],ecx
+    OV_MATCH(0x17, 0x39, 0x4A, 0x04),
+    // JZ +0x0B
+    OV_MATCH(0x1A, 0x74, 0x0B),
+    // add eax,0x04
+    OV_MATCH(0x1C, 0x83, 0xC0, 0x04),
+
+    // ret
+    OV_MATCH(0x26, 0xC3),
+
+    // ret
+    OV_MATCH(0x2A, 0xC3),
+    //
+);
+
+// ******************************************************************
+// * GetTypeInformation_8
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(GetTypeInformation_8,
+                      4242,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // mov eax,g_DeviceTypeInfoTableBegin
+    XREF_ENTRY(0x06, XREF_g_DeviceTypeInfoTableBegin), // derived
+
+    // mov esi,g_DeviceTypeInfoTableEnd
+    XREF_ENTRY(0x0E, XREF_g_DeviceTypeInfoTableEnd), // derived
+
+    // mov eax,g_DeviceTypeInfoTableBegin
+    OV_MATCH(0x05, 0xB8),
+    // push edi
+    // mov edi,eax
+    // mov esi,g_DeviceTypeInfoTableEnd
+    OV_MATCH(0x0A, 0x57, 0x8B, 0xF8, 0xBE),
+
+    // cmp edi,esi
+    OV_MATCH(0x14, 0x3B, 0xFE),
+    // jnc +0x13
+    OV_MATCH(0x16, 0x73, 0x13),
+
+    // mov edi,dword [eax]
+    OV_MATCH(0x18, 0x8B, 0x38),
+    // test edi,edi
+    OV_MATCH(0x1A, 0x85, 0xFF),
+
+    // cmp dword [edi],cl
+    OV_MATCH(0x1E, 0x38, 0x0F),
+    // JZ +0x0F
+    OV_MATCH(0x20, 0x74, 0x0F),
+
+    // add eax,0x04
+    OV_MATCH(0x24, 0x83, 0xC0, 0x04),
+
+    // ret
+    OV_MATCH(0x30, 0xC3),
+
+    // jmp -0x0A
+    OV_MATCH(0x35, 0xEB, 0xF6),
     //
 );

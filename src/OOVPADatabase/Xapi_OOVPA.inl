@@ -59,7 +59,6 @@
 //   * GetOverlappedResult (4034)
 //   * GetThreadPriority (4034)
 //   * GetTimeZoneInformation (4034)
-//   * GetTypeInformation (4134)
 //   * MoveFileA (4034)
 //   * QueueUserAPC (4034)
 //   * SetThreadPriority (4034)
@@ -449,7 +448,8 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS_XAPI(GetOverlappedResult, 3911),
     REGISTER_OOVPAS_XAPI(GetThreadPriority, 3911),
     REGISTER_OOVPAS_XAPI(GetTimeZoneInformation, 3911),
-    REGISTER_OOVPAS_XAPI(GetTypeInformation, 4134), // TODO: Actually introduced in some unknown XDK between 4134 and 4361
+    REGISTER_OOVPAS_M_PREFIX(GetTypeInformation_4, XAPI, 4242), // Final generic OOVPA: 4242; Removed: 0
+    REGISTER_OOVPAS_C_PREFIX(GetTypeInformation_8, XAPI, 4242, 5455), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS_M(MU_Init, 3911, 4242, 5233),
     REGISTER_OOVPAS_XAPI(OutputDebugStringA, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS_XAPI(OutputDebugStringW, 3911), // Final generic OOVPA: 3911; Removed: 0
@@ -473,7 +473,7 @@ OOVPATable XAPILIB_OOVPA[] = {
     REGISTER_OOVPAS(XInputGetCapabilities, 3911, 4831), // Final generic OOVPA: 4831; Removed: 0
     REGISTER_OOVPAS(XInputGetDeviceDescription, 4831),
     REGISTER_OOVPAS(XInputGetState, 3911, 4242, 5455),
-    REGISTER_OOVPAS(XInputOpen, 3911, 4242),
+    REGISTER_OOVPAS_C(XInputOpen, 3911, 4242), // Final generic OOVPA: 4242; Removed: 0
     REGISTER_OOVPAS(XInputPoll, 3911),
     REGISTER_OOVPAS(XInputSetLightgunCalibration, 4831),
     REGISTER_OOVPAS(XInputSetState, 3911, 4242, 4831),

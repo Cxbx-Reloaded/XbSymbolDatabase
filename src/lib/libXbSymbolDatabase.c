@@ -230,7 +230,9 @@ const char SectionList[][8] = {
     Sec_D3DX,
     Sec_DSOUND,
     Sec_XACTENG,
+    Sec_XID,
     Sec_XPP,
+    Sec_XPPDat,
     Sec_XGRPH,
     Sec_XONLINE,
     Sec_XNET
@@ -823,6 +825,12 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     pContext->xref_database[XREF_OFFSET_D3DDevice__m_VertexShader] = XREF_ADDR_DERIVE;         //In use
     // XAPILIB                                                                                 //
     pContext->xref_database[XREF_g_XapiCurrentTopLevelFilter] = XREF_ADDR_DERIVE;              //In use
+    pContext->xref_database[XREF_g_DeviceType_Gamepad] = XREF_ADDR_DERIVE;                     //In use
+    pContext->xref_database[XREF_g_DeviceType_Keyboard] = XREF_ADDR_DERIVE;                    //In use
+    pContext->xref_database[XREF_g_DeviceType_IRDongle] = XREF_ADDR_DERIVE;                    //In use
+    pContext->xref_database[XREF_g_DeviceTypeInfoTableBegin] = XREF_ADDR_DERIVE;               //In use
+    pContext->xref_database[XREF_g_DeviceTypeInfoTableEnd] = XREF_ADDR_DERIVE;                 //In use
+    pContext->xref_database[XREF_g_XapiAltLett_MU] = XREF_ADDR_DERIVE;                         //In use
     pContext->xref_database[XREF_g_XapiMountedMUs] = XREF_ADDR_DERIVE;                         //In use
     pContext->xref_database[XREF_OFFSET_XapiCurrentFiber] = XREF_ADDR_DERIVE;                  //In use
     pContext->xref_database[XREF_OFFSET_XapiLastErrorCode] = XREF_ADDR_DERIVE;                 //In use

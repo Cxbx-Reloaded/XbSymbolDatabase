@@ -22,17 +22,13 @@
 // ******************************************************************
 #pragma once
 
-static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
-                                        const iXbSymbolLibrarySession* pLibrarySession,
-                                        SymbolDatabaseList* pLibraryDB,
-                                        const XbSDBSection* pSection)
+static bool internal_xapi_find_XGetSectionSize(iXbSymbolContext* pContext,
+                                               const iXbSymbolLibrarySession* pLibrarySession,
+                                               SymbolDatabaseList* pLibraryDB,
+                                               const XbSDBSection* pSection,
+                                               uintptr_t virt_start_relative)
 {
-    // Generic usage
-    uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
-    memptr_t buffer_upper = (memptr_t)pSection->buffer_lower + pSection->buffer_size;
     xbaddr xXbAddr = 0;
-    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
-    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
     OOVPARevision* pOOVPARevision = NULL;
     OOVPATable* pSymbol = NULL;
 
@@ -68,12 +64,26 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
                 // Error message is handled by above function. No extra message necessary here.
                 return false;
             }
-            pContext->xref_database[XREF_XGetSectionSize] = XREF_ADDR_UNDETERMINED; // Force reset to able register
+            // Update to use virtual address instead of relative address.
+            pContext->xref_database[XREF_XGetSectionSize] = xXbAddr;
 
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_XGetSectionSize, pOOVPARevision->Version,
-                                      xref_str, xXbAddr);
+            internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XGetSectionSize, pOOVPARevision->Version, xref_str);
         }
     }
+
+    return true;
+}
+
+static bool internal_xapi_find_DeviceType_MU(iXbSymbolContext* pContext,
+                                             const iXbSymbolLibrarySession* pLibrarySession,
+                                             SymbolDatabaseList* pLibraryDB,
+                                             const XbSDBSection* pSection,
+                                             uintptr_t virt_start_relative)
+{
+    xbaddr xXbAddr = 0;
+    OOVPARevision* pOOVPARevision = NULL;
+    OOVPATable* pSymbol = NULL;
+    memptr_t buffer_upper = (memptr_t)pSection->buffer_lower + pSection->buffer_size;
 
     // Find MU_Init function
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_MU_Init])) {
@@ -117,7 +127,6 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
         internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 3911, xXbAddr);
     }
 
-
     xXbAddr = 0;
     // TODO: Move below into separate function.
     // search all of the buffer memory range
@@ -152,13 +161,138 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
     return true;
 }
 
+static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
+                                            const iXbSymbolLibrarySession* pLibrarySession,
+                                            SymbolDatabaseList* pLibraryDB,
+                                            const XbSDBSection* pSection,
+                                            uintptr_t virt_start_relative)
+{
+    xbaddr xXbAddr = 0;
+    OOVPARevision* pOOVPARevision = NULL;
+    OOVPATable* pSymbol = NULL;
+
+    // Find GetTypeInformation_4 function
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XAPI_GetTypeInformation_4])) {
+        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                   pLibrarySession,
+                                                                   pLibraryDB,
+                                                                   "GetTypeInformation_4",
+                                                                   pSection,
+                                                                   true,
+                                                                   &pSymbol,
+                                                                   &pOOVPARevision);
+
+        // If GetTypeInformation_4 is not found, then try find GetTypeInformation_8
+        if (!xXbAddr) {
+            xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                       pLibrarySession,
+                                                                       pLibraryDB,
+                                                                       "GetTypeInformation_8",
+                                                                       pSection,
+                                                                       true,
+                                                                       &pSymbol,
+                                                                       &pOOVPARevision);
+        }
+
+        // If either GetTypeInformation overload is found, start look up in DeviceTypeInfo table's entires.
+        if (xXbAddr) {
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
+
+            uint32_t* table_i = (uint32_t*)internal_section_VirtToHostAddress(pContext, pContext->xref_database[XREF_g_DeviceTypeInfoTableBegin]);
+            uint32_t* table_end = (uint32_t*)internal_section_VirtToHostAddress(pContext, pContext->xref_database[XREF_g_DeviceTypeInfoTableEnd]);
+            size_t type_description_table_count = ((memptr_t)table_end - (memptr_t)table_i) / sizeof(uint32_t);
+
+            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "DeviceTypeInfoTable Entires: %u", type_description_table_count);
+
+            // Partial extracted for ucType and XppType fields needed to get specific device type named.
+            typedef struct _XID_TYPE_INFORMATION {
+                uint8_t ucType;
+                uint8_t bRemainingHandles;
+                uint8_t ucUnknown[2]; // probably for xbox::dword_xt align
+                xbaddr XppType;       // pointer to DeviceType structure.
+            } XID_TYPE_INFORMATION, *PXID_TYPE_INFORMATION;
+
+            // Iterate through the table until we find known device types.
+            int i = 0;
+            for (; table_i < table_end; table_i++, i++) {
+                PXID_TYPE_INFORMATION DeviceTypeInfo = (PXID_TYPE_INFORMATION)internal_section_VirtToHostAddress(pContext, *table_i);
+                switch (DeviceTypeInfo->ucType) {
+                    case 1: // Gamepad (Generic)
+                        pContext->xref_database[XREF_g_DeviceType_Gamepad] = DeviceTypeInfo->XppType;
+                        break;
+                    case 2: // Keyboard
+                        pContext->xref_database[XREF_g_DeviceType_Keyboard] = DeviceTypeInfo->XppType;
+                        break;
+                    case 3: // IR Dongle
+                        pContext->xref_database[XREF_g_DeviceType_IRDongle] = DeviceTypeInfo->XppType;
+                        break;
+                    case 4: // Mouse
+                        // NOTE: Possibly introduced when Phantasy Star Online (b4831) added keyboard support.
+                        pContext->xref_database[XREF_g_DeviceType_Mouse] = DeviceTypeInfo->XppType;
+                        break;
+                    case 128: // Steel Battalion
+                        pContext->xref_database[XREF_g_DeviceType_SBC] = DeviceTypeInfo->XppType;
+                        break;
+                    default: // Unknown
+                        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN, "Unknown device type, DeviceTypeInfoTable[%hhu]:  ucType = %hhu, XppType = %08X", i, DeviceTypeInfo->ucType, DeviceTypeInfo->XppType);
+                        break;
+                }
+            }
+        }
+        else {
+            // Find XInputOpen function
+            if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XInputOpen])) {
+                xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                           pLibrarySession,
+                                                                           pLibraryDB,
+                                                                           "XInputOpen",
+                                                                           pSection,
+                                                                           true,
+                                                                           &pSymbol,
+                                                                           &pOOVPARevision);
+                if (xXbAddr) {
+                    internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
+                    // No further manual action require.
+                }
+            }
+        }
+    }
+
+    if (!xXbAddr) {
+        return false;
+    }
+
+    return true;
+};
+
+static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
+                                        const iXbSymbolLibrarySession* pLibrarySession,
+                                        SymbolDatabaseList* pLibraryDB,
+                                        const XbSDBSection* pSection)
+{
+    // Generic usage
+    uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
+
+    bool foundXGetSectionSize = internal_xapi_find_XGetSectionSize(pContext, pLibrarySession, pLibraryDB, pSection, virt_start_relative);
+
+    bool foundMURefs = internal_xapi_find_DeviceType_MU(pContext, pLibrarySession, pLibraryDB, pSection, virt_start_relative);
+
+    bool foundDeviceTypes = internal_xapi_find_device_types(pContext, pLibrarySession, pLibraryDB, pSection, virt_start_relative);
+
+    return foundXGetSectionSize && foundMURefs && foundDeviceTypes;
+}
+
 static inline void manual_register_xapilib(iXbSymbolContext* pContext)
 {
-    xbaddr xg_XapiMountedMUs = pContext->xref_database[XREF_g_XapiMountedMUs];
-    if (internal_IsXRefAddrValid(xg_XapiMountedMUs)) {
-        // Register g_XapiMountedMUs
-        internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs");
-    }
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Gamepad, 0, "g_DeviceType_Gamepad");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_IRDongle, 0, "g_DeviceType_IRDongle");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Keyboard, 0, "g_DeviceType_Keyboard");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Mouse, 0, "g_DeviceType_Mouse");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_SBC, 4242, "g_DeviceType_SBC");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableBegin, 4242, "g_DeviceTypeInfoTableBegin");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableEnd, 4242, "g_DeviceTypeInfoTableEnd");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiAltLett_MU, 0, "g_XapiAltLett_MU");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs");
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiCurrentTopLevelFilter, 0, "g_XapiCurrentTopLevelFilter");
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_array, 0, "_tls_array");
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_index, 0, "_tls_index");

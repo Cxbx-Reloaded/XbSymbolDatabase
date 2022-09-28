@@ -22,8 +22,16 @@
 // Variables
 XREF_SYMBOL(XAPI__tls_array)             // initially set to XREF_ADDR_DERIVE
 XREF_SYMBOL(XAPI__tls_index)             // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(g_DeviceType_Gamepad)        // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(g_DeviceType_IRDongle)       // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(g_DeviceType_Keyboard)       // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(g_DeviceType_Mouse)          //
 XREF_SYMBOL(g_DeviceType_MU)             // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(g_DeviceType_SBC)            //
+XREF_SYMBOL(g_DeviceTypeInfoTableBegin)  // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(g_DeviceTypeInfoTableEnd)    // initially set to XREF_ADDR_DERIVE
 XREF_SYMBOL(g_XapiCurrentTopLevelFilter) // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(g_XapiAltLett_MU)            // initially set to XREF_ADDR_DERIVE
 XREF_SYMBOL(g_XapiMountedMUs)            // initially set to XREF_ADDR_DERIVE
 
 // Offsets
@@ -48,7 +56,8 @@ XREF_SYMBOL(XAPI_GetLastError)
 XREF_SYMBOL(XAPI_GetOverlappedResult)
 XREF_SYMBOL(XAPI_GetThreadPriority)
 XREF_SYMBOL(XAPI_GetTimeZoneInformation)
-XREF_SYMBOL(XAPI_GetTypeInformation)
+XREF_SYMBOL(XAPI_GetTypeInformation_4)
+XREF_SYMBOL(XAPI_GetTypeInformation_8)
 XREF_SYMBOL(XAPI_mainCRTStartup)
 XREF_SYMBOL(XAPI_mainXapiStartup)
 XREF_SYMBOL(XAPI_MoveFileA)
