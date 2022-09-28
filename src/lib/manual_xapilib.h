@@ -226,6 +226,10 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
                     case 3: // IR Dongle
                         pContext->xref_database[XREF_g_DeviceType_IRDongle] = DeviceTypeInfo->XppType;
                         break;
+                    case 4: // Mouse
+                        // NOTE: Possibly introduced when Phantasy Star Online (b4831) added keyboard support.
+                        pContext->xref_database[XREF_g_DeviceType_Mouse] = DeviceTypeInfo->XppType;
+                        break;
                     case 128: // Steel Battalion
                         pContext->xref_database[XREF_g_DeviceType_SBC] = DeviceTypeInfo->XppType;
                         break;
@@ -281,8 +285,9 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
 static inline void manual_register_xapilib(iXbSymbolContext* pContext)
 {
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Gamepad, 0, "g_DeviceType_Gamepad");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Keyboard, 0, "g_DeviceType_Keyboard");
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_IRDongle, 0, "g_DeviceType_IRDongle");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Keyboard, 0, "g_DeviceType_Keyboard");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Mouse, 0, "g_DeviceType_Mouse");
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_SBC, 4242, "g_DeviceType_SBC");
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableBegin, 4242, "g_DeviceTypeInfoTableBegin");
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableEnd, 4242, "g_DeviceTypeInfoTableEnd");
