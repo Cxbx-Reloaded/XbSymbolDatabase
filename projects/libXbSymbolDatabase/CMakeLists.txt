@@ -45,7 +45,7 @@ file(GLOB_RECURSE SOURCES
 )
 source_group(TREE ${XBSDB_ROOT_DIR} FILES ${SOURCES})
 
-add_library(${PROJECT_NAME} ${INCLUDES} ${HEADERS} ${SOURCES})
+add_library(${PROJECT_NAME} STATIC ${INCLUDES} ${HEADERS} ${SOURCES})
 
 # NOTES:
 # Using INTERFACE keyword will not work within the project. Only PUBLIC/PRIVATE keywords does.
