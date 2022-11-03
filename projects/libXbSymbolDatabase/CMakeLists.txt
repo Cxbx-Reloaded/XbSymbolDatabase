@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.10.2)
 
 project(libXbSymbolDatabase LANGUAGES C)
 
+find_package(Threads)
+
 file(GLOB INCLUDES
  "${XBSDB_ROOT_DIR}/include/Xbe.h"
  "${XBSDB_ROOT_DIR}/include/libXbSymbolDatabase.h"
@@ -56,6 +58,10 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
+
+if(Threads_FOUND)
+ target_link_libraries(${PROJECT_NAME} Threads::Threads)
+endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
  C_STANDARD 11

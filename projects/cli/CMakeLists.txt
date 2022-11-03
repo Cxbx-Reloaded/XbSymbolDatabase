@@ -10,7 +10,11 @@ add_executable(${PROJECT_NAME} ${XBSDB_ROOT_DIR}/src/cli/main.c)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
 
-target_link_libraries(${PROJECT_NAME} libXbSymbolDatabase Threads::Threads)
+target_link_libraries(${PROJECT_NAME} libXbSymbolDatabase)
+
+if(Threads_FOUND)
+ target_link_libraries(${PROJECT_NAME} Threads::Threads)
+endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
  C_STANDARD 11
