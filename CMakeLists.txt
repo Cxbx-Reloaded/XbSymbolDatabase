@@ -33,9 +33,12 @@ endif()
 
 option(XBSDB_INSTALL_LIB "Install libXbSymbolDatabase library" ${XBSDB_DEFAULT_CONFIGS})
 option(XBSDB_BUILD_CLI "Build XbSymbolDatabase CLI tool" ${XBSDB_DEFAULT_CONFIGS})
+option(XBSDB_BUILD_UNITTEST "Build XbSymbolDatabase Unit Test" ${XBSDB_DEFAULT_CONFIGS})
 include(CMakeDependentOption)
 cmake_dependent_option(XBSDB_INSTALL_CLI "Install XbSymbolDatabase CLI tool" ${XBSDB_DEFAULT_CONFIGS}
                        "XBSDB_BUILD_CLI" OFF)
+cmake_dependent_option(XBSDB_INSTALL_UNITTEST "Install XbSymbolDatabase Unit Test" ${XBSDB_DEFAULT_CONFIGS}
+                       "XBSDB_BUILD_UNITTEST" OFF)
 
 # For any optional tools, use list(APPEND XBSDB_INSTALL_TOOLS "tool_name")
 
@@ -45,6 +48,10 @@ endif()
 
 if(XBSDB_INSTALL_CLI)
  list(APPEND XBSDB_INSTALL_TOOLS "XbSymbolDatabaseCLI")
+endif()
+
+if(XBSDB_INSTALL_UNITTEST)
+ list(APPEND XBSDB_INSTALL_TOOLS "XbSymbolDatabaseUnitTest")
 endif()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
