@@ -27,6 +27,7 @@ endif()
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
  set(XBSDB_DEFAULT_CONFIGS ON)
+ enable_testing()
 else()
  set(XBSDB_DEFAULT_CONFIGS OFF)
 endif()
