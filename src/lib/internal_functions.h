@@ -594,6 +594,8 @@ static bool internal_SetLibraryTypeStart(iXbSymbolContext* pContext, eLibraryTyp
 
     bool ret = false;
 
+    iXbSymbolContext_Lock(pContext);
+
     // Accept request if library type is inactive.
     if (!pContext->library_contexts[library_type].is_active) {
         // Then accept the scan request.
