@@ -170,29 +170,29 @@ unsigned int XbSymbolDatabase_LibraryVersion();
 
 /// <summary>
 /// Total symbols return give ability to support for progress bar from third-party software. Not all symbols will be detected in every titles.
-/// <param name="library_filter">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to obtain total symbols.</param>
 /// </summary>
+/// <param name="library_filter">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to obtain total symbols.</param>
 /// <returns>Return total symbols in current database system.</returns>
 unsigned XbSymbolDatabase_GetTotalSymbols(uint32_t library_filter);
 
 /// <summary>
 /// Register one or more library to be scan instead of whole database for optimize performance.
-/// <param name="library_filter">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to scan.</param>
 /// </summary>
+/// <param name="library_filter">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to scan.</param>
 /// <returns>Return true if success, or else will return false for invalid parameter.</returns>
 bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t library_filter);
 
 /// <summary>
-/// To register any detected symbol name with address and build version back to third-party program.
-/// NOTE: Be aware of library name will be varity since some libraries are detecting in other sections as well.
+/// Callback function type for output message to software when have information to be output.
 /// </summary>
-/// <param name="library_str">Name of the library in string.</param>
+/// <param name="message_flag">Output enum level flag.</param>
+/// <param name="message_str">Output log message.</param>
 typedef void (*xb_output_message_t)(xb_output_message message_flag, const char* message_str);
 
 /// <summary>
-/// For output a message to a program when have information to be output.
+/// Register output message callback function to receive output message.
 /// </summary>
-/// <param name="message_func">Set output message to a function.</param>
+/// <param name="message_func">Set output message to a callback function.</param>
 void XbSymbolDatabase_SetOutputMessage(xb_output_message_t message_func);
 
 /// <summary>
