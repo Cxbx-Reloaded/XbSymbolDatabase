@@ -36,11 +36,6 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <stddef.h>
-// TODO: Most compilers haven't include C11's thread support for multi-thread safe.
-#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L) && !defined(__STDC_NO_THREADS__)
-#define MULTI_THREAD_SAFE true
-#include <threads.h>
-#endif
 
 #ifdef _MSC_VER
 #include <intrin.h>
@@ -141,9 +136,9 @@ typedef struct _iXbSymbolContext {
     XbSDBSectionHeader section_input;
     eScanStage scan_stage;
     iXbSymbolLibraryContext library_contexts[LT_COUNT];
-#ifdef MULTI_THREAD_SAFE
-    mtx_t mutex;
-#endif
+    void* mtx_opaque_ptr;
+    xb_mutex_lock_t lock_fn;
+    xb_mutex_unlock_t unlock_fn;
 } iXbSymbolContext;
 
 typedef const struct _PairScanLibSec {
@@ -296,24 +291,20 @@ static xb_xbe_type GetXbeType(const xbe_header* pXbeHeader)
 
 static bool iXbSymbolContext_Lock(iXbSymbolContext* pContext)
 {
-#ifdef MULTI_THREAD_SAFE
-    // Lock to this thread only during the scan process until the scan is done.
-    int mtxStatus = mtx_lock(&pContext->mutex);
-    if (mtxStatus != thrd_success) {
-        output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Unable to lock mutex: %d", mtxStatus);
-        return false;
+    if (pContext->lock_fn) {
+        // Lock to this thread only during the scan process until the scan is done.
+        bool success = pContext->lock_fn(pContext, pContext->mtx_opaque_ptr);
+        // It is not XbSymbolDatabase's responsible to output an error. That is up to software's responsible.
+        return success;
     }
-#endif
-
     return true;
 }
 
 static void iXbSymbolContext_Unlock(iXbSymbolContext* pContext)
 {
-#ifdef MULTI_THREAD_SAFE
-    // Lock to this thread only during the scan process until the scan is done.
-    (void)mtx_unlock(&pContext->mutex);
-#endif
+    if (pContext->unlock_fn) {
+        pContext->unlock_fn(pContext, pContext->mtx_opaque_ptr);
+    }
 }
 
 static bool iXbSymbolContext_AllowSetParameter(iXbSymbolContext* pContext)
@@ -725,12 +716,6 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
 
     iXbSymbolContext* pContext = (iXbSymbolContext*)*ppHandle;
 
-#ifdef MULTI_THREAD_SAFE
-    if (mtx_init(&pContext->mutex, mtx_plain) != thrd_success) {
-        goto ContextCleanup;
-    }
-#endif
-
     pContext->scan_stage = SS_NONE;
 
     pContext->register_func = register_func;
@@ -742,6 +727,8 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     pContext->output.verbose_level = g_output_verbose_level;
     pContext->output.func = g_output_func;
     pContext->library_filter = 0;
+    pContext->lock_fn = NULL;
+    pContext->unlock_fn = NULL;
 
     // Copy pointers and values to context handler.
     pContext->library_input.count = library_input.count;
@@ -866,9 +853,8 @@ EmptyCleanup:
 void XbSymbolContext_Release(XbSymbolContextHandle pHandle)
 {
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
-#ifdef MULTI_THREAD_SAFE
-    (void)mtx_lock(&pContext->mutex);
-#endif
+
+    (void)iXbSymbolContext_Lock(pContext);
 
     for (unsigned int i = 0; i < LT_COUNT; i++) {
         if (pContext->library_contexts[i].is_active) {
@@ -876,10 +862,7 @@ void XbSymbolContext_Release(XbSymbolContextHandle pHandle)
         }
     }
 
-#ifdef MULTI_THREAD_SAFE
-    (void)mtx_unlock(&pContext->mutex);
-    mtx_destroy(&pContext->mutex);
-#endif
+    iXbSymbolContext_Unlock(pContext);
 
     free(pHandle);
 }
@@ -930,6 +913,25 @@ bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t lib
     }
 
     pContext->library_filter = library_filter;
+    return true;
+}
+
+bool XbSymbolContext_SetMutex(XbSymbolContextHandle pHandle, void* opaque_ptr, xb_mutex_lock_t mutex_lock, xb_mutex_unlock_t mutex_unlock)
+{
+    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+
+    if (!iXbSymbolContext_AllowSetParameter(pContext)) {
+        return false;
+    }
+
+    // Check to make sure both mutex (un)lock are present.
+    if (!mutex_lock && !mutex_unlock) {
+        return false;
+    }
+
+    pContext->mtx_opaque_ptr = opaque_ptr;
+    pContext->lock_fn = mutex_lock;
+    pContext->unlock_fn = mutex_unlock;
     return true;
 }
 
@@ -987,9 +989,7 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
     pContext->scan_stage = SS_2_SCAN_LIBS;
 
 skipScan:;
-#ifdef MULTI_THREAD_SAFE
-    (void)mtx_unlock(&pContext->mutex);
-#endif
+    iXbSymbolContext_Unlock(pContext);
 }
 
 unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
