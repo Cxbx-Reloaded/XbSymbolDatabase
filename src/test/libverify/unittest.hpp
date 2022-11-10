@@ -35,7 +35,7 @@ typedef struct _version_ranges {
 #define REGISTER_SYMBOLS(Symbol, ...) { XREF_##Symbol, { __VA_ARGS__ }}
 // clang-format on
 // NOTE: Using std::map does not check for duplicate xrefs from same variable!
-typedef const std::map<uint32_t, const std::map<const std::string, version_ranges>>
+typedef const std::multimap<uint32_t, const std::map<const std::string, version_ranges>>
     library_list;
 
 struct subcategory_db {

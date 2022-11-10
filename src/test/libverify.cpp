@@ -309,7 +309,25 @@ void verify_database_duplicate_compare(const char* lib_str,
     // paste and not update new entry or making duplicate entries.
     if (match_found) {
         error_count++;
-        XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, "Duplicate symbol registers detected: " + xref_symbol + " (index: " + std::to_string(xref_index) + ")");
+        XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, "Duplicate symbol registers detected from different database: " + xref_symbol + " (index: " + std::to_string(xref_index) + "), counter: " + std::to_string(match_found-1));
+    }
+}
+
+void verify_database_duplicate_internal(const library_list* db,
+    size_t& error_count)
+{
+    if (db) {
+        for (auto unique_key = db->begin(); unique_key != db->end();) {
+            const auto& xref_index = unique_key->first;
+            const auto& xref_entry_str = unique_key->second.begin()->first;
+            const auto& counter = db->count(xref_index);
+            if (counter > 1) {
+                error_count++;
+                XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, "Duplicate symbol registers detected from same database: " + xref_entry_str + " (index: " + std::to_string(xref_index) + "), counter: " + std::to_string(counter-1));
+            }
+            // Skip duplicate keys, if found, to avoid repeat same message.
+            unique_key = db->equal_range(xref_index).second;
+        }
     }
 }
 
@@ -319,6 +337,10 @@ void verify_database_duplicate(const char* lib_str,
                                size_t& error_count)
 {
     for (const auto& subcategory_i : lib_db.subcategories) {
+
+        verify_database_duplicate_internal(subcategory_i->optional, error_count);
+        verify_database_duplicate_internal(subcategory_i->min, error_count);
+        verify_database_duplicate_internal(subcategory_i->full, error_count);
 
         bool bFound = false;
         for (const auto& subcategory_ii : lib_db.subcategories) {
