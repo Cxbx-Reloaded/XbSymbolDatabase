@@ -82,7 +82,7 @@ static std::string cliMapPairsToString(cli_deque& map_pairs_out)
     i++;
 
     // iterate keys to combine into string
-    for (i; i != map_pairs_out.end();) {
+    for (; i != map_pairs_out.end();) {
         // If argument has space inside, return as empty.
         size_t found = i->first.find(str_space);
         if (found != std::string::npos) {
