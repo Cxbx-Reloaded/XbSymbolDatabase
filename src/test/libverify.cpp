@@ -336,7 +336,6 @@ void verify_database_duplicate(const char* lib_str,
             }
             if (subcategory_i->optional) {
                 for (auto&& [xref_index, xref_entry] : *subcategory_i->optional) {
-                    unsigned match_found = 0;
                     const std::string xref_symbol = xref_entry.begin()->first;
 
                     verify_database_duplicate_compare(lib_str, xref_index, xref_symbol, optional, subcategory_ii->min, subcategory_ii->full, error_count);
@@ -349,7 +348,6 @@ void verify_database_duplicate(const char* lib_str,
             }
             if (subcategory_i->min) {
                 for (auto&& [xref_index, xref_entry] : *subcategory_i->min) {
-                    unsigned match_found = 0;
                     const std::string xref_symbol = xref_entry.begin()->first;
 
                     verify_database_duplicate_compare(lib_str, xref_index, xref_symbol, optional, min, subcategory_ii->full, error_count);
@@ -362,7 +360,6 @@ void verify_database_duplicate(const char* lib_str,
             }
             if (subcategory_i->full) {
                 for (auto&& [xref_index, xref_entry] : *subcategory_i->full) {
-                    unsigned match_found = 0;
                     const std::string xref_symbol = xref_entry.begin()->first;
 
                     verify_database_duplicate_compare(lib_str, xref_index, xref_symbol, optional, min, full, error_count);

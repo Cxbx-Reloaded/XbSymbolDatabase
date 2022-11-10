@@ -50,7 +50,6 @@ std::ios_base::fmtflags cout_fmt = std::cout.flags();
 unsigned int XbSDB_test_error = 0;
 unsigned int XbUnitTest_error = 0;
 
-static const char* section_symbols = "Symbols";
 static const char* cli_argument_str = "> XbSymbolUnitTest"
                                       " [-h|--help]"
                                       " default.xbe"
@@ -706,9 +705,6 @@ static int run_test_raw(const xbe_header* pXbeHeader)
 static int run_test_virtual(const xbe_header* pXbeHeader, const uint8_t* xbe_data)
 {
     void* xb_environment = std::calloc(_128_MiB, 1);
-
-    const uint8_t* xb_env_data =
-        reinterpret_cast<const uint8_t*>(xb_environment);
 
     if (xb_environment == (void*)0) {
         std::cout
