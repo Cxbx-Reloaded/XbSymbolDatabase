@@ -28,6 +28,13 @@ endif()
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
  set(XBSDB_DEFAULT_CONFIGS ON)
  enable_testing()
+ # force disable unit test for XCode due to missing cuchar header file.
+ # TODO: Test XCode again when Apple Clang is at least version 15.
+ # NOTE: llvm Clang contain a fix in https://github.com/llvm/llvm-project/commit/311ff3917827131c20d4b8dac4ce0394a2351b94 commit.
+ if(XCODE)
+  cmake_policy(SET CMP0077 NEW)
+  set(XBSDB_BUILD_UNITTEST OFF)
+ endif()
 else()
  set(XBSDB_DEFAULT_CONFIGS OFF)
 endif()
