@@ -822,6 +822,7 @@ int main(int argc, char** argv)
     if (!run_test_verify_libraries()) {
         // If not, do not allow to run unit test until this is resolve first.
         XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, "Databases from libXbSymbolDatabase and XbSymbolUnitTest are not in sync!");
+        pause_for_user_input();
         return UNITTEST_FAIL_DATABASE_NOT_SYNC;
     }
 
