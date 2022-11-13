@@ -105,6 +105,9 @@ add_test(NAME ${PROJECT_NAME} COMMAND ${CMAKE_CROSSCOMPILING_EMULATOR} $<TARGET_
 set_tests_properties(
  ${PROJECT_NAME}
  PROPERTIES
+ # Set timeout to 10 seconds, internal tests only take less than a second at most.
+ # If there is any failure, then Unit Test will trigger a pause to wait for user input.
+ TIMEOUT 10
   # Certain tests need a bypass to allow pass for now.
   # Temporary permit bypass XbSymbolDatabase's test failure no more or less than 6 errors
   # Once XbSymbolDatabase's test is full resolved, then remove whole PASS_REGULAR_EXPRESSIONs
