@@ -45,6 +45,7 @@ bool operator==(const CSimpleIni::Entry& i, const CSimpleIni::Entry& ii)
 
 #define _128_MiB 0x08000000
 
+bool g_interactive_mode = true;
 std::map<uint32_t, symbol_result> g_SymbolAddresses;
 std::ios_base::fmtflags cout_fmt = std::cout.flags();
 unsigned int XbSDB_test_error = 0;
@@ -55,7 +56,8 @@ static const char* cli_argument_str = "> XbSymbolUnitTest"
                                       " default.xbe"
                                       " [-out|--out <output to specific folder>]"
                                       " [-f]"
-                                      " [-v|--verbose]\n";
+                                      " [-v|--verbose]"
+                                      " [-i|--interactive <yes|no>]\n";
 
 #define UNITTEST_OK 0
 #define UNITTEST_FAIL_INVALID_ARG 1
@@ -97,8 +99,10 @@ static struct {
 
 static void pause_for_user_input(void)
 {
-    std::cout << "Press 'enter' key to continue...";
-    (void)std::getchar();
+    if (g_interactive_mode) {
+        std::cout << "Press 'enter' key to continue...";
+        (void)std::getchar();
+    }
 }
 
 static int invalid_argument(int argc, char** argv)
@@ -155,8 +159,38 @@ cli_config::argtype cliArgValidate(const std::string& arg)
     else if (arg == "v" || arg == "verbose") {
         return argtype::single;
     }
+    // interactive mode
+    else if (arg == "i" || arg == "interactive") {
+        return argtype::pair;
     }
     return argtype::unknown;
+}
+
+static int cliInputInteractive(int argc, char** argv)
+{
+    std::string interactive_request;
+    bool bInteractiveRequested = false;
+    if (cli_config::hasKey("i")) {
+        cli_config::GetValue("i", &interactive_request);
+        bInteractiveRequested = true;
+    }
+    else if (cli_config::hasKey("interactive")) {
+        cli_config::GetValue("interactive", &interactive_request);
+        bInteractiveRequested = true;
+    }
+    // Check if user request no interaction.
+    if (interactive_request == "no") {
+        g_interactive_mode = false;
+    }
+    // Check if user request interaction. (default)
+    else if (interactive_request == "yes") {
+        g_interactive_mode = true;
+    }
+    // otherwise input is invalid
+    else {
+        return invalid_argument(argc, argv);
+    }
+    return 0;
 }
 
 template<bool doCache>
@@ -796,6 +830,10 @@ int main(int argc, char** argv)
     if (cli_config::hasKey("h") || cli_config::hasKey("help")) {
         help_argument();
         return UNITTEST_OK;
+    }
+
+    if (test_ret = cliInputInteractive(argc, argv)) {
+        return test_ret;
     }
 
     // Get xbe's file path even if it's not given.
