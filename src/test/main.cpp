@@ -144,10 +144,7 @@ cli_config::argtype cliArgValidate(const std::string& arg)
         return argtype::pair;
     }
     // request cli argument details
-    else if (arg == "h") {
-        return argtype::single;
-    }
-    else if (arg == "help") {
+    else if (arg == "h" || arg == "help") {
         return argtype::single;
     }
     // Force overwrite existing file
@@ -155,11 +152,9 @@ cli_config::argtype cliArgValidate(const std::string& arg)
         return argtype::single;
     }
     // verbose mode
-    else if (arg == "v") {
+    else if (arg == "v" || arg == "verbose") {
         return argtype::single;
     }
-    else if (arg == "verbose") {
-        return argtype::single;
     }
     return argtype::unknown;
 }
