@@ -29,6 +29,7 @@
 // Each include is base on library requirement to do by hand
 #include "manual_d3d8__ltcg.h"
 #include "manual_dsound.h"
+#include "manual_jvs.h"
 #include "manual_xapilib.h"
 
 static bool manual_scan_library_custom(iXbSymbolContext* pContext,
@@ -76,5 +77,6 @@ static bool manual_scan_library_custom(iXbSymbolContext* pContext,
 static inline void manual_register_symbols(iXbSymbolContext* pContext)
 {
     manual_register_d3d8__ltcg(pContext);
+    manual_register_jvs(pContext);
     manual_register_xapilib(pContext);
 }

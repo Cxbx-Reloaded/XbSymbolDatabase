@@ -2,6 +2,13 @@
 
 #include "unittest.hpp"
 
+static const library_list database_opt = {
+    REGISTER_SYMBOL_INLINE(JvsRTC_Write_String, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
+    REGISTER_SYMBOLS(JvsRTC_Write,
+                     REGISTER_SYMBOL(JvsRTC_Write, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(JvsRTC_Write2, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE))),
+};
+
 static const library_list database_min = {
     REGISTER_SYMBOL_INLINE(JVS_SendCommand_String, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(JvsBACKUP_Read_String, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
@@ -13,7 +20,6 @@ static const library_list database_min = {
     REGISTER_SYMBOL_INLINE(JvsNodeReceivePacket_String, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(JvsNodeSendPacket_String, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(JvsRTC_Read_String, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
-    REGISTER_SYMBOL_INLINE(JvsRTC_Write_String, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(JvsScFirmwareDownload_String, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(JvsScFirmwareUpload_String, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(JvsScReceiveMidi_String, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
@@ -23,6 +29,11 @@ static const library_list database_min = {
 };
 
 static const library_list database_full = {
+    // vars
+    REGISTER_SYMBOL_INLINE(JVS_g_pPINSA, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
+    REGISTER_SYMBOL_INLINE(JVS_g_pPINSB, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
+
+    // functions
     REGISTER_SYMBOLS(JVS_SendCommand,
                      REGISTER_SYMBOL(JVS_SendCommand, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(JVS_SendCommand2, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
@@ -62,9 +73,6 @@ static const library_list database_full = {
                      REGISTER_SYMBOL(JvsRTC_Read, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(JvsRTC_Read2, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(JvsRTC_Read3, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE))),
-    REGISTER_SYMBOLS(JvsRTC_Write,
-                     REGISTER_SYMBOL(JvsRTC_Write, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
-                     REGISTER_SYMBOL(JvsRTC_Write2, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE))),
     REGISTER_SYMBOLS(JvsScFirmwareDownload,
                      REGISTER_SYMBOL(JvsScFirmwareDownload, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(JvsScFirmwareDownload2, VER_RANGE(4831, VER_MAX, VER_NONE, VER_NONE)),
@@ -106,7 +114,7 @@ static_assert(XREF_OFFSET == 0);
 
 static const subcategory_db jvs_db = {
     .name = "general",
-    .optional = nullptr,
+    .optional = &database_opt,
     .min = &database_min,
     .full = &database_full,
 };

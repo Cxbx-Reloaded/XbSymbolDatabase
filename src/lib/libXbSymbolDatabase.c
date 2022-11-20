@@ -844,6 +844,9 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     pContext->xref_database[XREF_OFFSET_D3DDevice__m_VBlankCallback] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
 #endif                                                                                         //
     pContext->xref_database[XREF_OFFSET_D3DDevice__m_VertexShader] = XREF_ADDR_DERIVE;         //In use
+    // JVS                                                                                     //
+    pContext->xref_database[XREF_JVS_g_pPINSA] = XREF_ADDR_DERIVE;                             //In use
+    pContext->xref_database[XREF_JVS_g_pPINSB] = XREF_ADDR_DERIVE;                             //In use
     // XAPILIB                                                                                 //
     pContext->xref_database[XREF_g_XapiCurrentTopLevelFilter] = XREF_ADDR_DERIVE;              //In use
     pContext->xref_database[XREF_g_DeviceType_Gamepad] = XREF_ADDR_DERIVE;                     //In use
