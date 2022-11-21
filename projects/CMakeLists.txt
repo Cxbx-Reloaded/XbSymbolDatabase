@@ -7,3 +7,7 @@ add_subdirectory("libXbSymbolDatabase")
 if(XBSDB_BUILD_CLI)
  add_subdirectory("cli")
 endif()
+
+if(XBSDB_BUILD_UNITTEST)
+ add_subdirectory("UnitTest")
+endif()

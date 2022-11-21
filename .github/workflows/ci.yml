@@ -118,6 +118,8 @@ jobs:
         run: cmake -B build -Werror=dev ${{ matrix.cmake-generator }}
       - name: Build
         run: cmake --build build --config ${{ matrix.configuration }} ${{ matrix.cmake-build-param }}
+      - name: CTests
+        run: ctest --test-dir build --build-config ${{ matrix.configuration }} --verbose
       - name: Copy Files
         if: matrix.configuration == 'Release'
         run: cmake --install build --config ${{ matrix.configuration }} --prefix upload/${{ matrix.folder }}_${{ matrix.arch }}

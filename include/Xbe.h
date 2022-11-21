@@ -76,7 +76,7 @@ typedef struct _xbe_certificate {
     uint32_t dwSize;                              // 0x0000 - size of certificate
     uint32_t dwTimeDate;                          // 0x0004 - timedate stamp
     uint32_t dwTitleId;                           // 0x0008 - title id
-    const wchar_t wszTitleName[40];               // 0x000C - title name (unicode)
+    uint16_t wszTitleName[40];                    // 0x000C - title name (unicode)
     uint32_t dwAlternateTitleId[0x10];            // 0x005C - alternate title ids
     uint32_t dwAllowedMedia;                      // 0x009C - allowed media types
     uint32_t dwGameRegion;                        // 0x00A0 - game region

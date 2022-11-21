@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.10.2)
 
 project(libXbSymbolDatabase LANGUAGES C)
 
+find_package(Threads)
+
 file(GLOB INCLUDES
  "${XBSDB_ROOT_DIR}/include/Xbe.h"
  "${XBSDB_ROOT_DIR}/include/libXbSymbolDatabase.h"
@@ -45,7 +47,7 @@ file(GLOB_RECURSE SOURCES
 )
 source_group(TREE ${XBSDB_ROOT_DIR} FILES ${SOURCES})
 
-add_library(${PROJECT_NAME} ${INCLUDES} ${HEADERS} ${SOURCES})
+add_library(${PROJECT_NAME} STATIC ${INCLUDES} ${HEADERS} ${SOURCES})
 
 # NOTES:
 # Using INTERFACE keyword will not work within the project. Only PUBLIC/PRIVATE keywords does.
@@ -56,6 +58,10 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
+
+if(Threads_FOUND)
+ target_link_libraries(${PROJECT_NAME} Threads::Threads)
+endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
  C_STANDARD 11
