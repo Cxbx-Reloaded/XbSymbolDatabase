@@ -19,13 +19,10 @@
 #include <sstream>
 #include <stdlib.h>
 #include <string>
-// TODO: Need fix multi-threading
-// Known bug from XbSymbolDatabase:
-// * Console log appear to only output one at a time from one thread to next.
-// * Sometimes get error'd for certain libraries. Some sort of conflict occurred.
-//#define ENABLE_MULTI_THREAD
-#ifdef ENABLE_MULTI_THREAD
+//#define DISABLE_MULTI_THREAD // NOTE: Uncomment define if need to use or test on single thread.
+#ifndef DISABLE_MULTI_THREAD
 #include <thread>
+#include <mutex>
 #endif
 
 #include <libXbSymbolDatabase.h>
@@ -193,9 +190,27 @@ static int cliInputInteractive(int argc, char** argv)
     return 0;
 }
 
+#ifndef DISABLE_MULTI_THREAD
+std::mutex mtx_context;
+static bool XbSDbContext_Lock(XbSymbolContextHandle pHandle, void* mtx_ptr)
+{
+    reinterpret_cast<std::mutex*>(mtx_ptr)->lock();
+    return true;
+}
+static void XbSDbContext_Unlock(XbSymbolContextHandle pHandle, void* mtx_ptr)
+{
+    reinterpret_cast<std::mutex*>(mtx_ptr)->unlock();
+}
+
+std::mutex mtx_message;
+#endif
+
 template<bool doCache>
 void Generic_OutputMessage(xb_output_message mFlag, const char* section, const std::string& message)
 {
+#ifndef DISABLE_MULTI_THREAD
+    const std::lock_guard<std::mutex> lock(mtx_message);
+#endif
     switch (mFlag) {
         case XB_OUTPUT_MESSAGE_INFO: {
             std::cout << "INFO   : " << message << std::endl;
@@ -238,6 +253,9 @@ static void XbSDb_OutputMessage(xb_output_message mFlag, const char* message)
 
 void Custom_OutputMessage(xb_output_message mFlag, const std::string& section, const std::string& key, const std::string& value)
 {
+#ifndef DISABLE_MULTI_THREAD
+    const std::lock_guard<std::mutex> lock(mtx_message);
+#endif
     const std::string message = key + " = " + value;
     switch (mFlag) {
         case XB_OUTPUT_MESSAGE_INFO: {
@@ -641,73 +659,72 @@ static void ScanXbe(const xbe_header* pXbeHeader, bool is_raw)
         return;
     }
 
-#ifdef ENABLE_MULTI_THREAD
-    std::vector<std::thread> threads;
-    auto ScanLibraryFunc = [](XbSymbolContextHandle pHandle,
-                              const XbSDBLibrary* library) -> void {
-        unsigned int LastUnResolvedXRefs = 0, CurrentUnResolvedXRefs = 0;
-        bool xref_first_pass =
-            true; // Set to true for search speed optimization
-        do {
-            LastUnResolvedXRefs = CurrentUnResolvedXRefs;
-
-            // Start library scan against symbol database we want to
-            // search for address of symbols and xreferences.
-            CurrentUnResolvedXRefs +=
-                XbSymbolContext_ScanLibrary(pHandle, library, xref_first_pass);
-
-            xref_first_pass = false;
-        } while (LastUnResolvedXRefs < CurrentUnResolvedXRefs);
-    };
-#endif
-
     xbaddr kt_addr = XbSymbolDatabase_GetKernelThunkAddress(pXbeHeader);
 
     if (!XbSymbolDatabase_CreateXbSymbolContext(&pHandle, EmuRegisterSymbol, library_input, section_input, kt_addr)) {
         error_msg = "Unable to create XbSymbolContext handle.";
-        goto scanError;
     }
+    else {
 
-    // delete[] library_input.filters;
-    // library_input.filters = nullptr;
-    delete[] section_input.filters;
-    section_input.filters = nullptr;
+        // delete[] library_input.filters;
+        // library_input.filters = nullptr;
+        // We no longer need section_input variable as XbSymbolDatabase_CreateXbSymbolContext will store it internally.
+        delete[] section_input.filters;
+        section_input.filters = nullptr;
 
-    // For output various false detection messages.
-    XbSymbolContext_SetBypassBuildVersionLimit(pHandle, true);
-    XbSymbolContext_SetContinuousSigScan(pHandle, true);
-    XbSymbolContext_SetFirstDetectAddressOnly(pHandle, true);
-
-    XbSymbolContext_ScanManual(pHandle);
-
-    // TODO: Replace below to use XbSymbolContext_ScanLibrary function to speed
-    // up scan process. Either by replace toolset to CLANG or wait until MSVC
-    // support C11 standard. Perhaps use macro to detect compiler selection?
-    // Then toggle between the two.
-#ifndef ENABLE_MULTI_THREAD
-     XbSymbolContext_ScanAllLibraryFilter(pHandle);
-#else
-    for (unsigned i = 0; i < library_input.count; i++) {
-        threads.emplace_back(
-            std::thread(ScanLibraryFunc, pHandle, &library_input.filters[i]));
-    }
-
-    for (auto& thread : threads) {
-        thread.join();
-    }
+#ifndef DISABLE_MULTI_THREAD
+        XbSymbolContext_SetMutex(pHandle, &mtx_context, XbSDbContext_Lock, XbSDbContext_Unlock);
 #endif
-    delete[] library_input.filters;
-    library_input.filters = nullptr;
 
-    XbSymbolContext_RegisterXRefs(pHandle);
+        // For output various false detection messages.
+        XbSymbolContext_SetBypassBuildVersionLimit(pHandle, true);
+        XbSymbolContext_SetContinuousSigScan(pHandle, true);
+        XbSymbolContext_SetFirstDetectAddressOnly(pHandle, true);
 
-    XbSymbolContext_Release(pHandle);
+        XbSymbolContext_ScanManual(pHandle);
 
-    std::cout << "\n";
+#ifdef DISABLE_MULTI_THREAD
+        XbSymbolContext_ScanAllLibraryFilter(pHandle);
+#else
+        std::vector<std::thread> threads;
+        auto ScanLibraryFunc = [](XbSymbolContextHandle pHandle,
+                                  const XbSDBLibrary* library) -> void {
+            unsigned int LastUnResolvedXRefs = 0, CurrentUnResolvedXRefs = 0;
+            bool xref_first_pass =
+                true; // Set to true for search speed optimization
+            do {
+                LastUnResolvedXRefs = CurrentUnResolvedXRefs;
 
-    return;
+                // Start library scan against symbol database we want to
+                // search for address of symbols and xreferences.
+                CurrentUnResolvedXRefs +=
+                    XbSymbolContext_ScanLibrary(pHandle, library, xref_first_pass);
 
-scanError:
+                xref_first_pass = false;
+            } while (LastUnResolvedXRefs < CurrentUnResolvedXRefs);
+        };
+
+        for (unsigned i = 0; i < library_input.count; i++) {
+            threads.emplace_back(
+                std::thread(ScanLibraryFunc, pHandle, &library_input.filters[i]));
+        }
+
+        for (auto& thread : threads) {
+            thread.join();
+        }
+#endif
+        delete[] library_input.filters;
+        library_input.filters = nullptr;
+
+        XbSymbolContext_RegisterXRefs(pHandle);
+
+        XbSymbolContext_Release(pHandle);
+
+        std::cout << "\n";
+
+        return;
+    }
+
     if (library_input.filters) {
         delete[] library_input.filters;
     }
