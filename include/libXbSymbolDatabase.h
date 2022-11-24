@@ -170,29 +170,29 @@ unsigned int XbSymbolDatabase_LibraryVersion();
 
 /// <summary>
 /// Total symbols return give ability to support for progress bar from third-party software. Not all symbols will be detected in every titles.
-/// <param name="library_filter">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to obtain total symbols.</param>
 /// </summary>
+/// <param name="library_filter">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to obtain total symbols.</param>
 /// <returns>Return total symbols in current database system.</returns>
 unsigned XbSymbolDatabase_GetTotalSymbols(uint32_t library_filter);
 
 /// <summary>
 /// Register one or more library to be scan instead of whole database for optimize performance.
-/// <param name="library_filter">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to scan.</param>
 /// </summary>
+/// <param name="library_filter">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to scan.</param>
 /// <returns>Return true if success, or else will return false for invalid parameter.</returns>
 bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t library_filter);
 
 /// <summary>
-/// To register any detected symbol name with address and build version back to third-party program.
-/// NOTE: Be aware of library name will be varity since some libraries are detecting in other sections as well.
+/// Callback function type for output message to software when have information to be output.
 /// </summary>
-/// <param name="library_str">Name of the library in string.</param>
+/// <param name="message_flag">Output enum level flag.</param>
+/// <param name="message_str">Output log message.</param>
 typedef void (*xb_output_message_t)(xb_output_message message_flag, const char* message_str);
 
 /// <summary>
-/// For output a message to a program when have information to be output.
+/// Register output message callback function to receive output message.
 /// </summary>
-/// <param name="message_func">Set output message to a function.</param>
+/// <param name="message_func">Set output message to a callback function.</param>
 void XbSymbolDatabase_SetOutputMessage(xb_output_message_t message_func);
 
 /// <summary>
@@ -265,6 +265,28 @@ void XbSymbolContext_SetContinuousSigScan(XbSymbolContextHandle pHandle, bool en
 void XbSymbolContext_SetFirstDetectAddressOnly(XbSymbolContextHandle pHandle, bool enable);
 
 /// <summary>
+/// To register mutex lock callback functions.
+/// </summary>
+/// <param name="opaque_ptr">Retrieve opaque pointer if set from XbSymbolContext_SetMutex registration.</param>
+/// <returns>True: Successful lock. False: Failure to lock.</returns>
+typedef bool (*xb_mutex_lock_t)(XbSymbolContextHandle pHandle, void* opaque_ptr);
+
+/// <summary>
+/// To register mutex unlock callback functions.
+/// </summary>
+/// <param name="opaque_ptr">Retrieve opaque pointer if set from XbSymbolContext_SetMutex registration.</param>
+typedef void (*xb_mutex_unlock_t)(XbSymbolContextHandle pHandle, void* opaque_ptr);
+
+/// <summary>
+/// To register mutex (un)lock callback functions for multi-thread safe purpose.
+/// </summary>
+/// <param name="opaque_ptr">Set pointer to be used to retrieve during (un)lock callback events.</param>
+/// <param name="mutex_lock">Set mutex lock to a callback function.</param>
+/// <param name="mutex_unlock">Set mutex unlock to a callback function.</param>
+/// <returns>Return true if success, or else will return false for invalid parameter.</returns>
+bool XbSymbolContext_SetMutex(XbSymbolContextHandle pHandle, void* opaque_ptr, xb_mutex_lock_t mutex_lock, xb_mutex_unlock_t mutex_unlock);
+
+/// <summary>
 /// Step 1: Generate library array for LibraryHeader input.
 /// First call with <paramref name="library_out"/> as null pointer will return total count. Then second call will insert information to <paramref name="library_out"/>.filters field.
 /// </summary>
@@ -308,7 +330,8 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle, xb_
 void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle);
 
 /// <summary>
-/// Step 6a: (multi-thread safe, C11 standard) Process individual library input by third-party.
+/// Step 6a: (multi-thread safe, optional) Process individual library input by third-party.
+/// NOTE: If planned to use multi-thread purpose, please register mutex (un)lock callbacks to XbSymbolContext_SetMutex.
 /// </summary>
 /// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
 /// <param name="pLibrary">Input pointer of a library to start a scan process.</param>
