@@ -175,17 +175,20 @@ static int cliInputInteractive(int argc, char** argv)
         cli_config::GetValue("interactive", &interactive_request);
         bInteractiveRequested = true;
     }
-    // Check if user request no interaction.
-    if (interactive_request == "no") {
-        g_interactive_mode = false;
-    }
-    // Check if user request interaction. (default)
-    else if (interactive_request == "yes") {
-        g_interactive_mode = true;
-    }
-    // otherwise input is invalid
-    else {
-        return invalid_argument(argc, argv);
+
+    if (bInteractiveRequested) {
+        // Check if user request no interaction.
+        if (interactive_request == "no") {
+            g_interactive_mode = false;
+        }
+        // Check if user request interaction. (default)
+        else if (interactive_request == "yes") {
+            g_interactive_mode = true;
+        }
+        // otherwise input is invalid
+        else {
+            return invalid_argument(argc, argv);
+        }
     }
     return 0;
 }
