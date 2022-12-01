@@ -63,7 +63,7 @@ static const char* cli_argument_str = "> XbSymbolUnitTest"
 #define UNITTEST_FAIL_INVALID_XBE 4
 #define UNITTEST_FAIL_UNABLE_ALLOC_MEM 5
 #define UNITTEST_FAIL_SYMBOLS_NOT_FOUND 6
-#define UNITTEST_FAIL_SYMBOLS_DIFF_SIZE 7
+#define UNITTEST_FAIL_UNUSED 7
 #define UNITTEST_FAIL_SYMBOLS_NOT_MATCH 8
 #define UNITTEST_FAIL_DATABASE_NOT_SYNC 9
 
@@ -959,16 +959,21 @@ int main(int argc, char** argv)
         return UNITTEST_FAIL_SYMBOLS_NOT_FOUND;
     }
 
-    // Then check both raw and simulated do indeed have same size.
-    if (g_SymbolAddresses.size() != g_SymbolAddressesRaw.size()) {
-        XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, "Registered symbols are not even; Raw xbe: " + std::to_string(g_SymbolAddressesRaw.size()) + " - Sim xbox: " + std::to_string(g_SymbolAddresses.size()));
+    // Then check both raw and simulated do indeed have same symbols and addresses.
+    if (!std::equal(g_SymbolAddresses.begin(), g_SymbolAddresses.end(), g_SymbolAddressesRaw.begin())) {
+        XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, "Symbol registered does not match raw vs virtual xbox. Raw xbe: " + std::to_string(g_SymbolAddressesRaw.size()) + " - Sim xbox: " + std::to_string(g_SymbolAddresses.size()));
 
         // Remove all identical symbols
-        for (const auto& xref : g_SymbolAddresses) {
-            g_SymbolAddressesRaw.erase(xref.first);
-        }
-        for (const auto& xref : g_SymbolAddressesRaw) {
-            g_SymbolAddresses.erase(xref.first);
+        for (auto xref = g_SymbolAddresses.begin(); xref != g_SymbolAddresses.end();) {
+            const auto& it = g_SymbolAddressesRaw.find(xref->first);
+            if (it != g_SymbolAddressesRaw.end()) {
+                if (xref->second == it->second) {
+                    g_SymbolAddressesRaw.erase(it);
+                    xref = g_SymbolAddresses.erase(xref);
+                    continue;
+                }
+            }
+            xref++;
         }
 
         // Now report what's missing compared to other.
@@ -991,16 +996,6 @@ int main(int argc, char** argv)
                       << " -> " << xref.second.symbol << "\n";
         }
 
-        pause_for_user_input();
-        return UNITTEST_FAIL_SYMBOLS_DIFF_SIZE;
-    }
-    else {
-        XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Symbol registered size...OK!");
-    }
-
-    // Finally, check each string and addresses are the same.
-    if (!std::equal(g_SymbolAddresses.begin(), g_SymbolAddresses.end(), g_SymbolAddressesRaw.begin())) {
-        XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, "Symbol registered does not match raw vs virtual xbox.");
         pause_for_user_input();
         return UNITTEST_FAIL_SYMBOLS_NOT_MATCH;
     }
