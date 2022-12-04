@@ -675,10 +675,6 @@ static void ScanXbe(const xbe_header* pXbeHeader, bool is_raw)
         delete[] section_input.filters;
         section_input.filters = nullptr;
 
-#ifndef DISABLE_MULTI_THREAD
-        XbSymbolContext_SetMutex(pHandle, &mtx_context, XbSDbContext_Lock, XbSDbContext_Unlock);
-#endif
-
         // For output various false detection messages.
         XbSymbolContext_SetBypassBuildVersionLimit(pHandle, true);
         XbSymbolContext_SetContinuousSigScan(pHandle, true);
@@ -690,8 +686,20 @@ static void ScanXbe(const xbe_header* pXbeHeader, bool is_raw)
         XbSymbolContext_ScanAllLibraryFilter(pHandle);
 #else
         std::vector<std::thread> threads;
-        auto ScanLibraryFunc = [](XbSymbolContextHandle pHandle,
+        uint32_t library_completion = 0;
+        auto ScanLibraryFunc = [&library_completion](XbSymbolContextHandle pHandle,
                                   const XbSDBLibrary* library) -> void {
+            uint32_t dependency_flags = XbSymbolContext_GetLibraryDependencies(pHandle, library->flag);
+            if (dependency_flags) {
+                do {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                    std::lock_guard lck(mtx_context);
+                    if (XbSymbolDatabase_CheckDependencyCompletion(library_completion, dependency_flags)) {
+                        break;
+                    }
+                } while (true);
+            }
+
             unsigned int LastUnResolvedXRefs = 0, CurrentUnResolvedXRefs = 0;
             bool xref_first_pass =
                 true; // Set to true for search speed optimization
@@ -705,6 +713,9 @@ static void ScanXbe(const xbe_header* pXbeHeader, bool is_raw)
 
                 xref_first_pass = false;
             } while (LastUnResolvedXRefs < CurrentUnResolvedXRefs);
+
+            std::lock_guard lck(mtx_context);
+            XbSymbolDatabase_SetLibraryCompletion(library_completion, library->flag);
         };
 
         for (unsigned i = 0; i < library_input.count; i++) {

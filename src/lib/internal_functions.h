@@ -652,3 +652,11 @@ static xbaddr internal_section_HostToVirtAddress(iXbSymbolContext* pContext, mem
     }
     return virt_addr;
 }
+
+static bool internal_LibraryFilterPermitScan(iXbSymbolContext* pContext, uint32_t library_flag)
+{
+    if (pContext->library_filter == 0 || (pContext->library_filter & library_flag) > 0) {
+        return true;
+    }
+    return false;
+}

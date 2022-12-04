@@ -287,6 +287,15 @@ typedef void (*xb_mutex_unlock_t)(XbSymbolContextHandle pHandle, void* opaque_pt
 bool XbSymbolContext_SetMutex(XbSymbolContextHandle pHandle, void* opaque_ptr, xb_mutex_lock_t mutex_lock, xb_mutex_unlock_t mutex_unlock);
 
 /// <summary>
+/// Get library flag's dependencies.
+/// </summary>
+/// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
+/// <param name="library_flag">Input specific library flag.</param>
+/// <param name="library_filters">Input generated library filters.</param>
+/// <returns>Return either none, one, or more library flag dependencies.</returns>
+uint32_t XbSymbolDatabase_GetLibraryDependencies(uint32_t library_flag, XbSDBLibraryHeader library_filters);
+
+/// <summary>
 /// Step 1: Generate library array for LibraryHeader input.
 /// First call with <paramref name="library_out"/> as null pointer will return total count. Then second call will insert information to <paramref name="library_out"/>.filters field.
 /// </summary>
@@ -330,8 +339,19 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle, xb_
 void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle);
 
 /// <summary>
-/// Step 6a: (multi-thread safe, optional) Process individual library input by third-party.
-/// NOTE: If planned to use multi-thread purpose, please register mutex (un)lock callbacks to XbSymbolContext_SetMutex.
+/// Step 6: Get library flag's dependencies.
+/// </summary>
+/// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
+/// <param name="library_flag">Input specific library flag.</param>
+/// <param name="library_filters">Input generated library filters.</param>
+/// <returns>Return either none, one, or more library flag dependencies.</returns>
+uint32_t XbSymbolContext_GetLibraryDependencies(XbSymbolContextHandle pHandle, uint32_t library_flag);
+
+#define XbSymbolDatabase_CheckDependencyCompletion(completion_flag, dependencies) ((completion_flag & dependencies) == dependencies)
+
+/// <summary>
+/// Step 7a: (multi-thread safe, optional) Process individual library input by third-party.
+/// NOTE: If planned to use multi-thread purpose, please use thread-safe method for library dependency checkup.
 /// </summary>
 /// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
 /// <param name="pLibrary">Input pointer of a library to start a scan process.</param>
@@ -339,14 +359,16 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle);
 /// <returns>Return total xref count found. Unless it return zero, then there's nothing left to find.</returns>
 unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle, const XbSDBLibrary* pLibrary, bool xref_first_pass);
 
+#define XbSymbolDatabase_SetLibraryCompletion(completion_flag, library_flag) (completion_flag |= library_flag)
+
 /// <summary>
-/// Step 6b: (single-thread usage) Process all of filter libraries internally.
+/// Step 7b: (single-thread usage) Process all of filter libraries internally.
 /// </summary>
 /// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
 void XbSymbolContext_ScanAllLibraryFilter(XbSymbolContextHandle pHandle);
 
 /// <summary>
-/// Step 7: Register any references, XRefDatabase, may not had been output during the scan process.
+/// Step 8: Register any references, XRefDatabase, may not had been output during the scan process.
 /// NOTE: Currently a stub at the moment.
 /// </summary>
 /// <param name="pHandle">Input XbSymbolContextHandle handler.</param>

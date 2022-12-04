@@ -466,6 +466,48 @@ uint32_t XbSymbolDatabase_LibraryToFlag(const char* library_name)
     return 0;
 }
 
+uint32_t XbSymbolDatabase_GetLibraryDependencies(uint32_t library_flag, XbSDBLibraryHeader library_filters)
+{
+    uint32_t flag_dependencies;
+    switch (library_flag) {
+        default:
+            return 0;
+        case XbSymbolLib_D3DX8:
+            flag_dependencies = XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG;
+            break;
+        case XbSymbolLib_XACTENG:
+            return XbSymbolLib_DSOUND;
+#if 0 // Disabled since internal scan will scan XNET(N|S) library anyway.
+        case XbSymbolLib_XONLINE:
+        case XbSymbolLib_XONLINES:
+        case XbSymbolLib_XONLINLS:
+            flag_dependencies = XbSymbolLib_XNET | XbSymbolLib_XNETN | XbSymbolLib_XNETS;
+            break;
+#endif
+    }
+
+    // TODO: Should we go with this method or convert into a function for separate dependency process?
+    uint32_t ret_dependencies = 0;
+    for (unsigned i = 0; i < library_filters.count; i++) {
+        if (library_filters.filters[i].flag & flag_dependencies) {
+            ret_dependencies |= library_filters.filters[i].flag;
+        }
+    }
+    // If flag dependency is/are found, then return those.
+    if (ret_dependencies) {
+        return ret_dependencies;
+    }
+    // If not, then return whole dependency filters.
+    return flag_dependencies;
+}
+
+uint32_t XbSymbolContext_GetLibraryDependencies(XbSymbolContextHandle pHandle, uint32_t library_flag)
+{
+    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+    // Forward call to XbSymbolDatabase_GetLibraryDependencies.
+    return XbSymbolDatabase_GetLibraryDependencies(library_flag, pContext->library_input);
+}
+
 // TODO: Expose to third-party?
 bool XbSymbolHasDSoundSection(const void* xb_header_addr)
 {
@@ -1062,41 +1104,69 @@ void XbSymbolContext_ScanAllLibraryFilter(XbSymbolContextHandle pHandle)
 {
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
 
-    uint32_t library_filter = pContext->library_filter;
-
-    bool xref_first_pass = true; // Set to true for search speed optimization
-
-    unsigned int LastUnResolvedXRefs = 0;
-    unsigned int CurrentUnResolvedXRefs = 0;
-
     if (!iXbSymbolContext_AllowScanLibrary(pContext)) {
         return;
     }
 
-    do {
-        LastUnResolvedXRefs = CurrentUnResolvedXRefs;
+    // Library input should not be above 4 * 8 (32) total.
+    if (pContext->library_input.count > sizeof(uint32_t) * 8) {
+        return;
+    }
 
+    uint32_t library_scan = 0;
+    uint32_t library_completion = 0;
+    bool not_first_pass[sizeof(uint32_t) * 8] = { false }; // Set to invert true for search speed optimization
+    uint32_t library_dependency[sizeof(uint32_t) * 8] = { 0 };
+    // Get Library's dependency flag(s)
+    for (unsigned int lv = 0; lv < pContext->library_input.count; lv++) {
+        const XbSDBLibrary* library = pContext->library_input.filters + lv;
+        if (internal_LibraryFilterPermitScan(pContext, library->flag)) {
+            library_dependency[lv] = XbSymbolContext_GetLibraryDependencies(pHandle, library->flag);
+            library_scan |= library->flag;
+        }
+    }
+
+    // TODO: Update this loop for dependency check up.
+    // Repeat process until all libraries has been scanned.
+    do {
         for (unsigned int lv = 0; lv < pContext->library_input.count; lv++) {
             const XbSDBLibrary* library = pContext->library_input.filters + lv;
 
+            // Keep scanning active library until it is done or skipped.
             do {
                 // Temporary placeholder until v2.0 API's section scan function is ready or may be permanent in here.
                 // Skip specific library if third-party set to specific library.
-                if (!(library_filter == 0 || (library_filter & library->flag) > 0)) {
+                if (!internal_LibraryFilterPermitScan(pContext, library->flag)) {
                     output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Skipping %.8s (%hu) scan.", library->name, library->build_version);
                 }
                 else {
+                    // Check if we already completed library scan first.
+                    if (XbSymbolDatabase_CheckDependencyCompletion(library_completion, library->flag)) {
+                        // Skip if already been scanned.
+                        break;
+                    }
 
+                    // Check if any dependency is set and if they are completed
+                    if (library_dependency[lv] && !XbSymbolDatabase_CheckDependencyCompletion(library_completion, library_dependency[lv])) {
+                        // Skip if any dependency library isn't done yet.
+                        break;
+                    }
                     // Start library scan against symbol database we want to search for address of symbols and xreferences.
-                    CurrentUnResolvedXRefs += XbSymbolContext_ScanLibrary(pHandle, library, xref_first_pass);
-                }
+                    unsigned counter = XbSymbolContext_ScanLibrary(pHandle, library, !not_first_pass[lv]);
 
-                break;
+                    // If no additional symbols found, then set as scan completed.
+                    if (counter == 0) {
+                        XbSymbolDatabase_SetLibraryCompletion(library_completion, library->flag);
+                    }
+                    // Once first pass is done, multiple passes may will occur for any xref dependency symbols haven't been found.
+                    if (!not_first_pass[lv]) {
+                        not_first_pass[lv] = true;
+                    }
+                }
             } while (true);
         }
 
-        xref_first_pass = false;
-    } while (LastUnResolvedXRefs < CurrentUnResolvedXRefs);
+    } while (!XbSymbolDatabase_CheckDependencyCompletion(library_completion, library_scan));
 }
 
 // Does individual registration of derived XRef's that are useful but not yet registered.
