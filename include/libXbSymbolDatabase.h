@@ -265,28 +265,6 @@ void XbSymbolContext_SetContinuousSigScan(XbSymbolContextHandle pHandle, bool en
 void XbSymbolContext_SetFirstDetectAddressOnly(XbSymbolContextHandle pHandle, bool enable);
 
 /// <summary>
-/// To register mutex lock callback functions.
-/// </summary>
-/// <param name="opaque_ptr">Retrieve opaque pointer if set from XbSymbolContext_SetMutex registration.</param>
-/// <returns>True: Successful lock. False: Failure to lock.</returns>
-typedef bool (*xb_mutex_lock_t)(XbSymbolContextHandle pHandle, void* opaque_ptr);
-
-/// <summary>
-/// To register mutex unlock callback functions.
-/// </summary>
-/// <param name="opaque_ptr">Retrieve opaque pointer if set from XbSymbolContext_SetMutex registration.</param>
-typedef void (*xb_mutex_unlock_t)(XbSymbolContextHandle pHandle, void* opaque_ptr);
-
-/// <summary>
-/// To register mutex (un)lock callback functions for multi-thread safe purpose.
-/// </summary>
-/// <param name="opaque_ptr">Set pointer to be used to retrieve during (un)lock callback events.</param>
-/// <param name="mutex_lock">Set mutex lock to a callback function.</param>
-/// <param name="mutex_unlock">Set mutex unlock to a callback function.</param>
-/// <returns>Return true if success, or else will return false for invalid parameter.</returns>
-bool XbSymbolContext_SetMutex(XbSymbolContextHandle pHandle, void* opaque_ptr, xb_mutex_lock_t mutex_lock, xb_mutex_unlock_t mutex_unlock);
-
-/// <summary>
 /// Get library flag's dependencies.
 /// </summary>
 /// <param name="pHandle">Input XbSymbolContextHandle handler.</param>

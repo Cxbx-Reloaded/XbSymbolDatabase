@@ -136,9 +136,6 @@ typedef struct _iXbSymbolContext {
     XbSDBSectionHeader section_input;
     eScanStage scan_stage;
     iXbSymbolLibraryContext library_contexts[LT_COUNT];
-    void* mtx_opaque_ptr;
-    xb_mutex_lock_t lock_fn;
-    xb_mutex_unlock_t unlock_fn;
 } iXbSymbolContext;
 
 typedef const struct _PairScanLibSec {
@@ -289,58 +286,24 @@ static xb_xbe_type GetXbeType(const xbe_header* pXbeHeader)
     return XB_XBE_TYPE_RETAIL;
 }
 
-static bool iXbSymbolContext_Lock(iXbSymbolContext* pContext)
-{
-    if (pContext->lock_fn) {
-        // Lock to this thread only during the scan process until the scan is done.
-        bool success = pContext->lock_fn(pContext, pContext->mtx_opaque_ptr);
-        // It is not XbSymbolDatabase's responsible to output an error. That is up to software's responsible.
-        return success;
-    }
-    return true;
-}
-
-static void iXbSymbolContext_Unlock(iXbSymbolContext* pContext)
-{
-    if (pContext->unlock_fn) {
-        pContext->unlock_fn(pContext, pContext->mtx_opaque_ptr);
-    }
-}
-
 static bool iXbSymbolContext_AllowSetParameter(iXbSymbolContext* pContext)
 {
-    bool bRet;
-
-    if (!iXbSymbolContext_Lock(pContext)) {
-        return false;
-    }
-
-    bRet = (pContext->scan_stage == SS_NONE);
+    bool bRet = (pContext->scan_stage == SS_NONE);
 
     if (!bRet) {
         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Cannot set parameter value after first and during scan call.");
     }
-
-    iXbSymbolContext_Unlock(pContext);
 
     return bRet;
 }
 
 static bool iXbSymbolContext_AllowScanLibrary(iXbSymbolContext* pContext)
 {
-    bool bRet;
-
-    if (!iXbSymbolContext_Lock(pContext)) {
-        return false;
-    }
-
-    bRet = (pContext->scan_stage == SS_2_SCAN_LIBS);
+    bool bRet = (pContext->scan_stage == SS_2_SCAN_LIBS);
 
     if (!bRet) {
         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "XbSymbolContext_ScanManual must be call first before scan for library's symbols.");
     }
-
-    iXbSymbolContext_Unlock(pContext);
 
     return bRet;
 }
@@ -769,8 +732,6 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     pContext->output.verbose_level = g_output_verbose_level;
     pContext->output.func = g_output_func;
     pContext->library_filter = 0;
-    pContext->lock_fn = NULL;
-    pContext->unlock_fn = NULL;
 
     // Copy pointers and values to context handler.
     pContext->library_input.count = library_input.count;
@@ -896,15 +857,11 @@ void XbSymbolContext_Release(XbSymbolContextHandle pHandle)
 {
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
 
-    (void)iXbSymbolContext_Lock(pContext);
-
     for (unsigned int i = 0; i < LT_COUNT; i++) {
         if (pContext->library_contexts[i].is_active) {
             output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Library type is currently active: %u", i);
         }
     }
-
-    iXbSymbolContext_Unlock(pContext);
 
     free(pHandle);
 }
@@ -958,37 +915,14 @@ bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t lib
     return true;
 }
 
-bool XbSymbolContext_SetMutex(XbSymbolContextHandle pHandle, void* opaque_ptr, xb_mutex_lock_t mutex_lock, xb_mutex_unlock_t mutex_unlock)
-{
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
-
-    if (!iXbSymbolContext_AllowSetParameter(pContext)) {
-        return false;
-    }
-
-    // Check to make sure both mutex (un)lock are present.
-    if (!mutex_lock && !mutex_unlock) {
-        return false;
-    }
-
-    pContext->mtx_opaque_ptr = opaque_ptr;
-    pContext->lock_fn = mutex_lock;
-    pContext->unlock_fn = mutex_unlock;
-    return true;
-}
-
 #include "manual_custom.h"
 void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
 {
     iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
 
-    if (!iXbSymbolContext_Lock(pContext)) {
-        return;
-    }
-
     if (pContext->scan_stage >= SS_1_MANUAL) {
         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Manual rescan request is skip.");
-        goto skipScan;
+        return;
     }
     pContext->scan_stage = SS_1_MANUAL;
 
@@ -1029,9 +963,6 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
     }
 
     pContext->scan_stage = SS_2_SCAN_LIBS;
-
-skipScan:;
-    iXbSymbolContext_Unlock(pContext);
 }
 
 unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
@@ -1179,15 +1110,9 @@ void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle)
         return;
     }
 
-    if (!iXbSymbolContext_Lock(pContext)) {
-        return;
-    }
-
     // Any symbols that are not registered, check into below function's library calls.
     // Then add missing symbol(s) to appropriate library's function.
     manual_register_symbols(pContext);
-
-    iXbSymbolContext_Unlock(pContext);
 }
 
 

@@ -23,6 +23,7 @@
 #ifndef DISABLE_MULTI_THREAD
 #include <thread>
 #include <mutex>
+std::mutex mtx_context;
 #endif
 
 #include <libXbSymbolDatabase.h>
@@ -194,20 +195,8 @@ static int cliInputInteractive(int argc, char** argv)
 }
 
 #ifndef DISABLE_MULTI_THREAD
-std::mutex mtx_context;
-static bool XbSDbContext_Lock(XbSymbolContextHandle pHandle, void* mtx_ptr)
-{
-    reinterpret_cast<std::mutex*>(mtx_ptr)->lock();
-    return true;
-}
-static void XbSDbContext_Unlock(XbSymbolContextHandle pHandle, void* mtx_ptr)
-{
-    reinterpret_cast<std::mutex*>(mtx_ptr)->unlock();
-}
-
 std::mutex mtx_message;
 #endif
-
 template<bool doCache>
 void Generic_OutputMessage(xb_output_message mFlag, const char* section, const std::string& message)
 {
