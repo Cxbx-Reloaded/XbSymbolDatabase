@@ -561,6 +561,7 @@ static eLibraryType internal_GetLibraryType(uint32_t library)
             return LT_UNKNOWN;
         case XbSymbolLib_D3D8:
         case XbSymbolLib_D3D8LTCG:
+        case XbSymbolLib_D3DX8:
             return LT_D3D;
         case XbSymbolLib_DSOUND:
         case XbSymbolLib_XACTENG:
