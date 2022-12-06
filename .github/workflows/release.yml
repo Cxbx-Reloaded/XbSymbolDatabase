@@ -21,7 +21,7 @@ jobs:
     if: needs.build.outputs.do-release == 'true'
     runs-on: ubuntu-latest
     env:
-      version_current: ${{ needs.build.outputs.ver-cur }}
+      tag_name: ${{ needs.build.outputs.ver-cur }}
     steps:
       - uses: actions/checkout@v3
       - name: Get Artifacts
@@ -31,20 +31,7 @@ jobs:
         run: | # download-artifact doesn't download a zip, so rezip it
           7z a -mx1 "XbSymbolDatabase.zip" "./XbSymbolDatabase/*"
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
         env:
+          GH_REPO: ${{ github.repository }} # https://github.com/cli/cli/issues/3556
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.version_current }}
-          release_name: ${{ env.version_current }}
-          body_path: changelog/changelog
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: XbSymbolDatabase.zip
-          asset_name: XbSymbolDatabase.zip
-          asset_content_type: application/zip
+        run: gh release create ${{ env.tag_name }} XbSymbolDatabase.zip --notes-file changelog --target $GITHUB_SHA
