@@ -23,7 +23,9 @@
 #ifndef DISABLE_MULTI_THREAD
 #include <thread>
 #include <mutex>
-std::mutex mtx_context;
+static std::mutex mtx_context;
+static std::mutex mtx_message;
+static std::mutex mtx_symbol_register;
 #endif
 
 #include <libXbSymbolDatabase.h>
@@ -194,9 +196,6 @@ static int cliInputInteractive(int argc, char** argv)
     return 0;
 }
 
-#ifndef DISABLE_MULTI_THREAD
-std::mutex mtx_message;
-#endif
 template<bool doCache>
 void Generic_OutputMessage(xb_output_message mFlag, const char* section, const std::string& message)
 {
@@ -299,6 +298,10 @@ static void EmuRegisterSymbol(const char* library_str,
         return;
     }
 
+#ifndef DISABLE_MULTI_THREAD
+    // TODO: Find a way to make this more thread safe without locking.
+    std::lock_guard lck(mtx_symbol_register);
+#endif
     // Ignore registered symbol in current database.
     symbol_result hasSymbol = g_SymbolAddresses[xref_index];
 
