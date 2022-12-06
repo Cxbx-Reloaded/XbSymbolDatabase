@@ -49,9 +49,9 @@ jobs:
         run: |
           if [ "true" == "${{ (github.event_name != 'schedule' && github.event_name != 'workflow_dispatch') || steps.semver-output.outputs.version_previous != steps.semver-output.outputs.version_current }}" ]
           then
-            echo "::set-output name=do-build::true"
+            echo "do-build=true" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=do-build::false"
+            echo "do-build=false" >> $GITHUB_OUTPUT
           fi
       - name: Generate Changelog
         if: steps.build-cond.outputs.do-build == 'true'
