@@ -561,6 +561,7 @@ static eLibraryType internal_GetLibraryType(uint32_t library)
             return LT_UNKNOWN;
         case XbSymbolLib_D3D8:
         case XbSymbolLib_D3D8LTCG:
+        case XbSymbolLib_D3DX8:
             return LT_D3D;
         case XbSymbolLib_DSOUND:
         case XbSymbolLib_XACTENG:
@@ -594,8 +595,6 @@ static bool internal_SetLibraryTypeStart(iXbSymbolContext* pContext, eLibraryTyp
 
     bool ret = false;
 
-    iXbSymbolContext_Lock(pContext);
-
     // Accept request if library type is inactive.
     if (!pContext->library_contexts[library_type].is_active) {
         // Then accept the scan request.
@@ -604,15 +603,11 @@ static bool internal_SetLibraryTypeStart(iXbSymbolContext* pContext, eLibraryTyp
         output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Library type active: %u", library_type);
     }
 
-    iXbSymbolContext_Unlock(pContext);
-
     return ret;
 }
 
 static void internal_SetLibraryTypeEnd(iXbSymbolContext* pContext, eLibraryType library_type)
 {
-    (void)iXbSymbolContext_Lock(pContext);
-
     // If library is active, deny the scan request.
     if (!pContext->library_contexts[library_type].is_active) {
         output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Attempted to set already inactive library type %u.", library_type);
@@ -620,8 +615,6 @@ static void internal_SetLibraryTypeEnd(iXbSymbolContext* pContext, eLibraryType 
 
     pContext->library_contexts[library_type].is_active = false;
     output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Library type inactive: %u", library_type);
-
-    iXbSymbolContext_Unlock(pContext);
 }
 
 static memptr_t internal_section_VirtToHostAddress(iXbSymbolContext* pContext, xbaddr virt_addr)
@@ -650,4 +643,12 @@ static xbaddr internal_section_HostToVirtAddress(iXbSymbolContext* pContext, mem
         }
     }
     return virt_addr;
+}
+
+static bool internal_LibraryFilterPermitScan(iXbSymbolContext* pContext, uint32_t library_flag)
+{
+    if (pContext->library_filter == 0 || (pContext->library_filter & library_flag) > 0) {
+        return true;
+    }
+    return false;
 }
