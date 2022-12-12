@@ -66,7 +66,7 @@ static const char* cli_argument_str = "> XbSymbolUnitTest"
 #define UNITTEST_FAIL_INVALID_XBE 4
 #define UNITTEST_FAIL_UNABLE_ALLOC_MEM 5
 #define UNITTEST_FAIL_SYMBOLS_NOT_FOUND 6
-#define UNITTEST_FAIL_UNUSED 7
+#define UNITTEST_FAIL_UNABLE_SET_UTF8 7
 #define UNITTEST_FAIL_SYMBOLS_NOT_MATCH 8
 #define UNITTEST_FAIL_DATABASE_NOT_SYNC 9
 
@@ -413,7 +413,7 @@ static bool VerifyXbeIsBuiltWithXDK(const xbe_header* pXbeHeader,
               << XbSymbolDatabase_LibraryVersion() << "\n";
 
     // Store Certificate Details
-    const std::string& title_name = getXbeTitle(pXbeHeader);
+    const auto& title_name = getXbeTitle(pXbeHeader);
     std::cout << "Name                  : " << title_name << "\n";
     gen_result.SetValue(section_certificate, sect_certificate.name, title_name.c_str());
     const std::string& title_id = FormatTitleId(pCertificate->dwTitleId);
@@ -838,7 +838,27 @@ static int run_test_virtual(const xbe_header* pXbeHeader, const uint8_t* xbe_dat
 
 int main(int argc, char** argv)
 {
+#ifdef _WIN32
+    if (!IsValidCodePage(CP_UTF8)) {
+        XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, "CP_UTF8 is not valid!");
+        return UNITTEST_FAIL_UNABLE_SET_UTF8;
+    }
+    BOOL console_result = SetConsoleCP(CP_UTF8);
+    if (!console_result) {
+        XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, "Could not set console input to UTF8!");
+        return UNITTEST_FAIL_UNABLE_SET_UTF8;
+    }
+    console_result = SetConsoleOutputCP(CP_UTF8);
+    if (!console_result) {
+        XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, "Could not set console output to UTF8!");
+        return UNITTEST_FAIL_UNABLE_SET_UTF8;
+    }
+#else
+    // Using this method on Windows will cause problem for C++ filesystem.
+    // Alternative method is above.
     std::setlocale(LC_ALL, "en_US.utf8");
+#endif
+
     std::string xbe_path;
     int test_ret = UNITTEST_OK;
 
@@ -1055,7 +1075,10 @@ int main(int argc, char** argv)
         bool doSave = true;
         auto XbeTitle = getXbeTitle(pXbeHeader);
         PurgeBadChar(XbeTitle);
-        std::filesystem::path file_name = XbeTitle + "-" + getXbeHeaderHash(pXbeHeader) + ".ini";
+        // NOTE: C++20 use u8string as utf8 whilst use string as ansi. Otherwise conversion will throw error.
+        // This occur on Windows platform so far.
+        std::filesystem::path file_name = reinterpret_cast<const char8_t*>(XbeTitle.c_str());
+        file_name += "-" + getXbeHeaderHash(pXbeHeader) + ".ini";
         // Since output directory do exist, check if we have existing cache file.
         std::filesystem::path cache_file = output_path / file_name;
         if (std::filesystem::exists(cache_file)) {
