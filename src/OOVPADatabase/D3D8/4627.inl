@@ -1417,7 +1417,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_PersistDisplay,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_PersistDisplay+0x02 : mov ebx,[D3D__PDEVICE]
+    // D3DDevice_PersistDisplay+0x02 : mov ebx,[D3D_g_pDevice]
     XREF_ENTRY(0x04, XREF_D3D_g_pDevice),
 
     // D3DDevice_PersistDisplay+0x00 : push ecx

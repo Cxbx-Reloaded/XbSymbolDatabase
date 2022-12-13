@@ -853,7 +853,7 @@ OOVPA_SIG_HEADER_XREF(D3DVertexBuffer_Lock,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DVertexBuffer_Lock+0x0B : mov esi,[D3D__PDEVICE]
+    // D3DVertexBuffer_Lock+0x0B : mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x0D, XREF_D3D_g_pDevice),
 
     // D3DVertexBuffer_Lock+0x18 : call D3DDevice_MakeSpace
@@ -1523,7 +1523,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_OcclusionCullEnable,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D__PDEVICE]
+    // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
     // D3DDevice_SetRenderState_OcclusionCullEnable+0x0B : D3D__RenderState[D3DRS_OCCLUSIONCULLENABLE]
@@ -1558,7 +1558,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_StencilCullEnable,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D__PDEVICE]
+    // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
     // D3DDevice_SetRenderState_StencilCullEnable+0x0B : D3D__RenderState[D3DRS_STENCILCULLENABLE]

@@ -1163,13 +1163,13 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_BlockUntilVerticalBlank,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax, [D3D__PDEVICE]
+    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax, [D3D_g_pDevice]
     XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
     // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDevice__m_VerticalBlankEvent
     XREF_ENTRY(0x18, XREF_OFFSET_D3DDevice__m_VerticalBlankEvent),
 
-    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax,[D3D__PDEVICE]
+    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax,[D3D_g_pDevice]
     OV_MATCH(0x00, 0xA1),
 
     // D3DDevice_BlockUntilVerticalBlank+0x05 : push 0; push 0; push 1

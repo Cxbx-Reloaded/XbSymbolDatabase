@@ -27,7 +27,7 @@
 // * D3DDevice__m_VerticalBlankEvent__ManualFindGeneric
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-// NOTE: This signature will find any generic match with D3D__PDEVICE
+// NOTE: This signature will find any generic match with D3D_g_pDevice
 //       Currently, this is the best method without rely on
 //       D3DDevice_BlockUntilVerticalBlank detection.
 //       So, even though it's scanning for D3DDevice_BlockUntilVerticalBlank,
@@ -38,31 +38,31 @@ OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric,
                              DetectFirst)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice__m_VerticalBlankEvent__ManualFindGeneric+0x00 : mov eax, [D3D__PDEVICE]
+    // mov eax, [D3D_g_pDevice]
     XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
-    // D3DDevice__m_VerticalBlankEvent__ManualFindGeneric+0x17 : add eax, OFFSET_D3DDevice__m_VerticalBlankEvent
+    // add eax, OFFSET_D3DDevice__m_VerticalBlankEvent
     XREF_ENTRY(0x18, XREF_OFFSET_D3DDevice__m_VerticalBlankEvent), // <-- Deriving this XRef is the purpose of this OOVPA
 
-    // D3DDevice__m_VerticalBlankEvent__ManualFindGeneric+0x00 : mov eax,[D3D__PDEVICE]
+    // mov eax,[D3D_g_pDevice]
     OV_MATCH(0x00, 0xA1),
 
-    // D3DDevice__m_VerticalBlankEvent__ManualFindGeneric+0x05 : push 0; push 0; push 1
+    // push 0; push 0; push 1
     OV_MATCH(0x05, 0x6A, 0x00, 0x6A, 0x00, 0x6A, 0x01),
 
-    // D3DDevice__m_VerticalBlankEvent__ManualFindGeneric+0x0B : mov dword ptr [eax+OFFSET_D3DDEVICE_M_???],
+    // mov dword ptr [eax+OFFSET_D3DDEVICE_M_???],
     OV_MATCH(0x0B, 0xC7, 0x80),
 
-    // D3DDevice__m_VerticalBlankEvent__ManualFindGeneric+0x15 : push 6
+    // push 6
     OV_MATCH(0x15, 0x6A, 0x06),
 
-    // D3DDevice__m_VerticalBlankEvent__ManualFindGeneric+0x17 : add eax, OFFSET_D3DDevice__m_VerticalBlankEvent
+    // add eax, OFFSET_D3DDevice__m_VerticalBlankEvent
     OV_MATCH(0x17, 0x05),
 
-    // D3DDevice__m_VerticalBlankEvent__ManualFindGeneric+0x1D : push eax
+    // push eax
     OV_MATCH(0x1C, 0x50),
 
-    // D3DDevice__m_VerticalBlankEvent__ManualFindGeneric+0x1D : call e__
+    // call e__
     OV_MATCH(0x1D, 0xFF),
 
     //
@@ -1505,13 +1505,13 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_BlockUntilVerticalBlank,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax, [D3D__PDEVICE]
+    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax, [D3D_g_pDevice]
     XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
     // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDevice__m_VerticalBlankEvent
     XREF_ENTRY(0x18, XREF_OFFSET_D3DDevice__m_VerticalBlankEvent),
 
-    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax,[D3D__PDEVICE]
+    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax,[D3D_g_pDevice]
     OV_MATCH(0x00, 0xA1),
 
     // D3DDevice_BlockUntilVerticalBlank+0x05 : push 0; push 0; push 1
@@ -1544,7 +1544,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVerticalBlankCallback,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetVerticalBlankCallback+0x04 : mov ecx,[D3D__PDEVICE]
+    // D3DDevice_SetVerticalBlankCallback+0x04 : mov ecx,[D3D_g_pDevice]
     XREF_ENTRY(0x06, XREF_D3D_g_pDevice),
 
     // D3DDevice_SetVerticalBlankCallback+0x0A : mov [ecx+OFFSET_D3DDevice__m_VBlankCallback],eax
@@ -2641,10 +2641,10 @@ OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_FillMode,
                          3911)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_FillMode+0x00 : push esi
+    // push esi
     { 0x00, 0x56 },
 
-    // D3DDevice_SetRenderState_FillMode+0x23 : mov dword ptr [eax], 0x8038C
+    // mov dword ptr [eax],0x8038C
     { 0x23, 0xC7 },
     { 0x24, 0x00 },
     { 0x25, 0x8C },
@@ -2652,12 +2652,12 @@ OOVPA_SIG_MATCH(
     { 0x27, 0x08 },
     { 0x28, 0x00 },
 
-    // D3DDevice_SetRenderState_FillMode+0x2F : add eax, 0x0C
+    // add eax,0x0C
     { 0x2F, 0x83 },
     { 0x30, 0xC0 },
     { 0x31, 0x0C },
 
-    // D3DDevice_SetRenderState_FillMode+0x3B : retn 0x04
+    // retn 0x04
     { 0x3B, 0xC2 },
     { 0x3C, 0x04 },
     //
@@ -3819,7 +3819,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_PersistDisplay,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_PersistDisplay+0x02 : mov ebx,[D3D__PDEVICE]
+    // D3DDevice_PersistDisplay+0x02 : mov ebx,[D3D_g_pDevice]
     XREF_ENTRY(0x04, XREF_D3D_g_pDevice),
 
     // D3DDevice_PersistDisplay+0x00 : push ecx
@@ -3940,7 +3940,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_OcclusionCullEnable,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_OcclusionCullEnable+0x05 : mov esi,[D3D__PDEVICE]
+    // D3DDevice_SetRenderState_OcclusionCullEnable+0x05 : mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
     // D3DDevice_SetRenderState_OcclusionCullEnable+0x0C : D3D__RenderState[D3DRS_OCCLUSIONCULLENABLE]
@@ -3974,7 +3974,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_StencilCullEnable,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D__PDEVICE]
+    // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
     // D3DDevice_SetRenderState_StencilCullEnable+0x0C : D3D__RenderState[D3DRS_STENCILCULLENABLE]
@@ -4006,7 +4006,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVerticesUP,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_DrawVerticesUP+0x09 : mov edi,[D3D__PDEVICE]
+    // D3DDevice_DrawVerticesUP+0x09 : mov edi,[D3D_g_pDevice]
     XREF_ENTRY(0x0B, XREF_D3D_g_pDevice),
 
     // D3DDevice_DrawVerticesUP+0x00 : push ebp
@@ -4015,7 +4015,7 @@ OOVPA_SIG_MATCH(
     // D3DDevice_DrawVerticesUP+0x03 : sub esp,0x10
     OV_MATCH(0x03, 0x83, 0xEC, 0x10),
 
-    // D3DDevice_DrawVerticesUP+0x09 : mov edi,[D3D__PDEVICE]
+    // D3DDevice_DrawVerticesUP+0x09 : mov edi,[D3D_g_pDevice]
     OV_MATCH(0x09, 0x8B, 0x3D),
 
     // D3DDevice_DrawVerticesUP+0x0F : mov ecx,edi
@@ -4036,7 +4036,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVerticesUP,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_DrawIndexedVerticesUP+0x09 : mov edi,[D3D__PDEVICE]
+    // D3DDevice_DrawIndexedVerticesUP+0x09 : mov edi,[D3D_g_pDevice]
     XREF_ENTRY(0x0B, XREF_D3D_g_pDevice),
 
     // D3DDevice_DrawIndexedVerticesUP+0x00 : push ebp
@@ -4045,7 +4045,7 @@ OOVPA_SIG_MATCH(
     // D3DDevice_DrawIndexedVerticesUP+0x03 : sub esp,0x14
     OV_MATCH(0x03, 0x83, 0xEC, 0x14),
 
-    // D3DDevice_DrawIndexedVerticesUP+0x09 : mov edi,[D3D__PDEVICE]
+    // D3DDevice_DrawIndexedVerticesUP+0x09 : mov edi,[D3D_g_pDevice]
     OV_MATCH(0x09, 0x8B, 0x3D),
 
     // D3DDevice_DrawIndexedVerticesUP+0x0F : mov ecx,edi
