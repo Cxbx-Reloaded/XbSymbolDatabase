@@ -551,7 +551,7 @@ OOVPA_SIG_MATCH(
 // * D3D_MakeRequestedSpace
 // ******************************************************************
 //81C5004000003BE9 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3D_MakeRequestedSpace,
+OOVPA_SIG_HEADER_NO_XREF(D3D_MakeRequestedSpace_4__LTCG_eax_RequestedSpace,
                          2048)
 OOVPA_SIG_MATCH(
 

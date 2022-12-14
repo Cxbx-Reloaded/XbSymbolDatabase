@@ -67,7 +67,7 @@
 OOVPATable D3D8LTCG_OOVPA[] = {
 
     REGISTER_OOVPAS_BIND_XREF(D3D_MakeRequestedSpace_8, D3D_MakeRequestedSpace, 1036), // NOTE: OOVPA is in 5849. In used by (5849) Manhunt title
-    REGISTER_OOVPAS(D3D_MakeRequestedSpace, 2048),
+    REGISTER_OOVPAS_BIND_XREF(D3D_MakeRequestedSpace_4__LTCG_eax_RequestedSpace, D3D_MakeRequestedSpace, 2048),
     REGISTER_OOVPAS(D3D_SetFence, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3D_BlockOnTime, 1024, 1036, 1048),
     REGISTER_OOVPAS_BIND_XREF(D3D_BlockOnTime_4, D3D_BlockOnTime, 2048, 2060),

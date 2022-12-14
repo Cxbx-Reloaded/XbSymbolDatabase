@@ -369,9 +369,9 @@ static const library_list database_full = {
         REGISTER_SYMBOL(Lock3DSurface, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
         REGISTER_SYMBOL(Lock3DSurface_16, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
     REGISTER_SYMBOLS(D3D_MakeRequestedSpace,
-                     // TODO: Need fix D3D_MakeRequestedSpace in LTCG database to amend _4 or _8. Current status is unknown and may be _4 suffix.
                      REGISTER_SYMBOL(D3D_MakeRequestedSpace_4, VER_RANGE(4034, 4134, VER_NONE, VER_NONE)),
-                     REGISTER_SYMBOL(D3D_MakeRequestedSpace_8, VER_RANGE(4134, VER_MAX, VER_NONE, VER_NONE))),
+                     REGISTER_SYMBOL(D3D_MakeRequestedSpace_8, VER_RANGE(4134, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3D_MakeRequestedSpace_4__LTCG_eax_RequestedSpace, VER_RANGE(5788, VER_MAX, VER_NONE, VER_NONE))),
     REGISTER_SYMBOL_INLINE(XMETAL_StartPush, VER_RANGE(3911, 4034, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(IDirect3DVertexBuffer8_Lock, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE)),
 
