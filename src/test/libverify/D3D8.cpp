@@ -149,7 +149,9 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DDevice_Present, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DDevice_PrimeVertexCache, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DDevice_Release, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
-    REGISTER_SYMBOL_INLINE(D3DDevice_Reset, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+    REGISTER_SYMBOLS(D3DDevice_Reset,
+                     REGISTER_SYMBOL(D3DDevice_Reset, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_Reset_0__LTCG_edi_pPresentationParameters, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE))),
     REGISTER_SYMBOLS(D3DDevice_RunPushBuffer,
                      REGISTER_SYMBOL(D3DDevice_RunPushBuffer, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(D3DDevice_RunPushBuffer_4, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
