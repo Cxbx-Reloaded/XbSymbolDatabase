@@ -199,7 +199,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_C_BIND_XREF(D3DDevice_SetTextureState_TexCoordIndex_0, D3DDevice_SetTextureState_TexCoordIndex, 2039, 2058),
     REGISTER_OOVPAS_C_BIND_XREF(D3DDevice_SetTextureState_TexCoordIndex_4, D3DDevice_SetTextureState_TexCoordIndex, 2040, 2045, 2052, 2058),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTexture_4__LTCG_eax_pTexture, D3DDevice_SetTexture, 2024),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTexture_4, D3DDevice_SetTexture, 2036),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTexture_4__LTCG_eax_Stage, D3DDevice_SetTexture, 2036),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTile_0, D3DDevice_SetTile, 2024, 2036, 2048, 2060, 2072),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTransform_0__LTCG_eax1_edx2, D3DDevice_SetTransform, 3911, 4034, 5344, 5455, 5558),
     REGISTER_OOVPAS(D3DDevice_SetVertexData2f, 1024, 1036, 1048),
