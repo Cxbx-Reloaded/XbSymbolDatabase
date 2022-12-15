@@ -144,7 +144,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetPixelShaderConstant, 1024, 1036),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetPixelShaderConstant_4, D3DDevice_SetPixelShaderConstant, 2024),
     REGISTER_OOVPAS(D3DDevice_SetPixelShaderProgram, 1024),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetPixelShader_0, D3DDevice_SetPixelShader, 2024, 2036, 2048, 2060, 2072),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetPixelShader_0__LTCG_eax_handle, D3DDevice_SetPixelShader, 2024, 2036, 2048, 2060, 2072),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetRenderStateNotInline_0, D3DDevice_SetRenderStateNotInline, 2048),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_BackFillMode, 1024, 1036),
     REGISTER_OOVPAS_C(D3DDevice_SetRenderState_CullMode, 1045, 1049, 1052, 1053),
