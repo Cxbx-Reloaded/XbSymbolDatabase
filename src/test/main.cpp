@@ -1037,7 +1037,7 @@ int main(int argc, char** argv)
     error_count += XbUnitTest_error;
 
     if (error_count) {
-        XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_WARN, "XbSymbolUnitTest: FAIL - " + std::to_string(error_count) + " errors");
+        XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_WARN, "XbSymbolUnitTest: FAIL - " + std::to_string(error_count) + " errors");
     }
 
     // Check for out argument has input to store symbols cache and results to a folder.
