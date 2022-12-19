@@ -1199,7 +1199,7 @@ OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // Derived
 
-    XREF_ENTRY(0x25, XREF_D3DRS_CULLMODE), // Derived
+    XREF_ENTRY(0x25, XREF_D3DRS_CullMode), // Derived
 
     // D3DDevice_SetRenderState_CullMode+0x00 : push esi
     { 0x00, 0x56 },
@@ -3943,8 +3943,8 @@ OOVPA_SIG_MATCH(
     // D3DDevice_SetRenderState_OcclusionCullEnable+0x05 : mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    // D3DDevice_SetRenderState_OcclusionCullEnable+0x0C : D3D__RenderState[D3DRS_OCCLUSIONCULLENABLE]
-    XREF_ENTRY(0x0D, XREF_D3DRS_OCCLUSIONCULLENABLE), // Derived
+    // D3DDevice_SetRenderState_OcclusionCullEnable+0x0C : [D3DRS_OcclusionCullEnable]
+    XREF_ENTRY(0x0D, XREF_D3DRS_OcclusionCullEnable), // Derived
 
     // D3DDevice_SetRenderState_OcclusionCullEnable+0x11 : call XMETAL_StartPush
     //XREF_ENTRY(0x12, XREF_XMETAL_StartPush),
@@ -3977,8 +3977,8 @@ OOVPA_SIG_MATCH(
     // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x0C : D3D__RenderState[D3DRS_STENCILCULLENABLE]
-    XREF_ENTRY(0x0D, XREF_D3DRS_STENCILCULLENABLE), // Derived
+    // D3DDevice_SetRenderState_StencilCullEnable+0x0C : [D3DRS_StencilCullEnable]
+    XREF_ENTRY(0x0D, XREF_D3DRS_StencilCullEnable), // Derived
 
     // D3DDevice_SetRenderState_StencilCullEnable+0x11 : call XMETAL_StartPush
     //XREF_ENTRY(0x12, XREF_XMETAL_StartPush),
@@ -4218,7 +4218,7 @@ OOVPA_SIG_MATCH(
     { 0x07, 0x09 },
     { 0x08, 0x05 },
 
-    // D3DDevice_SetRenderState_Deferred+0x0D : mov dword ptr ds:D3D__RenderState[ecx*4], edx
+    // D3DDevice_SetRenderState_Deferred+0x0D : mov dword ptr ds:D3D_g_RenderState[ecx*4], edx
     { 0x0D, 0x89 },
     { 0x0E, 0x14 },
     { 0x0F, 0x8D },
@@ -4698,8 +4698,8 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_RopZCmpAlwaysRead,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_RopZCmpAlwaysRead+0x05 : D3D__RenderState[D3DRS_ROPZCMPALWAYSREAD]
-    XREF_ENTRY(0x05, XREF_D3DRS_ROPZCMPALWAYSREAD), // Derived
+    // D3DDevice_SetRenderState_RopZCmpAlwaysRead+0x05 : [D3DRS_RopZCmpAlwaysRead]
+    XREF_ENTRY(0x05, XREF_D3DRS_RopZCmpAlwaysRead), // Derived
 
     // D3DDevice_SetRenderState_RopZCmpAlwaysRead+0x00 : mov eax, [esp+0x04]
     { 0x00, 0x8B },
@@ -4726,8 +4726,8 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_RopZRead,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_RopZRead+0x05 : D3D__RenderState[D3DRS_ROPZREAD]
-    XREF_ENTRY(0x05, XREF_D3DRS_ROPZREAD), // Derived
+    // D3DDevice_SetRenderState_RopZRead+0x05 : [D3DRS_RopZRead]
+    XREF_ENTRY(0x05, XREF_D3DRS_RopZRead), // Derived
 
     // D3DDevice_SetRenderState_RopZRead+0x00 : mov eax, [esp+0x04]
     { 0x00, 0x8B },
@@ -4754,8 +4754,8 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_DoNotCullUncompressed,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_DoNotCullUncompressed+0x05 : D3D__RenderState[D3DRS_DONOTCULLUNCOMPRESSED]
-    XREF_ENTRY(0x05, XREF_D3DRS_DONOTCULLUNCOMPRESSED), // Derived
+    // D3DDevice_SetRenderState_DoNotCullUncompressed+0x05 : [D3DRS_DoNotCullUncompressed]
+    XREF_ENTRY(0x05, XREF_D3DRS_DoNotCullUncompressed), // Derived
 
     // D3DDevice_SetRenderState_DoNotCullUncompressed+0x00 : mov eax, [esp+0x04]
     { 0x00, 0x8B },

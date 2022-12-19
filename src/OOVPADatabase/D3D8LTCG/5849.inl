@@ -280,7 +280,7 @@ OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_ZBias,
                          1024)
 OOVPA_SIG_MATCH(
 
-    // XREF_ENTRY( 0x6A, XREF_D3DRS_ZBIAS ),
+    // XREF_ENTRY( 0x6A, XREF_D3DRS_ZBias ),
 
     { 0x00, 0x51 },
 

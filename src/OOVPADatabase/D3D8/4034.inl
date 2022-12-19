@@ -226,7 +226,7 @@ OOVPA_SIG_MATCH(
 
     XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // Derived
 
-    XREF_ENTRY(0x2B, XREF_D3DRS_CULLMODE), // Derived
+    XREF_ENTRY(0x2B, XREF_D3DRS_CullMode), // Derived
 
     // D3DDevice_SetRenderState_CullMode+0x00 : push esi
     { 0x00, 0x56 },
@@ -1458,7 +1458,7 @@ OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleRenderTargetMode,
            XRefTwo)
 {
 #endif
-        XREF_ENTRY(0x0B, XREF_D3DRS_MULTISAMPLERENDERTARGETMODE), // Derived
+        XREF_ENTRY(0x0B, XREF_D3DRS_MultiSampleRenderTargetMode), // Derived
 
 #ifdef WIP_LessVertexPatching
             XREF_ENTRY(0x11, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
@@ -1526,8 +1526,8 @@ OOVPA_SIG_MATCH(
     // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    // D3DDevice_SetRenderState_OcclusionCullEnable+0x0B : D3D__RenderState[D3DRS_OCCLUSIONCULLENABLE]
-    XREF_ENTRY(0x0C, XREF_D3DRS_OCCLUSIONCULLENABLE), // Derived
+    // D3DDevice_SetRenderState_OcclusionCullEnable+0x0B : [D3DRS_OcclusionCullEnable]
+    XREF_ENTRY(0x0C, XREF_D3DRS_OcclusionCullEnable), // Derived
 
     // D3DDevice_SetRenderState_OcclusionCullEnable+0x17 : call D3DDevice_MakeSpace
     //XREF_ENTRY(0x18, XREF_D3DDevice_MakeSpace),
@@ -1561,8 +1561,8 @@ OOVPA_SIG_MATCH(
     // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x0B : D3D__RenderState[D3DRS_STENCILCULLENABLE]
-    XREF_ENTRY(0x0C, XREF_D3DRS_STENCILCULLENABLE), // Derived
+    // D3DDevice_SetRenderState_StencilCullEnable+0x0B : [D3DRS_StencilCullEnable]
+    XREF_ENTRY(0x0C, XREF_D3DRS_StencilCullEnable), // Derived
 
     // D3DDevice_SetRenderState_StencilCullEnable+0x17 : call D3DDevice_MakeSpace
     //XREF_ENTRY(0x18, XREF_D3DDevice_MakeSpace),

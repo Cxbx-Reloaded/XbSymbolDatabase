@@ -77,7 +77,7 @@ OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_ZBias,
                          1060)
 OOVPA_SIG_MATCH(
 
-    // XREF_ENTRY( 0x6A, XREF_D3DRS_ZBIAS ),
+    // XREF_ENTRY( 0x6A, XREF_D3DRS_ZBias ),
 
     { 0x00, 0x51 },
     { 0x01, 0x53 },
@@ -101,7 +101,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0D, XREF_D3DRS_MULTISAMPLEANTIALIAS),
+    XREF_ENTRY(0x0D, XREF_D3DRS_MultiSampleAntiAlias),
 
     { 0x00, 0x8B },
     { 0x01, 0x44 },
@@ -121,7 +121,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMask,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0C, XREF_D3DRS_MULTISAMPLEMASK),
+    XREF_ENTRY(0x0C, XREF_D3DRS_MultiSampleMask),
 
     { 0x01, 0x44 },
     { 0x02, 0x24 },
@@ -140,7 +140,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMask,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0B, XREF_D3DRS_MULTISAMPLEMASK),
+    XREF_ENTRY(0x0B, XREF_D3DRS_MultiSampleMask),
 
     { 0x01, 0x44 },
     { 0x0F, 0xC1 },
@@ -159,7 +159,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_SampleAlpha,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0C, XREF_D3DRS_SAMPLEALPHA),
+    XREF_ENTRY(0x0C, XREF_D3DRS_SampleAlpha),
 
     { 0x00, 0x8B },
     { 0x04, 0x57 },
