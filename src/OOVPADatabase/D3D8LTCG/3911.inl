@@ -344,20 +344,62 @@ OOVPA_SIG_MATCH(
 //******************************************************************
 //* D3DDevice_SetRenderState_BackFillMode
 //******************************************************************
+// Found in 4039 title "NBA 2K2"
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_BackFillMode,
                       1024,
+                      XRefThree)
+OOVPA_SIG_MATCH(
+
+    // mov ecx,ptr [D3DRS_FillMode]
+    XREF_ENTRY(0x06, XREF_D3DRS_FillMode),
+    // mov [D3DRS_BackFillMode],eax
+    XREF_ENTRY(0x0B, XREF_D3DRS_BackFillMode),
+    // jmp D3DDevice_SetRenderState_FillMode
+    XREF_ENTRY(0x14, XREF_D3DDevice_SetRenderState_FillMode),
+
+    // mov eax,ptr [esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov ecx,ptr [D3DRS_FillMode]
+    OV_MATCH(0x04, 0x8B, 0x0D),
+
+    // mov [D3DRS_BackFillMode],eax
+    OV_MATCH(0x0A, 0xA3),
+    // mov ptr [esp + param_1],ecx
+    OV_MATCH(0x0F, 0x89, 0x4C, 0x24, 0x04),
+    // jmp D3DDevice_SetRenderState_FillMode
+    OV_MATCH(0x13, 0xE9)
+    //
+);
+
+//******************************************************************
+//* D3DDevice_SetRenderState_BackFillMode
+//******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_BackFillMode,
+                      1036,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x06, XREF_D3DRS_FillMode),
-    XREF_ENTRY(0x0B, XREF_D3DRS_BackFillMode),
+    // mov [D3DRS_BackFillMode],eax
+    XREF_ENTRY(0x0C, XREF_D3DRS_BackFillMode),
+    // mov edi,ptr [D3DRS_FillMode]
+    XREF_ENTRY(0x18, XREF_D3DRS_FillMode),
 
-    { 0x01, 0x44 },
-    { 0x0F, 0x89 },
-    { 0x10, 0x4C },
-    { 0x11, 0x24 },
-    { 0x12, 0x04 },
-    //
+    // mov eax,ptr [esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov [D3DRS_BackFillMode],eax
+    OV_MATCH(0x0B, 0xA3),
+
+    // mov eax,ptr [esi]
+    OV_MATCH(0x10, 0x8B, 0x06),
+    // cmp eax,ptr [esi + 0x4]
+    OV_MATCH(0x12, 0x3B, 0x46, 0x04),
+    // push edi
+    OV_MATCH(0x15, 0x57),
+    // mov edi,ptr [D3DRS_FillMode]
+    OV_MATCH(0x16, 0x8B, 0x3D),
+    // Generic support over multiple revisions end at offset 0x1C
 );
 
 // ******************************************************************

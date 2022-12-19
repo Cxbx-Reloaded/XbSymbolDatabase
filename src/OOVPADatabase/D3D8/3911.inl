@@ -3585,32 +3585,30 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_BackFillMode
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_BackFillMode,
-                         3911)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_BackFillMode,
+                      3911,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_BackFillMode+0x00 : mov eax, [esp+arg_0]
-    { 0x00, 0x8B },
+    // mov esi,ptr [D3DRS_FillMode]
+    XREF_ENTRY(0x07, XREF_D3DRS_FillMode),
+    // mov [D3DRS_BackFillMode],eax
+    XREF_ENTRY(0x14, XREF_D3DRS_BackFillMode),
 
-    // D3DDevice_SetRenderState_BackFillMode+0x2B : jnz +0x2
-    { 0x2B, 0x75 },
-    { 0x2C, 0x02 },
+    // mov eax, [esp+arg_0]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    // D3DDevice_SetRenderState_BackFillMode+0x32 : mov dword ptr [eax], abs
-    { 0x32, 0xC7 },
-    { 0x33, 0x00 },
+    // mov esi,ptr [D3DRS_FillMode]
+    OV_MATCH(0x05, 0x8B),
 
-    // D3DDevice_SetRenderState_BackFillMode+0x3B : add eax, 0x0C; mov [edi], eax; pop edi
-    { 0x3B, 0x83 },
-    { 0x3C, 0xC0 },
-    { 0x3D, 0x0C },
-    { 0x3E, 0x89 },
-    { 0x3F, 0x07 },
-    { 0x40, 0x5F },
+    // mov [D3DRS_BackFillMode],eax
+    OV_MATCH(0x13, 0xA3),
 
-    // D3DDevice_SetRenderState_BackFillMode+0x48 : retn 0x04
-    { 0x48, 0xC2 },
-    { 0x49, 0x04 },
+    // add eax, 0x0C
+    OV_MATCH(0x3B, 0x83, 0xC0, 0x0C),
+
+    // retn 0x04
+    OV_MATCH(0x48, 0xC2, 0x04),
     //
 );
 
