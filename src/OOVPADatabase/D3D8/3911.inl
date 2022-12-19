@@ -4699,84 +4699,75 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_RopZCmpAlwaysRead
 // ******************************************************************
-// LTCG: 1024
+// Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_RopZCmpAlwaysRead,
                       3911,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_RopZCmpAlwaysRead+0x05 : [D3DRS_RopZCmpAlwaysRead]
-    XREF_ENTRY(0x05, XREF_D3DRS_RopZCmpAlwaysRead), // Derived
+    // [D3DRS_RopZCmpAlwaysRead],eax
+    XREF_ENTRY(0x05, XREF_D3DRS_RopZCmpAlwaysRead),
+    // call D3D_CommonSetDebugRegisters
+    XREF_ENTRY(0x0A, XREF_D3D_CommonSetDebugRegisters),
 
-    // D3DDevice_SetRenderState_RopZCmpAlwaysRead+0x00 : mov eax, [esp+0x04]
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
+    // mov eax, [esp+0x04]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    // D3DDevice_SetRenderState_RopZCmpAlwaysRead+0x09 : call [abs]
-    { 0x09, 0xE8 },
+    // call D3D_CommonSetDebugRegisters
+    OV_MATCH(0x09, 0xE8),
 
-    // D3DDevice_SetRenderState_RopZCmpAlwaysRead+0x0E : retn 0x04
-    { 0x0E, 0xC2 },
-    { 0x0F, 0x04 },
-    { 0x10, 0x00 },
+    // retn 0x04
+    OV_MATCH(0x0E, 0xC2, 0x04, 0x00),
     //
 );
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_RopZRead
 // ******************************************************************
-// LTCG: 1024
+// Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_RopZRead,
                       3911,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_RopZRead+0x05 : [D3DRS_RopZRead]
-    XREF_ENTRY(0x05, XREF_D3DRS_RopZRead), // Derived
+    // mov [D3DRS_RopZRead],eax
+    XREF_ENTRY(0x05, XREF_D3DRS_RopZRead),
+    // call D3D_CommonSetDebugRegisters
+    XREF_ENTRY(0x0A, XREF_D3D_CommonSetDebugRegisters),
 
-    // D3DDevice_SetRenderState_RopZRead+0x00 : mov eax, [esp+0x04]
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
+    // mov eax, [esp+0x04]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    // D3DDevice_SetRenderState_RopZRead+0x09 : call [abs]
-    { 0x09, 0xE8 },
+    // call D3D_CommonSetDebugRegisters
+    OV_MATCH(0x09, 0xE8),
 
-    // D3DDevice_SetRenderState_RopZRead+0x0E : retn 0x04
-    { 0x0E, 0xC2 },
-    { 0x0F, 0x04 },
-    { 0x10, 0x00 },
+    // retn 0x04
+    OV_MATCH(0x0E, 0xC2, 0x04, 0x00),
     //
 );
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_DoNotCullUncompressed
 // ******************************************************************
-// LTCG: 1024
+// Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_DoNotCullUncompressed,
                       3911,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_DoNotCullUncompressed+0x05 : [D3DRS_DoNotCullUncompressed]
-    XREF_ENTRY(0x05, XREF_D3DRS_DoNotCullUncompressed), // Derived
+    // mov [D3DRS_DoNotCullUncompressed],eax
+    XREF_ENTRY(0x05, XREF_D3DRS_DoNotCullUncompressed),
+    // call D3D_CommonSetDebugRegisters
+    XREF_ENTRY(0x0A, XREF_D3D_CommonSetDebugRegisters),
 
-    // D3DDevice_SetRenderState_DoNotCullUncompressed+0x00 : mov eax, [esp+0x04]
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
+    // mov eax, [esp+0x04]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    // D3DDevice_SetRenderState_DoNotCullUncompressed+0x09 : call [abs]
-    { 0x09, 0xE8 },
+    // call D3D_CommonSetDebugRegisters
+    OV_MATCH(0x09, 0xE8),
 
-    // D3DDevice_SetRenderState_DoNotCullUncompressed+0x0E : retn 0x04
-    { 0x0E, 0xC2 },
-    { 0x0F, 0x04 },
-    { 0x10, 0x00 },
+    // retn 0x04
+    OV_MATCH(0x0E, 0xC2, 0x04, 0x00),
     //
 );
 
