@@ -3989,27 +3989,51 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_OcclusionCullEnable,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_OcclusionCullEnable+0x05 : mov esi,[D3D_g_pDevice]
+    // mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    // D3DDevice_SetRenderState_OcclusionCullEnable+0x0C : [D3DRS_OcclusionCullEnable]
-    XREF_ENTRY(0x0D, XREF_D3DRS_OcclusionCullEnable), // Derived
+    // mov [D3DRS_OcclusionCullEnable],eax
+    XREF_ENTRY(0x0D, XREF_D3DRS_OcclusionCullEnable),
 
-    // D3DDevice_SetRenderState_OcclusionCullEnable+0x11 : call XMETAL_StartPush
+    // call XMETAL_StartPush
     //XREF_ENTRY(0x12, XREF_XMETAL_StartPush),
 
-    // D3DDevice_SetRenderState_OcclusionCullEnable+0x00 : mov eax, [esp+arg_0]
+    // mov eax,[esp+arg_0]
     OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+    // push esi
+    OV_MATCH(0x04, 0x56),
 
-    // D3DDevice_SetRenderState_OcclusionCullEnable+0x3B : cmp [abs], 0x1E00
-    OV_MATCH(0x3B, 0x81),
-    OV_MATCH(0x41, 0x00, 0x1E),
+    // mov [D3DRS_OcclusionCullEnable],eax
+    OV_MATCH(0x0C, 0xA3)
+    //
+);
 
-    // D3DDevice_SetRenderState_OcclusionCullEnable+0x4A : mov dword ptr [eax], 0x41D84
-    OV_MATCH(0x4A, 0xC7, 0x00, 0x84, 0x1D, 0x04),
+// ******************************************************************
+// * D3DDevice_SetRenderState_OcclusionCullEnable
+// ******************************************************************
+// Generic OOVPA as of 3911 (LTCG) / 4034 (non-LTCG) and newer.
+// NOTE: asm codes are the same as D3DDevice_SetRenderState_StencilCullEnable
+//       except for the offset references.
+// NOTE2: This signature is used in LTCG titles first in 3911 then later
+//        afterward become standard in non-LTCG titles since build 4034.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_OcclusionCullEnable,
+                      1024,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_OcclusionCullEnable+0x59 : retn 0x04
-    OV_MATCH(0x59, 0xC2, 0x04),
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_OcclusionCullEnable],eax
+    XREF_ENTRY(0x0C, XREF_D3DRS_OcclusionCullEnable),
+
+    // mov eax,[esp+arg_0]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+    // push esi
+    OV_MATCH(0x04, 0x56),
+
+    // mov [D3DRS_OcclusionCullEnable],eax
+    OV_MATCH(0x0B, 0xA3)
     //
 );
 
@@ -4023,27 +4047,51 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_StencilCullEnable,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x05 : mov esi,[D3D_g_pDevice]
+    // mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x0C : [D3DRS_StencilCullEnable]
-    XREF_ENTRY(0x0D, XREF_D3DRS_StencilCullEnable), // Derived
+    // mov [D3DRS_StencilCullEnable],eax
+    XREF_ENTRY(0x0D, XREF_D3DRS_StencilCullEnable),
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x11 : call XMETAL_StartPush
+    // call XMETAL_StartPush
     //XREF_ENTRY(0x12, XREF_XMETAL_StartPush),
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x00 : mov eax, [esp+arg_0]
+    // mov eax, [esp+arg_0]
     OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+    // push esi
+    OV_MATCH(0x04, 0x56),
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x3B : cmp [abs], 0x1E00
-    OV_MATCH(0x3B, 0x81),
-    OV_MATCH(0x41, 0x00, 0x1E),
+    // mov [D3DRS_StencilCullEnable],eax
+    OV_MATCH(0x0C, 0xA3)
+    //
+);
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x4A : mov dword ptr [eax], 0x41D84
-    OV_MATCH(0x4A, 0xC7, 0x00, 0x84, 0x1D, 0x04),
+// ******************************************************************
+// * D3DDevice_SetRenderState_StencilCullEnable
+// ******************************************************************
+// Generic OOVPA as of 3911 (LTCG) / 4034 (non-LTCG) and newer.
+// NOTE: asm codes are the same as D3DDevice_SetRenderState_OcclusionCullEnable
+//       except for the offset references.
+// NOTE2: This signature is used in LTCG titles first in 3911 then later
+//        afterward become standard in non-LTCG titles since build 4034.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_StencilCullEnable,
+                      1024,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_StencilCullEnable+0x59 : retn 0x04
-    OV_MATCH(0x59, 0xC2, 0x04),
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_StencilCullEnable],eax
+    XREF_ENTRY(0x0C, XREF_D3DRS_StencilCullEnable),
+
+    // mov eax, [esp+arg_0]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+    // push esi
+    OV_MATCH(0x04, 0x56),
+
+    // mov [D3DRS_StencilCullEnable],eax
+    OV_MATCH(0x0B, 0xA3)
     //
 );
 
