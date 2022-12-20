@@ -348,7 +348,9 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
     internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_CullMode, DerivedAddr_D3DRS_CullMode);
 
     // Derive address of EmuD3DDeferredRenderState from D3DRS_CullMode
-    xbaddr EmuD3DDeferredRenderState = DerivedAddr_D3DRS_CullMode - Decrement + Increment;
+    // NOTE: No longer requirement anymore! Woohoo!
+    // xbaddr EmuD3DDeferredRenderState = DerivedAddr_D3DRS_CullMode - Decrement + Increment;
+    xbaddr EmuD3DDeferredRenderState = pContext->xref_database[XREF_D3D_g_DeferredRenderState];
     patchOffset -= Increment;
 
     // Derive address of a few other deferred render state slots (to help xref-based function location)
@@ -437,6 +439,8 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
         internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
     }
 
+    memptr_t pD3D_g_DeferredRenderStateOffset = 0;
+
     // Then look up for D3DDevice_SetRenderStateNotInline
     xbaddr D3DDevice_SetRenderStateNotInline = pContext->xref_database[XREF_D3DDevice_SetRenderStateNotInline];
     xbaddr D3DDevice_SetRenderStateInline = pContext->xref_database[XREF_D3DDevice_SetRenderStateInline__ManualFindGeneric];
@@ -464,6 +468,9 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
                                                                          &pSymbol,
                                                                          &pRevision);
 
+            // pointer to cmp opcode's value from D3DDevice_SetRenderStateInline__ManualFindGeneric sig.
+            pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xFuncAddr + 0x02);
+
             // If not found, skip the rest of the scan.
             if (xFuncAddr == 0) {
                 return false;
@@ -471,11 +478,24 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
             // If it is found, don't register it.
         }
         else {
+            // pointer to cmp opcode's value from D3DDevice_SetRenderStateNotInline sig.
+            pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xFuncAddr + 0x07);
+
             // Register only D3DDevice_SetRenderStateNotInline symbol function.
             // D3DDevice_SetRenderStateInline__ManualFindGeneric is not a function but a generic method to find D3D_g_RenderState.
             internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
         }
         // D3D_g_RenderState variable is already set internal, will be register later.
+
+        // And set D3D_g_DeferredRenderState variable base on signature cmp opcode's value as offset.
+        // This is 100% accurate method than manual offset usage.
+        if (pD3D_g_DeferredRenderStateOffset) {
+            uint8_t D3D_g_DeferredRenderStateOffset = *(uint8_t*)pD3D_g_DeferredRenderStateOffset;
+            internal_SetXRefDatabase(pContext,
+                                     pLibrarySession->iLibraryType,
+                                     XREF_D3D_g_DeferredRenderState,
+                                     pContext->xref_database[XREF_D3D_g_RenderState] + D3D_g_DeferredRenderStateOffset * 4);
+        }
     }
     return true;
 }
@@ -621,7 +641,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     // Needed for no dependency, scanning multiple sections, and library's databases.
     bool bComplete = true;
 
-    // Get D3D_g_RenderState variable
+    // Get D3D_g_RenderState and D3D_g_DeferredRenderState variables
     bComplete &= manual_scan_section_dx8_register_D3DRS(pContext, pLibrarySession, pLibraryDB, pSection);
 
     // Check if any results as incomplete scan.
