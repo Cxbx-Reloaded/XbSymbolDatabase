@@ -277,7 +277,7 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
         internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XREF_D3DRS_CullMode, DerivedAddr_D3DRS_CullMode);
     }
     // Register the offset of D3DRS_CullMode, this can be used to programatically locate other render-states in the calling program
-    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3DRS_CullMode, "D3DRS_CullMode", DerivedAddr_D3DRS_CullMode, 0);
+    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_CullMode, DerivedAddr_D3DRS_CullMode);
 
     // Derive address of EmuD3DDeferredRenderState from D3DRS_CullMode
     xbaddr EmuD3DDeferredRenderState = DerivedAddr_D3DRS_CullMode - Decrement + Increment;
@@ -319,7 +319,26 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
     internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_RopZRead, EmuD3DDeferredRenderState + patchOffset + 2 * 4);
     internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_DoNotCullUncompressed, EmuD3DDeferredRenderState + patchOffset + 3 * 4);
 
-    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_DeferredRenderState, "D3D_g_DeferredRenderState", EmuD3DDeferredRenderState, 0);
+}
+
+static bool manual_scan_section_dx8_register_D3DRS_list(iXbSymbolContext* pContext,
+                                                        const iXbSymbolLibrarySession* pLibrarySession,
+                                                        SymbolDatabaseList* pLibraryDB,
+                                                        const XbSDBSection* pSection)
+{
+    // Instead of individual register call, let's go through the list to automatically register valid xrefs.
+    const uint16_t lib_version = pLibrarySession->pLibrary->build_version;
+    for (size_t i = 0; i < DxbxRenderStateInfoSize; i++) {
+        const RenderStateRevision render_state_i = DxbxRenderStateInfo[i];
+        if (IsRenderStateAvailableInCurrentXboxD3D8Lib(render_state_i, lib_version) && render_state_i.xref != 0) {
+            internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, render_state_i.xref, render_state_i.version, render_state_i.name);
+        }
+    }
+
+    // Manual register RenderState sections.
+    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_DeferredRenderState, 0, "D3D_g_DeferredRenderState");
+
+    return true;
 }
 
 static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
@@ -755,7 +774,9 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         return bComplete;
     }
 
-    return true;
+    bComplete = manual_scan_section_dx8_register_D3DRS_list(pContext, pLibrarySession, pLibraryDB, pSection);
+
+    return bComplete;
 }
 
 static inline void manual_register_d3d8__ltcg(iXbSymbolContext* pContext)
