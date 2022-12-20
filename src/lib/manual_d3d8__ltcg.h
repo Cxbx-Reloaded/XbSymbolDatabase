@@ -22,6 +22,225 @@
 // ******************************************************************
 #pragma once
 
+// Notes :
+// * Most renderstates were introduced in the (lowest known) XDK version : 3424
+// * Some titles use XDK version 3911
+// * The lowest XDK version that has been verified is : 3944
+// * All renderstates marked 3424 are also verified to be present in 3944
+// * Twenty-three additional renderstates were introduced after 3944 and up to 4627;
+// *   D3DRS_DEPTHCLIPCONTROL, D3DRS_STIPPLEENABLE, D3DRS_SIMPLE_UNUSED8..D3DRS_SIMPLE_UNUSED1,
+// *   D3DRS_SWAPFILTER, D3DRS_PRESENTATIONINTERVAL, D3DRS_DEFERRED_UNUSED8..D3DRS_DEFERRED_UNUSED1,
+// *   D3DRS_MULTISAMPLEMODE, D3DRS_MULTISAMPLERENDERTARGETMODE, and D3DRS_SAMPLEALPHA
+// * One renderstate, D3DRS_MULTISAMPLETYPE, was removed (after 3944, before 4039, perhaps even 4034)
+// * Around when D3DRS_MULTISAMPLETYPE was removed, D3DRS_MULTISAMPLEMODE was introduced (after 3944, before or at 4039, perhaps even 4034)
+// * We MUST list exact versions for all above mentioned renderstates, since their inserts impacts mapping!
+// * Renderstates verified to be introduced at 4039 or earlier, may have been introduced at 4034 or earlier
+// * Renderstates were finalized in 4627 (so no change after that version)
+// * XDK versions that have been verified : 3944, 4039, 4134, 4242, 4361, 4432, 4531, 4627, 4721, 4831, 4928, 5028, 5120, 5233, 5344, 5455, 5558, 5659, 5788, 5849, 5933
+// * Renderstates with uncertain validity are marked "Verified absent in #XDK#" and/or "present in #XDK#". Some have "Might be introduced "... "in between" or "around #XDK#"
+// * Renderstates after D3DRS_MULTISAMPLEMASK have no host DX9 D3DRS mapping, thus no impact
+typedef struct _RenderStateRevision {
+    uint16_t version;
+    uint16_t removed;
+    unsigned xref;
+    const char* name;
+} RenderStateRevision;
+
+#define XREF_NAME(x) XREF_##x, #x
+
+static const RenderStateRevision DxbxRenderStateInfo[] = {
+    // Ord | Version (add/remove) | Name
+    /*   0 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaInputs0) */ },
+    /*   1 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaInputs1) */ },
+    /*   2 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaInputs2) */ },
+    /*   3 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaInputs3) */ },
+    /*   4 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaInputs4) */ },
+    /*   5 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaInputs5) */ },
+    /*   6 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaInputs6) */ },
+    /*   7 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaInputs7) */ },
+    /*   8 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSFinalCombinerInputsABCD) */ },
+    /*   9 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSFinalCombinerInputsEFG) */ },
+    /*  10 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant0_0) */ },
+    /*  11 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant0_1) */ },
+    /*  12 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant0_2) */ },
+    /*  13 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant0_3) */ },
+    /*  14 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant0_4) */ },
+    /*  15 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant0_5) */ },
+    /*  16 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant0_6) */ },
+    /*  17 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant0_7) */ },
+    /*  18 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant1_0) */ },
+    /*  19 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant1_1) */ },
+    /*  20 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant1_2) */ },
+    /*  21 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant1_3) */ },
+    /*  22 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant1_4) */ },
+    /*  23 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant1_5) */ },
+    /*  24 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant1_6) */ },
+    /*  25 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSConstant1_7) */ },
+    /*  26 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaOutputs0) */ },
+    /*  27 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaOutputs1) */ },
+    /*  28 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaOutputs2) */ },
+    /*  29 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaOutputs3) */ },
+    /*  30 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaOutputs4) */ },
+    /*  31 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaOutputs5) */ },
+    /*  32 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaOutputs6) */ },
+    /*  33 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSAlphaOutputs7) */ },
+    /*  34 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBInputs0) */ },
+    /*  35 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBInputs1) */ },
+    /*  36 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBInputs2) */ },
+    /*  37 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBInputs3) */ },
+    /*  38 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBInputs4) */ },
+    /*  39 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBInputs5) */ },
+    /*  40 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBInputs6) */ },
+    /*  41 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBInputs7) */ },
+    /*  42 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSCompareMode) */ },
+    /*  43 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSFinalCombinerConstant0) */ },
+    /*  44 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSFinalCombinerConstant1) */ },
+    /*  45 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBOutputs0) */ },
+    /*  46 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBOutputs1) */ },
+    /*  47 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBOutputs2) */ },
+    /*  48 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBOutputs3) */ },
+    /*  49 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBOutputs4) */ },
+    /*  50 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBOutputs5) */ },
+    /*  51 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBOutputs6) */ },
+    /*  52 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSRGBOutputs7) */ },
+    /*  53 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSCombinerCount) */ },
+    /*  54 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSTextureModes_Reserved) */ },          // Dxbx note : This takes the slot of X_D3DPIXELSHADERDEF.PSTextureModes, set by D3DDevice_SetRenderState_LogicOp?
+    /*  55 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSDotMapping) */ },                     //
+    /*  56 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSInputTexture) */ },                   //
+    /* End of "pixel-shader" render states, continuing with "simple" render states: */ //
+    /*  57 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ZFunc) */ },                            //
+    /*  58 */ { 3424, 0000 /*, XREF_NAME(D3DRS_AlphaFunc) */ },                        //
+    /*  59 */ { 3424, 0000 /*, XREF_NAME(D3DRS_AlphaBlendEnable) */ },                 //
+    /*  60 */ { 3424, 0000 /*, XREF_NAME(D3DRS_AlphaTestEnable) */ },                  //
+    /*  61 */ { 3424, 0000 /*, XREF_NAME(D3DRS_AlphaRef) */ },                         //
+    /*  62 */ { 3424, 0000 /*, XREF_NAME(D3DRS_SrcBlend) */ },                         //
+    /*  63 */ { 3424, 0000 /*, XREF_NAME(D3DRS_DestBlend) */ },                        //
+    /*  64 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ZWriteEnable) */ },                     //
+    /*  65 */ { 3424, 0000 /*, XREF_NAME(D3DRS_DitherEnable) */ },                     //
+    /*  66 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ShadeMode) */ },                        //
+    /*  67 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ColorWriteEnable) */ },                 // *_ALPHA, etc. per-channel write enable
+    /*  68 */ { 3424, 0000 /*, XREF_NAME(D3DRS_StencilZFail) */ },                     //
+    /*  69 */ { 3424, 0000 /*, XREF_NAME(D3DRS_StencilPass) */ },                      //
+    /*  70 */ { 3424, 0000 /*, XREF_NAME(D3DRS_StencilFunc) */ },                      //
+    /*  71 */ { 3424, 0000 /*, XREF_NAME(D3DRS_StencilRef) */ },                       //
+    /*  72 */ { 3424, 0000 /*, XREF_NAME(D3DRS_StencilMask) */ },                      //
+    /*  73 */ { 3424, 0000 /*, XREF_NAME(D3DRS_StencilWriteMask) */ },                 //
+    /*  74 */ { 3424, 0000 /*, XREF_NAME(D3DRS_BlendOp) */ },                          //
+    /*  75 */ { 3424, 0000 /*, XREF_NAME(D3DRS_BlendColor) */ },                       //
+    /* D3D9 D3DRS_BLENDFACTOR : D3DColor used for a constant blend factor during */    //
+    /* alpha blending for devices that support D3DPBLENDCAPS_BLENDFACTOR */            //
+    /*  76 */ { 3424, 0000 /*, XREF_NAME(D3DRS_SwathWidth) */ },                       //
+    /*  77 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PolygonOffsetZSlopeScale) */ },         //
+    /*  78 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PolygonOffsetZOffset) */ },             //
+    /*  79 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PointOffsetEnable) */ },                //
+    /*  80 */ { 3424, 0000 /*, XREF_NAME(D3DRS_WireFrameOffsetEnable) */ },            //
+    /*  81 */ { 3424, 0000 /*, XREF_NAME(D3DRS_SolidOffsetEnable) */ },                //
+    /*  82 */ { 4432, 0000 /*, XREF_NAME(D3DRS_DepthClipControl) */ },                 // Verified absent in 4361, present in 4432  TODO: Might be introduced around 4400?
+    /*  83 */ { 4627, 0000 /*, XREF_NAME(D3DRS_StippleEnable) */ },                    // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /*  84 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Simple_Unused8) */ },                   // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /*  85 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Simple_Unused7) */ },                   // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /*  86 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Simple_Unused6) */ },                   // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /*  87 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Simple_Unused5) */ },                   // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /*  88 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Simple_Unused4) */ },                   // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /*  89 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Simple_Unused3) */ },                   // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /*  90 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Simple_Unused2) */ },                   // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /*  91 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Simple_Unused1) */ },                   // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /* End of "simple" render states, continuing with "deferred" render states: */     //
+    /* Verified as XDK 3911 Deferred RenderStates(3424 yet to do) */                   //
+    /*  92 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FogEnable) */ },                        // TRUE to enable fog blending
+    /*  93 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FogTableMode) */ },                     // D3DFOGMODE
+    /*  94 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FogStart) */ },                         // float fog start (for both vertex and pixel fog)
+    /*  95 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FogEnd) */ },                           // float fog end
+    /*  96 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FogDensity) */ },                       // float fog density // + NV2A_FOG_EQUATION_LINEAR + NV2A_FOG_EQUATION_QUADRATIC
+    /*  97 */ { 3424, 0000 /*, XREF_NAME(D3DRS_RangeFogEnable) */ },                   // TRUE to enable range-based fog
+    /*  98 */ { 3424, 0000 /*, XREF_NAME(D3DRS_Wrap0) */ },                            // D3DWRAP* flags (D3DWRAP_U, D3DWRAPCOORD_0, etc.) for 1st texture coord.
+    /*  99 */ { 3424, 0000 /*, XREF_NAME(D3DRS_Wrap1) */ },                            // D3DWRAP* flags (D3DWRAP_U, D3DWRAPCOORD_0, etc.) for 2nd texture coord.
+    /* 100 */ { 3424, 0000 /*, XREF_NAME(D3DRS_Wrap2) */ },                            // D3DWRAP* flags (D3DWRAP_U, D3DWRAPCOORD_0, etc.) for 3rd texture coord.
+    /* 101 */ { 3424, 0000 /*, XREF_NAME(D3DRS_Wrap3) */ },                            // D3DWRAP* flags (D3DWRAP_U, D3DWRAPCOORD_0, etc.) for 4th texture coord.
+    /* 102 */ { 3424, 0000 /*, XREF_NAME(D3DRS_Lighting) */ },                         // TRUE to enable lighting // TODO: Needs push-buffer data conversion
+    /* 103 */ { 3424, 0000 /*, XREF_NAME(D3DRS_SpecularEnable) */ },                   // TRUE to enable specular
+    /* 104 */ { 3424, 0000 /*, XREF_NAME(D3DRS_LocalViewer) */ },                      // TRUE to enable camera-relative specular highlights
+    /* 105 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ColorVertex) */ },                      // TRUE to enable per-vertex color
+    /* 106 */ { 3424, 0000 /*, XREF_NAME(D3DRS_BackSpecularMaterialSource) */ },       // D3DMATERIALCOLORSOURCE (Xbox extension) nsp.
+    /* 107 */ { 3424, 0000 /*, XREF_NAME(D3DRS_BackDiffuseMaterialSource) */ },        // D3DMATERIALCOLORSOURCE (Xbox extension) nsp.
+    /* 108 */ { 3424, 0000 /*, XREF_NAME(D3DRS_BackAmbientMaterialSource) */ },        // D3DMATERIALCOLORSOURCE (Xbox extension) nsp.
+    /* 109 */ { 3424, 0000 /*, XREF_NAME(D3DRS_BackEmissiveMaterialSource) */ },       // D3DMATERIALCOLORSOURCE (Xbox extension) nsp.
+    /* 110 */ { 3424, 0000 /*, XREF_NAME(D3DRS_SpecularMaterialSource) */ },           // D3DMATERIALCOLORSOURCE
+    /* 111 */ { 3424, 0000 /*, XREF_NAME(D3DRS_DiffuseMaterialSource) */ },            // D3DMATERIALCOLORSOURCE
+    /* 112 */ { 3424, 0000 /*, XREF_NAME(D3DRS_AmbientMaterialSource) */ },            // D3DMATERIALCOLORSOURCE
+    /* 113 */ { 3424, 0000 /*, XREF_NAME(D3DRS_EmissiveMaterialSource) */ },           // D3DMATERIALCOLORSOURCE
+    /* 114 */ { 3424, 0000 /*, XREF_NAME(D3DRS_BackAmbient) */ },                      // D3DCOLOR (Xbox extension) // ..NV2A_MATERIAL_FACTOR_Back_B nsp. Was NV2A_LIGHT_MODEL_Back_AMBIENT_R
+    /* 115 */ { 3424, 0000 /*, XREF_NAME(D3DRS_Ambient) */ },                          // D3DCOLOR // ..NV2A_LIGHT_MODEL_FRONT_Ambient_B + NV2A_MATERIAL_FACTOR_FRONT_R..NV2A_MATERIAL_FACTOR_FRONT_A  Was NV2A_LIGHT_MODEL_FRONT_AMBIENT_R
+    /* 116 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PointSize) */ },                        // float point size
+    /* 117 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PointSize_Min) */ },                    // float point size min threshold
+    /* 118 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PointSpriteEnable) */ },                // TRUE to enable point sprites
+    /* 119 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PointScaleEnable) */ },                 // TRUE to enable point size scaling
+    /* 120 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PointScale_A) */ },                     // float point attenuation A value
+    /* 121 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PointScale_B) */ },                     // float point attenuation B value
+    /* 122 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PointScale_C) */ },                     // float point attenuation C value
+    /* 123 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PointSize_Max) */ },                    // float point size max threshold
+    /* 124 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PatchEdgeStyle) */ },                   // D3DPATCHEDGESTYLE
+    /* 125 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PatchSegments) */ },                    // DWORD number of segments per edge when drawing patches, nsp (D3DRS_PATCHSEGMENTS exists in Direct3D 8, but not in 9)
+    /* TODO -oDxbx : Is X_D3DRS_SWAPFILTER really a xtD3DMULTISAMPLE_TYPE? */          //
+    /* 126 */ { 4034, 0000 /*, XREF_NAME(D3DRS_SwapFilter) */ },                       // nsp. Verified absent in 3944, present in 4034.  4034 state based on test-case : The Simpsons Road Rage
+    /* 127 */ { 4627, 0000 /*, XREF_NAME(D3DRS_PresentationInterval) */ },             // nsp. Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /* 128 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Deferred_Unused8) */ },                 // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /* 129 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Deferred_Unused7) */ },                 // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /* 130 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Deferred_Unused6) */ },                 // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /* 131 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Deferred_Unused5) */ },                 // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /* 132 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Deferred_Unused4) */ },                 // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /* 133 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Deferred_Unused3) */ },                 // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /* 134 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Deferred_Unused2) */ },                 // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /* 135 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Deferred_Unused1) */ },                 // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /* End of "deferred" render states, continuing with "complex" render states: */    //
+    /* 136 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSTextureModes) */ },                   // This is where pPSDef->PSTextureModes is stored (outside the pPSDEF - see DxbxUpdateActivePixelShader)
+    /* 137 */ { 3424, 0000 /*, XREF_NAME(D3DRS_VertexBlend) */ },                      //
+    /* 138 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FogColor) */ },                         // SwapRgb
+    /* 139 */ { 3424, 0000, XREF_NAME(D3DRS_FillMode) },                               //
+    /* 140 */ { 3424, 0000, XREF_NAME(D3DRS_BackFillMode) },                           // nsp.
+    /* 141 */ { 3424, 0000, XREF_NAME(D3DRS_TwoSidedLighting) },                       // nsp.  // FIXME map from NV2A_LIGHT_MODEL
+    /* 142 */ { 3424, 0000 /*, XREF_NAME(D3DRS_NormalizeNormals) */ },                 //
+    /* 143 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ZEnable) */ },                          // D3DZBUFFERTYPE?
+    /* 144 */ { 3424, 0000, XREF_NAME(D3DRS_StencilEnable) },                          //
+    /* 145 */ { 3424, 0000 /*, XREF_NAME(D3DRS_StencilFail) */ },                      //
+    /* 146 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FrontFace) */ },                        // nsp.
+    /* 147 */ { 3424, 0000, XREF_NAME(D3DRS_CullMode) },                               //
+    /* 148 */ { 3424, 0000 /*, XREF_NAME(D3DRS_TextureFactor) */ },                    //
+    /* 149 */ { 3424, 0000, XREF_NAME(D3DRS_ZBias) },                                  // Was D3DRS_ZBIAS
+    /* 150 */ { 3424, 0000, XREF_NAME(D3DRS_LogicOp) },                                // nsp.
+    /* 151 */ { 3424, 0000 /*, XREF_NAME(D3DRS_EdgeAntiAlias) */ },                    // Was D3DRS_EDGEANTIALIAS. Dxbx note : No Xbox ext. (according to Direct3D8) !
+    /* 152 */ { 3424, 0000, XREF_NAME(D3DRS_MultiSampleAntiAlias) },                   //
+    /* 153 */ { 3424, 0000, XREF_NAME(D3DRS_MultiSampleMask) },                        //
+    /* 154 */ { 3424, 4034 /*, XREF_NAME(D3DRS_MultiSampleType) */ },                  // Verified present in 3944, removed in 4034. 4034 state based on test-case : The Simpsons Road Rage
+    /* 155 */ { 4034, 0000 /*, XREF_NAME(D3DRS_MultiSampleMode) */ },                  // D3DMULTISAMPLEMODE for the backbuffer. Verified absent in 3944, present in 4034.  4034 state based on test-case : The Simpsons Road Rage
+    /* 156 */ { 4034, 0000, XREF_NAME(D3DRS_MultiSampleRenderTargetMode) },            // Verified absent in 3944, present in 4034. Presence in 4034 is based on test-case : The Simpsons Road Rage
+    /* 157 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ShadowFunc) */ },                       //
+    /* 158 */ { 3424, 0000, XREF_NAME(D3DRS_LineWidth) },                              //
+    /* 159 */ { 4627, 0000, XREF_NAME(D3DRS_SampleAlpha) },                            // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
+    /* 160 */ { 3424, 0000, XREF_NAME(D3DRS_Dxt1NoiseEnable) },                        //
+    /* 161 */ { 3911, 0000, XREF_NAME(D3DRS_YuvEnable) },                              // Verified present in 3944
+    /* 162 */ { 3911, 0000, XREF_NAME(D3DRS_OcclusionCullEnable) },                    // Verified present in 3944
+    /* 163 */ { 3911, 0000, XREF_NAME(D3DRS_StencilCullEnable) },                      // Verified present in 3944
+    /* 164 */ { 3911, 0000, XREF_NAME(D3DRS_RopZCmpAlwaysRead) },                      // Verified present in 3944
+    /* 165 */ { 3911, 0000, XREF_NAME(D3DRS_RopZRead) },                               // Verified present in 3944
+    /* 166 */ { 3911, 0000, XREF_NAME(D3DRS_DoNotCullUncompressed) },                  // Verified present in 3944
+};
+static_assert(XBSDB_ARRAY_SIZE(DxbxRenderStateInfo) == 167, "DxbxRenderStateInfo is not at correct array size!");
+
+static const size_t DxbxRenderStateInfoSize = XBSDB_ARRAY_SIZE(DxbxRenderStateInfo);
+
+static bool IsRenderStateAvailableInCurrentXboxD3D8Lib(RenderStateRevision aRenderStateInfo,
+                                                       uint16_t library_version)
+{
+    bool bIsRenderStateAvailable = (aRenderStateInfo.version <= library_version);
+    if (aRenderStateInfo.removed > 0) { // Applies to xbox::X_D3DRS_MULTISAMPLETYPE
+        // Note : X_D3DRS_MULTISAMPLETYPE seems the only render state that got
+        // removed (from 4039 onwards), so we check that limitation here as well
+        bIsRenderStateAvailable &= (library_version < aRenderStateInfo.removed);
+    }
+    return bIsRenderStateAvailable;
+}
+
 static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
                                                    const iXbSymbolLibrarySession* pLibrarySession,
                                                    memptr_t pFunc,

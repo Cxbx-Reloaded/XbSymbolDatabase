@@ -36,6 +36,7 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <stddef.h>
+#include <assert.h> // for static_assert
 
 #ifdef _MSC_VER
 #include <intrin.h>
