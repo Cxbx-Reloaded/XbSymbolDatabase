@@ -165,6 +165,59 @@ static void manual_scan_section_dx8_register_stream(iXbSymbolContext* pContext,
     pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_Stream, "D3D_g_Stream", Derived_g_Stream, 0);
 }
 
+// Has dependency on D3D_g_pDevice xref.
+static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContext,
+                                                       const iXbSymbolLibrarySession* pLibrarySession,
+                                                       SymbolDatabaseList* pLibraryDB,
+                                                       const XbSDBSection* pSection)
+{
+    // Generic usage
+    memptr_t pFunc = 0;
+    xbaddr xSymbolAddr = 0;
+    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
+    // Manual check require for able to self-register these symbols:
+    // * D3DDevice_SetSwapCallback
+    // * D3DDevice_SetVerticalBlankCallback
+
+    // First, check if D3D_g_pDevice is found.
+    if (pContext->xref_database[XREF_D3D_g_pDevice] != XREF_ADDR_DERIVE &&
+        // Then, check at least one of symbol's member variable is not found.
+        pContext->xref_database[XREF_OFFSET_D3DDevice__m_SwapCallback] == XREF_ADDR_UNDETERMINED) {
+
+        // Scan if event handle variable is not yet derived.
+        if (pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent] == XREF_ADDR_DERIVE) {
+            xSymbolAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                           pLibrarySession,
+                                                                           pLibraryDB,
+                                                                           "D3DDevice__m_VerticalBlankEvent__ManualFindGeneric",
+                                                                           pSection,
+                                                                           true,
+                                                                           NULL,
+                                                                           NULL);
+        }
+
+        // We are not registering D3DDevice__m_VerticalBlankEvent__ManualFindGeneric itself, as it is NOT a symbol.
+
+
+        // If not found, skip manual register.
+        if (pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent] == XREF_ADDR_DERIVE) {
+            return false;
+        }
+
+        // Finally, manual register the symbol variables.
+        xSymbolAddr = pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent];
+        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDevice__m_SwapCallback, xSymbolAddr - 8);
+        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDevice__m_VBlankCallback, xSymbolAddr - 4);
+    }
+    // If D3D_g_pDevice is not found, the scan is not complete
+    // and will continue scan to next given section.
+    else {
+        return false;
+    }
+
+    return true;
+}
+
 static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
                                     const iXbSymbolLibrarySession* pLibrarySession,
                                     SymbolDatabaseList* pLibraryDB,
@@ -186,6 +239,10 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
 
     OOVPARevision* pOOVPARevision = NULL;
+
+    // We need to mask boolean from each function's scan process if any return false.
+    // Needed for no dependency, scanning multiple sections, and library's databases.
+    bool bComplete = true;
 
     if (pLibrary->flag == XbSymbolLib_D3D8) {
 
@@ -474,44 +531,9 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         manual_scan_section_dx8_register_stream(pContext, pLibrarySession, pFunc, iCodeOffsetFor_g_Stream);
     }
 
-    // Manual check require for able to self-register these symbols:
-    // * D3DDevice_SetSwapCallback
-    // * D3DDevice_SetVerticalBlankCallback
-
-    // First, check if D3D_g_pDevice is found.
-    if (pContext->xref_database[XREF_D3D_g_pDevice] != XREF_ADDR_DERIVE &&
-        // Then, check at least one of symbol's member variable is not found.
-        pContext->xref_database[XREF_OFFSET_D3DDevice__m_SwapCallback] == XREF_ADDR_UNDETERMINED) {
-
-        // Scan if event handle variable is not yet derived.
-        if (pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent] == XREF_ADDR_DERIVE) {
-            xSymbolAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
-                                                                           pLibrarySession,
-                                                                           pLibraryDB,
-                                                                           "D3DDevice__m_VerticalBlankEvent__ManualFindGeneric",
-                                                                           pSection,
-                                                                           true,
-                                                                           NULL,
-                                                                           NULL);
-        }
-
-        // We are not registering D3DDevice__m_VerticalBlankEvent__ManualFindGeneric itself, as it is NOT a symbol.
-
-
-        // If not found, skip manual register.
-        if (pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent] == XREF_ADDR_DERIVE) {
-            return false;
-        }
-
-        // Finally, manual register the symbol variables.
-        xSymbolAddr = pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent];
-        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDevice__m_SwapCallback, xSymbolAddr - 8);
-        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDevice__m_VBlankCallback, xSymbolAddr - 4);
-    }
-    // If D3D_g_pDevice is not found, the scan is not complete
-    // and will continue scan to next given section.
-    else {
-        return false;
+    bComplete = manual_scan_section_dx8_register_callbacks(pContext, pLibrarySession, pLibraryDB, pSection);
+    if (!bComplete) {
+        return bComplete;
     }
 
     return true;
