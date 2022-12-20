@@ -147,7 +147,7 @@ static const RenderStateRevision DxbxRenderStateInfo[] = {
     /*  91 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Simple_Unused1) */ },                   // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
     /* End of "simple" render states, continuing with "deferred" render states: */     //
     /* Verified as XDK 3911 Deferred RenderStates(3424 yet to do) */                   //
-    /*  92 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FogEnable) */ },                        // TRUE to enable fog blending
+    /*  92 */ { 3424, 0000, XREF_NAME(D3DRS_FogEnable) },                              // TRUE to enable fog blending
     /*  93 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FogTableMode) */ },                     // D3DFOGMODE
     /*  94 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FogStart) */ },                         // float fog start (for both vertex and pixel fog)
     /*  95 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FogEnd) */ },                           // float fog end
@@ -277,6 +277,15 @@ static void manual_scan_section_dx8_VerifyRenderStateOffsets(iXbSymbolContext* p
         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "D3D_g_DeferredRenderState is not set!");
         return;
     }
+    // Verify deferred offset is correct
+    int RenderStateOffset = GetRenderStateOffsetByXRef(XREF_D3DRS_FogEnable, pLibrary->build_version);
+    if (RenderStateOffset == -1) {
+        output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Could not find D3DRS_FogEnable offset from DxbxRenderStateInfo list!");
+        return;
+    }
+    if (RenderStateOffset * sizeof(xbaddr) != g_DeferredRenderState - g_RenderState) {
+        output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "DxbxRenderStateInfo list's entry base on g_DeferredRenderState is inaccurate!");
+    }
 
     // Verify D3D_g_ComplexRenderState is set.
     xbaddr g_ComplexRenderState = pContext->xref_database[XREF_D3D_g_ComplexRenderState];
@@ -285,7 +294,7 @@ static void manual_scan_section_dx8_VerifyRenderStateOffsets(iXbSymbolContext* p
         return;
     }
     // Verify complex offset is correct
-    int RenderStateOffset = GetRenderStateOffsetByXRef(XREF_D3DRS_PSTextureModes, pLibrary->build_version);
+    RenderStateOffset = GetRenderStateOffsetByXRef(XREF_D3DRS_PSTextureModes, pLibrary->build_version);
     if (RenderStateOffset == -1) {
         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Could not find D3DRS_PSTextureModes offset from DxbxRenderStateInfo list!");
         return;
@@ -458,10 +467,11 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
 
     memptr_t pD3D_g_DeferredRenderStateOffset = 0;
 
-    // Then look up for D3DDevice_SetRenderStateNotInline
-    xbaddr D3DDevice_SetRenderStateNotInline = pContext->xref_database[XREF_D3DDevice_SetRenderStateNotInline];
-    xbaddr D3DDevice_SetRenderStateInline = pContext->xref_database[XREF_D3DDevice_SetRenderStateInline__ManualFindGeneric];
-    if (internal_IsXRefAddrUnset(D3DDevice_SetRenderStateNotInline) && internal_IsXRefAddrUnset(D3DDevice_SetRenderStateInline)) {
+    // Then look up for D3D_g_RenderState
+    xbaddr D3D_g_RenderState = pContext->xref_database[XREF_D3D_g_RenderState];
+    if (internal_IsXRefAddrUnset(D3D_g_RenderState)) {
+        // Below xref is used to obtain from D3DDevice_SetRenderState(Not)Inline signatures.
+        pContext->xref_database[XREF_D3D_g_RenderState] = XREF_ADDR_DERIVE;
         xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
                                                                             pLibrarySession,
                                                                             pLibraryDB,
@@ -473,9 +483,10 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
         if (xFuncAddr == 0) {
             // If not found, then check if library is not LTCG.
             if (pLibrarySession->pLibrary->flag == XbSymbolLib_D3D8) {
+                pContext->xref_database[XREF_D3D_g_RenderState] = XREF_ADDR_UNDETERMINED;
                 return false;
             }
-            // Otherwise, let's look up for D3DDevice_SetRenderStateInline which is NOT a function.
+            // Otherwise, let's look up for D3DDevice_SetRenderStateInline__ManualFindGeneric which is NOT a symbol.
             xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
                                                                          pLibrarySession,
                                                                          pLibraryDB,
@@ -485,13 +496,14 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
                                                                          &pSymbol,
                                                                          &pRevision);
 
+            // If not found, skip the rest of the scan.
+            if (xFuncAddr == 0) {
+                pContext->xref_database[XREF_D3D_g_RenderState] = XREF_ADDR_UNDETERMINED;
+                return false;
+            }
             // pointer to cmp opcode's value from D3DDevice_SetRenderStateInline__ManualFindGeneric sig.
             pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xFuncAddr + 0x02);
 
-            // If not found, skip the rest of the scan.
-            if (xFuncAddr == 0) {
-                return false;
-            }
             // If it is found, don't register it.
         }
         else {
@@ -499,12 +511,13 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
             pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xFuncAddr + 0x07);
 
             // Register only D3DDevice_SetRenderStateNotInline symbol function.
-            // D3DDevice_SetRenderStateInline__ManualFindGeneric is not a function but a generic method to find D3D_g_RenderState.
+            // NOTE: D3DDevice_SetRenderStateInline__ManualFindGeneric is NOT a symbol but a generic method to find D3D_g_RenderState.
             internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
         }
         // D3D_g_RenderState variable is already set internal, will be register later.
 
-        // And set D3D_g_DeferredRenderState variable base on signature cmp opcode's value as offset.
+
+        // And set D3D_g_DeferredRenderState, including D3DRS_FogEnable, variables base on signature cmp opcode's value as offset.
         // This is 100% accurate method than manual offset usage.
         if (pD3D_g_DeferredRenderStateOffset) {
             uint8_t D3D_g_DeferredRenderStateOffset = *(uint8_t*)pD3D_g_DeferredRenderStateOffset;
@@ -512,6 +525,11 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
                                      pLibrarySession->iLibraryType,
                                      XREF_D3D_g_DeferredRenderState,
                                      pContext->xref_database[XREF_D3D_g_RenderState] + D3D_g_DeferredRenderStateOffset * 4);
+
+            internal_SetXRefDatabase(pContext,
+                                     pLibrarySession->iLibraryType,
+                                     XREF_D3DRS_FogEnable,
+                                     pContext->xref_database[XREF_D3D_g_DeferredRenderState]);
         }
     }
     return true;
@@ -525,9 +543,13 @@ static bool manual_scan_section_dx8_register_D3DCRS(iXbSymbolContext* pContext,
 {
     OOVPATable* pSymbol = NULL;
     OOVPARevision* pRevision = NULL;
-    // First, we need to find D3DDevice_SetRenderState_Simple symbol.
+    // First, we need to find D3DRS_FillMode symbol.
     xbaddr D3DRS_FillMode = pContext->xref_database[XREF_D3DRS_FillMode];
     if (internal_IsXRefAddrUnset(D3DRS_FillMode)) {
+        // These xrefs are used to obtain from D3DDevice_SetRenderState_FillMode signature.
+        pContext->xref_database[XREF_D3DRS_FillMode] = XREF_ADDR_DERIVE;
+        pContext->xref_database[XREF_D3DRS_BackFillMode] = XREF_ADDR_DERIVE;
+        pContext->xref_database[XREF_D3DRS_TwoSidedLighting] = XREF_ADDR_DERIVE;
         xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
                                                                             pLibrarySession,
                                                                             pLibraryDB,
@@ -538,6 +560,9 @@ static bool manual_scan_section_dx8_register_D3DCRS(iXbSymbolContext* pContext,
                                                                             &pRevision);
         // If not found, skip the rest of the scan.
         if (xFuncAddr == 0) {
+            pContext->xref_database[XREF_D3DRS_FillMode] = XREF_ADDR_UNDETERMINED;
+            pContext->xref_database[XREF_D3DRS_BackFillMode] = XREF_ADDR_UNDETERMINED;
+            pContext->xref_database[XREF_D3DRS_TwoSidedLighting] = XREF_ADDR_UNDETERMINED;
             return false;
         }
 
