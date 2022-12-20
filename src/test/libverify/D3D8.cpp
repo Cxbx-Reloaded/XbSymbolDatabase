@@ -438,7 +438,7 @@ void getLibraryD3D8(library_db& lib_db)
     // TODO: database is incomplete + 2 internal reference need to be exclude.
     // Excluding:
     // -  2 internal manual scan reference
-    // -  4 variables
+    // -  2 variables
     // -  5 internal offsets
-    lib_db.xref_exclude = 11;
+    lib_db.xref_exclude = 9;
 }

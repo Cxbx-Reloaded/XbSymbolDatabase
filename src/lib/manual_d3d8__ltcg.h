@@ -201,7 +201,7 @@ static const RenderStateRevision DxbxRenderStateInfo[] = {
     /* 141 */ { 3424, 0000, XREF_NAME(D3DRS_TwoSidedLighting) },                       // nsp.  // FIXME map from NV2A_LIGHT_MODEL
     /* 142 */ { 3424, 0000 /*, XREF_NAME(D3DRS_NormalizeNormals) */ },                 //
     /* 143 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ZEnable) */ },                          // D3DZBUFFERTYPE?
-    /* 144 */ { 3424, 0000, XREF_NAME(D3DRS_StencilEnable) },                          //
+    /* 144 */ { 3424, 0000 /*, XREF_NAME(D3DRS_StencilEnable) */ },                    //
     /* 145 */ { 3424, 0000 /*, XREF_NAME(D3DRS_StencilFail) */ },                      //
     /* 146 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FrontFace) */ },                        // nsp.
     /* 147 */ { 3424, 0000, XREF_NAME(D3DRS_CullMode) },                               //
@@ -215,7 +215,7 @@ static const RenderStateRevision DxbxRenderStateInfo[] = {
     /* 155 */ { 4034, 0000 /*, XREF_NAME(D3DRS_MultiSampleMode) */ },                  // D3DMULTISAMPLEMODE for the backbuffer. Verified absent in 3944, present in 4034.  4034 state based on test-case : The Simpsons Road Rage
     /* 156 */ { 4034, 0000, XREF_NAME(D3DRS_MultiSampleRenderTargetMode) },            // Verified absent in 3944, present in 4034. Presence in 4034 is based on test-case : The Simpsons Road Rage
     /* 157 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ShadowFunc) */ },                       //
-    /* 158 */ { 3424, 0000, XREF_NAME(D3DRS_LineWidth) },                              //
+    /* 158 */ { 3424, 0000 /*, XREF_NAME(D3DRS_LineWidth) */ },                        //
     /* 159 */ { 4627, 0000, XREF_NAME(D3DRS_SampleAlpha) },                            // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
     /* 160 */ { 3424, 0000, XREF_NAME(D3DRS_Dxt1NoiseEnable) },                        //
     /* 161 */ { 3911, 0000, XREF_NAME(D3DRS_YuvEnable) },                              // Verified present in 3944
