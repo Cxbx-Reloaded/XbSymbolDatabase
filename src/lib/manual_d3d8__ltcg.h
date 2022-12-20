@@ -241,6 +241,74 @@ static bool IsRenderStateAvailableInCurrentXboxD3D8Lib(RenderStateRevision aRend
     return bIsRenderStateAvailable;
 }
 
+static int GetRenderStateOffsetByXRef(uint16_t xref,
+                                      uint16_t library_version)
+{
+    int offset = 0;
+    for (size_t i = 0; i < DxbxRenderStateInfoSize; i++) {
+        if (DxbxRenderStateInfo[i].xref == xref) {
+            return offset;
+        }
+        if (IsRenderStateAvailableInCurrentXboxD3D8Lib(DxbxRenderStateInfo[i], library_version)) {
+            offset++;
+        }
+    }
+    return -1;
+}
+
+static void manual_scan_section_dx8_VerifyRenderStateOffsets(iXbSymbolContext* pContext,
+                                                             const iXbSymbolLibrarySession* pLibrarySession)
+{
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
+
+    // Perform basic check up on:
+    // * Deferred offset
+    // * Complex offset
+    // Verify D3D_g_RenderState is set.
+    xbaddr g_RenderState = pContext->xref_database[XREF_D3D_g_RenderState];
+    if (internal_IsXRefAddrUnset(g_RenderState)) {
+        output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "D3D_g_RenderState is not set!");
+        return;
+    }
+
+    // Verify D3D_g_DeferredRenderState is set.
+    xbaddr g_DeferredRenderState = pContext->xref_database[XREF_D3D_g_DeferredRenderState];
+    if (internal_IsXRefAddrUnset(g_DeferredRenderState)) {
+        output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "D3D_g_DeferredRenderState is not set!");
+        return;
+    }
+
+    // Now we want to inspect each entries to be sure they are properly offset from DxbxRenderStateInfo list inspection.
+    // If an offset is inaccurate, we want to know ASAP!
+    unsigned RenderState_iLib = 0;
+    char buffer_str[512];
+    for (size_t i = 0; i < DxbxRenderStateInfoSize; i++) {
+        if (IsRenderStateAvailableInCurrentXboxD3D8Lib(DxbxRenderStateInfo[i], pLibrary->build_version)) {
+            if (DxbxRenderStateInfo[i].xref) {
+                xbaddr RenderState_iAddr = pContext->xref_database[DxbxRenderStateInfo[i].xref];
+                if (internal_IsXRefAddrUnset(RenderState_iAddr)) {
+                    if (RenderState_iAddr != XREF_ADDR_DERIVE) {
+                        sprintf(buffer_str, "XbSymbolDatabase's %s symbol is not set!", DxbxRenderStateInfo[i].name);
+                        output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, buffer_str);
+                    }
+                    else {
+                        sprintf(buffer_str, "XbSymbolDatabase's %s symbol is currently set to derive.", DxbxRenderStateInfo[i].name);
+                        output_message(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, buffer_str);
+                    }
+                }
+                else if (RenderState_iLib * sizeof(xbaddr) != RenderState_iAddr - g_RenderState) {
+                    sprintf(buffer_str, "DxbxRenderStateInfo list's entry base on %s is inaccurate!", DxbxRenderStateInfo[i].name);
+                    output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, buffer_str);
+                }
+            }
+            RenderState_iLib++;
+        }
+    }
+
+    output_message(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Verify RenderState offsets is complete.");
+}
+
+
 static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
                                                    const iXbSymbolLibrarySession* pLibrarySession,
                                                    memptr_t pFunc,
@@ -854,6 +922,10 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     }
 
     bComplete = manual_scan_section_dx8_register_D3DRS_list(pContext, pLibrarySession, pLibraryDB, pSection);
+
+    if (bComplete) {
+        manual_scan_section_dx8_VerifyRenderStateOffsets(pContext, pLibrarySession);
+    }
 
     return bComplete;
 }
