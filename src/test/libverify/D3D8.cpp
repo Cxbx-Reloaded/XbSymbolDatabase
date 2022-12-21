@@ -26,6 +26,8 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DRS_RopZRead, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DRS_SampleAlpha, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DRS_StencilCullEnable, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
+    REGISTER_SYMBOL_INLINE(D3DRS_StencilEnable, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
+    REGISTER_SYMBOL_INLINE(D3DRS_StencilFail, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DRS_TwoSidedLighting, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DRS_YuvEnable, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DRS_ZBias, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
@@ -438,10 +440,10 @@ void getLibraryD3D8(library_db& lib_db)
     lib_db.subcategories = { &d3d8_db };
     lib_db.xref_offset = XREF_OFFSET;
     lib_db.xref_total = LOCAL_COUNT;
-    // TODO: database is incomplete + 2 internal reference need to be exclude.
+    // TODO: database is incomplete + 3 internal reference need to be exclude.
     // Excluding:
-    // -  2 internal manual scan reference
+    // -  3 internal manual scan reference
     // -  2 variables
     // -  5 internal offsets
-    lib_db.xref_exclude = 9;
+    lib_db.xref_exclude = 10;
 }

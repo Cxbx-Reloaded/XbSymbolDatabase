@@ -21,6 +21,7 @@
 
 // custom search (not for external project usage)
 XREF_SYMBOL(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric)
+XREF_SYMBOL(D3DRS_Stencils_and_Occlusion__ManualFindGeneric)
 
 // variable addresses
 XREF_SYMBOL(D3D_g_RenderState)
@@ -48,7 +49,8 @@ XREF_SYMBOL(D3DRS_PSTextureModes)
 XREF_SYMBOL(D3DRS_DoNotCullUncompressed)
 XREF_SYMBOL(D3DRS_SampleAlpha)
 XREF_SYMBOL(D3DRS_StencilCullEnable)
-//XREF_SYMBOL(D3DRS_StencilEnable) // Not been used
+XREF_SYMBOL(D3DRS_StencilEnable) // Not been used
+XREF_SYMBOL(D3DRS_StencilFail)
 XREF_SYMBOL(D3DRS_TwoSidedLighting)
 XREF_SYMBOL(D3DRS_YuvEnable)
 XREF_SYMBOL(D3DRS_ZBias)

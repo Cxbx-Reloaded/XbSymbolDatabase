@@ -201,8 +201,8 @@ static const RenderStateRevision DxbxRenderStateInfo[] = {
     /* 141 */ { 3424, 0000, XREF_NAME(D3DRS_TwoSidedLighting) },                       // nsp.  // FIXME map from NV2A_LIGHT_MODEL
     /* 142 */ { 3424, 0000 /*, XREF_NAME(D3DRS_NormalizeNormals) */ },                 //
     /* 143 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ZEnable) */ },                          // D3DZBUFFERTYPE?
-    /* 144 */ { 3424, 0000 /*, XREF_NAME(D3DRS_StencilEnable) */ },                    //
-    /* 145 */ { 3424, 0000 /*, XREF_NAME(D3DRS_StencilFail) */ },                      //
+    /* 144 */ { 3424, 0000, XREF_NAME(D3DRS_StencilEnable) },                          //
+    /* 145 */ { 3424, 0000, XREF_NAME(D3DRS_StencilFail) },                            //
     /* 146 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FrontFace) */ },                        // nsp.
     /* 147 */ { 3424, 0000, XREF_NAME(D3DRS_CullMode) },                               //
     /* 148 */ { 3424, 0000 /*, XREF_NAME(D3DRS_TextureFactor) */ },                    //
@@ -408,8 +408,8 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
 
     internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_Dxt1NoiseEnable, EmuD3DDeferredRenderState + patchOffset - 3 * 4);
     internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_YuvEnable, EmuD3DDeferredRenderState + patchOffset - 2 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_OcclusionCullEnable, EmuD3DDeferredRenderState + patchOffset - 1 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_StencilCullEnable, EmuD3DDeferredRenderState + patchOffset + 0 * 4);
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_OcclusionCullEnable, EmuD3DDeferredRenderState + patchOffset - 1 * 4);
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_StencilCullEnable, EmuD3DDeferredRenderState + patchOffset + 0 * 4);
     //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_RopZCmpAlwaysRead, EmuD3DDeferredRenderState + patchOffset + 1 * 4);
     //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_RopZRead, EmuD3DDeferredRenderState + patchOffset + 2 * 4);
     //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_DoNotCullUncompressed, EmuD3DDeferredRenderState + patchOffset + 3 * 4);
@@ -617,6 +617,44 @@ static bool manual_scan_section_dx8_register_D3DRS_end_of_list(iXbSymbolContext*
     return true;
 }
 
+// No dependency requirement
+static bool manual_scan_section_dx8_register_D3DRS_Stencils_and_Occlusion(iXbSymbolContext* pContext,
+                                                                          const iXbSymbolLibrarySession* pLibrarySession,
+                                                                          SymbolDatabaseList* pLibraryDB,
+                                                                          const XbSDBSection* pSection)
+{
+    OOVPATable* pSymbol = NULL;
+    OOVPARevision* pRevision = NULL;
+    // First, we need to find D3DRS_StencilEnable symbol.
+    xbaddr D3DRS_StencilEnable = pContext->xref_database[XREF_D3DRS_StencilEnable];
+    if (internal_IsXRefAddrUnset(D3DRS_StencilEnable)) {
+        // These xrefs are used to obtain from D3DRS_Stencils_and_Occlusion__ManualFindGeneric signature.
+        pContext->xref_database[XREF_D3DRS_StencilEnable] = XREF_ADDR_DERIVE;
+        pContext->xref_database[XREF_D3DRS_StencilFail] = XREF_ADDR_DERIVE;
+        pContext->xref_database[XREF_D3DRS_OcclusionCullEnable] = XREF_ADDR_DERIVE;
+        pContext->xref_database[XREF_D3DRS_StencilCullEnable] = XREF_ADDR_DERIVE;
+        xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                            pLibrarySession,
+                                                                            pLibraryDB,
+                                                                            "D3DRS_Stencils_and_Occlusion__ManualFindGeneric",
+                                                                            pSection,
+                                                                            false,
+                                                                            &pSymbol,
+                                                                            &pRevision);
+        // If not found, skip the rest of the scan.
+        if (xFuncAddr == 0) {
+            pContext->xref_database[XREF_D3DRS_StencilEnable] = XREF_ADDR_UNDETERMINED;
+            pContext->xref_database[XREF_D3DRS_StencilFail] = XREF_ADDR_UNDETERMINED;
+            pContext->xref_database[XREF_D3DRS_OcclusionCullEnable] = XREF_ADDR_UNDETERMINED;
+            pContext->xref_database[XREF_D3DRS_StencilCullEnable] = XREF_ADDR_UNDETERMINED;
+            return false;
+        }
+
+        // If found, then above xrefs will be set internally.
+    }
+    return true;
+}
+
 static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
                                                     const iXbSymbolLibrarySession* pLibrarySession,
                                                     memptr_t pFunc,
@@ -766,6 +804,9 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 
     // Get D3D_g_ComplexRenderState, D3DRS_FillMode, and D3DRS_PSTextureModes variables
     bComplete &= manual_scan_section_dx8_register_D3DCRS(pContext, pLibrarySession, pLibraryDB, pSection);
+
+    // Get D3DRS_OcclusionCullEnable, D3DRS_StencilCullEnable, D3DRS_StencilEnable, and D3DRS_StencilFail variables
+    bComplete &= manual_scan_section_dx8_register_D3DRS_Stencils_and_Occlusion(pContext, pLibrarySession, pLibraryDB, pSection);
 
     // Check if any results as incomplete scan.
     if (!bComplete) {

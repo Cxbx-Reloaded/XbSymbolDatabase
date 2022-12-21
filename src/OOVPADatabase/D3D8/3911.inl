@@ -69,6 +69,48 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
+// * D3DRS_Stencils_and_Occlusion__ManualFindGeneric
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF_DETECT(D3DRS_Stencils_and_Occlusion__ManualFindGeneric,
+                             3911,
+                             XRefFour,
+                             DetectFirst)
+OOVPA_SIG_MATCH(
+
+    // mov e??, [D3DRS_StencilCullEnable]
+    XREF_ENTRY(0x02, XREF_D3DRS_StencilCullEnable),
+
+    // mov e??, [D3DRS_OcclusionCullEnable]
+    XREF_ENTRY(0x13, XREF_D3DRS_OcclusionCullEnable),
+
+    // mov e??, [D3DRS_StencilEnable]
+    XREF_ENTRY(0x1D, XREF_D3DRS_StencilEnable),
+
+    // cmp [D3DRS_StencilFail],0x1E00
+    XREF_ENTRY(0x27, XREF_D3DRS_StencilFail),
+
+    // mov e??, [D3DRS_StencilCullEnable]
+    OV_MATCH(0x00, 0x8B),
+
+    // mov ecx,0x2
+    OV_MATCH(0x0C, 0xB9, 0x02, 0x00 /*, 0x00, 0x00*/),
+
+    // mov e??, [D3DRS_OcclusionCullEnable]
+    OV_MATCH(0x11, 0x8B),
+
+    // mov e??, [D3DRS_StencilEnable]
+    OV_MATCH(0x1B, 0x8B),
+
+    // cmp [D3DRS_StencilFail],0x1E00
+    OV_MATCH(0x25, 0x81),
+
+    // or ecx,0x1
+    OV_MATCH(0x31, 0x83, 0xC9, 0x01),
+    //
+);
+
+// ******************************************************************
 // * Direct3D_CreateDevice
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(Direct3D_CreateDevice,

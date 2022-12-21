@@ -831,7 +831,6 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     pContext->xref_database[XREF_D3DRS_RopZCmpAlwaysRead] = XREF_ADDR_DERIVE;                  //In use
     pContext->xref_database[XREF_D3DRS_RopZRead] = XREF_ADDR_DERIVE;                           //In use
     pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed] = XREF_ADDR_DERIVE;              //In use
-    pContext->xref_database[XREF_D3DRS_StencilCullEnable] = XREF_ADDR_DERIVE;                  //In use
     pContext->xref_database[XREF_D3DRS_TwoSidedLighting] = XREF_ADDR_DERIVE;                   //In use
     pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                     //In use
     pContext->xref_database[XREF_D3D_g_Stream] = XREF_ADDR_DERIVE;                             //In use
