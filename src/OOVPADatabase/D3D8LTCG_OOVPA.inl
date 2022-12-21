@@ -150,7 +150,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_BackFillMode, 1024, 1036),
     REGISTER_OOVPAS_C(D3DDevice_SetRenderState_CullMode, 1045, 1049, 1052, 1053),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_EdgeAntiAlias, 1024, 1036, 1048, 1060),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_FillMode, 1024, 1036, 1048, 1060),
+    REGISTER_OOVPAS_M(D3DDevice_SetRenderState_FillMode, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FogColor, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FrontFace, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_LineWidth, 1024),

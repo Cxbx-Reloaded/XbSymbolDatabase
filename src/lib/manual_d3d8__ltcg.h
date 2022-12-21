@@ -193,7 +193,7 @@ static const RenderStateRevision DxbxRenderStateInfo[] = {
     /* 134 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Deferred_Unused2) */ },                 // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
     /* 135 */ { 4627, 0000 /*, XREF_NAME(D3DRS_Deferred_Unused1) */ },                 // Verified absent in 4531, present in 4627  TODO: might be introduced in between?
     /* End of "deferred" render states, continuing with "complex" render states: */    //
-    /* 136 */ { 3424, 0000 /*, XREF_NAME(D3DRS_PSTextureModes) */ },                   // This is where pPSDef->PSTextureModes is stored (outside the pPSDEF - see DxbxUpdateActivePixelShader)
+    /* 136 */ { 3424, 0000, XREF_NAME(D3DRS_PSTextureModes) },                         // This is where pPSDef->PSTextureModes is stored (outside the pPSDEF - see DxbxUpdateActivePixelShader)
     /* 137 */ { 3424, 0000 /*, XREF_NAME(D3DRS_VertexBlend) */ },                      //
     /* 138 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FogColor) */ },                         // SwapRgb
     /* 139 */ { 3424, 0000, XREF_NAME(D3DRS_FillMode) },                               //
@@ -278,6 +278,22 @@ static void manual_scan_section_dx8_VerifyRenderStateOffsets(iXbSymbolContext* p
         return;
     }
 
+    // Verify D3D_g_ComplexRenderState is set.
+    xbaddr g_ComplexRenderState = pContext->xref_database[XREF_D3D_g_ComplexRenderState];
+    if (internal_IsXRefAddrUnset(g_ComplexRenderState)) {
+        output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "D3D_g_ComplexRenderState is not set!");
+        return;
+    }
+    // Verify complex offset is correct
+    int RenderStateOffset = GetRenderStateOffsetByXRef(XREF_D3DRS_PSTextureModes, pLibrary->build_version);
+    if (RenderStateOffset == -1) {
+        output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Could not find D3DRS_PSTextureModes offset from DxbxRenderStateInfo list!");
+        return;
+    }
+    if (RenderStateOffset * sizeof(xbaddr) != g_ComplexRenderState - g_RenderState) {
+        output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "DxbxRenderStateInfo list's entry base on g_ComplexRenderState is inaccurate!");
+    }
+
     // Now we want to inspect each entries to be sure they are properly offset from DxbxRenderStateInfo list inspection.
     // If an offset is inaccurate, we want to know ASAP!
     unsigned RenderState_iLib = 0;
@@ -357,9 +373,9 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
     // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_PSTextureModes, DerivedAddr_D3DRS_CullMode - 11*4);
     // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_VertexBlend, DerivedAddr_D3DRS_CullMode - 10*4);
     // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_FogColor, DerivedAddr_D3DRS_CullMode - 9*4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_FillMode, DerivedAddr_D3DRS_CullMode - 8 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_BackFillMode, DerivedAddr_D3DRS_CullMode - 7 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_TwoSidedLighting, DerivedAddr_D3DRS_CullMode - 6 * 4);
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_FillMode, DerivedAddr_D3DRS_CullMode - 8 * 4); // is done in manual_scan_section_dx8_register_D3DCRS.
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_BackFillMode, DerivedAddr_D3DRS_CullMode - 7 * 4); // is done in manual_scan_section_dx8_register_D3DCRS.
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_TwoSidedLighting, DerivedAddr_D3DRS_CullMode - 6 * 4); // is done in manual_scan_section_dx8_register_D3DCRS.
     // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_NormalizeNormals, DerivedAddr_D3DRS_CullMode - 5*4);
     // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_ZEnable, DerivedAddr_D3DRS_CullMode - 4*4);
     // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_StencilEnable, DerivedAddr_D3DRS_CullMode - 3*4);
@@ -407,6 +423,7 @@ static bool manual_scan_section_dx8_register_D3DRS_list(iXbSymbolContext* pConte
 
     // Manual register RenderState sections.
     internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_RenderState, 0, "D3D_g_RenderState");
+    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_ComplexRenderState, 0, "D3D_g_ComplexRenderState");
     internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_DeferredRenderState, 0, "D3D_g_DeferredRenderState");
 
     return true;
@@ -497,6 +514,45 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
                                      pContext->xref_database[XREF_D3D_g_RenderState] + D3D_g_DeferredRenderStateOffset * 4);
         }
     }
+    return true;
+}
+
+// No dependency requirement
+static bool manual_scan_section_dx8_register_D3DCRS(iXbSymbolContext* pContext,
+                                                    const iXbSymbolLibrarySession* pLibrarySession,
+                                                    SymbolDatabaseList* pLibraryDB,
+                                                    const XbSDBSection* pSection)
+{
+    OOVPATable* pSymbol = NULL;
+    OOVPARevision* pRevision = NULL;
+    // First, we need to find D3DDevice_SetRenderState_Simple symbol.
+    xbaddr D3DRS_FillMode = pContext->xref_database[XREF_D3DRS_FillMode];
+    if (internal_IsXRefAddrUnset(D3DRS_FillMode)) {
+        xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                            pLibrarySession,
+                                                                            pLibraryDB,
+                                                                            "D3DDevice_SetRenderState_FillMode",
+                                                                            pSection,
+                                                                            false,
+                                                                            &pSymbol,
+                                                                            &pRevision);
+        // If not found, skip the rest of the scan.
+        if (xFuncAddr == 0) {
+            return false;
+        }
+
+        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
+    }
+
+    // Derived D3DRS_FillMode, D3DRS_BackFillMode, and D3DRS_TwoSidedLighting variables are already set.
+
+    // Set D3D_g_ComplexRenderState variable
+    // Had been reverse engineered and verified across compiled XDK builds from retail titles.
+    pContext->xref_database[XREF_D3D_g_ComplexRenderState] = pContext->xref_database[XREF_D3DRS_FillMode] - 3 /*index*/ * sizeof(xbaddr);
+
+    // Set D3DRS_PSTextureModes variable which reside in same address as D3D_g_ComplexRenderState is at.
+    pContext->xref_database[XREF_D3DRS_PSTextureModes] = pContext->xref_database[XREF_D3D_g_ComplexRenderState];
+
     return true;
 }
 
@@ -643,6 +699,9 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 
     // Get D3D_g_RenderState and D3D_g_DeferredRenderState variables
     bComplete &= manual_scan_section_dx8_register_D3DRS(pContext, pLibrarySession, pLibraryDB, pSection);
+
+    // Get D3D_g_ComplexRenderState, D3DRS_FillMode, and D3DRS_PSTextureModes variables
+    bComplete &= manual_scan_section_dx8_register_D3DCRS(pContext, pLibrarySession, pLibraryDB, pSection);
 
     // Check if any results as incomplete scan.
     if (!bComplete) {

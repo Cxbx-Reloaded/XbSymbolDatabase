@@ -827,12 +827,15 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     // D3D
     pContext->xref_database[XREF_D3D_g_pDevice] = XREF_ADDR_DERIVE;                            //In use
     pContext->xref_database[XREF_D3D_g_RenderState] = XREF_ADDR_DERIVE;                        //In use
+    pContext->xref_database[XREF_D3DRS_BackFillMode] = XREF_ADDR_DERIVE;                       //In use
     pContext->xref_database[XREF_D3DRS_CullMode] = XREF_ADDR_DERIVE;                           //In use
+    pContext->xref_database[XREF_D3DRS_FillMode] = XREF_ADDR_DERIVE;                           //In use
     pContext->xref_database[XREF_D3DRS_MultiSampleRenderTargetMode] = XREF_ADDR_DERIVE;        //In use
     pContext->xref_database[XREF_D3DRS_RopZCmpAlwaysRead] = XREF_ADDR_DERIVE;                  //In use
     pContext->xref_database[XREF_D3DRS_RopZRead] = XREF_ADDR_DERIVE;                           //In use
     pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed] = XREF_ADDR_DERIVE;              //In use
     pContext->xref_database[XREF_D3DRS_StencilCullEnable] = XREF_ADDR_DERIVE;                  //In use
+    pContext->xref_database[XREF_D3DRS_TwoSidedLighting] = XREF_ADDR_DERIVE;                   //In use
     pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                     //In use
     pContext->xref_database[XREF_D3D_g_Stream] = XREF_ADDR_DERIVE;                             //In use
     pContext->xref_database[XREF_OFFSET_D3DDevice__m_PixelShader] = XREF_ADDR_DERIVE;          //
