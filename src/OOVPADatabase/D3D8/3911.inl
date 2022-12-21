@@ -4991,23 +4991,41 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3D::SetCommonDebugRegisters
+// * D3D::CommonSetDebugRegisters
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3D_SetCommonDebugRegisters,
-                         3911)
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(D3D_CommonSetDebugRegisters,
+                      3911,
+                      XRefThree)
 OOVPA_SIG_MATCH(
 
-    { 0x07, 0x8B },
-    { 0x08, 0x96 },
-    { 0x09, 0x44 },
-    { 0x0A, 0x2B },
-    { 0x31, 0x81 },
-    { 0x32, 0xE2 },
-    { 0x33, 0xFF },
-    { 0x34, 0xFF },
-    { 0x35, 0xEF },
-    { 0x36, 0xE7 },
-    //
+    // mov ecx, ptr [D3DRS_DoNotCullUncompressed]
+    XREF_ENTRY(0x18, XREF_D3DRS_DoNotCullUncompressed), // derived
+    // mov ecx, ptr [D3DRS_RopZCmpAlwaysRead]
+    XREF_ENTRY(0x3F, XREF_D3DRS_RopZCmpAlwaysRead), // derived
+    // mov eax, ptr [D3DRS_RopZRead]
+    XREF_ENTRY(0x55, XREF_D3DRS_RopZRead), // derived
+
+    // push esi
+    OV_MATCH(0x00, 0x56),
+
+    // and edx, -9
+    OV_MATCH(0x0D, 0x83, 0xE2, 0xF7),
+
+    // mov ecx, ptr [D3DRS_DoNotCullUncompressed]
+    OV_MATCH(0x16, 0x8B),
+
+    // Unique offset
+    // and edx,0xE7EFFFFF
+    OV_MATCH(0x31, 0x81, 0xE2, 0xFF, 0xFF, 0xEF, 0xE7),
+
+    // mov ecx, ptr [D3DRS_RopZCmpAlwaysRead]
+    OV_MATCH(0x3D, 0x8B),
+
+    // mov eax, ptr [D3DRS_RopZRead]
+    OV_MATCH(0x54, 0xA1),
+
+    // offset from 0x67 and later are different across builds.
 );
 
 // ******************************************************************

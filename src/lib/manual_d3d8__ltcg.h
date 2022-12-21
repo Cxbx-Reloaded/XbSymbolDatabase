@@ -410,9 +410,9 @@ static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
     internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_YuvEnable, EmuD3DDeferredRenderState + patchOffset - 2 * 4);
     internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_OcclusionCullEnable, EmuD3DDeferredRenderState + patchOffset - 1 * 4);
     internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_StencilCullEnable, EmuD3DDeferredRenderState + patchOffset + 0 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_RopZCmpAlwaysRead, EmuD3DDeferredRenderState + patchOffset + 1 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_RopZRead, EmuD3DDeferredRenderState + patchOffset + 2 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_DoNotCullUncompressed, EmuD3DDeferredRenderState + patchOffset + 3 * 4);
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_RopZCmpAlwaysRead, EmuD3DDeferredRenderState + patchOffset + 1 * 4);
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_RopZRead, EmuD3DDeferredRenderState + patchOffset + 2 * 4);
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_DoNotCullUncompressed, EmuD3DDeferredRenderState + patchOffset + 3 * 4);
 
 }
 
@@ -581,6 +581,42 @@ static bool manual_scan_section_dx8_register_D3DCRS(iXbSymbolContext* pContext,
     return true;
 }
 
+// No dependency requirement
+static bool manual_scan_section_dx8_register_D3DRS_end_of_list(iXbSymbolContext* pContext,
+                                                               const iXbSymbolLibrarySession* pLibrarySession,
+                                                               SymbolDatabaseList* pLibraryDB,
+                                                               const XbSDBSection* pSection)
+{
+    OOVPATable* pSymbol = NULL;
+    OOVPARevision* pRevision = NULL;
+    // First, we need to find D3DRS_DoNotCullUncompressed symbol.
+    xbaddr D3DRS_DoNotCullUncompressed = pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed];
+    if (internal_IsXRefAddrUnset(D3DRS_DoNotCullUncompressed)) {
+        // These xrefs are used to obtain from D3D_CommonSetDebugRegisters signature.
+        pContext->xref_database[XREF_D3DRS_RopZCmpAlwaysRead] = XREF_ADDR_DERIVE;
+        pContext->xref_database[XREF_D3DRS_RopZRead] = XREF_ADDR_DERIVE;
+        pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed] = XREF_ADDR_DERIVE;
+        xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                            pLibrarySession,
+                                                                            pLibraryDB,
+                                                                            "D3D_CommonSetDebugRegisters",
+                                                                            pSection,
+                                                                            false,
+                                                                            &pSymbol,
+                                                                            &pRevision);
+        // If not found, skip the rest of the scan.
+        if (xFuncAddr == 0) {
+            pContext->xref_database[XREF_D3DRS_RopZCmpAlwaysRead] = XREF_ADDR_UNDETERMINED;
+            pContext->xref_database[XREF_D3DRS_RopZRead] = XREF_ADDR_UNDETERMINED;
+            pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed] = XREF_ADDR_UNDETERMINED;
+            return false;
+        }
+
+        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
+    }
+    return true;
+}
+
 static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
                                                     const iXbSymbolLibrarySession* pLibrarySession,
                                                     memptr_t pFunc,
@@ -721,6 +757,9 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     // We need to mask boolean from each function's scan process if any return false.
     // Needed for no dependency, scanning multiple sections, and library's databases.
     bool bComplete = true;
+
+    // Get end of D3D_g_RenderState list by D3DRS_DoNotCullUncompressed variable
+    bComplete &= manual_scan_section_dx8_register_D3DRS_end_of_list(pContext, pLibrarySession, pLibraryDB, pSection);
 
     // Get D3D_g_RenderState and D3D_g_DeferredRenderState variables
     bComplete &= manual_scan_section_dx8_register_D3DRS(pContext, pLibrarySession, pLibraryDB, pSection);

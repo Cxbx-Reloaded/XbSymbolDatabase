@@ -975,9 +975,15 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
 
         if ((pLibrary->flag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
             // TODO: Do we need to check twice?
-            // Initialize a matching specific section is currently pair with library in order to scan specific section only.
-            // By doing this method will reduce false detection dramatically. If it had happened before.
-            manual_scan_library_custom(pContext, manual_scan_section_dx8, &libSession);
+            // Perform check twice, since sections can be in different order.
+            for (unsigned int loop = 0; loop < 2; loop++) {
+                // Initialize a matching specific section is currently pair with library in order to scan specific section only.
+                // By doing this method will reduce false detection dramatically. If it had happened before.
+                if (!manual_scan_library_custom(pContext, manual_scan_section_dx8, &libSession)) {
+                    continue;
+                }
+                break;
+            }
         }
         else if ((pLibrary->flag & XbSymbolLib_DSOUND) > 0) {
             // Perform check twice, since sections can be in different order.

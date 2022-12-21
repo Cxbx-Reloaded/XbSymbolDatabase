@@ -411,6 +411,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS_D3D(CMiniport_GetDisplayCapabilities, 3911),
     REGISTER_OOVPAS(D3D_CheckDeviceFormat, 3911),
     REGISTER_OOVPAS(D3D_ClearStateBlockFlags, 3911),
+    REGISTER_OOVPAS_M(D3D_CommonSetDebugRegisters, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 4627, 5028), // Used between 4627 to 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3D_CreateStandAloneSurface, 4034),
     REGISTER_OOVPAS(D3D_DestroyResource, 3911),
@@ -422,7 +423,6 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3D_KickOffAndWaitForIdle, 3911, 4034, 4627, 5028),
     REGISTER_OOVPAS(D3D_LazySetPointParams, 3911, 4034),
     REGISTER_OOVPAS(D3D_RecordStateBlock, 3911),
-    REGISTER_OOVPAS(D3D_SetCommonDebugRegisters, 3911),
     REGISTER_OOVPAS(D3D_SetFence, 3911, 4034, 4134, 5028, 5558),
     REGISTER_OOVPAS(D3D_SetPushBufferSize, 3911),
     REGISTER_OOVPAS(D3D_SetTileNoWait, 4627, 5455),
