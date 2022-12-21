@@ -5671,11 +5671,12 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderStateNotInline,
                       3911,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
     // D3DDevice::SetRenderStateNotInline+0x18 : call D3DDevice_SetRenderState_Simple
     XREF_ENTRY(0x19, XREF_D3DDevice_SetRenderState_Simple),
+    XREF_ENTRY(0x20, XREF_D3D_g_RenderState),
 
     // D3DDevice::SetRenderStateNotInline+0x00 : push esi
     OV_MATCH(0x00, 0x56),

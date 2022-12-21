@@ -19,6 +19,9 @@
 // *
 // ******************************************************************
 
+// custom search (not for external project usage)
+XREF_SYMBOL(D3DDevice_SetRenderStateInline__ManualFindGeneric)
+
 // TODO: Verify each xref's function match with d3d8.def's function xrefs.
 
 // functions

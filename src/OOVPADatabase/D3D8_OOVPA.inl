@@ -313,8 +313,8 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetPixelShader, 3911, 4034, 4627),
     REGISTER_OOVPAS(D3DDevice_SetPixelShaderConstant, 3911, 4831),
     REGISTER_OOVPAS(D3DDevice_SetPixelShaderProgram, 3911),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_Simple, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderStateNotInline, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: Must be after D3DDevice_SetRenderState_Simple.
+    REGISTER_OOVPAS_M(D3DDevice_SetRenderState_Simple, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_M(D3DDevice_SetRenderStateNotInline, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: Must be after D3DDevice_SetRenderState_Simple.
     // NOTE: Some or most of render state signatures below must be after D3DDevice_SetRenderStateNotInline.
     REGISTER_OOVPAS(D3DDevice_SetRenderState, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState2, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: There is a verified duplicate function.

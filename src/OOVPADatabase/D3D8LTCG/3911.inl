@@ -1222,3 +1222,41 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x24, 0x81, 0xFE, 0x00, 0x00, 0x05, 0x00),
     //
 );
+
+// ******************************************************************
+// * D3DDevice_SetRenderStateInline__ManualFindGeneric
+// ******************************************************************
+// NOTE: This signature will find any generic match with D3D_g_RenderState
+//       Currently, this is the best method if
+//       D3DDevice_SetRenderStateNotInline detection is absent.
+//       This OOVPA itself is not a symbol.
+OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice_SetRenderStateInline__ManualFindGeneric,
+                             3911,
+                             XRefTwo,
+                             DetectFirst)
+OOVPA_SIG_MATCH(
+    // call D3DDevice_SetRenderState_Simple
+    XREF_ENTRY(0x15, XREF_D3DDevice_SetRenderState_Simple),
+    XREF_ENTRY(0x1C, XREF_D3D_g_RenderState),
+
+    // cmp esi,0x?? // Up until < 4039 is 0x52
+    OV_MATCH(0x00, 0x83, 0xFE),
+
+    // mov edi,ptr [ebx + ????]
+    OV_MATCH(0x03, 0x8B, 0xBB),
+
+    // jge +0x??
+    OV_MATCH(0x09, 0x7D),
+
+    // mov ecx,ptr [esi * 4 + ????]
+    OV_MATCH(0x0B, 0x8B, 0x0C, 0xB5),
+
+    // mov edx,edi
+    OV_MATCH(0x12, 0x8B, 0xD7),
+    // call D3DDevice_SetRenderState_Simple
+    OV_MATCH(0x14, 0xE8),
+
+    // mov ptr [esi * 4 + D3D_g_RenderState],edi
+    OV_MATCH(0x19, 0x89, 0x3C, 0xB5),
+    //
+);

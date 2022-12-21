@@ -336,8 +336,79 @@ static bool manual_scan_section_dx8_register_D3DRS_list(iXbSymbolContext* pConte
     }
 
     // Manual register RenderState sections.
+    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_RenderState, 0, "D3D_g_RenderState");
     internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_DeferredRenderState, 0, "D3D_g_DeferredRenderState");
 
+    return true;
+}
+
+// No dependency requirement
+static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
+                                                   const iXbSymbolLibrarySession* pLibrarySession,
+                                                   SymbolDatabaseList* pLibraryDB,
+                                                   const XbSDBSection* pSection)
+{
+    OOVPATable* pSymbol = NULL;
+    OOVPARevision* pRevision = NULL;
+    // First, we need to find D3DDevice_SetRenderState_Simple symbol.
+    xbaddr D3DDevice_SetRenderState_Simple = pContext->xref_database[XREF_D3DDevice_SetRenderState_Simple];
+    if (internal_IsXRefAddrUnset(D3DDevice_SetRenderState_Simple)) {
+        xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                            pLibrarySession,
+                                                                            pLibraryDB,
+                                                                            "D3DDevice_SetRenderState_Simple",
+                                                                            pSection,
+                                                                            true,
+                                                                            &pSymbol,
+                                                                            &pRevision);
+        // If not found, skip the rest of the scan.
+        if (xFuncAddr == 0) {
+            return false;
+        }
+
+        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
+    }
+
+    // Then look up for D3DDevice_SetRenderStateNotInline
+    xbaddr D3DDevice_SetRenderStateNotInline = pContext->xref_database[XREF_D3DDevice_SetRenderStateNotInline];
+    xbaddr D3DDevice_SetRenderStateInline = pContext->xref_database[XREF_D3DDevice_SetRenderStateInline__ManualFindGeneric];
+    if (internal_IsXRefAddrUnset(D3DDevice_SetRenderStateNotInline) && internal_IsXRefAddrUnset(D3DDevice_SetRenderStateInline)) {
+        xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                            pLibrarySession,
+                                                                            pLibraryDB,
+                                                                            "D3DDevice_SetRenderStateNotInline",
+                                                                            pSection,
+                                                                            true,
+                                                                            &pSymbol,
+                                                                            &pRevision);
+        if (xFuncAddr == 0) {
+            // If not found, then check if library is not LTCG.
+            if (pLibrarySession->pLibrary->flag == XbSymbolLib_D3D8) {
+                return false;
+            }
+            // Otherwise, let's look up for D3DDevice_SetRenderStateInline which is NOT a function.
+            xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+                                                                         pLibrarySession,
+                                                                         pLibraryDB,
+                                                                         "D3DDevice_SetRenderStateInline__ManualFindGeneric",
+                                                                         pSection,
+                                                                         true,
+                                                                         &pSymbol,
+                                                                         &pRevision);
+
+            // If not found, skip the rest of the scan.
+            if (xFuncAddr == 0) {
+                return false;
+            }
+            // If it is found, don't register it.
+        }
+        else {
+            // Register only D3DDevice_SetRenderStateNotInline symbol function.
+            // D3DDevice_SetRenderStateInline__ManualFindGeneric is not a function but a generic method to find D3D_g_RenderState.
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
+        }
+        // D3D_g_RenderState variable is already set internal, will be register later.
+    }
     return true;
 }
 
@@ -481,6 +552,14 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     // We need to mask boolean from each function's scan process if any return false.
     // Needed for no dependency, scanning multiple sections, and library's databases.
     bool bComplete = true;
+
+    // Get D3D_g_RenderState variable
+    bComplete &= manual_scan_section_dx8_register_D3DRS(pContext, pLibrarySession, pLibraryDB, pSection);
+
+    // Check if any results as incomplete scan.
+    if (!bComplete) {
+        return bComplete;
+    }
 
     if (pLibrary->flag == XbSymbolLib_D3D8) {
 

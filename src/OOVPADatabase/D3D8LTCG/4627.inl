@@ -1132,9 +1132,17 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderStateNotInline
 // ******************************************************************
 //C381FE880000007D1D8B0D ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderStateNotInline_0,
-                         2048)
+// Titles found are...
+// * (4928.1) Shin Megami Tensei: Nine (DDS9)
+// * (5120.1) Crimson Sea
+// * (5344.1) The Italian Job
+// * (5455.1) Freaky Flyers
+// * (5659.4) Beyond Good And Evil
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderStateNotInline_0,
+                      2048,
+                      XRefOne)
 OOVPA_SIG_MATCH(
+    XREF_ENTRY(0x16, XREF_D3D_g_RenderState),
 
     { 0x00, 0x83 },
     { 0x01, 0xFE },

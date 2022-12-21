@@ -4,6 +4,7 @@
 
 static const library_list database_full = {
     // derived xrefs (variables)
+    REGISTER_SYMBOL_INLINE(D3D_g_RenderState, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3D_g_DeferredRenderState, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3D_g_DeferredTextureState, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3D_g_pDevice, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
@@ -434,10 +435,10 @@ void getLibraryD3D8(library_db& lib_db)
     lib_db.subcategories = { &d3d8_db };
     lib_db.xref_offset = XREF_OFFSET;
     lib_db.xref_total = LOCAL_COUNT;
-    // TODO: database is incomplete + 1 internal reference need to be exclude.
+    // TODO: database is incomplete + 2 internal reference need to be exclude.
     // Excluding:
-    // -  1 internal manual scan reference
+    // -  2 internal manual scan reference
     // -  4 variables
     // -  5 internal offsets
-    lib_db.xref_exclude = 10;
+    lib_db.xref_exclude = 11;
 }

@@ -23,6 +23,7 @@
 XREF_SYMBOL(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric)
 
 // variable addresses
+XREF_SYMBOL(D3D_g_RenderState)
 XREF_SYMBOL(D3D_g_DeferredRenderState)
 XREF_SYMBOL(D3D_g_DeferredTextureState)
 XREF_SYMBOL(D3D_g_pDevice)
