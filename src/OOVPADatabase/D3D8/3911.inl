@@ -5077,9 +5077,11 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 3911 and newer.
 OOVPA_SIG_HEADER_XREF(D3D_CommonSetDebugRegisters,
                       3911,
-                      XRefThree)
+                      XRefFour)
 OOVPA_SIG_MATCH(
 
+    // mov esi, ptr [D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // derived
     // mov ecx, ptr [D3DRS_DoNotCullUncompressed]
     XREF_ENTRY(0x18, XREF_D3DRS_DoNotCullUncompressed), // derived
     // mov ecx, ptr [D3DRS_RopZCmpAlwaysRead]

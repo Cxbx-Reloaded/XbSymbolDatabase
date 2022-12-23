@@ -212,7 +212,7 @@ static const RenderStateRevision DxbxRenderStateInfo[] = {
     /* 152 */ { 3424, 0000, XREF_NAME(D3DRS_MultiSampleAntiAlias) },                   //
     /* 153 */ { 3424, 0000, XREF_NAME(D3DRS_MultiSampleMask) },                        //
     /* 154 */ { 3424, 4034 /*, XREF_NAME(D3DRS_MultiSampleType) */ },                  // Verified present in 3944, removed in 4034. 4034 state based on test-case : The Simpsons Road Rage
-    /* 155 */ { 4034, 0000 /*, XREF_NAME(D3DRS_MultiSampleMode) */ },                  // D3DMULTISAMPLEMODE for the backbuffer. Verified absent in 3944, present in 4034.  4034 state based on test-case : The Simpsons Road Rage
+    /* 155 */ { 4034, 0000, XREF_NAME(D3DRS_MultiSampleMode) },                        // D3DMULTISAMPLEMODE for the backbuffer. Verified absent in 3944, present in 4034.  4034 state based on test-case : The Simpsons Road Rage
     /* 156 */ { 4034, 0000, XREF_NAME(D3DRS_MultiSampleRenderTargetMode) },            // Verified absent in 3944, present in 4034. Presence in 4034 is based on test-case : The Simpsons Road Rage
     /* 157 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ShadowFunc) */ },                       //
     /* 158 */ { 3424, 0000 /*, XREF_NAME(D3DRS_LineWidth) */ },                        //
@@ -333,100 +333,35 @@ static void manual_scan_section_dx8_VerifyRenderStateOffsets(iXbSymbolContext* p
     output_message(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Verify RenderState offsets is complete.");
 }
 
-
-static void manual_scan_section_dx8_register_xrefs(iXbSymbolContext* pContext,
-                                                   const iXbSymbolLibrarySession* pLibrarySession,
-                                                   memptr_t pFunc,
-                                                   xbaddr DerivedAddr_D3DRS_CullMode,
-                                                   uint32_t patchOffset,
-                                                   uint32_t Increment,
-                                                   uint32_t Decrement)
-{
-    if (pFunc == NULL) {
-        return;
-    }
-    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
-    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
-
-    // Temporary verification - is XREF_D3D_g_pDevice derived correctly?
-    xbaddr DerivedAddr_D3DDevice = *(xbaddr*)(pFunc + 0x03);
-    if (pContext->xref_database[XREF_D3D_g_pDevice] != DerivedAddr_D3DDevice) {
-
-        if (pContext->xref_database[XREF_D3D_g_pDevice] != XREF_ADDR_DERIVE) {
-            output_message(&pContext->output, XB_OUTPUT_MESSAGE_INFO, "Second derived XREF_D3D_g_pDevice differs from first!");
-        }
-
-        internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XREF_D3D_g_pDevice, DerivedAddr_D3DDevice);
-    }
-    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_pDevice, "D3D_g_pDevice", DerivedAddr_D3DDevice, 0);
-
-    // Temporary verification - is XREF_D3D_RenderState_CullMode derived correctly?
-    if (pContext->xref_database[XREF_D3DRS_CullMode] != DerivedAddr_D3DRS_CullMode) {
-
-        if (pContext->xref_database[XREF_D3DRS_CullMode] != XREF_ADDR_DERIVE) {
-            output_message(&pContext->output, XB_OUTPUT_MESSAGE_WARN, "Second derived XREF_D3D_RenderState_CullMode differs from first!");
-        }
-
-        internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XREF_D3DRS_CullMode, DerivedAddr_D3DRS_CullMode);
-    }
-    // Register the offset of D3DRS_CullMode, this can be used to programatically locate other render-states in the calling program
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_CullMode, DerivedAddr_D3DRS_CullMode);
-
-    // Derive address of EmuD3DDeferredRenderState from D3DRS_CullMode
-    // NOTE: No longer requirement anymore! Woohoo!
-    // xbaddr EmuD3DDeferredRenderState = DerivedAddr_D3DRS_CullMode - Decrement + Increment;
-    xbaddr EmuD3DDeferredRenderState = pContext->xref_database[XREF_D3D_g_DeferredRenderState];
-    patchOffset -= Increment;
-
-    // Derive address of a few other deferred render state slots (to help xref-based function location)
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_PSTextureModes, DerivedAddr_D3DRS_CullMode - 11*4);
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_VertexBlend, DerivedAddr_D3DRS_CullMode - 10*4);
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_FogColor, DerivedAddr_D3DRS_CullMode - 9*4);
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_FillMode, DerivedAddr_D3DRS_CullMode - 8 * 4); // is done in manual_scan_section_dx8_register_D3DCRS.
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_BackFillMode, DerivedAddr_D3DRS_CullMode - 7 * 4); // is done in manual_scan_section_dx8_register_D3DCRS.
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_TwoSidedLighting, DerivedAddr_D3DRS_CullMode - 6 * 4); // is done in manual_scan_section_dx8_register_D3DCRS.
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_NormalizeNormals, DerivedAddr_D3DRS_CullMode - 5*4);
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_ZEnable, DerivedAddr_D3DRS_CullMode - 4*4);
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_StencilEnable, DerivedAddr_D3DRS_CullMode - 3*4);
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_StencilFail, DerivedAddr_D3DRS_CullMode - 2*4);
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_FrontFace, DerivedAddr_D3DRS_CullMode - 1*4);
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_CullMode, DerivedAddr_D3DRS_CullMode - 0*4);
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_TextureFactor, DerivedAddr_D3DRS_CullMode + 1*4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_ZBias, DerivedAddr_D3DRS_CullMode + 2 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_LogicOp, DerivedAddr_D3DRS_CullMode + 3 * 4);
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_EdgeAntiAlias, DerivedAddr_D3DRS_CullMode + 4*4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_MultiSampleAntiAlias, DerivedAddr_D3DRS_CullMode + 5 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_MultiSampleMask, DerivedAddr_D3DRS_CullMode + 6 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_MultiSampleMode, DerivedAddr_D3DRS_CullMode + 7 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_MultiSampleRenderTargetMode, DerivedAddr_D3DRS_CullMode + 8 * 4);
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_ShadowFunc, DerivedAddr_D3DRS_CullMode + 9*4);
-    // SetXRefDataBase(pContext, iLibraryType, XREF_D3DRS_LineWidth, DerivedAddr_D3DRS_CullMode + 10*4);
-
-    if (pLibrary->build_version >= 4627 && pLibrary->build_version <= 5933) { // Add XDK 4627
-        internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_SampleAlpha, DerivedAddr_D3DRS_CullMode + 11 * 4);
-    }
-
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_Dxt1NoiseEnable, EmuD3DDeferredRenderState + patchOffset - 3 * 4);
-    internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_YuvEnable, EmuD3DDeferredRenderState + patchOffset - 2 * 4);
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_OcclusionCullEnable, EmuD3DDeferredRenderState + patchOffset - 1 * 4);
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_StencilCullEnable, EmuD3DDeferredRenderState + patchOffset + 0 * 4);
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_RopZCmpAlwaysRead, EmuD3DDeferredRenderState + patchOffset + 1 * 4);
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_RopZRead, EmuD3DDeferredRenderState + patchOffset + 2 * 4);
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DRS_DoNotCullUncompressed, EmuD3DDeferredRenderState + patchOffset + 3 * 4);
-
-}
-
-static bool manual_scan_section_dx8_register_D3DRS_list(iXbSymbolContext* pContext,
+static bool manual_scan_section_dx8_register_D3DRS_vars(iXbSymbolContext* pContext,
                                                         const iXbSymbolLibrarySession* pLibrarySession,
                                                         SymbolDatabaseList* pLibraryDB,
                                                         const XbSDBSection* pSection)
 {
     // Instead of individual register call, let's go through the list to automatically register valid xrefs.
     const uint16_t lib_version = pLibrarySession->pLibrary->build_version;
+    unsigned RenderState_iLib = 0;
+    char buffer_str[512];
     for (size_t i = 0; i < DxbxRenderStateInfoSize; i++) {
         const RenderStateRevision render_state_i = DxbxRenderStateInfo[i];
-        if (IsRenderStateAvailableInCurrentXboxD3D8Lib(render_state_i, lib_version) && render_state_i.xref != 0) {
-            internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, render_state_i.xref, render_state_i.version, render_state_i.name);
+        if (IsRenderStateAvailableInCurrentXboxD3D8Lib(render_state_i, lib_version)) {
+            if (DxbxRenderStateInfo[i].xref) {
+                xbaddr RenderState_iAddr = pContext->xref_database[DxbxRenderStateInfo[i].xref];
+                // Check if D3DRS_ prefix variables are set.
+                if (internal_IsXRefAddrUnset(RenderState_iAddr)) {
+                    if (RenderState_iAddr != XREF_ADDR_DERIVE) {
+                        // If it is not derive address, then let's calculate base on DxbxRenderStateInfo table for accuracy.
+                        internal_SetXRefDatabase(pContext,
+                                                 pLibrarySession->iLibraryType,
+                                                 DxbxRenderStateInfo[i].xref,
+                                                 pContext->xref_database[XREF_D3D_g_RenderState] + RenderState_iLib * sizeof(xbaddr));
+                        snprintf(buffer_str, sizeof(buffer_str), "%s symbol address is manually set to D3D_g_RenderState + %zd * %u.", DxbxRenderStateInfo[i].name, sizeof(xbaddr), RenderState_iLib);
+                        output_message(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, buffer_str);
+                    }
+                }
+                internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, render_state_i.xref, render_state_i.version, render_state_i.name);
+            }
+            RenderState_iLib++;
         }
     }
 
@@ -593,6 +528,7 @@ static bool manual_scan_section_dx8_register_D3DRS_end_of_list(iXbSymbolContext*
     xbaddr D3DRS_DoNotCullUncompressed = pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed];
     if (internal_IsXRefAddrUnset(D3DRS_DoNotCullUncompressed)) {
         // These xrefs are used to obtain from D3D_CommonSetDebugRegisters signature.
+        pContext->xref_database[XREF_D3D_g_pDevice] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_RopZCmpAlwaysRead] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_RopZRead] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed] = XREF_ADDR_DERIVE;
@@ -606,6 +542,7 @@ static bool manual_scan_section_dx8_register_D3DRS_end_of_list(iXbSymbolContext*
                                                                             &pRevision);
         // If not found, skip the rest of the scan.
         if (xFuncAddr == 0) {
+            pContext->xref_database[XREF_D3D_g_pDevice] = XREF_ADDR_UNDETERMINED;
             pContext->xref_database[XREF_D3DRS_RopZCmpAlwaysRead] = XREF_ADDR_UNDETERMINED;
             pContext->xref_database[XREF_D3DRS_RopZRead] = XREF_ADDR_UNDETERMINED;
             pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed] = XREF_ADDR_UNDETERMINED;
@@ -778,11 +715,6 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     // Generic usage
     memptr_t pFunc = 0;
     xbaddr xSymbolAddr = 0;
-    // offset for stencil cull enable render state in the deferred render state buffer
-    uint32_t DerivedAddr_D3DRS_CullMode = 0;
-    int Decrement = 0;   // TODO : Rename into something understandable
-    int Increment = 0;   // TODO : Rename into something understandable
-    int patchOffset = 0; // TODO : Rename into something understandable
     int OOVPA_version;
     int iCodeOffsetFor_g_Stream;
     int pXRefOffset = 0; // TODO : Rename into something understandable
@@ -813,135 +745,14 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         return bComplete;
     }
 
-    if (pLibrary->flag == XbSymbolLib_D3D8) {
+    bComplete = manual_scan_section_dx8_register_D3DRS_vars(pContext, pLibrarySession, pLibraryDB, pSection);
 
-        // locate D3DDevice_SetRenderState_CullMode first
-        if (pLibrary->build_version < 3911) {
-            // Not supported, currently ignored.
-        }
-        else {
-            pFunc = internal_LocateSymbolFunction(pContext,
-                                                  pLibrarySession,
-                                                  pLibraryDB,
-                                                  "D3DDevice_SetRenderState_CullMode",
-                                                  pSection,
-                                                  true,
-                                                  NULL,
-                                                  NULL);
-        }
-
-        // then locate D3DDeferredRenderState
-        if (pFunc != 0) {
-            // NOTE: Is a requirement to align properly.
-            pFunc += virt_start_relative;
-
-            // Read address of D3DRS_CullMode from D3DDevice_SetRenderState_CullMode
-            // TODO : Simplify this when XREF_D3D_RenderState_CullMode derivation is deemed stable
-            if (pLibrary->build_version < 3911) {
-                // Not supported, currently ignored.
-            }
-            else if (pLibrary->build_version < 4034) {
-                DerivedAddr_D3DRS_CullMode = *(uint32_t*)(pFunc + 0x25);
-                Decrement = 0x1FC; // TODO: Clean up (?)
-                Increment = 82 * 4;
-                patchOffset = 140 * 4; // Verified 3925 and 3948
-
-                //Decrement = 0x19F; // TODO: Clean up (?)
-                //Increment = 72 * 4;
-                //patchOffset = 142*4; // TODO: Verify
-            }
-            else if (pLibrary->build_version <= 4361) {
-                DerivedAddr_D3DRS_CullMode = *(uint32_t*)(pFunc + 0x2B);
-                Decrement = 0x200;
-                Increment = 82 * 4;
-                patchOffset = 142 * 4;
-            }
-            else if (pLibrary->build_version < 4627) {
-                DerivedAddr_D3DRS_CullMode = *(uint32_t*)(pFunc + 0x2B);
-                Decrement = 0x204;
-                Increment = 83 * 4;
-                patchOffset = 143 * 4;
-            }
-            else { // 4627-5933
-                DerivedAddr_D3DRS_CullMode = *(uint32_t*)(pFunc + 0x2B);
-                Decrement = 0x24C;
-                Increment = 92 * 4;
-                patchOffset = 162 * 4;
-            }
-        }
+    if (bComplete) {
+        manual_scan_section_dx8_VerifyRenderStateOffsets(pContext, pLibrarySession);
     }
-    else { // D3D8LTCG
-        // locate D3DDevice_SetRenderState_CullMode first
-        pFunc = internal_LocateSymbolFunction(pContext,
-                                              pLibrarySession,
-                                              pLibraryDB,
-                                              "D3DDevice_SetRenderState_CullMode",
-                                              pSection,
-                                              true,
-                                              NULL,
-                                              &pOOVPARevision);
-
-        if (pFunc != 0) {
-
-            // D3DDevice_SetRenderState_CullMode assign pXRefOffset for D3DDeferredRenderState
-            switch (pOOVPARevision->Version) {
-                case 1045:
-                default:
-                    pXRefOffset = 0x2D; // verified for 3925
-                    break;
-                case 1049:
-                    pXRefOffset = 0x31; // verified for 4039
-                    break;
-                case 1052:
-                    pXRefOffset = 0x34;
-                    break;
-                case 1053:
-                    pXRefOffset = 0x35;
-                    break;
-            }
-
-            // then locate D3DDeferredRenderState
-
-            // NOTE: Is a requirement to align properly.
-            pFunc += virt_start_relative;
-
-            // Read address of D3DRS_CullMode from D3DDevice_SetRenderState_CullMode
-            // TODO : Simplify this when XREF_D3D_RenderState_CullMode derivation is deemed stable
-            if (pLibrary->build_version < 3911) {
-                // Not supported, currently ignored.
-            }
-            else if (pLibrary->build_version < 4034) {
-                DerivedAddr_D3DRS_CullMode = *(uint32_t*)(pFunc + pXRefOffset);
-                Decrement = 0x1FC; // TODO: Clean up (?)
-                Increment = 82 * 4;
-                patchOffset = 140 * 4; // Verified 3925 and 3948
-
-                //Decrement = 0x19F; // TODO: Clean up (?)
-                //Increment = 72 * 4;
-                //patchOffset = 142*4; // TODO: Verify
-            }
-            else if (pLibrary->build_version <= 4361) {
-                DerivedAddr_D3DRS_CullMode = *(uint32_t*)(pFunc + pXRefOffset);
-                Decrement = 0x200;
-                Increment = 82 * 4;
-                patchOffset = 142 * 4;
-            }
-            else if (pLibrary->build_version < 4627) {
-                DerivedAddr_D3DRS_CullMode = *(uint32_t*)(pFunc + pXRefOffset);
-                Decrement = 0x204;
-                Increment = 83 * 4;
-                patchOffset = 143 * 4;
-            }
-            else { // 4627-5933
-                // NOTE: Burnout 3 is (pFunc + 0x34), Black is (pFunc + 0x35)
-                DerivedAddr_D3DRS_CullMode = *(uint32_t*)(pFunc + pXRefOffset);
-                Decrement = 0x24C;
-                Increment = 92 * 4;
-                patchOffset = 162 * 4;
-            }
-        }
+    if (!bComplete) {
+        return bComplete;
     }
-    manual_scan_section_dx8_register_xrefs(pContext, pLibrarySession, pFunc, DerivedAddr_D3DRS_CullMode, patchOffset, Increment, Decrement);
 
     // then locate D3DDeferredTextureState
     if (pLibrary->flag == XbSymbolLib_D3D8) {
@@ -1101,15 +912,6 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     }
 
     bComplete = manual_scan_section_dx8_register_callbacks(pContext, pLibrarySession, pLibraryDB, pSection);
-    if (!bComplete) {
-        return bComplete;
-    }
-
-    bComplete = manual_scan_section_dx8_register_D3DRS_list(pContext, pLibrarySession, pLibraryDB, pSection);
-
-    if (bComplete) {
-        manual_scan_section_dx8_VerifyRenderStateOffsets(pContext, pLibrarySession);
-    }
 
     return bComplete;
 }
@@ -1118,6 +920,7 @@ static inline void manual_register_d3d8__ltcg(iXbSymbolContext* pContext)
 {
     xbaddr xD3D_pDeviceAddr = pContext->xref_database[XREF_D3D_g_pDevice];
     if (internal_IsXRefAddrValid(xD3D_pDeviceAddr)) {
+        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_pDevice, 0, "D3D_g_pDevice");
         // Register offsets of D3DDevice's members
         internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_SwapCallback, 0, "D3DDevice__m_SwapCallback_OFFSET");
         internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VBlankCallback, 0, "D3DDevice__m_VBlankCallback_OFFSET");

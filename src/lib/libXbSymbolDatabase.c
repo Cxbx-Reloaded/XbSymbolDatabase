@@ -825,13 +825,6 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     // clang-format off
     // Request a few fundamental XRefs to be derived instead of checked
     // D3D
-    pContext->xref_database[XREF_D3D_g_pDevice] = XREF_ADDR_DERIVE;                            //In use
-    pContext->xref_database[XREF_D3DRS_CullMode] = XREF_ADDR_DERIVE;                           //In use
-    pContext->xref_database[XREF_D3DRS_MultiSampleRenderTargetMode] = XREF_ADDR_DERIVE;        //In use
-    pContext->xref_database[XREF_D3DRS_RopZCmpAlwaysRead] = XREF_ADDR_DERIVE;                  //In use
-    pContext->xref_database[XREF_D3DRS_RopZRead] = XREF_ADDR_DERIVE;                           //In use
-    pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed] = XREF_ADDR_DERIVE;              //In use
-    pContext->xref_database[XREF_D3DRS_TwoSidedLighting] = XREF_ADDR_DERIVE;                   //In use
     pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                     //In use
     pContext->xref_database[XREF_D3D_g_Stream] = XREF_ADDR_DERIVE;                             //In use
     pContext->xref_database[XREF_OFFSET_D3DDevice__m_PixelShader] = XREF_ADDR_DERIVE;          //

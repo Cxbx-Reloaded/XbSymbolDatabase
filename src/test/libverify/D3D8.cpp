@@ -19,6 +19,7 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DRS_LogicOp, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DRS_MultiSampleAntiAlias, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DRS_MultiSampleMask, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
+    REGISTER_SYMBOL_INLINE(D3DRS_MultiSampleMode, VER_RANGE(4034, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DRS_MultiSampleRenderTargetMode, VER_RANGE(4034, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DRS_OcclusionCullEnable, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DRS_PSTextureModes, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
@@ -443,7 +444,7 @@ void getLibraryD3D8(library_db& lib_db)
     // TODO: database is incomplete + 3 internal reference need to be exclude.
     // Excluding:
     // -  3 internal manual scan reference
-    // -  2 variables
+    // -  1 variables
     // -  5 internal offsets
-    lib_db.xref_exclude = 10;
+    lib_db.xref_exclude = 9;
 }
