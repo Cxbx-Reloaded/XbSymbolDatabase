@@ -313,16 +313,16 @@ static void manual_scan_section_dx8_VerifyRenderStateOffsets(iXbSymbolContext* p
                 xbaddr RenderState_iAddr = pContext->xref_database[DxbxRenderStateInfo[i].xref];
                 if (internal_IsXRefAddrUnset(RenderState_iAddr)) {
                     if (RenderState_iAddr != XREF_ADDR_DERIVE) {
-                        sprintf(buffer_str, "XbSymbolDatabase's %s symbol is not set!", DxbxRenderStateInfo[i].name);
+                        snprintf(buffer_str, XBSDB_ARRAY_SIZE(buffer_str), "XbSymbolDatabase's %s symbol is not set!", DxbxRenderStateInfo[i].name);
                         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, buffer_str);
                     }
                     else {
-                        sprintf(buffer_str, "XbSymbolDatabase's %s symbol is currently set to derive.", DxbxRenderStateInfo[i].name);
+                        snprintf(buffer_str, XBSDB_ARRAY_SIZE(buffer_str), "XbSymbolDatabase's %s symbol is currently set to derive.", DxbxRenderStateInfo[i].name);
                         output_message(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, buffer_str);
                     }
                 }
                 else if (RenderState_iLib * sizeof(xbaddr) != RenderState_iAddr - g_RenderState) {
-                    sprintf(buffer_str, "DxbxRenderStateInfo list's entry base on %s is inaccurate!", DxbxRenderStateInfo[i].name);
+                    snprintf(buffer_str, XBSDB_ARRAY_SIZE(buffer_str), "DxbxRenderStateInfo list's entry base on %s is inaccurate!", DxbxRenderStateInfo[i].name);
                     output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, buffer_str);
                 }
             }
@@ -355,7 +355,7 @@ static bool manual_scan_section_dx8_register_D3DRS_vars(iXbSymbolContext* pConte
                                                  pLibrarySession->iLibraryType,
                                                  DxbxRenderStateInfo[i].xref,
                                                  pContext->xref_database[XREF_D3D_g_RenderState] + RenderState_iLib * sizeof(xbaddr));
-                        snprintf(buffer_str, sizeof(buffer_str), "%s symbol address is manually set to D3D_g_RenderState + %zd * %u.", DxbxRenderStateInfo[i].name, sizeof(xbaddr), RenderState_iLib);
+                        snprintf(buffer_str, XBSDB_ARRAY_SIZE(buffer_str), "%s symbol address is manually set to D3D_g_RenderState + %zd * %u.", DxbxRenderStateInfo[i].name, sizeof(xbaddr), RenderState_iLib);
                         output_message(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, buffer_str);
                     }
                 }
