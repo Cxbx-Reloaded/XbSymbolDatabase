@@ -1130,7 +1130,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetPixelShader
 // ******************************************************************
 //C740040000210083C008 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader_0__LTCG_eax_handle,
                          2060)
 OOVPA_SIG_MATCH(
 

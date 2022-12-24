@@ -149,7 +149,9 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DDevice_Present, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DDevice_PrimeVertexCache, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3DDevice_Release, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
-    REGISTER_SYMBOL_INLINE(D3DDevice_Reset, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+    REGISTER_SYMBOLS(D3DDevice_Reset,
+                     REGISTER_SYMBOL(D3DDevice_Reset, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_Reset_0__LTCG_edi_pPresentationParameters, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE))),
     REGISTER_SYMBOLS(D3DDevice_RunPushBuffer,
                      REGISTER_SYMBOL(D3DDevice_RunPushBuffer, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(D3DDevice_RunPushBuffer_4, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
@@ -179,7 +181,9 @@ static const library_list database_full = {
     REGISTER_SYMBOLS(D3DDevice_SetPalette,
                      REGISTER_SYMBOL(D3DDevice_SetPalette, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(D3DDevice_SetPalette_4, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
-    REGISTER_SYMBOL_INLINE(D3DDevice_SetPixelShader, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+    REGISTER_SYMBOLS(D3DDevice_SetPixelShader,
+                     REGISTER_SYMBOL(D3DDevice_SetPixelShader, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_SetPixelShader_0__LTCG_eax_handle, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))),
     REGISTER_SYMBOLS(D3DDevice_SetPixelShaderConstant,
                      REGISTER_SYMBOL(D3DDevice_SetPixelShaderConstant, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(D3DDevice_SetPixelShaderConstant_4, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
@@ -246,7 +250,10 @@ static const library_list database_full = {
                      REGISTER_SYMBOL(D3DDevice_SetStreamSource_4, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),  // NOTE: LTCG usage
                      REGISTER_SYMBOL(D3DDevice_SetStreamSource_8, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
     REGISTER_SYMBOL_INLINE(D3DDevice_SetSwapCallback, VER_RANGE(4039, VER_MAX, VER_NONE, VER_NONE)),
-    REGISTER_SYMBOL_INLINE(D3DDevice_SetTexture, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+    REGISTER_SYMBOLS(D3DDevice_SetTexture,
+                     REGISTER_SYMBOL(D3DDevice_SetTexture, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_SetTexture_4__LTCG_eax_pTexture, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_SetTexture_4__LTCG_eax_Stage, VER_RANGE(4721, VER_MAX, VER_NONE, VER_NONE))),
     REGISTER_SYMBOLS(D3DDevice_SetTextureState_BorderColor,
                      REGISTER_SYMBOL(D3DDevice_SetTextureState_BorderColor, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(D3DDevice_SetTextureState_BorderColor_0, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),  // NOTE: LTCG usage
@@ -369,9 +376,9 @@ static const library_list database_full = {
         REGISTER_SYMBOL(Lock3DSurface, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
         REGISTER_SYMBOL(Lock3DSurface_16, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
     REGISTER_SYMBOLS(D3D_MakeRequestedSpace,
-                     // TODO: Need fix D3D_MakeRequestedSpace in LTCG database to amend _4 or _8. Current status is unknown and may be _4 suffix.
                      REGISTER_SYMBOL(D3D_MakeRequestedSpace_4, VER_RANGE(4034, 4134, VER_NONE, VER_NONE)),
-                     REGISTER_SYMBOL(D3D_MakeRequestedSpace_8, VER_RANGE(4134, VER_MAX, VER_NONE, VER_NONE))),
+                     REGISTER_SYMBOL(D3D_MakeRequestedSpace_8, VER_RANGE(4134, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3D_MakeRequestedSpace_4__LTCG_eax_RequestedSpace, VER_RANGE(5788, VER_MAX, VER_NONE, VER_NONE))),
     REGISTER_SYMBOL_INLINE(XMETAL_StartPush, VER_RANGE(3911, 4034, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(IDirect3DVertexBuffer8_Lock, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE)),
 

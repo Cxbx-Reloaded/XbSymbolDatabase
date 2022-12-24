@@ -727,7 +727,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_Reset
 // ******************************************************************
 //803F6A006A036A006A00E8 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Reset_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Reset_0__LTCG_edi_pPresentationParameters,
                          2024)
 OOVPA_SIG_MATCH(
 
@@ -819,7 +819,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_CreateVertexShader
 // ******************************************************************
 //C740040000210083C008 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader_0__LTCG_eax_handle,
                          2036)
 OOVPA_SIG_MATCH(
 

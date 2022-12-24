@@ -74,7 +74,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetTexture
 // ******************************************************************
 //81C10000F8FF89 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTexture_4,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTexture_4__LTCG_eax_Stage,
                          2036)
 OOVPA_SIG_MATCH(
 
