@@ -50,6 +50,7 @@ bool g_interactive_mode = true;
 std::map<uint32_t, symbol_result> g_SymbolAddresses;
 unsigned int XbSDB_test_error = 0;
 unsigned int XbUnitTest_error = 0;
+bool g_verbose_mode = false;
 
 static const char* cli_argument_str = "> XbSymbolUnitTest"
                                       " [-h|--help]"
@@ -223,7 +224,9 @@ void Generic_OutputMessage(xb_output_message mFlag, const char* section, const s
             break;
         }
         case XB_OUTPUT_MESSAGE_DEBUG: {
-            std::cout << "DEBUG  : " << message << "\n";
+            if (g_verbose_mode) {
+                std::cout << "DEBUG  : " << message << "\n";
+            }
             break;
         }
         default: {
@@ -265,7 +268,9 @@ void Custom_OutputMessage(xb_output_message mFlag, const std::string& section, c
             break;
         }
         case XB_OUTPUT_MESSAGE_DEBUG: {
-            std::cout << "DEBUG  : " << message << "\n";
+            if (g_verbose_mode) {
+                std::cout << "DEBUG  : " << message << "\n";
+            }
             break;
         }
         default: {
@@ -888,6 +893,7 @@ int main(int argc, char** argv)
     xb_output_message xbsdb_output = XB_OUTPUT_MESSAGE_INFO;
     if (cli_config::hasKey("v") || cli_config::hasKey("verbose")) {
         xbsdb_output = XB_OUTPUT_MESSAGE_DEBUG;
+        g_verbose_mode = true;
     }
 
     XbSymbolDatabase_SetOutputVerbosity(xbsdb_output);
