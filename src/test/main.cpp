@@ -196,28 +196,35 @@ static int cliInputInteractive(int argc, char** argv)
     return 0;
 }
 
+std::string generate_ThreadIDStr()
+{
+    std::stringstream buffer;
+    buffer << "[" << std::setw(8) << std::setfill('0') << std::hex << std::this_thread::get_id() << "] ";
+    return buffer.str();
+}
+
 template<bool doCache>
 void Generic_OutputMessage(xb_output_message mFlag, const char* section, const std::string& message)
 {
 #ifndef DISABLE_MULTI_THREAD
     const std::lock_guard<std::mutex> lock(mtx_message);
     // output thread id first, then the message.
-    std::cout << "[" << std::setw(8) << std::setfill('0') << std::hex << std::this_thread::get_id() << "] ";
+    thread_local static std::string thread_id_str = generate_ThreadIDStr();
 #endif
     switch (mFlag) {
         case XB_OUTPUT_MESSAGE_INFO: {
-            std::cout << "INFO   : " << message << "\n";
+            std::cout << thread_id_str << "INFO   : " << message << "\n";
             break;
         }
         case XB_OUTPUT_MESSAGE_WARN: {
-            std::cout << "WARNING: " << message << "\n";
+            std::cout << thread_id_str << "WARNING: " << message << "\n";
             if constexpr (doCache) {
                 gen_result.SetValue(section, sect_generic_messages.warn, message.c_str());
             }
             break;
         }
         case XB_OUTPUT_MESSAGE_ERROR: {
-            std::cout << "ERROR  : " << message << "\n";
+            std::cout << thread_id_str << "ERROR  : " << message << "\n";
             if constexpr (doCache) {
                 gen_result.SetValue(section, sect_generic_messages.error, message.c_str());
             }
@@ -225,12 +232,12 @@ void Generic_OutputMessage(xb_output_message mFlag, const char* section, const s
         }
         case XB_OUTPUT_MESSAGE_DEBUG: {
             if (g_verbose_mode) {
-                std::cout << "DEBUG  : " << message << "\n";
+                std::cout << thread_id_str << "DEBUG  : " << message << "\n";
             }
             break;
         }
         default: {
-            std::cout << "UNKNOWN: " << message << "\n";
+            std::cout << thread_id_str << "UNKNOWN: " << message << "\n";
             if constexpr (doCache) {
                 gen_result.SetValue(section, sect_generic_messages.unknown, message.c_str());
             }
@@ -250,31 +257,32 @@ void Custom_OutputMessage(xb_output_message mFlag, const std::string& section, c
 {
 #ifndef DISABLE_MULTI_THREAD
     const std::lock_guard<std::mutex> lock(mtx_message);
+    thread_local std::stringstream thread_id;
     // output thread id first, then the message.
-    std::cout << "[" << std::setw(8) << std::setfill('0') << std::hex << std::this_thread::get_id() << "] ";
+    thread_local static std::string thread_id_str = generate_ThreadIDStr();
 #endif
     const std::string message = key + " = " + value;
     switch (mFlag) {
         case XB_OUTPUT_MESSAGE_INFO: {
-            std::cout << "INFO   : " << message << "\n";
+            std::cout << thread_id_str << "INFO   : " << message << "\n";
             break;
         }
         case XB_OUTPUT_MESSAGE_WARN: {
-            std::cout << "WARNING: " << message << "\n";
+            std::cout << thread_id_str << "WARNING: " << message << "\n";
             break;
         }
         case XB_OUTPUT_MESSAGE_ERROR: {
-            std::cout << "ERROR  : " << message << "\n";
+            std::cout << thread_id_str << "ERROR  : " << message << "\n";
             break;
         }
         case XB_OUTPUT_MESSAGE_DEBUG: {
             if (g_verbose_mode) {
-                std::cout << "DEBUG  : " << message << "\n";
+                std::cout << thread_id_str << "DEBUG  : " << message << "\n";
             }
             break;
         }
         default: {
-            std::cout << "UNKNOWN: " << message << "\n";
+            std::cout << thread_id_str << "UNKNOWN: " << message << "\n";
             break;
         }
     }
