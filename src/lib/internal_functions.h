@@ -652,3 +652,37 @@ static bool internal_LibraryFilterPermitScan(iXbSymbolContext* pContext, uint32_
     }
     return false;
 }
+
+// Check & update if build version is higher than existing library flag.
+static void internal_LibraryFilterUpdateVersionIfGreater(XbSDBLibrary* filters,
+                                                         unsigned int count,
+                                                         uint32_t library_flags,
+                                                         uint16_t wBuildVersion,
+                                                         uint16_t QFEVersion)
+{
+    for (unsigned filter_i = 0; filter_i < count; filter_i++) {
+        if (filters[filter_i].flag & library_flags) {
+            if (filters[filter_i].build_version < wBuildVersion) {
+                filters[filter_i].build_version = wBuildVersion;
+                filters[filter_i].qfe_version = QFEVersion;
+            }
+            else if (filters[filter_i].qfe_version < QFEVersion) {
+                filters[filter_i].qfe_version = QFEVersion;
+            }
+        }
+    }
+}
+
+// Check & update existing library flag to new library flag.
+static void internal_LibraryFilterUpdateFlagIfExist(XbSDBLibrary* filters,
+                                                    unsigned int count,
+                                                    uint32_t library_flag_find,
+                                                    uint32_t library_flag_set)
+{
+    for (unsigned filter_i = 0; filter_i < count; filter_i++) {
+        if ((filters[filter_i].flag & library_flag_find) == library_flag_find) {
+            filters[filter_i].flag = library_flag_set;
+            memcpy(filters[filter_i].name, XbSymbolDatabase_LibraryToString(library_flag_set), 8);
+        }
+    }
+}
