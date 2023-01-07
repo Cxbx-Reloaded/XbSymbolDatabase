@@ -34,4 +34,4 @@ jobs:
         env:
           GH_REPO: ${{ github.repository }} # https://github.com/cli/cli/issues/3556
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release create ${{ env.tag_name }} XbSymbolDatabase.zip --notes-file changelog/changelog --target $GITHUB_SHA
+        run: gh release create ${{ env.tag_name }} XbSymbolDatabase.zip --title "${{ env.tag_name }}" --notes-file changelog/changelog --target $GITHUB_SHA
