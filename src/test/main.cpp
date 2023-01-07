@@ -210,6 +210,9 @@ void Generic_OutputMessage(xb_output_message mFlag, const char* section, const s
     const std::lock_guard<std::mutex> lock(mtx_message);
     // output thread id first, then the message.
     thread_local static std::string thread_id_str = generate_ThreadIDStr();
+#else
+    // Initialize empty string as placeholder for single thread usage.
+    static std::string thread_id_str;
 #endif
     switch (mFlag) {
         case XB_OUTPUT_MESSAGE_INFO: {
@@ -260,6 +263,9 @@ void Custom_OutputMessage(xb_output_message mFlag, const std::string& section, c
     thread_local std::stringstream thread_id;
     // output thread id first, then the message.
     thread_local static std::string thread_id_str = generate_ThreadIDStr();
+#else
+    // Initialize empty string as placeholder for single thread usage.
+    static std::string thread_id_str;
 #endif
     const std::string message = key + " = " + value;
     switch (mFlag) {
