@@ -528,33 +528,38 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
             }
 
             // If found DSOUND library, then skip the manual check.
-            if (library_flag == XbSymbolLib_DSOUND && !has_dsound_library) {
-                has_dsound_library = true;
+            if (library_flag == XbSymbolLib_DSOUND) {
+                if (!has_dsound_library) {
+                    has_dsound_library = true;
+                }
             }
 
             // If D3D8 and D3D8LTCG library details may had bundled by accident, then do manual fix below.
             // See details from https://github.com/Cxbx-Reloaded/XbSymbolDatabase/issues/178
-            if (has_d3d8__ltcg_library) {
-                if (library_header != NULL) {
-                    if (library_flag == XbSymbolLib_D3D8LTCG) {
-                        // Force set to D3D8LTCG if D3D8 flag was found first.
-                        internal_LibraryFilterUpdateFlagIfExist(library_header->filters,
-                                                                count,
-                                                                XbSymbolLib_D3D8,
-                                                                XbSymbolLib_D3D8LTCG);
+            if (library_flag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) {
+                if (has_d3d8__ltcg_library) {
+                    if (library_header != NULL) {
+                        if (library_flag == XbSymbolLib_D3D8LTCG) {
+                            // Force set to D3D8LTCG if D3D8 flag was found first.
+                            internal_LibraryFilterUpdateFlagIfExist(library_header->filters,
+                                                                    count,
+                                                                    XbSymbolLib_D3D8,
+                                                                    XbSymbolLib_D3D8LTCG);
+                        }
+                        // Update duplicated library detail
+                        internal_LibraryFilterUpdateVersionIfGreater(library_header->filters,
+                                                                     count,
+                                                                     XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG,
+                                                                     xb_library_versions[library_index].wBuildVersion,
+                                                                     xb_library_versions[library_index].wFlags.QFEVersion);
                     }
-                    // Update duplicated library detail
-                    internal_LibraryFilterUpdateVersionIfGreater(library_header->filters,
-                                                                 count,
-                                                                 XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG,
-                                                                 xb_library_versions[library_index].wBuildVersion,
-                                                                 xb_library_versions[library_index].wFlags.QFEVersion);
+
+                    // Skip duplicate library finding.
+                    continue;
                 }
-                // Skip duplicate library finding.
-                continue;
-            }
-            else if (!has_d3d8__ltcg_library && (library_flag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG))) {
-                has_d3d8__ltcg_library = true;
+                else if (!has_d3d8__ltcg_library) {
+                    has_d3d8__ltcg_library = true;
+                }
             }
 
             // Append the information to the array.
