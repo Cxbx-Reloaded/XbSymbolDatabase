@@ -723,22 +723,25 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_Reset
 // ******************************************************************
-//803F6A006A036A006A00E8 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Reset_0__LTCG_edi_pPresentationParameters,
-                         2024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset_0__LTCG_edi1,
+                      2024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x53 },
-    { 0x01, 0x8B },
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+    // call D3D_BlockOnTime
+    XREF_ENTRY(0x10, XREF_D3D_BlockOnTime),
 
-    { 0x92, 0x6A },
-    { 0x93, 0x00 },
-    { 0x94, 0x68 },
-    { 0x95, 0x00 },
-    { 0x96, 0x00 },
-    { 0x97, 0x80 },
-    { 0x98, 0x3F },
-    { 0x99, 0x6A },
+    // call D3D_BlockOnTime
+    OV_MATCH(0x0F, 0xE8),
+
+    // call ????
+    OV_MATCH(0x35, 0xE8),
+    // push edi (param_1)
+    OV_MATCH(0x3A, 0x57),
+    // call ????
+    OV_MATCH(0x3B, 0xE8),
     //
 );
 
