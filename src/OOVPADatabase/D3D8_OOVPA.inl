@@ -426,7 +426,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3D_RecordStateBlock, 3911),
     REGISTER_OOVPAS(D3D_SetFence, 3911, 4034, 4134, 5028, 5558),
     REGISTER_OOVPAS(D3D_SetPushBufferSize, 3911),
-    REGISTER_OOVPAS(D3D_SetTileNoWait, 4627, 5455),
+    REGISTER_OOVPAS(D3D_SetTileNoWait, 4627, 5455), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS(Direct3D_CheckDeviceMultiSampleType, 3911),
     REGISTER_OOVPAS(Direct3D_CreateDevice, 3911, 5028),
     REGISTER_OOVPAS_D3D8(Get2DSurfaceDesc, 3911, 4034), // Was 5233 (from 5344's comment)

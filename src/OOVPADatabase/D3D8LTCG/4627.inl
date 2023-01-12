@@ -1425,3 +1425,67 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x48, 0xC2, 0x0C),
     //
 );
+
+//******************************************************************
+//* D3D::SetTileNoWait
+//******************************************************************
+// Revision 0
+// NOTE: Only very few titles triggered this detection which is the
+//       same as D3DDevice_SetTile_0__LTCG_eax1_ecx2 (3911) signature
+//       with early ret shifted by one offset.
+OOVPA_SIG_HEADER_XREF(D3D_SetTileNoWait_0__LTCG_eax1_ecx2,
+                      2024,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov edx,[D3D_g_pDevice]
+    XREF_ENTRY(0x02, XREF_D3D_g_pDevice),
+
+    // mov edx,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x8B, 0x15),
+    // sub esp,0x18
+    OV_MATCH(0x06, 0x83, 0xEC, 0x18),
+
+    // mov esi,ecx(param_2)
+    OV_MATCH(0x0A, 0x8B, 0xF1),
+
+    // mov [esp + 0x20],0
+    OV_MATCH(0x2C, 0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x00, 0x00),
+    // mov [esp + 0x1C],0
+    OV_MATCH(0x34, 0xC7, 0x44, 0x24, 0x1C),
+
+    // NOTE: Required separate difference to avoid detect <4627
+    //       build titles.
+    // add esp,0x18
+    // ret
+    OV_MATCH(0x81, 0x83, 0xC4, 0x18, 0xC3), // offset 0x81 vs 3911 0x80
+    //
+);
+
+//******************************************************************
+//* D3D::SetTileNoWait
+//******************************************************************
+// Revision 1
+OOVPA_SIG_HEADER_XREF(D3D_SetTileNoWait_0__LTCG_eax1_ecx2,
+                      2048,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov edx,[D3D_g_pDevice]
+    XREF_ENTRY(0x02, XREF_D3D_g_pDevice),
+
+    // mov edx,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x8B, 0x15),
+
+    // sub esp,0x18
+    OV_MATCH(0x06, 0x83, 0xEC, 0x18),
+
+    // mov esi,ecx(param_2)
+    OV_MATCH(0x0B, 0x8B, 0xF1), // offset 0x0B vs 3911/2024 0x0A
+
+    // mov [esp + 0x20],0
+    OV_MATCH(0x2C, 0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x00, 0x00),
+    // mov [esp + 0x1C],0
+    OV_MATCH(0x34, 0xC7, 0x44, 0x24, 0x1C),
+    //
+);

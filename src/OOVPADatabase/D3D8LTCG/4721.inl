@@ -45,28 +45,32 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetTile
+// * D3D::SetTileNoWait
 // ******************************************************************
-//C744242000000000C744241C ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTile_0,
-                         2048)
+OOVPA_SIG_HEADER_XREF(D3D_SetTileNoWait_0__LTCG_ecx1_eax2,
+                      4721,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x83 },
-    { 0x01, 0xEC },
+    // mov eax,[D3D_g_pDevice]
+    XREF_ENTRY(0x0A, XREF_D3D_g_pDevice),
 
-    { 0x2D, 0xC7 },
-    { 0x2E, 0x44 },
-    { 0x2F, 0x24 },
-    { 0x30, 0x20 },
-    { 0x31, 0x00 },
-    { 0x32, 0x00 },
-    { 0x33, 0x00 },
-    { 0x34, 0x00 },
-    { 0x35, 0xC7 },
-    { 0x36, 0x44 },
-    { 0x37, 0x24 },
-    { 0x38, 0x1C },
+    // sub esp,0x18
+    OV_MATCH(0x00, 0x83, 0xEC, 0x18),
+
+    // mov esi,eax(param_2)
+    OV_MATCH(0x05, 0x8B, 0xF0),
+
+    // mov eax,[D3D_g_pDevice]
+    OV_MATCH(0x09, 0xA1),
+
+    // mov ebx,ecx(param_1)
+    OV_MATCH(0x0F, 0x8B, 0xD9),
+
+    // mov [esp + 0x20],0
+    OV_MATCH(0x2D, 0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x00, 0x00),
+    // mov [esp + 0x1C],0
+    OV_MATCH(0x35, 0xC7, 0x44, 0x24, 0x1C),
     //
 );
 

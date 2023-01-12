@@ -428,30 +428,28 @@ OOVPA_XREF(D3DDevice_GetDepthStencilSurface2,
 OOVPA_END;
 
 // ******************************************************************
-// * D3D_SetTileNoWait
+// * D3D::SetTileNoWait
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(D3D_SetTileNoWait,
                          4627)
 OOVPA_SIG_MATCH(
 
-    // D3D_SetTileNoWait+0x06 : sub esp, 0x18
-    { 0x06, 0x83 },
-    { 0x07, 0xEC },
-    { 0x08, 0x18 },
+    // mov edx, [D3D__pDevice]
+    OV_MATCH(0x00, 0x8B, 0x15),
 
-    // D3D_SetTileNoWait+0x15 : cmp [esi+4], eax
-    { 0x15, 0x39 },
-    { 0x16, 0x46 },
-    { 0x17, 0x04 },
+    // sub esp, 0x18
+    OV_MATCH(0x06, 0x83, 0xEC, 0x18),
 
-    // D3D_SetTileNoWait+0x3D : lea edi, [edx+ecx*8+0xXXXX]
-    { 0x3D, 0x8D },
-    { 0x3E, 0xBC },
-    { 0x3F, 0xCA },
-    //{ 0x40, 0x60 },
-    //{ 0x41, 0x22 },
-    { 0x42, 0x00 },
-    { 0x43, 0x00 },
+    // mov ecx,6
+    OV_MATCH(0x1A, 0xB9, 0x06, 0x00 /*, 0x00, 0x00*/),
+
+    // mov ecx,6
+    OV_MATCH(0x44, 0xB9, 0x06, 0x00 /*, 0x00, 0x00*/),
+
+    // and e??,0x0FFFFFFF
+    OV_MATCH(0x68, 0x81),
+    // OV_MATCH(0x69, 0xE1), // Sometimes changed over builds.
+    OV_MATCH(0x6A, 0xFF, 0xFF, 0xFF, 0x0F) // 0x0F vs 0x03 from D3DDevice_SetTile
     //
 );
 

@@ -298,7 +298,9 @@ static const library_list database_full = {
                      REGISTER_SYMBOL(D3DDevice_SetTextureState_TexCoordIndex_4, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
     REGISTER_SYMBOLS(D3DDevice_SetTile,
                      REGISTER_SYMBOL(D3DDevice_SetTile, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
-                     REGISTER_SYMBOL(D3DDevice_SetTile_0, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
+                     REGISTER_SYMBOL(D3DDevice_SetTile_0__LTCG_eax1_ecx2, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_SetTile_0__LTCG_ecx1_eax2, VER_RANGE(4039, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_SetTile_0__LTCG_ebx1_eax2, VER_RANGE(4432, VER_MAX, VER_NONE, VER_NONE))),
     REGISTER_SYMBOLS(D3DDevice_SetTransform,
                      REGISTER_SYMBOL(D3DDevice_SetTransform, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(D3DDevice_SetTransform_0__LTCG_eax1_edx2, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))),
@@ -382,8 +384,10 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3D_RecordStateBlock, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3D_SetFence, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3D_SetPushBufferSize, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
-    REGISTER_SYMBOL_INLINE(D3D_SetTileNoWait, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE)),
-
+    REGISTER_SYMBOLS(D3D_SetTileNoWait,
+                     REGISTER_SYMBOL(D3D_SetTileNoWait, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3D_SetTileNoWait_0__LTCG_eax1_ecx2, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3D_SetTileNoWait_0__LTCG_ecx1_eax2, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE))),
     REGISTER_SYMBOL_INLINE(D3D_UpdateProjectionViewportTransform, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(Direct3D_CheckDeviceMultiSampleType, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOLS(Direct3D_CreateDevice,

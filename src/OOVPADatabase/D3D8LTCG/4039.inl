@@ -1375,3 +1375,30 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x30, 0xC3),
     //
 );
+
+//******************************************************************
+//* D3DDevice_SetTile
+//******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTile_0__LTCG_ebx1_eax2,
+                      4039,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov edx,[D3D_g_pDevice]
+    XREF_ENTRY(0x06, XREF_D3D_g_pDevice),
+
+    // sub esp,0x18
+    OV_MATCH(0x00, 0x83, 0xEC, 0x18),
+
+    // mov ebp,[D3D_g_pDevice]
+    OV_MATCH(0x04, 0x8B, 0x2D),
+
+    // mov esi,eax(param_2)
+    OV_MATCH(0x0B, 0x8B, 0xF0),
+
+    // mov [esp + 0x20],edx
+    OV_MATCH(0x2C, 0x89, 0x54, 0x24, 0x20),
+    // mov [esp + 0x1C],edx
+    OV_MATCH(0x30, 0x89, 0x54, 0x24, 0x1C),
+    //
+);

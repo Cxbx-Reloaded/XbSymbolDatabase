@@ -733,26 +733,36 @@ OOVPA_SIG_MATCH(
 //******************************************************************
 //* D3DDevice_SetTile
 //******************************************************************
-//C744242000000000C744241C ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTile_0,
-                         2024)
+// NOTE: Only very few titles with 4627 or later build triggered
+//       this detection which is the same as
+//       D3D_SetTileNoWait_0__LTCG_eax1_ecx2 (2024) signature
+//       with early ret shifted by one offset.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTile_0__LTCG_eax1_ecx2,
+                      3911,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x8B },
-    { 0x01, 0x15 },
+    // mov edx,[D3D_g_pDevice]
+    XREF_ENTRY(0x02, XREF_D3D_g_pDevice),
 
-    { 0x2C, 0xC7 },
-    { 0x2D, 0x44 },
-    { 0x2E, 0x24 },
-    { 0x2F, 0x20 },
-    { 0x30, 0x00 },
-    { 0x31, 0x00 },
-    { 0x32, 0x00 },
-    { 0x33, 0x00 },
-    { 0x34, 0xC7 },
-    { 0x35, 0x44 },
-    { 0x36, 0x24 },
-    { 0x37, 0x1C },
+    // mov edx,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x8B, 0x15),
+    // sub esp,0x18
+    OV_MATCH(0x06, 0x83, 0xEC, 0x18),
+
+    // mov esi,ecx(param_2)
+    OV_MATCH(0x0A, 0x8B, 0xF1),
+
+    // mov [esp + 0x20],0
+    OV_MATCH(0x2C, 0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x00, 0x00),
+    // mov [esp + 0x1C],0
+    OV_MATCH(0x34, 0xC7, 0x44, 0x24, 0x1C),
+
+    // NOTE: Required separate difference to avoid detect 4627+
+    //       build titles.
+    // add esp,0x18
+    // ret
+    OV_MATCH(0x80, 0x83, 0xC4, 0x18, 0xC3), // offset 0x80 vs 2024 0x80
     //
 );
 

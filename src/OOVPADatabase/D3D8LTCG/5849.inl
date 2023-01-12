@@ -259,23 +259,39 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetTile
+// * D3D::SetTileNoWait
 // ******************************************************************
-//83EC1885C05356578B3D ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTile_0,
-                         2072)
+// NOTE: Might be possible to migrate with 4721 sig but need remove
+//       JS, 2x XORs instructions to work. Since in general is off by
+//       1 byte except for starting instruction.
+OOVPA_SIG_HEADER_XREF(D3D_SetTileNoWait_0__LTCG_ecx1_eax2,
+                      5849,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x83 },
-    { 0x01, 0xEC },
-    { 0x02, 0x18 },
-    { 0x03, 0x85 },
-    { 0x04, 0xC0 },
-    { 0x05, 0x53 },
-    { 0x06, 0x56 },
-    { 0x07, 0x57 },
-    { 0x08, 0x8B },
-    { 0x09, 0x3D },
+    // mov edi,[D3D_g_pDevice]
+    XREF_ENTRY(0x0A, XREF_D3D_g_pDevice),
+
+    // sub esp,0x18
+    OV_MATCH(0x00, 0x83, 0xEC, 0x18),
+
+    // mov edi,[D3D_g_pDevice]
+    OV_MATCH(0x08, 0x8B, 0x3D),
+
+    // edx,[param_2]
+    OV_MATCH(0x1C, 0x8B, 0x10),
+    // test edx,edx
+    OV_MATCH(0x1E, 0x85, 0xD2),
+
+    // js +0x04
+    // xor eax,eax
+    // xor esi,esi
+    OV_MATCH(0x31, 0x78, 0x04, 0x33, 0xC0, 0x33, 0xF6),
+
+    // and e??,0x0FFFFFFF
+    OV_MATCH(0x6C, 0x81),
+    // OV_MATCH(0x6D, 0xE1), // Sometimes changed over builds.
+    OV_MATCH(0x6E, 0xFF, 0xFF, 0xFF, 0x0F) // 0x0F vs 0x03 from D3DDevice_SetTile
     //
 );
 
