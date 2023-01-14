@@ -2475,29 +2475,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_PSTextureModes
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_PSTextureModes,
-                         3911)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_PSTextureModes,
+                      3911,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_PSTextureModes+0x00 : mov eax, [addr]
-    { 0x00, 0xA1 },
+    // mov eax,[D3D_g_pDevice]
+    XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
-    // D3DDevice_SetRenderState_PSTextureModes+0x0C : or edx, 0x400
-    { 0x0C, 0x81 },
-    { 0x0D, 0xCA },
-    { 0x0E, 0x00 },
-    { 0x0F, 0x04 },
+    // mov [D3DRS_PSTextureModes],e??
+    XREF_ENTRY(0x1D, XREF_D3DRS_PSTextureModes),
 
-    // D3DDevice_SetRenderState_PSTextureModes+0x12 : mov [eax+0x420], ecx
-    { 0x12, 0x89 },
-    { 0x13, 0x88 },
-    { 0x14, 0x20 },
-    { 0x15, 0x04 },
-    { 0x16, 0x00 },
+    // mov eax,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0xA1),
 
-    // D3DDevice_SetRenderState_PSTextureModes+0x21 : retn 4
-    { 0x21, 0xC2 },
-    { 0x22, 0x04 },
+    // or edx,0x400
+    OV_MATCH(0x0C, 0x81, 0xCA, 0x00, 0x04),
+
+    // mov [D3DRS_PSTextureModes],e??
+    OV_MATCH(0x1B, 0x89),
+
+    // retn 4
+    OV_MATCH(0x21, 0xC2, 0x04),
     //
 );
 
