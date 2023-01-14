@@ -440,45 +440,49 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleAntiAlias
 // ******************************************************************
-//C1E11083E20F
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias,
                       1024,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_MultiSampleAntiAlias],eax
     XREF_ENTRY(0x0C, XREF_D3DRS_MultiSampleAntiAlias),
 
-    { 0x00, 0x8B },
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    { 0x36, 0xC1 },
-    { 0x37, 0xE1 },
-    { 0x38, 0x10 },
-    { 0x39, 0x83 },
-    { 0x3A, 0xE2 },
-    { 0x3B, 0x0F },
-    //
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x35),
+
+    // mov [D3DRS_MultiSampleAntiAlias],eax
+    OV_MATCH(0x0B, 0xA3), // 3911 (non-LTCG) 0x0D vs 0x0B
 );
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleMask
 // ******************************************************************
-//83E10FC1E210
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMask,
                       1024,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_MultiSampleMask],eax
     XREF_ENTRY(0x0C, XREF_D3DRS_MultiSampleMask),
 
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    { 0x36, 0x83 },
-    { 0x37, 0xE1 },
-    { 0x38, 0x0F },
-    { 0x39, 0xC1 },
-    { 0x3A, 0xE2 },
-    { 0x3B, 0x10 },
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x35),
+
+    // mov [D3DRS_MultiSampleMask],eax
+    OV_MATCH(0x0B, 0xA3), // 3911 (non-LTCG) 0x0D vs 0x0B
     //
 );
 

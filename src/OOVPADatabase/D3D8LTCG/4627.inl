@@ -96,58 +96,52 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleAntiAlias
 // ******************************************************************
+// Generic OOVPA as of 4627 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias,
                       1060,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_MultiSampleAntiAlias],eax
     XREF_ENTRY(0x0D, XREF_D3DRS_MultiSampleAntiAlias),
 
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
-    { 0x04, 0x56 },
-    { 0x05, 0x8B },
-    { 0x06, 0x35 },
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x35),
+
+    // mov [D3DRS_MultiSampleAntiAlias],eax
+    OV_MATCH(0x0C, 0xA3), // 4627 (non-LTCG) 0x0E vs 0x0C
     //
 );
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleMask
 // ******************************************************************
+// Generic OOVPA as of 4627 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMask,
                       1060,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
+    // mov edi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_MultiSampleMask],eax
     XREF_ENTRY(0x0C, XREF_D3DRS_MultiSampleMask),
 
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
-    { 0x04, 0x57 },
-    { 0x05, 0x8B },
-    { 0x06, 0x3D },
-    //
-);
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-// ******************************************************************
-// * D3DDevice_SetRenderState_MultiSampleMask
-// ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMask,
-                      1072,
-                      XRefOne)
-OOVPA_SIG_MATCH(
+    // mov edi,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x3D),
 
-    XREF_ENTRY(0x0B, XREF_D3DRS_MultiSampleMask),
-
-    { 0x01, 0x44 },
-    { 0x0F, 0xC1 },
-    { 0x10, 0xE0 },
-    { 0x11, 0x10 },
-    { 0x12, 0x56 },
-    { 0x13, 0x8B },
+    // mov [D3DRS_MultiSampleMask],eax
+    OV_MATCH(0x0B, 0xA3), // 4627 (non-LTCG) 0x0A vs 0x0B
     //
 );
 

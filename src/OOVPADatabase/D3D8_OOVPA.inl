@@ -330,8 +330,8 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FrontFace, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_LineWidth, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_LogicOp, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleAntiAlias, 3911, 4034, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMask, 3911, 4034, 4627),
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleAntiAlias, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMask, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMode, 3925, 4034, 4134, 4627, 5233),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleRenderTargetMode, 4034), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_SetRenderState_NormalizeNormals, 3911, 4034),

@@ -975,29 +975,26 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleAntiAlias
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias,
-                         4627)
+// Generic OOVPA as of 4627 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias,
+                      4627,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x04, 0x56 },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    { 0x13, 0xE8 },
+    // mov [D3DRS_MultiSampleAntiAlias],eax
+    XREF_ENTRY(0x0F, XREF_D3DRS_MultiSampleAntiAlias),
 
-    { 0x48, 0xC7 },
-    { 0x50, 0x04 },
-    { 0x51, 0x8B },
-    { 0x52, 0x4E },
-    { 0x53, 0x04 },
-    { 0x54, 0x83 },
-    { 0x55, 0xC0 },
-    { 0x56, 0x08 },
-    { 0x57, 0x3B },
-    { 0x58, 0xC1 },
-    { 0x59, 0x89 },
-    { 0x5A, 0x06 },
-    { 0x5B, 0x72 },
-    { 0x5C, 0x05 },
-    { 0x5D, 0xE8 },
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x35),
+
+    // mov [D3DRS_MultiSampleAntiAlias],eax
+    OV_MATCH(0x0E, 0xA3), // 3911 0x0D vs 0x0E
     //
 );
 
@@ -1308,18 +1305,26 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleMask
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_MultiSampleMask,
-                         4627)
+// Generic OOVPA as of 4627 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMask,
+                      4627,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x0A, 0xA3 },
-    { 0x12, 0x56 },
-    { 0x1C, 0x8B },
-    { 0x2A, 0x85 },
-    { 0x30, 0x01 },
-    { 0x3D, 0xC7 },
-    { 0x44, 0x78 },
-    { 0x4E, 0x04 },
+    // mov [D3DRS_MultiSampleMask],eax
+    XREF_ENTRY(0x0B, XREF_D3DRS_MultiSampleMask),
+
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x15, XREF_D3D_g_pDevice),
+
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov [D3DRS_MultiSampleMask],eax
+    OV_MATCH(0x0A, 0xA3),
+
+    // esi,[D3D_g_pDevice]
+    OV_MATCH(0x13, 0x8B, 0x35),
     //
 );
 

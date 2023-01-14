@@ -604,40 +604,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_MultiSampleAntiAlias
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias,
-                         4034)
-OOVPA_SIG_MATCH(
-
-    { 0x0B, 0x8B },
-    { 0x17, 0x8B },
-    { 0x23, 0x8B },
-    { 0x2C, 0x8B },
-    { 0x38, 0xC1 },
-    { 0x40, 0x7C },
-    { 0x4B, 0x08 },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_SetRenderState_MultiSampleMask
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_MultiSampleMask,
-                         4034)
-OOVPA_SIG_MATCH(
-
-    { 0x0B, 0x8B },
-    { 0x17, 0x8B },
-    { 0x23, 0x8B },
-    { 0x2C, 0x8B },
-    { 0x38, 0x83 },
-    { 0x40, 0x7C },
-    { 0x4B, 0x08 },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_NormalizeNormals
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_NormalizeNormals,

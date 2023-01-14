@@ -3576,18 +3576,25 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleAntiAlias
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias,
-                         3911)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias,
+                      3911,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x8B },
-    { 0x0B, 0x8B },
-    { 0x1D, 0x8B },
-    { 0x26, 0x8B },
-    { 0x2C, 0x8B },
-    { 0x38, 0x0B },
-    { 0x40, 0x89 },
-    { 0x49, 0xC2 },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_MultiSampleAntiAlias],eax
+    XREF_ENTRY(0x0E, XREF_D3DRS_MultiSampleAntiAlias),
+
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x35),
+
+    // mov [D3DRS_MultiSampleAntiAlias],eax
+    OV_MATCH(0x0D, 0xA3), // 4627 0x0E vs 0x0D
     //
 );
 
@@ -3830,33 +3837,25 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleMask
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_MultiSampleMask,
-                         3911)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMask,
+                      3911,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_MultiSampleMask+0x00 : mov eax, [esp+arg_0]
-    { 0x00, 0x8B },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    // D3DDevice_SetRenderState_MultiSampleMask+0x0B : mov ecx, esi
-    { 0x0B, 0x8B },
-    { 0x0C, 0xCE },
+    // mov [D3DRS_MultiSampleMask],eax
+    XREF_ENTRY(0x0E, XREF_D3DRS_MultiSampleMask),
 
-    // D3DDevice_SetRenderState_MultiSampleMask+0x32 : and ecx, 0x0F; shl edx, 0x10
-    { 0x32, 0x83 },
-    { 0x33, 0xE1 },
-    { 0x34, 0x0F },
-    { 0x35, 0xC1 },
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    // D3DDevice_SetRenderState_MultiSampleMask+0x3A : mov dword ptr [eax], 0x41D7C
-    { 0x3A, 0xC7 },
-    { 0x3B, 0x00 },
-    { 0x3C, 0x7C },
-    { 0x3D, 0x1D },
-    { 0x3E, 0x04 },
+    // esi,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x35),
 
-    // D3DDevice_SetRenderState_MultiSampleMask+0x49 : retn 0x04
-    { 0x49, 0xC2 },
-    { 0x4A, 0x04 },
+    // mov [D3DRS_MultiSampleMask],eax
+    OV_MATCH(0x0D, 0xA3),
     //
 );
 
