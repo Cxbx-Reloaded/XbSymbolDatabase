@@ -192,7 +192,7 @@ static const library_list database_full = {
                      REGISTER_SYMBOL(D3DDevice_RunVertexStateShader_4, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
     REGISTER_SYMBOLS(D3DDevice_SelectVertexShader,
                      REGISTER_SYMBOL(D3DDevice_SelectVertexShader, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
-                     REGISTER_SYMBOL(D3DDevice_SelectVertexShader_0, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),  // NOTE: LTCG usage
+                     REGISTER_SYMBOL(D3DDevice_SelectVertexShader_0__LTCG_eax1_ebx2, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(D3DDevice_SelectVertexShader_4, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
     REGISTER_SYMBOLS(D3DDevice_SelectVertexShaderDirect,
                      REGISTER_SYMBOL(D3DDevice_SelectVertexShaderDirect, VER_RANGE(4361, VER_MAX, VER_NONE, VER_NONE)),
