@@ -2747,27 +2747,28 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderState_Dxt1NoiseEnable
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-// 1024 (4627), 1036 (3911) <-- jarupxx, this doesn't make sense.
+// NOTE: D3DRS_Dxt1NoiseEnable is referenced at end of the function,
+//       therefore will require additional OOVPA signatures. This
+//       signature is currently the best generic version.
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_Dxt1NoiseEnable,
                          3911)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x00 : push ebx
+    // push ebx
     OV_MATCH(0x00, 0x53),
-
-    // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x01 : mov ebx,[esp+0x__]
+    // mov ebx,[esp + 0x??]
     OV_MATCH(0x01, 0x8B),
 
-    // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x05 : push esi
+    // push esi
     OV_MATCH(0x05, 0x56),
 
-    // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x1D : and dl, 0x3C
+    // and dl, 0x3C
     OV_MATCH(0x1D, 0x80, 0xE2, 0x3C),
 
-    // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x22 : cmp dl, 0x20
+    // cmp dl, 0x20
     OV_MATCH(0x22, 0x80, 0xFA, 0x20),
 
-    // D3DDevice_SetRenderState_Dxt1NoiseEnable+0x2E : and ecx,0x01
+    // and ecx,0x01
     OV_MATCH(0x2E, 0x83, 0xE1, 0x01),
 
     //
