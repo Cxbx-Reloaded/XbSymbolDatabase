@@ -325,7 +325,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_DoNotCullUncompressed, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_Dxt1NoiseEnable, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_EdgeAntiAlias, 3911, 4034),
-    REGISTER_OOVPAS_M(D3DDevice_SetRenderState_FillMode, 3911, 4034),
+    REGISTER_OOVPAS_M(D3DDevice_SetRenderState_FillMode, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FogColor, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FrontFace, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_LineWidth, 3911, 4034),
