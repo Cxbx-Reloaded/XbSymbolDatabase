@@ -1750,17 +1750,26 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_SampleAlpha
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_SampleAlpha,
-                         4627)
+// Generic OOVPA as of 4627 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_SampleAlpha,
+                      4627,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x0B, 0xC1 },
-    { 0x15, 0x0B },
-    { 0x1C, 0x8B },
-    { 0x28, 0x85 },
-    { 0x30, 0x07 },
-    { 0x3B, 0xC7 },
-    { 0x44, 0x83 },
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x11, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_SampleAlpha],eax
+    XREF_ENTRY(0x18, XREF_D3DRS_SampleAlpha),
+
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x0F, 0x8B),
+
+    // mov [D3DRS_SampleAlpha],eax
+    OV_MATCH(0x17, 0xA3),
     //
 );
 
