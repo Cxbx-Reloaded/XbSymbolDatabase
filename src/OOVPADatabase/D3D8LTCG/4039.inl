@@ -465,15 +465,20 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_TwoSidedLighting,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
+    // mov e??,[D3DRS_FillMode]
     XREF_ENTRY(0x18, XREF_D3DRS_FillMode),
+
+    // mov [D3DRS_TwoSidedLighting],e??
     XREF_ENTRY(0x1D, XREF_D3DRS_TwoSidedLighting),
 
-    { 0x00, 0x8B },
-    { 0x06, 0x8B },
-    { 0x07, 0x44 },
-    { 0x08, 0x24 },
-    { 0x09, 0x04 },
-    { 0x25, 0xE9 },
+    // mov e??,[0x????????]
+    OV_MATCH(0x00, 0x8B),
+
+    // mov e??,[esp + param_1]
+    OV_MATCH(0x06, 0x8B),
+
+    // mov e??,[D3DRS_FillMode]
+    OV_MATCH(0x16, 0x8B),
     //
 );
 

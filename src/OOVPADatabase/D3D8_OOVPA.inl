@@ -346,7 +346,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilEnable, 3911, 4034, 5849),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilFail, 3911, 4034, 5849),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_TextureFactor, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_TwoSidedLighting, 3911, 4034, 5344), // Beware of the typo... (from 4627's comment)
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_TwoSidedLighting, 3911, 4034, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_VertexBlend, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_YuvEnable, 3911, 1024), // Final generic OOVPA: 3911 (LTCG) / 4034 (non-LTCG); Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZBias, 3911), // Final generic OOVPA: 3911; Removed: 0

@@ -530,21 +530,25 @@ OOVPA_SIG_MATCH(
 //******************************************************************
 //* D3DDevice_SetRenderState_TwoSidedLighting
 //******************************************************************
-//834808208B
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_TwoSidedLighting,
                       1024,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
+    // mov eax,[D3D_g_pDevice]
+    XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_TwoSidedLighting],eax
     XREF_ENTRY(0x15, XREF_D3DRS_TwoSidedLighting),
 
-    { 0x00, 0xA1 },
+    // mov eax,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0xA1),
 
-    { 0x05, 0x83 },
-    { 0x06, 0x48 },
-    { 0x07, 0x08 },
-    { 0x08, 0x20 },
-    { 0x09, 0x8B },
+    // mov e??,[esp + param_1]
+    OV_MATCH(0x09, 0x8B),
+
+    // mov [D3DRS_TwoSidedLighting],eax
+    OV_MATCH(0x14, 0xA3),
     //
 );
 

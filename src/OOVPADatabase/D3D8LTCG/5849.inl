@@ -256,6 +256,9 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderState_TwoSidedLighting
 // ******************************************************************
 //C700C417040089
+// TODO: Find title match with this signature. If there are absolutely
+//       none, then delete it from database. Otherwise, try reuse pattern
+//       from LTCG 5344's signatures.
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_TwoSidedLighting,
                          1084)
 OOVPA_SIG_MATCH(

@@ -3662,33 +3662,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_TwoSidedLighting
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_TwoSidedLighting,
-                         3911)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_TwoSidedLighting,
+                      3911,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_TwoSidedLighting+0x00 : mov eax, [addr]
-    { 0x00, 0xA1 },
+    // mov eax,[D3D_g_pDevice]
+    XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
-    // D3DDevice_SetRenderState_TwoSidedLighting+0x06 : or dword ptr [eax+8], 0x20
-    { 0x06, 0x83 },
-    { 0x07, 0x48 },
-    { 0x08, 0x08 },
-    { 0x09, 0x20 },
+    // mov [D3DRS_TwoSidedLighting],eax
+    XREF_ENTRY(0x1D, XREF_D3DRS_TwoSidedLighting),
 
-    // D3DDevice_SetRenderState_TwoSidedLighting+0x3B : mov dword ptr [eax], 0x8038C
-    { 0x3B, 0xC7 },
-    { 0x3C, 0x00 },
-    { 0x3D, 0x8C },
-    { 0x3E, 0x03 },
+    // mov eax,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0xA1),
 
-    // D3DDevice_SetRenderState_TwoSidedLighting+0x44 : add eax, 0x0C
-    { 0x44, 0x83 },
-    { 0x45, 0xC0 },
-    { 0x46, 0x0C },
+    // mov e??,[esp + param_1]
+    OV_MATCH(0x0A, 0x8B),
 
-    // D3DDevice_SetRenderState_TwoSidedLighting+0x51 : retn 0x04
-    { 0x51, 0xC2 },
-    { 0x52, 0x04 },
+    // mov e??,[D3DRS_FillMode]
+    OV_MATCH(0x0E, 0x8B),
+
+    // mov [D3DRS_TwoSidedLighting],eax
+    OV_MATCH(0x1C, 0xA3),
     //
 );
 
