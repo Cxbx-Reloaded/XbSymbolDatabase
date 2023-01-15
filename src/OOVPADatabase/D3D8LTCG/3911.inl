@@ -237,25 +237,26 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_ZBias
 // ******************************************************************
-//24..8BF07D06D805
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_ZBias,
-                         1048)
+                         1024)
 OOVPA_SIG_MATCH(
+    // push ecx
+    // push ebx // non-LTCG does not have this instruction
+    // push esi
+    OV_MATCH(0x00, 0x51, 0x53, 0x56),
 
-    // XREF_ENTRY( 0x6A, XREF_D3DRS_ZBias ),
+    // setnz al
+    OV_MATCH(0x0C, 0x0F, 0x95, 0xC0),
 
-    { 0x00, 0x51 },
-    { 0x01, 0x53 },
+    // fild [esp + param_1]
+    OV_MATCH(0x15, 0xDB, 0x44, 0x24, 0x14),
 
-    { 0x17, 0x24 },
-    //{ 0x18, 0x10 },
-    { 0x19, 0x8B },
-    { 0x1A, 0xF0 },
-    { 0x1B, 0x7D },
-    { 0x1C, 0x06 },
-    { 0x1D, 0xD8 },
-    { 0x1E, 0x05 },
-    //
+    // jge +0x06
+    OV_MATCH(0x1B, 0x7D, 0x06),
+    // fadd [0x????????]
+    OV_MATCH(0x1D, 0xD8, 0x05),
+    // NOTE: fchs instruction is moved to different offset
+    // Source: (4928) The Fellowship of the Ring
 );
 
 // ******************************************************************

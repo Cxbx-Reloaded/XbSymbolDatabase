@@ -2776,30 +2776,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_ZBias
 // ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+// NOTE: D3DRS_ZBias is referenced at end of the function,
+//       therefore will require additional OOVPA signatures. This
+//       signature is currently the best generic version.
+// NOTE2: Above note include LTCG's titles detection.
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_ZBias,
                          3911)
 OOVPA_SIG_MATCH(
+    // push ecx
+    // push esi
+    OV_MATCH(0x00, 0x51, 0x56),
 
-    // D3DDevice_SetRenderState_ZBias+0x00 : push ecx
-    { 0x00, 0x51 },
+    // setnz al
+    OV_MATCH(0x0B, 0x0F, 0x95, 0xC0),
 
-    // D3DDevice_SetRenderState_ZBias+0x0B : setnz al
-    { 0x0B, 0x0F },
-    { 0x0C, 0x95 },
-    { 0x0D, 0xC0 },
+    // fild [esp + param_1]
+    OV_MATCH(0x14, 0xDB, 0x44, 0x24, 0x10),
 
-    // D3DDevice_SetRenderState_ZBias+0x14 : fild [esp+0x10]
-    { 0x14, 0xDB },
-    { 0x15, 0x44 },
-    { 0x16, 0x24 },
-
-    // D3DDevice_SetRenderState_ZBias+0x45 : push 0x4E
-    { 0x45, 0x6A },
-    { 0x46, 0x4E },
-
-    // D3DDevice_SetRenderState_ZBias+0x45 : retn 0x04
-    { 0x71, 0xC2 },
-    { 0x72, 0x04 },
+    // jge +0x06
+    OV_MATCH(0x1A, 0x7D, 0x06),
+    // fadd [0x????????]
+    OV_MATCH(0x1C, 0xD8, 0x05),
     //
 );
 
