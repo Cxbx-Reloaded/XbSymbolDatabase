@@ -674,23 +674,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_YuvEnable
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_YuvEnable,
-                         4034)
-OOVPA_SIG_MATCH(
-
-    { 0x04, 0x56 },
-    { 0x0B, 0xA3 },
-    { 0x10, 0x8B },
-    { 0x16, 0x05 },
-    { 0x1C, 0x8B },
-    { 0x25, 0x89 },
-    { 0x28, 0xC2 },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_TwoSidedLighting
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_TwoSidedLighting,

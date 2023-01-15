@@ -164,26 +164,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_YuvEnable
-// ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_YuvEnable,
-                      1024,
-                      XRefOne)
-OOVPA_SIG_MATCH(
-
-    XREF_ENTRY(0x0C, XREF_D3DRS_YuvEnable),
-
-    { 0x01, 0x44 },
-    { 0x04, 0x56 },
-    { 0x05, 0x8B },
-    { 0x06, 0x35 },
-    { 0x0B, 0xA3 },
-    { 0x11, 0x06 },
-    { 0x15, 0x72 },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_SetTextureState_TexCoordIndex
 // ******************************************************************
 //538BD9C1E107 ...C3

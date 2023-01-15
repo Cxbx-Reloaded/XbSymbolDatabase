@@ -3952,29 +3952,53 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_YuvEnable
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_YuvEnable,
-                         3911)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_YuvEnable,
+                      3911,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetRenderState_YuvEnable+0x00 : mov eax, [esp+0x04]
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    // D3DDevice_SetRenderState_YuvEnable+0x04 : push edi
-    { 0x04, 0x56 },
+    // mov [D3DRS_YuvEnable],eax
+    XREF_ENTRY(0x0D, XREF_D3DRS_YuvEnable),
 
-    // D3DDevice_SetRenderState_YuvEnable+0x0B : push edi
-    { 0x0B, 0x56 },
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    // D3DDevice_SetRenderState_YuvEnable+0x1F : mov [esi], eax
-    { 0x1F, 0x89 },
-    { 0x20, 0x06 },
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B),
 
-    // D3DDevice_SetRenderState_YuvEnable+0x22 : retn 0x04
-    { 0x22, 0xC2 },
-    { 0x23, 0x04 },
+    // mov [D3DRS_YuvEnable],eax
+    OV_MATCH(0x0C, 0xA3),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_SetRenderState_YuvEnable
+// ******************************************************************
+// Generic OOVPA as of 3911 (LTCG) / 4034 (non-LTCG) and newer.
+// NOTE: This signature is used in LTCG titles first in 3911 then later
+//       afterward become standard in non-LTCG titles since build 4034.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_YuvEnable,
+                      1024,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_YuvEnable],eax
+    XREF_ENTRY(0x0C, XREF_D3DRS_YuvEnable),
+
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B),
+
+    // mov [D3DRS_YuvEnable],eax
+    OV_MATCH(0x0B, 0xA3),
     //
 );
 

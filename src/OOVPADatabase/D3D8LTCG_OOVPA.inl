@@ -167,7 +167,6 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_TextureFactor, 1036),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_TwoSidedLighting, 1024, 1036, 1048, 1060, 1072, 1084),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_VertexBlend, 1024, 1036, 1048),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_YuvEnable, 1024),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZBias, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZEnable, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 1024, 1036, 1048, 1072, 1084),
