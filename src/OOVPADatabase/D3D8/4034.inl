@@ -1379,43 +1379,33 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleMode
 // ******************************************************************
-#ifndef WIP_LessVertexPatching
-OOVPA_NO_XREF(D3DDevice_SetRenderState_MultiSampleMode, 4034, 12)
-    {
-#else
-OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleMode,
-           4034,
-           1 + 8,
-           XRefOne)
-{
+// Generic OOVPA as of 4034 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMode,
+                      4034,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x11, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
-#endif
-        // D3DDevice_SetRenderState_MultiSampleMode+0x0F : mov ecx, [eax+0x21F0]
-        { 0x0F, 0x8B },
-            { 0x10, 0x88 },
-#ifndef WIP_LessVertexPatching
-            { 0x11, 0xF0 }, // disabled. part of an offset
-            { 0x12, 0x21 },
-#endif
+    // Do not xref with D3D_g_pDevice due to offset difference across builds.
 
-            // D3DDevice_SetRenderState_MultiSampleMode+0x15 : cmp ecx, [eax+0x21FC]
-            { 0x15, 0x3B },
-            { 0x16, 0x88 },
-#ifndef WIP_LessVertexPatching
-            { 0x17, 0xFC }, // disabled. part of an offset
-            { 0x18, 0x21 },
-#endif
+    // mov [D3DRS_MultiSampleMode],e??
+    XREF_ENTRY(0x0B, XREF_D3DRS_MultiSampleMode),
 
-            // D3DDevice_SetRenderState_MultiSampleMode+0x1B : jnz +0x0D
-            { 0x1B, 0x75 },
-            { 0x1C, 0x0D },
+    // TODO: enable below for WIP_LessVertexPatching
+    //XREF_ENTRY(0x11, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
 
-            // D3DDevice_SetRenderState_MultiSampleMode+0x2A : retn 0x04
-            { 0x2A, 0xC2 },
-            { 0x2B, 0x04 },
-    }
-OOVPA_END;
+    // mov e??,[esp + param_1]
+    OV_MATCH(0x00, 0x8B),
+    OV_MATCH(0x02, 0x24, 0x04),
+    // Do not input any OV patterns in-between here and before offset 0x0F.
+
+    // mov e??,[e??+OFFSET_D3DDevice__m_RenderTarget]
+    OV_MATCH(0x0F, 0x8B),
+    // cmp e??, [e??+0x????????]
+    OV_MATCH(0x15, 0x3B),
+    // jnz +0x??
+    OV_MATCH(0x1B, 0x75),
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleRenderTargetMode

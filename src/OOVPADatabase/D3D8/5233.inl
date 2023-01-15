@@ -47,40 +47,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_MultiSampleMode
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_MultiSampleMode,
-                         5233)
-OOVPA_SIG_MATCH(
-
-    // D3DDevice_SetRenderState_MultiSampleMode+0x04 : mov ecx, ds:dword_XXXX
-    { 0x04, 0x8B },
-    { 0x05, 0x0D },
-
-    // D3DDevice_SetRenderState_MultiSampleMode+0x0F : mov edx, [ecx+XXXXh]
-    { 0x0F, 0x8B },
-    { 0x10, 0x91 },
-
-    // D3DDevice_SetRenderState_MultiSampleMode+0x15 : cmp edx, [ecx+XXXXh]
-    { 0x15, 0x3B },
-    { 0x16, 0x91 },
-
-    // D3DDevice_SetRenderState_MultiSampleMode+0x1B : jnz short
-    { 0x1B, 0x75 },
-    { 0x1C, 0x07 },
-
-    // D3DDevice_SetRenderState_MultiSampleMode+0x1D : xor edx, edx
-    { 0x1D, 0x33 },
-    { 0x1E, 0xD2 },
-
-    // D3DDevice_SetRenderState_MultiSampleMode+0x24 : retn 4
-    { 0x24, 0xC2 },
-    { 0x25, 0x04 },
-    { 0x26, 0x00 },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_SetRenderTargetFast
 // ******************************************************************
 #ifndef WIP_LessVertexPatching

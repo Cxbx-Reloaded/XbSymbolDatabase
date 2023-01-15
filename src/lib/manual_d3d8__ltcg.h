@@ -211,7 +211,7 @@ static const RenderStateRevision DxbxRenderStateInfo[] = {
     /* 151 */ { 3424, 0000 /*, XREF_NAME(D3DRS_EdgeAntiAlias) */ },                    // Was D3DRS_EDGEANTIALIAS. Dxbx note : No Xbox ext. (according to Direct3D8) !
     /* 152 */ { 3424, 0000, XREF_NAME(D3DRS_MultiSampleAntiAlias) },                   //
     /* 153 */ { 3424, 0000, XREF_NAME(D3DRS_MultiSampleMask) },                        //
-    /* 154 */ { 3424, 4034 /*, XREF_NAME(D3DRS_MultiSampleType) */ },                  // Verified present in 3944, removed in 4034. 4034 state based on test-case : The Simpsons Road Rage
+    /* 154 */ { 3424, 4034, XREF_NAME(D3DRS_MultiSampleType) },                        // Verified present in 3944, removed in 4034. 4034 state based on test-case : The Simpsons Road Rage
     /* 155 */ { 4034, 0000, XREF_NAME(D3DRS_MultiSampleMode) },                        // D3DMULTISAMPLEMODE for the backbuffer. Verified absent in 3944, present in 4034.  4034 state based on test-case : The Simpsons Road Rage
     /* 156 */ { 4034, 0000, XREF_NAME(D3DRS_MultiSampleRenderTargetMode) },            // Verified absent in 3944, present in 4034. Presence in 4034 is based on test-case : The Simpsons Road Rage
     /* 157 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ShadowFunc) */ },                       //

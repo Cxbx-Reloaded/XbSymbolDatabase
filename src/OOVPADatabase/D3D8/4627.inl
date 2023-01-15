@@ -1444,24 +1444,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_MultiSampleMode
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_MultiSampleMode,
-                         4627)
-OOVPA_SIG_MATCH(
-
-    { 0x09, 0x89 },
-    { 0x0F, 0x8B },
-    { 0x13, 0x00 },
-    { 0x1A, 0x00 },
-    { 0x1B, 0x75 },
-    { 0x21, 0x00 },
-    { 0x28, 0x00 },
-    { 0x31, 0xC2 },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_ApplyStateBlock
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_ApplyStateBlock,
