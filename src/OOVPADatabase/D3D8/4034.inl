@@ -577,17 +577,25 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_LogicOp
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_LogicOp,
-                         4034)
+// Generic OOVPA as of 4034 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_LogicOp,
+                      4034,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x09, 0x3B },
-    { 0x14, 0x4C },
-    { 0x1F, 0x04 },
-    { 0x2A, 0x0D },
-    { 0x35, 0xBC },
-    { 0x40, 0x89 },
-    { 0x4E, 0x5E },
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+    // mov [D3DRS_LogicOp],e??
+    XREF_ENTRY(0x2B, XREF_D3DRS_LogicOp),
+
+    // push esi
+    OV_MATCH(0x00, 0x56),
+
+    // jnz +0x??
+    OV_MATCH(0x19, 0x75),
+    // unique
+    // mov [eax],0x417bc
+    OV_MATCH(0x1B, 0xC7, 0x00, 0xBC, 0x17, 0x04, 0x00),
     //
 );
 

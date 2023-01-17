@@ -329,7 +329,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FogColor, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FrontFace, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_LineWidth, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_LogicOp, 3911, 4034),
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_LogicOp, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleAntiAlias, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMask, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMode, 4034), // Final generic OOVPA: 4034; Removed: 0
