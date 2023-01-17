@@ -1239,35 +1239,19 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_CullMode,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // Derived
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+    // mov [D3DRS_CullMode],e??
+    XREF_ENTRY(0x25, XREF_D3DRS_CullMode),
 
-    XREF_ENTRY(0x25, XREF_D3DRS_CullMode), // Derived
+    // push esi
+    OV_MATCH(0x00, 0x56),
 
-    // D3DDevice_SetRenderState_CullMode+0x00 : push esi
-    { 0x00, 0x56 },
-
-    // D3DDevice_SetRenderState_CullMode+0x42 : mov dword ptr [eax+8], 0x4039C
-    { 0x42, 0xC7 },
-    { 0x43, 0x40 },
-    { 0x44, 0x08 },
-    { 0x45, 0x9C },
-    { 0x46, 0x03 },
-    { 0x47, 0x04 },
-
-    // D3DDevice_SetRenderState_CullMode+0x49 : add eax, 0x10
-    { 0x49, 0x83 },
-    { 0x4A, 0xC0 },
-    { 0x4B, 0x10 },
-
-    // D3DDevice_SetRenderState_CullMode+0x4D : add edx, 0x404
-    { 0x4D, 0x81 },
-    { 0x4E, 0xC2 },
-    { 0x4F, 0x04 },
-    { 0x50, 0x04 },
-
-    // D3DDevice_SetRenderState_CullMode+0x5F : retn 4
-    { 0x5F, 0xC2 },
-    { 0x60, 0x04 },
+    // unique
+    // mov [eax],0x40308
+    OV_MATCH(0x13, 0xC7, 0x00, 0x08, 0x03, 0x04, 0x00),
+    // jnz +0x??
+    OV_MATCH(0x19, 0x75),
     //
 );
 

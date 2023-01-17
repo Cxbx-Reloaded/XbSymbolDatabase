@@ -320,7 +320,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetRenderState, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState2, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: There is a verified duplicate function.
     REGISTER_OOVPAS(D3DDevice_SetRenderState_BackFillMode, 3911, 4034),
-    REGISTER_OOVPAS_C(D3DDevice_SetRenderState_CullMode, 3911, 4034),
+    REGISTER_OOVPAS_C(D3DDevice_SetRenderState_CullMode, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_Deferred, 3911),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_DoNotCullUncompressed, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_Dxt1NoiseEnable, 3911), // Final generic OOVPA: 3911; Removed: 0
