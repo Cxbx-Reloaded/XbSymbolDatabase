@@ -203,7 +203,7 @@ static const RenderStateRevision DxbxRenderStateInfo[] = {
     /* 143 */ { 3424, 0000 /*, XREF_NAME(D3DRS_ZEnable) */ },                          // D3DZBUFFERTYPE?
     /* 144 */ { 3424, 0000, XREF_NAME(D3DRS_StencilEnable) },                          //
     /* 145 */ { 3424, 0000, XREF_NAME(D3DRS_StencilFail) },                            //
-    /* 146 */ { 3424, 0000 /*, XREF_NAME(D3DRS_FrontFace) */ },                        // nsp.
+    /* 146 */ { 3424, 0000, XREF_NAME(D3DRS_FrontFace) },                              // nsp.
     /* 147 */ { 3424, 0000, XREF_NAME(D3DRS_CullMode) },                               //
     /* 148 */ { 3424, 0000 /*, XREF_NAME(D3DRS_TextureFactor) */ },                    //
     /* 149 */ { 3424, 0000, XREF_NAME(D3DRS_ZBias) },                                  // Was D3DRS_ZBIAS

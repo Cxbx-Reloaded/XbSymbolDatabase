@@ -560,17 +560,26 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_FrontFace
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_FrontFace,
-                         4034)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_FrontFace,
+                      4034,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x56 },
-    { 0x07, 0x8B },
-    { 0x0E, 0xE8 },
-    { 0x16, 0x08 },
-    { 0x1E, 0x48 },
-    { 0x2A, 0x89 },
-    { 0x30, 0x5E },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_FrontFace],e??
+    XREF_ENTRY(0x2C, XREF_D3DRS_FrontFace),
+
+    // push esi
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x56, 0x8B, 0x35),
+
+    // add eax,0x08
+    OV_MATCH(0x20, 0x83, 0xC0, 0x08),
+
+    // mov [D3DRS_FrontFace],e??
+    OV_MATCH(0x2A, 0x89),
     //
 );
 
