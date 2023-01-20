@@ -535,28 +535,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_MultiSampleRenderTargetMode
-// ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleRenderTargetMode,
-                      1024,
-                      XRefOne)
-OOVPA_SIG_MATCH(
-
-    XREF_ENTRY(0x0B, XREF_D3DRS_MultiSampleRenderTargetMode),
-
-    { 0x01, 0x4C },
-    { 0x15, 0x3B },
-    //{ 0x16, 0x90 },
-    //{ 0x17, 0x14 },
-    //{ 0x18, 0x1A },
-    { 0x19, 0x00 },
-    { 0x1A, 0x00 },
-    { 0x1B, 0x74 },
-    //{ 0x1C, 0x0D },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_SetRenderState_StencilFail
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_StencilFail,

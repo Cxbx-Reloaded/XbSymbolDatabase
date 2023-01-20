@@ -1438,46 +1438,30 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderState_MultiSampleRenderTargetMode
 // ******************************************************************
 // Generic OOVPA as of 4034 and newer.
-#ifndef WIP_LessVertexPatching
-OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleRenderTargetMode,
-           4034,
-           1 + 10,
-           XRefOne)
-    {
-#else
-OOVPA_XREF(D3DDevice_SetRenderState_MultiSampleRenderTargetMode,
-           4034,
-           2 + 10,
-           XRefTwo)
-{
-#endif
-        XREF_ENTRY(0x0B, XREF_D3DRS_MultiSampleRenderTargetMode), // Derived
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleRenderTargetMode,
+                      4034,
+                      XRefOne)
+OOVPA_SIG_MATCH(
 
-#ifdef WIP_LessVertexPatching
-            XREF_ENTRY(0x11, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
-#endif
+    XREF_ENTRY(0x0B, XREF_D3DRS_MultiSampleRenderTargetMode),
 
-            { 0x00, 0x8B },
-            //{ 0x01, 0x4C },
-            { 0x02, 0x24 },
-            { 0x03, 0x04 },
+    // TODO: enable below for WIP_LessVertexPatching
+    // mov e??,[e?? + XREF_OFFSET_D3DDevice__m_RenderTarget]
+    //XREF_ENTRY(0x11, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
 
-            { 0x0F, 0x8B },
-            //{ 0x10, 0x88 },
-            //{ 0x11, 0x70 },
-            //{ 0x12, 0x20 },
-            { 0x13, 0x00 },
-            { 0x14, 0x00 },
-            { 0x15, 0x3B },
-            //{ 0x16, 0x88 },
-            //{ 0x17, 0x7C },
-            //{ 0x18, 0x20 },
-            { 0x19, 0x00 },
-            { 0x1A, 0x00 },
-            { 0x1B, 0x74 }, // MultiSampleRenderTargetMode 0x74 vs MultiSampleMode 0x75
-        //{ 0x1C, 0x0D },
-    }
-OOVPA_END;
+    // mov e??,[esp + param_1]
+    OV_MATCH(0x00, 0x8B),
+    OV_MATCH(0x02, 0x24, 0x04),
+
+    // mov e??,[e?? + XREF_OFFSET_D3DDevice__m_RenderTarget]
+    OV_MATCH(0x0F, 0x8B),
+
+    // cmp e??,[e?? + XREF_OFFSET_D3DDevice__m_????]
+    OV_MATCH(0x15, 0x3B),
+
+    // jz +0x??
+    OV_MATCH(0x1B, 0x74), // MultiSampleRenderTargetMode 0x74 vs MultiSampleMode 0x75
+);
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_LineWidth
