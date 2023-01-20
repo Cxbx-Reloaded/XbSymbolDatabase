@@ -90,48 +90,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_StencilEnable
-// ******************************************************************
-//85FFC700841D0400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilEnable,
-                         1072)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x56 },
-    { 0x02, 0x35 },
-
-    { 0x5C, 0x85 },
-    { 0x5D, 0xFF },
-    { 0x5E, 0xC7 },
-    { 0x5F, 0x00 },
-    { 0x60, 0x84 },
-    { 0x61, 0x1D },
-    { 0x62, 0x04 },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_SetRenderState_StencilEnable
-// ******************************************************************
-//85FFC700841D0400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilEnable,
-                         1084)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x56 },
-    { 0x02, 0x35 },
-
-    { 0x5B, 0x85 },
-    { 0x5C, 0xFF },
-    { 0x5D, 0xC7 },
-    { 0x5E, 0x00 },
-    { 0x5F, 0x84 },
-    { 0x60, 0x1D },
-    { 0x61, 0x04 },
-    //
-);
-
-// ******************************************************************
 // * D3DTexture_GetLevelDesc
 // ******************************************************************
 // * NOTE: We are actually intercepting Get2DSurfaceDesc, because

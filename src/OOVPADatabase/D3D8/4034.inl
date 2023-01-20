@@ -636,18 +636,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_StencilEnable
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilEnable,
-                         4034)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_StencilEnable,
+                      4034,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x56 },
-    { 0x13, 0x8B },
-    { 0x20, 0x02 },
-    { 0x34, 0x85 },
-    { 0x42, 0x75 },
-    { 0x53, 0x89 },
-    { 0x64, 0x00 },
-    { 0x75, 0x83 },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+
+    // mov [D3DRS_StencilEnable],e??
+    XREF_ENTRY(0x7C, XREF_D3DRS_StencilEnable),
+
+    // push esi
+    OV_MATCH(0x00, 0x56),
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
+
+    // mov [e?? + 0x8],0x4032C
+    OV_MATCH(0x6B, 0xC7),
+    OV_MATCH(0x6D, 0x08, 0x2C, 0x03, 0x04, 0x00),
+
+    // mov [D3DRS_StencilEnable],e??
+    OV_MATCH(0x7A, 0x89),
     //
 );
 
