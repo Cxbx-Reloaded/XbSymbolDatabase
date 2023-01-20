@@ -26,12 +26,13 @@
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleType
 // ******************************************************************
+// Generic OOVPA as of 3925 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleType,
                       3925,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // mov [D3DRS_MultiSampleType],ecx
+    // mov [D3DRS_MultiSampleType],e??
     XREF_ENTRY(0x0B, XREF_D3DRS_MultiSampleType),
 
     // call D3DDevice_SetRenderTarget

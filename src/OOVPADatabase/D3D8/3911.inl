@@ -5874,3 +5874,28 @@ OOVPA_SIG_MATCH(
 
     //
 );
+
+// ******************************************************************
+// * D3DDevice_SetRenderState_MultiSampleType
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleType,
+                      3911,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // mov [D3DRS_MultiSampleType],e??
+    XREF_ENTRY(0x0E, XREF_D3DRS_MultiSampleType),
+
+    // call D3DDevice_SetViewport
+    XREF_ENTRY(0x1F, XREF_D3DDevice_SetViewport),
+
+    // mov ecx,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // call D3DDevice_SetViewport
+    OV_MATCH(0x1E, 0xE8),
+
+    // retn 0x04
+    OV_MATCH(0x2B, 0xC2, 0x04),
+    //
+);
