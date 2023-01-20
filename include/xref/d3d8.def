@@ -50,7 +50,7 @@ XREF_SYMBOL(D3DRS_PSTextureModes)
 XREF_SYMBOL(D3DRS_DoNotCullUncompressed)
 XREF_SYMBOL(D3DRS_SampleAlpha)
 XREF_SYMBOL(D3DRS_StencilCullEnable)
-XREF_SYMBOL(D3DRS_StencilEnable) // Not been used
+XREF_SYMBOL(D3DRS_StencilEnable)
 XREF_SYMBOL(D3DRS_StencilFail)
 XREF_SYMBOL(D3DRS_TwoSidedLighting)
 XREF_SYMBOL(D3DRS_YuvEnable)
