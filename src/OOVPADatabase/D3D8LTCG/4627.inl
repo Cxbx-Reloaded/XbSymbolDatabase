@@ -72,119 +72,106 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_ZBias
 // ******************************************************************
-//24..8BF07D06D805
+// List of titles found:
+// - (4627) Aggressive Inline
+// - (5028) BMX XXX
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_ZBias,
                          1060)
 OOVPA_SIG_MATCH(
+    // push ecx
+    // push ebx // non-LTCG titles does not have this instruction
+    // push ebp // most LTCG titles does not have this instruction
+    // push esi
+    OV_MATCH(0x00, 0x51, 0x53, 0x55, 0x56),
 
-    // XREF_ENTRY( 0x6A, XREF_D3DRS_ZBIAS ),
+    // setnz al
+    OV_MATCH(0x0D, 0x0F, 0x95, 0xC0),
 
-    { 0x00, 0x51 },
-    { 0x01, 0x53 },
+    // fild [esp + param_1]
+    OV_MATCH(0x16, 0xDB, 0x44, 0x24, 0x18),
 
-    { 0x18, 0x24 },
-    //{ 0x19, 0x18 },
-    { 0x1A, 0x8B },
-    { 0x1B, 0xF0 },
-    { 0x1C, 0x7D },
-    { 0x1D, 0x06 },
-    { 0x1E, 0xD8 },
-    { 0x1F, 0x05 },
+    // jge +0x06
+    OV_MATCH(0x1C, 0x7D, 0x06),
+    // fadd [0x????????]
+    OV_MATCH(0x1E, 0xD8, 0x05),
     //
 );
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleAntiAlias
 // ******************************************************************
+// Generic OOVPA as of 4627 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias,
                       1060,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0D, XREF_D3DRS_MULTISAMPLEANTIALIAS),
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
-    { 0x04, 0x56 },
-    { 0x05, 0x8B },
-    { 0x06, 0x35 },
+    // mov [D3DRS_MultiSampleAntiAlias],eax
+    XREF_ENTRY(0x0D, XREF_D3DRS_MultiSampleAntiAlias),
+
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x35),
+
+    // mov [D3DRS_MultiSampleAntiAlias],eax
+    OV_MATCH(0x0C, 0xA3), // 4627 (non-LTCG) 0x0E vs 0x0C
     //
 );
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleMask
 // ******************************************************************
+// Generic OOVPA as of 4627 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMask,
                       1060,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0C, XREF_D3DRS_MULTISAMPLEMASK),
+    // mov edi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
-    { 0x04, 0x57 },
-    { 0x05, 0x8B },
-    { 0x06, 0x3D },
-    //
-);
+    // mov [D3DRS_MultiSampleMask],eax
+    XREF_ENTRY(0x0C, XREF_D3DRS_MultiSampleMask),
 
-// ******************************************************************
-// * D3DDevice_SetRenderState_MultiSampleMask
-// ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMask,
-                      1072,
-                      XRefOne)
-OOVPA_SIG_MATCH(
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    XREF_ENTRY(0x0B, XREF_D3DRS_MULTISAMPLEMASK),
+    // mov edi,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x3D),
 
-    { 0x01, 0x44 },
-    { 0x0F, 0xC1 },
-    { 0x10, 0xE0 },
-    { 0x11, 0x10 },
-    { 0x12, 0x56 },
-    { 0x13, 0x8B },
+    // mov [D3DRS_MultiSampleMask],eax
+    OV_MATCH(0x0B, 0xA3), // 4627 (non-LTCG) 0x0A vs 0x0B
     //
 );
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_SampleAlpha
 // ******************************************************************
+// Generic OOVPA as of 4627 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_SampleAlpha,
                       1024,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0C, XREF_D3DRS_SAMPLEALPHA),
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    { 0x00, 0x8B },
-    { 0x04, 0x57 },
-    { 0x05, 0x8B },
-    { 0x06, 0x3D },
-    //
-);
+    // mov [D3DRS_SampleAlpha],eax
+    XREF_ENTRY(0x0C, XREF_D3DRS_SampleAlpha),
 
-// ******************************************************************
-// * D3DDevice_SetRenderState_SampleAlpha
-// ******************************************************************
-//C1E610578B3D
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_SampleAlpha,
-                         1036)
-OOVPA_SIG_MATCH(
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
 
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B),
 
-    { 0x0B, 0xC1 },
-    { 0x0C, 0xE6 },
-    { 0x0D, 0x10 },
-    { 0x0E, 0x57 },
-    { 0x0F, 0x8B },
-    { 0x10, 0x3D },
+    // mov [D3DRS_SampleAlpha],eax
+    OV_MATCH(0x0B, 0xA3),
     //
 );
 
@@ -1132,9 +1119,17 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderStateNotInline
 // ******************************************************************
 //C381FE880000007D1D8B0D ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderStateNotInline_0,
-                         2048)
+// Titles found are...
+// * (4928.1) Shin Megami Tensei: Nine (DDS9)
+// * (5120.1) Crimson Sea
+// * (5344.1) The Italian Job
+// * (5455.1) Freaky Flyers
+// * (5659.4) Beyond Good And Evil
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderStateNotInline_0,
+                      2048,
+                      XRefOne)
 OOVPA_SIG_MATCH(
+    XREF_ENTRY(0x16, XREF_D3D_g_RenderState),
 
     { 0x00, 0x83 },
     { 0x01, 0xFE },

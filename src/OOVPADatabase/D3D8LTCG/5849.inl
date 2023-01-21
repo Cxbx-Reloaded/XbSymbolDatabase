@@ -90,48 +90,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_StencilEnable
-// ******************************************************************
-//85FFC700841D0400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilEnable,
-                         1072)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x56 },
-    { 0x02, 0x35 },
-
-    { 0x5C, 0x85 },
-    { 0x5D, 0xFF },
-    { 0x5E, 0xC7 },
-    { 0x5F, 0x00 },
-    { 0x60, 0x84 },
-    { 0x61, 0x1D },
-    { 0x62, 0x04 },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_SetRenderState_StencilEnable
-// ******************************************************************
-//85FFC700841D0400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilEnable,
-                         1084)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x56 },
-    { 0x02, 0x35 },
-
-    { 0x5B, 0x85 },
-    { 0x5C, 0xFF },
-    { 0x5D, 0xC7 },
-    { 0x5E, 0x00 },
-    { 0x5F, 0x84 },
-    { 0x60, 0x1D },
-    { 0x61, 0x04 },
-    //
-);
-
-// ******************************************************************
 // * D3DTexture_GetLevelDesc
 // ******************************************************************
 // * NOTE: We are actually intercepting Get2DSurfaceDesc, because
@@ -256,6 +214,9 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderState_TwoSidedLighting
 // ******************************************************************
 //C700C417040089
+// TODO: Find title match with this signature. If there are absolutely
+//       none, then delete it from database. Otherwise, try reuse pattern
+//       from LTCG 5344's signatures.
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_TwoSidedLighting,
                          1084)
 OOVPA_SIG_MATCH(
@@ -269,67 +230,6 @@ OOVPA_SIG_MATCH(
     { 0x26, 0x04 },
     { 0x27, 0x00 },
     { 0x28, 0x89 },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_SetRenderState_ZBias
-// ******************************************************************
-//241485FF0F95C085
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_ZBias,
-                         1024)
-OOVPA_SIG_MATCH(
-
-    // XREF_ENTRY( 0x6A, XREF_D3DRS_ZBIAS ),
-
-    { 0x00, 0x51 },
-
-    { 0x08, 0x24 },
-    { 0x09, 0x14 },
-    { 0x0A, 0x85 },
-    { 0x0B, 0xFF },
-    { 0x0C, 0x0F },
-    { 0x0D, 0x95 },
-    { 0x0E, 0xC0 },
-    { 0x0F, 0x85 },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_SetRenderState_StencilFail
-// ******************************************************************
-//7003040089
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilFail,
-                         1072)
-OOVPA_SIG_MATCH(
-
-    { 0x01, 0x8B },
-    { 0x2E, 0x33 },
-
-    { 0x68, 0x70 },
-    { 0x69, 0x03 },
-    { 0x6A, 0x04 },
-    { 0x6B, 0x00 },
-    { 0x6C, 0x89 },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_SetRenderState_StencilFail
-// ******************************************************************
-//7003040089
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilFail,
-                         1084)
-OOVPA_SIG_MATCH(
-
-    { 0x01, 0x8B },
-    { 0x2D, 0x33 },
-
-    { 0x67, 0x70 },
-    { 0x68, 0x03 },
-    { 0x69, 0x04 },
-    { 0x6A, 0x00 },
-    { 0x6B, 0x89 },
     //
 );
 

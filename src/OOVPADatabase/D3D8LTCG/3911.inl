@@ -54,18 +54,19 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_CullMode,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x03, XREF_D3D_g_pDevice), // Derived
-    XREF_ENTRY(0x2D, XREF_D3DRS_CULLMODE), // Derived
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+    // mov [D3DRS_CullMode],e??
+    XREF_ENTRY(0x2D, XREF_D3DRS_CullMode),
 
-    { 0x00, 0x56 },
+    // push esi
+    OV_MATCH(0x00, 0x56),
 
-    { 0x1B, 0xC7 },
-    { 0x1C, 0x00 },
-    { 0x1D, 0x08 },
-    { 0x1E, 0x03 },
-    { 0x1F, 0x04 },
-    { 0x20, 0x00 },
-    { 0x21, 0x75 },
+    // unique
+    // mov [eax],0x40308
+    OV_MATCH(0x1B, 0xC7, 0x00, 0x08, 0x03, 0x04, 0x00),
+    // jnz +0x??
+    OV_MATCH(0x21, 0x75),
     //
 );
 
@@ -164,47 +165,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_YuvEnable
-// ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_YuvEnable,
-                      1024,
-                      XRefOne)
-OOVPA_SIG_MATCH(
-
-    XREF_ENTRY(0x0C, XREF_D3DRS_YUVENABLE),
-
-    { 0x01, 0x44 },
-    { 0x04, 0x56 },
-    { 0x05, 0x8B },
-    { 0x06, 0x35 },
-    { 0x0B, 0xA3 },
-    { 0x11, 0x06 },
-    { 0x15, 0x72 },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_SetRenderState_OcclusionCullEnable
-// ******************************************************************
-//568BD0E8
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_OcclusionCullEnable,
-                      1024,
-                      XRefOne)
-OOVPA_SIG_MATCH(
-
-    XREF_ENTRY(0x0C, XREF_D3DRS_OCCLUSIONCULLENABLE),
-
-    { 0x00, 0x8B },
-    { 0x06, 0x35 },
-
-    //{ 0x26, 0x56 },
-    //{ 0x27, 0x8B },
-    //{ 0x28, 0xD0 },
-    //{ 0x29, 0xE8 },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_SetTextureState_TexCoordIndex
 // ******************************************************************
 //538BD9C1E107 ...C3
@@ -278,25 +238,26 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_ZBias
 // ******************************************************************
-//24..8BF07D06D805
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_ZBias,
-                         1048)
+                         1024)
 OOVPA_SIG_MATCH(
+    // push ecx
+    // push ebx // non-LTCG does not have this instruction
+    // push esi
+    OV_MATCH(0x00, 0x51, 0x53, 0x56),
 
-    // XREF_ENTRY( 0x6A, XREF_D3DRS_ZBIAS ),
+    // setnz al
+    OV_MATCH(0x0C, 0x0F, 0x95, 0xC0),
 
-    { 0x00, 0x51 },
-    { 0x01, 0x53 },
+    // fild [esp + param_1]
+    OV_MATCH(0x15, 0xDB, 0x44, 0x24, 0x14),
 
-    { 0x17, 0x24 },
-    //{ 0x18, 0x10 },
-    { 0x19, 0x8B },
-    { 0x1A, 0xF0 },
-    { 0x1B, 0x7D },
-    { 0x1C, 0x06 },
-    { 0x1D, 0xD8 },
-    { 0x1E, 0x05 },
-    //
+    // jge +0x06
+    OV_MATCH(0x1B, 0x7D, 0x06),
+    // fadd [0x????????]
+    OV_MATCH(0x1D, 0xD8, 0x05),
+    // NOTE: fchs instruction is moved to different offset
+    // Source: (4928) The Fellowship of the Ring
 );
 
 // ******************************************************************
@@ -308,7 +269,7 @@ OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_LineWidth,
 OOVPA_SIG_MATCH(
 
 
-    // XREF_ENTRY( 0x5B, XREF_D3DRS_LINEWIDTH ),
+    // XREF_ENTRY( 0x5B, XREF_D3DRS_LineWidth ),
 
     { 0x02, 0x5C },
 
@@ -321,23 +282,34 @@ OOVPA_SIG_MATCH(
     //
 );
 
-// ******************************************************************
-// * D3DDevice_SetRenderState_StencilCullEnable
-// ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_StencilCullEnable,
+//******************************************************************
+//* D3DDevice_SetRenderState_BackFillMode
+//******************************************************************
+// Found in 4039 title "NBA 2K2"
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_BackFillMode,
                       1024,
-                      XRefOne)
+                      XRefThree)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0C, XREF_D3DRS_STENCILCULLENABLE),
+    // mov ecx,ptr [D3DRS_FillMode]
+    XREF_ENTRY(0x06, XREF_D3DRS_FillMode),
+    // mov [D3DRS_BackFillMode],eax
+    XREF_ENTRY(0x0B, XREF_D3DRS_BackFillMode),
+    // jmp D3DDevice_SetRenderState_FillMode
+    XREF_ENTRY(0x14, XREF_D3DDevice_SetRenderState_FillMode),
 
-    { 0x01, 0x44 },
-    { 0x04, 0x56 },
-    { 0x05, 0x8B },
-    { 0x06, 0x35 },
-    { 0x0B, 0xA3 },
-    { 0x11, 0x06 },
-    { 0x15, 0x72 },
+    // mov eax,ptr [esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov ecx,ptr [D3DRS_FillMode]
+    OV_MATCH(0x04, 0x8B, 0x0D),
+
+    // mov [D3DRS_BackFillMode],eax
+    OV_MATCH(0x0A, 0xA3),
+    // mov ptr [esp + param_1],ecx
+    OV_MATCH(0x0F, 0x89, 0x4C, 0x24, 0x04),
+    // jmp D3DDevice_SetRenderState_FillMode
+    OV_MATCH(0x13, 0xE9)
     //
 );
 
@@ -345,19 +317,30 @@ OOVPA_SIG_MATCH(
 //* D3DDevice_SetRenderState_BackFillMode
 //******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_BackFillMode,
-                      1024,
+                      1036,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x06, XREF_D3DRS_FILLMODE),
-    XREF_ENTRY(0x0B, XREF_D3DRS_BACKFILLMODE),
+    // mov [D3DRS_BackFillMode],eax
+    XREF_ENTRY(0x0C, XREF_D3DRS_BackFillMode),
+    // mov edi,ptr [D3DRS_FillMode]
+    XREF_ENTRY(0x18, XREF_D3DRS_FillMode),
 
-    { 0x01, 0x44 },
-    { 0x0F, 0x89 },
-    { 0x10, 0x4C },
-    { 0x11, 0x24 },
-    { 0x12, 0x04 },
-    //
+    // mov eax,ptr [esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov [D3DRS_BackFillMode],eax
+    OV_MATCH(0x0B, 0xA3),
+
+    // mov eax,ptr [esi]
+    OV_MATCH(0x10, 0x8B, 0x06),
+    // cmp eax,ptr [esi + 0x4]
+    OV_MATCH(0x12, 0x3B, 0x46, 0x04),
+    // push edi
+    OV_MATCH(0x15, 0x57),
+    // mov edi,ptr [D3DRS_FillMode]
+    OV_MATCH(0x16, 0x8B, 0x3D),
+    // Generic support over multiple revisions end at offset 0x1C
 );
 
 // ******************************************************************
@@ -385,21 +368,35 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_FillMode
 // ******************************************************************
-//C98B4C24087502
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_FillMode,
-                         1024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_FillMode,
+                      1024,
+                      XRefThree)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x56 },
-    { 0x08, 0x06 },
+    XREF_ENTRY(0x17, XREF_D3DRS_TwoSidedLighting),
+    XREF_ENTRY(0x1D, XREF_D3DRS_BackFillMode),
+    XREF_ENTRY(0x3E, XREF_D3DRS_FillMode),
 
-    { 0x22, 0xC9 },
-    { 0x23, 0x8B },
-    { 0x24, 0x4C },
-    { 0x25, 0x24 },
-    { 0x26, 0x08 },
-    { 0x27, 0x75 },
-    { 0x28, 0x02 },
+    // push esi
+    OV_MATCH(0x00, 0x56),
+
+    // mov ecx,ptr [D3DRS_TwoSidedLighting]
+    OV_MATCH(0x15, 0x8B),
+
+    // mov edx,ptr [D3DRS_BackFillMode]
+    OV_MATCH(0x1B, 0x8B),
+
+    // mov ptr [eax],0x008038C
+    OV_MATCH(0x2B, 0xC7, 0x00, 0x8C, 0x03, 0x08, 0x00),
+
+    // add eax,0x0C
+    OV_MATCH(0x37, 0x83, 0xC0, 0x0C),
+
+    // mov ptr [D3DRS_FillMode],ecx
+    OV_MATCH(0x3C, 0x89),
+
+    // retn 0x04
+    OV_MATCH(0x43, 0xC2, 0x04),
     //
 );
 
@@ -425,66 +422,73 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleAntiAlias
 // ******************************************************************
-//C1E11083E20F
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleAntiAlias,
                       1024,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0C, XREF_D3DRS_MULTISAMPLEANTIALIAS),
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    { 0x00, 0x8B },
+    // mov [D3DRS_MultiSampleAntiAlias],eax
+    XREF_ENTRY(0x0C, XREF_D3DRS_MultiSampleAntiAlias),
 
-    { 0x36, 0xC1 },
-    { 0x37, 0xE1 },
-    { 0x38, 0x10 },
-    { 0x39, 0x83 },
-    { 0x3A, 0xE2 },
-    { 0x3B, 0x0F },
-    //
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x35),
+
+    // mov [D3DRS_MultiSampleAntiAlias],eax
+    OV_MATCH(0x0B, 0xA3), // 3911 (non-LTCG) 0x0D vs 0x0B
 );
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_MultiSampleMask
 // ******************************************************************
-//83E10FC1E210
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_MultiSampleMask,
                       1024,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0C, XREF_D3DRS_MULTISAMPLEMASK),
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
+    // mov [D3DRS_MultiSampleMask],eax
+    XREF_ENTRY(0x0C, XREF_D3DRS_MultiSampleMask),
 
-    { 0x36, 0x83 },
-    { 0x37, 0xE1 },
-    { 0x38, 0x0F },
-    { 0x39, 0xC1 },
-    { 0x3A, 0xE2 },
-    { 0x3B, 0x10 },
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x35),
+
+    // mov [D3DRS_MultiSampleMask],eax
+    OV_MATCH(0x0B, 0xA3), // 3911 (non-LTCG) 0x0D vs 0x0B
     //
 );
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_LogicOp
 // ******************************************************************
-//18C700BC1704
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_LogicOp,
-                         1024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_LogicOp,
+                      1024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // XREF_ENTRY( 0x2D, XREF_D3DRS_LOGICOP ),
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+    // mov [D3DRS_LogicOp],e??
+    XREF_ENTRY(0x2D, XREF_D3DRS_LogicOp),
 
-    { 0x01, 0x8B },
+    // push esi
+    OV_MATCH(0x00, 0x56),
 
-    { 0x1C, 0x18 },
-    { 0x1D, 0xC7 },
-    { 0x1E, 0x00 },
-    { 0x1F, 0xBC },
-    { 0x20, 0x17 },
-    { 0x21, 0x04 },
+    // jnz +0x??
+    OV_MATCH(0x1B, 0x75),
+    // unique
+    // mov [eax],0x417bc
+    OV_MATCH(0x1D, 0xC7, 0x00, 0xBC, 0x17, 0x04, 0x00),
     //
 );
 
@@ -511,60 +515,79 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_StencilFail
 // ******************************************************************
-//7003040089
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilFail,
-                         1024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_StencilFail,
+                      1024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x01, 0x8B },
-    { 0x1B, 0x33 },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    { 0x59, 0x70 },
-    { 0x5A, 0x03 },
-    { 0x5B, 0x04 },
-    { 0x5C, 0x00 },
-    { 0x5D, 0x89 },
+    // mov [D3DRS_StencilFail],e??
+    XREF_ENTRY(0x67, XREF_D3DRS_StencilFail),
+
+    // push esi
+    OV_MATCH(0x00, 0x56),
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
+
+    // mov [e?? + 0x8],0x40370
+    OV_MATCH(0x56, 0xC7),
+    OV_MATCH(0x58, 0x08, 0x70, 0x03, 0x04, 0x00),
+
+    // mov [D3DRS_StencilFail],e??
+    OV_MATCH(0x65, 0x89),
     //
 );
 
 //******************************************************************
 //* D3DDevice_SetRenderState_TwoSidedLighting
 //******************************************************************
-//834808208B
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_TwoSidedLighting,
                       1024,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x15, XREF_D3DRS_TWOSIDEDLIGHTING),
+    // mov eax,[D3D_g_pDevice]
+    XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
-    { 0x00, 0xA1 },
+    // mov [D3DRS_TwoSidedLighting],eax
+    XREF_ENTRY(0x15, XREF_D3DRS_TwoSidedLighting),
 
-    { 0x05, 0x83 },
-    { 0x06, 0x48 },
-    { 0x07, 0x08 },
-    { 0x08, 0x20 },
-    { 0x09, 0x8B },
+    // mov eax,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0xA1),
+
+    // mov e??,[esp + param_1]
+    OV_MATCH(0x09, 0x8B),
+
+    // mov [D3DRS_TwoSidedLighting],eax
+    OV_MATCH(0x14, 0xA3),
     //
 );
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_FrontFace
 // ******************************************************************
-//00A00304008948
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_FrontFace,
-                         1024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_FrontFace,
+                      1024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x01, 0x8B },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    { 0x1A, 0x00 },
-    { 0x1B, 0xA0 },
-    { 0x1C, 0x03 },
-    { 0x1D, 0x04 },
-    { 0x1E, 0x00 },
-    { 0x1F, 0x89 },
-    { 0x20, 0x48 },
+    // mov [D3DRS_FrontFace],e??
+    XREF_ENTRY(0x2E, XREF_D3DRS_FrontFace),
+
+    // push esi
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x56, 0x8B, 0x35),
+
+    // add eax,0x08
+    OV_MATCH(0x22, 0x83, 0xC0, 0x08),
+
+    // mov [D3DRS_FrontFace],e??
+    OV_MATCH(0x2C, 0x89),
     //
 );
 
@@ -591,22 +614,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_StencilEnable
 // ******************************************************************
-//018b54240885d2c700
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_StencilEnable,
-                         1024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_StencilEnable,
+                      1024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x02, 0x35 },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    { 0x48, 0x01 },
-    { 0x49, 0x8B },
-    { 0x4A, 0x54 },
-    { 0x4B, 0x24 },
-    { 0x4C, 0x08 },
-    { 0x4D, 0x85 },
-    { 0x4E, 0xD2 },
-    { 0x4F, 0xC7 },
-    { 0x50, 0x00 },
+    // mov [D3DRS_StencilEnable],e??
+    XREF_ENTRY(0x7E, XREF_D3DRS_StencilEnable),
+
+    // push esi
+    OV_MATCH(0x00, 0x56),
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
+
+    // mov [e?? + 0x8],0x4032C
+    OV_MATCH(0x6D, 0xC7),
+    OV_MATCH(0x6F, 0x08, 0x2C, 0x03, 0x04, 0x00),
+
+    // mov [D3DRS_StencilEnable],e??
+    OV_MATCH(0x7C, 0x89),
     //
 );
 
@@ -1163,13 +1192,13 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_BlockUntilVerticalBlank,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax, [D3D__PDEVICE]
+    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax, [D3D_g_pDevice]
     XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
     // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDevice__m_VerticalBlankEvent
     XREF_ENTRY(0x18, XREF_OFFSET_D3DDevice__m_VerticalBlankEvent),
 
-    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax,[D3D__PDEVICE]
+    // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax,[D3D_g_pDevice]
     OV_MATCH(0x00, 0xA1),
 
     // D3DDevice_BlockUntilVerticalBlank+0x05 : push 0; push 0; push 1
@@ -1220,5 +1249,43 @@ OOVPA_SIG_MATCH(
     // relative to 0x00; LTCG offset 0x24 vs STD offset 0x22
     // D3D_DestroyResource+0x24 : cmp esi, $50000
     OV_MATCH(0x24, 0x81, 0xFE, 0x00, 0x00, 0x05, 0x00),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_SetRenderStateInline__ManualFindGeneric
+// ******************************************************************
+// NOTE: This signature will find any generic match with D3D_g_RenderState
+//       Currently, this is the best method if
+//       D3DDevice_SetRenderStateNotInline detection is absent.
+//       This OOVPA itself is not a symbol.
+OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice_SetRenderStateInline__ManualFindGeneric,
+                             3911,
+                             XRefTwo,
+                             DetectFirst)
+OOVPA_SIG_MATCH(
+    // call D3DDevice_SetRenderState_Simple
+    XREF_ENTRY(0x15, XREF_D3DDevice_SetRenderState_Simple),
+    XREF_ENTRY(0x1C, XREF_D3D_g_RenderState),
+
+    // cmp esi,0x?? // Up until < 4039 is 0x52
+    OV_MATCH(0x00, 0x83, 0xFE),
+
+    // mov edi,ptr [ebx + ????]
+    OV_MATCH(0x03, 0x8B, 0xBB),
+
+    // jge +0x??
+    OV_MATCH(0x09, 0x7D),
+
+    // mov ecx,ptr [esi * 4 + ????]
+    OV_MATCH(0x0B, 0x8B, 0x0C, 0xB5),
+
+    // mov edx,edi
+    OV_MATCH(0x12, 0x8B, 0xD7),
+    // call D3DDevice_SetRenderState_Simple
+    OV_MATCH(0x14, 0xE8),
+
+    // mov ptr [esi * 4 + D3D_g_RenderState],edi
+    OV_MATCH(0x19, 0x89, 0x3C, 0xB5),
     //
 );

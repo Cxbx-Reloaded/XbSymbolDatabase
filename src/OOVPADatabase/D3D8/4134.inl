@@ -219,35 +219,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderState_MultiSampleMode
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_MultiSampleMode,
-                         4134)
-OOVPA_SIG_MATCH(
-
-    // D3DDevice_SetRenderState_MultiSampleMode+0x0F : mov ecx, [eax+0x2070]
-    { 0x0F, 0x8B },
-    { 0x10, 0x88 },
-    { 0x11, 0x70 },
-    { 0x12, 0x20 },
-
-    // D3DDevice_SetRenderState_MultiSampleMode+0x15 : cmp ecx, [eax+0x207C]
-    { 0x15, 0x3B },
-    { 0x16, 0x88 },
-    { 0x17, 0x7C },
-    { 0x18, 0x20 },
-
-    // D3DDevice_SetRenderState_MultiSampleMode+0x1B : jnz +0x0D
-    { 0x1B, 0x75 },
-    { 0x1C, 0x0D },
-
-    // D3DDevice_SetRenderState_MultiSampleMode+0x2A : retn 0x04
-    { 0x2A, 0xC2 },
-    { 0x2B, 0x04 },
-    //
-);
-
-// ******************************************************************
 // * D3D::SetFence
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(D3D_SetFence,

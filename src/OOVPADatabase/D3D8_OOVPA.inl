@@ -186,6 +186,7 @@
 // ******************************************************************
 OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS_M(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric, 3911), // This OOVPA signature is not a symbol. Read its note for more details.
+    REGISTER_OOVPAS_M(D3DRS_Stencils_and_Occlusion__ManualFindGeneric, 3911), // This OOVPA signature is not a symbol. Read its note for more details.
 
     REGISTER_OOVPAS(D3D_UpdateProjectionViewportTransform, 3900, 3901), // Final generic OOVPA: 4034; Removed: 0 // NOTE: 3901 is 4034 signature, except LTCG title been detected in 3925.
 
@@ -313,41 +314,42 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetPixelShader, 3911, 4034, 4627),
     REGISTER_OOVPAS(D3DDevice_SetPixelShaderConstant, 3911, 4831),
     REGISTER_OOVPAS(D3DDevice_SetPixelShaderProgram, 3911),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_Simple, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderStateNotInline, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: Must be after D3DDevice_SetRenderState_Simple.
+    REGISTER_OOVPAS_M(D3DDevice_SetRenderState_Simple, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_M(D3DDevice_SetRenderStateNotInline, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: Must be after D3DDevice_SetRenderState_Simple.
     // NOTE: Some or most of render state signatures below must be after D3DDevice_SetRenderStateNotInline.
     REGISTER_OOVPAS(D3DDevice_SetRenderState, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState2, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: There is a verified duplicate function.
     REGISTER_OOVPAS(D3DDevice_SetRenderState_BackFillMode, 3911, 4034),
-    REGISTER_OOVPAS_C(D3DDevice_SetRenderState_CullMode, 3911, 4034),
+    REGISTER_OOVPAS_C(D3DDevice_SetRenderState_CullMode, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_Deferred, 3911),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_DoNotCullUncompressed, 3911),
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_DoNotCullUncompressed, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_Dxt1NoiseEnable, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_EdgeAntiAlias, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_FillMode, 3911, 4034),
+    REGISTER_OOVPAS_M(D3DDevice_SetRenderState_FillMode, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_FogColor, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_FrontFace, 3911, 4034),
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_FrontFace, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_LineWidth, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_LogicOp, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleAntiAlias, 3911, 4034, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMask, 3911, 4034, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMode, 3925, 4034, 4134, 4627, 5233),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleRenderTargetMode, 4034), // Was 5233 (from 5344's comment)
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_LogicOp, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleAntiAlias, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMask, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMode, 4034), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleRenderTargetMode, 4034), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleType, 3911, 3925), // Final generic OOVPA: 3925 Removed: 4034
     REGISTER_OOVPAS(D3DDevice_SetRenderState_NormalizeNormals, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_OcclusionCullEnable, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_PSTextureModes, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZCmpAlwaysRead, 3911),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZRead, 3911),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_SampleAlpha, 4627),
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_OcclusionCullEnable, 3911, 1024), // Final generic OOVPA: 3911 (LTCG) / 4034 (non-LTCG); Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_PSTextureModes, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZCmpAlwaysRead, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZRead, 3911), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_SampleAlpha, 4627), // Final generic OOVPA: 4627; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ShadowFunc, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilCullEnable, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilCullEnable, 3911, 1024), // Final generic OOVPA: 3911 (LTCG) / 4034 (non-LTCG); Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilEnable, 3911, 4034, 5849),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilFail, 3911, 4034, 5849),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_TextureFactor, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_TwoSidedLighting, 3911, 4034, 5344), // Beware of the typo... (from 4627's comment)
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_TwoSidedLighting, 3911, 4034, 5344), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_VertexBlend, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_YuvEnable, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_ZBias, 3911),
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_YuvEnable, 3911, 1024), // Final generic OOVPA: 3911 (LTCG) / 4034 (non-LTCG); Removed: 0
+    REGISTER_OOVPAS(D3DDevice_SetRenderState_ZBias, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderState_ZEnable, 3911, 4034, 4134, 4432),
     REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 3911, 3947, 4034, 4039, 4627, 5344, 5455), // Final generic OOVPA: 5344/5455; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetRenderTargetFast, 5233),
@@ -411,6 +413,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS_D3D(CMiniport_GetDisplayCapabilities, 3911),
     REGISTER_OOVPAS(D3D_CheckDeviceFormat, 3911),
     REGISTER_OOVPAS(D3D_ClearStateBlockFlags, 3911),
+    REGISTER_OOVPAS_M(D3D_CommonSetDebugRegisters, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 4627, 5028), // Used between 4627 to 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3D_CreateStandAloneSurface, 4034),
     REGISTER_OOVPAS(D3D_DestroyResource, 3911),
@@ -422,7 +425,6 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3D_KickOffAndWaitForIdle, 3911, 4034, 4627, 5028),
     REGISTER_OOVPAS(D3D_LazySetPointParams, 3911, 4034),
     REGISTER_OOVPAS(D3D_RecordStateBlock, 3911),
-    REGISTER_OOVPAS(D3D_SetCommonDebugRegisters, 3911),
     REGISTER_OOVPAS(D3D_SetFence, 3911, 4034, 4134, 5028, 5558),
     REGISTER_OOVPAS(D3D_SetPushBufferSize, 3911),
     REGISTER_OOVPAS(D3D_SetTileNoWait, 4627, 5455),

@@ -109,7 +109,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVerticesUP,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_DrawVerticesUP+0x08 : mov esi,[D3D__PDEVICE]
+    // D3DDevice_DrawVerticesUP+0x08 : mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x0A, XREF_D3D_g_pDevice),
 
     // D3DDevice_DrawVerticesUP+0x00 : push ebp
@@ -118,7 +118,7 @@ OOVPA_SIG_MATCH(
     // D3DDevice_DrawVerticesUP+0x03 : sub esp,0x14
     OV_MATCH(0x03, 0x83, 0xEC, 0x14),
 
-    // D3DDevice_DrawVerticesUP+0x08 : mov esi,[D3D__PDEVICE]
+    // D3DDevice_DrawVerticesUP+0x08 : mov esi,[D3D_g_pDevice]
     OV_MATCH(0x08, 0x8B, 0x35),
 
     // D3DDevice_DrawVerticesUP+0x0E : push edi
@@ -175,40 +175,48 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetRenderState_TwoSidedLighting
 // ******************************************************************
-//C700C417040089
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_TwoSidedLighting,
-                         1060)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_TwoSidedLighting,
+                      1060,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x01, 0x8B },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    { 0x20, 0xC7 },
-    { 0x21, 0x00 },
-    { 0x22, 0xC4 },
-    { 0x23, 0x17 },
-    { 0x24, 0x04 },
-    { 0x25, 0x00 },
-    { 0x26, 0x89 },
+    // push esi
+    OV_MATCH(0x00, 0x56),
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
+
+    // jz +0x0A
+    OV_MATCH(0x31, 0x74, 0x0A),
+    // or [0x????????],0x900000
+    OV_MATCH(0x33, 0x81),
+    OV_MATCH(0x38, 0x00, 0x00, 0x90, 0x00, 0x00), // unique
     //
 );
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_TwoSidedLighting
 // ******************************************************************
-//C700C417040089
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetRenderState_TwoSidedLighting,
-                         1072)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderState_TwoSidedLighting,
+                      1061,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x01, 0x8B },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    { 0x21, 0xC7 },
-    { 0x22, 0x00 },
-    { 0x23, 0xC4 },
-    { 0x24, 0x17 },
-    { 0x25, 0x04 },
-    { 0x26, 0x00 },
-    { 0x27, 0x89 },
+    // push esi
+    OV_MATCH(0x00, 0x56),
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
+
+    // jz +0x0A
+    OV_MATCH(0x32, 0x74, 0x0A),
+    // or [0x????????],0x900000
+    OV_MATCH(0x34, 0x81),
+    OV_MATCH(0x39, 0x00, 0x00, 0x90, 0x00, 0x00), // unique
     //
 );
 
