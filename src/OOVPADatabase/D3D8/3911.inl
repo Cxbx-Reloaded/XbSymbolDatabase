@@ -24,7 +24,7 @@
 // ******************************************************************
 
 // ******************************************************************
-// * D3DDevice__m_VerticalBlankEvent__ManualFindGeneric
+// * D3DDevice__m_VerticalBlankEvent__GenericFragment
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
 // NOTE: This signature will find any generic match with D3D_g_pDevice
@@ -32,7 +32,7 @@
 //       D3DDevice_BlockUntilVerticalBlank detection.
 //       So, even though it's scanning for D3DDevice_BlockUntilVerticalBlank,
 //       this OOVPA itself is not a symbol.
-OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric,
+OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice__m_VerticalBlankEvent__GenericFragment,
                              3911,
                              XRefTwo,
                              DetectFirst)
@@ -69,10 +69,10 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DRS_Stencils_and_Occlusion__ManualFindGeneric
+// * D3DRS_Stencils_and_Occlusion__GenericFragment
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
-OOVPA_SIG_HEADER_XREF_DETECT(D3DRS_Stencils_and_Occlusion__ManualFindGeneric,
+OOVPA_SIG_HEADER_XREF_DETECT(D3DRS_Stencils_and_Occlusion__GenericFragment,
                              3911,
                              XRefFour,
                              DetectFirst)

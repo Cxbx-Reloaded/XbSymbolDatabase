@@ -421,11 +421,11 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
                 pContext->xref_database[XREF_D3D_g_RenderState] = XREF_ADDR_UNDETERMINED;
                 return false;
             }
-            // Otherwise, let's look up for D3DDevice_SetRenderStateInline__ManualFindGeneric which is NOT a symbol.
+            // Otherwise, let's look up for D3DDevice_SetRenderStateInline__GenericFragment which is NOT a symbol.
             xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
                                                                          pLibrarySession,
                                                                          pLibraryDB,
-                                                                         "D3DDevice_SetRenderStateInline__ManualFindGeneric",
+                                                                         "D3DDevice_SetRenderStateInline__GenericFragment",
                                                                          pSection,
                                                                          true,
                                                                          &pSymbol,
@@ -436,7 +436,7 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
                 pContext->xref_database[XREF_D3D_g_RenderState] = XREF_ADDR_UNDETERMINED;
                 return false;
             }
-            // pointer to cmp opcode's value from D3DDevice_SetRenderStateInline__ManualFindGeneric sig.
+            // pointer to cmp opcode's value from D3DDevice_SetRenderStateInline__GenericFragment sig.
             pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xFuncAddr + 0x02);
 
             // If it is found, don't register it.
@@ -446,7 +446,7 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
             pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xFuncAddr + 0x07);
 
             // Register only D3DDevice_SetRenderStateNotInline symbol function.
-            // NOTE: D3DDevice_SetRenderStateInline__ManualFindGeneric is NOT a symbol but a generic method to find D3D_g_RenderState.
+            // NOTE: D3DDevice_SetRenderStateInline__GenericFragment is NOT a symbol but a generic method to find D3D_g_RenderState.
             internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
         }
         // D3D_g_RenderState variable is already set internal, will be register later.
@@ -565,7 +565,7 @@ static bool manual_scan_section_dx8_register_D3DRS_Stencils_and_Occlusion(iXbSym
     // First, we need to find D3DRS_StencilEnable symbol.
     xbaddr D3DRS_StencilEnable = pContext->xref_database[XREF_D3DRS_StencilEnable];
     if (internal_IsXRefAddrUnset(D3DRS_StencilEnable)) {
-        // These xrefs are used to obtain from D3DRS_Stencils_and_Occlusion__ManualFindGeneric signature.
+        // These xrefs are used to obtain from D3DRS_Stencils_and_Occlusion__GenericFragment signature.
         pContext->xref_database[XREF_D3DRS_StencilEnable] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_StencilFail] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_OcclusionCullEnable] = XREF_ADDR_DERIVE;
@@ -573,7 +573,7 @@ static bool manual_scan_section_dx8_register_D3DRS_Stencils_and_Occlusion(iXbSym
         xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
                                                                             pLibrarySession,
                                                                             pLibraryDB,
-                                                                            "D3DRS_Stencils_and_Occlusion__ManualFindGeneric",
+                                                                            "D3DRS_Stencils_and_Occlusion__GenericFragment",
                                                                             pSection,
                                                                             false,
                                                                             &pSymbol,
@@ -678,14 +678,14 @@ static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContex
             xSymbolAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
                                                                            pLibrarySession,
                                                                            pLibraryDB,
-                                                                           "D3DDevice__m_VerticalBlankEvent__ManualFindGeneric",
+                                                                           "D3DDevice__m_VerticalBlankEvent__GenericFragment",
                                                                            pSection,
                                                                            true,
                                                                            NULL,
                                                                            NULL);
         }
 
-        // We are not registering D3DDevice__m_VerticalBlankEvent__ManualFindGeneric itself, as it is NOT a symbol.
+        // We are not registering D3DDevice__m_VerticalBlankEvent__GenericFragment itself, as it is NOT a symbol.
 
 
         // If not found, skip manual register.
