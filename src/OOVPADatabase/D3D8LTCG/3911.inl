@@ -1253,13 +1253,13 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderStateInline__ManualFindGeneric
+// * D3DDevice_SetRenderStateInline__GenericFragment
 // ******************************************************************
 // NOTE: This signature will find any generic match with D3D_g_RenderState
 //       Currently, this is the best method if
 //       D3DDevice_SetRenderStateNotInline detection is absent.
 //       This OOVPA itself is not a symbol.
-OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice_SetRenderStateInline__ManualFindGeneric,
+OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice_SetRenderStateInline__GenericFragment,
                              3911,
                              XRefTwo,
                              DetectFirst)

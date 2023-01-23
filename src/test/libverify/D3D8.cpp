@@ -426,7 +426,7 @@ enum LOCAL_XREFS {
 
 // Verify if symbol name is at start of offset.
 #define XREF_SYMBOL_GET(e) e
-#define XREF_OFFSET XREF_SYMBOL_GET(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric)
+#define XREF_OFFSET XREF_SYMBOL_GET(D3DDevice__m_VerticalBlankEvent__GenericFragment)
 static_assert(XREF_OFFSET == 0);
 // Then get symbol's actual offset.
 #undef XREF_SYMBOL_GET

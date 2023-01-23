@@ -185,8 +185,8 @@
 // * D3D8_OOVPA
 // ******************************************************************
 OOVPATable D3D8_OOVPA[] = {
-    REGISTER_OOVPAS_M(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric, 3911), // This OOVPA signature is not a symbol. Read its note for more details.
-    REGISTER_OOVPAS_M(D3DRS_Stencils_and_Occlusion__ManualFindGeneric, 3911), // This OOVPA signature is not a symbol. Read its note for more details.
+    REGISTER_OOVPAS_M(D3DDevice__m_VerticalBlankEvent__GenericFragment, 3911), // This OOVPA signature is not a symbol. Read its note for more details.
+    REGISTER_OOVPAS_M(D3DRS_Stencils_and_Occlusion__GenericFragment, 3911), // This OOVPA signature is not a symbol. Read its note for more details.
 
     REGISTER_OOVPAS(D3D_UpdateProjectionViewportTransform, 3900, 3901), // Final generic OOVPA: 4034; Removed: 0 // NOTE: 3901 is 4034 signature, except LTCG title been detected in 3925.
 

@@ -1270,7 +1270,7 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_SetRenderStateInline__ManualFindGeneric
+// * D3DDevice_SetRenderStateInline__GenericFragment
 // ******************************************************************
 // Generic OOVPA as of 4039? and newer.
 // NOTE: This signature will find any generic match with D3D_g_RenderState
@@ -1280,7 +1280,7 @@ OOVPA_SIG_MATCH(
 // NOTE: Unknown if any titles build before 4039 with sig been detected.
 //       Due to lack of titles compiled as LTCG in 4039 and earlier builds.
 //       All titles from 4039 and later always detect 4039 sig.
-OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice_SetRenderStateInline__ManualFindGeneric,
+OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice_SetRenderStateInline__GenericFragment,
                              4039,
                              XRefTwo,
                              DetectFirst)

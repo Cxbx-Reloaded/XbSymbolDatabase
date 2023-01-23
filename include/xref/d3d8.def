@@ -20,8 +20,8 @@
 // ******************************************************************
 
 // custom search (not for external project usage)
-XREF_SYMBOL(D3DDevice__m_VerticalBlankEvent__ManualFindGeneric)
-XREF_SYMBOL(D3DRS_Stencils_and_Occlusion__ManualFindGeneric)
+XREF_SYMBOL(D3DDevice__m_VerticalBlankEvent__GenericFragment)
+XREF_SYMBOL(D3DRS_Stencils_and_Occlusion__GenericFragment)
 
 // variable addresses
 XREF_SYMBOL(D3D_g_RenderState)
