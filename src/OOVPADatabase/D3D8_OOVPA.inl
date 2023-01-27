@@ -414,7 +414,8 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3D_CheckDeviceFormat, 3911),
     REGISTER_OOVPAS(D3D_ClearStateBlockFlags, 3911),
     REGISTER_OOVPAS_M(D3D_CommonSetDebugRegisters, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 4627, 5028), // Used between 4627 to 5233 (from 5344's comment)
+    REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 4627, 5028), // Final generic OOVPA: 4627; Removed: 5344
+    REGISTER_OOVPAS(D3D_CommonSetMultiSampleModeAndScale, 5344), // Final generic OOVPA: 5344; Removed: 0 // fastcall (2 params)
     REGISTER_OOVPAS(D3D_CreateStandAloneSurface, 4034),
     REGISTER_OOVPAS(D3D_DestroyResource, 3911),
     REGISTER_OOVPAS(D3D_EnumAdapterModes, 3911),

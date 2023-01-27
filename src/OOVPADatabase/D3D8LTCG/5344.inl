@@ -373,3 +373,29 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x3C, 0xE8),
     //
 );
+
+// ******************************************************************
+// * D3D_CommonSetMultiSampleModeAndScale
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3D_CommonSetMultiSampleModeAndScale_4__LTCG_eax1,
+                      5344,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov e??,[D3DRS_MultiSampleMode]
+    XREF_ENTRY(0x29, XREF_D3DRS_MultiSampleMode),
+
+    // sub esp,0x0C
+    OV_MATCH(0x00, 0x83, 0xEC, 0x0C),
+
+    // mov esi,eax
+    OV_MATCH(0x06, 0x8B, 0xF0),
+
+    // shr ecx,0x14
+    OV_MATCH(0x45, 0xC1, 0xE9, 0x14),
+    // and ecx,0xF
+    OV_MATCH(0x48, 0x83, 0xE1, 0x0F),
+    // mov eax,0x1
+    OV_MATCH(0x4B, 0xB8, 0x01, 0x00),
+    //
+);

@@ -237,6 +237,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3D_BlockOnResource_0, D3D_BlockOnResource, 2024, 2036, 2048, 2060),
     REGISTER_OOVPAS_BIND_XREF(D3D_DestroyResource__LTCG, D3D_DestroyResource, 3911),
     REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 1024, 1036, 1048, 1060),
+    REGISTER_OOVPAS_BIND_XREF(D3D_CommonSetMultiSampleModeAndScale_4__LTCG_eax1, D3D_CommonSetMultiSampleModeAndScale, 5344),
     REGISTER_OOVPAS(D3D_KickOffAndWaitForIdle2, 1024, 1036, 1048),
     REGISTER_OOVPAS(Direct3D_CreateDevice, 1024, 1036),
     REGISTER_OOVPAS_BIND_XREF(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ebx_ppReturnedDeviceInterface, Direct3D_CreateDevice, 2024),
