@@ -1119,20 +1119,26 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderStateNotInline
 // ******************************************************************
 //C381FE880000007D1D8B0D ...C3
-// Titles found are...
-// * (4928.1) Shin Megami Tensei: Nine (DDS9)
-// * (5120.1) Crimson Sea
-// * (5344.1) The Italian Job
-// * (5455.1) Freaky Flyers
-// * (5659.4) Beyond Good And Evil
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderStateNotInline_0,
+// NOTE: Compiler with LTCG flag perform task differently and will
+//       produce redundant functions. BUT we need better correction OR
+//       maybe removal due to compiler made its own decision how to do
+//       things.
+// NOTE2: Due to complication problem to tell which one is or not relative
+//       to D3DDevice_SetRenderStateNotInline function. There are some that
+//       are inline, some do use returns, and some only does jumps.
+//       Please cross reference with D3DDevice_SetRenderStateInline__GenericFragment
+//       signatures for possible replacement.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderStateNotInline_0__LTCG_esi1_edi2,
                       2048,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
+    // call D3DDevice_SetRenderState_Simple
+    XREF_ENTRY(0x0F, XREF_D3DDevice_SetRenderState_Simple),
+    // mov D3D_g_RenderState[param_1]
     XREF_ENTRY(0x16, XREF_D3D_g_RenderState),
 
-    { 0x00, 0x83 },
-    { 0x01, 0xFE },
+    // cmp esi,0x??
+    OV_MATCH(0x00, 0x83, 0xFE),
 
     { 0x1A, 0xC3 },
     { 0x1B, 0x81 },

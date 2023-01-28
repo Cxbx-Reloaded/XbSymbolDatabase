@@ -146,7 +146,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetPixelShaderProgram, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetPixelShader_0__LTCG_eax_handle, D3DDevice_SetPixelShader, 2024, 2036, 2048, 2060, 2072),
     REGISTER_OOVPAS_M(D3DDevice_SetRenderStateInline__GenericFragment, 3911, 4039), // Final generic OOVPA: 4039?; Removed: 0 // NOTE: see notes from 4039 sig.
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetRenderStateNotInline_0, D3DDevice_SetRenderStateNotInline, 2048),
+    //REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetRenderStateNotInline_0__LTCG_esi1_edi2, D3DDevice_SetRenderStateNotInline, 2048), // NOTE: Signature is unlikely correct and need correction or removal (maybe)
     REGISTER_OOVPAS(D3DDevice_SetRenderState_BackFillMode, 1024, 1036),
     REGISTER_OOVPAS_C(D3DDevice_SetRenderState_CullMode, 1045, 1049, 1052, 1053),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_EdgeAntiAlias, 1024, 1036, 1048, 1060),

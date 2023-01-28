@@ -5776,20 +5776,20 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderStateNotInline,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice::SetRenderStateNotInline+0x18 : call D3DDevice_SetRenderState_Simple
+    // call D3DDevice_SetRenderState_Simple
     XREF_ENTRY(0x19, XREF_D3DDevice_SetRenderState_Simple),
     XREF_ENTRY(0x20, XREF_D3D_g_RenderState),
 
-    // D3DDevice::SetRenderStateNotInline+0x00 : push esi
+    // push esi
     OV_MATCH(0x00, 0x56),
 
-    // D3DDevice::SetRenderStateNotInline+0x06 : jge +0x__ (0x1F vs LTCG 0x21)
+    // jge +0x?? (0x1F vs LTCG 0x21)
     OV_MATCH(0x08, 0x7D),
 
-    // D3DDevice::SetRenderStateNotInline+0x0A : ecx,[addr]
+    // ecx,[esi * 0x4 + 0x????]
     OV_MATCH(0x0A, 0x8B, 0x0C, 0xB5),
 
-    // D3DDevice::SetRenderStateNotInline+0x18 : call D3DDevice_SetRenderState_Simple
+    // call D3DDevice_SetRenderState_Simple
     OV_MATCH(0x18, 0xE8),
 
     // After offset 0x24 has various instruction changes
