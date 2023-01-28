@@ -165,29 +165,25 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetScreenSpaceOffset
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetScreenSpaceOffset,
-                         5455)
+// Generic OOVPA as of 5455 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetScreenSpaceOffset,
+                      5455,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0xD9 },
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
-    { 0x04, 0x56 },
-    { 0x05, 0xD8 },
-    { 0x06, 0x05 },
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x0D, XREF_D3D_g_pDevice),
 
-    { 0x17, 0x00 },
-    { 0x18, 0x00 },
-    { 0x19, 0xD9 },
-    { 0x1A, 0x44 },
-    { 0x1B, 0x24 },
-    { 0x1C, 0x0C },
-    { 0x1D, 0xD8 },
-    { 0x1E, 0x05 },
+    // fld [esp + param_1]
+    OV_MATCH(0x00, 0xD9, 0x44, 0x24, 0x04),
 
-    { 0x23, 0xD9 },
-    { 0x29, 0xE8 },
+    // fadd [0x????????]
+    OV_MATCH(0x05, 0xD8, 0x05),
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x0B, 0x8B),
+
+    // fld [esp + param_2]
+    OV_MATCH(0x19, 0xD9, 0x44, 0x24, 0x0C),
     //
 );
 

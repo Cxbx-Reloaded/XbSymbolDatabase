@@ -171,7 +171,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetRenderTarget_0, D3DDevice_SetRenderTarget, 2048),
     REGISTER_OOVPAS(D3DDevice_SetRenderTargetFast, 1024),
     REGISTER_OOVPAS(D3DDevice_SetScissors, 1024, 1036, 1048, 1060, 1072),
-    REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 1024),
+    REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 1024), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetShaderConstantMode_0__LTCG_eax1, D3DDevice_SetShaderConstantMode, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetSoftDisplayFilter_0, D3DDevice_SetSoftDisplayFilter, 2048),
