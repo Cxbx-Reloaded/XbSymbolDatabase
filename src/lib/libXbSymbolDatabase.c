@@ -161,7 +161,7 @@ SymbolDatabaseList SymbolDBList[] = {
     { XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG, { Sec_text, Sec_D3D, Sec_FLASHROM }, D3D8_OOVPA, D3D8_OOVPA_COUNT },
 
     // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
-    { XbSymbolLib_D3D8LTCG, { Sec_D3D }, D3D8LTCG_OOVPA, D3D8LTCG_OOVPA_COUNT },
+    { XbSymbolLib_D3D8LTCG, { Sec_text, Sec_D3D }, D3D8LTCG_OOVPA, D3D8LTCG_OOVPA_COUNT },
 
     // NOTE: Likely is a D3D Helper library.
     // Jarupxx mention this is not a requirement?
