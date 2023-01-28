@@ -626,7 +626,7 @@ static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
 
     uint32_t EmuD3DDeferredTextureState = DerivedAddr_D3DTSS_TEXCOORDINDEX - Decrement;
 
-    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_DeferredTextureState, "D3D_g_DeferredTextureState", EmuD3DDeferredTextureState, 0);
+    internal_RegisterXRef(pContext, pLibrarySession, XREF_D3D_g_DeferredTextureState, 0, "D3D_g_DeferredTextureState", EmuD3DDeferredTextureState, true);
 }
 
 static void manual_scan_section_dx8_register_stream(iXbSymbolContext* pContext,
