@@ -17,12 +17,12 @@ FOR /F "tokens=1,2 delims=d" %%A IN ("-%~a1") DO (
   SET /A fileC+=1
   SET xbes[!fileC!]=%~s1
  ) else (
-  ECHO ERROR: %1 does not exist
+  ECHO ERROR: "%~1" does not exist
  )
 )
 SHIFT
 :: Continue in loop if user has more inputs
-IF NOT "%1" == "" GOTO ARGI_LOOP
+IF NOT "%~1" == "" GOTO ARGI_LOOP
 
 :: Skip if we don't have any directory in the list.
 IF %dirC% EQU 0 GOTO SKIP_DIRS_LOOP
