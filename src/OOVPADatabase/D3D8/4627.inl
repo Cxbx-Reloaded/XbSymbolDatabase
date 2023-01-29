@@ -999,34 +999,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_DrawIndexedVertices
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawIndexedVertices,
-                         4627)
-OOVPA_SIG_MATCH(
-
-    // D3DDevice_DrawIndexedVertices+0x0E : mov eax, [esi+0x1C]
-    { 0x0E, 0x8B },
-    { 0x0F, 0x46 },
-    { 0x10, 0x1C },
-
-    // D3DDevice_DrawIndexedVertices+0x26 : push 0x0209
-    { 0x26, 0x68 },
-    { 0x27, 0x09 },
-    { 0x28, 0x02 },
-
-    // D3DDevice_DrawIndexedVertices+0x66 : dec eax
-    { 0x66, 0x48 },
-
-    // D3DDevice_DrawIndexedVertices+0xFB : prefetchnta byte ptr [esi+0x3C]
-    { 0xFB, 0x0F },
-    { 0xFC, 0x18 },
-    { 0xFD, 0x46 },
-    { 0xFE, 0x3C },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_SetMaterial
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetMaterial,

@@ -57,25 +57,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_DrawIndexedVertices
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawIndexedVertices,
-                         5028)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x55 },
-    { 0x1E, 0x5E },
-    { 0x3E, 0x17 },
-    { 0x5E, 0x00 },
-    { 0x7E, 0x8B },
-    { 0x9E, 0x89 },
-    { 0xBE, 0x2B },
-    { 0xDE, 0x00 },
-    { 0xFE, 0x04 },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_LoadVertexShader
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LoadVertexShader,

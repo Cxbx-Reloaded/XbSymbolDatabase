@@ -279,29 +279,36 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_DrawIndexedVertices
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawIndexedVertices,
-                         4034)
+// Generic OOVPA as of 4034 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVertices,
+                      4034,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_DrawIndexedVertices+0x0E : mov eax, [esi+0x1C]
-    { 0x0E, 0x8B },
-    { 0x0F, 0x46 },
-    { 0x10, 0x1C },
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x0A, XREF_D3D_g_pDevice),
 
-    // D3DDevice_DrawIndexedVertices+0x20 : push 0x0209
-    { 0x20, 0x68 },
-    { 0x21, 0x09 },
-    { 0x22, 0x02 },
+    // call D3D::CDevice::SetStateVB
+    XREF_ENTRY(0x19, XREF_D3D_CDevice_SetStateVB),
 
-    // D3DDevice_DrawIndexedVertices+0x64 : dec eax
-    { 0x64, 0x48 },
+    // push ebp
+    OV_MATCH(0x00, 0x55),
 
-    // D3DDevice_DrawIndexedVertices+0xF1 : prefetchnta byte ptr [esi+0x3C]
-    { 0xF1, 0x0F },
-    { 0xF2, 0x18 },
-    { 0xF3, 0x46 },
-    { 0xF4, 0x3C },
-    //
+    // sub esp,0x08
+    OV_MATCH(0x03, 0x83, 0xEC, 0x08),
+
+    // push esi
+    OV_MATCH(0x07, 0x56),
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x08, 0x8B),
+    // mov e??,[e?? + 0x????????]
+    OV_MATCH(0x0E, 0x8B),
+
+    // mov [ebp - 8],esi
+    OV_MATCH(0x15, 0x89, 0x75, 0xF8),
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x18, 0xE8),
+    // Do not use any offsets after 0x1C
 );
 
 // ******************************************************************
