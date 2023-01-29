@@ -1306,3 +1306,26 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x13, 0x89, 0x3C, 0xB5),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::SetStateVB
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(CDevice_SetStateVB_8,
+                         4039)
+OOVPA_SIG_MATCH(
+
+    // sub esp,0x08
+    OV_MATCH(0x00, 0x83, 0xEC, 0x08),
+
+    // mov e??,[0x????????]
+    OV_MATCH(0x4, 0x8B),
+    // mov e??,e??
+    OV_MATCH(0xA, 0x8B),
+
+    // unique
+    // and eax,0xFFFFFFAF
+    OV_MATCH(0xC, 0x83, 0xE0, 0xAF),
+    // test ebx,0x3FFFFF8F
+    OV_MATCH(0x0F, 0xF7, 0xC3, 0x8F, 0xFF, 0xFF, 0x3F),
+    //
+);

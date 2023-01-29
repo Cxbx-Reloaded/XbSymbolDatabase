@@ -585,7 +585,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x09, XREF_D3DDevice_LazySetStateVB),
+    XREF_ENTRY(0x09, XREF_D3D_CDevice_SetStateVB),
 
     { 0x00, 0x8B },
     { 0x01, 0x0D },

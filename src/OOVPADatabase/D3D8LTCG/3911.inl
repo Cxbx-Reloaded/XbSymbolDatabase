@@ -1289,3 +1289,25 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x19, 0x89, 0x3C, 0xB5),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::SetStateVB
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(CDevice_SetStateVB_8,
+                         3911)
+OOVPA_SIG_MATCH(
+    // push ebp
+    OV_MATCH(0x00, 0x55),
+
+    // call ????
+    OV_MATCH(0x06, 0xE8),
+
+    // test eax,0x40000000
+    OV_MATCH(0x12, 0xA9, 0x00, 0x00, 0x00, 0x40),
+
+    // and eax,0xBFFFFF7F
+    OV_MATCH(0x2D, 0x25, 0x7F, 0xFF, 0xFF, 0xBF),
+    // or eax,0x300
+    OV_MATCH(0x32, 0x0D, 0x00, 0x03, 0x00 /*, 0x00*/),
+    //
+);
