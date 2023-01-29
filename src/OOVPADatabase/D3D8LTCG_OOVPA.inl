@@ -122,7 +122,6 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_MultiplyTransform_0, D3DDevice_MultiplyTransform, 2024),
     REGISTER_OOVPAS(D3DDevice_PersistDisplay, 1024, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_Present, 1024),
-    REGISTER_OOVPAS(D3DDevice_Release, 1024),
     REGISTER_OOVPAS(D3DDevice_Reset, 1024, 1036),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_edi_pPresentationParameters, D3DDevice_Reset, 2024),
     REGISTER_OOVPAS(D3DDevice_RunPushBuffer, 1024, 1048),

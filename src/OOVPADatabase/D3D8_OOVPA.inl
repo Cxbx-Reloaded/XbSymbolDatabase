@@ -295,7 +295,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_PersistDisplay, 3911, 4039, 4627, 4831),
     REGISTER_OOVPAS(D3DDevice_Present, 3911),
     REGISTER_OOVPAS(D3DDevice_PrimeVertexCache, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_Release, 3911),
+    REGISTER_OOVPAS(D3DDevice_Release, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_Reset, 3911),
     REGISTER_OOVPAS(D3DDevice_RunPushBuffer, 3911, 4039, 4627, 5120, 5558), // for 5455 (from 5558's comment)
     REGISTER_OOVPAS(D3DDevice_RunVertexStateShader, 3911, 4039),

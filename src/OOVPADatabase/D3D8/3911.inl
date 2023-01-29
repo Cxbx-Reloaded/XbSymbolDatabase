@@ -404,22 +404,40 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_Release
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Release,
-                         3911) // Also for 4034, 4361, 4627, 5344, 5558, 5788, 5849, 5933
+// Generic OOVPA as of 3911 and newer.
+// NOTE: LTCG titles may have inlined the function. Therefore need
+//       to have end of function inspection.
+// TODO: Add signature for a function at offset 0x15, then use it to
+//       secure signature a bit better if necessary.
+// NOTE2: Function reference at offset 0x15 is also called in
+//       Direct3D_CreateDevice function.
+OOVPA_SIG_HEADER_XREF(D3DDevice_Release,
+                      3911,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x57 },
-    { 0x08, 0x87 },
-    { 0x0B, 0x00 },
-    { 0x0C, 0x00 },
-    { 0x0D, 0x83 },
-    { 0x0E, 0xF8 },
-    { 0x0F, 0x01 },
-    { 0x10, 0x75 },
-    { 0x11, 0x1C },
-    { 0x12, 0x8B },
-    { 0x13, 0xCF },
-    { 0x14, 0xE8 },
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+
+    // push edi
+    OV_MATCH(0x00, 0x57),
+
+    // cmp eax,0x01
+    OV_MATCH(0x0D, 0x83, 0xF8, 0x01),
+    // jnz +0x??
+    OV_MATCH(0x10, 0x75),
+    // mov e?x,edi
+    OV_MATCH(0x12, 0x8B),
+    // call ????
+    OV_MATCH(0x14, 0xE8),
+
+    // pop edi
+    // ret
+    // dec eax
+    OV_MATCH(0x2C, 0x5F, 0xC3, 0x48),
+
+    // pop edi
+    // ret
+    OV_MATCH(0x35, 0x5F, 0xC3),
     //
 );
 
