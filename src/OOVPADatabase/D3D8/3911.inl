@@ -1345,29 +1345,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_BeginVisibilityTest
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginVisibilityTest,
-                         3911)
+OOVPA_SIG_HEADER_XREF(D3DDevice_BeginVisibilityTest,
+                      3911,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_BeginVisibilityTest+0x00 : push esi
-    { 0x00, 0x56 },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    // D3DDevice_BeginVisibilityTest+0x0D : mov ecx, 1
-    { 0x0D, 0xB9 },
-    { 0x0E, 0x01 },
-    { 0x0F, 0x00 },
+    // push esi
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x56, 0x8B, 0x35),
 
-    // D3DDevice_BeginVisibilityTest+0x12 : mov dword ptr [eax], 0x000817C8
-    { 0x12, 0xC7 },
-    { 0x13, 0x00 },
-    { 0x14, 0xC8 },
-    { 0x15, 0x17 },
-    { 0x16, 0x08 },
+    // mov ecx,1
+    OV_MATCH(0x0D, 0xB9, 0x01, 0x00),
+    // mov [eax],0x000817C8
+    OV_MATCH(0x12, 0xC7, 0x00, 0xC8, 0x17, 0x08, 0x00),
 
-    // D3DDevice_BeginVisibilityTest+0x1E : add eax, 0x0C
-    { 0x1E, 0x83 },
-    { 0x1F, 0xC0 },
-    { 0x20, 0x0C },
+    // add eax,0x0C
+    OV_MATCH(0x1E, 0x83, 0xC0, 0x0C),
+
+    // ret
+    OV_MATCH(0x24, 0xC3),
     //
 );
 

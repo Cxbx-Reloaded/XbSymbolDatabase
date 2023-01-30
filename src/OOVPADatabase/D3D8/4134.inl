@@ -704,5 +704,4 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * Rollback support signature(s)
 // ******************************************************************
-#define D3DDevice_BeginVisibilityTest_4134 D3DDevice_BeginVisibilityTest_3925
 #define D3DDevice_EndVisibilityTest_4134   D3DDevice_EndVisibilityTest_3925

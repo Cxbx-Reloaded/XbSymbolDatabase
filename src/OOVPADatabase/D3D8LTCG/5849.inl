@@ -413,21 +413,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_BeginVisibilityTest
 // ******************************************************************
-//C700C8170800B9
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginVisibilityTest,
-                         1048)
+OOVPA_SIG_HEADER_XREF(D3DDevice_BeginVisibilityTest,
+                      1048,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x56 },
-    { 0x01, 0x8B },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    { 0x1D, 0xC7 },
-    { 0x1E, 0x00 },
-    { 0x1F, 0xC8 },
-    { 0x20, 0x17 },
-    { 0x21, 0x08 },
-    { 0x22, 0x00 },
-    { 0x23, 0xB9 },
+    // push esi
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x56, 0x8B, 0x35),
+
+    // mov [eax],0x000817C8
+    OV_MATCH(0x1D, 0xC7, 0x00, 0xC8, 0x17, 0x08, 0x00),
+    // mov ecx,1
+    OV_MATCH(0x23, 0xB9, 0x01, 0x00),
+
+    // add eax,0x0C
+    OV_MATCH(0x2E, 0x83, 0xC0, 0x0C),
+
+    // ret
+    OV_MATCH(0x36, 0xC3),
     //
 );
 

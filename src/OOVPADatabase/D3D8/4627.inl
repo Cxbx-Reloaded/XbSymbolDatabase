@@ -24,32 +24,6 @@
 // ******************************************************************
 
 // ******************************************************************
-// * D3DDevice_BeginVisibilityTest
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginVisibilityTest,
-                         4627)
-OOVPA_SIG_MATCH(
-
-    // D3DDevice_BeginVisibilityTest+0x13 : mov dword ptr [eax], 0x000817C8
-    { 0x13, 0xC7 },
-    { 0x14, 0x00 },
-    { 0x15, 0xC8 },
-    { 0x16, 0x17 },
-    { 0x17, 0x08 },
-
-    // D3DDevice_BeginVisibilityTest+0x19 : mov ecx, 1
-    { 0x19, 0xB9 },
-    { 0x1A, 0x01 },
-    { 0x1B, 0x00 },
-
-    // D3DDevice_BeginVisibilityTest+0x24 : add eax, 0x0C
-    { 0x24, 0x83 },
-    { 0x25, 0xC0 },
-    { 0x26, 0x0C },
-    //
-);
-
-// ******************************************************************
 // * D3D_GetAdapterDisplayMode
 // ******************************************************************
 // Generic OOVPA as of 4627 and newer.
