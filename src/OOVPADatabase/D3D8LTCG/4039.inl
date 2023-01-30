@@ -889,19 +889,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetVertexData2f
 // ******************************************************************
-//8D....801808008B
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexData2f,
-                         1024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexData2f,
+                      1024,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x01, 0x8B },
-    { 0x1D, 0x8D },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    { 0x20, 0x80 },
-    { 0x21, 0x18 },
-    { 0x22, 0x08 },
-    { 0x23, 0x00 },
-    { 0x24, 0x8B },
+    // push esi
+    OV_MATCH(0x00, 0x56),
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
+
+    // lea e??,[e?? * 8 + 0x00081880]
+    OV_MATCH(0x1D, 0x8D),
+    OV_MATCH(0x20, 0x80, 0x18, 0x08, 0x00),
+
+    // add eax,0x0C
+    OV_MATCH(0x34, 0x83, 0xC0, 0x0C),
+
+    // retn 0x0C
+    OV_MATCH(0x3A, 0xC2, 0x0C),
     //
 );
 

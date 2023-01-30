@@ -1955,34 +1955,27 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetVertexData2f
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexData2f,
-                         3911)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexData2f,
+                      3911,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_SetVertexData2f+0x00 : push esi
-    { 0x00, 0x56 },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    // D3DDevice_SetVertexData2f+0x11 : lea edx, ds:abs[ecx*8]
-    { 0x11, 0x8D },
-    { 0x12, 0x14 },
-    { 0x13, 0xCD },
+    // push esi
+    OV_MATCH(0x00, 0x56),
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
 
-    // D3DDevice_SetVertexData2f+0x1C : mov [eax], edx; mov edx, [esp+0x10]
-    { 0x1C, 0x89 },
-    { 0x1D, 0x10 },
-    { 0x1E, 0x8B },
-    { 0x1F, 0x54 },
-    { 0x20, 0x24 },
-    { 0x21, 0x10 },
+    // lea edx,[ecx * 8 + 0x81880]
+    OV_MATCH(0x11, 0x8D, 0x14, 0xCD, 0x80, 0x18, 0x08, 0x00),
 
-    // D3DDevice_SetVertexData2f+0x28 : add eax, 0x0C
-    { 0x28, 0x83 },
-    { 0x29, 0xC0 },
-    { 0x2A, 0x0C },
+    // add eax,0x0C
+    OV_MATCH(0x28, 0x83, 0xC0, 0x0C),
 
-    // D3DDevice_SetVertexData2f+0x2E : retn 0x0C
-    { 0x2E, 0xC2 },
-    { 0x2F, 0x0C },
+    // retn 0x0C
+    OV_MATCH(0x2E, 0xC2, 0x0C),
     //
 );
 

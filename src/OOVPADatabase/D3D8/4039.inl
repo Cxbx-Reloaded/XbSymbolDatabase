@@ -174,24 +174,29 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetVertexData2f
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexData2f,
-                         4039)
+// TODO: May need lower to 4034, not 100% sure... Check with other
+//       signatures has similar instruction at offset 0x17
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexData2f,
+                      4039,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x56 },
-    { 0x01, 0x8B },
-    { 0x02, 0x35 },
-    { 0x07, 0x8B },
-    { 0x18, 0x14 },
-    { 0x19, 0xCD },
-    { 0x1A, 0x80 },
-    { 0x1B, 0x18 },
-    { 0x1C, 0x08 },
-    { 0x1D, 0x00 },
-    { 0x1E, 0x8B },
-    { 0x1F, 0x4C },
-    { 0x34, 0xC2 },
-    { 0x35, 0x0C },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+
+    // push esi
+    OV_MATCH(0x00, 0x56),
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
+
+    // lea edx,[ecx * 8 + 0x81880]
+    OV_MATCH(0x17, 0x8D, 0x14, 0xCD, 0x80, 0x18, 0x08, 0x00),
+
+    // add eax,0x0C
+    OV_MATCH(0x2E, 0x83, 0xC0, 0x0C),
+
+    // retn 0x0C
+    OV_MATCH(0x34, 0xC2, 0x0C),
     //
 );
 
