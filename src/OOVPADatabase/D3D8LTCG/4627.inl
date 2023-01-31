@@ -1382,3 +1382,39 @@ OOVPA_SIG_MATCH(
     { 0x1D, 0x15 },
     //
 );
+
+// ******************************************************************
+// * D3DCubeTexture_GetCubeMapSurface2
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(D3DCubeTexture_GetCubeMapSurface2,
+                         1024)
+OOVPA_SIG_MATCH(
+
+    // sub esp,0x8
+    OV_MATCH(0x00, 0x83, 0xEC, 0x08),
+
+    // mov e??,[esp + 0x10]
+    OV_MATCH(0x04, 0x8B),
+    OV_MATCH(0x06, 0x24, 0x10),
+
+    // mov e??,[esp + 0x24]
+    OV_MATCH(0x17, 0x8B),
+    OV_MATCH(0x19, 0x24, 0x24),
+    // lea eax,[esp + 0x14]
+    OV_MATCH(0x1B, 0x8D),
+    OV_MATCH(0x1D, 0x24, 0x14),
+    // push eax
+    OV_MATCH(0x1F, 0x50),
+    // mov e??,[esp + 0x24]
+    OV_MATCH(0x20, 0x8B),
+    OV_MATCH(0x22, 0x24, 0x24),
+
+    // call ????
+    OV_MATCH(0x3F, 0xE8),
+
+    // add esp,8
+    OV_MATCH(0x45, 0x83, 0xC4, 0x08),
+    // retn 0x0C
+    OV_MATCH(0x48, 0xC2, 0x0C),
+    //
+);
