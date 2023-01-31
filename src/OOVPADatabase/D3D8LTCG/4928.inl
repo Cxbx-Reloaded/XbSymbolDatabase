@@ -137,26 +137,33 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_GetRenderTarget2
 // ******************************************************************
-//8B88041A000085
 OOVPA_SIG_HEADER_XREF(D3DDevice_GetRenderTarget2,
-                      1024,
-                      XRefOne)
+                      1036,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
+    // mov eax,[D3D_g_pDevice]
+    XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
+    // TODO: Uncomment when WIP_LessVertexPatching is defined
+    // XREF_ENTRY(0x07, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
+
+    // call D3DResource_AddRef
     XREF_ENTRY(0x2D, XREF_D3DResource_AddRef),
 
-    { 0x00, 0xA1 },
+    // mov eax,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0xA1),
 
-    { 0x05, 0x8B },
-    //{ 0x06, 0x88 },
-    //{ 0x07, 0x04 },
-    //{ 0x08, 0x1A },
-    { 0x09, 0x00 },
-    { 0x0A, 0x00 },
-    { 0x0B, 0x85 },
+    // mov eci,[eax + OFFSET_D3DDevice__m_RenderTarget]
+    OV_MATCH(0x05, 0x8B, 0x88),
 
-    { 0x34, 0xC1 },
-    { 0x35, 0xC3 },
+    // jz +0x24
+    OV_MATCH(0x0D, 0x74, 0x24),
+
+    // call D3DResource_AddRef
+    OV_MATCH(0x2C, 0xE8),
+
+    // ret
+    OV_MATCH(0x35, 0xC3),
     //
 );
 
