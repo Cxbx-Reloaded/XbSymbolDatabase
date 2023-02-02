@@ -1064,3 +1064,28 @@ OOVPA_SIG_MATCH(
     { 0x37, 0x89 },
     //
 );
+
+// ******************************************************************
+// * D3DDevice_SetTextureStageStateNotInline
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureStageStateNotInline_0__LTCG_ecx1_eax2_edx3,
+                      4432,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov D3D_g_DeferredTextureState[e?? * 4],e??
+    XREF_ENTRY(0x25, XREF_D3D_g_DeferredTextureState),
+
+    // cmp eax(param_2),0x??
+    OV_MATCH(0x00, 0x83, 0xF8),
+
+    // shl ecx(param_1),0x05
+    OV_MATCH(0x16, 0xC1, 0xE1, 0x05),
+
+    // mov D3D_g_DeferredTextureState[e?? * 4],e??
+    OV_MATCH(0x22, 0x89),
+
+    // ret
+    OV_MATCH(0x2A, 0xC3),
+    //
+);

@@ -25,5 +25,5 @@ XREF_SYMBOL(D3DDevice_SetRenderStateInline__GenericFragment)
 // TODO: Verify each xref's function match with d3d8.def's function xrefs.
 
 // functions
-XREF_SYMBOL(D3DDevice_SetTextureStageStateNotInline)
+XREF_SYMBOL(D3DDevice_SetTextureStageStateNotInline2)
 XREF_SYMBOL(D3D_KickOffAndWaitForIdle2)

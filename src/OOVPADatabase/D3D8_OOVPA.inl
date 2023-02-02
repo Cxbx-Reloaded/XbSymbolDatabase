@@ -362,6 +362,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetStreamSource, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetSwapCallback, 4039), // Final generic OOVPA: 4039; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetTexture, 3911, 4034, 4361, 4831),
+    REGISTER_OOVPAS(D3DDevice_SetTextureStageStateNotInline, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BorderColor, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BumpEnv, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_ColorKeyColor, 3911, 4034),

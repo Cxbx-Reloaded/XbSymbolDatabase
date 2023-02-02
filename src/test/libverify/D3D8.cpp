@@ -2,6 +2,13 @@
 
 #include "unittest.hpp"
 
+static const library_list database_optional = {
+    REGISTER_SYMBOLS(D3DDevice_SetTextureStageStateNotInline2,
+                     REGISTER_SYMBOL(D3DDevice_SetTextureStageStateNotInline2_0__LTCG_eax1_edx2_ecx3, VER_RANGE(4039, VER_MAX, VER_NONE, VER_NONE))),
+    REGISTER_SYMBOLS(D3D_CDevice_SetTextureStageStateNotInline,
+                     REGISTER_SYMBOL(D3D_CDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_ecx3, VER_RANGE(4039, VER_MAX, VER_NONE, VER_NONE))),
+};
+
 static const library_list database_full = {
     // derived xrefs (variables)
     REGISTER_SYMBOL_INLINE(D3D_g_RenderState, VER_RANGE(0, VER_MAX, VER_NONE, VER_NONE)),
@@ -412,10 +419,15 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(XMETAL_StartPush, VER_RANGE(3911, 4034, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(IDirect3DVertexBuffer8_Lock, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE)),
 
-    // Listed only in LTCG database:
     REGISTER_SYMBOLS(D3DDevice_SetTextureStageStateNotInline,
-                     REGISTER_SYMBOL(D3DDevice_SetTextureStageStateNotInline, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE)),
-                     REGISTER_SYMBOL(D3DDevice_SetTextureStageStateNotInline_0, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE))),
+                     REGISTER_SYMBOL(D3DDevice_SetTextureStageStateNotInline, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_SetTextureStageStateNotInline_0__LTCG_ecx1_edx2_eax3, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_ecx3, VER_RANGE(4039, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_SetTextureStageStateNotInline2_0__LTCG_eax1_edx2_ecx3, VER_RANGE(4039, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_SetTextureStageStateNotInline3_0__LTCG_eax1_edx2_ecx3, VER_RANGE(4039, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_SetTextureStageStateNotInline_0__LTCG_ecx1_eax2_edx3, VER_RANGE(4432, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3DDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_esi3, VER_RANGE(4531, VER_MAX, VER_NONE, VER_NONE))),
+    // Listed only in LTCG database:
     REGISTER_SYMBOL_INLINE(D3D_KickOffAndWaitForIdle2, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE)),
 };
 
@@ -438,7 +450,7 @@ static_assert(XREF_OFFSET == 0);
 
 static const subcategory_db d3d8_db = {
     .name = "general",
-    .optional = nullptr,
+    .optional = &database_optional,
     .min = nullptr,
     .full = &database_full,
 };

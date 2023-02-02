@@ -182,8 +182,12 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetStreamSource_4, D3DDevice_SetStreamSource, 2058),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetStreamSource_8, D3DDevice_SetStreamSource, 2040),
     REGISTER_OOVPAS(D3DDevice_SetTexture, 1024),
-    REGISTER_OOVPAS(D3DDevice_SetTextureStageStateNotInline, 1024),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline_0, D3DDevice_SetTextureStageStateNotInline, 2024),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline_0__LTCG_ecx1_edx2_eax3, D3DDevice_SetTextureStageStateNotInline, 3911),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_ecx3, D3DDevice_SetTextureStageStateNotInline, 4039),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline2_0__LTCG_eax1_edx2_ecx3, D3DDevice_SetTextureStageStateNotInline2, 4039), // TODO: fix bug to include counter from previous sections?
+    REGISTER_OOVPAS_BIND_XREF(D3D_CDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_ecx3, D3D_CDevice_SetTextureStageStateNotInline, 4039), // NOTE: has return 0 (xor eax)
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline_0__LTCG_ecx1_eax2_edx3, D3DDevice_SetTextureStageStateNotInline, 4432),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_esi3, D3DDevice_SetTextureStageStateNotInline, 4531),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BorderColor, 1024, 1048),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureState_BorderColor_0, D3DDevice_SetTextureState_BorderColor, 2024, 2036, 2048),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureState_BorderColor_4, D3DDevice_SetTextureState_BorderColor, 2048, 2060),
