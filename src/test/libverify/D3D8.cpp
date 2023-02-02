@@ -369,8 +369,8 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3D_CommonSetRenderTarget, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3D_CreateStandAloneSurface, VER_RANGE(4034, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOLS(D3D_DestroyResource,
-        REGISTER_SYMBOL(D3D_DestroyResource, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
-        REGISTER_SYMBOL(D3D_DestroyResource__LTCG, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: missing param usage
+                     REGISTER_SYMBOL(D3D_DestroyResource, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(D3D_DestroyResource__LTCG, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: missing param usage
     REGISTER_SYMBOL_INLINE(D3D_EnumAdapterModes, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3D_GetAdapterDisplayMode, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOL_INLINE(D3D_GetAdapterIdentifier, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
@@ -384,23 +384,22 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3D_SetTileNoWait, VER_RANGE(4627, VER_MAX, VER_NONE, VER_NONE)),
 
     REGISTER_SYMBOL_INLINE(D3D_UpdateProjectionViewportTransform, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
-
     REGISTER_SYMBOL_INLINE(Direct3D_CheckDeviceMultiSampleType, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
     REGISTER_SYMBOLS(Direct3D_CreateDevice,
-        REGISTER_SYMBOL(Direct3D_CreateDevice, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(Direct3D_CreateDevice, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ebx_ppReturnedDeviceInterface, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ecx_ppReturnedDeviceInterface, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(Direct3D_CreateDevice_4, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
     REGISTER_SYMBOLS(D3D8_Get2DSurfaceDesc,
-        REGISTER_SYMBOL(Get2DSurfaceDesc, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
-        REGISTER_SYMBOL(Get2DSurfaceDesc_0, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)), // NOTE: LTCG usage
-        REGISTER_SYMBOL(Get2DSurfaceDesc_4, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
+                     REGISTER_SYMBOL(Get2DSurfaceDesc, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(Get2DSurfaceDesc_0, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),  // NOTE: LTCG usage
+                     REGISTER_SYMBOL(Get2DSurfaceDesc_4, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
     REGISTER_SYMBOLS(D3D8_Lock2DSurface,
-        REGISTER_SYMBOL(Lock2DSurface, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
-        REGISTER_SYMBOL(Lock2DSurface_16, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
+                     REGISTER_SYMBOL(Lock2DSurface, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(Lock2DSurface_16, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
     REGISTER_SYMBOLS(D3D8_Lock3DSurface,
-        REGISTER_SYMBOL(Lock3DSurface, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
-        REGISTER_SYMBOL(Lock3DSurface_16, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
+                     REGISTER_SYMBOL(Lock3DSurface, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE)),
+                     REGISTER_SYMBOL(Lock3DSurface_16, VER_RANGE(3911, VER_MAX, VER_NONE, VER_NONE))), // NOTE: LTCG usage
     REGISTER_SYMBOLS(D3D_MakeRequestedSpace,
                      REGISTER_SYMBOL(D3D_MakeRequestedSpace_4, VER_RANGE(4034, 4134, VER_NONE, VER_NONE)),
                      REGISTER_SYMBOL(D3D_MakeRequestedSpace_8, VER_RANGE(4134, VER_MAX, VER_NONE, VER_NONE)),
