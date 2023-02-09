@@ -11,11 +11,11 @@ FOR /F "tokens=1,2 delims=d" %%A IN ("-%~a1") DO (
  IF "%%B" neq "" (
   :: input is a directory
   SET /A dirC+=1
-  SET dirs[!dirC!]=%~s1
+  SET "dirs[!dirC!]=%~s1"
  ) else if "%%A" neq "-" (
   :: input is a file
   SET /A fileC+=1
-  SET xbes[!fileC!]=%~s1
+  SET "xbes[!fileC!]=%~s1"
  ) else (
   ECHO ERROR: "%~1" does not exist
  )
@@ -33,7 +33,7 @@ SET "dir=!dirs[%dirI%]!"
 :: Look in each sub directory to find filtered files found.
 FOR /R "%dir%" %%i IN (*.xbe) DO (
   SET /A fileC+=1
-  SET xbes[!fileC!]=%%~si
+  SET "xbes[!fileC!]=%%~si"
 )
 SET /A dirI+=1
 :: Continue loop until we hit the limit
