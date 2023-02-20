@@ -165,57 +165,51 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetScreenSpaceOffset
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetScreenSpaceOffset,
-                         5455)
+// Generic OOVPA as of 5455 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetScreenSpaceOffset,
+                      5455,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0xD9 },
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
-    { 0x04, 0x56 },
-    { 0x05, 0xD8 },
-    { 0x06, 0x05 },
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x0D, XREF_D3D_g_pDevice),
 
-    { 0x17, 0x00 },
-    { 0x18, 0x00 },
-    { 0x19, 0xD9 },
-    { 0x1A, 0x44 },
-    { 0x1B, 0x24 },
-    { 0x1C, 0x0C },
-    { 0x1D, 0xD8 },
-    { 0x1E, 0x05 },
+    // fld [esp + param_1]
+    OV_MATCH(0x00, 0xD9, 0x44, 0x24, 0x04),
 
-    { 0x23, 0xD9 },
-    { 0x29, 0xE8 },
+    // fadd [0x????????]
+    OV_MATCH(0x05, 0xD8, 0x05),
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x0B, 0x8B),
+
+    // fld [esp + param_2]
+    OV_MATCH(0x19, 0xD9, 0x44, 0x24, 0x0C),
     //
 );
 
 // ******************************************************************
-// * D3D_SetTileNoWait
+// * D3D::SetTileNoWait
 // ******************************************************************
+// Generic OOVPA as of 5455 and newer.
 OOVPA_SIG_HEADER_NO_XREF(D3D_SetTileNoWait,
                          5455)
 OOVPA_SIG_MATCH(
+    // sub esp,0x1C
+    OV_MATCH(0x00, 0x83, 0xEC, 0x1C),
+    // eax,[esp + param_2]
+    OV_MATCH(0x03, 0x8B, 0x44, 0x24, 0x24),
+    // test eax,eax
+    OV_MATCH(0x07, 0x85, 0xC0),
 
-    { 0x00, 0x83 },
-    { 0x01, 0xEC },
-    { 0x02, 0x1C },
-    { 0x03, 0x8B },
-    { 0x04, 0x44 },
-    { 0x05, 0x24 },
-    { 0x06, 0x24 },
-    { 0x07, 0x85 },
-    { 0x08, 0xC0 },
-    { 0x09, 0x53 },
-    { 0x0A, 0x8B },
-    { 0x0B, 0x1D },
+    // js +0x04
+    // xor eax,eax
+    // xor esi,esi
+    OV_MATCH(0x36, 0x78, 0x04, 0x33, 0xC0, 0x33, 0xF6),
 
-    { 0x45, 0x8D },
-    { 0x46, 0x9C },
-
-    { 0x88, 0x5F },
-    { 0x9B, 0xCB },
+    // and e??,0x0FFFFFFF
+    OV_MATCH(0x70, 0x81),
+    // OV_MATCH(0x69, 0xE1), // Sometimes changed over builds.
+    OV_MATCH(0x72, 0xFF, 0xFF, 0xFF, 0x0F) // 0x0F vs 0x03 from D3DDevice_SetTile
     //
 );
 

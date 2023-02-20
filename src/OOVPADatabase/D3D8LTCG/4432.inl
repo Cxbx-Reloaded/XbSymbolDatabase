@@ -635,24 +635,30 @@ OOVPA_SIG_MATCH(
 //******************************************************************
 //* D3DDevice_SetTile
 //******************************************************************
-//B9060000008D7C2410F3 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTile_0,
-                         2036)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTile_0__LTCG_ecx1_eax2,
+                      4432,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x83 },
-    { 0x01, 0xEC },
+    // mov edx,[D3D_g_pDevice]
+    XREF_ENTRY(0x07, XREF_D3D_g_pDevice),
 
-    { 0x1C, 0xB9 },
-    { 0x1D, 0x06 },
-    { 0x1E, 0x00 },
-    { 0x1F, 0x00 },
-    { 0x20, 0x00 },
-    { 0x21, 0x8D },
-    { 0x22, 0x7C },
-    { 0x23, 0x24 },
-    { 0x24, 0x10 },
-    { 0x25, 0xF3 },
+    // sub esp,0x18
+    OV_MATCH(0x00, 0x83, 0xEC, 0x18),
+
+    // mov ebp,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x8B, 0x2D),
+
+    // mov esi,eax(param_2)
+    OV_MATCH(0x0C, 0x8B, 0xF0),
+
+    // mov ebx,ecx(param_1)
+    OV_MATCH(0x13, 0x8B, 0xD9),
+
+    // mov [esp + 0x24],edx
+    OV_MATCH(0x2F, 0x89, 0x54, 0x24, 0x24),
+    // mov [esp + 0x20],edx
+    OV_MATCH(0x33, 0x89, 0x54, 0x24, 0x20),
     //
 );
 
@@ -702,19 +708,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetVertexData2f
 // ******************************************************************
-//8D....801808008B
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexData2f,
-                         1036)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexData2f,
+                      1036,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x01, 0x8B },
-    { 0x20, 0x8D },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    { 0x23, 0x80 },
-    { 0x24, 0x18 },
-    { 0x25, 0x08 },
-    { 0x26, 0x00 },
-    { 0x27, 0x8B },
+    // push esi
+    OV_MATCH(0x00, 0x56),
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
+
+    // lea e??,[e?? * 8 + 0x00081880]
+    OV_MATCH(0x20, 0x8D),
+    OV_MATCH(0x23, 0x80, 0x18, 0x08, 0x00),
+
+    // add eax,0x0C
+    OV_MATCH(0x37, 0x83, 0xC0, 0x0C),
+
+    // retn 0x0C
+    OV_MATCH(0x3D, 0xC2, 0x0C),
     //
 );
 
@@ -740,22 +755,39 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DCubeTexture_GetCubeMapSurface2
+// * D3DCubeTexture_GetCubeMapSurface
 // ******************************************************************
-//83EC08578B7C24108D
-OOVPA_SIG_HEADER_NO_XREF(D3DCubeTexture_GetCubeMapSurface2,
+OOVPA_SIG_HEADER_NO_XREF(D3DCubeTexture_GetCubeMapSurface,
                          1024)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x83 },
-    { 0x01, 0xEC },
-    { 0x02, 0x08 },
-    { 0x03, 0x57 },
-    { 0x04, 0x8B },
-    { 0x05, 0x7C },
-    { 0x06, 0x24 },
-    { 0x07, 0x10 },
-    { 0x08, 0x8D },
+    // sub esp,8
+    OV_MATCH(0x00, 0x83, 0xEC, 0x08),
+
+    // mov e??,[esp + 0x10]
+    OV_MATCH(0x04, 0x8B),
+    OV_MATCH(0x06, 0x24, 0x10),
+
+    // mov e??,[esp + 0x24]
+    OV_MATCH(0x17, 0x8B),
+    OV_MATCH(0x19, 0x24, 0x24),
+    // lea eax,[esp + 0x14]
+    OV_MATCH(0x1B, 0x8D),
+    OV_MATCH(0x1D, 0x24, 0x14),
+    // push eax
+    OV_MATCH(0x1F, 0x50),
+
+    // mov e??,[esp + 0x24]
+    OV_MATCH(0x20, 0x8B),
+    OV_MATCH(0x22, 0x24, 0x24),
+
+    // call ????
+    OV_MATCH(0x44, 0xE8),
+
+    // add esp,8
+    OV_MATCH(0x4A, 0x83, 0xC4, 0x08),
+    // retn 0x10
+    OV_MATCH(0x4D, 0xC2, 0x10),
     //
 );
 
@@ -1030,5 +1062,30 @@ OOVPA_SIG_MATCH(
     { 0x35, 0x10 },
     { 0x36, 0x02 },
     { 0x37, 0x89 },
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_SetTextureStageStateNotInline
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureStageStateNotInline_0__LTCG_ecx1_eax2_edx3,
+                      4432,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov D3D_g_DeferredTextureState[e?? * 4],e??
+    XREF_ENTRY(0x25, XREF_D3D_g_DeferredTextureState),
+
+    // cmp eax(param_2),0x??
+    OV_MATCH(0x00, 0x83, 0xF8),
+
+    // shl ecx(param_1),0x05
+    OV_MATCH(0x16, 0xC1, 0xE1, 0x05),
+
+    // mov D3D_g_DeferredTextureState[e?? * 4],e??
+    OV_MATCH(0x22, 0x89),
+
+    // ret
+    OV_MATCH(0x2A, 0xC3),
     //
 );

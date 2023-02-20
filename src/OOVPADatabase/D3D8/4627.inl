@@ -24,32 +24,6 @@
 // ******************************************************************
 
 // ******************************************************************
-// * D3DDevice_BeginVisibilityTest
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginVisibilityTest,
-                         4627)
-OOVPA_SIG_MATCH(
-
-    // D3DDevice_BeginVisibilityTest+0x13 : mov dword ptr [eax], 0x000817C8
-    { 0x13, 0xC7 },
-    { 0x14, 0x00 },
-    { 0x15, 0xC8 },
-    { 0x16, 0x17 },
-    { 0x17, 0x08 },
-
-    // D3DDevice_BeginVisibilityTest+0x19 : mov ecx, 1
-    { 0x19, 0xB9 },
-    { 0x1A, 0x01 },
-    { 0x1B, 0x00 },
-
-    // D3DDevice_BeginVisibilityTest+0x24 : add eax, 0x0C
-    { 0x24, 0x83 },
-    { 0x25, 0xC0 },
-    { 0x26, 0x0C },
-    //
-);
-
-// ******************************************************************
 // * D3D_GetAdapterDisplayMode
 // ******************************************************************
 // Generic OOVPA as of 4627 and newer.
@@ -324,83 +298,68 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_GetRenderTarget
 // ******************************************************************
+// Generic OOVPA as of 4627 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_GetRenderTarget,
                       4627,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
+    // call D3DDevice_GetRenderTarget2
     XREF_ENTRY(0x01, XREF_D3DDevice_GetRenderTarget2),
 
-    // D3DDevice_GetRenderTarget+0x00 : call addr
-    { 0x00, 0xE8 },
+    // call D3DDevice_GetRenderTarget2
+    OV_MATCH(0x00, 0xE8),
 
-    // D3DDevice_GetRenderTarget+0x05 : mov ecx, [esp + 0x04]
-    { 0x05, 0x8B },
-    { 0x06, 0x4C },
-    { 0x07, 0x24 },
-    { 0x08, 0x04 },
+    // mov ecx, [esp + 0x04]
+    OV_MATCH(0x05, 0x8B, 0x4C, 0x24, 0x04),
 
-    // D3DDevice_GetRenderTarget+0x09 : mov [ecx], eax
-    { 0x09, 0x89 },
-    { 0x0A, 0x01 },
+    // mov [ecx], eax
+    OV_MATCH(0x09, 0x89, 0x01),
 
-    // D3DDevice_GetRenderTarget+0x0B : xor eax, eax
-    { 0x0B, 0x33 },
-    { 0x0C, 0xC0 },
+    // xor eax, eax
+    OV_MATCH(0x0B, 0x33, 0xC0),
 
-    // D3DDevice_GetRenderTarget+0x0D : ret 0x0004
-    { 0x0D, 0xC2 },
-    { 0x0E, 0x04 },
-    { 0x0F, 0x00 },
-
+    // ret 0x0004
+    OV_MATCH(0x0D, 0xC2, 0x04, 0x00),
     //
 );
 
 // ******************************************************************
 // * D3DDevice_GetRenderTarget2
 // ******************************************************************
-#ifndef WIP_LessVertexPatching
-OOVPA_XREF(D3DDevice_GetRenderTarget2,
-           4627,
-           2 + 8,
-           XRefTwo)
-    {
-#else
-OOVPA_XREF(D3DDevice_GetRenderTarget2,
-           4627,
-           3 + 8,
-           XRefThree)
-{
-#endif
-        XREF_ENTRY(0x01, XREF_D3D_g_pDevice), // Derived
-#ifdef WIP_LessVertexPatching
-            XREF_ENTRY(0x08, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
-#endif
-            XREF_ENTRY(0x12, XREF_D3DResource_AddRef),
+// Generic OOVPA as of 4627 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_GetRenderTarget2,
+                      4627,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+    // mov eax,[D3D_g_pDevice]
+    XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
-            // D3DDevice_GetRenderTarget2+0x00 : mov eax, [addr]
-            { 0x00, 0xA1 },
+    // TODO: Uncomment when WIP_LessVertexPatching is defined
+    //XREF_ENTRY(0x08, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
 
-            // D3DDevice_GetRenderTarget2+0x05 : push esi
-            { 0x05, 0x56 },
+    // call D3DResource_AddRef
+    XREF_ENTRY(0x12, XREF_D3DResource_AddRef),
 
-            // D3DDevice_GetRenderTarget2+0x06 : mov esi, [eax + 0xXXXX]
-            { 0x06, 0x8B },
-            { 0x07, 0xB0 },
-            //{ 0x08, 0xB4 }, // disabled. part of an offset
-            //{ 0x09, 0x21 },
+    // mov eax,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0xA1),
 
-            // D3DDevice_GetRenderTarget2+0x0E : jz + 0x06
-            { 0x0E, 0x74 },
-            { 0x0F, 0x06 },
+    // push esi
+    OV_MATCH(0x05, 0x56),
 
-            // D3DDevice_GetRenderTarget2+0x11 : call [addr]
-            { 0x11, 0xE8 },
+    // mov esi,[eax + OFFSET_D3DDevice__m_RenderTarget]
+    OV_MATCH(0x06, 0x8B, 0xB0),
 
-            // D3DDevice_GetRenderTarget2+0x19 : retn
-            { 0x19, 0xC3 },
-    }
-OOVPA_END;
+    // jz +0x06
+    OV_MATCH(0x0E, 0x74, 0x06),
+
+    // call D3DResource_AddRef
+    OV_MATCH(0x11, 0xE8),
+
+    // ret
+    OV_MATCH(0x19, 0xC3),
+    //
+);
 
 // ******************************************************************
 // * D3DDevice_GetDepthStencilSurface
@@ -469,30 +428,28 @@ OOVPA_XREF(D3DDevice_GetDepthStencilSurface2,
 OOVPA_END;
 
 // ******************************************************************
-// * D3D_SetTileNoWait
+// * D3D::SetTileNoWait
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(D3D_SetTileNoWait,
                          4627)
 OOVPA_SIG_MATCH(
 
-    // D3D_SetTileNoWait+0x06 : sub esp, 0x18
-    { 0x06, 0x83 },
-    { 0x07, 0xEC },
-    { 0x08, 0x18 },
+    // mov edx, [D3D__pDevice]
+    OV_MATCH(0x00, 0x8B, 0x15),
 
-    // D3D_SetTileNoWait+0x15 : cmp [esi+4], eax
-    { 0x15, 0x39 },
-    { 0x16, 0x46 },
-    { 0x17, 0x04 },
+    // sub esp, 0x18
+    OV_MATCH(0x06, 0x83, 0xEC, 0x18),
 
-    // D3D_SetTileNoWait+0x3D : lea edi, [edx+ecx*8+0xXXXX]
-    { 0x3D, 0x8D },
-    { 0x3E, 0xBC },
-    { 0x3F, 0xCA },
-    //{ 0x40, 0x60 },
-    //{ 0x41, 0x22 },
-    { 0x42, 0x00 },
-    { 0x43, 0x00 },
+    // mov ecx,6
+    OV_MATCH(0x1A, 0xB9, 0x06, 0x00 /*, 0x00, 0x00*/),
+
+    // mov ecx,6
+    OV_MATCH(0x44, 0xB9, 0x06, 0x00 /*, 0x00, 0x00*/),
+
+    // and e??,0x0FFFFFFF
+    OV_MATCH(0x68, 0x81),
+    // OV_MATCH(0x69, 0xE1), // Sometimes changed over builds.
+    OV_MATCH(0x6A, 0xFF, 0xFF, 0xFF, 0x0F) // 0x0F vs 0x03 from D3DDevice_SetTile
     //
 );
 
@@ -999,34 +956,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_DrawIndexedVertices
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawIndexedVertices,
-                         4627)
-OOVPA_SIG_MATCH(
-
-    // D3DDevice_DrawIndexedVertices+0x0E : mov eax, [esi+0x1C]
-    { 0x0E, 0x8B },
-    { 0x0F, 0x46 },
-    { 0x10, 0x1C },
-
-    // D3DDevice_DrawIndexedVertices+0x26 : push 0x0209
-    { 0x26, 0x68 },
-    { 0x27, 0x09 },
-    { 0x28, 0x02 },
-
-    // D3DDevice_DrawIndexedVertices+0x66 : dec eax
-    { 0x66, 0x48 },
-
-    // D3DDevice_DrawIndexedVertices+0xFB : prefetchnta byte ptr [esi+0x3C]
-    { 0xFB, 0x0F },
-    { 0xFC, 0x18 },
-    { 0xFD, 0x46 },
-    { 0xFE, 0x3C },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_SetMaterial
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetMaterial,
@@ -1499,44 +1428,70 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DCubeTexture_GetCubeMapSurface
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DCubeTexture_GetCubeMapSurface,
-                         4627)
+// Generic OOVPA as of 4627 and newer.
+OOVPA_SIG_HEADER_XREF(D3DCubeTexture_GetCubeMapSurface,
+                      4627,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x02, 0x24 },
-    { 0x0D, 0x51 },
-    { 0x0E, 0x52 },
-    { 0x0F, 0xE8 },
+    // call D3DCubeTexture_GetCubeMapSurface2
+    XREF_ENTRY(0x10, XREF_D3DCubeTexture_GetCubeMapSurface2),
 
-    { 0x14, 0x8B },
-    { 0x15, 0x4C },
-    { 0x16, 0x24 },
-    { 0x17, 0x10 },
-    { 0x18, 0x33 },
-    { 0x19, 0xD2 },
-    { 0x1A, 0x85 },
-    { 0x1B, 0xC0 },
-    { 0x1C, 0x0F },
-    { 0x1D, 0x95 },
-    { 0x2A, 0xC2 },
-    { 0x2B, 0x10 },
+    // mov e??,[esp + 0x??]
+    OV_MATCH(0x00, 0x8B),
+    // mov e??,[esp + 0x??]
+    OV_MATCH(0x04, 0x8B),
+    // mov e??,[esp + 0x??]
+    OV_MATCH(0x08, 0x8B),
+
+    // call D3DCubeTexture_GetCubeMapSurface2
+    OV_MATCH(0x0F, 0xE8),
+
+    // mov e??,[esp + 0x??]
+    OV_MATCH(0x14, 0x8B),
+
+    // setne ??
+    OV_MATCH(0x1C, 0x0F, 0x95),
+
+    // retn 0x10
+    OV_MATCH(0x2A, 0xC2, 0x10),
     //
 );
 
 // ******************************************************************
 // * D3DCubeTexture_GetCubeMapSurface2
 // ******************************************************************
+// Generic OOVPA as of 4627 and newer.
 OOVPA_SIG_HEADER_NO_XREF(D3DCubeTexture_GetCubeMapSurface2,
                          4627)
 OOVPA_SIG_MATCH(
 
-    { 0x08, 0x8D },
-    { 0x12, 0x8D },
-    { 0x1C, 0x44 },
-    { 0x26, 0x24 },
-    { 0x31, 0x8B },
-    { 0x3A, 0x44 },
-    { 0x46, 0x5E },
+    // sub esp,0x8
+    OV_MATCH(0x00, 0x83, 0xEC, 0x08),
+
+    // mov e??,[esp + 0x10]
+    OV_MATCH(0x04, 0x8B),
+    OV_MATCH(0x06, 0x24, 0x10),
+
+    // mov e??,[esp + 0x24]
+    OV_MATCH(0x17, 0x8B),
+    OV_MATCH(0x19, 0x24, 0x24),
+    // lea eax,[esp + 0x14]
+    OV_MATCH(0x1B, 0x8D),
+    OV_MATCH(0x1D, 0x24, 0x14),
+    // push eax
+    OV_MATCH(0x1F, 0x50),
+    // mov e??,[esp + 0x24]
+    OV_MATCH(0x20, 0x8B),
+    OV_MATCH(0x22, 0x24, 0x24),
+
+    // call ????
+    OV_MATCH(0x41, 0xE8),
+
+    // add esp,8
+    OV_MATCH(0x47, 0x83, 0xC4, 0x08),
+    // retn 0x0C
+    OV_MATCH(0x4A, 0xC2, 0x0C),
     //
 );
 

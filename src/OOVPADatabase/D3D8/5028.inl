@@ -57,25 +57,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_DrawIndexedVertices
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawIndexedVertices,
-                         5028)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x55 },
-    { 0x1E, 0x5E },
-    { 0x3E, 0x17 },
-    { 0x5E, 0x00 },
-    { 0x7E, 0x8B },
-    { 0x9E, 0x89 },
-    { 0xBE, 0x2B },
-    { 0xDE, 0x00 },
-    { 0xFE, 0x04 },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_LoadVertexShader
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LoadVertexShader,
@@ -370,35 +351,6 @@ OOVPA_XREF(D3D_CommonSetRenderTarget,
 OOVPA_END;
 
 // ******************************************************************
-// * D3DDevice_LazySetStateVB
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LazySetStateVB,
-                         5028)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x83 },
-    { 0x01, 0xEC },
-    { 0x02, 0x0C },
-
-    { 0x41, 0x0F },
-    { 0x42, 0x84 },
-    { 0x43, 0x41 },
-    { 0x44, 0x01 },
-    { 0x45, 0x00 },
-    { 0x46, 0x00 },
-    { 0x47, 0x8B },
-    { 0x48, 0x86 },
-    { 0x49, 0x7C },
-    { 0x4A, 0x03 },
-    { 0x4B, 0x00 },
-    { 0x4C, 0x00 },
-
-    { 0x66, 0x3B },
-    { 0x67, 0xC1 },
-    //
-);
-
-// ******************************************************************
 // * D3D::CDevice::LazySetStateUP
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(CDevice_LazySetStateUP,
@@ -433,7 +385,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x09, XREF_D3DDevice_LazySetStateVB),
+    XREF_ENTRY(0x09, XREF_D3D_CDevice_SetStateVB),
 
     { 0x00, 0x8B },
     { 0x01, 0x0D },

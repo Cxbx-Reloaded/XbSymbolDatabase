@@ -73,38 +73,93 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetScreenSpaceOffset
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetScreenSpaceOffset,
-                         1024)
+// Generic OOVPA as of 5455 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetScreenSpaceOffset,
+                      1024,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0xD9 },
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x04 },
-    { 0x04, 0x56 },
-    { 0x05, 0xD8 },
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x0D, XREF_D3D_g_pDevice),
+
+    // fld [esp + param_1]
+    OV_MATCH(0x00, 0xD9, 0x44, 0x24, 0x04),
+
+    // fadd [0x????????]
+    OV_MATCH(0x05, 0xD8, 0x05),
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x0B, 0x8B),
+
+    // fld [esp + param_2]
+    OV_MATCH(0x17, 0xD9, 0x44, 0x24, 0x0C),
     //
 );
 
 // ******************************************************************
-// * D3DDevice_SetTile
+// * D3D::SetTileNoWait
 // ******************************************************************
-//85C9538B1D ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTile_0,
-                         2060)
+OOVPA_SIG_HEADER_XREF(D3D_SetTileNoWait_0__LTCG_eax1_ecx2,
+                      5455,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x83 },
-    { 0x01, 0xEC },
+    // mov ebx,[D3D_g_pDevice]
+    XREF_ENTRY(0x08, XREF_D3D_g_pDevice),
 
-    { 0x03, 0x85 },
-    { 0x04, 0xC9 },
-    { 0x05, 0x53 },
-    { 0x06, 0x8B },
-    { 0x07, 0x1D },
+    // sub esp,0x18
+    OV_MATCH(0x00, 0x83, 0xEC, 0x18),
 
-    { 0x0B, 0x00 },
-    { 0x0C, 0x56 },
+    // mov ebx,[D3D_g_pDevice]
+    OV_MATCH(0x06, 0x8B, 0x1D),
+
+    // esi,[param_2]
+    OV_MATCH(0x16, 0x8B, 0x31),
+    // test esi,esi
+    OV_MATCH(0x18, 0x85, 0xF6),
+
+    // js +0x04
+    // xor ecx,ecx
+    // xor edi,edi
+    OV_MATCH(0x30, 0x78, 0x04, 0x33, 0xC9, 0x33, 0xFF),
+
+    // and e??,0x0FFFFFFF
+    OV_MATCH(0x6B, 0x81),
+    //OV_MATCH(0x6C, 0xE2), // Sometimes changed over builds.
+    OV_MATCH(0x6D, 0xFF, 0xFF, 0xFF, 0x0F) // 0x0F vs 0x03 from D3DDevice_SetTile
+    //
+);
+
+// ******************************************************************
+// * D3D::SetTileNoWait
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3D_SetTileNoWait_0__LTCG_eax1_ecx2,
+                      5659,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov ebx,[D3D_g_pDevice]
+    XREF_ENTRY(0x08, XREF_D3D_g_pDevice),
+
+    // sub esp,0x1C
+    OV_MATCH(0x00, 0x83, 0xEC, 0x1C),
+
+    // mov ebx,[D3D_g_pDevice]
+    OV_MATCH(0x06, 0x8B, 0x1D),
+
+    // esi,[param_2]
+    OV_MATCH(0x1A, 0x8B, 0x31),
+    // test esi,esi
+    OV_MATCH(0x1C, 0x85, 0xF6),
+
+    // js +0x04
+    // xor ecx,ecx
+    // xor edi,edi
+    OV_MATCH(0x34, 0x78, 0x04, 0x33, 0xC9, 0x33, 0xFF),
+
+    // and e??,0x0FFFFFFF
+    OV_MATCH(0x68, 0x81),
+    // OV_MATCH(0x69, 0xE2), // Sometimes changed over builds.
+    OV_MATCH(0x6A, 0xFF, 0xFF, 0xFF, 0x0F) // 0x0F vs 0x03 from D3DDevice_SetTile
     //
 );
 

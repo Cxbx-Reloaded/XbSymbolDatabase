@@ -26,22 +26,31 @@
 // ******************************************************************
 // * D3DDevice_DrawIndexedVertices
 // ******************************************************************
-//558BEC83EC0853568B35
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawIndexedVertices,
-                         1036)
+OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVertices,
+                      1036,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x55 },
-    { 0x01, 0x8B },
-    { 0x02, 0xEC },
-    { 0x03, 0x83 },
-    { 0x04, 0xEC },
-    { 0x05, 0x08 },
-    { 0x06, 0x53 },
-    { 0x07, 0x56 },
-    { 0x08, 0x8B },
-    { 0x09, 0x35 },
-    //
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x0A, XREF_D3D_g_pDevice),
+
+    // call D3D::CDevice::SetStateVB
+    XREF_ENTRY(0x17, XREF_D3D_CDevice_SetStateVB),
+
+    // push ebp
+    OV_MATCH(0x00, 0x55),
+
+    // sub esp,0x08
+    OV_MATCH(0x03, 0x83, 0xEC, 0x08),
+
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x08, 0x8B),
+
+    // mov [ebp - 8],esi
+    OV_MATCH(0x13, 0x89, 0x75, 0xF8),
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x16, 0xE8),
+    // Do not use any offsets after 0x1A
 );
 
 // ******************************************************************
@@ -880,19 +889,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetVertexData2f
 // ******************************************************************
-//8D....801808008B
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexData2f,
-                         1024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexData2f,
+                      1024,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x01, 0x8B },
-    { 0x1D, 0x8D },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    { 0x20, 0x80 },
-    { 0x21, 0x18 },
-    { 0x22, 0x08 },
-    { 0x23, 0x00 },
-    { 0x24, 0x8B },
+    // push esi
+    OV_MATCH(0x00, 0x56),
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
+
+    // lea e??,[e?? * 8 + 0x00081880]
+    OV_MATCH(0x1D, 0x8D),
+    OV_MATCH(0x20, 0x80, 0x18, 0x08, 0x00),
+
+    // add eax,0x0C
+    OV_MATCH(0x34, 0x83, 0xC0, 0x0C),
+
+    // retn 0x0C
+    OV_MATCH(0x3A, 0xC2, 0x0C),
     //
 );
 
@@ -1304,5 +1322,163 @@ OOVPA_SIG_MATCH(
 
     // mov ptr [esi * 4 + D3D_g_RenderState],edi
     OV_MATCH(0x13, 0x89, 0x3C, 0xB5),
+    //
+);
+
+// ******************************************************************
+// * D3D::CDevice::SetStateVB
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(CDevice_SetStateVB_8,
+                         4039)
+OOVPA_SIG_MATCH(
+
+    // sub esp,0x08
+    OV_MATCH(0x00, 0x83, 0xEC, 0x08),
+
+    // mov e??,[0x????????]
+    OV_MATCH(0x4, 0x8B),
+    // mov e??,e??
+    OV_MATCH(0xA, 0x8B),
+
+    // unique
+    // and eax,0xFFFFFFAF
+    OV_MATCH(0xC, 0x83, 0xE0, 0xAF),
+    // test ebx,0x3FFFFF8F
+    OV_MATCH(0x0F, 0xF7, 0xC3, 0x8F, 0xFF, 0xFF, 0x3F),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_BeginVisibilityTest
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_BeginVisibilityTest,
+                      1024,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+
+    // push esi
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x56, 0x8B, 0x35),
+
+    // mov [eax],0x000817C8
+    OV_MATCH(0x19, 0xC7, 0x00, 0xC8, 0x17, 0x08, 0x00),
+    // mov ecx,1
+    OV_MATCH(0x1F, 0xB9, 0x01, 0x00),
+
+    // add eax,0x0C
+    OV_MATCH(0x2A, 0x83, 0xC0, 0x0C),
+
+    // ret
+    OV_MATCH(0x30, 0xC3),
+    //
+);
+
+//******************************************************************
+//* D3DDevice_SetTile
+//******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTile_0__LTCG_ebx1_eax2,
+                      4039,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov edx,[D3D_g_pDevice]
+    XREF_ENTRY(0x06, XREF_D3D_g_pDevice),
+
+    // sub esp,0x18
+    OV_MATCH(0x00, 0x83, 0xEC, 0x18),
+
+    // mov ebp,[D3D_g_pDevice]
+    OV_MATCH(0x04, 0x8B, 0x2D),
+
+    // mov esi,eax(param_2)
+    OV_MATCH(0x0B, 0x8B, 0xF0),
+
+    // mov [esp + 0x20],edx
+    OV_MATCH(0x2C, 0x89, 0x54, 0x24, 0x20),
+    // mov [esp + 0x1C],edx
+    OV_MATCH(0x30, 0x89, 0x54, 0x24, 0x1C),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_SetTextureStageStateNotInline
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_ecx3,
+                             4039,
+                             XRefOne,
+                             DetectFirst)
+OOVPA_SIG_MATCH(
+
+    // mov D3D_g_DeferredTextureState[e?? * 4],e??
+    XREF_ENTRY(0x23, XREF_D3D_g_DeferredTextureState),
+
+    // cmp edx(param_2),0x??
+    OV_MATCH(0x00, 0x83, 0xFA),
+
+    // shl eax(param_1),0x05
+    OV_MATCH(0x18, 0xC1, 0xE0, 0x05),
+
+    // mov D3D_g_DeferredTextureState[e?? * 4],e??
+    OV_MATCH(0x20, 0x89),
+
+    // ret
+    OV_MATCH(0x2E, 0xC3),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_SetTextureStageStateNotInline
+// ******************************************************************
+// NOTE: Signature is exactly the same as above but is failed to find
+//       in different xbe's section.
+OOVPA_SIG_HEADER_XREF_DETECT(D3DDevice_SetTextureStageStateNotInline2_0__LTCG_eax1_edx2_ecx3,
+                             4039,
+                             XRefOne,
+                             DetectSecond)
+OOVPA_SIG_MATCH(
+
+    // mov D3D_g_DeferredTextureState[e?? * 4],e??
+    XREF_ENTRY(0x23, XREF_D3D_g_DeferredTextureState),
+
+    // cmp edx(param_2),0x??
+    OV_MATCH(0x00, 0x83, 0xFA),
+
+    // shl eax(param_1),0x05
+    OV_MATCH(0x18, 0xC1, 0xE0, 0x05),
+
+    // mov D3D_g_DeferredTextureState[e?? * 4],e??
+    OV_MATCH(0x20, 0x89),
+
+    // ret
+    OV_MATCH(0x2E, 0xC3),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice::SetTextureStageStateNotInline
+// ******************************************************************
+// NOTE: has return 0 (xor eax)
+OOVPA_SIG_HEADER_XREF(D3D_CDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_ecx3,
+                      4039,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov D3D_g_DeferredTextureState[e?? * 4],e??
+    XREF_ENTRY(0x22, XREF_D3D_g_DeferredTextureState),
+
+    // cmp edx(param_2),0x??
+    OV_MATCH(0x00, 0x83, 0xFA),
+
+    // shl eax(param_1),0x05
+    OV_MATCH(0x18, 0xC1, 0xE0, 0x05),
+
+    // mov D3D_g_DeferredTextureState[e?? * 4],e??
+    OV_MATCH(0x1F, 0x89),
+
+    // ret
+    OV_MATCH(0x30, 0xC3),
     //
 );

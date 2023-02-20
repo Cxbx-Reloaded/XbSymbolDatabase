@@ -675,35 +675,6 @@ OOVPA_XREF(D3DDevice_GetTexture2, 4134, 1 + 23, // Up to 4531
 OOVPA_END;
 
 // ******************************************************************
-// * D3D::CDevice::SetStateVB
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(CDevice_SetStateVB,
-                         4134)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x83 },
-    { 0x01, 0xEC },
-    { 0x02, 0x0C },
-
-    { 0x41, 0x0F },
-    { 0x42, 0x84 },
-    { 0x43, 0x41 },
-    { 0x44, 0x01 },
-    { 0x45, 0x00 },
-    { 0x46, 0x00 },
-    { 0x47, 0x8B },
-    { 0x48, 0x86 },
-    { 0x49, 0x80 },
-    { 0x4A, 0x03 },
-    { 0x4B, 0x00 },
-    { 0x4C, 0x00 },
-
-    { 0x66, 0x3B },
-    { 0x67, 0xC1 },
-    //
-);
-
-// ******************************************************************
 // * D3D::CDevice::SetStateUP
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(CDevice_SetStateUP,
@@ -733,5 +704,4 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * Rollback support signature(s)
 // ******************************************************************
-#define D3DDevice_BeginVisibilityTest_4134 D3DDevice_BeginVisibilityTest_3925
-#define D3DDevice_EndVisibilityTest_4134   D3DDevice_EndVisibilityTest_3925
+#define D3DDevice_EndVisibilityTest_4134 D3DDevice_EndVisibilityTest_3925

@@ -73,12 +73,13 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3D_BlockOnTime_4, D3D_BlockOnTime, 2048, 2060),
 
     REGISTER_OOVPAS_D3D(CMiniport_InitHardware, 1024),
+    REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface, 1024),
     REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface2, 1024),
     REGISTER_OOVPAS(D3DDevice_Begin, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_BeginPush, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_BeginPushBuffer, 1024, 1036),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_BeginPushBuffer_0, D3DDevice_BeginPushBuffer, 2048, 2060),
-    REGISTER_OOVPAS(D3DDevice_BeginVisibilityTest, 1024, 1048),
+    REGISTER_OOVPAS(D3DDevice_BeginVisibilityTest, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 1024), // NOTE: NASCAR Heat 2002 reveal this function is inlined, need some sort of indicator which is inline or not.
     REGISTER_OOVPAS(D3DDevice_Clear, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_CopyRects, 1024, 1036, 1048),
@@ -122,7 +123,6 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_MultiplyTransform_0, D3DDevice_MultiplyTransform, 2024),
     REGISTER_OOVPAS(D3DDevice_PersistDisplay, 1024, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_Present, 1024),
-    REGISTER_OOVPAS(D3DDevice_Release, 1024),
     REGISTER_OOVPAS(D3DDevice_Reset, 1024, 1036),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_edi_pPresentationParameters, D3DDevice_Reset, 2024),
     REGISTER_OOVPAS(D3DDevice_RunPushBuffer, 1024, 1048),
@@ -146,7 +146,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetPixelShaderProgram, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetPixelShader_0__LTCG_eax_handle, D3DDevice_SetPixelShader, 2024, 2036, 2048, 2060, 2072),
     REGISTER_OOVPAS_M(D3DDevice_SetRenderStateInline__GenericFragment, 3911, 4039), // Final generic OOVPA: 4039?; Removed: 0 // NOTE: see notes from 4039 sig.
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetRenderStateNotInline_0, D3DDevice_SetRenderStateNotInline, 2048),
+    //REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetRenderStateNotInline_0__LTCG_esi1_edi2, D3DDevice_SetRenderStateNotInline, 2048), // NOTE: Signature is unlikely correct and need correction or removal (maybe)
     REGISTER_OOVPAS(D3DDevice_SetRenderState_BackFillMode, 1024, 1036),
     REGISTER_OOVPAS_C(D3DDevice_SetRenderState_CullMode, 1045, 1049, 1052, 1053),
     REGISTER_OOVPAS(D3DDevice_SetRenderState_EdgeAntiAlias, 1024, 1036, 1048, 1060),
@@ -171,18 +171,23 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetRenderTarget_0, D3DDevice_SetRenderTarget, 2048),
     REGISTER_OOVPAS(D3DDevice_SetRenderTargetFast, 1024),
     REGISTER_OOVPAS(D3DDevice_SetScissors, 1024, 1036, 1048, 1060, 1072),
-    REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 1024),
+    REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 1024), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetShaderConstantMode_0__LTCG_eax1, D3DDevice_SetShaderConstantMode, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetSoftDisplayFilter_0, D3DDevice_SetSoftDisplayFilter, 2048),
+    REGISTER_OOVPAS_BIND_XREF(CDevice_SetStateVB_8, D3D_CDevice_SetStateVB, 3911, 4039), // stdcall
     REGISTER_OOVPAS(D3DDevice_SetStreamSource, 1044),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetStreamSource_0__LTCG_eax_StreamNumber_edi_pStreamData_ebx_Stride, D3DDevice_SetStreamSource, 2058),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetStreamSource_8__LTCG_edx_StreamNumber, D3DDevice_SetStreamSource, 1039),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetStreamSource_4, D3DDevice_SetStreamSource, 2058),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetStreamSource_8, D3DDevice_SetStreamSource, 2040),
     REGISTER_OOVPAS(D3DDevice_SetTexture, 1024),
-    REGISTER_OOVPAS(D3DDevice_SetTextureStageStateNotInline, 1024),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline_0, D3DDevice_SetTextureStageStateNotInline, 2024),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline_0__LTCG_ecx1_edx2_eax3, D3DDevice_SetTextureStageStateNotInline, 3911),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_ecx3, D3DDevice_SetTextureStageStateNotInline, 4039),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline2_0__LTCG_eax1_edx2_ecx3, D3DDevice_SetTextureStageStateNotInline2, 4039), // TODO: fix bug to include counter from previous sections?
+    REGISTER_OOVPAS_BIND_XREF(D3D_CDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_ecx3, D3D_CDevice_SetTextureStageStateNotInline, 4039), // NOTE: has return 0 (xor eax)
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline_0__LTCG_ecx1_eax2_edx3, D3DDevice_SetTextureStageStateNotInline, 4432),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_esi3, D3DDevice_SetTextureStageStateNotInline, 4531),
     REGISTER_OOVPAS(D3DDevice_SetTextureState_BorderColor, 1024, 1048),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureState_BorderColor_0, D3DDevice_SetTextureState_BorderColor, 2024, 2036, 2048),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTextureState_BorderColor_4, D3DDevice_SetTextureState_BorderColor, 2048, 2060),
@@ -196,7 +201,11 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_C_BIND_XREF(D3DDevice_SetTextureState_TexCoordIndex_4, D3DDevice_SetTextureState_TexCoordIndex, 2040, 2045, 2052, 2058),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTexture_4__LTCG_eax_pTexture, D3DDevice_SetTexture, 2024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTexture_4__LTCG_eax_Stage, D3DDevice_SetTexture, 2036),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTile_0, D3DDevice_SetTile, 2024, 2036, 2048, 2060, 2072),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTile_0__LTCG_eax1_ecx2, D3DDevice_SetTile, 3911),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTile_0__LTCG_ebx1_eax2, D3DDevice_SetTile, 4039),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTile_0__LTCG_ecx1_eax2, D3DDevice_SetTile, 4432),
+    REGISTER_OOVPAS_BIND_XREF(D3D_SetTileNoWait_0__LTCG_eax1_ecx2, D3D_SetTileNoWait, 2024, 2048, 5455, 5659),
+    REGISTER_OOVPAS_BIND_XREF(D3D_SetTileNoWait_0__LTCG_ecx1_eax2, D3D_SetTileNoWait, 4721, 5849),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetTransform_0__LTCG_eax1_edx2, D3DDevice_SetTransform, 3911, 4034, 5344, 5455, 5558),
     REGISTER_OOVPAS(D3DDevice_SetVertexData2f, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_SetVertexData2s, 1024, 1036, 1048),

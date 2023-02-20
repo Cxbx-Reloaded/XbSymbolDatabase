@@ -331,18 +331,28 @@ OOVPA_SIG_MATCH(
 //******************************************************************
 //* D3DDevice_BeginVisibilityTest
 //******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginVisibilityTest,
-                         1024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_BeginVisibilityTest,
+                      1036,
+                      XRefOne)
 OOVPA_SIG_MATCH(
 
-    { 0x08, 0x06 },
-    { 0x1C, 0xC7 },
-    { 0x1D, 0x00 },
-    { 0x1E, 0xC8 },
-    { 0x1F, 0x17 },
-    { 0x20, 0x08 },
-    { 0x21, 0x00 },
-    { 0x22, 0xB9 },
+    // mov esi,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+
+    // push esi
+    // mov esi,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x56, 0x8B, 0x35),
+
+    // mov [eax],0x000817C8
+    OV_MATCH(0x1C, 0xC7, 0x00, 0xC8, 0x17, 0x08, 0x00),
+    // mov ecx,1
+    OV_MATCH(0x22, 0xB9, 0x01, 0x00),
+
+    // add eax,0x0C
+    OV_MATCH(0x2D, 0x83, 0xC0, 0x0C),
+
+    // ret
+    OV_MATCH(0x33, 0xC3),
     //
 );
 
@@ -1119,20 +1129,26 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetRenderStateNotInline
 // ******************************************************************
 //C381FE880000007D1D8B0D ...C3
-// Titles found are...
-// * (4928.1) Shin Megami Tensei: Nine (DDS9)
-// * (5120.1) Crimson Sea
-// * (5344.1) The Italian Job
-// * (5455.1) Freaky Flyers
-// * (5659.4) Beyond Good And Evil
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderStateNotInline_0,
+// NOTE: Compiler with LTCG flag perform task differently and will
+//       produce redundant functions. BUT we need better correction OR
+//       maybe removal due to compiler made its own decision how to do
+//       things.
+// NOTE2: Due to complication problem to tell which one is or not relative
+//       to D3DDevice_SetRenderStateNotInline function. There are some that
+//       are inline, some do use returns, and some only does jumps.
+//       Please cross reference with D3DDevice_SetRenderStateInline__GenericFragment
+//       signatures for possible replacement.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderStateNotInline_0__LTCG_esi1_edi2,
                       2048,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
+    // call D3DDevice_SetRenderState_Simple
+    XREF_ENTRY(0x0F, XREF_D3DDevice_SetRenderState_Simple),
+    // mov D3D_g_RenderState[param_1]
     XREF_ENTRY(0x16, XREF_D3D_g_RenderState),
 
-    { 0x00, 0x83 },
-    { 0x01, 0xFE },
+    // cmp esi,0x??
+    OV_MATCH(0x00, 0x83, 0xFE),
 
     { 0x1A, 0xC3 },
     { 0x1B, 0x81 },
@@ -1145,52 +1161,6 @@ OOVPA_SIG_MATCH(
     { 0x22, 0x1D },
     { 0x23, 0x8B },
     { 0x24, 0x0D },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_SetTextureStageStateNotInline
-// ******************************************************************
-//1BC981E1F1BFFFFF81C1
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureStageStateNotInline,
-                         1024)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x8B },
-
-    { 0x46, 0x1B },
-    { 0x47, 0xC9 },
-    { 0x48, 0x81 },
-    { 0x49, 0xE1 },
-    { 0x4A, 0xF1 },
-    { 0x4B, 0xBF },
-    { 0x4C, 0xFF },
-    { 0x4D, 0xFF },
-    { 0x4E, 0x81 },
-    { 0x4F, 0xC1 },
-    //
-);
-
-// ******************************************************************
-// * D3DDevice_SetTextureStageStateNotInline
-// ******************************************************************
-//1BC025F1BFFFFF050F48
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureStageStateNotInline_0,
-                         2024)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x83 },
-
-    { 0x36, 0x1B },
-    { 0x37, 0xC0 },
-    { 0x38, 0x25 },
-    { 0x39, 0xF1 },
-    { 0x3A, 0xBF },
-    { 0x3B, 0xFF },
-    { 0x3C, 0xFF },
-    { 0x3D, 0x05 },
-    { 0x3E, 0x0F },
-    { 0x3F, 0x48 },
     //
 );
 
@@ -1276,25 +1246,32 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 //8B88041A000085
 OOVPA_SIG_HEADER_XREF(D3DDevice_GetRenderTarget2,
-                      1036,
-                      XRefOne)
+                      1024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
+    // mov eax,[D3D_g_pDevice]
+    XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
+    // TODO: Uncomment when WIP_LessVertexPatching is defined
+    // XREF_ENTRY(0x08, XREF_OFFSET_D3DDevice__m_RenderTarget), // Derived
+
+    // call D3DResource_AddRef
     XREF_ENTRY(0x2E, XREF_D3DResource_AddRef),
 
-    { 0x00, 0xA1 },
+    // mov eax,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0xA1),
 
-    { 0x05, 0x56 },
-    { 0x06, 0x8B },
-    { 0x07, 0xB0 },
-    //{ 0x08, 0xB4 },
-    //{ 0x09, 0x21 },
-    { 0x0A, 0x00 },
-    { 0x0B, 0x00 },
-    { 0x0C, 0x85 },
+    // mov esi,[eax + OFFSET_D3DDevice__m_RenderTarget]
+    OV_MATCH(0x06, 0x8B, 0xB0),
 
-    { 0x32, 0xFF },
-    { 0x33, 0x06 },
+    // jz +0x24
+    OV_MATCH(0x0E, 0x74, 0x24),
+
+    // call D3DResource_AddRef
+    OV_MATCH(0x2D, 0xE8),
+
+    // ret
+    OV_MATCH(0x37, 0xC3),
     //
 );
 
@@ -1364,5 +1341,105 @@ OOVPA_SIG_MATCH(
     { 0x1B, 0x52 },
     { 0x1C, 0xFF },
     { 0x1D, 0x15 },
+    //
+);
+
+// ******************************************************************
+// * D3DCubeTexture_GetCubeMapSurface2
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(D3DCubeTexture_GetCubeMapSurface2,
+                         1024)
+OOVPA_SIG_MATCH(
+
+    // sub esp,0x8
+    OV_MATCH(0x00, 0x83, 0xEC, 0x08),
+
+    // mov e??,[esp + 0x10]
+    OV_MATCH(0x04, 0x8B),
+    OV_MATCH(0x06, 0x24, 0x10),
+
+    // mov e??,[esp + 0x24]
+    OV_MATCH(0x17, 0x8B),
+    OV_MATCH(0x19, 0x24, 0x24),
+    // lea eax,[esp + 0x14]
+    OV_MATCH(0x1B, 0x8D),
+    OV_MATCH(0x1D, 0x24, 0x14),
+    // push eax
+    OV_MATCH(0x1F, 0x50),
+    // mov e??,[esp + 0x24]
+    OV_MATCH(0x20, 0x8B),
+    OV_MATCH(0x22, 0x24, 0x24),
+
+    // call ????
+    OV_MATCH(0x3F, 0xE8),
+
+    // add esp,8
+    OV_MATCH(0x45, 0x83, 0xC4, 0x08),
+    // retn 0x0C
+    OV_MATCH(0x48, 0xC2, 0x0C),
+    //
+);
+
+//******************************************************************
+//* D3D::SetTileNoWait
+//******************************************************************
+// Revision 0
+// NOTE: Only very few titles triggered this detection which is the
+//       same as D3DDevice_SetTile_0__LTCG_eax1_ecx2 (3911) signature
+//       with early ret shifted by one offset.
+OOVPA_SIG_HEADER_XREF(D3D_SetTileNoWait_0__LTCG_eax1_ecx2,
+                      2024,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov edx,[D3D_g_pDevice]
+    XREF_ENTRY(0x02, XREF_D3D_g_pDevice),
+
+    // mov edx,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x8B, 0x15),
+    // sub esp,0x18
+    OV_MATCH(0x06, 0x83, 0xEC, 0x18),
+
+    // mov esi,ecx(param_2)
+    OV_MATCH(0x0A, 0x8B, 0xF1),
+
+    // mov [esp + 0x20],0
+    OV_MATCH(0x2C, 0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x00, 0x00),
+    // mov [esp + 0x1C],0
+    OV_MATCH(0x34, 0xC7, 0x44, 0x24, 0x1C),
+
+    // NOTE: Required separate difference to avoid detect <4627
+    //       build titles.
+    // add esp,0x18
+    // ret
+    OV_MATCH(0x81, 0x83, 0xC4, 0x18, 0xC3), // offset 0x81 vs 3911 0x80
+    //
+);
+
+//******************************************************************
+//* D3D::SetTileNoWait
+//******************************************************************
+// Revision 1
+OOVPA_SIG_HEADER_XREF(D3D_SetTileNoWait_0__LTCG_eax1_ecx2,
+                      2048,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov edx,[D3D_g_pDevice]
+    XREF_ENTRY(0x02, XREF_D3D_g_pDevice),
+
+    // mov edx,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x8B, 0x15),
+
+    // sub esp,0x18
+    OV_MATCH(0x06, 0x83, 0xEC, 0x18),
+
+    // mov esi,ecx(param_2)
+    OV_MATCH(0x0B, 0x8B, 0xF1), // offset 0x0B vs 3911/2024 0x0A
+
+    // mov [esp + 0x20],0
+    OV_MATCH(0x2C, 0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x00, 0x00),
+    // mov [esp + 0x1C],0
+    OV_MATCH(0x34, 0xC7, 0x44, 0x24, 0x1C),
     //
 );
