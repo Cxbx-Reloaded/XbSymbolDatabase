@@ -518,14 +518,14 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
 
             library_flag = XbSymbolDatabase_LibraryToFlag(xb_library_versions[library_index].szName);
 
-            // If library is unknown to the database, skip it.
-            if (library_flag == 0) {
-                continue;
-            }
-
             // Keep the highest build version for manual checklist.
             if (build_version < xb_library_versions[library_index].wBuildVersion) {
                 build_version = xb_library_versions[library_index].wBuildVersion;
+            }
+
+            // If library is unknown to the database, skip it.
+            if (library_flag == 0) {
+                continue;
             }
 
             // If found DSOUND library, then skip the manual check.
