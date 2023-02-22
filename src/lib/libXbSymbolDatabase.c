@@ -351,6 +351,9 @@ const char* XbSymbolDatabase_LibraryToString(uint32_t library_flag)
         case XbSymbolLib_DSOUND: {
             return Lib_DSOUND;
         }
+        case XbSymbolLib_JVS: {
+            return Lib_JVS;
+        }
         case XbSymbolLib_XACTENG: {
             return Lib_XACTENG;
         }
@@ -399,6 +402,9 @@ uint32_t XbSymbolDatabase_LibraryToFlag(const char* library_name)
     }
     if (strncmp(library_name, Lib_DSOUND, 8) == 0) {
         return XbSymbolLib_DSOUND;
+    }
+    if (strncmp(library_name, Lib_JVS, 8) == 0) {
+        return XbSymbolLib_JVS;
     }
     if (strncmp(library_name, Lib_XACTENG, 8) == 0) {
         return XbSymbolLib_XACTENG;
