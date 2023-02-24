@@ -194,7 +194,7 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
                                                                        &pOOVPARevision);
         }
 
-        // If either GetTypeInformation overload is found, start look up in DeviceTypeInfo table's entires.
+        // If either GetTypeInformation overload is found, start look up in DeviceTypeInfo table's entries.
         if (xXbAddr) {
             internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
 
@@ -202,7 +202,7 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
             uint32_t* table_end = (uint32_t*)internal_section_VirtToHostAddress(pContext, pContext->xref_database[XREF_g_DeviceTypeInfoTableEnd]);
             size_t type_description_table_count = ((memptr_t)table_end - (memptr_t)table_i) / sizeof(uint32_t);
 
-            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "DeviceTypeInfoTable Entires: %u", type_description_table_count);
+            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "DeviceTypeInfoTable Entries: %u", type_description_table_count);
 
             // Partial extracted for ucType and XppType fields needed to get specific device type named.
             typedef struct _XID_TYPE_INFORMATION {
@@ -216,6 +216,10 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
             int i = 0;
             for (; table_i < table_end; table_i++, i++) {
                 PXID_TYPE_INFORMATION DeviceTypeInfo = (PXID_TYPE_INFORMATION)internal_section_VirtToHostAddress(pContext, *table_i);
+                if (!DeviceTypeInfo) {
+                    // if address is nullptr, then skip it.
+                    continue;
+                }
                 switch (DeviceTypeInfo->ucType) {
                     case 1: // Gamepad (Generic)
                         pContext->xref_database[XREF_g_DeviceType_Gamepad] = DeviceTypeInfo->XppType;

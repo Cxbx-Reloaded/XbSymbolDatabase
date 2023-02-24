@@ -351,6 +351,9 @@ const char* XbSymbolDatabase_LibraryToString(uint32_t library_flag)
         case XbSymbolLib_DSOUND: {
             return Lib_DSOUND;
         }
+        case XbSymbolLib_JVS: {
+            return Lib_JVS;
+        }
         case XbSymbolLib_XACTENG: {
             return Lib_XACTENG;
         }
@@ -399,6 +402,9 @@ uint32_t XbSymbolDatabase_LibraryToFlag(const char* library_name)
     }
     if (strncmp(library_name, Lib_DSOUND, 8) == 0) {
         return XbSymbolLib_DSOUND;
+    }
+    if (strncmp(library_name, Lib_JVS, 8) == 0) {
+        return XbSymbolLib_JVS;
     }
     if (strncmp(library_name, Lib_XACTENG, 8) == 0) {
         return XbSymbolLib_XACTENG;
@@ -518,14 +524,14 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
 
             library_flag = XbSymbolDatabase_LibraryToFlag(xb_library_versions[library_index].szName);
 
-            // If library is unknown to the database, skip it.
-            if (library_flag == 0) {
-                continue;
-            }
-
             // Keep the highest build version for manual checklist.
             if (build_version < xb_library_versions[library_index].wBuildVersion) {
                 build_version = xb_library_versions[library_index].wBuildVersion;
+            }
+
+            // If library is unknown to the database, skip it.
+            if (library_flag == 0) {
+                continue;
             }
 
             // If found DSOUND library, then skip the manual check.
@@ -838,6 +844,9 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     pContext->xref_database[XREF_OFFSET_D3DDevice__m_VBlankCallback] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
 #endif                                                                                         //
     pContext->xref_database[XREF_OFFSET_D3DDevice__m_VertexShader] = XREF_ADDR_DERIVE;         //In use
+    // JVS                                                                                     //
+    pContext->xref_database[XREF_JVS_g_pPINSA] = XREF_ADDR_DERIVE;                             //In use
+    pContext->xref_database[XREF_JVS_g_pPINSB] = XREF_ADDR_DERIVE;                             //In use
     // XAPILIB                                                                                 //
     pContext->xref_database[XREF_g_XapiCurrentTopLevelFilter] = XREF_ADDR_DERIVE;              //In use
     pContext->xref_database[XREF_g_DeviceType_Gamepad] = XREF_ADDR_DERIVE;                     //In use

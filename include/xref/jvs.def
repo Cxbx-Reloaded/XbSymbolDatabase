@@ -38,6 +38,10 @@ XREF_SYMBOL(JvsScReceiveRs323c_String)
 XREF_SYMBOL(JvsScSendMidi_String)
 XREF_SYMBOL(JvsScSendRs323c_String)
 
+// derived variables
+XREF_SYMBOL(JVS_g_pPINSA)
+XREF_SYMBOL(JVS_g_pPINSB)
+
 // functions
 XREF_SYMBOL(JVS_SendCommand)
 XREF_SYMBOL(JvsBACKUP_Read)

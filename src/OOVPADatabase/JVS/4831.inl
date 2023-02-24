@@ -275,23 +275,35 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(JVS_SendCommand,
                       4831,
-                      XRefOne)
+                      XRefThree)
 OOVPA_SIG_MATCH(
     XREF_ENTRY(0x250, XREF_JVS_SendCommand_String),
+    XREF_ENTRY(0x2A0, XREF_JVS_g_pPINSA), // Derived
+    XREF_ENTRY(0x2A8, XREF_JVS_g_pPINSB), // Derived
 
+    // sub esp,0x?
     OV_MATCH(0x00, 0x81, 0xEC),
 
+    // mov e??, [e?? + param_4]
     OV_MATCH(0x0A, 0xB4, 0x00),
 
+    // test ebp,ebp
     OV_MATCH(0x0E, 0x85, 0xED),
-
+    // push esi
+    // push edi
     OV_MATCH(0x10, 0x56, 0x57),
 
+    // mov esi,[e?? + 0x?]
     OV_MATCH(0x31, 0x8B, 0xB4),
 
+    // jz +?
     OV_MATCH(0x90, 0x0F),
 
+    // test al,0x??
     OV_MATCH(0x96, 0xA8),
+
+    // and eax,0x3
+    OV_MATCH(0x2A4, 0x83, 0xE0, 0x03),
     //
 );
 
@@ -301,13 +313,21 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(JVS_SendCommand2,
                       4831,
-                      XRefOne)
+                      XRefThree)
 OOVPA_SIG_MATCH(
     XREF_ENTRY(0x2C0, XREF_JVS_SendCommand_String),
+    XREF_ENTRY(0x312, XREF_JVS_g_pPINSA), // Derived
+    XREF_ENTRY(0x31B, XREF_JVS_g_pPINSB), // Derived
 
+    // sub esp,0x58
+    // push ebx
     OV_MATCH(0x00, 0x83, 0xEC, 0x58, 0x53),
 
+    // mov [esp + 0x70],al
     OV_MATCH(0x86, 0x88, 0x44, 0x24, 0x70),
+
+    // and edx,0x3
+    OV_MATCH(0x316, 0x83, 0xE2, 0x03),
     //
 );
 
@@ -315,15 +335,49 @@ OOVPA_SIG_MATCH(
 // * JVS_SendCommand3
 // * Variation of JVS_SendCommand
 // ******************************************************************
+// TODO: Set this signature as revision 1
 OOVPA_SIG_HEADER_XREF(JVS_SendCommand3,
                       4831,
-                      XRefOne)
+                      XRefThree)
 OOVPA_SIG_MATCH(
     XREF_ENTRY(0x28B, XREF_JVS_SendCommand_String),
+    XREF_ENTRY(0x302, XREF_JVS_g_pPINSA), // Derived
+    XREF_ENTRY(0x30B, XREF_JVS_g_pPINSB), // Derived
 
+    // sub esp,0x58
+    // push ebx
     OV_MATCH(0x00, 0x83, 0xEC, 0x58, 0x53),
 
+    // mov [esp + 0x70],al
     OV_MATCH(0x86, 0x88, 0x44, 0x24, 0x70),
+
+    // and edx,0x3
+    OV_MATCH(0x306, 0x83, 0xE2, 0x03),
+    //
+);
+
+// ******************************************************************
+// * JVS_SendCommand3
+// * Variation of JVS_SendCommand
+// ******************************************************************
+// TODO: Set this signature as revision 2
+OOVPA_SIG_HEADER_XREF(JVS_SendCommand3,
+                      4832,
+                      XRefThree)
+OOVPA_SIG_MATCH(
+    XREF_ENTRY(0x28B, XREF_JVS_SendCommand_String),
+    XREF_ENTRY(0x307, XREF_JVS_g_pPINSA), // Derived
+    XREF_ENTRY(0x313, XREF_JVS_g_pPINSB), // Derived
+
+    // sub esp,0x58
+    // push ebx
+    OV_MATCH(0x00, 0x83, 0xEC, 0x58, 0x53),
+
+    // mov [esp + 0x70],al
+    OV_MATCH(0x86, 0x88, 0x44, 0x24, 0x70),
+
+    // and edx,0x3
+    OV_MATCH(0x30B, 0x83, 0xE2, 0x03),
     //
 );
 
