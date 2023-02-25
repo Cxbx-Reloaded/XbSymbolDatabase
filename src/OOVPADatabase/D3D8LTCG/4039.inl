@@ -598,25 +598,27 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_CreateTexture2
+// * D3D::CreateTexture
 // ******************************************************************
-//F744241C0000010074
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CreateTexture2,
-                         1036)
+// NOTE: Custom stdcall with params 1 - 7 pushed onto stack but has
+//       param 8 as DL and param 9 as EDI registers.
+// NOTE2: Can confirm NASCAR Heat 2002 (3925) does not use D3D_CreateTexture.
+OOVPA_SIG_HEADER_NO_XREF(D3D_CreateTexture_28__LTCG_edx8_edi9,
+                         4039)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x53 },
-    { 0x01, 0x56 },
+    // push ebx
+    // push esi
+    // lea e??,[esp + 0x20]
+    OV_MATCH(0x00, 0x53, 0x56, 0x8D),
 
-    { 0x37, 0xF7 },
-    { 0x38, 0x44 },
-    { 0x39, 0x24 },
-    { 0x3A, 0x1C },
-    { 0x3B, 0x00 },
-    { 0x3C, 0x00 },
-    { 0x3D, 0x01 },
-    { 0x3E, 0x00 },
-    { 0x3F, 0x74 },
+    // unique instruction
+    // and [esp + 0x24],0xFFFFFFF7
+    OV_MATCH(0x41, 0x83, 0x64, 0x24, 0x24, 0xF7),
+    // push 0x14
+    OV_MATCH(0x46, 0x6A, 0x14),
+    // push 0x40
+    OV_MATCH(0x48, 0x6A, 0x40),
     //
 );
 
@@ -1480,5 +1482,38 @@ OOVPA_SIG_MATCH(
 
     // ret
     OV_MATCH(0x30, 0xC3),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_CreateTexture
+// ******************************************************************
+// NOTE: param 6 is unused.
+OOVPA_SIG_HEADER_XREF(D3DDevice_CreateTexture_8__LTCG_edx3_ecx4_eax5_edi7,
+                      4039,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // call D3D::CreateTexture
+    XREF_ENTRY(0x14, XREF_D3D_CreateTexture),
+
+    // push 0x0
+    // push param_5
+    OV_MATCH(0x00, 0x6A, 0x00, 0x50),
+
+    // push param_4
+    OV_MATCH(0x07, 0x51),
+    // push param_2
+    // OV_MATCH(0x08, 0x51),
+
+    // push param_3
+    // push 0x1
+    OV_MATCH(0x0C, 0x52, 0x6A, 0x01),
+
+    // xor dl,dl
+    // call D3D::CreateTexture
+    OV_MATCH(0x11, 0x32, 0xD2, 0xE8),
+    // ret 0xC
+    OV_MATCH(0x18, 0xC2, 0x0C),
     //
 );

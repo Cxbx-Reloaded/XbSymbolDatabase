@@ -190,6 +190,7 @@ OOVPATable D3D8_OOVPA[] = {
 
     REGISTER_OOVPAS(D3D_UpdateProjectionViewportTransform, 3900, 3901), // Final generic OOVPA: 4034; Removed: 0 // NOTE: 3901 is 4034 signature, except LTCG title been detected in 3925.
 
+    REGISTER_OOVPAS(D3D_CreateTexture, 3911, 4034),
     REGISTER_OOVPAS_D3D(CDevice_MakeSpace, 3911), // NOTE: has multiple rets.
     REGISTER_OOVPAS_D3D(CMiniport_CreateCtxDmaObject, 3911, 4034),
     REGISTER_OOVPAS_D3D(CMiniport_InitHardware, 3911, 4034, 5455),
@@ -220,8 +221,8 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_CreatePalette2, 4627, 5344, 5455),
     REGISTER_OOVPAS(D3DDevice_CreatePixelShader, 3911, 5344),
     REGISTER_OOVPAS(D3DDevice_CreateStateBlock, 3911),
-    REGISTER_OOVPAS(D3DDevice_CreateTexture, 3911, 4627), // Called D3DDevice_CreateTexture2 (from 4627's comment) NOTE: Use D3DDevice_CreateTexture2 for 4627 and above
     REGISTER_OOVPAS(D3DDevice_CreateTexture2, 4627, 4831), // Was 4627 (from 5344's comment)
+    REGISTER_OOVPAS(D3DDevice_CreateTexture, 3911, 4627), // Called D3DDevice_CreateTexture2 (from 4627's comment) NOTE: Use D3DDevice_CreateTexture2 for 4627 and above
     REGISTER_OOVPAS(D3DDevice_CreateVertexBuffer, 3911, 4627),
     REGISTER_OOVPAS(D3DDevice_CreateVertexBuffer2, 4627, 5344, 5455),
     REGISTER_OOVPAS(D3DDevice_CreateVertexShader, 3911),

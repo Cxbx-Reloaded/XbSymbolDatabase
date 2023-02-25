@@ -361,7 +361,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 //F744241C0000010074
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CreateTexture2,
-                         1048)
+                         1024)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },

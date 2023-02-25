@@ -66,6 +66,7 @@
 // ******************************************************************
 OOVPATable D3D8LTCG_OOVPA[] = {
 
+    REGISTER_OOVPAS_BIND_XREF(D3D_CreateTexture_28__LTCG_edx8_edi9, D3D_CreateTexture, 4039), // Final generic OOVPA: 4039; Removed: 4627 // See note for details.
     REGISTER_OOVPAS_BIND_XREF(D3D_MakeRequestedSpace_8, D3D_MakeRequestedSpace, 1036), // NOTE: OOVPA is in 5849. In used by (5849) Manhunt title
     REGISTER_OOVPAS_BIND_XREF(D3D_MakeRequestedSpace_4__LTCG_eax_RequestedSpace, D3D_MakeRequestedSpace, 2048),
     REGISTER_OOVPAS(D3D_SetFence, 1024, 1036, 1048, 1060),
@@ -85,7 +86,8 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_CopyRects, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_CreatePixelShader, 1024),
     REGISTER_OOVPAS(D3DDevice_CreateTexture, 1024),
-    REGISTER_OOVPAS(D3DDevice_CreateTexture2, 1024, 1036, 1048),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_CreateTexture_8__LTCG_edx3_ecx4_eax5_edi7, D3DDevice_CreateTexture, 4039),
+    REGISTER_OOVPAS(D3DDevice_CreateTexture2, 1024, 1048),
     REGISTER_OOVPAS(D3DDevice_CreateVertexShader, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_DeletePixelShader_0, D3DDevice_DeletePixelShader, 2024),
     REGISTER_OOVPAS(D3DDevice_DeleteStateBlock, 1024),
