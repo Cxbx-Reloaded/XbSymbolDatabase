@@ -1093,3 +1093,40 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x2A, 0xC3),
     //
 );
+
+// ******************************************************************
+// * D3DDevice_CreateCubeTexture
+// ******************************************************************
+// TODO: Might be possible to move it early as 4039 since this function
+//       is compatible with D3D::CreateTexture's 4039 LTCG signature.
+OOVPA_SIG_HEADER_XREF(D3DDevice_CreateCubeTexture,
+                      4432,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // call D3D::CreateTexture
+    XREF_ENTRY(0x21, XREF_D3D_CreateTexture),
+
+    // mov eax,[esp + param_4]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x10),
+
+    // push 0x1
+    // push param_4
+    OV_MATCH(0x11, 0x6A, 0x01, 0x50),
+
+    // push param_3
+    OV_MATCH(0x18, 0x51),
+    // push param_2
+    // OV_MATCH(0x19, 0x52),
+
+    // push 0x1
+    // push param_1
+    // push param_1
+    OV_MATCH(0x1A, 0x6A, 0x01, 0x50, 0x50),
+    // xor dl,dl
+    // call D3D::CreateTexture
+    OV_MATCH(0x1E, 0x32, 0xD2, 0xE8),
+    // ret 0x18
+    OV_MATCH(0x26, 0xC2, 0x18),
+    //
+);

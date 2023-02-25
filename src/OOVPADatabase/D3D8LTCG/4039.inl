@@ -1517,3 +1517,66 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x18, 0xC2, 0x0C),
     //
 );
+
+// ******************************************************************
+// * D3DDevice_CreateVolumeTexture
+// ******************************************************************
+// NOTE: param 7 is unused.
+OOVPA_SIG_HEADER_XREF(D3DDevice_CreateVolumeTexture_12__LTCG_edx4_ecx5_eax6_edi8,
+                      4039,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // call D3D::CreateTexture
+    XREF_ENTRY(0x17, XREF_D3D_CreateTexture),
+
+    // push 0x0
+    // push param_6
+    OV_MATCH(0x00, 0x6A, 0x00, 0x50),
+
+    // push param_5
+    OV_MATCH(0x07, 0x51),
+
+    // push param_4
+    OV_MATCH(0x0C, 0x52),
+
+    // mov edx,0x01
+    // call D3D::CreateTexture
+    OV_MATCH(0x14, 0xB2, 0x01, 0xE8),
+    // ret 0x8
+    OV_MATCH(0x1B, 0xC2, 0x10),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_CreateCubeTexture
+// ******************************************************************
+// NOTE: param 5 is unused.
+OOVPA_SIG_HEADER_XREF(D3DDevice_CreateCubeTexture_4__LTCG_eax1_edx3_ecx4_edi6,
+                      4039,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // call D3D::CreateTexture
+    XREF_ENTRY(0x10, XREF_D3D_CreateTexture),
+
+    // push 0x1
+    // push param_4
+    OV_MATCH(0x00, 0x6A, 0x01, 0x51),
+
+    // push param_3
+    OV_MATCH(0x07, 0x52),
+    // push param_2
+    //OV_MATCH(0x08, 0x51),
+
+    // push 0x1
+    // push param_1
+    // push param_1
+    OV_MATCH(0x09, 0x6A, 0x01, 0x50, 0x50),
+    // xor dl,dl
+    // call D3D::CreateTexture
+    OV_MATCH(0x0D, 0x32, 0xD2, 0xE8),
+    // ret 0x8
+    OV_MATCH(0x14, 0xC2, 0x08),
+    //
+);
