@@ -17,13 +17,30 @@ typedef struct _version_ranges {
 } version_ranges;
 
 #define VER_NONE 0x000
-#define VER_MAX 0xFFFF
+#define VER_MAX  0xFFFF
 
-#define STRINGIZEX(x) #x
-#define STRINGIZE(x) STRINGIZEX(x)
+#define STRINGIZEX(x)  #x
+#define STRINGIZE(x)   STRINGIZEX(x)
 #define XREF_SYMBOL(e) XREF_##e
+
+static constexpr version_ranges VER_RANGE(uint16_t intro_start,
+                                          uint16_t intro_end,
+                                          uint16_t revive_start,
+                                          uint16_t revive_end = VER_MAX)
+{
+    return version_ranges{
+        .intro_start = intro_start,
+        .intro_end = intro_end,
+        .revive_start = revive_start,
+        .revive_end = revive_end
+    };
+}
+static constexpr version_ranges VER_RANGE(uint16_t intro_start,
+                                          uint16_t intro_end = VER_MAX)
+{
+    return VER_RANGE(intro_start, intro_end, VER_NONE, VER_NONE);
+}
 // clang-format off
-#define VER_RANGE(v1l, v1h, v2l, v2h) {v1l, v1h, v2l, v2h}
 #define REGISTER_SYMBOL_INLINE(e, v) { XREF_SYMBOL(e), {{ #e, v}}}
 // Below are aliases for XREF usage only.
 #define REGISTER_SYMBOL_INLINE_D3D(e, v) { XREF_SYMBOL(D3D_##e), {{ #e, v}}}
