@@ -1580,3 +1580,30 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x14, 0xC2, 0x08),
     //
 );
+
+//******************************************************************
+//* D3DDevice_SelectVertexShader
+//******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SelectVertexShader_4__LTCG_eax1,
+                         4039)
+OOVPA_SIG_MATCH(
+
+    // test param_1,param_1
+    OV_MATCH(0x00, 0x85, 0xC0),
+
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x03, 0x8B),
+
+    // mov [eax],0x00081E94
+    OV_MATCH(0x4C, 0xC7, 0x00, 0x94, 0x1E, 0x08, 0x00),
+    // mov [eax + 0x4],0x6
+    OV_MATCH(0x52, 0xC7, 0x40, 0x04, 0x06, 0x00),
+    //OV_MATCH(0x4B, 0x00, 0x00),
+
+    // lea ecx,[eax + 0xC]
+    OV_MATCH(0x5C, 0x8D, 0x48, 0x0C),
+
+    // ret 0x4
+    OV_MATCH(0x92, 0xC2, 0x04),
+    //
+);
