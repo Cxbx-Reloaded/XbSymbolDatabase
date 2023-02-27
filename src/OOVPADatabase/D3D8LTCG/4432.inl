@@ -931,25 +931,29 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SelectVertexShader
 // ******************************************************************
-//04C700941E080083 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SelectVertexShader_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SelectVertexShader_0__LTCG_eax1_ebx2,
                          2024)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x85 },
-    { 0x01, 0xC0 },
+    // test param_1,param_1
+    OV_MATCH(0x00, 0x85, 0xC0),
 
-    { 0x3C, 0x04 },
-    { 0x3D, 0xC7 },
-    { 0x3E, 0x00 },
-    { 0x3F, 0x94 },
-    { 0x40, 0x1E },
-    { 0x41, 0x08 },
-    { 0x42, 0x00 },
-    { 0x43, 0x83 },
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x03, 0x8B),
 
-    { 0x84, 0x5E },
-    { 0x85, 0xC3 },
+    // mov [eax],0x00081E94
+    OV_MATCH(0x3D, 0xC7, 0x00, 0x94, 0x1E, 0x08, 0x00),
+
+    // mov [eax + 0x4],0x6
+    OV_MATCH(0x46, 0xC7, 0x40, 0x04, 0x06, 0x00),
+    //OV_MATCH(0x4B, 0x00, 0x00),
+
+    // add eax,0xC
+    OV_MATCH(0x50, 0x83, 0xC0, 0x0C),
+
+    // pop esi
+    // ret
+    OV_MATCH(0x84, 0x5E, 0xC3),
     //
 );
 
@@ -1087,5 +1091,42 @@ OOVPA_SIG_MATCH(
 
     // ret
     OV_MATCH(0x2A, 0xC3),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_CreateCubeTexture
+// ******************************************************************
+// TODO: Might be possible to move it early as 4039 since this function
+//       is compatible with D3D::CreateTexture's 4039 LTCG signature.
+OOVPA_SIG_HEADER_XREF(D3DDevice_CreateCubeTexture,
+                      4432,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // call D3D::CreateTexture
+    XREF_ENTRY(0x21, XREF_D3D_CreateTexture),
+
+    // mov eax,[esp + param_4]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x10),
+
+    // push 0x1
+    // push param_4
+    OV_MATCH(0x11, 0x6A, 0x01, 0x50),
+
+    // push param_3
+    OV_MATCH(0x18, 0x51),
+    // push param_2
+    // OV_MATCH(0x19, 0x52),
+
+    // push 0x1
+    // push param_1
+    // push param_1
+    OV_MATCH(0x1A, 0x6A, 0x01, 0x50, 0x50),
+    // xor dl,dl
+    // call D3D::CreateTexture
+    OV_MATCH(0x1E, 0x32, 0xD2, 0xE8),
+    // ret 0x18
+    OV_MATCH(0x26, 0xC2, 0x18),
     //
 );

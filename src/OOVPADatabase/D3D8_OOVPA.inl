@@ -190,13 +190,14 @@ OOVPATable D3D8_OOVPA[] = {
 
     REGISTER_OOVPAS(D3D_UpdateProjectionViewportTransform, 3900, 3901), // Final generic OOVPA: 4034; Removed: 0 // NOTE: 3901 is 4034 signature, except LTCG title been detected in 3925.
 
+    REGISTER_OOVPAS(D3D_CreateTexture, 3911, 4034),
     REGISTER_OOVPAS_D3D(CDevice_MakeSpace, 3911), // NOTE: has multiple rets.
     REGISTER_OOVPAS_D3D(CMiniport_CreateCtxDmaObject, 3911, 4034),
     REGISTER_OOVPAS_D3D(CMiniport_InitHardware, 3911, 4034, 5455),
     REGISTER_OOVPAS_D3D(CMiniport_IsFlipPending, 3911, 4242, 4627, 4928),
     REGISTER_OOVPAS(D3DBaseTexture_GetLevelCount, 3911),
-    REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0
     REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface2, 4627), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0
     REGISTER_OOVPAS(D3DCubeTexture_LockRect, 3911), // Just calls Lock2DSurface (from 4134, 4432's comment)
     REGISTER_OOVPAS(D3DDevice_AddRef, 3911, 4039, 4134, 4242, 4627, 5028, 5344, 5558, 5788),
     REGISTER_OOVPAS(D3DDevice_ApplyStateBlock, 3911, 4627),
@@ -220,8 +221,8 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_CreatePalette2, 4627, 5344, 5455),
     REGISTER_OOVPAS(D3DDevice_CreatePixelShader, 3911, 5344),
     REGISTER_OOVPAS(D3DDevice_CreateStateBlock, 3911),
-    REGISTER_OOVPAS(D3DDevice_CreateTexture, 3911, 4627), // Called D3DDevice_CreateTexture2 (from 4627's comment) NOTE: Use D3DDevice_CreateTexture2 for 4627 and above
     REGISTER_OOVPAS(D3DDevice_CreateTexture2, 4627, 4831), // Was 4627 (from 5344's comment)
+    REGISTER_OOVPAS(D3DDevice_CreateTexture, 3911, 4627), // Called D3DDevice_CreateTexture2 (from 4627's comment) NOTE: Use D3DDevice_CreateTexture2 for 4627 and above
     REGISTER_OOVPAS(D3DDevice_CreateVertexBuffer, 3911, 4627),
     REGISTER_OOVPAS(D3DDevice_CreateVertexBuffer2, 4627, 5344, 5455),
     REGISTER_OOVPAS(D3DDevice_CreateVertexShader, 3911),
@@ -262,8 +263,8 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_GetPixelShader, 3911, 4039, 4134, 5028, 5558, 5788),
     REGISTER_OOVPAS(D3DDevice_GetProjectionViewportMatrix, 3911, 4134, 4627, 5344, 5558), // For 5455 (from 5558's comment)
     REGISTER_OOVPAS(D3DDevice_GetPushBufferOffset, 3911, 4627), //TODO 4831 (from 4627's comment)
-    REGISTER_OOVPAS(D3DDevice_GetRenderTarget, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0 // NOTE: Use D3DDevice_GetRenderTarget2 for 4627 and above
     REGISTER_OOVPAS(D3DDevice_GetRenderTarget2, 4627), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(D3DDevice_GetRenderTarget, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0 // NOTE: Use D3DDevice_GetRenderTarget2 for 4627 and above
     REGISTER_OOVPAS(D3DDevice_GetScissors, 3911),
     REGISTER_OOVPAS(D3DDevice_GetShaderConstantMode, 3911, 4134, 4627, 5028, 5344, 5558, 5788),
     REGISTER_OOVPAS(D3DDevice_GetStreamSource2, 4627),
@@ -414,7 +415,8 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3D_CheckDeviceFormat, 3911),
     REGISTER_OOVPAS(D3D_ClearStateBlockFlags, 3911),
     REGISTER_OOVPAS_M(D3D_CommonSetDebugRegisters, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 4627, 5028), // Used between 4627 to 5233 (from 5344's comment)
+    REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 4627, 5028), // Final generic OOVPA: 4627; Removed: 5344
+    REGISTER_OOVPAS(D3D_CommonSetMultiSampleModeAndScale, 5344), // Final generic OOVPA: 5344; Removed: 0 // fastcall (2 params)
     REGISTER_OOVPAS(D3D_CreateStandAloneSurface, 4034),
     REGISTER_OOVPAS(D3D_DestroyResource, 3911),
     REGISTER_OOVPAS(D3D_EnumAdapterModes, 3911),

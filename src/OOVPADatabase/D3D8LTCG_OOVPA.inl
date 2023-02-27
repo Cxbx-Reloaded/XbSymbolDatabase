@@ -66,6 +66,7 @@
 // ******************************************************************
 OOVPATable D3D8LTCG_OOVPA[] = {
 
+    REGISTER_OOVPAS_BIND_XREF(D3D_CreateTexture_28__LTCG_edx8_edi9, D3D_CreateTexture, 4039), // Final generic OOVPA: 4039; Removed: 4627 // See note for details.
     REGISTER_OOVPAS_BIND_XREF(D3D_MakeRequestedSpace_8, D3D_MakeRequestedSpace, 1036), // NOTE: OOVPA is in 5849. In used by (5849) Manhunt title
     REGISTER_OOVPAS_BIND_XREF(D3D_MakeRequestedSpace_4__LTCG_eax_RequestedSpace, D3D_MakeRequestedSpace, 2048),
     REGISTER_OOVPAS(D3D_SetFence, 1024, 1036, 1048, 1060),
@@ -73,8 +74,8 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3D_BlockOnTime_4, D3D_BlockOnTime, 2048, 2060),
 
     REGISTER_OOVPAS_D3D(CMiniport_InitHardware, 1024),
-    REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface, 1024),
     REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface2, 1024),
+    REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface, 1024),
     REGISTER_OOVPAS(D3DDevice_Begin, 1024, 1036, 1048),
     REGISTER_OOVPAS(D3DDevice_BeginPush, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_BeginPushBuffer, 1024, 1036),
@@ -83,10 +84,14 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 1024), // NOTE: NASCAR Heat 2002 reveal this function is inlined, need some sort of indicator which is inline or not.
     REGISTER_OOVPAS(D3DDevice_Clear, 1024, 1036),
     REGISTER_OOVPAS(D3DDevice_CopyRects, 1024, 1036, 1048),
+    REGISTER_OOVPAS(D3DDevice_CreateCubeTexture, 4432),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_CreateCubeTexture_4__LTCG_eax1_edx3_ecx4_edi6, D3DDevice_CreateCubeTexture, 4039),
     REGISTER_OOVPAS(D3DDevice_CreatePixelShader, 1024),
     REGISTER_OOVPAS(D3DDevice_CreateTexture, 1024),
-    REGISTER_OOVPAS(D3DDevice_CreateTexture2, 1024, 1036, 1048),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_CreateTexture_8__LTCG_edx3_ecx4_eax5_edi7, D3DDevice_CreateTexture, 4039),
+    REGISTER_OOVPAS(D3DDevice_CreateTexture2, 1024, 1048),
     REGISTER_OOVPAS(D3DDevice_CreateVertexShader, 1024),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_CreateVolumeTexture_12__LTCG_edx4_ecx5_eax6_edi8, D3DDevice_CreateVolumeTexture, 4039),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_DeletePixelShader_0, D3DDevice_DeletePixelShader, 2024),
     REGISTER_OOVPAS(D3DDevice_DeleteStateBlock, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_DeleteVertexShader_0, D3DDevice_DeleteVertexShader, 3911, 5344), // Final generic OOVPA: 5344; Removed: 0
@@ -124,13 +129,14 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_PersistDisplay, 1024, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_Present, 1024),
     REGISTER_OOVPAS(D3DDevice_Reset, 1024, 1036),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_edi_pPresentationParameters, D3DDevice_Reset, 2024),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_edi1, D3DDevice_Reset, 2024),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_ebx1, D3DDevice_Reset, 2024),
     REGISTER_OOVPAS(D3DDevice_RunPushBuffer, 1024, 1048),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_RunPushBuffer_4, D3DDevice_RunPushBuffer, 2048),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_RunVertexStateShader_4, D3DDevice_RunVertexStateShader, 2048),
     REGISTER_OOVPAS(D3DDevice_SelectVertexShader, 1024, 1036),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SelectVertexShader_0, D3DDevice_SelectVertexShader, 2024, 2048, 2060, 2072, 2084),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SelectVertexShader_4, D3DDevice_SelectVertexShader, 2024, 2048, 2060),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SelectVertexShader_0__LTCG_eax1_ebx2, D3DDevice_SelectVertexShader, 2024, 2048, 2060, 2061, 2062, 2072, 2084),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_SelectVertexShader_4__LTCG_eax1, D3DDevice_SelectVertexShader, 3911, 4039, 4531, 4627),
     REGISTER_OOVPAS(D3DDevice_SelectVertexShaderDirect, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SelectVertexShaderDirect_0, D3DDevice_SelectVertexShaderDirect, 2024, 2048),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_SetFlickerFilter_0, D3DDevice_SetFlickerFilter, 2024),
@@ -236,6 +242,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3D_BlockOnResource_0, D3D_BlockOnResource, 2024, 2036, 2048, 2060),
     REGISTER_OOVPAS_BIND_XREF(D3D_DestroyResource__LTCG, D3D_DestroyResource, 3911),
     REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 1024, 1036, 1048, 1060),
+    REGISTER_OOVPAS_BIND_XREF(D3D_CommonSetMultiSampleModeAndScale_4__LTCG_eax1, D3D_CommonSetMultiSampleModeAndScale, 5344),
     REGISTER_OOVPAS(D3D_KickOffAndWaitForIdle2, 1024, 1036, 1048),
     REGISTER_OOVPAS(Direct3D_CreateDevice, 1024, 1036),
     REGISTER_OOVPAS_BIND_XREF(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ebx_ppReturnedDeviceInterface, Direct3D_CreateDevice, 2024),

@@ -701,6 +701,33 @@ OOVPA_XREF(D3DDevice_GetTexture2, 5344, 1 + 23, // Up to 5455
 OOVPA_END;
 
 // ******************************************************************
+// * D3D_CommonSetMultiSampleModeAndScale
+// ******************************************************************
+// Generic OOVPA as of 5344 and newer.
+OOVPA_SIG_HEADER_XREF(D3D_CommonSetMultiSampleModeAndScale,
+                      5344,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // mov e??,[D3DRS_MultiSampleMode]
+    XREF_ENTRY(0x2D, XREF_D3DRS_MultiSampleMode),
+
+    // sub esp,0x10
+    OV_MATCH(0x00, 0x83, 0xEC, 0x10),
+
+    // mov esi,ecx
+    OV_MATCH(0x06, 0x8B, 0xF1),
+
+    // shr ecx,0x14
+    OV_MATCH(0x49, 0xC1, 0xE9, 0x14),
+    // and ecx,0xF
+    OV_MATCH(0x4C, 0x83, 0xE1, 0x0F),
+    // mov eax,0x1
+    OV_MATCH(0x4F, 0xB8, 0x01, 0x00),
+    //
+);
+
+// ******************************************************************
 // * Rollback support signature(s)
 // ******************************************************************
 #define D3DDevice_GetTransform_5344 D3DDevice_GetTransform_3925

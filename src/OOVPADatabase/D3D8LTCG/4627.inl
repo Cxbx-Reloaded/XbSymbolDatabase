@@ -361,7 +361,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 //F744241C0000010074
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CreateTexture2,
-                         1048)
+                         1024)
 OOVPA_SIG_MATCH(
 
     { 0x00, 0x56 },
@@ -723,22 +723,25 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_Reset
 // ******************************************************************
-//803F6A006A036A006A00E8 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Reset_0__LTCG_edi_pPresentationParameters,
-                         2024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset_0__LTCG_edi1,
+                      2024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x53 },
-    { 0x01, 0x8B },
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
+    // call D3D_BlockOnTime
+    XREF_ENTRY(0x10, XREF_D3D_BlockOnTime),
 
-    { 0x92, 0x6A },
-    { 0x93, 0x00 },
-    { 0x94, 0x68 },
-    { 0x95, 0x00 },
-    { 0x96, 0x00 },
-    { 0x97, 0x80 },
-    { 0x98, 0x3F },
-    { 0x99, 0x6A },
+    // call D3D_BlockOnTime
+    OV_MATCH(0x0F, 0xE8),
+
+    // call ????
+    OV_MATCH(0x35, 0xE8),
+    // push edi (param_1)
+    OV_MATCH(0x3A, 0x57),
+    // call ????
+    OV_MATCH(0x3B, 0xE8),
     //
 );
 
@@ -1278,25 +1281,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SelectVertexShader
 // ******************************************************************
-//04C700941E080083 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SelectVertexShader_4,
-                         2060)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SelectVertexShader_4__LTCG_eax1,
+                         4627)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x85 },
-    { 0x01, 0xC0 },
+    // test param_1,param_1
+    OV_MATCH(0x00, 0x85, 0xC0),
 
-    { 0x41, 0x04 },
-    { 0x42, 0xC7 },
-    { 0x43, 0x00 },
-    { 0x44, 0x94 },
-    { 0x45, 0x1E },
-    { 0x46, 0x08 },
-    { 0x47, 0x00 },
-    { 0x48, 0x83 },
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x03, 0x8B),
 
-    { 0x8B, 0xC2 },
-    { 0x8C, 0x04 },
+    // mov [eax],0x00081E94
+    OV_MATCH(0x42, 0xC7, 0x00, 0x94, 0x1E, 0x08, 0x00),
+
+    // mov [eax + 0x4],0x6
+    OV_MATCH(0x4B, 0xC7, 0x40, 0x04, 0x06, 0x00),
+    //OV_MATCH(0x50, 0x00, 0x00),
+
+    // add eax,0xC
+    OV_MATCH(0x55, 0x83, 0xC0, 0x0C),
+
+    // ret
+    OV_MATCH(0x8B, 0xC2, 0x04),
     //
 );
 

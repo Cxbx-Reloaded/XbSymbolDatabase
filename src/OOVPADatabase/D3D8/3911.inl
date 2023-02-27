@@ -2293,32 +2293,21 @@ OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CreateCubeTexture,
                          3911)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_CreateCubeTexture+0x00 : mov eax, [esp+0x1C]
-    { 0x00, 0x8B },
-    { 0x01, 0x44 },
-    { 0x02, 0x24 },
-    { 0x03, 0x18 },
+    // mov eax,[esp + 0x1C]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x18),
 
-    // D3DDevice_CreateCubeTexture+0x0C : push eax
-    { 0x0C, 0x50 },
+    // push eax
+    OV_MATCH(0x0C, 0x50),
 
-    // D3DDevice_CreateCubeTexture+0x11 : push 0
-    { 0x11, 0x6A },
-    { 0x12, 0x00 },
+    // push 0
+    // push 1
+    OV_MATCH(0x11, 0x6A, 0x00, 0x6A, 0x01),
 
-    // D3DDevice_CreateCubeTexture+0x13 : push 1
-    { 0x13, 0x6A },
-    { 0x14, 0x01 },
+    // mov eax,[esp + 0x1C]
+    OV_MATCH(0x18, 0x8B, 0x44, 0x24, 0x1C),
 
-    // D3DDevice_CreateCubeTexture+0x18 : mov eax, [esp+0x1C]
-    { 0x18, 0x8B },
-    { 0x19, 0x44 },
-    { 0x1A, 0x24 },
-    { 0x1B, 0x1C },
-
-    // D3DDevice_CreateCubeTexture+0x25 : retn 0x18
-    { 0x25, 0xC2 },
-    { 0x26, 0x18 },
+    // retn 0x18
+    OV_MATCH(0x25, 0xC2, 0x18),
     //
 );
 
@@ -5897,5 +5886,26 @@ OOVPA_SIG_MATCH(
 
     // retn 0x0C
     OV_MATCH(0x2F, 0xC2, 0x0C),
+    //
+);
+
+// ******************************************************************
+// * D3D::CreateTexture
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(D3D_CreateTexture,
+                         3911)
+OOVPA_SIG_MATCH(
+
+    // mov edx,[esp + 0x20]
+    // push ebx
+    OV_MATCH(0x00, 0x8B, 0x54, 0x24, 0x20, 0x53),
+
+    // unique instruction
+    // and [esp + 0x30],0xFFFFFFF7
+    OV_MATCH(0x4F, 0x83, 0x64, 0x24, 0x30, 0xF7),
+    // push 0x14
+    OV_MATCH(0x54, 0x6A, 0x14),
+    // push 0x40
+    OV_MATCH(0x56, 0x6A, 0x40),
     //
 );

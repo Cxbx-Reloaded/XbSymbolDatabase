@@ -1839,3 +1839,24 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x34, 0xC2, 0x0C),
     //
 );
+
+// ******************************************************************
+// * D3D::CreateTexture
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(D3D_CreateTexture,
+                         4034)
+OOVPA_SIG_MATCH(
+
+    // mov edx,[esp + 0x20]
+    // push ebx
+    OV_MATCH(0x00, 0x8B, 0x54, 0x24, 0x20, 0x53),
+
+    // unique instruction
+    // and [esp + 0x30],0xFFFFFFF7
+    OV_MATCH(0x4D, 0x83, 0x64, 0x24, 0x30, 0xF7),
+    // push 0x14
+    OV_MATCH(0x52, 0x6A, 0x14),
+    // push 0x40
+    OV_MATCH(0x54, 0x6A, 0x40),
+    //
+);
