@@ -353,25 +353,30 @@ OOVPA_END;
 // ******************************************************************
 // * D3DDevice_BeginPush
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
+OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush_4,
                       5028,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
+    // mov ecx,[D3D_g_pDevice]
+    XREF_ENTRY(0x02, XREF_D3D_g_pDevice),
+
+    // call D3D::CDevice::SetStateVB
     XREF_ENTRY(0x09, XREF_D3D_CDevice_SetStateVB),
 
-    { 0x00, 0x8B },
-    { 0x01, 0x0D },
+    // mov ecx,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x8B, 0x0D),
+    // push 0x00
+    OV_MATCH(0x06, 0x6A, 0x00),
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x08, 0xE8),
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x0D, 0x8B, 0x44, 0x24, 0x04),
+    // inc eax
+    OV_MATCH(0x11, 0x40),
 
-    { 0x06, 0x6A },
-    { 0x07, 0x00 },
-
-    { 0x11, 0x40 },
-
-    { 0x12, 0x89 },
-    { 0x13, 0x44 },
-    { 0x14, 0x24 },
-    { 0x15, 0x04 },
+    // jmp ????
+    OV_MATCH(0x16, 0xE9),
     //
 );
 
