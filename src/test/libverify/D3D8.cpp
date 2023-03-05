@@ -352,6 +352,7 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DDevice_SetVertexShaderInputDirect, VER_RANGE(4361)),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetVerticalBlankCallback, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetViewport, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(D3DDevice_Suspend, VER_RANGE(3911)),
     REGISTER_SYMBOLS(D3DDevice_Swap,
                      REGISTER_SYMBOL(D3DDevice_Swap, VER_RANGE(4034)),
                      REGISTER_SYMBOL(D3DDevice_Swap_0, VER_RANGE(4034))), // NOTE: LTCG usage

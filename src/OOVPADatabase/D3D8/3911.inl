@@ -5916,3 +5916,28 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x56, 0x6A, 0x40),
     //
 );
+
+// ******************************************************************
+// * D3DDevice_Suspend
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_Suspend,
+                      3911,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // mov ecx,[D3D_g_pDevice]
+    XREF_ENTRY(0x02, XREF_D3D_g_pDevice),
+
+    // call D3D::CDevice::SetStateVB
+    XREF_ENTRY(0x09, XREF_D3D_CDevice_SetStateVB),
+
+    // mov ecx,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x8B, 0x0D),
+    // push 0x0
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x06, 0x6A, 0x00, 0xE8),
+    // ret
+    OV_MATCH(0x0D, 0xC3),
+    //
+);

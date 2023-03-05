@@ -192,6 +192,7 @@ OOVPATable D3D8_OOVPA[] = {
 
     REGISTER_OOVPAS_D3D(CDevice_SetStateUP, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0 // thiscall
     REGISTER_OOVPAS_D3D(CDevice_SetStateVB, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0 // thiscall
+
     REGISTER_OOVPAS(D3D_CreateTexture, 3911, 4034),
     REGISTER_OOVPAS_D3D(CDevice_MakeSpace, 3911), // NOTE: has multiple rets.
     REGISTER_OOVPAS_D3D(CMiniport_CreateCtxDmaObject, 3911, 4034),
@@ -387,6 +388,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetVertexShaderInputDirect, 4361),
     REGISTER_OOVPAS(D3DDevice_SetVerticalBlankCallback, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetViewport, 3911, 4034, 5344, 5455), // Was 5233 (from 5344's comment)
+    REGISTER_OOVPAS(D3DDevice_Suspend, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_Swap, 4034, 4531, 4627),
     REGISTER_OOVPAS(D3DDevice_SwitchTexture, 3911),
     REGISTER_OOVPAS(D3DDevice_UpdateOverlay, 3911, 4531, 5233),
