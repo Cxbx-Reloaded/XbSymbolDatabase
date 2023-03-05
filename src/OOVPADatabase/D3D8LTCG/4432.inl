@@ -574,19 +574,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_DrawVertices
 // ******************************************************************
-//56576A0053E8
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawVertices,
-                         1024)
+// TODO: May could lower this down to 3911 since it is more or less
+//       identical to non-LTCG sig (3911).
+//       Or better yet, migrate into non-LTCG sig (3911)
+OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVertices,
+                      1024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x53 },
+    // mov ebx,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    { 0x07, 0x56 },
-    { 0x08, 0x57 },
-    { 0x09, 0x6A },
-    { 0x0A, 0x00 },
-    { 0x0B, 0x53 },
-    { 0x0C, 0xE8 },
+    // call D3D::CDevice::SetStateVB
+    XREF_ENTRY(0x0D, XREF_D3D_CDevice_SetStateVB),
+
+    // push ebx
+    // mov ebx,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x53, 0x8B, 0x1D),
+
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x0C, 0xE8),
+    // mov edi,[esp + param_3]
+    OV_MATCH(0x11, 0x8B, 0x7C, 0x24, 0x18),
     //
 );
 

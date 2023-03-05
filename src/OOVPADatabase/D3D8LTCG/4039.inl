@@ -54,6 +54,38 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
+// * D3DDevice_DrawIndexedVertices
+// ******************************************************************
+// TODO: Migrate this change into 1036 (above) signature once range
+//       offset is supported.
+OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVertices,
+                      1037,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x0A, XREF_D3D_g_pDevice),
+
+    // call D3D::CDevice::SetStateVB
+    XREF_ENTRY(0x18, XREF_D3D_CDevice_SetStateVB),
+
+    // push ebp
+    OV_MATCH(0x00, 0x55),
+
+    // sub esp,0x08
+    OV_MATCH(0x03, 0x83, 0xEC, 0x08),
+
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x08, 0x8B),
+
+    // mov [ebp - 8],esi
+    OV_MATCH(0x14, 0x89, 0x75, 0xF8),
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x17, 0xE8),
+    // Do not use any offsets after 0x1B
+);
+
+// ******************************************************************
 // * D3DDevice_SetViewport
 // ******************************************************************
 //EB06894424088BF8
@@ -1286,22 +1318,30 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_DrawVertices
 // ******************************************************************
-//1018004081FF0001 ...C20800
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawVertices_8,
-                         2024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVertices_8__LTCG_eax3,
+                      4039,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x53 },
-    { 0x01, 0x8B },
+    // mov ebp,[D3D_g_pDevice]
+    XREF_ENTRY(0x08, XREF_D3D_g_pDevice),
 
-    { 0x5D, 0x10 },
-    { 0x5E, 0x18 },
-    { 0x5F, 0x00 },
-    { 0x60, 0x40 },
-    { 0x61, 0x81 },
-    { 0x62, 0xFF },
-    { 0x63, 0x00 },
-    { 0x64, 0x01 },
+    // call D3D::CDevice::SetStateVB
+    XREF_ENTRY(0x14, XREF_D3D_CDevice_SetStateVB),
+
+    // push ebx
+    // mov ebx,[esp + param_2]
+    OV_MATCH(0x00, 0x53, 0x8B, 0x5C, 0x24, 0x0C),
+    // push ebp
+    // mov ebp,[D3D_g_pDevice]
+    OV_MATCH(0x05, 0x55, 0x8B, 0x2D),
+
+    // push 0x0
+    // push ebp
+    OV_MATCH(0x0E, 0x6A, 0x00, 0x55),
+    // mov edi,param_3
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x11, 0x8B, 0xF8, 0xE8),
     //
 );
 

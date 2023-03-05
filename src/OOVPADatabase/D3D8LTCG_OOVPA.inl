@@ -95,11 +95,11 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_DeletePixelShader_0, D3DDevice_DeletePixelShader, 2024),
     REGISTER_OOVPAS(D3DDevice_DeleteStateBlock, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_DeleteVertexShader_0, D3DDevice_DeleteVertexShader, 3911, 5344), // Final generic OOVPA: 5344; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_DrawIndexedVertices, 1024, 1036),
+    REGISTER_OOVPAS(D3DDevice_DrawIndexedVertices, 1024, 1036, 1037),
     REGISTER_OOVPAS(D3DDevice_DrawIndexedVerticesUP, 1024, 1036, 1048), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS(D3DDevice_DrawVertices, 1024),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_DrawVertices_4, D3DDevice_DrawVertices, 2048),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_DrawVertices_8, D3DDevice_DrawVertices, 2024, 2048),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_DrawVertices_4__LTCG_ecx2_eax3, D3DDevice_DrawVertices, 2024),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_DrawVertices_8__LTCG_eax3, D3DDevice_DrawVertices, 4039),
     REGISTER_OOVPAS(D3DDevice_DrawVerticesUP, 1024, 1048), // Final generic OOVPA: 5344; Removed: 0
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_DrawVerticesUP_12__LTCG_ebx3, D3DDevice_DrawVerticesUP, 2024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_EnableOverlay_0, D3DDevice_EnableOverlay, 2048),

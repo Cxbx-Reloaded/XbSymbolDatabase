@@ -258,31 +258,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_DrawVertices
-// ******************************************************************
-//81C2000200003BCA7223A1 ...C20800
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawVertices_8,
-                         2048)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x53 },
-    { 0x01, 0x8B },
-
-    { 0x29, 0x81 },
-    { 0x2A, 0xC2 },
-    { 0x2B, 0x00 },
-    { 0x2C, 0x02 },
-    { 0x2D, 0x00 },
-    { 0x2E, 0x00 },
-    { 0x2F, 0x3B },
-    { 0x30, 0xCA },
-    { 0x31, 0x72 },
-    { 0x32, 0x23 },
-    { 0x33, 0xA1 },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_SetTextureStageStateNotInline
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureStageStateNotInline_0__LTCG_eax1_edx2_esi3,
