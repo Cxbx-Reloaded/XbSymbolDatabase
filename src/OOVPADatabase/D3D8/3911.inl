@@ -4749,25 +4749,30 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_EndPushBuffer
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_EndPushBuffer,
-                         3911) // Up to 5849
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_EndPushBuffer,
+                      3911,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x01, 0x56 },
-    { 0x11, 0x8D },
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x04, XREF_D3D_g_pDevice),
 
-    { 0x2E, 0x8D },
-    { 0x2F, 0x4C },
-    { 0x30, 0x11 },
-    { 0x31, 0x04 },
-    { 0x32, 0x89 },
-    { 0x33, 0x48 },
-    { 0x34, 0x0C },
-    { 0x35, 0x8B },
-    { 0x36, 0x86 },
+    // call D3D::CDevice::SetStateVB
+    XREF_ENTRY(0x0D, XREF_D3D_CDevice_SetStateVB),
 
-    { 0x6D, 0x8B },
-    { 0x6E, 0x86 },
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x02, 0x8B),
+
+    // call D3D::CDevice::SetStateUP
+    OV_MATCH(0x0C, 0xE8),
+
+    // and [esi + 0x??],0xFFFFFF7B
+    OV_MATCH(0x44, 0x81, 0x66),
+    OV_MATCH(0x47, 0x7B, 0xFF, 0xFF, 0xFF),
+
+    // test ecx,0x78FFFF
+    OV_MATCH(0x5D, 0xF7, 0xC1, 0xFF, 0xFF, 0x78, 0x00),
     //
 );
 

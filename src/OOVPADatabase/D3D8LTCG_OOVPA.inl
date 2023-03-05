@@ -104,7 +104,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_DrawVerticesUP_12__LTCG_ebx3, D3DDevice_DrawVerticesUP, 2024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_EnableOverlay_0, D3DDevice_EnableOverlay, 2048),
     REGISTER_OOVPAS(D3DDevice_End, 1024, 1036, 1048),
-    REGISTER_OOVPAS(D3DDevice_EndPushBuffer, 1024, 1036),
+    REGISTER_OOVPAS(D3DDevice_EndPushBuffer, 1024), // Final generic OOVPA: 4432?; Removed: 0
     REGISTER_OOVPAS(D3DDevice_EndVisibilityTest, 1024),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_EndVisibilityTest_0, D3DDevice_EndVisibilityTest, 2048),
     REGISTER_OOVPAS(D3DDevice_GetBackBuffer2, 4626), // Due to non-LTCG signature conflict, lowered down by one number.
