@@ -190,6 +190,8 @@ OOVPATable D3D8_OOVPA[] = {
 
     REGISTER_OOVPAS(D3D_UpdateProjectionViewportTransform, 3900, 3901), // Final generic OOVPA: 4034; Removed: 0 // NOTE: 3901 is 4034 signature, except LTCG title been detected in 3925.
 
+    REGISTER_OOVPAS_D3D(CDevice_SetStateUP, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0 // thiscall
+    REGISTER_OOVPAS_D3D(CDevice_SetStateVB, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0 // thiscall
     REGISTER_OOVPAS(D3D_CreateTexture, 3911, 4034),
     REGISTER_OOVPAS_D3D(CDevice_MakeSpace, 3911), // NOTE: has multiple rets.
     REGISTER_OOVPAS_D3D(CMiniport_CreateCtxDmaObject, 3911, 4034),
@@ -287,7 +289,6 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_IsFencePending, 3911, 4039, 5028),
     REGISTER_OOVPAS_D3D(CDevice_KickOff, 3911, 4034, 4531, 5028, 5455),
     REGISTER_OOVPAS(D3DDevice_KickPushBuffer, 3911),
-    REGISTER_OOVPAS_D3D(CDevice_LazySetStateUP, 5028, 5558),
     REGISTER_OOVPAS(D3DDevice_LightEnable, 3911, 5344), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_LoadVertexShader, 3911, 4034, 4627, 5028),
     REGISTER_OOVPAS(D3DDevice_LoadVertexShaderProgram, 3911),
@@ -357,8 +358,6 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 4034, 5455), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_SetSoftDisplayFilter, 3911, 4034, 4134),
-    REGISTER_OOVPAS_D3D(CDevice_SetStateUP, 3911, 4034, 4134),
-    REGISTER_OOVPAS_D3D(CDevice_SetStateVB, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0 // thiscall
     REGISTER_OOVPAS(D3DDevice_SetStipple, 4627),
     REGISTER_OOVPAS(D3DDevice_SetStreamSource, 3911, 4034),
     REGISTER_OOVPAS(D3DDevice_SetSwapCallback, 4039), // Final generic OOVPA: 4039; Removed: 0

@@ -1607,3 +1607,57 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x92, 0xC2, 0x04),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::SetStateUP
+// ******************************************************************
+// revision 0
+OOVPA_SIG_HEADER_NO_XREF(CDevice_SetStateUP_0__LTCG_esi1,
+                         4039)
+OOVPA_SIG_MATCH(
+
+    // mov eax,[0x????????]
+    OV_MATCH(0x00, 0xA1),
+    // sub esp,0x14
+    OV_MATCH(0x5, 0x83, 0xEC, 0x14),
+    // test eax,0x3FFFFF8F
+    OV_MATCH(0x08, 0xA9, 0x8F, 0xFF, 0xFF, 0x3F),
+
+    // call ????????
+    OV_MATCH(0x0F, 0xE8),
+
+    // jz 0x???????? // required to separate difference with LTCG version
+    OV_MATCH(0x1B, 0x0F, 0x84),
+    // mov ecx,[esi + 0x4]
+    OV_MATCH(0x21, 0x8B, 0x4E, 0x04),
+    // and eax,0xFFFFFFDF
+    // or eax,0x50
+    OV_MATCH(0x24, 0x83, 0xE0, 0xDF, 0x83, 0xC8, 0x50),
+    //
+);
+
+// ******************************************************************
+// * D3D::CDevice::SetStateUP
+// ******************************************************************
+// revision 1
+OOVPA_SIG_HEADER_NO_XREF(CDevice_SetStateUP_0__LTCG_esi1,
+                         4040)
+OOVPA_SIG_MATCH(
+
+    // mov eax,[0x????????]
+    OV_MATCH(0x00, 0xA1),
+    // sub esp,0x14
+    OV_MATCH(0x5, 0x83, 0xEC, 0x14),
+    // test eax,0x3FFFFF8F
+    OV_MATCH(0x08, 0xA9, 0x8F, 0xFF, 0xFF, 0x3F),
+
+    // jz 0x???????? // required to separate difference with LTCG version
+    OV_MATCH(0x1B, 0x0F, 0x84),
+    // and eax,0xFFFFFFDF
+    // or eax,0x50
+    OV_MATCH(0x21, 0x83, 0xE0, 0xDF, 0x83, 0xC8, 0x50),
+
+    // mov ecx,[esi + 0x4]
+    OV_MATCH(0x32, 0x8B, 0x4E, 0x04),
+    //
+);

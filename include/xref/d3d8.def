@@ -77,7 +77,6 @@ XREF_SYMBOL(D3D8_Lock3DSurface)
 XREF_SYMBOL(D3D8_Get2DSurfaceDesc)
 // include D3D prefix
 XREF_SYMBOL(D3D_CDevice_KickOff)
-XREF_SYMBOL(D3D_CDevice_LazySetStateUP)
 XREF_SYMBOL(D3D_CDevice_MakeSpace)
 XREF_SYMBOL(D3D_CDevice_SetStateUP)
 XREF_SYMBOL(D3D_CDevice_SetStateVB)

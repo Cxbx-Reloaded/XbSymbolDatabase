@@ -174,7 +174,6 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DDevice_IsFencePending, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE_D3D(CDevice_KickOff, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_KickPushBuffer, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_D3D(CDevice_LazySetStateUP, VER_RANGE(5028)),
     REGISTER_SYMBOLS(D3DDevice_LightEnable,
                      REGISTER_SYMBOL(D3DDevice_LightEnable, VER_RANGE(3911)),
                      REGISTER_SYMBOL(D3DDevice_LightEnable_4, VER_RANGE(3911))), // NOTE: LTCG usage
@@ -282,10 +281,13 @@ static const library_list database_full = {
     REGISTER_SYMBOLS(D3DDevice_SetSoftDisplayFilter,
                      REGISTER_SYMBOL(D3DDevice_SetSoftDisplayFilter, VER_RANGE(3911)),
                      REGISTER_SYMBOL(D3DDevice_SetSoftDisplayFilter_0, VER_RANGE(3911))), // NOTE: LTCG usage
-    REGISTER_SYMBOL_INLINE_D3D(CDevice_SetStateUP, VER_RANGE(3911)),
+    REGISTER_SYMBOLS(D3D_CDevice_SetStateUP,
+                     REGISTER_SYMBOL(CDevice_SetStateUP, VER_RANGE(3911)), // thiscall
+                     REGISTER_SYMBOL(CDevice_SetStateUP_4, VER_RANGE(3911)), // stdcall
+                     REGISTER_SYMBOL(CDevice_SetStateUP_0__LTCG_esi1, VER_RANGE(3911))),
     REGISTER_SYMBOLS(D3D_CDevice_SetStateVB,
-                     REGISTER_SYMBOL(CDevice_SetStateVB, VER_RANGE(3911)),
-                     REGISTER_SYMBOL(CDevice_SetStateVB_8, VER_RANGE(3911))),
+                     REGISTER_SYMBOL(CDevice_SetStateVB, VER_RANGE(3911)), // thiscall
+                     REGISTER_SYMBOL(CDevice_SetStateVB_8, VER_RANGE(3911))), // stdcall
     REGISTER_SYMBOL_INLINE(D3DDevice_SetStipple, VER_RANGE(4627)),
     REGISTER_SYMBOLS(D3DDevice_SetStreamSource,
                      REGISTER_SYMBOL(D3DDevice_SetStreamSource, VER_RANGE(3911)),
