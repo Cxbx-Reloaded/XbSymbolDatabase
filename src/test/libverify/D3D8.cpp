@@ -62,8 +62,9 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DDevice_AddRef, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_ApplyStateBlock, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_Begin, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE(D3DDevice_BeginPush, VER_RANGE(4531)),
-    REGISTER_SYMBOL_INLINE(D3DDevice_BeginPush2, VER_RANGE(4039)),
+    REGISTER_SYMBOLS(D3DDevice_BeginPush,
+                     REGISTER_SYMBOL(D3DDevice_BeginPush_8, VER_RANGE(4039)),
+                     REGISTER_SYMBOL(D3DDevice_BeginPush_4, VER_RANGE(4531))),
     REGISTER_SYMBOLS(D3DDevice_BeginPushBuffer,
                      REGISTER_SYMBOL(D3DDevice_BeginPushBuffer, VER_RANGE(3911)),
                      REGISTER_SYMBOL(D3DDevice_BeginPushBuffer_0, VER_RANGE(3911))), // NOTE: LTCG usage
@@ -109,11 +110,11 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DDevice_DrawTriPatch, VER_RANGE(3911)),
     REGISTER_SYMBOLS(D3DDevice_DrawVertices,
                      REGISTER_SYMBOL(D3DDevice_DrawVertices, VER_RANGE(3911)),
-                     REGISTER_SYMBOL(D3DDevice_DrawVertices_4, VER_RANGE(3911)),  // NOTE: LTCG usage
-                     REGISTER_SYMBOL(D3DDevice_DrawVertices_8, VER_RANGE(3911))), // NOTE: LTCG usage
+                     REGISTER_SYMBOL(D3DDevice_DrawVertices_4__LTCG_ecx2_eax3, VER_RANGE(3911)),
+                     REGISTER_SYMBOL(D3DDevice_DrawVertices_8__LTCG_eax3, VER_RANGE(4039))),
     REGISTER_SYMBOLS(D3DDevice_DrawVerticesUP,
                      REGISTER_SYMBOL(D3DDevice_DrawVerticesUP, VER_RANGE(3911)),
-                     REGISTER_SYMBOL(D3DDevice_DrawVerticesUP_12, VER_RANGE(3911))), // NOTE: LTCG usage
+                     REGISTER_SYMBOL(D3DDevice_DrawVerticesUP_12__LTCG_ebx3, VER_RANGE(3911))),
     REGISTER_SYMBOLS(D3DDevice_EnableOverlay,
                      REGISTER_SYMBOL(D3DDevice_EnableOverlay, VER_RANGE(3911)),
                      REGISTER_SYMBOL(D3DDevice_EnableOverlay_0, VER_RANGE(3911))), // NOTE: LTCG usage
@@ -174,7 +175,6 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DDevice_IsFencePending, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE_D3D(CDevice_KickOff, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_KickPushBuffer, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_D3D(CDevice_LazySetStateUP, VER_RANGE(5028)),
     REGISTER_SYMBOLS(D3DDevice_LightEnable,
                      REGISTER_SYMBOL(D3DDevice_LightEnable, VER_RANGE(3911)),
                      REGISTER_SYMBOL(D3DDevice_LightEnable_4, VER_RANGE(3911))), // NOTE: LTCG usage
@@ -282,10 +282,13 @@ static const library_list database_full = {
     REGISTER_SYMBOLS(D3DDevice_SetSoftDisplayFilter,
                      REGISTER_SYMBOL(D3DDevice_SetSoftDisplayFilter, VER_RANGE(3911)),
                      REGISTER_SYMBOL(D3DDevice_SetSoftDisplayFilter_0, VER_RANGE(3911))), // NOTE: LTCG usage
-    REGISTER_SYMBOL_INLINE_D3D(CDevice_SetStateUP, VER_RANGE(3911)),
+    REGISTER_SYMBOLS(D3D_CDevice_SetStateUP,
+                     REGISTER_SYMBOL(CDevice_SetStateUP, VER_RANGE(3911)), // thiscall
+                     REGISTER_SYMBOL(CDevice_SetStateUP_4, VER_RANGE(3911)), // stdcall
+                     REGISTER_SYMBOL(CDevice_SetStateUP_0__LTCG_esi1, VER_RANGE(3911))),
     REGISTER_SYMBOLS(D3D_CDevice_SetStateVB,
-                     REGISTER_SYMBOL(CDevice_SetStateVB, VER_RANGE(3911)),
-                     REGISTER_SYMBOL(CDevice_SetStateVB_8, VER_RANGE(3911))),
+                     REGISTER_SYMBOL(CDevice_SetStateVB, VER_RANGE(3911)), // thiscall
+                     REGISTER_SYMBOL(CDevice_SetStateVB_8, VER_RANGE(3911))), // stdcall
     REGISTER_SYMBOL_INLINE(D3DDevice_SetStipple, VER_RANGE(4627)),
     REGISTER_SYMBOLS(D3DDevice_SetStreamSource,
                      REGISTER_SYMBOL(D3DDevice_SetStreamSource, VER_RANGE(3911)),
@@ -349,6 +352,7 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DDevice_SetVertexShaderInputDirect, VER_RANGE(4361)),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetVerticalBlankCallback, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetViewport, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(D3DDevice_Suspend, VER_RANGE(3911)),
     REGISTER_SYMBOLS(D3DDevice_Swap,
                      REGISTER_SYMBOL(D3DDevice_Swap, VER_RANGE(4034)),
                      REGISTER_SYMBOL(D3DDevice_Swap_0, VER_RANGE(4034))), // NOTE: LTCG usage

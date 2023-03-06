@@ -322,28 +322,31 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 5344 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVerticesUP,
                       5344,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_DrawVerticesUP+0x09 : mov edi,[D3D_g_pDevice]
+    // mov edi,[D3D_g_pDevice]
     XREF_ENTRY(0x0B, XREF_D3D_g_pDevice),
 
-    // D3DDevice_DrawVerticesUP+0x00 : push ebp
+    // call D3D::CDevice::SetStateUP
+    XREF_ENTRY(0x15, XREF_D3D_CDevice_SetStateUP),
+
+    // push ebp
     OV_MATCH(0x00, 0x55),
 
-    // D3DDevice_DrawVerticesUP+0x03 : sub esp,0x14
+    // sub esp,0x14
     OV_MATCH(0x03, 0x83, 0xEC, 0x14),
 
-    // D3DDevice_DrawVerticesUP+0x09 : mov edi,[D3D_g_pDevice]
+    // mov edi,[D3D_g_pDevice]
     OV_MATCH(0x09, 0x8B, 0x3D),
 
-    // D3DDevice_DrawVerticesUP+0x0F : mov ecx,edi
+    // mov ecx,edi
     OV_MATCH(0x0F, 0x8B, 0xCF),
-
-    // D3DDevice_DrawVerticesUP+0x11 : mov [ebp-0x14],e__
+    // mov [ebp - 0x14],e??
     OV_MATCH(0x11, 0x89),
     OV_MATCH(0x13, 0xEC), // D3DDevice_DrawVerticesUP 0xEC vs D3DDevice_DrawIndexedVerticesUP 0xF8
-
+    // call D3D::CDevice::SetStateUP
+    OV_MATCH(0x14, 0xE8),
     //
 );
 
@@ -353,28 +356,32 @@ OOVPA_SIG_MATCH(
 // Generic OOVPA as of 5344 and newer.
 OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVerticesUP,
                       5344,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_DrawIndexedVerticesUP+0x08 : mov edi,[D3D_g_pDevice]
+    // mov edi,[D3D_g_pDevice]
     XREF_ENTRY(0x0A, XREF_D3D_g_pDevice),
 
-    // D3DDevice_DrawIndexedVerticesUP+0x00 : push ebp
+    // call D3D::CDevice::SetStateUP
+    XREF_ENTRY(0x15, XREF_D3D_CDevice_SetStateUP),
+
+    // push ebp
     OV_MATCH(0x00, 0x55),
 
-    // D3DDevice_DrawIndexedVerticesUP+0x03 : sub esp,0x14
+    // sub esp,0x14
     OV_MATCH(0x03, 0x83, 0xEC, 0x14),
 
-    // D3DDevice_DrawIndexedVerticesUP+0x08 : mov esi,[D3D_g_pDevice]
+    // mov esi,[D3D_g_pDevice]
     OV_MATCH(0x08, 0x8B, 0x35),
 
-    // D3DDevice_DrawIndexedVerticesUP+0x0F : mov ecx,esi
+    // mov ecx,esi
     OV_MATCH(0x0F, 0x8B, 0xCE),
 
-    // D3DDevice_DrawIndexedVerticesUP+0x11 : mov [ebp-0x8],e__
+    // mov [ebp - 0x8],e??
     OV_MATCH(0x11, 0x89),
     OV_MATCH(0x13, 0xF8), // D3DDevice_DrawIndexedVerticesUP 0xF8 vs D3DDevice_DrawVerticesUP 0xEC
-
+    // call D3D::CDevice::SetStateUP
+    OV_MATCH(0x14, 0xE8),
     //
 );
 

@@ -403,48 +403,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_DrawIndexedVerticesUP
-// ******************************************************************
-//8B4D148B560883
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawIndexedVerticesUP,
-                         1036)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x55 },
-    { 0x0F, 0xF8 },
-
-    { 0x36, 0x8B },
-    { 0x37, 0x4D },
-    { 0x38, 0x14 },
-    { 0x39, 0x8B },
-    { 0x3A, 0x56 },
-    { 0x3B, 0x08 },
-    { 0x3C, 0x83 },
-    //
-);
-
-//******************************************************************
-//* D3DDevice_DrawVerticesUP
-//******************************************************************
-//8B8E7C0700008B
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawVerticesUP,
-                         1036)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x55 },
-    { 0x0F, 0xEC },
-
-    { 0x36, 0x8B },
-    { 0x37, 0x8E },
-    { 0x38, 0x7C },
-    { 0x39, 0x07 },
-    { 0x3A, 0x00 },
-    { 0x3B, 0x00 },
-    { 0x3C, 0x8B },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_EndVisibilityTest
 // ******************************************************************
 //B80E0007805E
@@ -1170,18 +1128,24 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_BeginPush
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
+OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush_4,
                       1024,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
     // mov e??,[D3D_g_pDevice]
     XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
+    // call D3D::CDevice::SetStateVB
+    XREF_ENTRY(0x0B, XREF_D3D_CDevice_SetStateVB),
+
     // push esi
     OV_MATCH(0x00, 0x56),
     // mov e??,[D3D_g_pDevice]
     OV_MATCH(0x01, 0x8B),
+
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x0A, 0xE8),
 
     // mov eax,[esi]
     OV_MATCH(0x0F, 0x8B, 0x06),

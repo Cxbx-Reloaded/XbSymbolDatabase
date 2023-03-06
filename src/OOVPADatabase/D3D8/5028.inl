@@ -351,54 +351,32 @@ OOVPA_XREF(D3D_CommonSetRenderTarget,
 OOVPA_END;
 
 // ******************************************************************
-// * D3D::CDevice::LazySetStateUP
-// ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(CDevice_LazySetStateUP,
-                         5028)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0xA1 },
-
-    { 0x2F, 0x8B },
-    { 0x30, 0x86 },
-    { 0x31, 0x7C },
-    { 0x32, 0x03 },
-    { 0x33, 0x00 },
-    { 0x34, 0x00 },
-    { 0x35, 0x8B },
-    { 0x36, 0x4E },
-    { 0x37, 0x04 },
-    { 0x38, 0x53 },
-    { 0x39, 0x8B },
-    { 0x3A, 0x58 },
-
-    { 0x4F, 0x3B },
-    { 0x50, 0xC1 },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_BeginPush
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
+OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush_4,
                       5028,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
+    // mov ecx,[D3D_g_pDevice]
+    XREF_ENTRY(0x02, XREF_D3D_g_pDevice),
+
+    // call D3D::CDevice::SetStateVB
     XREF_ENTRY(0x09, XREF_D3D_CDevice_SetStateVB),
 
-    { 0x00, 0x8B },
-    { 0x01, 0x0D },
+    // mov ecx,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x8B, 0x0D),
+    // push 0x00
+    OV_MATCH(0x06, 0x6A, 0x00),
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x08, 0xE8),
+    // mov eax,[esp + param_1]
+    OV_MATCH(0x0D, 0x8B, 0x44, 0x24, 0x04),
+    // inc eax
+    OV_MATCH(0x11, 0x40),
 
-    { 0x06, 0x6A },
-    { 0x07, 0x00 },
-
-    { 0x11, 0x40 },
-
-    { 0x12, 0x89 },
-    { 0x13, 0x44 },
-    { 0x14, 0x24 },
-    { 0x15, 0x04 },
+    // jmp ????
+    OV_MATCH(0x16, 0xE9),
     //
 );
 
@@ -494,28 +472,32 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVerticesUP,
                       5028,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // D3DDevice_DrawIndexedVerticesUP+0x07 : mov esi,[D3D_g_pDevice]
+    // mov esi,[D3D_g_pDevice]
     XREF_ENTRY(0x09, XREF_D3D_g_pDevice),
 
-    // D3DDevice_DrawIndexedVerticesUP+0x00 : push ebp
+    // call D3D::CDevice::SetStateUP
+    XREF_ENTRY(0x13, XREF_D3D_CDevice_SetStateUP),
+
+    // push ebp
     OV_MATCH(0x00, 0x55),
 
-    // D3DDevice_DrawIndexedVerticesUP+0x03 : sub esp,0x14
+    // sub esp,0x14
     OV_MATCH(0x03, 0x83, 0xEC, 0x14),
 
-    // D3DDevice_DrawIndexedVerticesUP+0x07 : mov esi,[D3D_g_pDevice]
+    // mov esi,[D3D_g_pDevice]
     OV_MATCH(0x07, 0x8B, 0x35),
 
-    // D3DDevice_DrawIndexedVerticesUP+0x0D : mov ecx,esi
+    // mov ecx,esi
     OV_MATCH(0x0D, 0x8B, 0xCE),
 
-    // D3DDevice_DrawIndexedVerticesUP+0x0F : mov [ebp-0x8],e__
+    // mov [ebp - 0x8],e??
     OV_MATCH(0x0F, 0x89),
     OV_MATCH(0x11, 0xF8), // D3DDevice_DrawIndexedVerticesUP 5028 0xF8 vs D3DDevice_DrawVerticesUP 4039 0xEC
-
+    // call D3D::CDevice::SetStateUP
+    OV_MATCH(0x12, 0xE8),
     //
 );
 

@@ -574,19 +574,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_DrawVertices
 // ******************************************************************
-//56576A0053E8
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawVertices,
-                         1024)
+// TODO: May could lower this down to 3911 since it is more or less
+//       identical to non-LTCG sig (3911).
+//       Or better yet, migrate into non-LTCG sig (3911)
+OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVertices,
+                      1024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x53 },
+    // mov ebx,[D3D_g_pDevice]
+    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
 
-    { 0x07, 0x56 },
-    { 0x08, 0x57 },
-    { 0x09, 0x6A },
-    { 0x0A, 0x00 },
-    { 0x0B, 0x53 },
-    { 0x0C, 0xE8 },
+    // call D3D::CDevice::SetStateVB
+    XREF_ENTRY(0x0D, XREF_D3D_CDevice_SetStateVB),
+
+    // push ebx
+    // mov ebx,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x53, 0x8B, 0x1D),
+
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x0C, 0xE8),
+    // mov edi,[esp + param_3]
+    OV_MATCH(0x11, 0x8B, 0x7C, 0x24, 0x18),
     //
 );
 
@@ -885,30 +894,6 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * D3DDevice_DrawVerticesUP
-// ******************************************************************
-//8B4D08C700FC17040089
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawVerticesUP,
-                         1060)
-OOVPA_SIG_MATCH(
-
-    { 0x00, 0x55 },
-    { 0x01, 0x8B },
-
-    { 0x2A, 0x8B },
-    { 0x2B, 0x4D },
-    { 0x2C, 0x08 },
-    { 0x2D, 0xC7 },
-    { 0x2E, 0x00 },
-    { 0x2F, 0xFC },
-    { 0x30, 0x17 },
-    { 0x31, 0x04 },
-    { 0x32, 0x00 },
-    { 0x33, 0x89 },
-    //
-);
-
-// ******************************************************************
 // * D3DDevice_SetScissors
 // ******************************************************************
 //C700B402040089
@@ -982,22 +967,29 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_EndPushBuffer
 // ******************************************************************
-//B82908768859
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_EndPushBuffer,
-                         1036)
+// TODO: Maybe move this signature to 3911? Last found was 4432.
+OOVPA_SIG_HEADER_XREF(D3DDevice_EndPushBuffer,
+                      1024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x51 },
-    { 0x01, 0x56 },
+    // mov e??,[D3D_g_pDevice]
+    XREF_ENTRY(0x04, XREF_D3D_g_pDevice),
 
-    { 0x09, 0x6A },
-    { 0x0A, 0x00 },
+    // call D3D::CDevice::SetStateVB
+    XREF_ENTRY(0x0D, XREF_D3D_CDevice_SetStateVB),
 
-    { 0x4E, 0x7B },
-    { 0x4F, 0xFF },
-    { 0x50, 0xFF },
-    { 0x51, 0xFF },
-    { 0x52, 0x89 },
+    // mov e??,[D3D_g_pDevice]
+    OV_MATCH(0x02, 0x8B),
+
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x0C, 0xE8),
+
+    // and edx,0xFFFFFF7B
+    OV_MATCH(0x4C, 0x81, 0xE2, 0x7B, 0xFF, 0xFF, 0xFF),
+
+    // test eax,0x78FFFF
+    OV_MATCH(0x62, 0xA9, 0xFF, 0xFF, 0x78, 0x00),
     //
 );
 

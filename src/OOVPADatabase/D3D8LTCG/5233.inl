@@ -26,7 +26,8 @@
 // ******************************************************************
 // * D3DDevice_BeginPush
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush,
+// TODO: Detected in 5120; May need lower to 5028
+OOVPA_SIG_HEADER_XREF(D3DDevice_BeginPush_4,
                       1036,
                       XRefTwo)
 OOVPA_SIG_MATCH(

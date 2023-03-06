@@ -797,22 +797,31 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_DrawIndexedVerticesUP
 // ******************************************************************
-//C700FC1704008B57
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawIndexedVerticesUP,
-                         1024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_DrawIndexedVerticesUP,
+                      1024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x01, 0x8B },
-    { 0x05, 0x14 },
+    // mov edi,[D3D_g_pDevice]
+    XREF_ENTRY(0x0B, XREF_D3D_g_pDevice),
 
-    { 0x2F, 0xC7 },
-    { 0x30, 0x00 },
-    { 0x31, 0xFC },
-    { 0x32, 0x17 },
-    { 0x33, 0x04 },
-    { 0x34, 0x00 },
-    { 0x35, 0x8B },
-    { 0x36, 0x57 },
+    // call D3D::CDevice::SetStateUP
+    XREF_ENTRY(0x14, XREF_D3D_CDevice_SetStateUP),
+
+    // push ebp
+    OV_MATCH(0x00, 0x55),
+
+    // sub esp,0x14
+    OV_MATCH(0x03, 0x83, 0xEC, 0x14),
+
+    // mov edi,[D3D_g_pDevice]
+    OV_MATCH(0x09, 0x8B, 0x3D),
+
+    // mov [ebp - 0x8],e??
+    OV_MATCH(0x10, 0x89),
+    OV_MATCH(0x12, 0xF8), // D3DDevice_DrawIndexedVerticesUP 0xF8 vs D3DDevice_DrawVerticesUP 0xFC
+    // call D3D::CDevice::SetStateUP
+    OV_MATCH(0x13, 0xE8),
     //
 );
 
@@ -971,24 +980,41 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_DrawVerticesUP
 // ******************************************************************
-//894804C700FC1704008B ...C20C00
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawVerticesUP_12,
-                         2024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVerticesUP_12__LTCG_ebx3,
+                      2024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x55 },
-    { 0x01, 0x8B },
+    // mov edi,[D3D_g_pDevice]
+    XREF_ENTRY(0x0A, XREF_D3D_g_pDevice),
 
-    { 0x2B, 0x89 },
-    { 0x2C, 0x48 },
-    { 0x2D, 0x04 },
-    { 0x2E, 0xC7 },
-    { 0x2F, 0x00 },
-    { 0x30, 0xFC },
-    { 0x31, 0x17 },
-    { 0x32, 0x04 },
-    { 0x33, 0x00 },
-    { 0x34, 0x8B },
+    // call D3D::CDevice::SetStateUP
+    XREF_ENTRY(0x13, XREF_D3D_CDevice_SetStateUP),
+
+    // push ebp
+    OV_MATCH(0x00, 0x55),
+
+    // sub esp,0x14
+    OV_MATCH(0x03, 0x83, 0xEC, 0x14),
+
+    // mov edi,[D3D_g_pDevice]
+    OV_MATCH(0x08, 0x8B, 0x3D),
+
+    // mov [ebp - 0x4],e??
+    OV_MATCH(0x0F, 0x89),
+    OV_MATCH(0x11, 0xFC), // D3DDevice_DrawVerticesUP 0xFC vs D3DDevice_DrawIndexedVerticesUP 0xF8
+    // call D3D::CDevice::SetStateUP
+    OV_MATCH(0x12, 0xE8),
+
+    // mov e??,[ebp + param_1]
+    OV_MATCH(0x25, 0x8B),
+    OV_MATCH(0x27, 0x08),
+    // mov e??,[ebp + param_4]
+    OV_MATCH(0x28, 0x8B),
+    OV_MATCH(0x2A, 0x10),
+    // difference from non-LTCG, there is identical mov instruction from two above but is absent.
+    // mov [e?? + 0x??,e??
+    OV_MATCH(0x2B, 0x89),
     //
 );
 
@@ -1365,5 +1391,26 @@ OOVPA_SIG_MATCH(
 
     // retn 0x04
     OV_MATCH(0x41, 0xC2, 0x04),
+    //
+);
+
+// ******************************************************************
+// * D3D::CDevice::SetStateUP
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(CDevice_SetStateUP_4,
+                         3911)
+OOVPA_SIG_MATCH(
+
+    // sub esp,0x??
+    OV_MATCH(0x00, 0x83, 0xEC),
+
+    // call ????
+    OV_MATCH(0x08, 0xE8),
+
+    // and eax,0xFFFFFEFF
+    OV_MATCH(0x19, 0x25, 0xFF, 0xFE, 0xFF, 0xFF),
+
+    // or eax,0x80
+    OV_MATCH(0x1F, 0x0D, 0x80, 0x00, 0x00),
     //
 );

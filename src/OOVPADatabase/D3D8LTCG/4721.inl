@@ -98,21 +98,29 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_DrawVertices
 // ******************************************************************
-//0056576A00558B ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DrawVertices_4,
-                         2048)
+OOVPA_SIG_HEADER_XREF(D3DDevice_DrawVertices_4__LTCG_ecx2_eax3,
+                      2024,
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x53 },
-    { 0x01, 0x55 },
-    { 0x02, 0x8B },
+    // mov ebp,[D3D_g_pDevice]
+    XREF_ENTRY(0x04, XREF_D3D_g_pDevice),
 
-    { 0x07, 0x00 },
-    { 0x08, 0x56 },
-    { 0x09, 0x57 },
-    { 0x0A, 0x6A },
-    { 0x0B, 0x00 },
-    { 0x0C, 0x55 },
-    { 0x0D, 0x8B },
+    // call D3D::CDevice::SetStateVB
+    XREF_ENTRY(0x12, XREF_D3D_CDevice_SetStateVB),
+
+    // push ebx
+    // push ebp
+    // mov ebp,[D3D_g_pDevice]
+    OV_MATCH(0x00, 0x53, 0x55, 0x8B, 0x2D),
+
+    // push 0x0
+    // push ebp
+    OV_MATCH(0x0A, 0x6A, 0x00, 0x55),
+    // mov edi,param_3
+    // mov ebx,param_2
+    OV_MATCH(0x0D, 0x8B, 0xF8, 0x8B, 0xD9),
+    // call D3D::CDevice::SetStateVB
+    OV_MATCH(0x11, 0xE8),
     //
 );
