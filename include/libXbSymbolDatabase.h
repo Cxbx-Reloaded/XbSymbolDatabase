@@ -1,30 +1,9 @@
-// ******************************************************************
-// *
-// *   XbSymbolDatabase.h
-// *
-// *  XbSymbolDatabase is free software; you can redistribute them
-// *  and/or modify them under the terms of the GNU General Public
-// *  License as published by the Free Software Foundation; either
-// *  version 2 of the license, or (at your option) any later version.
-// *
-// *  This program is distributed in the hope that it will be useful,
-// *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-// *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// *  GNU General Public License for more details.
-// *
-// *  You should have recieved a copy of the GNU General Public License
-// *  along with this program; see the file COPYING.
-// *  If not, write to the Free Software Foundation, Inc.,
-// *  59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-// *
-// *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
-// *  (c) 2016-2017 PatrickvL
-// *  (c) 2017-2018 Luke Usher
-// *  (c) 2018-2019 RadWolfie
-// *
-// *  All rights reserved
-// *
-// ******************************************************************
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2002 Aaron Robinson <caustik@caustik.com>
+// SPDX-FileCopyrightText: 2016-2017 PatrickvL
+// SPDX-FileCopyrightText: 2017-2018 Luke Usher
+// SPDX-FileCopyrightText: 2018-2019 RadWolfie
+
 #pragma once
 
 #include <stdlib.h> // for size_t
