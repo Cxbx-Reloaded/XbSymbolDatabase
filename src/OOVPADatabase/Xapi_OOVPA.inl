@@ -110,7 +110,6 @@
 //   * CopyFileExA
 //   * CopyRect
 //   * CreateDirectoryA
-//   * CreateEventA
 //   * CreateFileA
 //   * CreateIoCompletionPort
 //   * CreateSemaphoreA
@@ -206,14 +205,12 @@
 //   * MU_CreateDeviceObject
 //   * MU_RemoveDevice
 //   * OffsetRect
-//   * OpenEventA
 //   * OpenMutexA
 //   * OpenSemaphoreA
 //   * OpenWaitableTimerA
 //   * PortNumberToRootHubPort
 //   * PostQueuedCompletionStatus
 //   * PtInRect
-//   * PulseEvent
 //   * QueryPerformanceFrequency
 //   * ReadFile
 //   * ReadFileEx
@@ -221,7 +218,6 @@
 //   * ReleaseMutex
 //   * ReleaseSemaphore
 //   * RemoveDirectoryA
-//   * ResetEvent
 //   * ResumeThread
 //   * RootHubPortToPortNumber
 //   * RtlAllocateHeap
@@ -250,7 +246,6 @@
 //   * RtlSizeHeap
 //   * RtlZeroHeap
 //   * SetEndOfFile
-//   * SetEvent
 //   * SetFileAttributesA
 //   * SetFilePointer
 //   * SetFilePointerEx
