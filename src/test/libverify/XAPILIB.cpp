@@ -98,6 +98,14 @@ static const library_list thread_full = {
     REGISTER_SYMBOL_INLINE(XRegisterThreadNotifyRoutine, VER_RANGE(3911)),
 };
 
+static const library_list event_full = {
+    REGISTER_SYMBOL_INLINE_XAPI(CreateEventA, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE_XAPI(OpenEventA, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE_XAPI(PulseEvent, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE_XAPI(ResetEvent, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE_XAPI(SetEvent, VER_RANGE(3911)),
+};
+
 static const library_list mu_optional = {
 
     // derived xrefs
@@ -203,6 +211,13 @@ static const subcategory_db thread_db = {
     .full = &thread_full,
 };
 
+static const subcategory_db event_db = {
+    .name = "event",
+    .optional = nullptr,
+    .min = nullptr,
+    .full = &event_full,
+};
+
 static const subcategory_db mu_db = {
     .name = "Memory Unit",
     .optional = &mu_optional,
@@ -231,7 +246,7 @@ static const subcategory_db usbd_db = {
 
 void getLibraryXAPILIB(library_db& lib_db)
 {
-    lib_db.subcategories = { &xapilib_db, &fiber_db, &thread_db, &mu_db, &xinput_db, &usbd_db };
+    lib_db.subcategories = { &xapilib_db, &fiber_db, &thread_db, &event_db, &mu_db, &xinput_db, &usbd_db };
     lib_db.xref_offset = XREF_OFFSET;
     lib_db.xref_total = LOCAL_COUNT;
     lib_db.xref_exclude = 0;
