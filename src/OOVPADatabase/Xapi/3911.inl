@@ -1961,3 +1961,167 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x1F, 0xC2, 0x04),
     //
 );
+
+// ******************************************************************
+// * CreateEventA
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(CreateEventA,
+                      3911,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // call [NtCreateEvent]
+    XREF_ENTRY(0x33, XREF_KT_FUNC_NtCreateEvent),
+
+    // call XapiSetLastNTError
+    XREF_ENTRY(0x57, XREF_XapiSetLastNTError),
+
+    // push ebp
+    OV_MATCH(0x00, 0x55),
+
+    // sub esp, 0x14
+    OV_MATCH(0x03, 0x83, 0xEC, 0x14),
+
+    // call [NtCreateEvent]
+    OV_MATCH(0x31, 0xFF, 0x15),
+
+    // push 0xB7
+    OV_MATCH(0x42, 0x68, 0xB7, 0x00, 0x00),
+
+    // call XapiSetLastNTError
+    OV_MATCH(0x56, 0xE8),
+
+    // ret
+    OV_MATCH(0x5E, 0xC2, 0x10),
+    //
+);
+
+// ******************************************************************
+// * SetEvent
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(SetEvent,
+                      3911,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // call [NtSetEvent]
+    XREF_ENTRY(0x08, XREF_KT_FUNC_NtSetEvent),
+
+    // call XapiSetLastNTError
+    XREF_ENTRY(0x17, XREF_XapiSetLastNTError),
+
+    // push 0
+    OV_MATCH(0x00, 0x6A, 0x00),
+    // push [ESP + param_1]
+    OV_MATCH(0x02, 0xFF, 0x74, 0x24, 0x08),
+    // call [NtSetEvent]
+    OV_MATCH(0x06, 0xFF, 0x15),
+
+    // call XapiSetLastNTError
+    OV_MATCH(0x16, 0xE8),
+
+    // ret
+    OV_MATCH(0x1D, 0xC2, 0x04),
+    //
+);
+
+// ******************************************************************
+// * ResetEvent
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(ResetEvent,
+                      3911,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // call [NtClearEvent]
+    XREF_ENTRY(0x06, XREF_KT_FUNC_NtClearEvent),
+
+    // call XapiSetLastNTError
+    XREF_ENTRY(0x15, XREF_XapiSetLastNTError),
+
+    // push [ESP + param_1]
+    OV_MATCH(0x00, 0xFF, 0x74, 0x24, 0x04),
+    // call [NtClearEvent]
+    OV_MATCH(0x04, 0xFF, 0x15),
+
+    // call XapiSetLastNTError
+    OV_MATCH(0x14, 0xE8),
+
+    // ret
+    OV_MATCH(0x1B, 0xC2, 0x04),
+    //
+);
+
+// ******************************************************************
+// * PulseEvent
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(PulseEvent,
+                      3911,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+
+    // call [NtPulseEvent]
+    XREF_ENTRY(0x08, XREF_KT_FUNC_NtPulseEvent),
+
+    // call XapiSetLastNTError
+    XREF_ENTRY(0x17, XREF_XapiSetLastNTError),
+
+    // push 0
+    OV_MATCH(0x00, 0x6A, 0x00),
+    // push [ESP + param_1]
+    OV_MATCH(0x02, 0xFF, 0x74, 0x24, 0x08),
+    // call [NtPulseEvent]
+    OV_MATCH(0x06, 0xFF, 0x15),
+
+    // call XapiSetLastNTError
+    OV_MATCH(0x16, 0xE8),
+
+    // ret
+    OV_MATCH(0x1D, 0xC2, 0x04),
+    //
+);
+
+// ******************************************************************
+// * OpenEventA
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(OpenEventA,
+                      3911,
+                      XRefThree)
+OOVPA_SIG_MATCH(
+
+    // push [ExEventObjectType]
+    XREF_ENTRY(0x32, XREF_KT_VAR__ExEventObjectType),
+
+    // call [ObOpenObjectByName]
+    XREF_ENTRY(0x43, XREF_KT_FUNC_ObOpenObjectByName),
+
+    // call XapiSetLastNTError
+    XREF_ENTRY(0x4D, XREF_XapiSetLastNTError),
+
+    // push ebp
+    OV_MATCH(0x00, 0x55),
+
+    // sub esp, 0x14
+    OV_MATCH(0x03, 0x83, 0xEC, 0x14),
+
+    // push 0xC000000D
+    OV_MATCH(0x0C, 0x68, 0x0D, 0x00, 0x00, 0xC0),
+
+    // push [ExEventObjectType]
+    OV_MATCH(0x30, 0xFF, 0x35),
+
+    // call [ObOpenObjectByName]
+    OV_MATCH(0x41, 0xFF, 0x15),
+
+    // call XapiSetLastNTError
+    OV_MATCH(0x4C, 0xE8),
+
+    // ret
+    OV_MATCH(0x59, 0xC2, 0x0C),
+    //
+);
