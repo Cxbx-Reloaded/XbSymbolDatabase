@@ -186,6 +186,31 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
+// * D3DDevice_MakeSpace
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_MakeSpace_0,
+                      5849,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+
+    // call D3D::MakeRequestedSpace
+    XREF_ENTRY(0x0B, XREF_D3D_MakeRequestedSpace),
+
+    // D3DDevice_MakeSpace+0x00 : mov eax,[addr]
+    OV_MATCH(0x00, 0xA1),
+
+    // D3DDevice_MakeSpace+0x09 : push ecx
+    OV_MATCH(0x09, 0x51),
+
+    // D3DDevice_MakeSpace+0x0A : call D3D::MakeRequestedSpace
+    OV_MATCH(0x0A, 0xE8),
+
+    // D3DDevice_MakeSpace+0x0E : ret
+    OV_MATCH(0x0F, 0xC3),
+    //
+);
+
+// ******************************************************************
 // * D3D_KickOffAndWaitForIdle
 // ******************************************************************
 //8B4C24088B442404E8
@@ -209,6 +234,61 @@ OOVPA_SIG_MATCH(
     { 0x1D, 0x08 },
     //
 );
+
+//test case: Otogi 2/MechAssault 2
+// ******************************************************************
+// * D3D::CDevice::KickOff
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(CDevice_KickOff_0_edx,
+                      5849,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // mov eax, XREF_D3D_g_pDevice
+    XREF_ENTRY(0x35, XREF_D3D_g_pDevice), // Derived
+
+    // mov eax, [edx+8]
+    OV_MATCH(0x00, 0x8B, 0x42, 0x08),
+    // test al, 4
+    // push esi
+    // jz EIP+8
+    OV_MATCH(0x03, 0xA8, 0x04, 0x56, 0x74, 0x08),
+
+    // test ah, 0x20
+    OV_MATCH(0x12, 0xF6, 0xC4, 0x20),
+
+    // mov ecx, XREF_D3D_g_pDevice
+    OV_MATCH(0x34, 0x8B),
+
+    //
+);
+
+//test case: OddWorld Stranger's Wrath
+// ******************************************************************
+// * D3D::CDevice::KickOff
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(CDevice_KickOff_0_ecx,
+                      5849,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // mov eax, XREF_D3D_g_pDevice
+    XREF_ENTRY(0x1E, XREF_D3D_g_pDevice), // Derived
+
+    // mov eax, [ecx+8]
+    OV_MATCH(0x00, 0x8B, 0x41, 0x08),
+    // test al, 4
+    // push esi
+    // jz EIP+8
+    OV_MATCH(0x03, 0xA8, 0x04, 0x56, 0x74, 0x08),
+
+    // test ah, 0x20
+    OV_MATCH(0x12, 0xF6, 0xC4, 0x20),
+
+    // mov edi, XREF_D3D_g_pDevice
+    OV_MATCH(0x1C, 0x8B, 0x3D),
+
+    //
+);
+
 
 // ******************************************************************
 // * D3DDevice_SetRenderState_TwoSidedLighting

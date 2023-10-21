@@ -85,6 +85,33 @@ OOVPA_SIG_MATCH(
     // Do not use any offsets after 0x1B
 );
 
+// test case: NBA2K2
+//  ******************************************************************
+//  * D3D::CDevice::KickOff
+//  ******************************************************************
+OOVPA_SIG_HEADER_XREF(CDevice_KickOff_0_edx,
+                      4039,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // mov eax, XREF_D3D_g_pDevice
+    XREF_ENTRY(0x41, XREF_D3D_g_pDevice), // Derived
+
+    // mov eax, [edx+8]
+    OV_MATCH(0x00, 0x8B, 0x42, 0x08),
+    // test ah, 20h
+    // push esi
+    OV_MATCH(0x03, 0xF6, 0xC4, 0x20, 0x56),
+
+    // test al, 0x04
+    // jz EIP+8
+    OV_MATCH(0x0D, 0xA8, 0x04, 0x74, 0x08),
+
+    // mov eax, XREF_D3D_g_pDevice
+    OV_MATCH(0x40, 0xA1),
+
+    //
+);
+
 // ******************************************************************
 // * D3DDevice_SetViewport
 // ******************************************************************

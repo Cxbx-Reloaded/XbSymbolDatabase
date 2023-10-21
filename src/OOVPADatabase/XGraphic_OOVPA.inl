@@ -71,6 +71,7 @@
 #include "XGraphic/3911.inl"
 #include "XGraphic/4134.inl"
 #include "XGraphic/4361.inl"
+#include "XGraphic/5659.inl"
 
 // ******************************************************************
 // * XGRAPHC_OOVPA
@@ -81,6 +82,7 @@ OOVPATable XGRAPHC_OOVPA[] = {
     REGISTER_OOVPAS(XGCompressRect, 3911), // TODO: Do we need to patch this?
     REGISTER_OOVPAS(XGIsSwizzledFormat, 3911),
     REGISTER_OOVPAS(XGSetIndexBufferHeader, 3911, 4134),
+    REGISTER_OOVPAS(XGSetSurfaceHeader, 3911,5659),
     REGISTER_OOVPAS(XGSetTextureHeader, 3911),
     REGISTER_OOVPAS(XGSetVertexBufferHeader, 3911, 4134),
     REGISTER_OOVPAS(XGSwizzleBox, 3911),

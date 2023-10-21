@@ -236,3 +236,23 @@ OOVPA_SIG_MATCH(
     { 0x12, 0x18 },
     //
 );
+
+// ******************************************************************
+// * XGSetSurfaceHeader
+// ******************************************************************
+
+OOVPA_SIG_HEADER_NO_XREF(XGSetSurfaceHeader,
+                         3911)
+OOVPA_SIG_MATCH(
+
+    // XGSetSurfaceHeader+0x00 : push ebp, mov ebp,esp
+    OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+
+    OV_MATCH(0x06, 0x14),
+
+    OV_MATCH(0x09, 0x10),
+
+    // XGSetSurfaceHeader+0x0F : push 0x00, push 0x00
+    OV_MATCH(0x0F, 0x6A, 0x00, 0x6A, 0x00),
+
+);

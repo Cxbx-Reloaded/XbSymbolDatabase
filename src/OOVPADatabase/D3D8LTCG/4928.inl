@@ -147,6 +147,33 @@ OOVPA_SIG_MATCH(
     //
 );
 
+// test case: Crimson Sea
+//  ******************************************************************
+//  * D3D::CDevice::KickOff
+//  ******************************************************************
+OOVPA_SIG_HEADER_XREF(CDevice_KickOff_0_edx,
+                      4928,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // mov eax, XREF_D3D_g_pDevice
+    XREF_ENTRY(0x3C, XREF_D3D_g_pDevice), // Derived
+
+    // mov eax, [edx+8]
+    OV_MATCH(0x00, 0x8B, 0x42, 0x08),
+    // test al, 4
+    // push esi
+    // jz EIP+8
+    OV_MATCH(0x03, 0xA8, 0x04, 0x56, 0x74, 0x08),
+
+    // test ah, 0x20
+    OV_MATCH(0x12, 0xF6, 0xC4, 0x20),
+
+    // mov eax, XREF_D3D_g_pDevice
+    OV_MATCH(0x3B, 0xA1),
+
+    //
+);
+
 // ******************************************************************
 // * D3DDevice_PersistDisplay
 // ******************************************************************

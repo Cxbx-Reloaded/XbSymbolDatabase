@@ -1,5 +1,7 @@
 // ******************************************************************
 // *
+// *   OOVPADatabase->D3D8LTCG->5849.inl
+// *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
 // *  License as published by the Free Software Foundation; either
@@ -15,20 +17,35 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 // *
+// *  (c) 2017 jarupxx
+// *
 // *  All rights reserved
 // *
 // ******************************************************************
 
-// functions
-XREF_SYMBOL(XFONT_OpenBitmapFontFromMemory)
-XREF_SYMBOL(XGCompressRect)
-XREF_SYMBOL(XGIsSwizzledFormat)
-XREF_SYMBOL(XGSetIndexBufferHeader)
-XREF_SYMBOL(XGSetSurfaceHeader)
-XREF_SYMBOL(XGSetTextureHeader)
-XREF_SYMBOL(XGSetVertexBufferHeader)
-XREF_SYMBOL(XGSwizzleBox)
-XREF_SYMBOL(XGSwizzleRect)
-XREF_SYMBOL(XGUnswizzleBox)
-XREF_SYMBOL(XGUnswizzleRect)
-XREF_SYMBOL(XGWriteSurfaceOrTextureToXPR)
+//test case: OddWorld Stranger's Wrath
+// ******************************************************************
+// * D3D::CDevice::KickOff
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(CDevice_KickOff_0_ecx,
+                      5558,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // mov eax, XREF_D3D_g_pDevice
+    XREF_ENTRY(0x1E, XREF_D3D_g_pDevice), // Derived
+
+    // mov eax, [ecx+8]
+    OV_MATCH(0x00, 0x8B, 0x41, 0x08),
+    // test al, 4
+    // push esi
+    // jz EIP+8
+    OV_MATCH(0x03, 0xA8, 0x04, 0x56, 0x74, 0x08),
+
+    // test ah, 0x20
+    OV_MATCH(0x12, 0xF6, 0xC4, 0x20),
+
+    // mov edi, XREF_D3D_g_pDevice
+    OV_MATCH(0x1C, 0x8B, 0x3D),
+
+    //
+);
