@@ -39,7 +39,7 @@ if(NOT TARGET xxhash)
  FetchContent_Populate(
   xxhash
   GIT_REPOSITORY https://github.com/Cyan4973/xxhash.git
-  GIT_TAG        35b0373c697b5f160d3db26b1cbb45a0d5ba788c
+  GIT_TAG        ea3bd57f8eca408d9e17fc003876b805be3af54e
   SOURCE_SUBDIR ./cmake_unofficial
  )
  add_subdirectory(${xxhash_SOURCE_DIR}/cmake_unofficial ${xxhash_BINARY_DIR} EXCLUDE_FROM_ALL)
