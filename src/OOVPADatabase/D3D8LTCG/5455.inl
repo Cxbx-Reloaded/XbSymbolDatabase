@@ -396,3 +396,28 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x109, 0xC3), // LTCG 0xC3 vs non-LTCG 0xC2
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::KickOff
+// ******************************************************************
+// Lowest build detected was 5558, since function is almost identical to
+// standard 5028's function changed.
+// TODO: Find out if we need to lower CDevice_KickOff down to 5028.
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff,
+                         1048)
+OOVPA_SIG_MATCH(
+    // mov eax, [ecx + 0x08]
+    // test al, 0x04
+    OV_MATCH(0x00, 0x8B, 0x41, 0x08, 0xA8, 0x04),
+
+    // jz eip + 0x08
+    OV_MATCH(0x06, 0x74, 0x08),
+
+    // Below OV pairs help reduce multiple signatures into one because
+    // xref of D3D_g_pDevice's offset and ret instruction are changed in
+    // various titles, even in the same build version.
+
+    // or [ecx + 0x08], 0x2000
+    OV_MATCH(0x8F, 0x81, 0x49, 0x08, 0x00, 0x20, 0x00, 0x00), // unique
+    //
+);

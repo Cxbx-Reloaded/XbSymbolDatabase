@@ -25,10 +25,5 @@ XREF_SYMBOL(D3DDevice_SetRenderStateInline__GenericFragment)
 // TODO: Verify each xref's function match with d3d8.def's function xrefs.
 
 // functions
-XREF_SYMBOL(D3DDevice_GetBackBuffer_8)
-XREF_SYMBOL(D3DDevice_GetBackBuffer2_0__LTCG_eax1)
 XREF_SYMBOL(D3DDevice_SetTextureStageStateNotInline2)
 XREF_SYMBOL(D3D_KickOffAndWaitForIdle2)
-XREF_SYMBOL(D3DDevice_MakeSpace_0)
-XREF_SYMBOL(CDevice_KickOff_0_ecx)
-XREF_SYMBOL(CDevice_KickOff_0_edx)

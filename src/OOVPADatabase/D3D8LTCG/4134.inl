@@ -1,6 +1,6 @@
 // ******************************************************************
 // *
-// *   OOVPADatabase->XGraphic->4361.inl
+// *   OOVPADatabase->D3D8LTCG->4134.inl
 // *
 // *  XbSymbolDatabase is free software; you can redistribute them
 // *  and/or modify them under the terms of the GNU General Public
@@ -17,28 +17,30 @@
 // *  If not, write to the Free Software Foundation, Inc.,
 // *  59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 // *
-// *  (c) 2002-2003 Aaron Robinson <caustik@caustik.com>
-// *
 // *  All rights reserved
 // *
 // ******************************************************************
 
 // ******************************************************************
-// * XGSetSurfaceHeader
+// * D3DDevice::MakeSpace
 // ******************************************************************
-// Generic OOVPA as of 5659 and newer.
-OOVPA_SIG_HEADER_NO_XREF(XGSetSurfaceHeader,
-                         5659)
+// Almost identical to generic 4134 signature.
+// Earliest found is in titles with 5659 build.
+OOVPA_SIG_HEADER_XREF(D3DDevice_MakeSpace,
+                      1036,
+                      XRefOne)
 OOVPA_SIG_MATCH(
+    // call D3D::MakeRequestedSpace
+    XREF_ENTRY(0x0B, XREF_D3D_MakeRequestedSpace),
 
-    // XGSetSurfaceHeader+0x00 : push ebp, mov ebp,esp
-    OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+    // mov eax, [addr]
+    OV_MATCH(0x00, 0xA1),
 
-        OV_MATCH(0x15, 0x14),
-    
-        // XGSetSurfaceHeader+0x0F : push 0x00, push 0x00
-        OV_MATCH(0x0A, 0x6A, 0x00, 0x6A, 0x00),
-
-        OV_MATCH(0x18, 0x10),
-        
+    // push ecx
+    OV_MATCH(0x09, 0x51),
+    // call D3D::MakeRequestedSpace
+    OV_MATCH(0x0A, 0xE8),
+    // ret
+    OV_MATCH(0x0F, 0xC3), // required to separate this detection from inlined function
+    //
 );

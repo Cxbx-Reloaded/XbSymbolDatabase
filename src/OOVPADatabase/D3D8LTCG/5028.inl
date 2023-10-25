@@ -115,3 +115,25 @@ OOVPA_SIG_MATCH(
     { 0x61, 0x01 },
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::KickOff
+// ******************************************************************
+// Generic OOVPA as of 5028 and newer.
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff_0__LTCG_edx1,
+                         5028)
+OOVPA_SIG_MATCH(
+    // mov eax, [edx + 0x08]
+    // test al, 0x04
+    OV_MATCH(0x00, 0x8B, 0x42, 0x08, 0xA8, 0x04),
+
+    // jz eip + 0x08
+    OV_MATCH(0x06, 0x74, 0x08),
+
+    // [edx + 0x08], 0x2000
+    OV_MATCH(0x5F, 0x81, 0x4A, 0x08, 0x00, 0x20, 0x00, 0x00), // unique
+    // pop esi
+    // ret
+    OV_MATCH(0x66, 0x5E, 0xC3),
+    //
+);

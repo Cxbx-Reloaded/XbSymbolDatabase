@@ -173,7 +173,9 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DDevice_InsertFence, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_IsBusy, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_IsFencePending, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_D3D(CDevice_KickOff, VER_RANGE(3911)),
+    REGISTER_SYMBOLS(D3D_CDevice_KickOff, // thiscall
+                     REGISTER_SYMBOL(CDevice_KickOff, VER_RANGE(3911)),
+                     REGISTER_SYMBOL(CDevice_KickOff_0__LTCG_edx1, VER_RANGE(3911))),
     REGISTER_SYMBOL_INLINE(D3DDevice_KickPushBuffer, VER_RANGE(3911)),
     REGISTER_SYMBOLS(D3DDevice_LightEnable,
                      REGISTER_SYMBOL(D3DDevice_LightEnable, VER_RANGE(3911)),

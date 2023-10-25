@@ -1414,3 +1414,25 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x1F, 0x0D, 0x80, 0x00, 0x00),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::KickOff
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff_0__LTCG_edx1,
+                         3911)
+OOVPA_SIG_MATCH(
+    // mov eax, [addr]
+    OV_MATCH(0x00, 0xA1),
+    // test eax, eax
+    // jnz eip + 0x2B
+    OV_MATCH(0x05, 0x85, 0xC0, 0x75, 0x2B),
+    // test byte ptr [edx + 0Ch], 4
+    OV_MATCH(0x09, 0xF6, 0x42, 0x0C, 0x04),
+    // push esi
+    // jz eip + 0x08
+    OV_MATCH(0x0D, 0x56, 0x74, 0x08),
+
+    // ret
+    OV_MATCH(0x33, 0xC3),
+    //
+);

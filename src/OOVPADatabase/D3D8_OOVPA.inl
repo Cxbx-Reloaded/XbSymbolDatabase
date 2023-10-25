@@ -288,7 +288,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_InsertFence, 3911),
     REGISTER_OOVPAS(D3DDevice_IsBusy, 3911, 5028),
     REGISTER_OOVPAS(D3DDevice_IsFencePending, 3911, 4039, 5028),
-    REGISTER_OOVPAS_D3D(CDevice_KickOff, 3911, 4034, 4531, 5028, 5455),
+    REGISTER_OOVPAS_D3D(CDevice_KickOff, 3911, 4034, 4531, 5028, 5455), // thiscall
     REGISTER_OOVPAS(D3DDevice_KickPushBuffer, 3911),
     REGISTER_OOVPAS(D3DDevice_LightEnable, 3911, 5344), // Was 5233 (from 5344's comment)
     REGISTER_OOVPAS(D3DDevice_LoadVertexShader, 3911, 4034, 4627, 5028),
