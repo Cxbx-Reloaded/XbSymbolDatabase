@@ -137,3 +137,27 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x66, 0x5E, 0xC3),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::KickOff
+// ******************************************************************
+// stdcall (LTCG)
+// NOTE: Detected with 5120 build, except moved to 5028 since it is
+//       almost identical to non-ltcg 5028 signature.
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff_4,
+                         5028)
+OOVPA_SIG_MATCH(
+    // mov eax, [esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // test cl, 0x04
+    // jz eip + 0x08
+    OV_MATCH(0x07, 0xF6, 0xC1, 0x04, 0x74, 0x08),
+
+    // or [eax + 0x08], 0x2000
+    OV_MATCH(0xA5, 0x81, 0x48, 0x08, 0x00, 0x20, 0x00, 0x00), // unique
+
+    // ret 0x04
+    OV_MATCH(0xAD, 0xC2, 0x04),
+    //
+);

@@ -281,3 +281,29 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x2A, 0xC3),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::KickOff
+// ******************************************************************
+// stdcall (LTCG)
+// NOTE: Detected with 4627 build, except moved to 4531 since it is
+//       almost identical to non-ltcg 4531 signature.
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff_4,
+                         4531)
+OOVPA_SIG_MATCH(
+    // mov eax, [esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // test byte ptr [eax + 0x08], 0x04
+    OV_MATCH(0x04, 0xF6, 0x40, 0x08, 0x04),
+
+    // jz eip + 0x08
+    OV_MATCH(0x09, 0x74, 0x08),
+
+    // or ecx, 0x2000
+    OV_MATCH(0xB8, 0x81, 0xC9, 0x00, 0x20, 0x00, 0x00), // unique
+
+    // ret 0x04
+    OV_MATCH(0xC3, 0xC2, 0x04),
+    //
+);

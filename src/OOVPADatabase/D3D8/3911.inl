@@ -1464,23 +1464,26 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::CDevice::KickOff
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff,
-                         3911)
+OOVPA_SIG_HEADER_XREF(CDevice_KickOff,
+                      3911,
+                      XRefOne)
 OOVPA_SIG_MATCH(
+    // mov eax, [D3D_g_pDevice]
+    XREF_ENTRY(0x1F, XREF_D3D_g_pDevice),
 
-    { 0x01, 0xA1 },
+    // push ecx
+    // mov eax, [addr]
+    OV_MATCH(0x00, 0x51, 0xA1),
 
-    { 0x32, 0x81 },
-    { 0x33, 0xCA },
-    { 0x36, 0x01 },
+    // test byte ptr [ecx + 0xC], 0x04
+    // jz eip + 8
+    OV_MATCH(0x0E, 0xF6, 0x41, 0x0C, 0x04, 0x74, 0x08),
 
-    { 0x5E, 0x89 },
-    { 0x5F, 0x50 },
-    { 0x60, 0x40 },
+    // mov eax, [D3D_g_pDevice]
+    OV_MATCH(0x1E, 0xA1),
 
-    { 0x90, 0x83 },
-    { 0x91, 0xEA },
-    { 0x92, 0x02 },
+    // ret
+    OV_MATCH(0x69, 0xC3),
     //
 );
 

@@ -421,3 +421,24 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x8F, 0x81, 0x49, 0x08, 0x00, 0x20, 0x00, 0x00), // unique
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::KickOff
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff_0__LTCG_eax1,
+                         5455)
+OOVPA_SIG_MATCH(
+    // mov ecx, [eax + 0x08]
+    // test cl, 0x04
+    OV_MATCH(0x00, 0x8B, 0x48, 0x08, 0xF6, 0xC1, 0x04),
+
+    // jz eip + 0x08
+    OV_MATCH(0x07, 0x74, 0x08),
+
+    // or [eax + 0x08], 0x2000
+    OV_MATCH(0x8F, 0x81, 0x48, 0x08, 0x00, 0x20, 0x00, 0x00), // unique
+
+    // ret
+    OV_MATCH(0x98, 0xC3),
+    //
+);

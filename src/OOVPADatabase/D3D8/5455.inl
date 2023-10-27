@@ -276,13 +276,10 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D::CDevice::KickOff
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDevice_KickOff,
-                      5455,
-                      XRefOne)
+// Generic as of OOVPA 5455 and newer.
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff,
+                         5455)
 OOVPA_SIG_MATCH(
-    // mov eax, XREF_D3D_g_pDevice
-    XREF_ENTRY(0x1A, XREF_D3D_g_pDevice), // Derived
-
     // push esi
     // mov esi, ecx
     OV_MATCH(0x00, 0x56, 0x8B, 0xF1),
@@ -290,12 +287,11 @@ OOVPA_SIG_MATCH(
     // test al, 0x04
     OV_MATCH(0x03, 0x8B, 0x46, 0x08, 0xA8, 0x04),
 
-    // test ah, 0x20
-    OV_MATCH(0x14, 0xF6, 0xC4, 0x20),
+    // or [esi + 0x08], 0x2000
+    OV_MATCH(0x6D, 0x81, 0x4E, 0x08, 0x00, 0x20, 0x00, 0x00), // unique
 
-    // mov eax, XREF_D3D_g_pDevice
-    OV_MATCH(0x19, 0xA1),
-
+    // ret
+    OV_MATCH(0x75, 0xC3),
     //
 );
 
