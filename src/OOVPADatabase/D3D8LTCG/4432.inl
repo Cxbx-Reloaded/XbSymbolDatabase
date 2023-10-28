@@ -1122,3 +1122,24 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x26, 0xC2, 0x18),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::KickOff
+// ******************************************************************
+// stdcall (LTCG)
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff_4,
+                         4432)
+OOVPA_SIG_MATCH(
+    // mov eax, [esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),
+
+    // test ch, 0x20
+    OV_MATCH(0x07, 0xF6, 0xC5, 0x20),
+
+    // or ecx, 0x2000
+    OV_MATCH(0xB6, 0x81, 0xC9, 0x00, 0x20, 0x00, 0x00), // unique
+
+    // ret 0x04
+    OV_MATCH(0xC1, 0xC2, 0x04),
+    //
+);

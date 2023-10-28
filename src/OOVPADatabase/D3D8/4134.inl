@@ -614,21 +614,18 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_MakeSpace,
                       4134,
                       XRefOne)
 OOVPA_SIG_MATCH(
-
-    // D3DDevice_MakeSpace+0x09 : call D3D::MakeRequestedSpace
+    // call D3D::MakeRequestedSpace
     XREF_ENTRY(0x0A, XREF_D3D_MakeRequestedSpace),
 
-    // D3DDevice_MakeSpace+0x00 : mov eax,[addr]
+    // mov eax, [addr]
     OV_MATCH(0x00, 0xA1),
-
-    // D3DDevice_MakeSpace+0x05 : push eax
+    // push eax
     OV_MATCH(0x05, 0x50),
 
-    // D3DDevice_MakeSpace+0x09 : call D3D::MakeRequestedSpace
+    // call D3D::MakeRequestedSpace
     OV_MATCH(0x09, 0xE8),
-
-    // D3DDevice_MakeSpace+0x0E : ret
-    OV_MATCH(0x0E, 0xC3),
+    // ret
+    OV_MATCH(0x0E, 0xC3), // required to separate this detection from inlined function
     //
 );
 

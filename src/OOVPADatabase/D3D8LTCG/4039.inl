@@ -86,6 +86,28 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
+// * D3D::CDevice::KickOff
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(CDevice_KickOff_0__LTCG_edx1,
+                         4039)
+OOVPA_SIG_MATCH(
+    // mov eax, [edx + 0x08]
+    OV_MATCH(0x00, 0x8B, 0x42, 0x08),
+
+    // "test ?h, 0x20" and "test ?l, 0x4" instructions tend to swap or at different offsets.
+    // To reduce signatures, we check for "or eax, 0x2000" unique instruction and its return.
+
+    // pop edi
+    // or eax, 0x2000
+    // pop ebp
+    OV_MATCH(0x82, 0x5F, 0x0D, 0x00, 0x20, 0x00, 0x00, 0x5D), // unique
+
+    // ret
+    OV_MATCH(0x8D, 0xC3),
+    //
+);
+
+// ******************************************************************
 // * D3DDevice_SetViewport
 // ******************************************************************
 //EB06894424088BF8

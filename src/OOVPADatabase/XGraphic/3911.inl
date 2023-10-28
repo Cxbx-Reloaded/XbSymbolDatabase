@@ -236,3 +236,28 @@ OOVPA_SIG_MATCH(
     { 0x12, 0x18 },
     //
 );
+
+// ******************************************************************
+// * XGSetSurfaceHeader
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_NO_XREF(XGSetSurfaceHeader,
+                         3911)
+OOVPA_SIG_MATCH(
+    // push ebp
+    // mov ebp, esp
+    OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
+
+    // mov e??, [e?? + param_4]
+    OV_MATCH(0x04, 0x8B),
+    OV_MATCH(0x06, 0x14),
+
+    // lea e??, [e?? + 0x10]
+    OV_MATCH(0x07, 0x8D),
+    OV_MATCH(0x09, 0x10),
+
+    // push 0x00
+    // push 0x00
+    OV_MATCH(0x0F, 0x6A, 0x00, 0x6A, 0x00),
+    //
+);

@@ -48,6 +48,7 @@
 #include "D3D8LTCG/3911.inl"
 #include "D3D8LTCG/4034.inl"
 #include "D3D8LTCG/4039.inl"
+#include "D3D8LTCG/4134.inl"
 #include "D3D8LTCG/4432.inl"
 #include "D3D8LTCG/4531.inl"
 #include "D3D8LTCG/4627.inl"
@@ -246,6 +247,11 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS_BIND_XREF(D3D_CommonSetMultiSampleModeAndScale_4__LTCG_eax1, D3D_CommonSetMultiSampleModeAndScale, 5344),
     REGISTER_OOVPAS(D3D_KickOffAndWaitForIdle2, 1024, 1036, 1048),
+    REGISTER_OOVPAS_D3D(CDevice_KickOff, 1048), // thiscall
+    REGISTER_OOVPAS_BIND_XREF(CDevice_KickOff_4, D3D_CDevice_KickOff, 4432, 4531, 5028), // stdcall (LTCG)
+    REGISTER_OOVPAS_BIND_XREF(CDevice_KickOff_0__LTCG_edx1, D3D_CDevice_KickOff, 3911, 4039, 5028), // Final generic OOVPA: 5028; Removed: 0
+    REGISTER_OOVPAS_BIND_XREF(CDevice_KickOff_0__LTCG_eax1, D3D_CDevice_KickOff, 5455),
+    REGISTER_OOVPAS(D3DDevice_MakeSpace, 1036), // Almost identical to generic 4134 signature.
     REGISTER_OOVPAS(Direct3D_CreateDevice, 1024, 1036),
     REGISTER_OOVPAS_BIND_XREF(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ebx_ppReturnedDeviceInterface, Direct3D_CreateDevice, 2024),
     REGISTER_OOVPAS_BIND_XREF(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ecx_ppReturnedDeviceInterface, Direct3D_CreateDevice, 2036, 2048),
