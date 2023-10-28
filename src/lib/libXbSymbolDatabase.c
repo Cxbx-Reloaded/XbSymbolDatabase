@@ -463,8 +463,8 @@ uint32_t XbSymbolDatabase_GetLibraryDependencies(uint32_t library_flag, XbSDBLib
             ret_dependencies |= library_filters.filters[i].flag;
         }
     }
-    // If flag dependency is/are found, then return those.
-    if (ret_dependencies) {
+    // If library filters were given, then return any dependencies that were found.
+    if (library_filters.count) {
         return ret_dependencies;
     }
     // If not, then return whole dependency filters.
