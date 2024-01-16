@@ -225,12 +225,34 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
     return error_count;
 }
 
+// This function will report as verbose purpose only.
+static unsigned int SymbolDatabaseVerifyContext_VerifyXRefJmp(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
+{
+    LOOVPA* loovpa = (LOOVPA*)table[symbol_index].revisions[revision_index].Oovpa;
+    // Check if signature has both xref and byte registered.
+    if (loovpa->Header.Count == 2 &&
+        loovpa->Header.XRefCount == 1) {
+        // XRefs are always stored at the top whilst byte pairs are after.
+        // Since we only check for one xref and one byte. We can safely use hardcode offset to 1.
+        // Plus we don't need to check the OOVPA's offset value is 0 or not.
+        if (loovpa->Lovp[1].value == 0xE9) {
+            output_message_format(&context->output, XB_OUTPUT_MESSAGE_DEBUG, "%s has one xref and one jump instruction", table[symbol_index].szFuncName);
+        }
+    }
+    return 0;
+}
 
-static unsigned int SymbolDatabaseVerifyContext_VerifyXRefSymbolVsRevision(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
+static unsigned int SymbolDatabaseVerifyContext_VerifySymbolDuplicate(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index)
 {
     unsigned int error_count = 0;
-    if (!internal_IsXRefUnset(table[symbol_index].xref)) {
-        LOOVPA* loovpa = (LOOVPA*)table[symbol_index].revisions[revision_index].Oovpa;
+
+    if (&context->main.data->SymbolsTable[context->main.symbol_index] != &context->against.data->SymbolsTable[context->against.symbol_index] &&
+        context->main.revision_index == 0 && context->against.revision_index == 0) {
+
+        if (strcmp(table[symbol_index].szFuncName, context->main.data->SymbolsTable[context->main.symbol_index].szFuncName) == 0) {
+            SymbolDatabaseVerifyContext_OOVPAError(context, "Duplicate symbol detected");
+            error_count++;
+        }
     }
     return error_count;
 }
@@ -242,11 +264,19 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerify
         context->main.symbol_index = symbol_index;
         context->main.revision_index = revision_index;
 
-        error_count += SymbolDatabaseVerifyContext_VerifyXRefSymbolVsRevision(context, table, symbol_index, revision_index);
+        error_count += SymbolDatabaseVerifyContext_VerifyXRefJmp(context, table, symbol_index, revision_index);
+
+        // For safety check purpose
+        if (internal_IsXRefUnset(table[symbol_index].xref)) {
+            output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s cannot have unset xref.", table[symbol_index].szFuncName);
+            error_count++;
+        }
     }
     else {
         context->against.symbol_index = symbol_index;
         context->against.revision_index = revision_index;
+
+        error_count += SymbolDatabaseVerifyContext_VerifySymbolDuplicate(context, table, symbol_index);
     }
 
 
@@ -269,15 +299,6 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVer
 
     // Verify each entry in data's symbol table.
     for (uint32_t s = 0; s < data->SymbolsTableCount; s++) {
-        // We only need to check from main, not against.
-        if (context->against.data == NULL) {
-            // For safety check purpose
-            if (internal_IsXRefUnset(data->SymbolsTable[s].xref)) {
-                output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s cannot have unset xref.", data->SymbolsTable[s].szFuncName);
-                error_count++;
-            }
-        }
-
         // Check each revision entry in a symbol.
         for (uint32_t r = 0; r < data->SymbolsTable[s].count; r++) {
             error_count += SymbolDatabaseVerifyContext_VerifyEntry(context, data->SymbolsTable, s, r);
