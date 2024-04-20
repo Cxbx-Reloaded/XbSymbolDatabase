@@ -190,6 +190,7 @@ OOVPATable D3D8_OOVPA[] = {
 
     REGISTER_OOVPAS(D3D_UpdateProjectionViewportTransform, 3900, 3901), // Final generic OOVPA: 4034; Removed: 0 // NOTE: 3901 is 4034 signature, except LTCG title been detected in 3925.
 
+    REGISTER_OOVPAS_D3D(CDevice_FreeFrameBuffers, 3911, 4034, 5455), // Final generic OOVPA: 5455; Removed: 0 // thiscall
     REGISTER_OOVPAS_D3D(CDevice_SetStateUP, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0 // thiscall
     REGISTER_OOVPAS_D3D(CDevice_SetStateVB, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0 // thiscall
 

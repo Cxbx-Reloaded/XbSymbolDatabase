@@ -5944,3 +5944,38 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x0D, 0xC3),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::FreeFrameBuffers
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(CDevice_FreeFrameBuffers,
+                      3911,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+    // call [AvGetSavedDataAddress]
+    XREF_ENTRY(0x08, XREF_KT_FUNC_AvGetSavedDataAddress),
+    // call [AvSendTVEncoderOption]
+    XREF_ENTRY(0x20, XREF_KT_FUNC_AvSendTVEncoderOption),
+
+    // push ebx
+    // push ebp
+    // push esi
+    // push edi
+    OV_MATCH(0x00, 0x53, 0x55, 0x56, 0x57),
+    // mov esi, ecx
+    // call [AvGetSavedDataAddress]
+    OV_MATCH(0x04, 0x8B, 0xF1, 0xFF, 0x15),
+
+    // call [AvSendTVEncoderOption]
+    OV_MATCH(0x1E, 0xFF, 0x15),
+
+    // push edx
+    // call ????
+    OV_MATCH(0x6E, 0x52, 0xE8),
+    // mov [esi + 0x????], ebp
+    OV_MATCH(0x74, 0x89, 0xAE),
+
+    // cmp [esi + 0x????], ebp
+    OV_MATCH(0x7A, 0x39, 0xAE),
+    //
+);

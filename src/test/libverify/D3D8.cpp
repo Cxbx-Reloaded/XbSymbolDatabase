@@ -286,6 +286,10 @@ static const library_list database_full = {
     REGISTER_SYMBOLS(D3DDevice_SetSoftDisplayFilter,
                      REGISTER_SYMBOL(D3DDevice_SetSoftDisplayFilter, VER_RANGE(3911)),
                      REGISTER_SYMBOL(D3DDevice_SetSoftDisplayFilter_0, VER_RANGE(3911))), // NOTE: LTCG usage
+    REGISTER_SYMBOLS(D3D_CDevice_FreeFrameBuffers,
+                     REGISTER_SYMBOL(CDevice_FreeFrameBuffers, VER_RANGE(3911)), // thiscall
+                     REGISTER_SYMBOL(CDevice_FreeFrameBuffers_0__LTCG_ebx1, VER_RANGE(3911)),
+                     REGISTER_SYMBOL(CDevice_FreeFrameBuffers_4, VER_RANGE(4432))), // stdcall // NOTE: LTCG usage
     REGISTER_SYMBOLS(D3D_CDevice_SetStateUP,
                      REGISTER_SYMBOL(CDevice_SetStateUP, VER_RANGE(3911)), // thiscall
                      REGISTER_SYMBOL(CDevice_SetStateUP_4, VER_RANGE(3911)), // stdcall

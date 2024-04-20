@@ -40,6 +40,10 @@
 //   * 1024 and 1xxx - Cmpatible with known functions probably.
 //   * 2028 and 2xxx - Remade by Link-time Code Generation, will not work with known functions.
 
+// TODO: Known D3D8LTCG OOVPA issue list
+// * Verification needed: Function Name ( Revision )
+//   * CDevice_FreeFrameBuffers_4 (4034 ... < 4432) // NOTE: CDevice_FreeFrameBuffers_4 4433 signature is the same except off by one offset near start of the body.
+
 #ifndef D3D8LTCG_OOVPA_INL
 #define D3D8LTCG_OOVPA_INL
 
@@ -73,6 +77,9 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3D_SetFence, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3D_BlockOnTime, 1024, 1036, 1048),
     REGISTER_OOVPAS_BIND_XREF(D3D_BlockOnTime_4, D3D_BlockOnTime, 2048, 2060),
+
+    REGISTER_OOVPAS_BIND_XREF(CDevice_FreeFrameBuffers_0__LTCG_ebx1, D3D_CDevice_FreeFrameBuffers, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS_BIND_XREF(CDevice_FreeFrameBuffers_4, D3D_CDevice_FreeFrameBuffers, 4432, 4433), // stdcall
 
     REGISTER_OOVPAS_D3D(CMiniport_InitHardware, 1024),
     REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface2, 1024),

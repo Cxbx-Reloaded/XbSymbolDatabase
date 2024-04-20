@@ -1143,3 +1143,71 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0xC1, 0xC2, 0x04),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::FreeFrameBuffers
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(CDevice_FreeFrameBuffers_4,
+                      4432,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call [AvGetSavedDataAddress]
+    XREF_ENTRY(0x08, XREF_KT_FUNC_AvGetSavedDataAddress),
+    // NOTE: AvSendTVEncoderOption call occurs at different offsets in various titles.
+
+    // This is a requirement to separate detection vs CDevice_FreeFrameBuffers_0__LTCG_ebx1 (4034)
+    // mov e??, [esp + param_1]
+    OV_MATCH(0x01, 0x8B),
+    OV_MATCH(0x03, 0x24, 0x08),
+
+    // call [AvGetSavedDataAddress]
+    OV_MATCH(0x06, 0xFF, 0x15), // Offset 4432 0x06 vs 4433-ish 0x07 (the same for below)
+
+    // jz +0x20
+    // mov ecx, [eax + 0x14]
+    OV_MATCH(0x2E, 0x74, 0x20, 0x8B, 0x48, 0x14),
+
+    // call ????
+    OV_MATCH(0x6F, 0xE8), // Offset 4432 0x69 vs 4433-ish 0x68 (the same for below)
+    // mov [ebp + 0x????], e??
+    OV_MATCH(0x74, 0x89),
+
+    // cmp [ebp + 0x????], e??
+    OV_MATCH(0x7A, 0x39),
+    //
+);
+
+// ******************************************************************
+// * D3D::CDevice::FreeFrameBuffers
+// ******************************************************************
+// TODO: Migrate this signature into 4432 with offset shift range by one.
+// Found in "Call of Cthulhu: Dark Corners of the Earth" title (5849)
+// Yet all other 5849 title builds do match CDevice_FreeFrameBuffers_4 4432's signature.
+OOVPA_SIG_HEADER_XREF(CDevice_FreeFrameBuffers_4,
+                      4433,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call [AvGetSavedDataAddress]
+    XREF_ENTRY(0x09, XREF_KT_FUNC_AvGetSavedDataAddress),
+    // NOTE: AvSendTVEncoderOption call occurs at different offsets in various titles.
+
+    // mov e??, [esp + param_1]
+    OV_MATCH(0x01, 0x8B),
+    OV_MATCH(0x03, 0x24, 0x08),
+
+    // call [AvGetSavedDataAddress]
+    OV_MATCH(0x07, 0xFF, 0x15), // Offset 4433-ish 0x07 vs 4432 0x06
+
+    // jz +0x20
+    // mov ecx, [eax + 0x14]
+    OV_MATCH(0x2D, 0x74, 0x20, 0x8B, 0x48, 0x14),
+
+    // call ????
+    OV_MATCH(0x6E, 0xE8), // Offset 4433-ish 0x68 vs 4432 0x69 (the same for below)
+    // mov [ebp + 0x????], e??
+    OV_MATCH(0x73, 0x89),
+
+    // cmp [ebp + 0x????], e??
+    OV_MATCH(0x79, 0x39),
+    //
+);
