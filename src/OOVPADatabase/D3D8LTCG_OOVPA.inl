@@ -26,18 +26,18 @@
 // Titles which did compiled with full libary version
 //   [LibV] Title Name                       |  Verify   |   Comments
 //-----------------------------------------------------------------------
-// * [3925] Nascar Heat 2002                 |    20%    | Only verified an actually used library.
+// * [3925] NASCAR Heat 2002                 |    20%    | Only verified an actually used library.
 // * [4039] NBA 2K2                          |   100%    | Only has 50%-ish of the library compiled with xbe build.
 // * [4432] Bruce Lee                        |   100%    | Only has 50%-ish of the library compiled with xbe build.
 // * [4627] Battle Engine Aquila             |   100%    | Only has 50%-ish of the library compiled with xbe build.
 // * [4928] Shin Megami Tensei - Nine        |   100%    | Only has 80% of the library compiled with xbe build.
 // * [5233] Midtown Madness 3                |   100%    | Only has 50%-ish of the library compiled with xbe build.
 // * [5455] Freaky Flyers                    |   100%    | Only has 50%-ish of the library compiled with xbe build.
-// * [5659] Ninja Gaiden                     |   100%    | With Intergrated Hotfixes. Only has a few library.
+// * [5659] Ninja Gaiden                     |   100%    | With Integrated Hotfixes. Only has a few library.
 // * [5849] Grand Theft Auto - San Andreas   |   100%    | Only has 50%-ish of the library compiled with xbe build.
 
 // * About the number of OOVPA
-//   * 1024 and 1xxx - Cmpatible with known functions probably.
+//   * 1024 and 1xxx - Compatible with known functions probably.
 //   * 2028 and 2xxx - Remade by Link-time Code Generation, will not work with known functions.
 
 // TODO: Known D3D8LTCG OOVPA issue list
