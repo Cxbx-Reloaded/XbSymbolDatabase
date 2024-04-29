@@ -1467,3 +1467,30 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x75, 0x39),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers_8,
+                         3911)
+OOVPA_SIG_MATCH(
+    // sub esp, 0x??
+    OV_MATCH(0x00, 0x83, 0xEC),
+
+    // jc +4
+    // mov [esp + 0x??], eax
+    OV_MATCH(0x19, 0x72, 0x04, 0x89, 0x44, 0x24),
+
+    // mov eax, [edi + 0x08]
+    // call ????
+    OV_MATCH(0x1F, 0x8B, 0x47, 0x08, 0xE8),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x29, 0x8B),
+    OV_MATCH(0x2B, 0x24),
+
+    // NOTE: Do not include ADD, DEC, and LEA instructions OVs. Because they
+    //       are at different offsets and sometimes don't have a complete set
+    //       of instructions. Plus it is unnecessary.
+    //
+);

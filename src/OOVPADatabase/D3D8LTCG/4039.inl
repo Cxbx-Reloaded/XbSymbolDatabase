@@ -1739,3 +1739,35 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x32, 0x8B, 0x4E, 0x04),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+// Generic OOVPA as of 4039 and newer
+// NOTE: Only found in NBA 2K2 title (4039) so far.
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers_4__LTCG_esi1,
+                         4039)
+OOVPA_SIG_MATCH(
+    // sub esp, 0x??
+    OV_MATCH(0x00, 0x83, 0xEC),
+
+    // jc +4
+    // mov [esp + 0x??], eax
+    OV_MATCH(0x18, 0x72, 0x04, 0x89, 0x44, 0x24),
+
+    // mov e??, [e?? + 0x08]
+    // call ????
+    OV_MATCH(0x1E, 0x8B),
+    OV_MATCH(0x20, 0x08, 0xE8),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x2A, 0x8B),
+    OV_MATCH(0x2C, 0x24),
+
+    // [esi + 0x????], eax
+    OV_MATCH(0x4E, 0x89, 0x86),
+
+    // Unknown what offset range may be reliable, unlike other LTCG variants.
+    // For now, we'll rely on the instruction at offset 0x4E until another update is needed.
+    //
+);

@@ -1413,3 +1413,34 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x34, 0xC7, 0x44, 0x24, 0x1C),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+// Generic OOVPA as of 4627 and newer?
+// NOTE: Lowest detected was 4627, unknown if it's present in earlier
+//       builds and if it's detected there too.
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers_8,
+                         4627)
+OOVPA_SIG_MATCH(
+    // sub esp, 0x??
+    OV_MATCH(0x00, 0x83, 0xEC),
+
+    // jc +4
+    // mov [esp + 0x??], eax
+    OV_MATCH(0x1D, 0x72, 0x04, 0x89, 0x44, 0x24),
+
+    // mov eax, [e?? + 0x08]
+    // call ????
+    OV_MATCH(0x23, 0x8B),
+    OV_MATCH(0x25, 0x08, 0xE8),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x2F, 0x8B),
+    OV_MATCH(0x31, 0x24),
+
+    // NOTE: Do not include ADD, DEC, and LEA instructions OVs. Because they
+    //       are at different offsets and sometimes don't have a complete set
+    //       of instructions. Plus it is unnecessary.
+    //
+);

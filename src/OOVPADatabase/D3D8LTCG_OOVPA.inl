@@ -43,6 +43,10 @@
 // TODO: Known D3D8LTCG OOVPA issue list
 // * Verification needed: Function Name ( Revision )
 //   * CDevice_FreeFrameBuffers_4 (4034 ... < 4432) // NOTE: CDevice_FreeFrameBuffers_4 4433 signature is the same except off by one offset near start of the body.
+//   * CDevice_InitializeFrameBuffers_8 (4034 ... < 4627) // NOTE: Haven't found any titles below 4627 that match with the 4627's signature.
+//   * CDevice_InitializeFrameBuffers_4__LTCG_esi1 (3911 ... 4034) // NOTE: Unknown if it needs to be lowered to 4034 or below. Plus only found in one title, NBA 2K2.
+//   * CDevice_InitializeFrameBuffers_4__LTCG_ebx1 (3911 ... < 4432) // NOTE: Haven't found any titles below 4432 to match signatures.
+//   * CDevice_InitializeFrameBuffers_4__LTCG_edi1 (3911 ... < 5455) // NOTE: Likely caused by newer compiler yet haven't found any titles below 5455 to match signature.
 
 #ifndef D3D8LTCG_OOVPA_INL
 #define D3D8LTCG_OOVPA_INL
@@ -80,6 +84,10 @@ OOVPATable D3D8LTCG_OOVPA[] = {
 
     REGISTER_OOVPAS_BIND_XREF(CDevice_FreeFrameBuffers_0__LTCG_ebx1, D3D_CDevice_FreeFrameBuffers, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
     REGISTER_OOVPAS_BIND_XREF(CDevice_FreeFrameBuffers_4, D3D_CDevice_FreeFrameBuffers, 4432, 4433), // stdcall
+    REGISTER_OOVPAS_BIND_XREF(CDevice_InitializeFrameBuffers_8, D3D_CDevice_InitializeFrameBuffers, 3911, 4627), // stdcall
+    REGISTER_OOVPAS_BIND_XREF(CDevice_InitializeFrameBuffers_4__LTCG_esi1, D3D_CDevice_InitializeFrameBuffers, 4039),
+    REGISTER_OOVPAS_BIND_XREF(CDevice_InitializeFrameBuffers_4__LTCG_ebx1, D3D_CDevice_InitializeFrameBuffers, 4432, 4433, 4531),
+    REGISTER_OOVPAS_BIND_XREF(CDevice_InitializeFrameBuffers_4__LTCG_edi1, D3D_CDevice_InitializeFrameBuffers, 5455),
 
     REGISTER_OOVPAS_D3D(CMiniport_InitHardware, 1024),
     REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface2, 1024),

@@ -5979,3 +5979,27 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x7A, 0x39, 0xAE),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers,
+                         3911)
+OOVPA_SIG_MATCH(
+    // sub esp, 0x??
+    OV_MATCH(0x00, 0x83, 0xEC),
+
+    // jc +4
+    // mov [esp + 0x??], eax
+    OV_MATCH(0x1B, 0x72, 0x04, 0x89, 0x44, 0x24),
+
+    // push eax
+    // call ????
+    OV_MATCH(0x24, 0x50, 0xE8),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x2A, 0x8B),
+    OV_MATCH(0x2C, 0x24),
+    //
+);

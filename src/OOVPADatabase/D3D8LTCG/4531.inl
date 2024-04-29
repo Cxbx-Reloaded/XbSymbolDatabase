@@ -307,3 +307,39 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0xC3, 0xC2, 0x04),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+// Generic OOVPA as of 4531 and newer?
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers_4__LTCG_ebx1,
+                         4531)
+OOVPA_SIG_MATCH(
+    // sub esp, 0x??
+    OV_MATCH(0x00, 0x83, 0xEC),
+
+    // jc +4
+    // mov [esp + 0x??], eax
+    OV_MATCH(0x18, 0x72, 0x04, 0x89, 0x44, 0x24),
+
+    // mov e??, [e?? + 0x08]
+    // call ????
+    OV_MATCH(0x1E, 0x8B),
+    OV_MATCH(0x20, 0x08, 0xE8),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x2A, 0x8B),
+    OV_MATCH(0x2C, 0x24),
+
+    // Possible start at offset 0x140 - 0x176 to use one signature rather than multiple
+    // mov edi, eax
+    OV_MATCH(0x142, 0x8B, 0xF8), // random selection to avoid an error when the OOVPA is expanded.
+
+    // add eax, 0x18
+    // dec ecx
+    OV_MATCH(0x158, 0x83, 0xC0, 0x18, 0x49),
+
+    // lea eax, [ebx + 0x????]
+    OV_MATCH(0x171, 0x8D, 0x83),
+    //
+);

@@ -1211,3 +1211,59 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x79, 0x39),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers_4__LTCG_ebx1,
+                         4432)
+OOVPA_SIG_MATCH(
+    // mov edx, [esp + param_2]
+    OV_MATCH(0x00, 0x8B, 0x54, 0x24, 0x04),
+
+    // mov e??, [e?? + 0x08]
+    OV_MATCH(0x17, 0x8B),
+    OV_MATCH(0x19, 0x08),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x27, 0x8B),
+    OV_MATCH(0x29, 0x24),
+
+    // Possible start at offset 0x141 - 0x17B to use one signature rather than multiple
+    // add eax, 0x18
+    // dec ecx
+    OV_MATCH(0x161, 0x83, 0xC0, 0x18, 0x49), // offset 4432 0x161 vs 4433 0x160
+
+    // lea eax, [ebx + 0x????]
+    OV_MATCH(0x176, 0x8D, 0x83), // offset 4432 0x176 vs 4433 0x175
+    //
+);
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+// TODO: Migrate this signature into 4432 with offset shift range by one.
+// Only detected in Sega GT 2002 (4627)
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers_4__LTCG_ebx1,
+                         4433)
+OOVPA_SIG_MATCH(
+    // mov edx, [esp + param_2]
+    OV_MATCH(0x00, 0x8B, 0x54, 0x24, 0x04),
+
+    // mov e??, [e?? + 0x08]
+    OV_MATCH(0x17, 0x8B),
+    OV_MATCH(0x19, 0x08),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x27, 0x8B),
+    OV_MATCH(0x29, 0x24),
+
+    // Possible start at offset 0x140 - 0x17A to use one signature rather than multiple
+    // add eax, 0x18
+    // dec ecx
+    OV_MATCH(0x160, 0x83, 0xC0, 0x18, 0x49), // offset 4433 0x160 vs 4432 0x161
+
+    // lea eax, [ebx + 0x????]
+    OV_MATCH(0x175, 0x8D, 0x83), // offset 4433 0x175 vs 4432 0x176
+    //
+);
