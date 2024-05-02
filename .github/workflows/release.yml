@@ -23,9 +23,9 @@ jobs:
     env:
       tag_name: ${{ needs.build.outputs.ver-cur }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Get Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         # NOTE: We're downloading ALL artifacts.
       - name: Prepare artifacts for release
         run: | # download-artifact doesn't download a zip, so rezip it
