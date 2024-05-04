@@ -190,6 +190,8 @@ OOVPATable D3D8_OOVPA[] = {
 
     REGISTER_OOVPAS(D3D_UpdateProjectionViewportTransform, 3900, 3901), // Final generic OOVPA: 4034; Removed: 0 // NOTE: 3901 is 4034 signature, except LTCG title been detected in 3925.
 
+    REGISTER_OOVPAS_D3D(CDevice_InitializeFrameBuffers, 3911), // Final generic OOVPA: 3911; Removed: 0 // thiscall
+    REGISTER_OOVPAS_D3D(CDevice_FreeFrameBuffers, 3911, 4034, 5455), // Final generic OOVPA: 5455; Removed: 0 // thiscall
     REGISTER_OOVPAS_D3D(CDevice_SetStateUP, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0 // thiscall
     REGISTER_OOVPAS_D3D(CDevice_SetStateVB, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0 // thiscall
 
@@ -298,7 +300,7 @@ OOVPATable D3D8_OOVPA[] = {
     REGISTER_OOVPAS(D3DDevice_Present, 3911),
     REGISTER_OOVPAS(D3DDevice_PrimeVertexCache, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_Release, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_Reset, 3911),
+    REGISTER_OOVPAS(D3DDevice_Reset, 3911), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(D3DDevice_RunPushBuffer, 3911, 4039, 4627, 5120, 5558), // for 5455 (from 5558's comment)
     REGISTER_OOVPAS(D3DDevice_RunVertexStateShader, 3911, 4039),
     REGISTER_OOVPAS(D3DDevice_SelectVertexShader, 3911, 4034, 5455),

@@ -1436,3 +1436,84 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x33, 0xC3),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::FreeFrameBuffers
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(CDevice_FreeFrameBuffers_0__LTCG_ebx1,
+                      3911,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+    // call [AvGetSavedDataAddress]
+    XREF_ENTRY(0x02, XREF_KT_FUNC_AvGetSavedDataAddress),
+    // call [AvSendTVEncoderOption]
+    XREF_ENTRY(0x18, XREF_KT_FUNC_AvSendTVEncoderOption),
+
+    // call [AvGetSavedDataAddress]
+    OV_MATCH(0x00, 0xFF, 0x15),
+
+    // call [AvSendTVEncoderOption]
+    OV_MATCH(0x16, 0xFF, 0x15),
+
+    // mov esi, [ebx + 0x????]
+    OV_MATCH(0x64, 0x8B, 0xB3),
+
+    // call ????
+    OV_MATCH(0x6A, 0xE8),
+    // mov [ebx + 0x????], e??
+    OV_MATCH(0x6F, 0x89),
+
+    // cmp [ebx + 0x????], e??
+    OV_MATCH(0x75, 0x39),
+    //
+);
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers_8,
+                         3911)
+OOVPA_SIG_MATCH(
+    // sub esp, 0x??
+    OV_MATCH(0x00, 0x83, 0xEC),
+
+    // jc +4
+    // mov [esp + 0x??], eax
+    OV_MATCH(0x19, 0x72, 0x04, 0x89, 0x44, 0x24),
+
+    // mov eax, [edi + 0x08]
+    // call ????
+    OV_MATCH(0x1F, 0x8B, 0x47, 0x08, 0xE8),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x29, 0x8B),
+    OV_MATCH(0x2B, 0x24),
+
+    // NOTE: Do not include ADD, DEC, and LEA instructions OVs. Because they
+    //       are at different offsets and sometimes don't have a complete set
+    //       of instructions. Plus it is unnecessary.
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_Reset
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset_0__LTCG_edi1,
+                      3911,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x2C, XREF_D3D_CDevice_FreeFrameBuffers),
+
+    // push ebx
+    OV_MATCH(0x00, 0x53),
+
+    // jnz +0x??
+    OV_MATCH(0x29, 0x75),
+
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x2B, 0xE8),
+    // push param_1
+    OV_MATCH(0x30, 0x57),
+    //
+);

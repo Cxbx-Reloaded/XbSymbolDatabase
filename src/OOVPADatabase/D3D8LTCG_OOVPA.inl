@@ -26,19 +26,30 @@
 // Titles which did compiled with full libary version
 //   [LibV] Title Name                       |  Verify   |   Comments
 //-----------------------------------------------------------------------
-// * [3925] Nascar Heat 2002                 |    20%    | Only verified an actually used library.
+// * [3925] NASCAR Heat 2002                 |    20%    | Only verified an actually used library.
 // * [4039] NBA 2K2                          |   100%    | Only has 50%-ish of the library compiled with xbe build.
 // * [4432] Bruce Lee                        |   100%    | Only has 50%-ish of the library compiled with xbe build.
 // * [4627] Battle Engine Aquila             |   100%    | Only has 50%-ish of the library compiled with xbe build.
 // * [4928] Shin Megami Tensei - Nine        |   100%    | Only has 80% of the library compiled with xbe build.
 // * [5233] Midtown Madness 3                |   100%    | Only has 50%-ish of the library compiled with xbe build.
 // * [5455] Freaky Flyers                    |   100%    | Only has 50%-ish of the library compiled with xbe build.
-// * [5659] Ninja Gaiden                     |   100%    | With Intergrated Hotfixes. Only has a few library.
+// * [5659] Ninja Gaiden                     |   100%    | With Integrated Hotfixes. Only has a few library.
 // * [5849] Grand Theft Auto - San Andreas   |   100%    | Only has 50%-ish of the library compiled with xbe build.
 
 // * About the number of OOVPA
-//   * 1024 and 1xxx - Cmpatible with known functions probably.
+//   * 1024 and 1xxx - Compatible with known functions probably.
 //   * 2028 and 2xxx - Remade by Link-time Code Generation, will not work with known functions.
+
+// TODO: Known D3D8LTCG OOVPA issue list
+// * Verification needed: Function Name ( Revision )
+//   * CDevice_FreeFrameBuffers_4 (4034 ... < 4432) // NOTE: CDevice_FreeFrameBuffers_4 4433 signature is the same except off by one offset near start of the body.
+//   * CDevice_InitializeFrameBuffers_8 (4034 ... < 4627) // NOTE: Haven't found any titles below 4627 that match with the 4627's signature.
+//   * CDevice_InitializeFrameBuffers_4__LTCG_esi1 (3911 ... 4034) // NOTE: Unknown if it needs to be lowered to 4034 or below. Plus only found in one title, NBA 2K2.
+//   * CDevice_InitializeFrameBuffers_4__LTCG_ebx1 (3911 ... < 4432) // NOTE: Haven't found any titles below 4432 to match signatures.
+//   * CDevice_InitializeFrameBuffers_4__LTCG_edi1 (3911 ... < 5455) // NOTE: Likely caused by newer compiler yet haven't found any titles below 5455 to match signature.
+//   * D3DDevice_Reset (4034 ... < 4432) // NOTE: Unknown if any signatures need to be lower.
+//   * D3DDevice_Reset_0__LTCG_edi1 (4034 ... < 4039) // NOTE: Unknown if 4039 signature needs to be lower.
+//   * D3DDevice_Reset_0__LTCG_ebx1 (... < 5344) // NOTE: Unknown if signature needs to be lower, and may have appeared at the same time when CDevice_InitializeFrameBuffers_4__LTCG_edi1 was introduced.
 
 #ifndef D3D8LTCG_OOVPA_INL
 #define D3D8LTCG_OOVPA_INL
@@ -73,6 +84,13 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS(D3D_SetFence, 1024, 1036, 1048, 1060),
     REGISTER_OOVPAS(D3D_BlockOnTime, 1024, 1036, 1048),
     REGISTER_OOVPAS_BIND_XREF(D3D_BlockOnTime_4, D3D_BlockOnTime, 2048, 2060),
+
+    REGISTER_OOVPAS_BIND_XREF(CDevice_FreeFrameBuffers_0__LTCG_ebx1, D3D_CDevice_FreeFrameBuffers, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS_BIND_XREF(CDevice_FreeFrameBuffers_4, D3D_CDevice_FreeFrameBuffers, 4432, 4433), // stdcall
+    REGISTER_OOVPAS_BIND_XREF(CDevice_InitializeFrameBuffers_8, D3D_CDevice_InitializeFrameBuffers, 3911, 4627), // stdcall
+    REGISTER_OOVPAS_BIND_XREF(CDevice_InitializeFrameBuffers_4__LTCG_esi1, D3D_CDevice_InitializeFrameBuffers, 4039),
+    REGISTER_OOVPAS_BIND_XREF(CDevice_InitializeFrameBuffers_4__LTCG_ebx1, D3D_CDevice_InitializeFrameBuffers, 4432, 4433, 4531),
+    REGISTER_OOVPAS_BIND_XREF(CDevice_InitializeFrameBuffers_4__LTCG_edi1, D3D_CDevice_InitializeFrameBuffers, 5455),
 
     REGISTER_OOVPAS_D3D(CMiniport_InitHardware, 1024),
     REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface2, 1024),
@@ -129,9 +147,9 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_MultiplyTransform_0, D3DDevice_MultiplyTransform, 2024),
     REGISTER_OOVPAS(D3DDevice_PersistDisplay, 1024, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_Present, 1024),
-    REGISTER_OOVPAS(D3DDevice_Reset, 1024, 1036),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_edi1, D3DDevice_Reset, 2024),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_ebx1, D3DDevice_Reset, 2024),
+    REGISTER_OOVPAS(D3DDevice_Reset, 4432, 4627, 5120),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_edi1, D3DDevice_Reset, 3911, 4039, 4040, 4041),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_ebx1, D3DDevice_Reset, 5344),
     REGISTER_OOVPAS(D3DDevice_RunPushBuffer, 1024, 1048),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_RunPushBuffer_4, D3DDevice_RunPushBuffer, 2048),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_RunVertexStateShader_4, D3DDevice_RunVertexStateShader, 2048),

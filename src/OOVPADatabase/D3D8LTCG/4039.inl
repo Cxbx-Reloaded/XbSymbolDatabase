@@ -1739,3 +1739,112 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x32, 0x8B, 0x4E, 0x04),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+// Generic OOVPA as of 4039 and newer
+// NOTE: Only found in NBA 2K2 title (4039) so far.
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers_4__LTCG_esi1,
+                         4039)
+OOVPA_SIG_MATCH(
+    // sub esp, 0x??
+    OV_MATCH(0x00, 0x83, 0xEC),
+
+    // jc +4
+    // mov [esp + 0x??], eax
+    OV_MATCH(0x18, 0x72, 0x04, 0x89, 0x44, 0x24),
+
+    // mov e??, [e?? + 0x08]
+    // call ????
+    OV_MATCH(0x1E, 0x8B),
+    OV_MATCH(0x20, 0x08, 0xE8),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x2A, 0x8B),
+    OV_MATCH(0x2C, 0x24),
+
+    // [esi + 0x????], eax
+    OV_MATCH(0x4E, 0x89, 0x86),
+
+    // Unknown what offset range may be reliable, unlike other LTCG variants.
+    // For now, we'll rely on the instruction at offset 0x4E until another update is needed.
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_Reset
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset_0__LTCG_edi1,
+                      4039,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x35, XREF_D3D_CDevice_FreeFrameBuffers),
+
+    // push ebx
+    OV_MATCH(0x00, 0x53),
+
+    // TODO: Add range 0 to 1 offset at 0x32 (in summary, offset 0x32 - 0x33)
+    // jnz +0x??
+    OV_MATCH(0x32, 0x75), // Offset 4039 0x32 vs 4041-ish 0x33
+
+    // TODO: Add range 0 to 1 offset at 0x34 (in summary, offset 0x34 - 0x36, including above range)
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x34, 0xE8), // Offset 4039 0x34 vs 4040-ish 0x35 vs 4041-ish 0x36 (the same for below)
+    // push param_1
+    OV_MATCH(0x39, 0x57),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_Reset
+// ******************************************************************
+// NOTE: Lowest detected was 4627 except very similar to 4039 signature.
+// TODO: Migrate this signature into 4039 with offset shift range by one.
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset_0__LTCG_edi1,
+                      4040,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x36, XREF_D3D_CDevice_FreeFrameBuffers),
+
+    // push ebx
+    OV_MATCH(0x00, 0x53),
+
+    // jnz +0x??
+    OV_MATCH(0x32, 0x75),
+
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x35, 0xE8),
+    // push param_1
+    OV_MATCH(0x3A, 0x57),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_Reset
+// ******************************************************************
+// NOTE: Earliest found is 4928 build.
+// TODO: Migrate this signature into 4040-ish with offset shift range by one.
+//       See TODOs in 4039 signature for range difference.
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset_0__LTCG_edi1,
+                      4041,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x37, XREF_D3D_CDevice_FreeFrameBuffers),
+
+    // push ebx
+    OV_MATCH(0x00, 0x53),
+
+    // jnz +0x??
+    OV_MATCH(0x33, 0x75), // Offset 4041-ish 0x33 vs 4039 0x32 (the same for below)
+
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x36, 0xE8),
+
+    // push param_1
+    OV_MATCH(0x3B, 0x57),
+    //
+);

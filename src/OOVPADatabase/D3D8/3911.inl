@@ -5003,30 +5003,24 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_Reset
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Reset,
-                         3911)
+// Generic OOVPA as of 3911 and newer
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset,
+                      3911,
+                      XRefOne)
 OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x23, XREF_D3D_CDevice_FreeFrameBuffers),
 
-    // D3DDevice_Reset+0x00 : push ebx
-    { 0x00, 0x53 },
+    // push ebx
+    OV_MATCH(0x00, 0x53),
 
-    // D3DDevice_Reset+0x15 : mov ecx, ebp
-    { 0x15, 0x8B },
-    { 0x16, 0xCD },
+    // jnz +0xF5
+    OV_MATCH(0x1E, 0x75, 0xF5),
 
-    // D3DDevice_Reset+0x1E : jnz +0xF5
-    { 0x1E, 0x75 },
-    { 0x1F, 0xF5 },
-
-    // D3DDevice_Reset+0x27 : mov esi, [esp+0x14]
-    { 0x27, 0x8B },
-    { 0x28, 0x74 },
-    { 0x29, 0x24 },
-    { 0x2A, 0x14 },
-
-    // D3DDevice_Reset+0x37 : jge +0x10
-    { 0x37, 0x7D },
-    { 0x38, 0x10 },
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x22, 0xE8),
+    // mov esi, [esp + param_1]
+    OV_MATCH(0x27, 0x8B, 0x74, 0x24, 0x14),
     //
 );
 
@@ -5942,5 +5936,64 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x06, 0x6A, 0x00, 0xE8),
     // ret
     OV_MATCH(0x0D, 0xC3),
+    //
+);
+
+// ******************************************************************
+// * D3D::CDevice::FreeFrameBuffers
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(CDevice_FreeFrameBuffers,
+                      3911,
+                      XRefTwo)
+OOVPA_SIG_MATCH(
+    // call [AvGetSavedDataAddress]
+    XREF_ENTRY(0x08, XREF_KT_FUNC_AvGetSavedDataAddress),
+    // call [AvSendTVEncoderOption]
+    XREF_ENTRY(0x20, XREF_KT_FUNC_AvSendTVEncoderOption),
+
+    // push ebx
+    // push ebp
+    // push esi
+    // push edi
+    OV_MATCH(0x00, 0x53, 0x55, 0x56, 0x57),
+    // mov esi, ecx
+    // call [AvGetSavedDataAddress]
+    OV_MATCH(0x04, 0x8B, 0xF1, 0xFF, 0x15),
+
+    // call [AvSendTVEncoderOption]
+    OV_MATCH(0x1E, 0xFF, 0x15),
+
+    // push edx
+    // call ????
+    OV_MATCH(0x6E, 0x52, 0xE8),
+    // mov [esi + 0x????], ebp
+    OV_MATCH(0x74, 0x89, 0xAE),
+
+    // cmp [esi + 0x????], ebp
+    OV_MATCH(0x7A, 0x39, 0xAE),
+    //
+);
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers,
+                         3911)
+OOVPA_SIG_MATCH(
+    // sub esp, 0x??
+    OV_MATCH(0x00, 0x83, 0xEC),
+
+    // jc +4
+    // mov [esp + 0x??], eax
+    OV_MATCH(0x1B, 0x72, 0x04, 0x89, 0x44, 0x24),
+
+    // push eax
+    // call ????
+    OV_MATCH(0x24, 0x50, 0xE8),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x2A, 0x8B),
+    OV_MATCH(0x2C, 0x24),
     //
 );

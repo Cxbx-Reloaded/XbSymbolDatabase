@@ -1143,3 +1143,151 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0xC1, 0xC2, 0x04),
     //
 );
+
+// ******************************************************************
+// * D3D::CDevice::FreeFrameBuffers
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(CDevice_FreeFrameBuffers_4,
+                      4432,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call [AvGetSavedDataAddress]
+    XREF_ENTRY(0x08, XREF_KT_FUNC_AvGetSavedDataAddress),
+    // NOTE: AvSendTVEncoderOption call occurs at different offsets in various titles.
+
+    // This is a requirement to separate detection vs CDevice_FreeFrameBuffers_0__LTCG_ebx1 (4034)
+    // mov e??, [esp + param_1]
+    OV_MATCH(0x01, 0x8B),
+    OV_MATCH(0x03, 0x24, 0x08),
+
+    // call [AvGetSavedDataAddress]
+    OV_MATCH(0x06, 0xFF, 0x15), // Offset 4432 0x06 vs 4433-ish 0x07 (the same for below)
+
+    // jz +0x20
+    // mov ecx, [eax + 0x14]
+    OV_MATCH(0x2E, 0x74, 0x20, 0x8B, 0x48, 0x14),
+
+    // call ????
+    OV_MATCH(0x6F, 0xE8), // Offset 4432 0x69 vs 4433-ish 0x68 (the same for below)
+    // mov [ebp + 0x????], e??
+    OV_MATCH(0x74, 0x89),
+
+    // cmp [ebp + 0x????], e??
+    OV_MATCH(0x7A, 0x39),
+    //
+);
+
+// ******************************************************************
+// * D3D::CDevice::FreeFrameBuffers
+// ******************************************************************
+// TODO: Migrate this signature into 4432 with offset shift range by one.
+// Found in "Call of Cthulhu: Dark Corners of the Earth" title (5849)
+// Yet all other 5849 title builds do match CDevice_FreeFrameBuffers_4 4432's signature.
+OOVPA_SIG_HEADER_XREF(CDevice_FreeFrameBuffers_4,
+                      4433,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call [AvGetSavedDataAddress]
+    XREF_ENTRY(0x09, XREF_KT_FUNC_AvGetSavedDataAddress),
+    // NOTE: AvSendTVEncoderOption call occurs at different offsets in various titles.
+
+    // mov e??, [esp + param_1]
+    OV_MATCH(0x01, 0x8B),
+    OV_MATCH(0x03, 0x24, 0x08),
+
+    // call [AvGetSavedDataAddress]
+    OV_MATCH(0x07, 0xFF, 0x15), // Offset 4433-ish 0x07 vs 4432 0x06
+
+    // jz +0x20
+    // mov ecx, [eax + 0x14]
+    OV_MATCH(0x2D, 0x74, 0x20, 0x8B, 0x48, 0x14),
+
+    // call ????
+    OV_MATCH(0x6E, 0xE8), // Offset 4433-ish 0x68 vs 4432 0x69 (the same for below)
+    // mov [ebp + 0x????], e??
+    OV_MATCH(0x73, 0x89),
+
+    // cmp [ebp + 0x????], e??
+    OV_MATCH(0x79, 0x39),
+    //
+);
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers_4__LTCG_ebx1,
+                         4432)
+OOVPA_SIG_MATCH(
+    // mov edx, [esp + param_2]
+    OV_MATCH(0x00, 0x8B, 0x54, 0x24, 0x04),
+
+    // mov e??, [e?? + 0x08]
+    OV_MATCH(0x17, 0x8B),
+    OV_MATCH(0x19, 0x08),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x27, 0x8B),
+    OV_MATCH(0x29, 0x24),
+
+    // Possible start at offset 0x141 - 0x17B to use one signature rather than multiple
+    // add eax, 0x18
+    // dec ecx
+    OV_MATCH(0x161, 0x83, 0xC0, 0x18, 0x49), // offset 4432 0x161 vs 4433 0x160
+
+    // lea eax, [ebx + 0x????]
+    OV_MATCH(0x176, 0x8D, 0x83), // offset 4432 0x176 vs 4433 0x175
+    //
+);
+
+// ******************************************************************
+// * D3D::CDevice::InitializeFrameBuffers
+// ******************************************************************
+// TODO: Migrate this signature into 4432 with offset shift range by one.
+// Only detected in Sega GT 2002 (4627)
+OOVPA_SIG_HEADER_NO_XREF(CDevice_InitializeFrameBuffers_4__LTCG_ebx1,
+                         4433)
+OOVPA_SIG_MATCH(
+    // mov edx, [esp + param_2]
+    OV_MATCH(0x00, 0x8B, 0x54, 0x24, 0x04),
+
+    // mov e??, [e?? + 0x08]
+    OV_MATCH(0x17, 0x8B),
+    OV_MATCH(0x19, 0x08),
+
+    // mov e??, [e?? + 0x24]
+    OV_MATCH(0x27, 0x8B),
+    OV_MATCH(0x29, 0x24),
+
+    // Possible start at offset 0x140 - 0x17A to use one signature rather than multiple
+    // add eax, 0x18
+    // dec ecx
+    OV_MATCH(0x160, 0x83, 0xC0, 0x18, 0x49), // offset 4433 0x160 vs 4432 0x161
+
+    // lea eax, [ebx + 0x????]
+    OV_MATCH(0x175, 0x8D, 0x83), // offset 4433 0x175 vs 4432 0x176
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_Reset
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset,
+                      4432,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x36, XREF_D3D_CDevice_FreeFrameBuffers),
+
+    // push ebx
+    OV_MATCH(0x00, 0x53),
+
+    // jnz +0x??
+    OV_MATCH(0x32, 0x75),
+
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x35, 0xE8),
+    // mov edi, [esp + param_1]
+    OV_MATCH(0x3A, 0x8B),
+    OV_MATCH(0x3C, 0x24, 0x14),
+    //
+);
