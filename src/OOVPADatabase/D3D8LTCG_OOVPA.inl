@@ -47,6 +47,9 @@
 //   * CDevice_InitializeFrameBuffers_4__LTCG_esi1 (3911 ... 4034) // NOTE: Unknown if it needs to be lowered to 4034 or below. Plus only found in one title, NBA 2K2.
 //   * CDevice_InitializeFrameBuffers_4__LTCG_ebx1 (3911 ... < 4432) // NOTE: Haven't found any titles below 4432 to match signatures.
 //   * CDevice_InitializeFrameBuffers_4__LTCG_edi1 (3911 ... < 5455) // NOTE: Likely caused by newer compiler yet haven't found any titles below 5455 to match signature.
+//   * D3DDevice_Reset (4034 ... < 4432) // NOTE: Unknown if any signatures need to be lower.
+//   * D3DDevice_Reset_0__LTCG_edi1 (4034 ... < 4039) // NOTE: Unknown if 4039 signature needs to be lower.
+//   * D3DDevice_Reset_0__LTCG_ebx1 (... < 5344) // NOTE: Unknown if signature needs to be lower, and may have appeared at the same time when CDevice_InitializeFrameBuffers_4__LTCG_edi1 was introduced.
 
 #ifndef D3D8LTCG_OOVPA_INL
 #define D3D8LTCG_OOVPA_INL
@@ -144,9 +147,9 @@ OOVPATable D3D8LTCG_OOVPA[] = {
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_MultiplyTransform_0, D3DDevice_MultiplyTransform, 2024),
     REGISTER_OOVPAS(D3DDevice_PersistDisplay, 1024, 1048, 1060),
     REGISTER_OOVPAS(D3DDevice_Present, 1024),
-    REGISTER_OOVPAS(D3DDevice_Reset, 1024, 1036),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_edi1, D3DDevice_Reset, 2024),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_ebx1, D3DDevice_Reset, 2024),
+    REGISTER_OOVPAS(D3DDevice_Reset, 4432, 4627, 5120),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_edi1, D3DDevice_Reset, 3911, 4039, 4040, 4041),
+    REGISTER_OOVPAS_BIND_XREF(D3DDevice_Reset_0__LTCG_ebx1, D3DDevice_Reset, 5344),
     REGISTER_OOVPAS(D3DDevice_RunPushBuffer, 1024, 1048),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_RunPushBuffer_4, D3DDevice_RunPushBuffer, 2048),
     REGISTER_OOVPAS_BIND_XREF(D3DDevice_RunVertexStateShader_4, D3DDevice_RunVertexStateShader, 2048),

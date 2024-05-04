@@ -1267,3 +1267,27 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x175, 0x8D, 0x83), // offset 4433 0x175 vs 4432 0x176
     //
 );
+
+// ******************************************************************
+// * D3DDevice_Reset
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset,
+                      4432,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x36, XREF_D3D_CDevice_FreeFrameBuffers),
+
+    // push ebx
+    OV_MATCH(0x00, 0x53),
+
+    // jnz +0x??
+    OV_MATCH(0x32, 0x75),
+
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x35, 0xE8),
+    // mov edi, [esp + param_1]
+    OV_MATCH(0x3A, 0x8B),
+    OV_MATCH(0x3C, 0x24, 0x14),
+    //
+);

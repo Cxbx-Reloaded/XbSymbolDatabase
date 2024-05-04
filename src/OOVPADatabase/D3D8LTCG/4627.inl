@@ -659,47 +659,24 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_Reset
 // ******************************************************************
-//803F6A006A036A006A00E8
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Reset,
-                         1024)
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset,
+                      4627,
+                      XRefOne)
 OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x37, XREF_D3D_CDevice_FreeFrameBuffers),
 
-    { 0x00, 0x53 },
-    { 0x01, 0x8B },
+    // push ebx
+    OV_MATCH(0x00, 0x53),
 
-    { 0x99, 0x6A },
-    { 0x9A, 0x00 },
-    { 0x9B, 0x68 },
-    { 0x9C, 0x00 },
-    { 0x9D, 0x00 },
-    { 0x9E, 0x80 },
-    { 0x9F, 0x3F },
-    { 0xA0, 0x6A },
-    //
-);
+    // mov ebx, [esp + param_1]
+    OV_MATCH(0x01, 0x8B, 0x5C, 0x24, 0x08),
 
-// ******************************************************************
-// * D3DDevice_Reset
-// ******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_Reset_0__LTCG_edi1,
-                      2024,
-                      XRefTwo)
-OOVPA_SIG_MATCH(
+    // jnz +0x??
+    OV_MATCH(0x33, 0x75),
 
-    // mov e??,[D3D_g_pDevice]
-    XREF_ENTRY(0x03, XREF_D3D_g_pDevice),
-    // call D3D_BlockOnTime
-    XREF_ENTRY(0x10, XREF_D3D_BlockOnTime),
-
-    // call D3D_BlockOnTime
-    OV_MATCH(0x0F, 0xE8),
-
-    // call ????
-    OV_MATCH(0x35, 0xE8),
-    // push edi (param_1)
-    OV_MATCH(0x3A, 0x57),
-    // call ????
-    OV_MATCH(0x3B, 0xE8),
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x36, 0xE8),
     //
 );
 

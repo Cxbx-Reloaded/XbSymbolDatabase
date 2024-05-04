@@ -1771,3 +1771,80 @@ OOVPA_SIG_MATCH(
     // For now, we'll rely on the instruction at offset 0x4E until another update is needed.
     //
 );
+
+// ******************************************************************
+// * D3DDevice_Reset
+// ******************************************************************
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset_0__LTCG_edi1,
+                      4039,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x35, XREF_D3D_CDevice_FreeFrameBuffers),
+
+    // push ebx
+    OV_MATCH(0x00, 0x53),
+
+    // TODO: Add range 0 to 1 offset at 0x32 (in summary, offset 0x32 - 0x33)
+    // jnz +0x??
+    OV_MATCH(0x32, 0x75), // Offset 4039 0x32 vs 4041-ish 0x33
+
+    // TODO: Add range 0 to 1 offset at 0x34 (in summary, offset 0x34 - 0x36, including above range)
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x34, 0xE8), // Offset 4039 0x34 vs 4040-ish 0x35 vs 4041-ish 0x36 (the same for below)
+    // push param_1
+    OV_MATCH(0x39, 0x57),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_Reset
+// ******************************************************************
+// NOTE: Lowest detected was 4627 except very similar to 4039 signature.
+// TODO: Migrate this signature into 4039 with offset shift range by one.
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset_0__LTCG_edi1,
+                      4040,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x36, XREF_D3D_CDevice_FreeFrameBuffers),
+
+    // push ebx
+    OV_MATCH(0x00, 0x53),
+
+    // jnz +0x??
+    OV_MATCH(0x32, 0x75),
+
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x35, 0xE8),
+    // push param_1
+    OV_MATCH(0x3A, 0x57),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_Reset
+// ******************************************************************
+// NOTE: Earliest found is 4928 build.
+// TODO: Migrate this signature into 4040-ish with offset shift range by one.
+//       See TODOs in 4039 signature for range difference.
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset_0__LTCG_edi1,
+                      4041,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x37, XREF_D3D_CDevice_FreeFrameBuffers),
+
+    // push ebx
+    OV_MATCH(0x00, 0x53),
+
+    // jnz +0x??
+    OV_MATCH(0x33, 0x75), // Offset 4041-ish 0x33 vs 4039 0x32 (the same for below)
+
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x36, 0xE8),
+
+    // push param_1
+    OV_MATCH(0x3B, 0x57),
+    //
+);

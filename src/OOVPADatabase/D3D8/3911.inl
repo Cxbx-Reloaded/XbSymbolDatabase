@@ -5003,30 +5003,24 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_Reset
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Reset,
-                         3911)
+// Generic OOVPA as of 3911 and newer
+OOVPA_SIG_HEADER_XREF(D3DDevice_Reset,
+                      3911,
+                      XRefOne)
 OOVPA_SIG_MATCH(
+    // call CDevice::FreeFrameBuffers
+    XREF_ENTRY(0x23, XREF_D3D_CDevice_FreeFrameBuffers),
 
-    // D3DDevice_Reset+0x00 : push ebx
-    { 0x00, 0x53 },
+    // push ebx
+    OV_MATCH(0x00, 0x53),
 
-    // D3DDevice_Reset+0x15 : mov ecx, ebp
-    { 0x15, 0x8B },
-    { 0x16, 0xCD },
+    // jnz +0xF5
+    OV_MATCH(0x1E, 0x75, 0xF5),
 
-    // D3DDevice_Reset+0x1E : jnz +0xF5
-    { 0x1E, 0x75 },
-    { 0x1F, 0xF5 },
-
-    // D3DDevice_Reset+0x27 : mov esi, [esp+0x14]
-    { 0x27, 0x8B },
-    { 0x28, 0x74 },
-    { 0x29, 0x24 },
-    { 0x2A, 0x14 },
-
-    // D3DDevice_Reset+0x37 : jge +0x10
-    { 0x37, 0x7D },
-    { 0x38, 0x10 },
+    // call CDevice::FreeFrameBuffers
+    OV_MATCH(0x22, 0xE8),
+    // mov esi, [esp + param_1]
+    OV_MATCH(0x27, 0x8B, 0x74, 0x24, 0x14),
     //
 );
 
