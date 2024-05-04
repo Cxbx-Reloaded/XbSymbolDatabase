@@ -178,10 +178,12 @@ typedef struct _LOOVPA {
 #define OOVPA_END }
 // clang-format on
 
+#pragma pack() // require restore pack for AppleClang to build
 typedef struct _OOVPARevision {
     OOVPA* Oovpa;
     unsigned short Version; // : 13; // 2^13 = 8192, enough to store lowest and highest possible Library Version number in
 } OOVPARevision;
+#pragma pack(1)
 
 #define COUNTARGS_USHORT(...) (sizeof((unsigned short[]){ __VA_ARGS__ }) / sizeof(unsigned short))
 
@@ -196,6 +198,7 @@ typedef enum _eDBScanType {
 // ******************************************************************
 // * OOVPATable
 // ******************************************************************
+#pragma pack() // require restore pack for AppleClang to build
 typedef struct _OOVPATable {
     uint16_t xref;
     char* szFuncName;
@@ -203,6 +206,7 @@ typedef struct _OOVPATable {
     unsigned count;
     OOVPARevision* revisions;
 } OOVPATable;
+#pragma pack(1)
 
 // http://en.cppreference.com/w/cpp/iterator/size
 //#include <iterator>

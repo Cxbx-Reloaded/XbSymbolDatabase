@@ -31,7 +31,7 @@ if(NOT TARGET simpleini)
  FetchContent_Populate(
   simpleini
   GIT_REPOSITORY https://github.com/brofield/simpleini.git
-  GIT_TAG        56499b5af5d2195c6acfc58c4630b70e0c9c4c21
+  GIT_TAG        f7862c3dd7ad35becc2741f268e3402e89a37666
  )
 endif()
 

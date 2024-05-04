@@ -22,6 +22,7 @@
 #include <string>
 //#define DISABLE_MULTI_THREAD // NOTE: Uncomment define if need to use or test on single thread.
 #ifndef DISABLE_MULTI_THREAD
+#include <vector> // for using with thread library
 #include <thread>
 #include <mutex>
 static std::mutex mtx_context;
@@ -897,7 +898,7 @@ int main(int argc, char** argv)
         return UNITTEST_OK;
     }
 
-    if (test_ret = cliInputInteractive(argc, argv)) {
+    if ((test_ret = cliInputInteractive(argc, argv))) {
         return test_ret;
     }
 

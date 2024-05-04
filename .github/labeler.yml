@@ -1,42 +1,68 @@
 # Add 'OOVPA' and 'needs-verification' labels within OOVPADatabase folder and subfolders
 OOVPA:
-  - src/OOVPADatabase/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - src/OOVPADatabase/**/*
 needs-verification:
-  - src/OOVPADatabase/**/*
+- changed-files:
+  - any-glob-to-any-file:
+    - src/OOVPADatabase/**/*
 
 # The rest is base on folder and file's naming
 D3D8:
-  - src/OOVPADatabase/D3D8/*
-  - src/OOVPADatabase/D3D8_*.inl
+- changed-files:
+  - any-glob-to-any-file:
+    - src/OOVPADatabase/D3D8/*
+    - src/OOVPADatabase/D3D8_*.inl
 D3D8LTCG:
-  - src/OOVPADatabase/D3D8LTCG/*
-  - src/OOVPADatabase/D3D8LTCG_*.inl
+- changed-files:
+  - any-glob-to-any-file:
+    - src/OOVPADatabase/D3D8LTCG/*
+    - src/OOVPADatabase/D3D8LTCG_*.inl
 DSOUND:
-  - src/OOVPADatabase/DSound/*
-  - src/OOVPADatabase/DSound_*.inl
+- changed-files:
+  - any-glob-to-any-file:
+    - src/OOVPADatabase/DSound/*
+    - src/OOVPADatabase/DSound_*.inl
 JVS:
-  - src/OOVPADatabase/JVS/*
-  - src/OOVPADatabase/JVS_*.inl
+- changed-files:
+  - any-glob-to-any-file:
+    - src/OOVPADatabase/JVS/*
+    - src/OOVPADatabase/JVS_*.inl
 XACTENG:
-  - src/OOVPADatabase/XActEng/*
-  - src/OOVPADatabase/XActEng_*.inl
+- changed-files:
+  - any-glob-to-any-file:
+    - src/OOVPADatabase/XActEng/*
+    - src/OOVPADatabase/XActEng_*.inl
 XGRAPHIC:
-  - src/OOVPADatabase/XGraphic/*
-  - src/OOVPADatabase/XGraphic_*.inl
+- changed-files:
+  - any-glob-to-any-file:
+    - src/OOVPADatabase/XGraphic/*
+    - src/OOVPADatabase/XGraphic_*.inl
 XNET:
-  - src/OOVPADatabase/XNet/*
-  - src/OOVPADatabase/XNet_*.inl
+- changed-files:
+  - any-glob-to-any-file:
+    - src/OOVPADatabase/XNet/*
+    - src/OOVPADatabase/XNet_*.inl
 XONLINE:
-  - src/OOVPADatabase/XOnline/*
-  - src/OOVPADatabase/XOnline_*.inl
+- changed-files:
+  - any-glob-to-any-file:
+    - src/OOVPADatabase/XOnline/*
+    - src/OOVPADatabase/XOnline_*.inl
 XAPI:
-  - src/OOVPADatabase/Xapi/*
-  - src/OOVPADatabase/Xapi_*.inl
+- changed-files:
+  - any-glob-to-any-file:
+    - src/OOVPADatabase/Xapi/*
+    - src/OOVPADatabase/Xapi_*.inl
 
 # Misc
 CMAKE:
-  - '**/CMakeLists.txt'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/CMakeLists.txt'
 
 # Whenever add another tool, update below as well.
 TOOLS:
-  - src/cli/**
+- changed-files:
+  - any-glob-to-any-file:
+    - src/cli/**
