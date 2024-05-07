@@ -82,7 +82,7 @@ jobs:
             const platforms = [
                 {"platform": "Windows", "folder": "win", "cmake-build-param": "-j $env:NUMBER_OF_PROCESSORS"},
                 {"platform": "Linux", "folder": "linux", "cmake-build-param": "-j $(nproc --all)", "cmake-generator": "-G \"Unix Makefiles\""},
-                {"platform": "macOS", "folder": "macos", "cmake-build-param": "-j $(sysctl -n hw.ncpu)", "cmake-generator": "-G Xcode"}
+                {"platform": "macOS", "folder": "macos", "cmake-build-param": "-j $(sysctl -n hw.ncpu)"}
             ];
             let builder = [];
             for (let build of platforms.values()) {
@@ -105,13 +105,15 @@ jobs:
                 builder.push(Object.assign({}, build));
               }
               if (build.platform === "macOS") {
-                // create x64 build (only on macos-13 and earlier)
-                build["os"] = "macos-13";
-                build["arch"] = "x64";
-                builder.push(Object.assign({}, build));
-                // create amd64 build (only on macos-14 and later)
+                // always use the latest os
                 build["os"] = "macos-latest";
-                build["arch"] = "amd64";
+                // create x64 build
+                build["arch"] = "x64";
+                build["cmake-generator"] = "-G Xcode -DCMAKE_OSX_ARCHITECTURES=x86_64";
+                builder.push(Object.assign({}, build));
+                // create arm64 build
+                build["arch"] = "arm64";
+                build["cmake-generator"] = "-G Xcode -DCMAKE_OSX_ARCHITECTURES=arm64";
                 builder.push(Object.assign({}, build));
               }
             }
