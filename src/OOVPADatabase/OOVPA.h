@@ -31,6 +31,10 @@
 // MSVC_EXPAND works around a Visual C++ problem, expanding __VA_ARGS__ incorrectly:
 #define MSVC_EXPAND(x) x
 
+// Wrap C++ style macro function for clang-format to follow our code style.
+// NOTE: Not relative to MSVC_EXPAND macro's bugfix.
+#define MACRO_FUNC(x) x
+
 #define STRINGIZEX(x) #x
 #define STRINGIZE(x)  STRINGIZEX(x)
 
@@ -207,8 +211,10 @@ typedef struct _OOVPATable {
 #pragma pack(1)
 
 // http://en.cppreference.com/w/cpp/iterator/size
+// clang-format off
 //#include <iterator>
 //#define XBSDB_ARRAY_SIZE(x) std::size(x)
+// clang-format on
 #define XBSDB_ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 
 // clang-format off
@@ -258,24 +264,30 @@ typedef struct _OOVPATable {
 // the count of throwaway args before N. Note that this macro is preceded by
 // an underscore--it's an implementation detail, not something we expect people
 // to call directly.
-#define _GET_NTH_ARG(                                 \
+#define _GET_NTH_ARG_MAX_19(                          \
     _19, _18, _17, _16, _15, _14, _13, _12, _11, _10, \
     _9, _8, _7, _6, _5, _4, _3, _2, _1, _0,           \
     N, ...) N
+// For OV_MATCH macro
+// Even though x86 instructions can be anywhere from 1 to 15 bytes long,
+// we don't need to fill in whole instruction.
+#define _GET_NTH_ARG_MAX_8(             \
+    _8, _7, _6, _5, _4, _3, _2, _1, _0, \
+    N, ...) N
 
 
-#define REGISTER_OOVPAS_TYPE(Symbol, xref, ScanType, ...)                                                                                        \
-    XREF_##xref,                                                                                                                                 \
-        #Symbol,                                                                                                                                 \
-        ScanType,                                                                                                                                \
-        MSVC_EXPAND(COUNTARGS_USHORT(__VA_ARGS__)),                                                                                              \
-        (OOVPARevision[])                                                                                                                        \
-    {                                                                                                                                            \
-        MSVC_EXPAND(_GET_NTH_ARG("ignored", __VA_ARGS__,                                                                                         \
-                                 REGISTER_OOVPA_19, REGISTER_OOVPA_18, REGISTER_OOVPA_17, REGISTER_OOVPA_16, REGISTER_OOVPA_15,                  \
-                                 REGISTER_OOVPA_14, REGISTER_OOVPA_13, REGISTER_OOVPA_12, REGISTER_OOVPA_11, REGISTER_OOVPA_10,                  \
-                                 REGISTER_OOVPA_9, REGISTER_OOVPA_8, REGISTER_OOVPA_7, REGISTER_OOVPA_6, REGISTER_OOVPA_5,                       \
-                                 REGISTER_OOVPA_4, REGISTER_OOVPA_3, REGISTER_OOVPA_2, REGISTER_OOVPA_1, REGISTER_OOVPA_0)(Symbol, __VA_ARGS__)) \
+#define REGISTER_OOVPAS_TYPE(Symbol, xref, ScanType, ...)                                                                                              \
+    XREF_##xref,                                                                                                                                       \
+        #Symbol,                                                                                                                                       \
+        ScanType,                                                                                                                                      \
+        COUNTARGS_USHORT(__VA_ARGS__),                                                                                                                 \
+        (OOVPARevision[])                                                                                                                              \
+    {                                                                                                                                                  \
+        MACRO_FUNC(_GET_NTH_ARG_MAX_19("ignored", ##__VA_ARGS__,                                                                                       \
+                                       REGISTER_OOVPA_19, REGISTER_OOVPA_18, REGISTER_OOVPA_17, REGISTER_OOVPA_16, REGISTER_OOVPA_15,                  \
+                                       REGISTER_OOVPA_14, REGISTER_OOVPA_13, REGISTER_OOVPA_12, REGISTER_OOVPA_11, REGISTER_OOVPA_10,                  \
+                                       REGISTER_OOVPA_9, REGISTER_OOVPA_8, REGISTER_OOVPA_7, REGISTER_OOVPA_6, REGISTER_OOVPA_5,                       \
+                                       REGISTER_OOVPA_4, REGISTER_OOVPA_3, REGISTER_OOVPA_2, REGISTER_OOVPA_1, REGISTER_OOVPA_0)(Symbol, __VA_ARGS__)) \
     }
 
 // TODO: Need to work on support prefix inside macro.
@@ -295,17 +307,10 @@ typedef struct _OOVPATable {
 #define REGISTER_OOVPAS_C_PREFIX(Symbol, Prefix, ...)  MSVC_EXPAND(REGISTER_OOVPAS_TYPE_PREFIX(Symbol, Prefix, DB_ST_ALL, __VA_ARGS__))
 #define REGISTER_OOVPAS_C_BIND_XREF(Symbol, XRef, ...) MSVC_EXPAND(REGISTER_OOVPAS_TYPE_BIND_XREF(Symbol, XRef, DB_ST_ALL, __VA_ARGS__))
 
-// See _GET_NTH_ARG comment for details.
-// Even though x86 instructions can be anywhere from 1 to 15 bytes long,
-// we don't need to fill in whole instruction.
-#define _GET_NTH_ARG_OVP(               \
-    _8, _7, _6, _5, _4, _3, _2, _1, _0, \
-    N, ...) N
-
-#define OV_MATCH(Offset, ...)                                                                \
-    MSVC_EXPAND(_GET_NTH_ARG_OVP("ignored", __VA_ARGS__,                                     \
-                                 OV_BYTES_8, OV_BYTES_7, OV_BYTES_6, OV_BYTES_5, OV_BYTES_4, \
-                                 OV_BYTES_3, OV_BYTES_2, OV_BYTES_1, OV_BYTES_0)(Offset, __VA_ARGS__))
+#define OV_MATCH(Offset, ...)                                                                 \
+    MACRO_FUNC(_GET_NTH_ARG_MAX_8("ignored", ##__VA_ARGS__,                                   \
+                                  OV_BYTES_8, OV_BYTES_7, OV_BYTES_6, OV_BYTES_5, OV_BYTES_4, \
+                                  OV_BYTES_3, OV_BYTES_2, OV_BYTES_1, OV_BYTES_0)(Offset, __VA_ARGS__))
 
 #pragma pack()
 
