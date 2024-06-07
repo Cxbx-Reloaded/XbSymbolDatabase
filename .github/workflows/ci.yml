@@ -162,8 +162,8 @@ jobs:
   merge:
     name: Merge Artifacts
     runs-on: ubuntu-latest
-    needs: build
-    if: ${{ !cancelled() }}
+    needs: [semver, build]
+    if: ${{ !cancelled() && needs.semver.outputs.do-build == 'true' }}
     steps:
       - uses: actions/upload-artifact/merge@v4
         with:
