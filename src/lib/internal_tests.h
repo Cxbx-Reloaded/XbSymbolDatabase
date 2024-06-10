@@ -46,7 +46,7 @@ static int OOVPAErrorString(char* bufferTemp, SymbolDatabaseList* data, OOVPATab
     // Convert active symbol pointer to an index base on starting point of SymbolsTable.
     unsigned int sym_index = (unsigned int)(symbol - data->SymbolsTable);
 
-    return sprintf(bufferTemp, "OOVPATable db=%2u, i=[%4u], b=%4hu s=%s[%4u]", db_index, sym_index, symbol->revisions[index].Version, symbol->szFuncName, index);
+    return sprintf(bufferTemp, "OOVPATable db=%2u, i=[%4u], b=%4hu s=%s[%4u]", db_index, sym_index, symbol->revisions[index].Version, symbol->szSymbolName, index);
 }
 
 static void SymbolDatabaseVerifyContext_OOVPAError(SymbolDatabaseVerifyContext* context, char* format, ...)
@@ -273,7 +273,7 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVer
         if (context->against.data == NULL) {
             // For safety check purpose
             if (internal_IsXRefUnset(data->SymbolsTable[s].xref)) {
-                output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s cannot have unset xref.", data->SymbolsTable[s].szFuncName);
+                output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s cannot have unset xref.", data->SymbolsTable[s].szSymbolName);
                 error_count++;
             }
         }

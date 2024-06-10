@@ -127,6 +127,35 @@ static const char* xbe_type_str[XB_XBE_TYPE_MAX] = {
     "CHIHIRO"
 };
 
+typedef enum _XbSDBParamType {
+    param_unk = 0, // Unknown
+    param_stk,     // 32 bits
+    param_eax,     // 32 bits
+    param__ax,     // 16 bits
+    param__ah,     //  8 bits
+    param__al,     //  8 bits
+    param_ebx,     // 32 bits
+    param__bx,     // 16 bits
+    param__bh,     //  8 bits
+    param__bl,     //  8 bits
+    param_ecx,     // 32 bits
+    param__cx,     // 16 bits
+    param__ch,     //  8 bits
+    param__cl,     //  8 bits
+    param_edx,     // 32 bits
+    param__dx,     // 16 bits
+    param__dh,     //  8 bits
+    param__dl,     //  8 bits
+    param_ebp,     // 32 bits
+    param_edi,     // 32 bits
+    param_esi      // 32 bits
+} XbSDBParamType;
+
+typedef struct _XbSDBSymbolParam {
+    XbSDBParamType type;
+    const char* const name;
+} XbSDBSymbolParam;
+
 #ifndef xbaddr
 typedef uint32_t xbaddr;
 #endif

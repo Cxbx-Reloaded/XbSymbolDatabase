@@ -77,18 +77,30 @@
 // ******************************************************************
 OOVPATable XGRAPHC_OOVPA[] = {
 
-    REGISTER_OOVPAS(XFONT_OpenBitmapFontFromMemory, 4361),
-    REGISTER_OOVPAS(XGCompressRect, 3911), // TODO: Do we need to patch this?
-    REGISTER_OOVPAS(XGIsSwizzledFormat, 3911),
-    REGISTER_OOVPAS(XGSetIndexBufferHeader, 3911, 4134),
-    REGISTER_OOVPAS(XGSetSurfaceHeader, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(XGSetTextureHeader, 3911),
-    REGISTER_OOVPAS(XGSetVertexBufferHeader, 3911, 4134),
-    REGISTER_OOVPAS(XGSwizzleBox, 3911),
-    REGISTER_OOVPAS(XGSwizzleRect, 3911),
-    REGISTER_OOVPAS(XGUnswizzleBox, 3911),
-    REGISTER_OOVPAS(XGUnswizzleRect, 3911),
-    REGISTER_OOVPAS(XGWriteSurfaceOrTextureToXPR, 3911),
+    REGISTER_OOVPAS(SYM_FUN(XFONT_OpenBitmapFontFromMemory, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4361)),
+    REGISTER_OOVPAS(SYM_FUN(XGCompressRect, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // TODO: Do we need to patch this?
+    REGISTER_OOVPAS(SYM_FUN(XGIsSwizzledFormat, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGSetIndexBufferHeader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4134)),
+    REGISTER_OOVPAS(SYM_FUN(XGSetSurfaceHeader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(XGSetTextureHeader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGSetVertexBufferHeader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4134)),
+    REGISTER_OOVPAS(SYM_FUN(XGSwizzleBox, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGSwizzleRect, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGUnswizzleBox, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGUnswizzleRect, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGWriteSurfaceOrTextureToXPR, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
 };
 
 // ******************************************************************

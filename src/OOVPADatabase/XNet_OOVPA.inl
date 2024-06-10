@@ -56,17 +56,28 @@
 // ******************************************************************
 OOVPATable XNET_OOVPA[] = {
 
-    REGISTER_OOVPAS(XnInit, 3911, 4361), // 3911 is only XNETS library, XNET library is different OOVPA.
-    REGISTER_OOVPAS(WSAStartup, 3911, 4361),
-    REGISTER_OOVPAS(XNetStartup, 3911, 4361),
-    REGISTER_OOVPAS(XNetGetEthernetLinkStatus, 3911, 4627), //NOTE: Found in .text section, confirmed it is correct.
-    REGISTER_OOVPAS(bind, 3911, 4627),
-    REGISTER_OOVPAS(connect, 3911, 5120),
-    REGISTER_OOVPAS(ioctlsocket, 3911, 4627),
-    REGISTER_OOVPAS(listen, 3911, 4627),
-    REGISTER_OOVPAS(recv, 3911),
-    REGISTER_OOVPAS(send, 3911),
-    REGISTER_OOVPAS(socket, 3911, 4627, 5455),
+    REGISTER_OOVPAS(SYM_FUN(XnInit, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4361)), // 3911 is only XNETS library, XNET library is different OOVPA.
+    REGISTER_OOVPAS(SYM_FUN(WSAStartup, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4361)),
+    REGISTER_OOVPAS(SYM_FUN(XNetStartup, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4361)),
+    REGISTER_OOVPAS(SYM_FUN(XNetGetEthernetLinkStatus, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)), // NOTE: Found in .text section, confirmed it is correct.
+    REGISTER_OOVPAS(SYM_FUN(bind, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(connect, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5120)),
+    REGISTER_OOVPAS(SYM_FUN(ioctlsocket, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(listen, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(recv, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(send, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(socket, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627, 5455)),
 };
 
 // ******************************************************************

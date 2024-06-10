@@ -185,263 +185,516 @@
 // * D3D8_OOVPA
 // ******************************************************************
 OOVPATable D3D8_OOVPA[] = {
-    REGISTER_OOVPAS_M(D3DDevice__m_VerticalBlankEvent__GenericFragment, 3911), // This OOVPA signature is not a symbol. Read its note for more details.
-    REGISTER_OOVPAS_M(D3DRS_Stencils_and_Occlusion__GenericFragment, 3911), // This OOVPA signature is not a symbol. Read its note for more details.
+    REGISTER_OOVPAS_M(SYM_VAR(D3DDevice__m_VerticalBlankEvent__GenericFragment),
+                      SYM_SIG(3911)), // This OOVPA signature is not a symbol. Read its note for more details.
+    REGISTER_OOVPAS_M(SYM_VAR(D3DRS_Stencils_and_Occlusion__GenericFragment),
+                      SYM_SIG(3911)), // This OOVPA signature is not a symbol. Read its note for more details.
 
-    REGISTER_OOVPAS(D3D_UpdateProjectionViewportTransform, 3900, 3901), // Final generic OOVPA: 4034; Removed: 0 // NOTE: 3901 is 4034 signature, except LTCG title been detected in 3925.
+    REGISTER_OOVPAS(SYM_FUN(D3D_UpdateProjectionViewportTransform, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3900, 3901)), // Final generic OOVPA: 4034; Removed: 0 // NOTE: 3901 is 4034 signature, except LTCG title been detected in 3925.
 
-    REGISTER_OOVPAS_D3D(CDevice_InitializeFrameBuffers, 3911), // Final generic OOVPA: 3911; Removed: 0 // thiscall
-    REGISTER_OOVPAS_D3D(CDevice_FreeFrameBuffers, 3911, 4034, 5455), // Final generic OOVPA: 5455; Removed: 0 // thiscall
-    REGISTER_OOVPAS_D3D(CDevice_SetStateUP, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0 // thiscall
-    REGISTER_OOVPAS_D3D(CDevice_SetStateVB, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0 // thiscall
+    REGISTER_OOVPAS_D3D(SYM_FUN(CDevice_InitializeFrameBuffers, STACK(/*default*/), PARAMS(/*unknown*/)),
+                        SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0 // thiscall
+    REGISTER_OOVPAS_D3D(SYM_FUN(CDevice_FreeFrameBuffers, STACK(/*default*/), PARAMS(/*unknown*/)),
+                        SYM_SIG(3911, 4034, 5455)), // Final generic OOVPA: 5455; Removed: 0 // thiscall
+    REGISTER_OOVPAS_D3D(SYM_FUN(CDevice_SetStateUP, STACK(/*default*/), PARAMS(/*unknown*/)),
+                        SYM_SIG(3911, 4034)), // Final generic OOVPA: 4034; Removed: 0 // thiscall
+    REGISTER_OOVPAS_D3D(SYM_FUN(CDevice_SetStateVB, STACK(/*default*/), PARAMS(/*unknown*/)),
+                        SYM_SIG(3911, 4034)), // Final generic OOVPA: 4034; Removed: 0 // thiscall
 
-    REGISTER_OOVPAS(D3D_CreateTexture, 3911, 4034),
-    REGISTER_OOVPAS_D3D(CDevice_MakeSpace, 3911), // NOTE: has multiple rets.
-    REGISTER_OOVPAS_D3D(CMiniport_CreateCtxDmaObject, 3911, 4034),
-    REGISTER_OOVPAS_D3D(CMiniport_InitHardware, 3911, 4034, 5455),
-    REGISTER_OOVPAS_D3D(CMiniport_IsFlipPending, 3911, 4242, 4627, 4928),
-    REGISTER_OOVPAS(D3DBaseTexture_GetLevelCount, 3911),
-    REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface2, 4627), // Final generic OOVPA: 4627; Removed: 0
-    REGISTER_OOVPAS(D3DCubeTexture_GetCubeMapSurface, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0
-    REGISTER_OOVPAS(D3DCubeTexture_LockRect, 3911), // Just calls Lock2DSurface (from 4134, 4432's comment)
-    REGISTER_OOVPAS(D3DDevice_AddRef, 3911, 4039, 4134, 4242, 4627, 5028, 5344, 5558, 5788),
-    REGISTER_OOVPAS(D3DDevice_ApplyStateBlock, 3911, 4627),
-    REGISTER_OOVPAS(D3DDevice_Begin, 3911, 4039),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_BeginPush_8, D3DDevice_BeginPush, 4039),
-    REGISTER_OOVPAS_BIND_XREF(D3DDevice_BeginPush_4, D3DDevice_BeginPush, 4531, 4627, 5028),
-    REGISTER_OOVPAS(D3DDevice_BeginPushBuffer, 3911, 4039), // Not implemented yet. (from 5788's comment)
-    REGISTER_OOVPAS(D3DDevice_BeginStateBig, 5028),
-    REGISTER_OOVPAS(D3DDevice_BeginStateBlock, 3911, 4134),
-    REGISTER_OOVPAS(D3DDevice_BeginVisibilityTest, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_BlockOnFence, 3911),
-    REGISTER_OOVPAS(D3DDevice_BlockUntilVerticalBlank, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_CaptureStateBlock, 3911, 4134),
-    REGISTER_OOVPAS(D3DDevice_Clear, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_CopyRects, 3911, 4034, 4627, 5120),
-    REGISTER_OOVPAS(D3DDevice_CreateCubeTexture, 3911, 4627),
-    REGISTER_OOVPAS(D3DDevice_CreateImageSurface, 3911, 4034, 4627), //TODO 4721,4928 (from 4627's comment)
-    REGISTER_OOVPAS(D3DDevice_CreateIndexBuffer, 3911, 4627), // TODO: This needs to be verified on 4361
-    REGISTER_OOVPAS(D3DDevice_CreateIndexBuffer2, 4627, 5344),
-    REGISTER_OOVPAS(D3DDevice_CreatePalette, 3911, 4627), // Called D3DDevice_CreatePalette2 (from 4627's comment) NOTE: Use D3DDevice_CreatePalette2 for 4627 and above
-    REGISTER_OOVPAS(D3DDevice_CreatePalette2, 4627, 5344, 5455),
-    REGISTER_OOVPAS(D3DDevice_CreatePixelShader, 3911, 5344),
-    REGISTER_OOVPAS(D3DDevice_CreateStateBlock, 3911),
-    REGISTER_OOVPAS(D3DDevice_CreateTexture2, 4627, 4831), // Was 4627 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_CreateTexture, 3911, 4627), // Called D3DDevice_CreateTexture2 (from 4627's comment) NOTE: Use D3DDevice_CreateTexture2 for 4627 and above
-    REGISTER_OOVPAS(D3DDevice_CreateVertexBuffer, 3911, 4627),
-    REGISTER_OOVPAS(D3DDevice_CreateVertexBuffer2, 4627, 5344, 5455),
-    REGISTER_OOVPAS(D3DDevice_CreateVertexShader, 3911),
-    REGISTER_OOVPAS(D3DDevice_CreateVolumeTexture, 3911, 4627),
-    REGISTER_OOVPAS(D3DDevice_DeletePatch, 3911), // (TODO) (from 4034's comment)
-    REGISTER_OOVPAS(D3DDevice_DeletePixelShader, 3911, 5344),
-    REGISTER_OOVPAS(D3DDevice_DeleteStateBlock, 3911),
-    REGISTER_OOVPAS(D3DDevice_DeleteVertexShader, 3911, 5344), // Final generic OOVPA: 5344; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_DrawIndexedVertices, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_DrawIndexedVerticesUP, 3911, 5028, 5344), // Final generic OOVPA: 5344; Removed: 0 // TODO: Need verify title with 4034 version.
-    REGISTER_OOVPAS(D3DDevice_DrawRectPatch, 3911), // TODO: Unused? (from 4034's comment)
-    REGISTER_OOVPAS(D3DDevice_DrawTriPatch, 3911),
-    REGISTER_OOVPAS(D3DDevice_DrawVertices, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_DrawVerticesUP, 3911, 4039, 5344), // Final generic OOVPA: 5344; Removed: 0 // TODO: Need verify title with 4034 version.
-    REGISTER_OOVPAS(D3DDevice_EnableOverlay, 3911, 4134),
-    REGISTER_OOVPAS(D3DDevice_End, 3911, 4039, 5344),
-    REGISTER_OOVPAS(D3DDevice_EndPush, 4039), // Was 4627 (from 5233's comment)
-    REGISTER_OOVPAS(D3DDevice_EndPushBuffer, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_EndStateBlock, 3911, 4134),
-    REGISTER_OOVPAS(D3DDevice_EndVisibilityTest, 3911),
-    REGISTER_OOVPAS(D3DDevice_FlushVertexCache, 3911, 4134),
-    REGISTER_OOVPAS(D3DDevice_GetBackBuffer, 3911, 4034, 4134, 4627), // Called D3DDevice_GetBackBuffer2 (from 4627's comment) NOTE: Use D3DDevice_GetBackBuffer2 for 4627 and above
-    REGISTER_OOVPAS(D3DDevice_GetBackBuffer2, 4627), // Final generic OOVPA: 4627; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_GetBackMaterial, 3911, 4039, 4134, 4627, 5344, 5558, 5788),
-    REGISTER_OOVPAS(D3DDevice_GetCreationParameters, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetDepthStencilSurface, 3911, 4627), // Called D3DDevice_GetDepthStencilSurface2 (from 4627's comment) NOTE: Use D3DDevice_GetDepthStencilSurface2 for 4627 and above
-    REGISTER_OOVPAS(D3DDevice_GetDepthStencilSurface2, 4627),
-    REGISTER_OOVPAS(D3DDevice_GetDeviceCaps, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetDisplayFieldStatus, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetDisplayMode, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_GetGammaRamp, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetLight, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetLightEnable, 3911, 5344),
-    REGISTER_OOVPAS(D3DDevice_GetMaterial, 3911, 4039, 4134, 4627, 5344, 5558, 5788),
-    REGISTER_OOVPAS(D3DDevice_GetModelView, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_GetOverlayUpdateStatus, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetPersistedSurface2, 4928), // For only on Unreal Championship (from 4627's comment)
-    REGISTER_OOVPAS(D3DDevice_GetPixelShader, 3911, 4039, 4134, 5028, 5558, 5788),
-    REGISTER_OOVPAS(D3DDevice_GetProjectionViewportMatrix, 3911, 4134, 4627, 5344, 5558), // For 5455 (from 5558's comment)
-    REGISTER_OOVPAS(D3DDevice_GetPushBufferOffset, 3911, 4627), //TODO 4831 (from 4627's comment)
-    REGISTER_OOVPAS(D3DDevice_GetRenderTarget2, 4627), // Final generic OOVPA: 4627; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_GetRenderTarget, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0 // NOTE: Use D3DDevice_GetRenderTarget2 for 4627 and above
-    REGISTER_OOVPAS(D3DDevice_GetScissors, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetShaderConstantMode, 3911, 4134, 4627, 5028, 5344, 5558, 5788),
-    REGISTER_OOVPAS(D3DDevice_GetStreamSource2, 4627),
-    REGISTER_OOVPAS(D3DDevice_GetTexture2, 3911, 4134, 4627, 5344, 5558, 5788),
-    REGISTER_OOVPAS(D3DDevice_GetTile, 3911, 5455),
-    REGISTER_OOVPAS(D3DDevice_GetTransform, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_GetVertexShader, 3911, 4039, 4134, 5028, 5558, 5788),
-    REGISTER_OOVPAS(D3DDevice_GetVertexShaderConstant, 3911, 4039, 5028),
-    REGISTER_OOVPAS(D3DDevice_GetVertexShaderDeclaration, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetVertexShaderFunction, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetVertexShaderInput, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetVertexShaderSize, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetVertexShaderType, 3911),
-    REGISTER_OOVPAS(D3DDevice_GetViewport, 3911, 5455), // Was 4627 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_GetViewportOffsetAndScale, 4432),
-    REGISTER_OOVPAS(D3DDevice_GetVisibilityTestResult, 3911, 5233),
-    REGISTER_OOVPAS(D3DDevice_InsertCallback, 3911, 4134, 5028),
-    REGISTER_OOVPAS(D3DDevice_InsertFence, 3911),
-    REGISTER_OOVPAS(D3DDevice_IsBusy, 3911, 5028),
-    REGISTER_OOVPAS(D3DDevice_IsFencePending, 3911, 4039, 5028),
-    REGISTER_OOVPAS_D3D(CDevice_KickOff, 3911, 4034, 4531, 5028, 5455), // Final generic OOVPA: 5455; Removed: 0 // thiscall
-    REGISTER_OOVPAS(D3DDevice_KickPushBuffer, 3911),
-    REGISTER_OOVPAS(D3DDevice_LightEnable, 3911, 5344), // Was 5233 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_LoadVertexShader, 3911, 4034, 4627, 5028),
-    REGISTER_OOVPAS(D3DDevice_LoadVertexShaderProgram, 3911),
-    REGISTER_OOVPAS(D3DDevice_MakeSpace, 4034, 4134), // NOTE: LTCG has duplicate functions, need to find out how to resolve this issue with cross referencing.
-    REGISTER_OOVPAS(D3DDevice_PersistDisplay, 3911, 4039, 4627, 4831),
-    REGISTER_OOVPAS(D3DDevice_Present, 3911),
-    REGISTER_OOVPAS(D3DDevice_PrimeVertexCache, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_Release, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_Reset, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_RunPushBuffer, 3911, 4039, 4627, 5120, 5558), // for 5455 (from 5558's comment)
-    REGISTER_OOVPAS(D3DDevice_RunVertexStateShader, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_SelectVertexShader, 3911, 4034, 5455),
-    REGISTER_OOVPAS(D3DDevice_SelectVertexShaderDirect, 4361),
-    REGISTER_OOVPAS(D3DDevice_SetBackBufferScale, 4039),
-    REGISTER_OOVPAS(D3DDevice_SetBackMaterial, 3911, 4039, 4134, 4627, 5344, 5558, 5788),
-    REGISTER_OOVPAS(D3DDevice_SetDepthClipPlanes, 4432),
-    REGISTER_OOVPAS(D3DDevice_SetFlickerFilter, 3911, 4034, 4134),
-    REGISTER_OOVPAS(D3DDevice_SetGammaRamp, 3911, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetIndices, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetLight, 3911, 5344),
-    REGISTER_OOVPAS(D3DDevice_SetMaterial, 3911, 4034, 4134, 4627, 5344, 5558, 5788), // Was 4627 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_SetModelView, 3911, 4039, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetPalette, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetPixelShader, 3911, 4034, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetPixelShaderConstant, 3911, 4831),
-    REGISTER_OOVPAS(D3DDevice_SetPixelShaderProgram, 3911),
-    REGISTER_OOVPAS_M(D3DDevice_SetRenderState_Simple, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS_M(D3DDevice_SetRenderStateNotInline, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: Must be after D3DDevice_SetRenderState_Simple.
+    REGISTER_OOVPAS(SYM_FUN(D3D_CreateTexture, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS_D3D(SYM_FUN(CDevice_MakeSpace, STACK(/*default*/), PARAMS(/*unknown*/)),
+                        SYM_SIG(3911)), // NOTE: has multiple rets.
+    REGISTER_OOVPAS_D3D(SYM_FUN(CMiniport_CreateCtxDmaObject, STACK(/*default*/), PARAMS(/*unknown*/)),
+                        SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS_D3D(SYM_FUN(CMiniport_InitHardware, STACK(/*default*/), PARAMS(/*unknown*/)),
+                        SYM_SIG(3911, 4034, 5455)),
+    REGISTER_OOVPAS_D3D(SYM_FUN(CMiniport_IsFlipPending, STACK(/*default*/), PARAMS(/*unknown*/)),
+                        SYM_SIG(3911, 4242, 4627, 4928)),
+    REGISTER_OOVPAS(SYM_FUN(D3DBaseTexture_GetLevelCount, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DCubeTexture_GetCubeMapSurface2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DCubeTexture_GetCubeMapSurface, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DCubeTexture_LockRect, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Just calls Lock2DSurface (from 4134, 4432's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_AddRef, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 4134, 4242, 4627, 5028, 5344, 5558, 5788)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_ApplyStateBlock, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_Begin, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_BeginPush, STACK(8), PARAMS(/*unknown*/)),
+                    SYM_SIG(4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_BeginPush, STACK(4), PARAMS(/*unknown*/)),
+                    SYM_SIG(4531, 4627, 5028)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_BeginPushBuffer, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)), // Not implemented yet. (from 5788's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_BeginStateBig, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(5028)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_BeginStateBlock, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4134)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_BeginVisibilityTest, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_BlockOnFence, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_BlockUntilVerticalBlank, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CaptureStateBlock, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4134)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_Clear, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CopyRects, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4627, 5120)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateCubeTexture, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateImageSurface, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4627)), // TODO 4721,4928 (from 4627's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateIndexBuffer, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)), // TODO: This needs to be verified on 4361
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateIndexBuffer2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627, 5344)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreatePalette, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)), // Called D3DDevice_CreatePalette2 (from 4627's comment) NOTE: Use D3DDevice_CreatePalette2 for 4627 and above
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreatePalette2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627, 5344, 5455)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreatePixelShader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5344)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateStateBlock, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateTexture2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627, 4831)), // Was 4627 (from 5344's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateTexture, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)), // Called D3DDevice_CreateTexture2 (from 4627's comment) NOTE: Use D3DDevice_CreateTexture2 for 4627 and above
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateVertexBuffer, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateVertexBuffer2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627, 5344, 5455)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateVertexShader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateVolumeTexture, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_DeletePatch, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // (TODO) (from 4034's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_DeletePixelShader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5344)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_DeleteStateBlock, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_DeleteVertexShader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5344)), // Final generic OOVPA: 5344; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_DrawIndexedVertices, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_DrawIndexedVerticesUP, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5028, 5344)), // Final generic OOVPA: 5344; Removed: 0 // TODO: Need verify title with 4034 version.
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_DrawRectPatch, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // TODO: Unused? (from 4034's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_DrawTriPatch, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_DrawVertices, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_DrawVerticesUP, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 5344)), // Final generic OOVPA: 5344; Removed: 0 // TODO: Need verify title with 4034 version.
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_EnableOverlay, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4134)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_End, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 5344)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_EndPush, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4039)), // Was 4627 (from 5233's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_EndPushBuffer, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_EndStateBlock, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4134)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_EndVisibilityTest, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_FlushVertexCache, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4134)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetBackBuffer, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4134, 4627)), // Called D3DDevice_GetBackBuffer2 (from 4627's comment) NOTE: Use D3DDevice_GetBackBuffer2 for 4627 and above
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetBackBuffer2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetBackMaterial, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 4134, 4627, 5344, 5558, 5788)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetCreationParameters, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetDepthStencilSurface, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)), // Called D3DDevice_GetDepthStencilSurface2 (from 4627's comment) NOTE: Use D3DDevice_GetDepthStencilSurface2 for 4627 and above
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetDepthStencilSurface2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetDeviceCaps, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetDisplayFieldStatus, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetDisplayMode, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetGammaRamp, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetLight, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetLightEnable, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5344)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetMaterial, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 4134, 4627, 5344, 5558, 5788)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetModelView, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetOverlayUpdateStatus, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetPersistedSurface2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4928)), // For only on Unreal Championship (from 4627's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetPixelShader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 4134, 5028, 5558, 5788)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetProjectionViewportMatrix, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4134, 4627, 5344, 5558)), // For 5455 (from 5558's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetPushBufferOffset, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)), // TODO 4831 (from 4627's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetRenderTarget2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetRenderTarget, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)), // Final generic OOVPA: 4627; Removed: 0 // NOTE: Use D3DDevice_GetRenderTarget2 for 4627 and above
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetScissors, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetShaderConstantMode, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4134, 4627, 5028, 5344, 5558, 5788)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetStreamSource2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetTexture2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4134, 4627, 5344, 5558, 5788)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetTile, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5455)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetTransform, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetVertexShader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 4134, 5028, 5558, 5788)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetVertexShaderConstant, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 5028)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetVertexShaderDeclaration, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetVertexShaderFunction, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetVertexShaderInput, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetVertexShaderSize, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetVertexShaderType, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetViewport, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5455)), // Was 4627 (from 5344's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetViewportOffsetAndScale, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4432)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetVisibilityTestResult, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5233)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_InsertCallback, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4134, 5028)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_InsertFence, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_IsBusy, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5028)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_IsFencePending, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 5028)),
+    REGISTER_OOVPAS_D3D(SYM_FUN(CDevice_KickOff, STACK(/*default*/), PARAMS(/*unknown*/)),
+                        SYM_SIG(3911, 4034, 4531, 5028, 5455)), // Final generic OOVPA: 5455; Removed: 0 // thiscall
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_KickPushBuffer, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_LightEnable, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5344)), // Was 5233 (from 5344's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_LoadVertexShader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4627, 5028)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_LoadVertexShaderProgram, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_MakeSpace, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4034, 4134)), // NOTE: LTCG has duplicate functions, need to find out how to resolve this issue with cross referencing.
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_PersistDisplay, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 4627, 4831)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_Present, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_PrimeVertexCache, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_Release, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_Reset, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_RunPushBuffer, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 4627, 5120, 5558)), // for 5455 (from 5558's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_RunVertexStateShader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SelectVertexShader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 5455)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SelectVertexShaderDirect, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4361)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetBackBufferScale, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetBackMaterial, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 4134, 4627, 5344, 5558, 5788)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetDepthClipPlanes, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4432)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetFlickerFilter, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4134)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetGammaRamp, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetIndices, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetLight, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5344)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetMaterial, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4134, 4627, 5344, 5558, 5788)), // Was 4627 (from 5344's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetModelView, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetPalette, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetPixelShader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetPixelShaderConstant, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4831)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetPixelShaderProgram, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS_M(SYM_FUN(D3DDevice_SetRenderState_Simple, STACK(/*default*/), PARAMS(/*unknown*/)),
+                      SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS_M(SYM_FUN(D3DDevice_SetRenderStateNotInline, STACK(/*default*/), PARAMS(/*unknown*/)),
+                      SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0 // NOTE: Must be after D3DDevice_SetRenderState_Simple.
     // NOTE: Some or most of render state signatures below must be after D3DDevice_SetRenderStateNotInline.
-    REGISTER_OOVPAS(D3DDevice_SetRenderState, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState2, 3911), // Final generic OOVPA: 3911; Removed: 0 // NOTE: There is a verified duplicate function.
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_BackFillMode, 3911, 4034),
-    REGISTER_OOVPAS_C(D3DDevice_SetRenderState_CullMode, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_Deferred, 3911),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_DoNotCullUncompressed, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_Dxt1NoiseEnable, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_EdgeAntiAlias, 3911, 4034),
-    REGISTER_OOVPAS_M(D3DDevice_SetRenderState_FillMode, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_FogColor, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_FrontFace, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_LineWidth, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_LogicOp, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleAntiAlias, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMask, 3911, 4627), // Final generic OOVPA: 4627; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleMode, 4034), // Final generic OOVPA: 4034; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleRenderTargetMode, 4034), // Final generic OOVPA: 4034; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_MultiSampleType, 3911, 3925), // Final generic OOVPA: 3925 Removed: 4034
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_NormalizeNormals, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_OcclusionCullEnable, 3911, 1024), // Final generic OOVPA: 3911 (LTCG) / 4034 (non-LTCG); Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_PSTextureModes, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZCmpAlwaysRead, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_RopZRead, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_SampleAlpha, 4627), // Final generic OOVPA: 4627; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_ShadowFunc, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilCullEnable, 3911, 1024), // Final generic OOVPA: 3911 (LTCG) / 4034 (non-LTCG); Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilEnable, 3911, 4034, 5849),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_StencilFail, 3911, 4034, 5849),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_TextureFactor, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_TwoSidedLighting, 3911, 4034, 5344), // Final generic OOVPA: 5344; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_VertexBlend, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_YuvEnable, 3911, 1024), // Final generic OOVPA: 3911 (LTCG) / 4034 (non-LTCG); Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_ZBias, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderState_ZEnable, 3911, 4034, 4134, 4432),
-    REGISTER_OOVPAS(D3DDevice_SetRenderTarget, 3911, 3947, 4034, 4039, 4627, 5344, 5455), // Final generic OOVPA: 5344/5455; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetRenderTargetFast, 5233),
-    REGISTER_OOVPAS(D3DDevice_SetScissors, 3911, 5344, 5558), // Was 5233 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_SetScreenSpaceOffset, 4034, 5455), // Final generic OOVPA: 5455; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetShaderConstantMode, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetSoftDisplayFilter, 3911, 4034, 4134),
-    REGISTER_OOVPAS(D3DDevice_SetStipple, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetStreamSource, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetSwapCallback, 4039), // Final generic OOVPA: 4039; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetTexture, 3911, 4034, 4361, 4831),
-    REGISTER_OOVPAS(D3DDevice_SetTextureStageStateNotInline, 3911, 4034), // Final generic OOVPA: 4034; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetTextureState_BorderColor, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetTextureState_BumpEnv, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_SetTextureState_ColorKeyColor, 3911, 4034),
-    REGISTER_OOVPAS_C(D3DDevice_SetTextureState_TexCoordIndex, 3911, 4034, 4242, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetTile, 3911, 4034, 4627), // Then it has changed calls ?SetTileNoWait@D3D@@YGXKPBU_D3DTILE@@@Z in XDK 4627 and higher.
-    REGISTER_OOVPAS(D3DDevice_SetTransform, 3911, 4034),
-    REGISTER_OOVPAS(D3DDevice_MultiplyTransform, 3911, 4034), // TODO: Verify 4034 is correct
-    REGISTER_OOVPAS(D3DDevice_SetVertexData2f, 3911, 4039), // Was 4627 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_SetVertexData2s, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_SetVertexData4f, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_SetVertexData4s, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_SetVertexData4ub, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_SetVertexDataColor, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_SetVertexShader, 3911, 4034, 4134, 5028, 5455),
-    REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstant, 3911, 4034, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstant1, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstant1Fast, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstant4, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstantNotInline, 4627, 5028, 5558),
-    REGISTER_OOVPAS(D3DDevice_SetVertexShaderConstantNotInlineFast, 4627),
-    REGISTER_OOVPAS(D3DDevice_SetVertexShaderInput, 3911, 4039),
-    REGISTER_OOVPAS(D3DDevice_SetVertexShaderInputDirect, 4361),
-    REGISTER_OOVPAS(D3DDevice_SetVerticalBlankCallback, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_SetViewport, 3911, 4034, 5344, 5455), // Was 5233 (from 5344's comment)
-    REGISTER_OOVPAS(D3DDevice_Suspend, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3DDevice_Swap, 4034, 4531, 4627),
-    REGISTER_OOVPAS(D3DDevice_SwitchTexture, 3911),
-    REGISTER_OOVPAS(D3DDevice_UpdateOverlay, 3911, 4531, 5233),
-    REGISTER_OOVPAS(D3DPalette_Lock, 3911, 4531, 4627), // Called D3DPalette_Lock2 (from 4627's comment) NOTE: Use D3DPalette_Lock2 for 4627 and above
-    REGISTER_OOVPAS(D3DPalette_Lock2, 4627),
-    REGISTER_OOVPAS(D3DResource_AddRef, 3911),
-    REGISTER_OOVPAS(D3DResource_BlockUntilNotBusy, 3911),
-    REGISTER_OOVPAS(D3DResource_GetType, 3911, 4034), // Probably not even necessary... (from 3925's comment) // I forget why I had this in here... (from 5028's comment)
-    REGISTER_OOVPAS(D3DResource_IsBusy, 3911, 4039),
-    REGISTER_OOVPAS(D3DResource_Register, 3911),
-    REGISTER_OOVPAS(D3DResource_Release, 3911),
-    REGISTER_OOVPAS(D3DSurface_GetDesc, 3911),
-    REGISTER_OOVPAS(D3DSurface_LockRect, 3911),
-    REGISTER_OOVPAS(D3DTexture_GetSurfaceLevel, 3911, 4627),
-    REGISTER_OOVPAS(D3DTexture_GetSurfaceLevel2, 4627),
-    REGISTER_OOVPAS(D3DTexture_LockRect, 3911),
-    REGISTER_OOVPAS(D3DVertexBuffer_GetDesc, 3911),
-    REGISTER_OOVPAS(D3DVertexBuffer_Lock, 3911, 4034, 4627),
-    REGISTER_OOVPAS(D3DVertexBuffer_Lock2, 4627),
-    REGISTER_OOVPAS(D3DVolumeTexture_LockBox, 3911), // Just calls Lock3DSurface (from 4134, 4432's comment)
-    REGISTER_OOVPAS(D3D_AllocContiguousMemory, 3911, 5455), // Final generic OOVPA: 5455; Removed: 0 // Just calls MmAllocateContiguousMemory.
-    REGISTER_OOVPAS(D3D_BlockOnResource, 3911, 4034),
-    REGISTER_OOVPAS(D3D_BlockOnTime, 3911, 4034, 4627, 5028, 5558),
-    REGISTER_OOVPAS_D3D(CMiniport_GetDisplayCapabilities, 3911),
-    REGISTER_OOVPAS(D3D_CheckDeviceFormat, 3911),
-    REGISTER_OOVPAS(D3D_ClearStateBlockFlags, 3911),
-    REGISTER_OOVPAS_M(D3D_CommonSetDebugRegisters, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(D3D_CommonSetRenderTarget, 4627, 5028), // Final generic OOVPA: 4627; Removed: 5344
-    REGISTER_OOVPAS(D3D_CommonSetMultiSampleModeAndScale, 5344), // Final generic OOVPA: 5344; Removed: 0 // fastcall (2 params)
-    REGISTER_OOVPAS(D3D_CreateStandAloneSurface, 4034),
-    REGISTER_OOVPAS(D3D_DestroyResource, 3911),
-    REGISTER_OOVPAS(D3D_EnumAdapterModes, 3911),
-    REGISTER_OOVPAS(D3D_GetAdapterDisplayMode, 3911, 4627),
-    REGISTER_OOVPAS(D3D_GetAdapterIdentifier, 3911),
-    REGISTER_OOVPAS(D3D_GetAdapterModeCount, 3911),
-    REGISTER_OOVPAS(D3D_GetDeviceCaps, 3911),
-    REGISTER_OOVPAS(D3D_KickOffAndWaitForIdle, 3911, 4034, 4627, 5028),
-    REGISTER_OOVPAS(D3D_LazySetPointParams, 3911, 4034),
-    REGISTER_OOVPAS(D3D_RecordStateBlock, 3911),
-    REGISTER_OOVPAS(D3D_SetFence, 3911, 4034, 4134, 5028, 5558),
-    REGISTER_OOVPAS(D3D_SetPushBufferSize, 3911),
-    REGISTER_OOVPAS(D3D_SetTileNoWait, 4627, 5455), // Final generic OOVPA: 5455; Removed: 0
-    REGISTER_OOVPAS(Direct3D_CheckDeviceMultiSampleType, 3911),
-    REGISTER_OOVPAS(Direct3D_CreateDevice, 3911, 5028),
-    REGISTER_OOVPAS_D3D8(Get2DSurfaceDesc, 3911, 4034), // Was 5233 (from 5344's comment)
-    REGISTER_OOVPAS_D3D8(Lock2DSurface, 3911),
-    REGISTER_OOVPAS_D3D8(Lock3DSurface, 3911),
-    REGISTER_OOVPAS_BIND_XREF(D3D_MakeRequestedSpace_4, D3D_MakeRequestedSpace, 4034), // Final generic OOVPA: 4034??; Removed: 4134 // NOTE: has multiple rets.
-    REGISTER_OOVPAS_BIND_XREF(D3D_MakeRequestedSpace_8, D3D_MakeRequestedSpace, 4134, 5558), // Final generic OOVPA: 5558; Removed: 0 // NOTE: has multiple rets.
-    REGISTER_OOVPAS(XMETAL_StartPush, 3911), // Final generic OOVPA: 3911; Removed: 4034??
-    REGISTER_OOVPAS(IDirect3DVertexBuffer8_Lock, 4627),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0 // NOTE: There is a verified duplicate function.
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_BackFillMode, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS_C(SYM_FUN(D3DDevice_SetRenderState_CullMode, STACK(/*default*/), PARAMS(/*unknown*/)),
+                      SYM_SIG(3911, 4034)), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_Deferred, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_DoNotCullUncompressed, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_Dxt1NoiseEnable, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_EdgeAntiAlias, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS_M(SYM_FUN(D3DDevice_SetRenderState_FillMode, STACK(/*default*/), PARAMS(/*unknown*/)),
+                      SYM_SIG(3911, 4034)), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_FogColor, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_FrontFace, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_LineWidth, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_LogicOp, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_MultiSampleAntiAlias, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_MultiSampleMask, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_MultiSampleMode, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4034)), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_MultiSampleRenderTargetMode, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4034)), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_MultiSampleType, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 3925)), // Final generic OOVPA: 3925 Removed: 4034
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_NormalizeNormals, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_OcclusionCullEnable, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 1024)), // Final generic OOVPA: 3911 (LTCG) / 4034 (non-LTCG); Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_PSTextureModes, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_RopZCmpAlwaysRead, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_RopZRead, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_SampleAlpha, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)), // Final generic OOVPA: 4627; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_ShadowFunc, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_StencilCullEnable, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 1024)), // Final generic OOVPA: 3911 (LTCG) / 4034 (non-LTCG); Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_StencilEnable, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 5849)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_StencilFail, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 5849)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_TextureFactor, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_TwoSidedLighting, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 5344)), // Final generic OOVPA: 5344; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_VertexBlend, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_YuvEnable, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 1024)), // Final generic OOVPA: 3911 (LTCG) / 4034 (non-LTCG); Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_ZBias, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderState_ZEnable, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4134, 4432)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderTarget, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 3947, 4034, 4039, 4627, 5344, 5455)), // Final generic OOVPA: 5344/5455; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetRenderTargetFast, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(5233)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetScissors, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5344, 5558)), // Was 5233 (from 5344's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetScreenSpaceOffset, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4034, 5455)), // Final generic OOVPA: 5455; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetShaderConstantMode, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetSoftDisplayFilter, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4134)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetStipple, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetStreamSource, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetSwapCallback, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4039)), // Final generic OOVPA: 4039; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTexture, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4361, 4831)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTextureStageStateNotInline, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)), // Final generic OOVPA: 4034; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTextureState_BorderColor, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTextureState_BumpEnv, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTextureState_ColorKeyColor, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS_C(SYM_FUN(D3DDevice_SetTextureState_TexCoordIndex, STACK(/*default*/), PARAMS(/*unknown*/)),
+                      SYM_SIG(3911, 4034, 4242, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTile, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4627)), // Then it has changed calls ?SetTileNoWait@D3D@@YGXKPBU_D3DTILE@@@Z in XDK 4627 and higher.
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTransform, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_MultiplyTransform, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)), // TODO: Verify 4034 is correct
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexData2f, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)), // Was 4627 (from 5344's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexData2s, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexData4f, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexData4s, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexData4ub, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexDataColor, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexShader, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4134, 5028, 5455)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexShaderConstant, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexShaderConstant1, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexShaderConstant1Fast, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexShaderConstant4, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexShaderConstantNotInline, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627, 5028, 5558)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexShaderConstantNotInlineFast, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexShaderInput, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexShaderInputDirect, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4361)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVerticalBlankCallback, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetViewport, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 5344, 5455)), // Was 5233 (from 5344's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_Suspend, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_Swap, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4034, 4531, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SwitchTexture, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_UpdateOverlay, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4531, 5233)),
+    REGISTER_OOVPAS(SYM_FUN(D3DPalette_Lock, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4531, 4627)), // Called D3DPalette_Lock2 (from 4627's comment) NOTE: Use D3DPalette_Lock2 for 4627 and above
+    REGISTER_OOVPAS(SYM_FUN(D3DPalette_Lock2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DResource_AddRef, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DResource_BlockUntilNotBusy, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DResource_GetType, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)), // Probably not even necessary... (from 3925's comment) // I forget why I had this in here... (from 5028's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3DResource_IsBusy, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4039)),
+    REGISTER_OOVPAS(SYM_FUN(D3DResource_Register, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DResource_Release, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DSurface_GetDesc, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DSurface_LockRect, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DTexture_GetSurfaceLevel, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DTexture_GetSurfaceLevel2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DTexture_LockRect, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DVertexBuffer_GetDesc, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3DVertexBuffer_Lock, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DVertexBuffer_Lock2, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3DVolumeTexture_LockBox, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Just calls Lock3DSurface (from 4134, 4432's comment)
+    REGISTER_OOVPAS(SYM_FUN(D3D_AllocContiguousMemory, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5455)), // Final generic OOVPA: 5455; Removed: 0 // Just calls MmAllocateContiguousMemory.
+    REGISTER_OOVPAS(SYM_FUN(D3D_BlockOnResource, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_BlockOnTime, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4627, 5028, 5558)),
+    REGISTER_OOVPAS_D3D(SYM_FUN(CMiniport_GetDisplayCapabilities, STACK(/*default*/), PARAMS(/*unknown*/)),
+                        SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_CheckDeviceFormat, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_ClearStateBlockFlags, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS_M(SYM_FUN(D3D_CommonSetDebugRegisters, STACK(/*default*/), PARAMS(/*unknown*/)),
+                      SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(D3D_CommonSetRenderTarget, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627, 5028)), // Final generic OOVPA: 4627; Removed: 5344
+    REGISTER_OOVPAS(SYM_FUN(D3D_CommonSetMultiSampleModeAndScale, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(5344)), // Final generic OOVPA: 5344; Removed: 0 // fastcall (2 params)
+    REGISTER_OOVPAS(SYM_FUN(D3D_CreateStandAloneSurface, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_DestroyResource, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_EnumAdapterModes, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_GetAdapterDisplayMode, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_GetAdapterIdentifier, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_GetAdapterModeCount, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_GetDeviceCaps, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_KickOffAndWaitForIdle, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4627, 5028)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_LazySetPointParams, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_RecordStateBlock, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_SetFence, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 4034, 4134, 5028, 5558)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_SetPushBufferSize, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_SetTileNoWait, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627, 5455)), // Final generic OOVPA: 5455; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(Direct3D_CheckDeviceMultiSampleType, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(Direct3D_CreateDevice, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911, 5028)),
+    REGISTER_OOVPAS_D3D8(SYM_FUN(Get2DSurfaceDesc, STACK(/*default*/), PARAMS(/*unknown*/)),
+                         SYM_SIG(3911, 4034)), // Was 5233 (from 5344's comment)
+    REGISTER_OOVPAS_D3D8(SYM_FUN(Lock2DSurface, STACK(/*default*/), PARAMS(/*unknown*/)),
+                         SYM_SIG(3911)),
+    REGISTER_OOVPAS_D3D8(SYM_FUN(Lock3DSurface, STACK(/*default*/), PARAMS(/*unknown*/)),
+                         SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(D3D_MakeRequestedSpace, STACK(4), PARAMS(/*unknown*/)),
+                    SYM_SIG(4034)), // Final generic OOVPA: 4034??; Removed: 4134 // NOTE: has multiple rets.
+    REGISTER_OOVPAS(SYM_FUN(D3D_MakeRequestedSpace, STACK(8), PARAMS(/*unknown*/)),
+                    SYM_SIG(4134, 5558)), // Final generic OOVPA: 5558; Removed: 0 // NOTE: has multiple rets.
+    REGISTER_OOVPAS(SYM_FUN(XMETAL_StartPush, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 4034??
+    REGISTER_OOVPAS(SYM_FUN(IDirect3DVertexBuffer8_Lock, STACK(/*default*/), PARAMS(/*unknown*/)),
+                    SYM_SIG(4627)),
 };
 
 
