@@ -801,13 +801,13 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         //*/
 
         // verified for 3925
-        pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_0", 2039,
-                                   &D3DDevice_SetTextureState_TexCoordIndex_0_2039, pSection);
+        pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2", 2039,
+                                   &D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2_2039, pSection);
         pXRefOffset = 0x08;
 
         if (pFunc == 0) { // verified for 4039
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4", 2040,
-                                       &D3DDevice_SetTextureState_TexCoordIndex_4_2040, pSection);
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1", 2040,
+                                       &D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1_2040, pSection);
             pXRefOffset = 0x14;
         }
 
@@ -818,14 +818,14 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         }
 
         if (pFunc == 0) { // verified for 4531
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4", 2045,
-                                       &D3DDevice_SetTextureState_TexCoordIndex_4_2045, pSection);
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1", 2045,
+                                       &D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1_2045, pSection);
             pXRefOffset = 0x14;
         }
 
         if (pFunc == 0) { // verified for 4627 and higher
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4", 2058,
-                                       &D3DDevice_SetTextureState_TexCoordIndex_4_2058, pSection);
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1", 2058,
+                                       &D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1_2058, pSection);
             pXRefOffset = 0x14;
         }
 
@@ -836,14 +836,14 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         }
 
         if (pFunc == 0) { // verified for World Series Baseball 2K3
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4", 2052,
-                                       &D3DDevice_SetTextureState_TexCoordIndex_4_2052, pSection);
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1", 2052,
+                                       &D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1_2052, pSection);
             pXRefOffset = 0x15;
         }
 
         if (pFunc == 0) { // verified for Ski Racing 2006
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_0", 2058,
-                                       &D3DDevice_SetTextureState_TexCoordIndex_0_2058, pSection);
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2", 2058,
+                                       &D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2_2058, pSection);
             pXRefOffset = 0x15;
         }
     }
@@ -884,22 +884,22 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         if (pFunc == 0) { // LTCG specific
 
             OOVPA_version = 4034; // TODO Verify
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_4", 2058,
-                                       &D3DDevice_SetStreamSource_4_2058, pSection);
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_4__LTCG_eax1_ebx2", 2058,
+                                       &D3DDevice_SetStreamSource_4__LTCG_eax1_ebx2_2058, pSection);
             iCodeOffsetFor_g_Stream = 0x1E;
         }
 
         if (pFunc == 0) { // verified for 4039
             OOVPA_version = 4034;
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_8", 2040,
-                                       &D3DDevice_SetStreamSource_8_2040, pSection);
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_8__LTCG_eax1", 2040,
+                                       &D3DDevice_SetStreamSource_8__LTCG_eax1_2040, pSection);
             iCodeOffsetFor_g_Stream = 0x23;
         }
 
         if (pFunc == 0) { // verified for 3925
             OOVPA_version = 3911;
-            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_8__LTCG_edx_StreamNumber", 1039,
-                                       &D3DDevice_SetStreamSource_8__LTCG_edx_StreamNumber_1039, pSection);
+            pFunc = LocateFunctionCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_8__LTCG_edx1", 2039,
+                                       &D3DDevice_SetStreamSource_8__LTCG_edx1_2039, pSection);
             iCodeOffsetFor_g_Stream = 0x47;
         }
     }

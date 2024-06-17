@@ -27,7 +27,7 @@
 // * Direct3D_CreateDevice
 // ******************************************************************
 //85C9750AC705 ...C21000
-OOVPA_SIG_HEADER_NO_XREF(Direct3D_CreateDevice_16__LTCG_eax_BehaviorFlags_ecx_ppReturnedDeviceInterface,
+OOVPA_SIG_HEADER_NO_XREF(Direct3D_CreateDevice_16__LTCG_eax4_ecx6,
                          2036)
 OOVPA_SIG_MATCH(
 
@@ -51,7 +51,7 @@ OOVPA_SIG_MATCH(
 // *       GetLevelDesc Simply redirects to that function
 // ******************************************************************
 //7909C74608010000 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(Get2DSurfaceDesc_4,
+OOVPA_SIG_HEADER_NO_XREF(Get2DSurfaceDesc_4__LTCG_edi1_esi3,
                          2048)
 OOVPA_SIG_MATCH(
 
@@ -429,7 +429,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_EndVisibilityTest
 // ******************************************************************
 //B80E0007805E ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_EndVisibilityTest_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_EndVisibilityTest_0__LTCG_eax1,
                          2048)
 OOVPA_SIG_MATCH(
 
@@ -684,7 +684,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_RunVertexStateShader
 // ******************************************************************
 //C740EC801E1000D9 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_RunVertexStateShader_4,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_RunVertexStateShader_4__LTCG_esi2,
                          2048)
 OOVPA_SIG_MATCH(
 
@@ -754,7 +754,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_CreateVertexShader
 // ******************************************************************
 //C740040000210083C008 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader_0__LTCG_eax_handle,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader_0__LTCG_eax1,
                          2036)
 OOVPA_SIG_MATCH(
 
@@ -801,7 +801,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetVertexData4f
 // ******************************************************************
 //B918150000EB09 ...C21000
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexData4f_16,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexData4f_16__LTCG_edi1,
                          2036)
 OOVPA_SIG_MATCH(
 
@@ -946,7 +946,7 @@ OOVPA_SIG_MATCH(
 // * D3D_BlockOnResource
 // ******************************************************************
 //F7C20000780075 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource_0,
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource_0__LTCG_eax1,
                          2048)
 OOVPA_SIG_MATCH(
 
@@ -1165,7 +1165,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetIndices_4
 // ******************************************************************
 //74108103000008008B ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetIndices_4,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetIndices_4__LTCG_ebx1,
                          2024)
 OOVPA_SIG_MATCH(
 
@@ -1273,7 +1273,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetSoftDisplayFilter
 // ******************************************************************
 //6A00566A0E52FF15 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetSoftDisplayFilter_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetSoftDisplayFilter_0__LTCG_unk1,
                          2048)
 OOVPA_SIG_MATCH(
 

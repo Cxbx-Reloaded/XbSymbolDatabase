@@ -27,7 +27,7 @@
 // * D3DDevice_SetTextureState_TexCoordIndex
 // ******************************************************************
 //51538B5C240C8BC6C1E0 ...C20400
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex_4,
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1,
                       2045,
                       XRefOne)
 OOVPA_SIG_MATCH(
@@ -52,7 +52,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetTextureState_BorderColor
 // ******************************************************************
 //8BCEC1E10681C1241B04 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_BorderColor_4,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_BorderColor_4__LTCG_eax1,
                          2060)
 OOVPA_SIG_MATCH(
 
@@ -75,7 +75,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetTextureState_ColorKeyColor
 // ******************************************************************
 //8D0CB5E00A0400 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor_4,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor_4__LTCG_eax1,
                          2060)
 OOVPA_SIG_MATCH(
 
@@ -97,7 +97,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_Swap
 // ******************************************************************
 //7505BB050000008B ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Swap_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Swap_0__LTCG_eax1,
                          2024)
 OOVPA_SIG_MATCH(
 
@@ -169,7 +169,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetFlickerFilter
 // ******************************************************************
 //6A00566A0B50FF15 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetFlickerFilter_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetFlickerFilter_0__LTCG_esi1,
                          2024)
 OOVPA_SIG_MATCH(
 
@@ -191,7 +191,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetPixelShader
 // ******************************************************************
 //C740040000210083C008 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader_0__LTCG_eax_handle,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader_0__LTCG_eax1,
                          2024)
 OOVPA_SIG_MATCH(
 
@@ -217,7 +217,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_BeginPushBuffer
 // ******************************************************************
 //008107000008008B
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginPushBuffer_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginPushBuffer_0__LTCG_edi1,
                          2048)
 OOVPA_SIG_MATCH(
 
@@ -239,7 +239,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_RunPushBuffer
 // ******************************************************************
 //00576A00568BF8E8 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_RunPushBuffer_4,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_RunPushBuffer_4__LTCG_eax2,
                          2048)
 OOVPA_SIG_MATCH(
 

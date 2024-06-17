@@ -482,7 +482,7 @@ OOVPA_SIG_MATCH(
 // *       GetLevelDesc Simply redirects to that function
 // ******************************************************************
 //7909C74608010000 ...C3
-OOVPA_SIG_HEADER_NO_XREF(Get2DSurfaceDesc_0,
+OOVPA_SIG_HEADER_NO_XREF(Get2DSurfaceDesc_0__LTCG_edi1_ebx2_esi3,
                          2036)
 OOVPA_SIG_MATCH(
 
@@ -697,7 +697,7 @@ OOVPA_SIG_MATCH(
 //* D3DDevice_LoadVertexShader
 //******************************************************************
 //C7009C1E040089 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LoadVertexShader_0__LTCG_eax_Address_ecx_Handle,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LoadVertexShader_0__LTCG_ecx1_eax2,
                          2036)
 OOVPA_SIG_MATCH(
 
@@ -874,7 +874,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_GetViewportOffsetAndScale_0
 // ******************************************************************
 //000085F6577D06D805 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_GetViewportOffsetAndScale_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_GetViewportOffsetAndScale_0__LTCG_edx1_ecx2,
                          2024)
 OOVPA_SIG_MATCH(
 
