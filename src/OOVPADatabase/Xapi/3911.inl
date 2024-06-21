@@ -181,7 +181,7 @@ OOVPA_SIG_HEADER_XREF(OutputDebugStringW,
 OOVPA_SIG_MATCH(
 
     // call [OutputDebugStringA]
-    XREF_ENTRY(0x35, XREF_XAPI_OutputDebugStringA),
+    XREF_ENTRY(0x35, XREF_OutputDebugStringA),
 
     // push ebp
     OV_MATCH(0x00, 0x55),
@@ -711,10 +711,10 @@ OOVPA_SIG_HEADER_XREF(ConvertThreadToFiber,
 OOVPA_SIG_MATCH(
 
     // mov eax,[_tls_index]
-    XREF_ENTRY(0x01, XREF_XAPI__tls_index), // derived
+    XREF_ENTRY(0x01, XREF__tls_index), // derived
 
     // mov ecx,fs:[_tls_array]
-    XREF_ENTRY(0x08, XREF_XAPI__tls_array), // derived
+    XREF_ENTRY(0x08, XREF__tls_array), // derived
 
     // lea ecx,[edx+XapiThreadFiberData_OFFSET]
     XREF_ENTRY(0x15, XREF_OFFSET_XapiThreadFiberData), // derived
@@ -1329,7 +1329,7 @@ OOVPA_SIG_MATCH(
     XREF_ENTRY(0x68, XREF_XapiCallThreadNotifyRoutines),
 
     // call UnhandledExceptionFilter
-    XREF_ENTRY(0x82, XREF_XAPI_UnhandledExceptionFilter),
+    XREF_ENTRY(0x82, XREF_UnhandledExceptionFilter),
 
     // push 0x18
     OV_MATCH(0x00, 0x6A, 0x18),
@@ -1566,10 +1566,10 @@ OOVPA_SIG_HEADER_XREF(GetLastError,
 OOVPA_SIG_MATCH(
 
     // mov eax,[_tls_index]
-    XREF_ENTRY(0x13, XREF_XAPI__tls_index), // derived
+    XREF_ENTRY(0x13, XREF__tls_index), // derived
 
     // mov ecx,fs:[_tls_array]
-    XREF_ENTRY(0x1A, XREF_XAPI__tls_array), // derived
+    XREF_ENTRY(0x1A, XREF__tls_array), // derived
 
     // mov eax,[eax+XapiLastErrorCode_OFFSET]
     XREF_ENTRY(0x23, XREF_OFFSET_XapiLastErrorCode), // derived
@@ -1598,10 +1598,10 @@ OOVPA_SIG_HEADER_XREF(SetLastError,
 OOVPA_SIG_MATCH(
 
     // mov ecx,fs:[_tls_array]
-    XREF_ENTRY(0x15, XREF_XAPI__tls_array), // derived
+    XREF_ENTRY(0x15, XREF__tls_array), // derived
 
     // mov eax,[_tls_index]
-    XREF_ENTRY(0x1A, XREF_XAPI__tls_index), // derived
+    XREF_ENTRY(0x1A, XREF__tls_index), // derived
 
     // mov [eax+XapiLastErrorCode_OFFSET],ecx
     XREF_ENTRY(0x27, XREF_OFFSET_XapiLastErrorCode), // derived
@@ -1630,7 +1630,7 @@ OOVPA_SIG_HEADER_XREF(XapiSetLastNTError,
 OOVPA_SIG_MATCH(
 
     // call SetLastError
-    XREF_ENTRY(0x0E, XREF_XAPI_SetLastError),
+    XREF_ENTRY(0x0E, XREF_SetLastError),
 
     // push [esp+0x04]
     OV_MATCH(0x00, 0xFF, 0x74, 0x24, 0x04),
@@ -1785,14 +1785,14 @@ OOVPA_SIG_HEADER_XREF(mainXapiStartup,
 OOVPA_SIG_MATCH(
 
     // call XapiInitProcess
-    //XREF_ENTRY(0x01, XREF_XAPI_XapiInitProcess),
+    //XREF_ENTRY(0x01, XREF_XapiInitProcess),
 
 
     // call _rtinit
-    XREF_ENTRY(0x48, XREF_XAPI__rtinit),
+    XREF_ENTRY(0x48, XREF__rtinit),
 
     // call _cinit
-    XREF_ENTRY(0x4D, XREF_XAPI__cinit),
+    XREF_ENTRY(0x4D, XREF__cinit),
 
     // call XapiInitProcess
     OV_MATCH(0x00, 0xE8),
@@ -1815,10 +1815,10 @@ OOVPA_SIG_HEADER_XREF(mainCRTStartup,
 OOVPA_SIG_MATCH(
 
     // push mainXapiStartup
-    XREF_ENTRY(0x34, XREF_XAPI_mainXapiStartup),
+    XREF_ENTRY(0x34, XREF_mainXapiStartup),
 
     //  call CreateThread
-    XREF_ENTRY(0x3D, XREF_XAPI_CreateThread),
+    XREF_ENTRY(0x3D, XREF_CreateThread),
 
     //  call XapiBootToDash
     XREF_ENTRY(0x4D, XREF_XapiBootToDash),

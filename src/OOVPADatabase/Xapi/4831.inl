@@ -280,13 +280,13 @@ OOVPA_SIG_HEADER_XREF(mainXapiStartup,
 OOVPA_SIG_MATCH(
 
     // call XapiInitProcess
-    //XREF_ENTRY(0x01, XREF_XAPI_XapiInitProcess),
+    //XREF_ENTRY(0x01, XREF_XapiInitProcess),
 
     // call _rtinit
-    XREF_ENTRY(0x4D, XREF_XAPI__rtinit),
+    XREF_ENTRY(0x4D, XREF__rtinit),
 
     // call _cinit
-    XREF_ENTRY(0x52, XREF_XAPI__cinit),
+    XREF_ENTRY(0x52, XREF__cinit),
 
     // call XapiApplyKernelPatches
     OV_MATCH(0x00, 0xE8),

@@ -33,10 +33,10 @@ OOVPA_SIG_HEADER_XREF(XInputOpen,
 OOVPA_SIG_MATCH(
 
     // call GetTypeInformation_4
-    XREF_ENTRY(0x0C, XREF_XAPI_GetTypeInformation_4),
+    XREF_ENTRY(0x0C, XREF_GetTypeInformation_4),
 
     // call SetLastError
-    XREF_ENTRY(0x17, XREF_XAPI_SetLastError),
+    XREF_ENTRY(0x17, XREF_SetLastError),
 
     // push 0x57
     OV_MATCH(0x14, 0x6A, 0x57),

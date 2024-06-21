@@ -904,8 +904,8 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     pContext->xref_database[XREF_OFFSET_XapiCurrentFiber] = XREF_ADDR_DERIVE;                  //In use
     pContext->xref_database[XREF_OFFSET_XapiLastErrorCode] = XREF_ADDR_DERIVE;                 //In use
     pContext->xref_database[XREF_OFFSET_XapiThreadFiberData] = XREF_ADDR_DERIVE;               //In use
-    pContext->xref_database[XREF_XAPI__tls_array] = XREF_ADDR_DERIVE;                          //In use
-    pContext->xref_database[XREF_XAPI__tls_index] = XREF_ADDR_DERIVE;                          //In use
+    pContext->xref_database[XREF__tls_array] = XREF_ADDR_DERIVE;                               //In use
+    pContext->xref_database[XREF__tls_index] = XREF_ADDR_DERIVE;                               //In use
     pContext->xref_database[XREF_XapiThreadNotifyRoutineList] = XREF_ADDR_DERIVE;              //In use
     pContext->xref_database[XREF_XGetSectionSize] = XREF_ADDR_DERIVE;                          //In use
     // clang-format on

@@ -109,10 +109,10 @@ OOVPA_SIG_HEADER_XREF(mainCRTStartup,
 OOVPA_SIG_MATCH(
 
     // push mainXapiStartup
-    XREF_ENTRY(0x4C, XREF_XAPI_mainXapiStartup),
+    XREF_ENTRY(0x4C, XREF_mainXapiStartup),
 
     // call CreateThread
-    XREF_ENTRY(0x55, XREF_XAPI_CreateThread),
+    XREF_ENTRY(0x55, XREF_CreateThread),
 
     // call XapiBootToDash
     XREF_ENTRY(0x65, XREF_XapiBootToDash),

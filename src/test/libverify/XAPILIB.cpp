@@ -12,37 +12,37 @@ static const library_list database_full = {
 
     // OOVPA sigs
     // Without xrefs dependency
-    REGISTER_SYMBOL_INLINE_XAPI(_cinit, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(_rtinit, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(_cinit, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(_rtinit, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XapiFormatObjectAttributes, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XapiMapLetterToDirectory, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XLaunchNewImageA, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XUnmountAlternateTitleA, VER_RANGE(3911)),
 
     // With xrefs dependency (unorder, need to scan next before order list)
-    REGISTER_SYMBOL_INLINE_XAPI(mainXapiStartup, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(GetLastError, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(SetLastError, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(mainXapiStartup, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(GetLastError, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(SetLastError, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XapiBootToDash, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XapiSelectCachePartition, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XapiSetLastNTError, VER_RANGE(3911)),
 
     // With xrefs dependency (order)
-    REGISTER_SYMBOL_INLINE_XAPI(CreateMutexA, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(MoveFileA, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(CreateMutexA, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(MoveFileA, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XapiInitProcess, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XCalculateSignatureBegin, VER_RANGE(3911)),
     // REGISTER_SYMBOL_INLINE(XCalculateSignatureBeginEx, VER_RANGE(3911)), // no signature and currently unknown.
-    REGISTER_SYMBOL_INLINE_XAPI(GetOverlappedResult, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(GetTimeZoneInformation, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(GetTypeInformation_4, VER_RANGE(4242)),
-    REGISTER_SYMBOL_INLINE_XAPI(GetTypeInformation_8, VER_RANGE(4242)),
-    REGISTER_SYMBOL_INLINE_XAPI(OutputDebugStringA, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(OutputDebugStringW, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(mainCRTStartup, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(QueueUserAPC, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(QueryPerformanceCounter, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(SignalObjectAndWait, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(GetOverlappedResult, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(GetTimeZoneInformation, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(GetTypeInformation_4, VER_RANGE(4242)),
+    REGISTER_SYMBOL_INLINE(GetTypeInformation_8, VER_RANGE(4242)),
+    REGISTER_SYMBOL_INLINE(OutputDebugStringA, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(OutputDebugStringW, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(mainCRTStartup, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(QueueUserAPC, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(QueryPerformanceCounter, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(SignalObjectAndWait, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XAutoPowerDownResetTimer, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XFormatUtilityDrive, VER_RANGE(4242)),
     REGISTER_SYMBOL_INLINE(XGetLaunchInfo, VER_RANGE(3911)),
@@ -50,8 +50,8 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(XMountAlternateTitleA, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XMountUtilityDrive, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XSetProcessQuantumLength, VER_RANGE(4134)),
-    REGISTER_SYMBOL_INLINE_XAPI(timeKillEvent, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(timeSetEvent, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(timeKillEvent, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(timeSetEvent, VER_RANGE(3911)),
 };
 
 static const library_list fiber_full = {
@@ -63,18 +63,18 @@ static const library_list fiber_full = {
     // OOVPA sigs
 
     // With xrefs dependency (order)
-    REGISTER_SYMBOL_INLINE_XAPI(ConvertThreadToFiber, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(CreateFiber, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(DeleteFiber, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(SwitchToFiber, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(ConvertThreadToFiber, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(CreateFiber, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(DeleteFiber, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(SwitchToFiber, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XapiFiberStartup, VER_RANGE(3911)),
 };
 
 static const library_list thread_full = {
 
     // derived xrefs
-    REGISTER_SYMBOL_INLINE_XAPI(_tls_array, VER_RANGE(0)),
-    REGISTER_SYMBOL_INLINE_XAPI(_tls_index, VER_RANGE(0)),
+    REGISTER_SYMBOL_INLINE(_tls_array, VER_RANGE(0)),
+    REGISTER_SYMBOL_INLINE(_tls_index, VER_RANGE(0)),
     REGISTER_SYMBOL_INLINE(XapiThreadNotifyRoutineList, VER_RANGE(0)),
     REGISTER_SYMBOL_INLINE(g_XapiCurrentTopLevelFilter, VER_RANGE(0)),
 
@@ -83,27 +83,27 @@ static const library_list thread_full = {
     REGISTER_SYMBOL_INLINE(XapiCallThreadNotifyRoutines, VER_RANGE(3911)),
 
     // With xrefs dependency (unorder, need to scan next before order list)
-    REGISTER_SYMBOL_INLINE_XAPI(UnhandledExceptionFilter, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(UnhandledExceptionFilter, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XapiThreadStartup, VER_RANGE(3911)),
 
     // With xrefs dependency (order)
-    REGISTER_SYMBOL_INLINE_XAPI(CreateThread, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(ExitThread, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(SwitchToThread, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(GetExitCodeThread, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(GetThreadPriority, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(RaiseException, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(SetThreadPriority, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(SetThreadPriorityBoost, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(CreateThread, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(ExitThread, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(SwitchToThread, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(GetExitCodeThread, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(GetThreadPriority, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(RaiseException, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(SetThreadPriority, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(SetThreadPriorityBoost, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XRegisterThreadNotifyRoutine, VER_RANGE(3911)),
 };
 
 static const library_list event_full = {
-    REGISTER_SYMBOL_INLINE_XAPI(CreateEventA, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(OpenEventA, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(PulseEvent, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(ResetEvent, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE_XAPI(SetEvent, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(CreateEventA, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(OpenEventA, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(PulseEvent, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(ResetEvent, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(SetEvent, VER_RANGE(3911)),
 };
 
 static const library_list mu_optional = {
@@ -184,7 +184,7 @@ enum LOCAL_XREFS {
 
 // Verify if symbol name is at start of offset.
 #define XREF_SYMBOL_GET(e) e
-#define XREF_OFFSET XREF_SYMBOL_GET(XAPI__tls_array)
+#define XREF_OFFSET XREF_SYMBOL_GET(_tls_array)
 static_assert(XREF_OFFSET == 0);
 // Then get symbol's actual offset.
 #undef XREF_SYMBOL_GET

@@ -172,7 +172,7 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
     OOVPATable* pSymbol = NULL;
 
     // Find GetTypeInformation_4 function
-    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XAPI_GetTypeInformation_4])) {
+    if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_GetTypeInformation_4])) {
         xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
                                                                    pLibrarySession,
                                                                    pLibraryDB,
@@ -298,8 +298,8 @@ static inline void manual_register_xapilib(iXbSymbolContext* pContext)
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiAltLett_MU, 0, "g_XapiAltLett_MU", symbol_variable, 0, NULL);
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs", symbol_variable, 0, NULL);
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiCurrentTopLevelFilter, 0, "g_XapiCurrentTopLevelFilter", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_array, 0, "_tls_array", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_index, 0, "_tls_index", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF__tls_array, 0, "_tls_array", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF__tls_index, 0, "_tls_index", symbol_variable, 0, NULL);
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiCurrentFiber, 0, "XapiCurrentFiber_OFFSET", symbol_variable, 0, NULL);
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiLastErrorCode, 0, "XapiLastErrorCode_OFFSET", symbol_variable, 0, NULL);
     internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiThreadFiberData, 0, "XapiThreadFiberData_OFFSET", symbol_variable, 0, NULL);
