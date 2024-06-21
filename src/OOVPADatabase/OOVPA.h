@@ -230,13 +230,14 @@ typedef enum _eDBScanType {
 // ******************************************************************
 #pragma pack() // require restore pack for AppleClang to build
 typedef struct _OOVPATable {
-    uint16_t xref;
-    unsigned scan_type;
+    const uint16_t xref;
+    const unsigned scan_type;
+    const XbSDSymbolType symbol_type;
     const char* szSymbolName;
-    unsigned param_count;
+    const unsigned param_count;
     const XbSDBSymbolParam* param_list;
-    unsigned count;
-    OOVPARevision* revisions;
+    const unsigned count;
+    OOVPARevision* const revisions;
 } OOVPATable;
 #pragma pack(1)
 
@@ -290,28 +291,31 @@ typedef struct _OOVPATable {
 #define OV_BYTES_8(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_7(Offset + 1, __VA_ARGS__))
 
 // For generate symbol's suffix name, mainly for registers, and extend API usage.
-#define PARAM(Param, Name)           Param, Name
-#define PARAM_TOKEN_unk(Index, Name) _unk##Index
-#define PARAM_TOKEN_stk(Index, Name) // Argument is stored in call stack, do not append to symbol reference.
-#define PARAM_TOKEN_eax(Index, Name) _eax##Index
-#define PARAM_TOKEN__ax(Index, Name) _ax##Index
-#define PARAM_TOKEN__ah(Index, Name) _ah##Index
-#define PARAM_TOKEN__al(Index, Name) _al##Index
-#define PARAM_TOKEN_ebx(Index, Name) _ebx##Index
-#define PARAM_TOKEN__bx(Index, Name) _bx##Index
-#define PARAM_TOKEN__bh(Index, Name) _bh##Index
-#define PARAM_TOKEN__bl(Index, Name) _bl##Index
-#define PARAM_TOKEN_ecx(Index, Name) _ecx##Index
-#define PARAM_TOKEN__cx(Index, Name) _cx##Index
-#define PARAM_TOKEN__ch(Index, Name) _ch##Index
-#define PARAM_TOKEN__cl(Index, Name) _cl##Index
-#define PARAM_TOKEN_edx(Index, Name) _edx##Index
-#define PARAM_TOKEN__dx(Index, Name) _dx##Index
-#define PARAM_TOKEN__dh(Index, Name) _dh##Index
-#define PARAM_TOKEN__dl(Index, Name) _dl##Index
-#define PARAM_TOKEN_ebp(Index, Name) _ebp##Index
-#define PARAM_TOKEN_edi(Index, Name) _edi##Index
-#define PARAM_TOKEN_esi(Index, Name) _esi##Index
+#define PARAM(Param, Name)            Param, Name
+#define PARAM1(Param)                 Param, ""
+#define PARAM_TOKEN_unk(Index, Name)  _unk##Index
+#define PARAM_TOKEN_void(Index, Name) // No argument, do not append to symbol reference.
+#define PARAM_TOKEN_stk2(Index, Name) // Argument is stored in call stack, do not append to symbol reference.
+#define PARAM_TOKEN_stk(Index, Name)  // Argument is stored in call stack, do not append to symbol reference.
+#define PARAM_TOKEN_eax(Index, Name)  _eax##Index
+#define PARAM_TOKEN__ax(Index, Name)  _ax##Index
+#define PARAM_TOKEN__ah(Index, Name)  _ah##Index
+#define PARAM_TOKEN__al(Index, Name)  _al##Index
+#define PARAM_TOKEN_ebx(Index, Name)  _ebx##Index
+#define PARAM_TOKEN__bx(Index, Name)  _bx##Index
+#define PARAM_TOKEN__bh(Index, Name)  _bh##Index
+#define PARAM_TOKEN__bl(Index, Name)  _bl##Index
+#define PARAM_TOKEN_ecx(Index, Name)  _ecx##Index
+#define PARAM_TOKEN__cx(Index, Name)  _cx##Index
+#define PARAM_TOKEN__ch(Index, Name)  _ch##Index
+#define PARAM_TOKEN__cl(Index, Name)  _cl##Index
+#define PARAM_TOKEN_edx(Index, Name)  _edx##Index
+#define PARAM_TOKEN__dx(Index, Name)  _dx##Index
+#define PARAM_TOKEN__dh(Index, Name)  _dh##Index
+#define PARAM_TOKEN__dl(Index, Name)  _dl##Index
+#define PARAM_TOKEN_ebp(Index, Name)  _ebp##Index
+#define PARAM_TOKEN_edi(Index, Name)  _edi##Index
+#define PARAM_TOKEN_esi(Index, Name)  _esi##Index
 
 #define PARAMS_TOKEN_EXPAND(param_a, param_b) CONCAT(param_a, param_b)
 #define PARAMS_TOKEN_0(...)
@@ -404,15 +408,17 @@ typedef struct _OOVPATable {
 
 #define SYMBOL_EXPAND(symbol_name, stack_size, suffix, params, ...)      (symbol_name, symbol_name##stack_size##suffix, __VA_ARGS__)
 #define SYMBOL_EXPAND_LTCG(symbol_name, stack_size, suffix, params, ...) (symbol_name, symbol_name##stack_size##suffix##params, __VA_ARGS__)
-#define SYM_VAR(symbol_name)                                             SYMBOL_EXPAND(symbol_name, /*NONE*/, /*NONE*/, /*NONE*/, 0, ({ param_unk, "" }))
-#define SYM_FUN(symbol_name, stack_size, params)                         SYMBOL_EXPAND(symbol_name, stack_size, /*NONE*/, params)
-#define SYM_FUN_ALT(symbol_name, suffix, stack_size, params)             SYMBOL_EXPAND(symbol_name, stack_size, suffix, params)
-#define SYM_FUN_LTCG(symbol_name, stack_size, params)                    SYMBOL_EXPAND_LTCG(symbol_name, stack_size, __LTCG, params)
+#define SYM_INT(symbol_name)                                             SYMBOL_EXPAND(symbol_name, /*NONE*/, /*NONE*/, /*NONE*/, 0, ({ param_unk, "" }), symbol_internal)
+#define SYM_VAR(symbol_name)                                             SYMBOL_EXPAND(symbol_name, /*NONE*/, /*NONE*/, /*NONE*/, 0, ({ param_unk, "" }), symbol_variable)
+#define SYM_FUN(symbol_name, stack_size, params)                         SYMBOL_EXPAND(symbol_name, stack_size, /*NONE*/, params, symbol_function)
+#define SYM_FUN_ALT(symbol_name, suffix, stack_size, params)             SYMBOL_EXPAND(symbol_name, stack_size, suffix, params, symbol_function)
+#define SYM_FUN_LTCG(symbol_name, stack_size, params)                    SYMBOL_EXPAND_LTCG(symbol_name, stack_size, __LTCG, params, symbol_function)
 #define SYM_SIG                                                          VA_ARGS_EXPAND
 
-#define REGISTER_OOVPAS_TYPE(xref, symbol_name, param_count, param_list, scan_type, ...)                                                                    \
+#define REGISTER_OOVPAS_TYPE(xref, symbol_name, param_count, param_list, symbol_type, scan_type, ...)                                                       \
     XREF_##xref,                                                                                                                                            \
         scan_type,                                                                                                                                          \
+        symbol_type,                                                                                                                                        \
         #symbol_name,                                                                                                                                       \
         param_count,                                                                                                                                        \
         (const XbSDBSymbolParam[])UNPARENTHESES(param_list),                                                                                                \

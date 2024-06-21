@@ -185,9 +185,9 @@
 // * D3D8_OOVPA
 // ******************************************************************
 OOVPATable D3D8_OOVPA[] = {
-    REGISTER_OOVPAS_M(SYM_VAR(D3DDevice__m_VerticalBlankEvent__GenericFragment),
+    REGISTER_OOVPAS_M(SYM_INT(D3DDevice__m_VerticalBlankEvent__GenericFragment),
                       SYM_SIG(3911)), // This OOVPA signature is not a symbol. Read its note for more details.
-    REGISTER_OOVPAS_M(SYM_VAR(D3DRS_Stencils_and_Occlusion__GenericFragment),
+    REGISTER_OOVPAS_M(SYM_INT(D3DRS_Stencils_and_Occlusion__GenericFragment),
                       SYM_SIG(3911)), // This OOVPA signature is not a symbol. Read its note for more details.
 
     REGISTER_OOVPAS(SYM_FUN(D3D_UpdateProjectionViewportTransform, STACK(/*default*/), PARAMS(/*unknown*/)),

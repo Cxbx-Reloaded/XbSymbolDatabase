@@ -67,7 +67,7 @@ static bool internal_xapi_find_XGetSectionSize(iXbSymbolContext* pContext,
             // Update to use virtual address instead of relative address.
             pContext->xref_database[XREF_XGetSectionSize] = xXbAddr;
 
-            internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XGetSectionSize, pOOVPARevision->Version, xref_str);
+            internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XGetSectionSize, pOOVPARevision->Version, xref_str, symbol_function, 0, NULL);
         }
     }
 
@@ -155,7 +155,7 @@ static bool internal_xapi_find_DeviceType_MU(iXbSymbolContext* pContext,
 
         // Register g_DeviceType_MU
         internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_g_DeviceType_MU, 3911,
-                                  "g_DeviceType_MU", xXbAddr);
+                                  "g_DeviceType_MU", xXbAddr, symbol_variable, 0, NULL);
     }
 
     return true;
@@ -288,20 +288,20 @@ static bool manual_scan_section_xapilib(iXbSymbolContext* pContext,
 
 static inline void manual_register_xapilib(iXbSymbolContext* pContext)
 {
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Gamepad, 0, "g_DeviceType_Gamepad");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_IRDongle, 0, "g_DeviceType_IRDongle");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Keyboard, 0, "g_DeviceType_Keyboard");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Mouse, 0, "g_DeviceType_Mouse");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_SBC, 4242, "g_DeviceType_SBC");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableBegin, 4242, "g_DeviceTypeInfoTableBegin");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableEnd, 4242, "g_DeviceTypeInfoTableEnd");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiAltLett_MU, 0, "g_XapiAltLett_MU");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiCurrentTopLevelFilter, 0, "g_XapiCurrentTopLevelFilter");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_array, 0, "_tls_array");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_index, 0, "_tls_index");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiCurrentFiber, 0, "XapiCurrentFiber_OFFSET");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiLastErrorCode, 0, "XapiLastErrorCode_OFFSET");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiThreadFiberData, 0, "XapiThreadFiberData_OFFSET");
-    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiThreadNotifyRoutineList, 0, "XapiThreadNotifyRoutineList");
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Gamepad, 0, "g_DeviceType_Gamepad", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_IRDongle, 0, "g_DeviceType_IRDongle", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Keyboard, 0, "g_DeviceType_Keyboard", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Mouse, 0, "g_DeviceType_Mouse", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_SBC, 4242, "g_DeviceType_SBC", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableBegin, 4242, "g_DeviceTypeInfoTableBegin", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableEnd, 4242, "g_DeviceTypeInfoTableEnd", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiAltLett_MU, 0, "g_XapiAltLett_MU", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiCurrentTopLevelFilter, 0, "g_XapiCurrentTopLevelFilter", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_array, 0, "_tls_array", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XAPI__tls_index, 0, "_tls_index", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiCurrentFiber, 0, "XapiCurrentFiber_OFFSET", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiLastErrorCode, 0, "XapiLastErrorCode_OFFSET", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_OFFSET_XapiThreadFiberData, 0, "XapiThreadFiberData_OFFSET", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr_M(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiThreadNotifyRoutineList, 0, "XapiThreadNotifyRoutineList", symbol_variable, 0, NULL);
 }

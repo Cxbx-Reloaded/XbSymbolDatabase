@@ -62,9 +62,9 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
 
         // TODO: If possible, integrate into the OOVPA structure.
         internal_RegisterXRef(pContext, pLibrarySession, XREF_DSS_VOICE_VTABLE, 3911,
-                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x14), false);
+                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x14), symbol_variable, 0, NULL, false);
         internal_RegisterXRef(pContext, pLibrarySession, XREF_DSS_STREAM_VTABLE, 3911,
-                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x1B), false);
+                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x1B), symbol_variable, 0, NULL, false);
     }
 
     // Verify both variables are already set from the scan function above.
@@ -81,33 +81,33 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
 
         if (xblower <= vtable && vtable < xbupper) {
             pFuncAddr = (memptr_t)virt_start_relative + vtable;
-
+            // TODO: FIXME! BELOW ARE FUNCTIONS, TRY RETREIVE INFO SOMEHOW FOR PARAMETERS???
             internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_AddRef, 3911,
-                                      "CDirectSoundStream_AddRef", *(uint32_t*)(pFuncAddr + 0 * 4));
+                                      "CDirectSoundStream_AddRef", *(uint32_t*)(pFuncAddr + 0 * 4), symbol_function, 0, NULL);
 
             internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Release, 3911,
-                                      "CDirectSoundStream_Release", *(uint32_t*)(pFuncAddr + 1 * 4));
+                                      "CDirectSoundStream_Release", *(uint32_t*)(pFuncAddr + 1 * 4), symbol_function, 0, NULL);
 
             internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_GetInfo, 3911,
-                                      "CDirectSoundStream_GetInfo", *(uint32_t*)(pFuncAddr + 2 * 4));
+                                      "CDirectSoundStream_GetInfo", *(uint32_t*)(pFuncAddr + 2 * 4), symbol_function, 0, NULL);
 
             if (pLibrary->build_version < 4134) {
                 internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_GetStatus, 3911,
-                                          "CDirectSoundStream_GetStatus__r1", *(uint32_t*)(pFuncAddr + 3 * 4));
+                                          "CDirectSoundStream_GetStatus__r1", *(uint32_t*)(pFuncAddr + 3 * 4), symbol_function, 0, NULL);
             }
             else {
                 internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_GetStatus, 4134,
-                                          "CDirectSoundStream_GetStatus__r2", *(uint32_t*)(pFuncAddr + 3 * 4));
+                                          "CDirectSoundStream_GetStatus__r2", *(uint32_t*)(pFuncAddr + 3 * 4), symbol_function, 0, NULL);
             }
 
             internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Process, 3911,
-                                      "CDirectSoundStream_Process", *(uint32_t*)(pFuncAddr + 4 * 4));
+                                      "CDirectSoundStream_Process", *(uint32_t*)(pFuncAddr + 4 * 4), symbol_function, 0, NULL);
 
             internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Discontinuity, 3911,
-                                      "CDirectSoundStream_Discontinuity", *(uint32_t*)(pFuncAddr + 5 * 4));
+                                      "CDirectSoundStream_Discontinuity", *(uint32_t*)(pFuncAddr + 5 * 4), symbol_function, 0, NULL);
 
             internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Flush, 3911,
-                                      "CDirectSoundStream_Flush", *(uint32_t*)(pFuncAddr + 6 * 4));
+                                      "CDirectSoundStream_Flush", *(uint32_t*)(pFuncAddr + 6 * 4), symbol_function, 0, NULL);
 
             // NOTE: it is possible to manual add GetInfo, GetStatus, Process, Discontinuity,
             // and Flush functions.

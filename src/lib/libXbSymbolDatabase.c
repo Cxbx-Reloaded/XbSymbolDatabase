@@ -387,6 +387,51 @@ const char* XbSymbolDatabase_LibraryToString(uint32_t library_flag)
     }
 }
 
+static const char* const param_type_str[] = {
+#define PARAM_TYPE__0(type)  #type,
+#define PARAM_TYPE_64(type)  #type,
+#define PARAM_TYPE_32(type)  #type,
+#define PARAM_TYPE_16_(type) #type,
+#define PARAM_TYPE__8_(type) #type,
+#include <libParamTypes.h>
+#undef PARAM_TYPE__0
+#undef PARAM_TYPE_64
+#undef PARAM_TYPE_32
+#undef PARAM_TYPE_16
+#undef PARAM_TYPE__8
+};
+
+const char* XbSymbolDatabase_ParamToString(uint32_t param_type)
+{
+    if (param_type >= param_max) {
+        return param_type_str[param_unk];
+    }
+
+    return param_type_str[param_type];
+}
+
+const char* xref_str[] = {
+#define XREF_SYMBOL(e) #e,
+#include "xref/d3d8.def"
+#include "xref/d3d8ltcg.def"
+#include "xref/dsound.def"
+#include "xref/jvs.def"
+#include "xref/xacteng.def"
+#include "xref/xapilib.def"
+#include "xref/xgraphic.def"
+#include "xref/xnet.def"
+#include "xref/xonline.def"
+#undef XREF_SYMBOL
+};
+
+const char* XbSymbolDatabase_SymbolReferenceToString(uint32_t xref_index)
+{
+    if (xref_index <= XREF_KT_COUNT || XREF_COUNT <= xref_index) {
+        return NULL;
+    }
+    return xref_str[XREF_PUBLIC_INDEX(xref_index)];
+}
+
 // NOTE: Library string must return only one specific flag, cannot make a mix combo flags.
 //       Otherwise, internal scan and XbSymbolDatabase_LibraryToString will not function correctly.
 uint32_t XbSymbolDatabase_LibraryToFlag(const char* library_name)

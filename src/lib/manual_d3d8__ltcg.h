@@ -359,16 +359,16 @@ static bool manual_scan_section_dx8_register_D3DRS_vars(iXbSymbolContext* pConte
                         output_message(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, buffer_str);
                     }
                 }
-                internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, render_state_i.xref, render_state_i.version, render_state_i.name);
+                internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, render_state_i.xref, render_state_i.version, render_state_i.name, symbol_variable, 0, NULL);
             }
             RenderState_iLib++;
         }
     }
 
     // Manual register RenderState sections.
-    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_RenderState, 0, "D3D_g_RenderState");
-    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_ComplexRenderState, 0, "D3D_g_ComplexRenderState");
-    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_DeferredRenderState, 0, "D3D_g_DeferredRenderState");
+    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_RenderState, 0, "D3D_g_RenderState", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_ComplexRenderState, 0, "D3D_g_ComplexRenderState", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_DeferredRenderState, 0, "D3D_g_DeferredRenderState", symbol_variable, 0, NULL);
 
     return true;
 }
@@ -626,7 +626,7 @@ static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
 
     uint32_t EmuD3DDeferredTextureState = DerivedAddr_D3DTSS_TEXCOORDINDEX - Decrement;
 
-    internal_RegisterXRef(pContext, pLibrarySession, XREF_D3D_g_DeferredTextureState, 0, "D3D_g_DeferredTextureState", EmuD3DDeferredTextureState, true);
+    internal_RegisterXRef(pContext, pLibrarySession, XREF_D3D_g_DeferredTextureState, 0, "D3D_g_DeferredTextureState", EmuD3DDeferredTextureState, symbol_variable, 0, NULL, true);
 }
 
 static void manual_scan_section_dx8_register_stream(iXbSymbolContext* pContext,
@@ -651,7 +651,7 @@ static void manual_scan_section_dx8_register_stream(iXbSymbolContext* pContext,
     // Now that both Derived XREF and OOVPA-based function-contents match,
     // correct base-address (because "g_Stream" is actually "g_Stream"+8") :
     Derived_g_Stream -= 8;
-    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_Stream, "D3D_g_Stream", Derived_g_Stream, 0);
+    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_Stream, "D3D_g_Stream", Derived_g_Stream, 0, symbol_variable, 0, NULL);
 }
 
 // Has dependency on D3D_g_pDevice xref.
@@ -920,11 +920,11 @@ static inline void manual_register_d3d8__ltcg(iXbSymbolContext* pContext)
 {
     xbaddr xD3D_pDeviceAddr = pContext->xref_database[XREF_D3D_g_pDevice];
     if (internal_IsXRefAddrValid(xD3D_pDeviceAddr)) {
-        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_pDevice, 0, "D3D_g_pDevice");
+        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_pDevice, 0, "D3D_g_pDevice", symbol_variable, 0, NULL);
         // Register offsets of D3DDevice's members
-        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_SwapCallback, 0, "D3DDevice__m_SwapCallback_OFFSET");
-        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VBlankCallback, 0, "D3DDevice__m_VBlankCallback_OFFSET");
-        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VertexShader, 0, "D3DDevice__m_VertexShader_OFFSET");
-        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VerticalBlankEvent, 0, "D3DDevice__m_VerticalBlankEvent_OFFSET");
+        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_SwapCallback, 0, "D3DDevice__m_SwapCallback_OFFSET", symbol_variable, 0, NULL);
+        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VBlankCallback, 0, "D3DDevice__m_VBlankCallback_OFFSET", symbol_variable, 0, NULL);
+        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VertexShader, 0, "D3DDevice__m_VertexShader_OFFSET", symbol_variable, 0, NULL);
+        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VerticalBlankEvent, 0, "D3DDevice__m_VerticalBlankEvent_OFFSET", symbol_variable, 0, NULL);
     }
 }

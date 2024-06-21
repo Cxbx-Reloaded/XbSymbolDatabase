@@ -127,28 +127,25 @@ static const char* xbe_type_str[XB_XBE_TYPE_MAX] = {
     "CHIHIRO"
 };
 
+typedef enum _XbSDBSymbolType {
+    symbol_internal = 0, // Only for internal usage.
+    symbol_variable,
+    symbol_function
+} XbSDBSymbolType;
+
 typedef enum _XbSDBParamType {
-    param_unk = 0, // Unknown
-    param_stk,     // 32 bits
-    param_eax,     // 32 bits
-    param__ax,     // 16 bits
-    param__ah,     //  8 bits
-    param__al,     //  8 bits
-    param_ebx,     // 32 bits
-    param__bx,     // 16 bits
-    param__bh,     //  8 bits
-    param__bl,     //  8 bits
-    param_ecx,     // 32 bits
-    param__cx,     // 16 bits
-    param__ch,     //  8 bits
-    param__cl,     //  8 bits
-    param_edx,     // 32 bits
-    param__dx,     // 16 bits
-    param__dh,     //  8 bits
-    param__dl,     //  8 bits
-    param_ebp,     // 32 bits
-    param_edi,     // 32 bits
-    param_esi      // 32 bits
+#define PARAM_TYPE__0(type)  param_##type,
+#define PARAM_TYPE_64(type)  param_##type,
+#define PARAM_TYPE_32(type)  param_##type,
+#define PARAM_TYPE_16_(type) param__##type,
+#define PARAM_TYPE__8_(type) param__##type,
+#include <libParamTypes.h>
+#undef PARAM_TYPE__0
+#undef PARAM_TYPE_64
+#undef PARAM_TYPE_32
+#undef PARAM_TYPE_16_
+#undef PARAM_TYPE__8_
+    param_max
 } XbSDBParamType;
 
 typedef struct _XbSDBSymbolParam {
@@ -226,15 +223,18 @@ void XbSymbolDatabase_SetOutputMessage(xb_output_message_t message_func);
 
 /// <summary>
 /// To register any detected symbol name with address and build version back to third-party program.
-/// NOTE: Be aware of library name will be varity since some libraries are detecting in other sections as well.
+/// NOTE: Be aware of library name will be variety since some libraries are detecting in other sections as well.
 /// </summary>
 /// <param name="library_str">Name of the library in string.</param>
 /// <param name="library_flag">Name of the library in flag.</param>
 /// <param name="xref_index">Output unique xreference of symbol name.</param>
 /// <param name="symbol_str">Name of the library in symbol string.</param>
 /// <param name="address">Return xbox's virtual address.</param>
-/// <param name="build_verison">Found with specific build verison.</param>
-typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, uint32_t xref_index, const char* symbol_str, xbaddr address, uint32_t build_verison);
+/// <param name="build_version">Found with specific build version.</param>
+/// <param name="symbol_type">Type of symbol. If symbol type is a function, then the following arguments starting with a param_ prefix will be set.</param>
+/// <param name="param_count">Total count of parameters.</param>
+/// <param name="param_list">List of parameters.</param>
+typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, uint32_t xref_index, const char* symbol_str, xbaddr address, uint32_t build_version, uint32_t symbol_type, uint32_t param_count, const XbSDBSymbolParam* param_list);
 
 /// <summary>
 /// DEPRECATED: To scan symbols in memory of raw xbe or host's virtual xbox environment.
@@ -251,6 +251,20 @@ bool XbSymbolScan(const void* xb_header_addr, xb_symbol_register_t register_func
 /// <param name="library_flag">Input specific library flag.</param>
 /// <returns>Return "UNKNOWN" string if does not exist in the database. Otherwise will return library name string.</returns>
 const char* XbSymbolDatabase_LibraryToString(uint32_t library_flag);
+
+/// <summary>
+/// To convert parameter type into string format.
+/// </summary>
+/// <param name="param_type">Input provided param_type from symbol register callback.</param>
+/// <returns>Return "unk" string if does not exist in the database. Otherwise it will return the string representation of the parameter type.</returns>
+const char* XbSymbolDatabase_ParamToString(uint32_t param_type);
+
+/// <summary>
+/// To convert a symbol reference index into string format.
+/// </summary>
+/// <param name="xref_index">Input provided xref_index from symbol register callback.</param>
+/// <returns>Returns a demangled symbol name string.</returns>
+const char* XbSymbolDatabase_SymbolReferenceToString(uint32_t xref_index);
 
 /// <summary>
 /// To convert library name string into flag format.

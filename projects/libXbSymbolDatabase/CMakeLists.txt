@@ -8,6 +8,7 @@ find_package(Threads)
 
 file(GLOB INCLUDES
  "${XBSDB_ROOT_DIR}/include/Xbe.h"
+ "${XBSDB_ROOT_DIR}/include/libParamTypes.h"
  "${XBSDB_ROOT_DIR}/include/libXbSymbolDatabase.h"
 
 # Include xrefs for ABI feature support.

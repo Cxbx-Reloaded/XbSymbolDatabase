@@ -260,7 +260,7 @@ OOVPATable D3D8LTCG_OOVPA[] = {
                     SYM_SIG(1024)),
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetPixelShader, STACK(0), PARAMS(PARAM(eax, Handle))),
                     SYM_SIG(2024, 2036, 2048, 2060, 2072)),
-    REGISTER_OOVPAS_M(SYM_VAR(D3DDevice_SetRenderStateInline__GenericFragment),
+    REGISTER_OOVPAS_M(SYM_INT(D3DDevice_SetRenderStateInline__GenericFragment),
                       SYM_SIG(3911, 4039)), // Final generic OOVPA: 4039?; Removed: 0 // NOTE: see notes from 4039 sig.
     // REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetRenderStateNotInline, STACK(0), PARAMS(PARAM(esi, Value), PARAM(edi, Value))),
     //                 SYM_SIG(2048)), // NOTE: Signature is unlikely correct and need correction or removal (maybe)
