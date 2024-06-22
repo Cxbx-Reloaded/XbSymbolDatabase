@@ -176,6 +176,7 @@ typedef struct _LOOVPA {
 #define COUNTARGS_LOVP(...) (sizeof((LOVP[]){ __VA_ARGS__ }) / sizeof(LOVP))
 // clang-format off
 #define OOVPA_SIG_MATCH(...) MSVC_EXPAND(COUNTARGS_LOVP(__VA_ARGS__)), { __VA_ARGS__ } }
+#define OOVPA_SIG_MATCH_DUMMY() 0, { { 0, 0 } } }
 // clang-format on
 
 #define OOVPA_SIG_HEADER_XREF_EXTEND(Name, Version, XRefCount, DetectSelect) \

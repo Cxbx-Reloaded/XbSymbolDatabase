@@ -430,6 +430,32 @@ static OOVPATable* internal_OOVPATable_FindBySymbolName(SymbolDatabaseList* Libr
     return NULL;
 }
 
+static OOVPATable* internal_OOVPATable_FindByReference(SymbolDatabaseList* LibraryDB, uint16_t xref_index, unsigned scan_type)
+{
+    for (unsigned i = 0; i < LibraryDB->SymbolsTableCount; i++) {
+
+        // Intended for optimization purpose without need to search every single symbol's string.
+        if ((scan_type & LibraryDB->SymbolsTable[i].scan_type) == 0) {
+            continue;
+        }
+
+        if (LibraryDB->SymbolsTable[i].xref == xref_index) {
+            return &LibraryDB->SymbolsTable[i];
+        }
+    }
+    return NULL;
+}
+
+#define internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, xref)                                          \
+    pSymbol = internal_OOVPATable_FindByReference(pLibraryDB, XREF_##xref, DB_ST_MANUAL);                            \
+    if (!pSymbol) {                                                                                                  \
+        output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Unable to find " #xref " entry in database..."); \
+        return false;                                                                                                \
+    }
+
+#define internal_RegisterSymbolHelper(pContext, pLibrarySession, pSymbol, szSymbolName, version, symbol_addr) \
+    internal_RegisterSymbolManual(pContext, pLibrarySession, pSymbol->xref, version, szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->param_count, pSymbol->param_list)
+
 static void internal_OOVPATable_scan(iXbSymbolContext* pContext,
                                      const iXbSymbolLibrarySession* pLibrarySession,
                                      const XbSDBSection* pSection,
