@@ -46,6 +46,9 @@
 #define UNPARENTHESES_INVOKE(args) VA_ARGS_EXPAND(args)
 #define UNPARENTHESES(args)        UNPARENTHESES_INVOKE(VA_ARGS_EXPAND args)
 
+// count array type size
+#define COUNT_ARRAYSIZE(type_, array_) (sizeof((type_[])UNPARENTHESES(array_)) / sizeof(type_))
+
 // Increment counter for PARAMS macro to use with.
 #define INC_1  2
 #define INC_2  3
@@ -173,9 +176,8 @@ typedef struct _LOOVPA {
 } LOOVPA;
 #pragma warning(pop)
 
-#define COUNTARGS_LOVP(...) (sizeof((LOVP[]){ __VA_ARGS__ }) / sizeof(LOVP))
 // clang-format off
-#define OOVPA_SIG_MATCH(...) MSVC_EXPAND(COUNTARGS_LOVP(__VA_ARGS__)), { __VA_ARGS__ } }
+#define OOVPA_SIG_MATCH(...) COUNT_ARRAYSIZE(LOVP, ({ __VA_ARGS__ })), { __VA_ARGS__ } }
 #define OOVPA_SIG_MATCH_DUMMY() 0, { { 0, 0 } } }
 // clang-format on
 
@@ -215,8 +217,6 @@ typedef struct _OOVPARevision {
     unsigned short Version; // : 13; // 2^13 = 8192, enough to store lowest and highest possible Library Version number in
 } OOVPARevision;
 #pragma pack(1)
-
-#define COUNTARGS_USHORT(...) (sizeof((unsigned short[]){ __VA_ARGS__ }) / sizeof(unsigned short))
 
 typedef enum _eDBScanType {
     DB_ST_NONE = 0,
@@ -400,7 +400,6 @@ typedef struct _OOVPATable {
                                    PARAMS_TOKEN_14, PARAMS_TOKEN_13, PARAMS_TOKEN_12, PARAMS_TOKEN_11, PARAMS_TOKEN_10,              \
                                    PARAMS_TOKEN_9, PARAMS_TOKEN_8, PARAMS_TOKEN_7, PARAMS_TOKEN_6, PARAMS_TOKEN_5,                   \
                                    PARAMS_TOKEN_4, PARAMS_TOKEN_3, PARAMS_TOKEN_2, PARAMS_TOKEN_1, PARAMS_TOKEN_0)(1, __VA_ARGS__)), \
-        COUNT_VARARGS_MAX_19(__VA_ARGS__) / 2,                                                                                       \
         ({ MACRO_FUNC(_GET_NTH_ARG_MAX_19("ignored", ##__VA_ARGS__,                                                                  \
                                           PARAMS_LIST_19, PARAMS_LIST_18, PARAMS_LIST_17, PARAMS_LIST_16, PARAMS_LIST_15,            \
                                           PARAMS_LIST_14, PARAMS_LIST_13, PARAMS_LIST_12, PARAMS_LIST_11, PARAMS_LIST_10,            \
@@ -409,21 +408,21 @@ typedef struct _OOVPATable {
 
 #define SYMBOL_EXPAND(symbol_name, stack_size, suffix, params, ...)      (symbol_name, symbol_name##stack_size##suffix, __VA_ARGS__)
 #define SYMBOL_EXPAND_LTCG(symbol_name, stack_size, suffix, params, ...) (symbol_name, symbol_name##stack_size##suffix##params, __VA_ARGS__)
-#define SYM_INT(symbol_name)                                             SYMBOL_EXPAND(symbol_name, /*NONE*/, /*NONE*/, /*NONE*/, 0, ({ param_unk, "" }), symbol_internal)
-#define SYM_VAR(symbol_name)                                             SYMBOL_EXPAND(symbol_name, /*NONE*/, /*NONE*/, /*NONE*/, 0, ({ param_unk, "" }), symbol_variable)
+#define SYM_INT(symbol_name)                                             SYMBOL_EXPAND(symbol_name, /*NONE*/, /*NONE*/, /*NONE*/, ({ param_unk, "" }), symbol_internal)
+#define SYM_VAR(symbol_name)                                             SYMBOL_EXPAND(symbol_name, /*NONE*/, /*NONE*/, /*NONE*/, ({ param_unk, "" }), symbol_variable)
 #define SYM_FUN(symbol_name, stack_size, params)                         SYMBOL_EXPAND(symbol_name, stack_size, /*NONE*/, params, symbol_function)
 #define SYM_FUN_ALT(symbol_name, suffix, stack_size, params)             SYMBOL_EXPAND(symbol_name, stack_size, suffix, params, symbol_function)
 #define SYM_FUN_LTCG(symbol_name, stack_size, params)                    SYMBOL_EXPAND_LTCG(symbol_name, stack_size, __LTCG, params, symbol_function)
 #define SYM_SIG                                                          VA_ARGS_EXPAND
 
-#define REGISTER_OOVPAS_TYPE(xref, symbol_name, param_count, param_list, symbol_type, scan_type, ...)                                                       \
+#define REGISTER_OOVPAS_TYPE(xref, symbol_name, param_list, symbol_type, scan_type, ...)                                                                    \
     XREF_##xref,                                                                                                                                            \
         scan_type,                                                                                                                                          \
         symbol_type,                                                                                                                                        \
         #symbol_name,                                                                                                                                       \
-        param_count,                                                                                                                                        \
+        COUNT_ARRAYSIZE(const XbSDBSymbolParam, param_list),                                                                                                \
         (const XbSDBSymbolParam[])UNPARENTHESES(param_list),                                                                                                \
-        COUNTARGS_USHORT(__VA_ARGS__),                                                                                                                      \
+        COUNT_ARRAYSIZE(unsigned short, ({ __VA_ARGS__ })),                                                                                                 \
         (OOVPARevision[])                                                                                                                                   \
     {                                                                                                                                                       \
         MACRO_FUNC(_GET_NTH_ARG_MAX_19("ignored", ##__VA_ARGS__,                                                                                            \
