@@ -26,23 +26,23 @@
 // ******************************************************************
 // * XoUpdateLaunchNewImageInternal
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(XoUpdateLaunchNewImageInternal,
+OOVPA_SIG_HEADER_NO_XREF(XoUpdateLaunchNewImageInternal_12,
                          4627)
 OOVPA_SIG_MATCH(
 
-    { 0x00, 0x55 },
-    { 0x03, 0x81 },
+    // push ebp
+    // mov ebp, esp
+    OV_MATCH(0x00, 0x55, 0x8B, 0xEC),
 
-    { 0x58, 0xEB },
-    { 0x59, 0x04 },
-    { 0x5A, 0x83 },
-    { 0x5B, 0x63 },
-    { 0x5C, 0x10 },
-    { 0x5D, 0x00 },
-    { 0x5E, 0xF6 },
-    { 0x5F, 0x45 },
+    // mov esi, [ebp + param_1]
+    OV_MATCH(0x0B, 0x8B, 0x75, 0x08),
 
-    { 0x65, 0xE8 },
+    // mov ebx, [ebp + param_2]
+    // cmp ebx, eax
+    OV_MATCH(0x19, 0x8B, 0x5D, 0x0C, 0x3B, 0xD8),
+
+    // cmp [ebx], 0x05
+    OV_MATCH(0x27, 0x83, 0x3B, 0x05),
     //
 );
 

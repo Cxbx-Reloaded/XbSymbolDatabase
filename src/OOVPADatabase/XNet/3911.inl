@@ -81,7 +81,7 @@ OOVPA_SIG_MATCH(
 // * XnInit
 // ******************************************************************
 // For only XNETS library, XNET library is different OOVPA.
-OOVPA_SIG_HEADER_NO_XREF(XnInit,
+OOVPA_SIG_HEADER_NO_XREF(XnInit_8,
                          3911)
 OOVPA_SIG_MATCH(
 
