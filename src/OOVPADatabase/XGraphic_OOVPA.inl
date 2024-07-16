@@ -77,29 +77,29 @@
 // ******************************************************************
 OOVPATable XGRAPHC_OOVPA[] = {
 
-    REGISTER_OOVPAS(SYM_FUN(XFONT_OpenBitmapFontFromMemory, STACK(/*default*/), PARAMS(/*unknown*/)),
+    REGISTER_OOVPAS(SYM_FUN(XFONT_OpenBitmapFontFromMemory, STACK(/*default*/), PARAMS(PARAM(stk, pFontData), PARAM(stk, uFontDataSize), PARAM(stk, ppFont))),
                     SYM_SIG(4361)),
-    REGISTER_OOVPAS(SYM_FUN(XGCompressRect, STACK(/*default*/), PARAMS(/*unknown*/)),
-                    SYM_SIG(3911)), // TODO: Do we need to patch this?
-    REGISTER_OOVPAS(SYM_FUN(XGIsSwizzledFormat, STACK(/*default*/), PARAMS(/*unknown*/)),
+    REGISTER_OOVPAS(SYM_FUN(XGCompressRect, STACK(/*default*/), PARAMS(PARAM(stk, pDestBuf), PARAM(stk, DestFormat), PARAM(stk, DestPitch), PARAM(stk, Width), PARAM(stk, Height), PARAM(stk, pSrcData), PARAM(stk, SrcFormat), PARAM(stk, SrcPitch), PARAM(stk, fAlphaRef), PARAM(stk, Flags))),
                     SYM_SIG(3911)),
-    REGISTER_OOVPAS(SYM_FUN(XGSetIndexBufferHeader, STACK(/*default*/), PARAMS(/*unknown*/)),
+    REGISTER_OOVPAS(SYM_FUN(XGIsSwizzledFormat, STACK(/*default*/), PARAMS(PARAM(stk, Format))),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGSetIndexBufferHeader, STACK(/*default*/), PARAMS(PARAM(stk, Length), PARAM(stk, Usage), PARAM(stk, Format), PARAM(stk, Pool), PARAM(stk, pBuffer), PARAM(stk, Data))),
                     SYM_SIG(3911, 4134)),
-    REGISTER_OOVPAS(SYM_FUN(XGSetSurfaceHeader, STACK(/*default*/), PARAMS(/*unknown*/)),
+    REGISTER_OOVPAS(SYM_FUN(XGSetSurfaceHeader, STACK(/*default*/), PARAMS(PARAM(stk, Width), PARAM(stk, Height), PARAM(stk, Format), PARAM(stk, pSurface), PARAM(stk, Data), PARAM(stk, Pitch))),
                     SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(SYM_FUN(XGSetTextureHeader, STACK(/*default*/), PARAMS(/*unknown*/)),
+    REGISTER_OOVPAS(SYM_FUN(XGSetTextureHeader, STACK(/*default*/), PARAMS(PARAM(stk, Width), PARAM(stk, Height), PARAM(stk, Levels), PARAM(stk, Usage), PARAM(stk, Format), PARAM(stk, Pool), PARAM(stk, pTexture), PARAM(stk, Data), PARAM(stk, Pitch))),
                     SYM_SIG(3911)),
-    REGISTER_OOVPAS(SYM_FUN(XGSetVertexBufferHeader, STACK(/*default*/), PARAMS(/*unknown*/)),
+    REGISTER_OOVPAS(SYM_FUN(XGSetVertexBufferHeader, STACK(/*default*/), PARAMS(PARAM(stk, Length), PARAM(stk, Usage), PARAM(stk, FVF), PARAM(stk, Pool), PARAM(stk, pBuffer), PARAM(stk, Data))),
                     SYM_SIG(3911, 4134)),
-    REGISTER_OOVPAS(SYM_FUN(XGSwizzleBox, STACK(/*default*/), PARAMS(/*unknown*/)),
+    REGISTER_OOVPAS(SYM_FUN(XGSwizzleBox, STACK(/*default*/), PARAMS(PARAM(stk, pSource), PARAM(stk, RowPitch), PARAM(stk, SlicePitch), PARAM(stk, pBox), PARAM(stk, pDest), PARAM(stk, Width), PARAM(stk, Height), PARAM(stk, Depth), PARAM(stk, pPoint), PARAM(stk, BytesPerPixel))),
                     SYM_SIG(3911)),
-    REGISTER_OOVPAS(SYM_FUN(XGSwizzleRect, STACK(/*default*/), PARAMS(/*unknown*/)),
+    REGISTER_OOVPAS(SYM_FUN(XGSwizzleRect, STACK(/*default*/), PARAMS(PARAM(stk, pSource), PARAM(stk, Pitch), PARAM(stk, pRect), PARAM(stk, pDest), PARAM(stk, Width), PARAM(stk, Height), PARAM(stk, pPoint), PARAM(stk, BytesPerPixel))),
                     SYM_SIG(3911)),
-    REGISTER_OOVPAS(SYM_FUN(XGUnswizzleBox, STACK(/*default*/), PARAMS(/*unknown*/)),
+    REGISTER_OOVPAS(SYM_FUN(XGUnswizzleBox, STACK(/*default*/), PARAMS(PARAM(stk, pSource), PARAM(stk, Width), PARAM(stk, Height), PARAM(stk, Depth), PARAM(stk, pBox), PARAM(stk, pDest), PARAM(stk, RowPitch), PARAM(stk, SlicePitch), PARAM(stk, pPoint), PARAM(stk, BytesPerPixel))),
                     SYM_SIG(3911)),
-    REGISTER_OOVPAS(SYM_FUN(XGUnswizzleRect, STACK(/*default*/), PARAMS(/*unknown*/)),
+    REGISTER_OOVPAS(SYM_FUN(XGUnswizzleRect, STACK(/*default*/), PARAMS(PARAM(stk, pSource), PARAM(stk, Width), PARAM(stk, Height), PARAM(stk, pRect), PARAM(stk, pDest), PARAM(stk, Pitch), PARAM(stk, pPoint), PARAM(stk, BytesPerPixel))),
                     SYM_SIG(3911)),
-    REGISTER_OOVPAS(SYM_FUN(XGWriteSurfaceOrTextureToXPR, STACK(/*default*/), PARAMS(/*unknown*/)),
+    REGISTER_OOVPAS(SYM_FUN(XGWriteSurfaceOrTextureToXPR, STACK(/*default*/), PARAMS(PARAM(stk, pResource), PARAM(stk, cPath), PARAM(stk, bWriteSurfaceAsTexture))),
                     SYM_SIG(3911)),
 };
 
