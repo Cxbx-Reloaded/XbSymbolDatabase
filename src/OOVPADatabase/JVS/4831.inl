@@ -23,6 +23,22 @@
 // *
 // ******************************************************************
 
+// ******************************************************************
+// * JVS_g_pPINSA
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(JVS_g_pPINSA,
+                         4831)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * JVS_g_pPINSB
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(JVS_g_pPINSB,
+                         4831)
+OOVPA_SIG_MATCH_DUMMY();
+
 OOVPA_SIG_HEADER_NO_XREF(JVS_SendCommand_String,
                          4831)
 OOVPA_SIG_MATCH(

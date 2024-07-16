@@ -24,6 +24,6 @@
 
 static inline void manual_register_jvs(iXbSymbolContext* pContext)
 {
-    internal_RegisterValidXRefAddr_M(pContext, Lib_JVS, XbSymbolLib_JVS, XREF_JVS_g_pPINSA, 4831, "JVS_g_pPINSA", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr_M(pContext, Lib_JVS, XbSymbolLib_JVS, XREF_JVS_g_pPINSB, 4831, "JVS_g_pPINSB", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_JVS, XbSymbolLib_JVS, XREF_JVS_g_pPINSA, 4831, "JVS_g_pPINSA", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_JVS, XbSymbolLib_JVS, XREF_JVS_g_pPINSB, 4831, "JVS_g_pPINSB", symbol_variable, 0, NULL);
 }
