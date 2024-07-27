@@ -342,6 +342,7 @@ static void internal_RegisterValidXRefAddr(iXbSymbolContext* pContext,
     SYMBOL_COUNTER_VALUE;                     \
     internal_RegisterValidXRefAddr(__VA_ARGS__);
 
+// Old Method
 static void internal_RegisterXRef(iXbSymbolContext* pContext,
                                   const iXbSymbolLibrarySession* pLibrarySession,
                                   uint32_t XRefIndex,
@@ -373,6 +374,17 @@ static void internal_RegisterXRef(iXbSymbolContext* pContext,
     if (do_register && pContext->register_func != NULL) {
         pContext->register_func(pLibrary->name, pLibrary->flag, XRefIndex, symbol_name, symbol_addr, version, symbol_type, param_count, param_list);
     }
+}
+
+// New method
+static void internal_RegisterXRefHelper(iXbSymbolContext* pContext,
+                                        const iXbSymbolLibrarySession* pLibrarySection,
+                                        const OOVPATable* pSymbol,
+                                        uint16_t version,
+                                        uint32_t symbol_addr,
+                                        bool do_register)
+{
+    internal_RegisterXRef(pContext, pLibrarySection, pSymbol->xref, version, pSymbol->szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->param_count, pSymbol->param_list, do_register);
 }
 
 // (Old / Manual) method
