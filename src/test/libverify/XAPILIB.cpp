@@ -8,7 +8,7 @@
 static const library_list database_full = {
 
     // derived xrefs
-    REGISTER_SYMBOL_INLINE_VAR_OFFSET(XapiLastErrorCode, VER_RANGE(0)),
+    REGISTER_SYMBOL_INLINE(XapiLastErrorCode_OFFSET, VER_RANGE(0)),
 
     // OOVPA sigs
     // Without xrefs dependency
@@ -57,8 +57,8 @@ static const library_list database_full = {
 static const library_list fiber_full = {
 
     // derived xrefs
-    REGISTER_SYMBOL_INLINE_VAR_OFFSET(XapiCurrentFiber, VER_RANGE(0)),
-    REGISTER_SYMBOL_INLINE_VAR_OFFSET(XapiThreadFiberData, VER_RANGE(0)),
+    REGISTER_SYMBOL_INLINE(XapiCurrentFiber_OFFSET, VER_RANGE(0)),
+    REGISTER_SYMBOL_INLINE(XapiThreadFiberData_OFFSET, VER_RANGE(0)),
 
     // OOVPA sigs
 

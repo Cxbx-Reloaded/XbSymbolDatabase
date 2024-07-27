@@ -24,6 +24,126 @@
 // ******************************************************************
 
 // ******************************************************************
+// * _tls_array
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(_tls_array,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * _tls_index
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(_tls_index,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * g_DeviceType_Gamepad
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(g_DeviceType_Gamepad,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * g_DeviceType_IRDongle
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(g_DeviceType_IRDongle,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * g_DeviceType_Keyboard
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(g_DeviceType_Keyboard,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * g_DeviceType_Mouse
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(g_DeviceType_Mouse,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * g_DeviceType_MU
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(g_DeviceType_MU,
+                         3911)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * g_XapiAltLett_MU
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(g_XapiAltLett_MU,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * g_XapiCurrentTopLevelFilter
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(g_XapiCurrentTopLevelFilter,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * g_XapiMountedMUs
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(g_XapiMountedMUs,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * XapiCurrentFiber OFFSET
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(XapiCurrentFiber_OFFSET,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * XapiLastErrorCode OFFSET
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(XapiLastErrorCode_OFFSET,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * XapiThreadFiberData OFFSET
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(XapiThreadFiberData_OFFSET,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * XapiThreadNotifyRoutineList
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(XapiThreadNotifyRoutineList,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * XGetSectionSize
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(XGetSectionSize,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
 // * GetExitCodeThread
 // ******************************************************************
 // Generic OOVPA as of 3911 and newer.
@@ -717,10 +837,10 @@ OOVPA_SIG_MATCH(
     XREF_ENTRY(0x08, XREF__tls_array), // derived
 
     // lea ecx,[edx+XapiThreadFiberData_OFFSET]
-    XREF_ENTRY(0x15, XREF_OFFSET_XapiThreadFiberData), // derived
+    XREF_ENTRY(0x15, XREF_XapiThreadFiberData_OFFSET), // derived
 
     // mov [edx+XapiCurrentFiber_OFFSET],ecx
-    XREF_ENTRY(0x2D, XREF_OFFSET_XapiCurrentFiber), // derived
+    XREF_ENTRY(0x2D, XREF_XapiCurrentFiber_OFFSET), // derived
 
     // mov eax,[_tls_index]
     OV_MATCH(0x00, 0xA1),
@@ -1572,7 +1692,7 @@ OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1A, XREF__tls_array), // derived
 
     // mov eax,[eax+XapiLastErrorCode_OFFSET]
-    XREF_ENTRY(0x23, XREF_OFFSET_XapiLastErrorCode), // derived
+    XREF_ENTRY(0x23, XREF_XapiLastErrorCode_OFFSET), // derived
 
     // movzx eax,fs:[0x00000024]
     OV_MATCH(0x00, 0x64, 0x0F, 0xB6),
@@ -1604,7 +1724,7 @@ OOVPA_SIG_MATCH(
     XREF_ENTRY(0x1A, XREF__tls_index), // derived
 
     // mov [eax+XapiLastErrorCode_OFFSET],ecx
-    XREF_ENTRY(0x27, XREF_OFFSET_XapiLastErrorCode), // derived
+    XREF_ENTRY(0x27, XREF_XapiLastErrorCode_OFFSET), // derived
 
     // movzx eax,fs:[0x00000024]
     OV_MATCH(0x00, 0x64, 0x0F, 0xB6),

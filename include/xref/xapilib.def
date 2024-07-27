@@ -35,9 +35,9 @@ XREF_SYMBOL(g_XapiAltLett_MU)            // initially set to XREF_ADDR_DERIVE
 XREF_SYMBOL(g_XapiMountedMUs)            // initially set to XREF_ADDR_DERIVE
 
 // Offsets
-XREF_SYMBOL(OFFSET_XapiCurrentFiber)    // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_XapiLastErrorCode)   // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_XapiThreadFiberData) // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(XapiCurrentFiber_OFFSET)    // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(XapiLastErrorCode_OFFSET)   // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(XapiThreadFiberData_OFFSET) // initially set to XREF_ADDR_DERIVE
 
 // Functions
 XREF_SYMBOL(IUsbInit_GetMaxDeviceTypeCount)
