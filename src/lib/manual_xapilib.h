@@ -37,14 +37,14 @@ static bool internal_xapi_find_XGetSectionSize(iXbSymbolContext* pContext,
         const char* sig_func_str = "XapiMapLetterToDirectory";
         const char* xref_str = "XGetSectionSize";
 
-        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
-                                                                   pLibrarySession,
-                                                                   pLibraryDB,
-                                                                   sig_func_str,
-                                                                   pSection,
-                                                                   true,
-                                                                   &pSymbol,
-                                                                   &pOOVPARevision);
+        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
+                                                               pLibrarySession,
+                                                               pLibraryDB,
+                                                               sig_func_str,
+                                                               pSection,
+                                                               true,
+                                                               &pSymbol,
+                                                               &pOOVPARevision);
 
         if (xXbAddr) {
             internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
@@ -88,14 +88,14 @@ static bool internal_xapi_find_DeviceType_MU(iXbSymbolContext* pContext,
     // Find MU_Init function
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_MU_Init])) {
 
-        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
-                                                                   pLibrarySession,
-                                                                   pLibraryDB,
-                                                                   "MU_Init",
-                                                                   pSection,
-                                                                   true,
-                                                                   &pSymbol,
-                                                                   &pOOVPARevision);
+        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
+                                                               pLibrarySession,
+                                                               pLibraryDB,
+                                                               "MU_Init",
+                                                               pSection,
+                                                               true,
+                                                               &pSymbol,
+                                                               &pOOVPARevision);
 
         if (xXbAddr) {
             internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
@@ -110,14 +110,14 @@ static bool internal_xapi_find_DeviceType_MU(iXbSymbolContext* pContext,
 
     // Scan for IUsbInit::GetMaxDeviceTypeCount function.
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_IUsbInit_GetMaxDeviceTypeCount])) {
-        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
-                                                                   pLibrarySession,
-                                                                   pLibraryDB,
-                                                                   "IUsbInit_GetMaxDeviceTypeCount",
-                                                                   pSection,
-                                                                   true,
-                                                                   &pSymbol,
-                                                                   NULL);
+        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
+                                                               pLibrarySession,
+                                                               pLibraryDB,
+                                                               "IUsbInit_GetMaxDeviceTypeCount",
+                                                               pSection,
+                                                               true,
+                                                               &pSymbol,
+                                                               NULL);
 
         // If not found, skip the rest of the scan.
         if (xXbAddr == 0) {
@@ -173,25 +173,25 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
 
     // Find GetTypeInformation_4 function
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_GetTypeInformation_4])) {
-        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
+        xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
+                                                               pLibrarySession,
+                                                               pLibraryDB,
+                                                               "GetTypeInformation_4",
+                                                               pSection,
+                                                               true,
+                                                               &pSymbol,
+                                                               &pOOVPARevision);
+
+        // If GetTypeInformation_4 is not found, then try find GetTypeInformation_8
+        if (!xXbAddr) {
+            xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
                                                                    pLibrarySession,
                                                                    pLibraryDB,
-                                                                   "GetTypeInformation_4",
+                                                                   "GetTypeInformation_8",
                                                                    pSection,
                                                                    true,
                                                                    &pSymbol,
                                                                    &pOOVPARevision);
-
-        // If GetTypeInformation_4 is not found, then try find GetTypeInformation_8
-        if (!xXbAddr) {
-            xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
-                                                                       pLibrarySession,
-                                                                       pLibraryDB,
-                                                                       "GetTypeInformation_8",
-                                                                       pSection,
-                                                                       true,
-                                                                       &pSymbol,
-                                                                       &pOOVPARevision);
         }
 
         // If either GetTypeInformation overload is found, start look up in DeviceTypeInfo table's entries.
@@ -246,14 +246,14 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
         else {
             // Find XInputOpen function
             if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XInputOpen])) {
-                xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
-                                                                           pLibrarySession,
-                                                                           pLibraryDB,
-                                                                           "XInputOpen",
-                                                                           pSection,
-                                                                           true,
-                                                                           &pSymbol,
-                                                                           &pOOVPARevision);
+                xXbAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
+                                                                       pLibrarySession,
+                                                                       pLibraryDB,
+                                                                       "XInputOpen",
+                                                                       pSection,
+                                                                       true,
+                                                                       &pSymbol,
+                                                                       &pOOVPARevision);
                 if (xXbAddr) {
                     internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pOOVPARevision->Version, xXbAddr);
                     // No further manual action require.

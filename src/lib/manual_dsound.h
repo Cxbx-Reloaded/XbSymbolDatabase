@@ -44,14 +44,14 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
 
     // Scan for DirectSoundStream's constructor function.
     if (pContext->xref_database[XREF_CDirectSoundStream_Constructor] == XREF_ADDR_UNDETERMINED) {
-        xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
-                                                                     pLibrarySession,
-                                                                     pLibraryDB,
-                                                                     "CDirectSoundStream_Constructor",
-                                                                     pSection,
-                                                                     true,
-                                                                     &pSymbol,
-                                                                     NULL);
+        xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
+                                                                 pLibrarySession,
+                                                                 pLibraryDB,
+                                                                 "CDirectSoundStream_Constructor",
+                                                                 pSection,
+                                                                 true,
+                                                                 &pSymbol,
+                                                                 NULL);
 
         // If not found, skip the rest of the scan.
         if (xFuncAddr == 0) {
