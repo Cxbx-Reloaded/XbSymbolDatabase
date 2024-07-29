@@ -319,6 +319,7 @@ static void* internal_LocateSymbol(iXbSymbolContext* pContext,
 #define LocateSymbolCast(pContext, iLibraryType, szSymbolName, version, Oovpa, pSection) \
     internal_LocateSymbol(pContext, iLibraryType, szSymbolName, version, (OOVPA*)Oovpa, pSection, false)
 
+// Old Method - However, the library's scan method doesn't have self-register support implemented yet.
 // NOTE: Do not use direct call to this function. Use internal_RegisterValidXRefAddr_M macro instead.
 static void internal_RegisterValidXRefAddr(iXbSymbolContext* pContext,
                                            const char* library_name,
@@ -341,6 +342,21 @@ static void internal_RegisterValidXRefAddr(iXbSymbolContext* pContext,
 #define internal_RegisterValidXRefAddr_M(...) \
     SYMBOL_COUNTER_VALUE;                     \
     internal_RegisterValidXRefAddr(__VA_ARGS__);
+
+// New Method
+static void internal_RegisterSelfValidXRefAddr(iXbSymbolContext* pContext,
+                                               const iXbSymbolLibrarySession* pLibrarySession,
+                                               const OOVPATable* pSymbol,
+                                               uint16_t version)
+{
+    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
+
+    xbaddr xSymbolAddr = pContext->xref_database[pSymbol->xref];
+
+    if (internal_IsXRefAddrValid(xSymbolAddr)) {
+        pContext->register_func(pLibrary->name, pLibrary->flag, pSymbol->xref, pSymbol->szSymbolName, xSymbolAddr, version, pSymbol->symbol_type, pSymbol->param_count, pSymbol->param_list);
+    }
+}
 
 // Old Method
 static void internal_RegisterXRef(iXbSymbolContext* pContext,
