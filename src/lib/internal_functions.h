@@ -389,7 +389,7 @@ static void internal_RegisterSymbolManual(iXbSymbolContext* pContext,
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
 
     // If XRef is not found, save it then register once.
-    if (pContext->xref_database[xref_index] == XREF_ADDR_UNDETERMINED) {
+    if (internal_IsXRefAddrUnset(pContext->xref_database[xref_index])) {
         internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, xref_index, symbol_addr);
         if (pContext->register_func != NULL) {
             pContext->register_func(pLibrary->name, pLibrary->flag, xref_index, symbol_name, symbol_addr, version, symbol_type, param_count, param_list);
