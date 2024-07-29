@@ -37,6 +37,7 @@ file(GLOB HEADERS
  "${XBSDB_ROOT_DIR}/src/lib/manual_custom.h"
  "${XBSDB_ROOT_DIR}/src/lib/manual_d3d8__ltcg.h"
  "${XBSDB_ROOT_DIR}/src/lib/manual_dsound.h"
+ "${XBSDB_ROOT_DIR}/src/lib/manual_jvs.h"
  "${XBSDB_ROOT_DIR}/src/lib/manual_xapilib.h"
  "${XBSDB_ROOT_DIR}/src/OOVPADatabase/OOVPA.h"
 )
