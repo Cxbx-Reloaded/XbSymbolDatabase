@@ -878,17 +878,17 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     // D3D
     pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                     //In use
     pContext->xref_database[XREF_D3D_g_Stream] = XREF_ADDR_DERIVE;                             //In use
-    pContext->xref_database[XREF_OFFSET_D3DDevice__m_PixelShader] = XREF_ADDR_DERIVE;          //
-    pContext->xref_database[XREF_OFFSET_D3DDevice__m_Textures] = XREF_ADDR_DERIVE;             //
-    pContext->xref_database[XREF_OFFSET_D3DDevice__m_Palettes] = XREF_ADDR_DERIVE;             //
-    pContext->xref_database[XREF_OFFSET_D3DDevice__m_RenderTarget] = XREF_ADDR_DERIVE;         //
-    pContext->xref_database[XREF_OFFSET_D3DDevice__m_DepthStencil] = XREF_ADDR_DERIVE;         //
-    pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent] = XREF_ADDR_DERIVE;   //In use
+    pContext->xref_database[XREF_D3DDevice__m_PixelShader_OFFSET] = XREF_ADDR_DERIVE;          //
+    pContext->xref_database[XREF_D3DDevice__m_Textures_OFFSET] = XREF_ADDR_DERIVE;             //
+    pContext->xref_database[XREF_D3DDevice__m_Palettes_OFFSET] = XREF_ADDR_DERIVE;             //
+    pContext->xref_database[XREF_D3DDevice__m_RenderTarget_OFFSET] = XREF_ADDR_DERIVE;         //
+    pContext->xref_database[XREF_D3DDevice__m_DepthStencil_OFFSET] = XREF_ADDR_DERIVE;         //
+    pContext->xref_database[XREF_D3DDevice__m_VerticalBlankEvent_OFFSET] = XREF_ADDR_DERIVE;   //In use
 #if 0                                                                                          //
-    pContext->xref_database[XREF_OFFSET_D3DDevice__m_SwapCallback] = XREF_ADDR_UNDETERMINED;   //In use // Manual check only.
-    pContext->xref_database[XREF_OFFSET_D3DDevice__m_VBlankCallback] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
+    pContext->xref_database[XREF_D3DDevice__m_SwapCallback_OFFSET] = XREF_ADDR_UNDETERMINED;   //In use // Manual check only.
+    pContext->xref_database[XREF_D3DDevice__m_VBlankCallback_OFFSET] = XREF_ADDR_UNDETERMINED; //In use // Manual check only.
 #endif                                                                                         //
-    pContext->xref_database[XREF_OFFSET_D3DDevice__m_VertexShader] = XREF_ADDR_DERIVE;         //In use
+    pContext->xref_database[XREF_D3DDevice__m_VertexShader_OFFSET] = XREF_ADDR_DERIVE;         //In use
     // JVS                                                                                     //
     pContext->xref_database[XREF_JVS_g_pPINSA] = XREF_ADDR_DERIVE;                             //In use
     pContext->xref_database[XREF_JVS_g_pPINSB] = XREF_ADDR_DERIVE;                             //In use

@@ -165,7 +165,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader_0__LTCG_ebx1,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived (unverified, yet should be align base on existing 4 bytes in signatures)
+    XREF_ENTRY(0x0E, XREF_D3DDevice__m_VertexShader_OFFSET), // Derived (unverified, yet should be align base on existing 4 bytes in signatures)
 
     { 0x00, 0x51 },
 

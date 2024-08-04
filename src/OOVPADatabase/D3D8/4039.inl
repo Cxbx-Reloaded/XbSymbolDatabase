@@ -157,7 +157,7 @@ OOVPA_SIG_MATCH(
     XREF_ENTRY(0x06, XREF_D3D_g_pDevice),
 
     // D3DDevice_SetSwapCallback+0x0A : mov [ecx+OFFSET_D3DDevice__m_SwapCallback],eax
-    XREF_ENTRY(0x0C, XREF_OFFSET_D3DDevice__m_SwapCallback),
+    XREF_ENTRY(0x0C, XREF_D3DDevice__m_SwapCallback_OFFSET),
 
     // D3DDevice_SetSwapCallback+0x00 : mov eax,[esp+0x04]
     OV_MATCH(0x00, 0x8B, 0x44, 0x24, 0x04),

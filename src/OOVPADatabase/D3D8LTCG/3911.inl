@@ -868,7 +868,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader_0__LTCG_ebx1,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0D, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived (confirmed)
+    XREF_ENTRY(0x0D, XREF_D3DDevice__m_VertexShader_OFFSET), // Derived (confirmed)
 
     { 0x00, 0xF6 },
     { 0x01, 0xC3 },
@@ -1249,7 +1249,7 @@ OOVPA_SIG_MATCH(
     XREF_ENTRY(0x01, XREF_D3D_g_pDevice),
 
     // D3DDevice_BlockUntilVerticalBlank+0x17 : add eax, OFFSET_D3DDevice__m_VerticalBlankEvent
-    XREF_ENTRY(0x18, XREF_OFFSET_D3DDevice__m_VerticalBlankEvent),
+    XREF_ENTRY(0x18, XREF_D3DDevice__m_VerticalBlankEvent_OFFSET),
 
     // D3DDevice_BlockUntilVerticalBlank+0x00 : mov eax,[D3D_g_pDevice]
     OV_MATCH(0x00, 0xA1),

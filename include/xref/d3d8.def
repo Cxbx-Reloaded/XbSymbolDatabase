@@ -60,15 +60,15 @@ XREF_SYMBOL(D3DTSS_TEXCOORDINDEX)
 
 
 // Offsets :
-XREF_SYMBOL(OFFSET_D3DDevice__m_PixelShader)        // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDevice__m_Textures)           // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDevice__m_Palettes)           // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDevice__m_RenderTarget)       // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDevice__m_DepthStencil)       // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDevice__m_VerticalBlankEvent) // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDevice__m_SwapCallback)       // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDevice__m_VBlankCallback)     // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_D3DDevice__m_VertexShader)       // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(D3DDevice__m_PixelShader_OFFSET)        // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(D3DDevice__m_Textures_OFFSET)           // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(D3DDevice__m_Palettes_OFFSET)           // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(D3DDevice__m_RenderTarget_OFFSET)       // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(D3DDevice__m_DepthStencil_OFFSET)       // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(D3DDevice__m_VerticalBlankEvent_OFFSET) // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(D3DDevice__m_SwapCallback_OFFSET)       // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(D3DDevice__m_VBlankCallback_OFFSET)     // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(D3DDevice__m_VertexShader_OFFSET)       // initially set to XREF_ADDR_DERIVE
 
 // Functions
 // include D3D8 prefix

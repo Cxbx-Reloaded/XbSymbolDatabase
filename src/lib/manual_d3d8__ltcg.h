@@ -550,6 +550,17 @@ static bool manual_scan_section_dx8_register_D3DRS_end_of_list(iXbSymbolContext*
         }
 
         internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
+
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3D_g_pDevice);
+        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbol, 0);
+#if 0 // TODO: Fix this after #208 pull request is merged.
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DRS_RopZCmpAlwaysRead);
+        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbol, 0);
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DRS_RopZRead);
+        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbol, 0);
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DRS_DoNotCullUncompressed);
+        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbol, 0);
+#endif
     }
     return true;
 }
@@ -663,6 +674,7 @@ static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContex
     // Generic usage
     memptr_t pFunc = 0;
     xbaddr xSymbolAddr = 0;
+    OOVPATable* pSymbol = NULL;
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
     // Manual check require for able to self-register these symbols:
     // * D3DDevice_SetSwapCallback
@@ -671,10 +683,10 @@ static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContex
     // First, check if D3D_g_pDevice is found.
     if (pContext->xref_database[XREF_D3D_g_pDevice] != XREF_ADDR_DERIVE &&
         // Then, check at least one of symbol's member variable is not found.
-        pContext->xref_database[XREF_OFFSET_D3DDevice__m_SwapCallback] == XREF_ADDR_UNDETERMINED) {
+        pContext->xref_database[XREF_D3DDevice__m_SwapCallback_OFFSET] == XREF_ADDR_UNDETERMINED) {
 
         // Scan if event handle variable is not yet derived.
-        if (pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent] == XREF_ADDR_DERIVE) {
+        if (pContext->xref_database[XREF_D3DDevice__m_VerticalBlankEvent_OFFSET] == XREF_ADDR_DERIVE) {
             xSymbolAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
                                                                        pLibrarySession,
                                                                        pLibraryDB,
@@ -689,14 +701,18 @@ static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContex
 
 
         // If not found, skip manual register.
-        if (pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent] == XREF_ADDR_DERIVE) {
+        if (pContext->xref_database[XREF_D3DDevice__m_VerticalBlankEvent_OFFSET] == XREF_ADDR_DERIVE) {
             return false;
         }
 
         // Finally, manual register the symbol variables.
-        xSymbolAddr = pContext->xref_database[XREF_OFFSET_D3DDevice__m_VerticalBlankEvent];
-        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDevice__m_SwapCallback, xSymbolAddr - 8);
-        internal_SetXRefDatabase(pContext, iLibraryType, XREF_OFFSET_D3DDevice__m_VBlankCallback, xSymbolAddr - 4);
+        xSymbolAddr = pContext->xref_database[XREF_D3DDevice__m_VerticalBlankEvent_OFFSET];
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DDevice__m_VerticalBlankEvent_OFFSET);
+        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbol, 0);
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DDevice__m_SwapCallback_OFFSET);
+        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 0, xSymbolAddr - 8);
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DDevice__m_VBlankCallback_OFFSET);
+        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 0, xSymbolAddr - 4);
     }
     // If D3D_g_pDevice is not found, the scan is not complete
     // and will continue scan to next given section.
@@ -918,13 +934,7 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 
 static inline void manual_register_d3d8__ltcg(iXbSymbolContext* pContext)
 {
-    xbaddr xD3D_pDeviceAddr = pContext->xref_database[XREF_D3D_g_pDevice];
-    if (internal_IsXRefAddrValid(xD3D_pDeviceAddr)) {
-        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_pDevice, 0, "D3D_g_pDevice", symbol_variable, 0, NULL);
-        // Register offsets of D3DDevice's members
-        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_SwapCallback, 0, "D3DDevice__m_SwapCallback_OFFSET", symbol_variable, 0, NULL);
-        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VBlankCallback, 0, "D3DDevice__m_VBlankCallback_OFFSET", symbol_variable, 0, NULL);
-        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VertexShader, 0, "D3DDevice__m_VertexShader_OFFSET", symbol_variable, 0, NULL);
-        internal_RegisterValidXRefAddr_M(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_OFFSET_D3DDevice__m_VerticalBlankEvent, 0, "D3DDevice__m_VerticalBlankEvent_OFFSET", symbol_variable, 0, NULL);
-    }
+    // TODO: Require to be here until self register functionality is implement.
+    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3DDevice__m_VertexShader_OFFSET, 0, "D3DDevice__m_VertexShader_OFFSET", symbol_variable, 0, NULL);
+    // NOTE: D3DDevice__m_PixelShader_OFFSET is not accessible to the user.
 }

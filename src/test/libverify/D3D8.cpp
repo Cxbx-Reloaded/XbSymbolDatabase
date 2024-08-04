@@ -43,10 +43,11 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DRS_ZBias, VER_RANGE(0)),
 
     // derived xrefs (offsets)
-    REGISTER_SYMBOL_INLINE_VAR_OFFSET(D3DDevice__m_SwapCallback, VER_RANGE(0)),
-    REGISTER_SYMBOL_INLINE_VAR_OFFSET(D3DDevice__m_VBlankCallback, VER_RANGE(0)),
-    REGISTER_SYMBOL_INLINE_VAR_OFFSET(D3DDevice__m_VertexShader, VER_RANGE(0)),
-    REGISTER_SYMBOL_INLINE_VAR_OFFSET(D3DDevice__m_VerticalBlankEvent, VER_RANGE(0)),
+    // REGISTER_SYMBOL_INLINE(D3DDevice__m_PixelShader_OFFSET, VER_RANGE(0)),
+    REGISTER_SYMBOL_INLINE(D3DDevice__m_SwapCallback_OFFSET, VER_RANGE(0)),
+    REGISTER_SYMBOL_INLINE(D3DDevice__m_VBlankCallback_OFFSET, VER_RANGE(0)),
+    REGISTER_SYMBOL_INLINE(D3DDevice__m_VertexShader_OFFSET, VER_RANGE(0)),
+    REGISTER_SYMBOL_INLINE(D3DDevice__m_VerticalBlankEvent_OFFSET, VER_RANGE(0)),
 
     REGISTER_SYMBOLS(D3D_CreateTexture,
                      REGISTER_SYMBOL(D3D_CreateTexture, VER_RANGE(3911, 4627)),
