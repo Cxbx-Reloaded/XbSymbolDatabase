@@ -20,6 +20,8 @@
 // ******************************************************************
 #pragma once
 
+#include <stdint.h>
+
 // ******************************************************************
 // * XRefDatabase
 // ******************************************************************
@@ -418,7 +420,8 @@ typedef enum _XRefDatabase {
 #include "xonline.def"
 #undef XREF_SYMBOL
 
-    XREF_COUNT // XREF_COUNT must always be last.
+    XREF_COUNT, // XREF_COUNT must always be last.
+    XREF_UNDETERMINED = (uint16_t)-1
     // Also, if XREF_COUNT > sizeof(uint16), enlarge struct OOVPA.XRefSaveIndex (and Value somehow)
 } XRefDatabase;
 
