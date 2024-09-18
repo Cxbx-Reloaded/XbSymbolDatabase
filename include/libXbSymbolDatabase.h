@@ -133,6 +133,13 @@ typedef enum _XbSDBSymbolType {
     symbol_function
 } XbSDBSymbolType;
 
+typedef enum _XbSDBCallType {
+#define CALL_(type) call_##type,
+#include <libCallTypes.h>
+#undef CALL_
+    call_max
+} XbSDBCallType;
+
 typedef enum _XbSDBParamType {
 #define PARAM_TYPE__0(type)  param_##type,
 #define PARAM_TYPE_64(type)  param_##type,
@@ -234,7 +241,7 @@ void XbSymbolDatabase_SetOutputMessage(xb_output_message_t message_func);
 /// <param name="symbol_type">Type of symbol. If symbol type is a function, then the following arguments starting with a param_ prefix will be set.</param>
 /// <param name="param_count">Total count of parameters.</param>
 /// <param name="param_list">List of parameters.</param>
-typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, uint32_t xref_index, const char* symbol_str, xbaddr address, uint32_t build_version, uint32_t symbol_type, uint32_t param_count, const XbSDBSymbolParam* param_list);
+typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_flag, uint32_t xref_index, const char* symbol_str, xbaddr address, uint32_t build_version, uint32_t symbol_type, uint32_t call_type, uint32_t param_count, const XbSDBSymbolParam* param_list);
 
 /// <summary>
 /// DEPRECATED: To scan symbols in memory of raw xbe or host's virtual xbox environment.
@@ -258,6 +265,13 @@ const char* XbSymbolDatabase_LibraryToString(uint32_t library_flag);
 /// <param name="param_type">Input provided param_type from symbol register callback.</param>
 /// <returns>Return "unk" string if does not exist in the database. Otherwise it will return the string representation of the parameter type.</returns>
 const char* XbSymbolDatabase_ParamToString(uint32_t param_type);
+
+/// <summary>
+/// To convert calling convention type into string format.
+/// </summary>
+/// <param name="call_type">Input provided call_type from symbol register callback.</param>
+/// <returns>Return "unknown" string if does not exist in the database. Otherwise it will return the string representation of the calling convention type.</returns>
+const char* XbSymbolDatabase_CallingConventionToString(uint32_t call_type);
 
 /// <summary>
 /// To convert a symbol reference index into string format.

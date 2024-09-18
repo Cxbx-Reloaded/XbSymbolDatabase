@@ -20,6 +20,7 @@ static void reg_cb(const char* library_str,
                    xbaddr address,
                    uint32_t build_version,
                    uint32_t symbol_type,
+                   uint32_t call_type,
                    uint32_t param_count,
                    const XbSDBSymbolParam* param_list)
 {
@@ -47,7 +48,7 @@ static void reg_cb(const char* library_str,
                     strncat(param_output, buffer, buffer_count);
                     param_size += buffer_count;
                 }
-                printf("%.8s__FUN__%s(%s) = 0x%08x\n", library_str, symbol_name, param_output, address);
+                printf("%.8s__FUN__%s__%s(%s) = 0x%08x\n", library_str, XbSymbolDatabase_CallingConventionToString(call_type), symbol_name, param_output, address);
                 return;
             }
             default: {

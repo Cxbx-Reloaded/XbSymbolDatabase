@@ -328,13 +328,14 @@ static void internal_RegisterValidXRefAddr(iXbSymbolContext* pContext,
                                            uint16_t version,
                                            const char* symbol_name,
                                            XbSDBSymbolType symbol_type,
+                                           XbSDBCallType call_type,
                                            unsigned param_count,
                                            const XbSDBSymbolParam* param_list)
 {
     xbaddr xSymbolAddr = pContext->xref_database[XRefIndex];
 
     if (internal_IsXRefAddrValid(xSymbolAddr)) {
-        pContext->register_func(library_name, library_flag, XRefIndex, symbol_name, xSymbolAddr, version, symbol_type, param_count, param_list);
+        pContext->register_func(library_name, library_flag, XRefIndex, symbol_name, xSymbolAddr, version, symbol_type, call_type, param_count, param_list);
     }
 }
 
@@ -354,7 +355,7 @@ static void internal_RegisterSelfValidXRefAddr(iXbSymbolContext* pContext,
     xbaddr xSymbolAddr = pContext->xref_database[pSymbol->xref];
 
     if (internal_IsXRefAddrValid(xSymbolAddr)) {
-        pContext->register_func(pLibrary->name, pLibrary->flag, pSymbol->xref, pSymbol->szSymbolName, xSymbolAddr, version, pSymbol->symbol_type, pSymbol->param_count, pSymbol->param_list);
+        pContext->register_func(pLibrary->name, pLibrary->flag, pSymbol->xref, pSymbol->szSymbolName, xSymbolAddr, version, pSymbol->symbol_type, pSymbol->call_type, pSymbol->param_count, pSymbol->param_list);
     }
 }
 
@@ -366,6 +367,7 @@ static void internal_RegisterXRef(iXbSymbolContext* pContext,
                                   const char* symbol_name,
                                   uint32_t symbol_addr,
                                   XbSDBSymbolType symbol_type,
+                                  XbSDBCallType call_type,
                                   unsigned param_count,
                                   const XbSDBSymbolParam* param_list,
                                   bool do_register)
@@ -388,7 +390,7 @@ static void internal_RegisterXRef(iXbSymbolContext* pContext,
 
     internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XRefIndex, symbol_addr);
     if (do_register && pContext->register_func != NULL) {
-        pContext->register_func(pLibrary->name, pLibrary->flag, XRefIndex, symbol_name, symbol_addr, version, symbol_type, param_count, param_list);
+        pContext->register_func(pLibrary->name, pLibrary->flag, XRefIndex, symbol_name, symbol_addr, version, symbol_type, call_type, param_count, param_list);
     }
 }
 
@@ -400,7 +402,7 @@ static void internal_RegisterXRefHelper(iXbSymbolContext* pContext,
                                         uint32_t symbol_addr,
                                         bool do_register)
 {
-    internal_RegisterXRef(pContext, pLibrarySection, pSymbol->xref, version, pSymbol->szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->param_count, pSymbol->param_list, do_register);
+    internal_RegisterXRef(pContext, pLibrarySection, pSymbol->xref, version, pSymbol->szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->call_type, pSymbol->param_count, pSymbol->param_list, do_register);
 }
 
 // (Old / Manual) method
@@ -411,6 +413,7 @@ static void internal_RegisterSymbolManual(iXbSymbolContext* pContext,
                                           const char* symbol_name,
                                           uint32_t symbol_addr,
                                           const XbSDBSymbolType symbol_type,
+                                          const XbSDBCallType call_type,
                                           const unsigned param_count,
                                           const XbSDBSymbolParam* param_list)
 {
@@ -420,7 +423,7 @@ static void internal_RegisterSymbolManual(iXbSymbolContext* pContext,
     if (internal_IsXRefAddrUnset(pContext->xref_database[xref_index])) {
         internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, xref_index, symbol_addr);
         if (pContext->register_func != NULL) {
-            pContext->register_func(pLibrary->name, pLibrary->flag, xref_index, symbol_name, symbol_addr, version, symbol_type, param_count, param_list);
+            pContext->register_func(pLibrary->name, pLibrary->flag, xref_index, symbol_name, symbol_addr, version, symbol_type, call_type, param_count, param_list);
         }
     }
 }
@@ -438,7 +441,7 @@ static void internal_RegisterSymbol(iXbSymbolContext* pContext,
                                     uint32_t symbol_addr)
 {
     // forward to internal_RegisterSymbolManual to avoid need to copy paste between two identical functions.
-    internal_RegisterSymbolManual(pContext, pLibrarySession, pSymbol->xref, version, pSymbol->szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->param_count, pSymbol->param_list);
+    internal_RegisterSymbolManual(pContext, pLibrarySession, pSymbol->xref, version, pSymbol->szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->call_type, pSymbol->param_count, pSymbol->param_list);
 }
 
 
@@ -482,7 +485,7 @@ static OOVPATable* internal_OOVPATable_FindByReference(SymbolDatabaseList* Libra
     }
 
 #define internal_RegisterSymbolHelper(pContext, pLibrarySession, pSymbol, szSymbolName, version, symbol_addr) \
-    internal_RegisterSymbolManual(pContext, pLibrarySession, pSymbol->xref, version, szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->param_count, pSymbol->param_list)
+    internal_RegisterSymbolManual(pContext, pLibrarySession, pSymbol->xref, version, szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->call_type, pSymbol->param_count, pSymbol->param_list)
 
 static void internal_OOVPATable_scan(iXbSymbolContext* pContext,
                                      const iXbSymbolLibrarySession* pLibrarySession,

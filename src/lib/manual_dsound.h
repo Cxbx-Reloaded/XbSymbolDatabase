@@ -63,9 +63,9 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
 
         // TODO: If possible, integrate into the OOVPA structure.
         internal_RegisterXRef(pContext, pLibrarySession, XREF_DSS_VOICE_VTABLE, 3911,
-                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x14), symbol_variable, 0, NULL, false);
+                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x14), symbol_variable, call_none, 0, NULL, false);
         internal_RegisterXRef(pContext, pLibrarySession, XREF_DSS_STREAM_VTABLE, 3911,
-                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x1B), symbol_variable, 0, NULL, false);
+                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x1B), symbol_variable, call_none, 0, NULL, false);
     }
 
     // Verify both variables are already set from the scan function above.

@@ -303,6 +303,7 @@ static void EmuRegisterSymbol(const char* library_str,
                        uint32_t symbol_addr,
                        uint32_t build,
                        uint32_t symbol_type,
+                       uint32_t call_type,
                        uint32_t param_count,
                        const XbSDBSymbolParam* param_list)
 {

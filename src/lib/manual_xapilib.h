@@ -303,21 +303,21 @@ static inline void manual_register_xapilib(iXbSymbolContext* pContext)
     // TODO: Make everything below have ability to perform self-register. (but we need difference between virtual and relative address.... can it be built-in support?)
     //       Actually, let's make a separate pull request for this...
     // NOTE: These device types can be self-register according to XInputOpen signature. But newer implementation require manual search.
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Gamepad, 0, "g_DeviceType_Gamepad", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_IRDongle, 0, "g_DeviceType_IRDongle", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Keyboard, 0, "g_DeviceType_Keyboard", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Mouse, 0, "g_DeviceType_Mouse", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_SBC, 4242, "g_DeviceType_SBC", symbol_variable, 0, NULL);
-    //internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableBegin, 4242, "g_DeviceTypeInfoTableBegin", symbol_variable, 0, NULL);
-    //internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableEnd, 4242, "g_DeviceTypeInfoTableEnd", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Gamepad, 0, "g_DeviceType_Gamepad", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_IRDongle, 0, "g_DeviceType_IRDongle", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Keyboard, 0, "g_DeviceType_Keyboard", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_Mouse, 0, "g_DeviceType_Mouse", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceType_SBC, 4242, "g_DeviceType_SBC", symbol_variable, call_none, 0, NULL);
+    //internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableBegin, 4242, "g_DeviceTypeInfoTableBegin", symbol_variable, call_none, 0, NULL);
+    //internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_DeviceTypeInfoTableEnd, 4242, "g_DeviceTypeInfoTableEnd", symbol_variable, call_none, 0, NULL);
     // TODO: The above could actually do self-register but... do we need to?
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiAltLett_MU, 0, "g_XapiAltLett_MU", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiCurrentTopLevelFilter, 0, "g_XapiCurrentTopLevelFilter", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF__tls_array, 0, "_tls_array", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF__tls_index, 0, "_tls_index", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiCurrentFiber_OFFSET, 0, "XapiCurrentFiber_OFFSET", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiLastErrorCode_OFFSET, 0, "XapiLastErrorCode_OFFSET", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiThreadFiberData_OFFSET, 0, "XapiThreadFiberData_OFFSET", symbol_variable, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiThreadNotifyRoutineList, 0, "XapiThreadNotifyRoutineList", symbol_variable, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiAltLett_MU, 0, "g_XapiAltLett_MU", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiMountedMUs, 0, "g_XapiMountedMUs", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_g_XapiCurrentTopLevelFilter, 0, "g_XapiCurrentTopLevelFilter", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF__tls_array, 0, "_tls_array", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF__tls_index, 0, "_tls_index", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiCurrentFiber_OFFSET, 0, "XapiCurrentFiber_OFFSET", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiLastErrorCode_OFFSET, 0, "XapiLastErrorCode_OFFSET", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiThreadFiberData_OFFSET, 0, "XapiThreadFiberData_OFFSET", symbol_variable, call_none, 0, NULL);
+    internal_RegisterValidXRefAddr(pContext, Lib_XAPILIB, XbSymbolLib_XAPILIB, XREF_XapiThreadNotifyRoutineList, 0, "XapiThreadNotifyRoutineList", symbol_variable, call_none, 0, NULL);
 }

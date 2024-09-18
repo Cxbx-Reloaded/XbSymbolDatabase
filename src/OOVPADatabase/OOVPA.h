@@ -233,8 +233,9 @@ typedef enum _eDBScanType {
 typedef struct _OOVPATable {
     const uint16_t xref;
     const unsigned scan_type;
-    const XbSDSymbolType symbol_type;
+    const XbSDBSymbolType symbol_type;
     const char* szSymbolName;
+    const XbSDBCallType call_type;
     const unsigned param_count;
     const XbSDBSymbolParam* param_list;
     const unsigned count;
@@ -290,6 +291,13 @@ typedef struct _OOVPATable {
 #define OV_BYTES_6(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_5(Offset + 1, __VA_ARGS__))
 #define OV_BYTES_7(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_6(Offset + 1, __VA_ARGS__))
 #define OV_BYTES_8(Offset, Value, ...) OV_BYTE(Offset, Value), MSVC_EXPAND(OV_BYTES_7(Offset + 1, __VA_ARGS__))
+
+#define CALL_unk   call_unknown
+#define CALL_cde   call_cdecl
+#define CALL_std   call_stdcall
+#define CALL_thi   call_thiscall
+#define CALL_fas   call_fastcall
+#define CALL(Name) CALL_##Name
 
 // For generate symbol's suffix name, mainly for registers, and extend API usage.
 #define PARAM(Param, Name)            Param, Name
@@ -408,18 +416,19 @@ typedef struct _OOVPATable {
 
 #define SYMBOL_EXPAND(symbol_name, stack_size, suffix, params, ...)      (symbol_name, symbol_name##stack_size##suffix, __VA_ARGS__)
 #define SYMBOL_EXPAND_LTCG(symbol_name, stack_size, suffix, params, ...) (symbol_name, symbol_name##stack_size##suffix##params, __VA_ARGS__)
-#define SYM_INT(symbol_name)                                             SYMBOL_EXPAND(symbol_name, /*NONE*/, /*NONE*/, /*NONE*/, ({ param_unk, "" }), symbol_internal)
-#define SYM_VAR(symbol_name)                                             SYMBOL_EXPAND(symbol_name, /*NONE*/, /*NONE*/, /*NONE*/, ({ param_unk, "" }), symbol_variable)
-#define SYM_FUN(symbol_name, stack_size, params)                         SYMBOL_EXPAND(symbol_name, stack_size, /*NONE*/, params, symbol_function)
-#define SYM_FUN_ALT(symbol_name, suffix, stack_size, params)             SYMBOL_EXPAND(symbol_name, stack_size, suffix, params, symbol_function)
-#define SYM_FUN_LTCG(symbol_name, stack_size, params)                    SYMBOL_EXPAND_LTCG(symbol_name, stack_size, __LTCG, params, symbol_function)
+#define SYM_INT(symbol_name)                                             SYMBOL_EXPAND(symbol_name, /*NONE*/, /*NONE*/, /*NONE*/, ({ param_unk, "" }), symbol_internal, call_none)
+#define SYM_VAR(symbol_name)                                             SYMBOL_EXPAND(symbol_name, /*NONE*/, /*NONE*/, /*NONE*/, ({ param_unk, "" }), symbol_variable, call_none)
+#define SYM_FUN(symbol_name, call_type, stack_size, params)              SYMBOL_EXPAND(symbol_name, stack_size, /*NONE*/, params, symbol_function, call_type)
+#define SYM_FUN_ALT(symbol_name, suffix, call_type, stack_size, params)  SYMBOL_EXPAND(symbol_name, stack_size, suffix, params, symbol_function, call_type)
+#define SYM_FUN_LTCG(symbol_name, call_type, stack_size, params)         SYMBOL_EXPAND_LTCG(symbol_name, stack_size, __LTCG, params, symbol_function, call_type)
 #define SYM_SIG                                                          VA_ARGS_EXPAND
 
-#define REGISTER_OOVPAS_TYPE(xref, symbol_name, param_list, symbol_type, scan_type, ...)                                                                    \
+#define REGISTER_OOVPAS_TYPE(xref, symbol_name, param_list, symbol_type, call_type, scan_type, ...)                                                         \
     XREF_##xref,                                                                                                                                            \
         scan_type,                                                                                                                                          \
         symbol_type,                                                                                                                                        \
         #symbol_name,                                                                                                                                       \
+        call_type,                                                                                                                                          \
         COUNT_ARRAYSIZE(const XbSDBSymbolParam, param_list),                                                                                                \
         (const XbSDBSymbolParam[])UNPARENTHESES(param_list),                                                                                                \
         COUNT_ARRAYSIZE(unsigned short, ({ __VA_ARGS__ })),                                                                                                 \

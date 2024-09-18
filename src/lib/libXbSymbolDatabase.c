@@ -410,6 +410,21 @@ const char* XbSymbolDatabase_ParamToString(uint32_t param_type)
     return param_type_str[param_type];
 }
 
+static const char* const call_type_str[] = {
+#define CALL_(type) #type,
+#include <libCallTypes.h>
+#undef CALL_
+};
+
+const char* XbSymbolDatabase_CallingConventionToString(uint32_t call_type)
+{
+    if (call_type >= call_max) {
+        return call_type_str[call_unknown];
+    }
+
+    return call_type_str[call_type];
+}
+
 const char* xref_str[] = {
 #define XREF_SYMBOL(e) #e,
 #include "xref/d3d8.def"
