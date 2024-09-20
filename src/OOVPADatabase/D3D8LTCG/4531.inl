@@ -146,7 +146,7 @@ OOVPA_SIG_MATCH(
 // * CMiniport_InitHardware
 // ******************************************************************
 //558BEC83EC1053578BF85768
-OOVPA_SIG_HEADER_NO_XREF(CMiniport_InitHardware,
+OOVPA_SIG_HEADER_NO_XREF(CMiniport_InitHardware_4,
                          1024)
 OOVPA_SIG_MATCH(
 
