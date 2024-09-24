@@ -230,7 +230,7 @@ void XbSymbolDatabase_SetOutputMessage(xb_output_message_t message_func);
 
 /// <summary>
 /// To register any detected symbol name with address and build version back to third-party program.
-/// NOTE: Be aware of library name will be variety since some libraries are detecting in other sections as well.
+/// NOTE: Be aware that the library name will vary since some libraries are detected in other sections as well.
 /// </summary>
 /// <param name="library_str">Name of the library in string.</param>
 /// <param name="library_flag">Name of the library in flag.</param>

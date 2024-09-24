@@ -31,7 +31,7 @@
 // MSVC_EXPAND works around a Visual C++ problem, expanding __VA_ARGS__ incorrectly:
 #define MSVC_EXPAND(x) x
 
-// Wrap C++ style macro function for clang-format to follow our code style.
+// Wrap C++ style macro function so that clang-format follows our code style.
 // NOTE: Not relative to MSVC_EXPAND macro's bugfix.
 #define MACRO_FUNC(x) x
 
@@ -46,10 +46,10 @@
 #define UNPARENTHESES_INVOKE(args) VA_ARGS_EXPAND(args)
 #define UNPARENTHESES(args)        UNPARENTHESES_INVOKE(VA_ARGS_EXPAND args)
 
-// count array type size
+// get the number of elements of an array
 #define COUNT_ARRAYSIZE(type_, array_) (sizeof((type_[])UNPARENTHESES(array_)) / sizeof(type_))
 
-// Increment counter for PARAMS macro to use with.
+// Increment counter used by the PARAMS macro.
 #define INC_1  2
 #define INC_2  3
 #define INC_3  4
@@ -211,7 +211,7 @@ typedef struct _LOOVPA {
 
 #define OOVPA_END }
 
-#pragma pack() // require restore pack for AppleClang to build
+#pragma pack() // restore packing so that AppleClang can build
 typedef struct _OOVPARevision {
     OOVPA* Oovpa;
     unsigned short Version; // : 13; // 2^13 = 8192, enough to store lowest and highest possible Library Version number in
@@ -229,7 +229,7 @@ typedef enum _eDBScanType {
 // ******************************************************************
 // * OOVPATable
 // ******************************************************************
-#pragma pack() // require restore pack for AppleClang to build
+#pragma pack() // restore packing so that AppleClang can build
 typedef struct _OOVPATable {
     const uint16_t xref;
     const unsigned scan_type;
@@ -299,13 +299,13 @@ typedef struct _OOVPATable {
 #define CALL_fas   call_fastcall
 #define CALL(Name) CALL_##Name
 
-// For generate symbol's suffix name, mainly for registers, and extend API usage.
+// For generate symbol's suffix name, mainly for registers, and extended API usage.
 #define PARAM(Param, Name)            Param, Name
 #define PARAM1(Param)                 Param, ""
 #define PARAM_TOKEN_unk(Index, Name)  _unk##Index
 #define PARAM_TOKEN_void(Index, Name) // No argument, do not append to symbol reference.
-#define PARAM_TOKEN_stk2(Index, Name) // Argument is stored in call stack, do not append to symbol reference.
-#define PARAM_TOKEN_stk(Index, Name)  // Argument is stored in call stack, do not append to symbol reference.
+#define PARAM_TOKEN_stk2(Index, Name) // (Custom) argument is stored in call stack with two pushes, do not append to symbol reference.
+#define PARAM_TOKEN_stk(Index, Name)  // Argument is stored in call stack with one push, do not append to symbol reference.
 #define PARAM_TOKEN_eax(Index, Name)  _eax##Index
 #define PARAM_TOKEN__ax(Index, Name)  _ax##Index
 #define PARAM_TOKEN__ah(Index, Name)  _ah##Index

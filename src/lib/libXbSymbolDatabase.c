@@ -444,7 +444,7 @@ const char* XbSymbolDatabase_SymbolReferenceToString(uint32_t xref_index)
     if (xref_index <= XREF_KT_COUNT || XREF_COUNT <= xref_index) {
         return NULL;
     }
-    return xref_str[XREF_PUBLIC_INDEX(xref_index)];
+    return xref_str[XREF_API_TO_PUBLIC_INDEX(xref_index)];
 }
 
 // NOTE: Library string must return only one specific flag, cannot make a mix combo flags.
