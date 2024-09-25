@@ -8,6 +8,8 @@ find_package(Threads)
 
 file(GLOB INCLUDES
  "${XBSDB_ROOT_DIR}/include/Xbe.h"
+ "${XBSDB_ROOT_DIR}/include/libCallTypes.h"
+ "${XBSDB_ROOT_DIR}/include/libParamTypes.h"
  "${XBSDB_ROOT_DIR}/include/libXbSymbolDatabase.h"
 
 # Include xrefs for ABI feature support.
@@ -36,6 +38,7 @@ file(GLOB HEADERS
  "${XBSDB_ROOT_DIR}/src/lib/manual_custom.h"
  "${XBSDB_ROOT_DIR}/src/lib/manual_d3d8__ltcg.h"
  "${XBSDB_ROOT_DIR}/src/lib/manual_dsound.h"
+ "${XBSDB_ROOT_DIR}/src/lib/manual_jvs.h"
  "${XBSDB_ROOT_DIR}/src/lib/manual_xapilib.h"
  "${XBSDB_ROOT_DIR}/src/OOVPADatabase/OOVPA.h"
 )

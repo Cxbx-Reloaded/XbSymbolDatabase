@@ -27,7 +27,7 @@
 // * D3DDevice_DeleteVertexShader
 // ******************************************************************
 //Generic OOVPA as of 5344 and newer.
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DeleteVertexShader_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_DeleteVertexShader_0__LTCG_eax1,
                          5344)
 OOVPA_SIG_MATCH(
 
@@ -313,7 +313,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_LightEnable
 // ******************************************************************
 //F64401680175 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LightEnable_4,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_LightEnable_4__LTCG_eax1,
                          2048)
 OOVPA_SIG_MATCH(
 

@@ -54,7 +54,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetPalette
 // ******************************************************************
 //000085C05774258B4E ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPalette_4,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPalette_4__LTCG_eax1,
                          2024)
 OOVPA_SIG_MATCH(
 
@@ -101,7 +101,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_CreateVertexShader
 // ******************************************************************
 //C740040000210083C008 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader_0__LTCG_eax_handle,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShader_0__LTCG_eax1,
                          2048)
 OOVPA_SIG_MATCH(
 
@@ -127,7 +127,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetPixelShaderConstant
 // ******************************************************************
 //F30F2DC0C1E0100FC6C039 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShaderConstant_4,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetPixelShaderConstant_4__LTCG_ecx1_eax3,
                          2024)
 OOVPA_SIG_MATCH(
 
@@ -467,7 +467,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetTextureState_BorderColor
 // ******************************************************************
 //891089580483 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_BorderColor_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_BorderColor_0__LTCG_eax1_ebx2,
                          2048)
 OOVPA_SIG_MATCH(
 
@@ -506,7 +506,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetTextureState_ColorKeyColor
 // ******************************************************************
 //E00A040089 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor_0__LTCG_esi1_ebx2,
                          2048)
 OOVPA_SIG_MATCH(
 
@@ -569,7 +569,7 @@ OOVPA_SIG_MATCH(
 // * D3D_BlockOnTime
 // ******************************************************************
 //C747101001040089 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnTime_4,
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnTime_4__LTCG_eax1,
                          2048)
 OOVPA_SIG_MATCH(
 
@@ -590,7 +590,7 @@ OOVPA_SIG_MATCH(
 // * D3D_MakeRequestedSpace
 // ******************************************************************
 //81C5004000003BE9 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3D_MakeRequestedSpace_4__LTCG_eax_RequestedSpace,
+OOVPA_SIG_HEADER_NO_XREF(D3D_MakeRequestedSpace_4__LTCG_eax2,
                          2048)
 OOVPA_SIG_MATCH(
 

@@ -24,6 +24,30 @@
 // ******************************************************************
 
 // ******************************************************************
+// * g_DeviceType_SBC
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(g_DeviceType_SBC,
+                         4242)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * g_DeviceTypeInfoTableBegin
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(g_DeviceTypeInfoTableBegin,
+                         4242)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * g_DeviceTypeInfoTableEnd
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(g_DeviceTypeInfoTableEnd,
+                         4242)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
 // * XInputOpen
 // ******************************************************************
 // Generic OOVPA as of 4242 and newer.
@@ -33,10 +57,10 @@ OOVPA_SIG_HEADER_XREF(XInputOpen,
 OOVPA_SIG_MATCH(
 
     // call GetTypeInformation_4
-    XREF_ENTRY(0x0C, XREF_XAPI_GetTypeInformation_4),
+    XREF_ENTRY(0x0C, XREF_GetTypeInformation_4),
 
     // call SetLastError
-    XREF_ENTRY(0x17, XREF_XAPI_SetLastError),
+    XREF_ENTRY(0x17, XREF_SetLastError),
 
     // push 0x57
     OV_MATCH(0x14, 0x6A, 0x57),

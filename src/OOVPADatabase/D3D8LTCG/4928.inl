@@ -71,7 +71,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_BeginPushBuffer
 // ******************************************************************
 //008107000008008B
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginPushBuffer_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_BeginPushBuffer_0__LTCG_edi1,
                          2060)
 OOVPA_SIG_MATCH(
 
@@ -238,7 +238,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SelectVertexShaderDirect
 // ******************************************************************
 //B940000000BF ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SelectVertexShaderDirect_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SelectVertexShaderDirect_0__LTCG_eax1_ebx2,
                          2024)
 OOVPA_SIG_MATCH(
 

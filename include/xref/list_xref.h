@@ -422,6 +422,9 @@ typedef enum _XRefDatabase {
     // Also, if XREF_COUNT > sizeof(uint16), enlarge struct OOVPA.XRefSaveIndex (and Value somehow)
 } XRefDatabase;
 
+#define XREF_API_TO_PUBLIC_INDEX(xref_api_index)    xref_api_index - XREF_KT_COUNT - 1
+#define XREF_PUBLIC_TO_API_INDEX(xref_public_index) xref_public_index + XREF_KT_COUNT + 1
+
 #define XREF_ADDR_UNDETERMINED -1
 #define XREF_ADDR_NOT_FOUND    ((void*)0)
 #define XREF_ADDR_DERIVE       1

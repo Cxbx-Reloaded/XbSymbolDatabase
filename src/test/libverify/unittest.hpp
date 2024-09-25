@@ -46,7 +46,6 @@ static constexpr version_ranges VER_RANGE(uint16_t intro_start,
 #define REGISTER_SYMBOL_INLINE_D3D(e, v) { XREF_SYMBOL(D3D_##e), {{ #e, v}}}
 #define REGISTER_SYMBOL_INLINE_D3D8(e, v) { XREF_SYMBOL(D3D8_##e), {{ #e, v}}}
 #define REGISTER_SYMBOL_INLINE_VAR_OFFSET(e, v) { XREF_SYMBOL(OFFSET_##e), {{ STRINGIZE(e##_OFFSET), v}}}
-#define REGISTER_SYMBOL_INLINE_XAPI(e, v) { XREF_SYMBOL(XAPI_##e), {{ #e, v}}}
 // Below macros are intended to use multiple symbol names combine with single XREF.
 #define REGISTER_SYMBOL(e, v) { #e, v}
 #define REGISTER_SYMBOLS(Symbol, ...) { XREF_##Symbol, { __VA_ARGS__ }}

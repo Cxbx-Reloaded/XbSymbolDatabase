@@ -300,8 +300,12 @@ static void EmuRegisterSymbol(const char* library_str,
                        uint32_t library_flag,
                        uint32_t xref_index,
                        const char* symbol_str,
-                       uint32_t func_addr,
-                       uint32_t build)
+                       uint32_t symbol_addr,
+                       uint32_t build,
+                       uint32_t symbol_type,
+                       uint32_t call_type,
+                       uint32_t param_count,
+                       const XbSDBSymbolParam* param_list)
 {
     // Report invalid index
     if (xref_index == -1) {
@@ -309,7 +313,7 @@ static void EmuRegisterSymbol(const char* library_str,
         gen_str << "Symbol could not be register due to xref index is -1: "
             << XbSymbolDatabase_LibraryToString(library_flag) << " (b"
             << std::dec << std::setfill('0') << std::setw(4) << build << ") 0x"
-            << std::setfill('0') << std::setw(8) << std::hex << func_addr
+            << std::setfill('0') << std::setw(8) << std::hex << symbol_addr
             << " -> " << symbol_str;
         XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, gen_str.str());
         XbUnitTest_error++;
@@ -343,7 +347,7 @@ static void EmuRegisterSymbol(const char* library_str,
                 << XbSymbolDatabase_LibraryToString(library_flag) << " (b"
                 << std::dec << std::setfill('0') << std::setw(4) << build
                 << ") 0x" << std::setfill('0') << std::setw(8) << std::hex
-                << func_addr << " -> " << symbol_str;
+                << symbol_addr << " -> " << symbol_str;
             XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_ERROR, gen_str.str());
             XbUnitTest_error++;
         }
@@ -357,10 +361,10 @@ static void EmuRegisterSymbol(const char* library_str,
               << std::setw(8) << XbSymbolDatabase_LibraryToString(library_flag) << " (b"
               << std::dec << std::setw(4) << std::setfill('0') << build
               << ") 0x" << std::setw(8) << std::hex
-              << func_addr << " -> " << symbol_str;
+              << symbol_addr << " -> " << symbol_str;
     XbSUT_OutputMessage(XB_OUTPUT_MESSAGE_DEBUG, gen_str.str());
 
-    hasSymbol.addr = func_addr;
+    hasSymbol.addr = symbol_addr;
     hasSymbol.build = build;
     hasSymbol.library_flag = library_flag;
     hasSymbol.symbol = symbol_str;

@@ -2239,7 +2239,7 @@ OOVPA_SIG_MATCH(
 // * CDirectSoundBuffer::SetMixBinVolumes
 // ******************************************************************
 //Generic OOVPA as of 4134 and newer
-OOVPA_XREF(CDirectSoundBuffer_SetMixBinVolumes, 4134, 1 + 12, XRefOne)
+OOVPA_XREF(CDirectSoundBuffer_SetMixBinVolumes_8, 4134, 1 + 12, XRefOne)
     {
 
         // CDirectSoundBuffer_SetMixBinVolumes+0x32 : call [CDirectSoundVoice::SetMixBinVolumes]
@@ -4015,7 +4015,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxVoiceClient::Commit3dSettings
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Commit3dSettings,
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Commit3dSettings_0,
                          4134)
 OOVPA_SIG_MATCH(
 

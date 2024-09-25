@@ -53,8 +53,8 @@ void HashAssumedLOOVPA(unsigned int* Hash, const OOVPA* pAssumedLOOVPA)
 void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable)
 {
     // Part 1: function name string
-    if (pTable->szFuncName != NULL) {
-        hash_fnv1a(Hash, pTable->szFuncName, strlen(pTable->szFuncName));
+    if (pTable->szSymbolName != NULL) {
+        hash_fnv1a(Hash, pTable->szSymbolName, strlen(pTable->szSymbolName));
     }
 
     for (unsigned i = 0; i < pTable->count; i++) {

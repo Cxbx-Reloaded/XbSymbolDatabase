@@ -116,7 +116,7 @@ OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x13, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived (confirmed)
+    XREF_ENTRY(0x13, XREF_D3DDevice__m_VertexShader_OFFSET), // Derived (confirmed)
 
     { 0x1E, 0x89 },
     { 0x3E, 0x5F },

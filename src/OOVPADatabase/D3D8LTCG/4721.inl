@@ -27,7 +27,7 @@
 // * D3DDevice_Swap
 // ******************************************************************
 //7505BB050000008B ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Swap_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_Swap_0__LTCG_eax1,
                          2036)
 OOVPA_SIG_MATCH(
 
@@ -78,7 +78,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetTexture
 // ******************************************************************
 //81C10000F8FF89 ...C20400
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTexture_4__LTCG_eax_Stage,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTexture_4__LTCG_eax1,
                          2036)
 OOVPA_SIG_MATCH(
 

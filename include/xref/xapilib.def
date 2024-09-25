@@ -20,8 +20,8 @@
 // ******************************************************************
 
 // Variables
-XREF_SYMBOL(XAPI__tls_array)             // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(XAPI__tls_index)             // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(_tls_array)                  // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(_tls_index)                  // initially set to XREF_ADDR_DERIVE
 XREF_SYMBOL(g_DeviceType_Gamepad)        // initially set to XREF_ADDR_DERIVE
 XREF_SYMBOL(g_DeviceType_IRDongle)       // initially set to XREF_ADDR_DERIVE
 XREF_SYMBOL(g_DeviceType_Keyboard)       // initially set to XREF_ADDR_DERIVE
@@ -35,51 +35,50 @@ XREF_SYMBOL(g_XapiAltLett_MU)            // initially set to XREF_ADDR_DERIVE
 XREF_SYMBOL(g_XapiMountedMUs)            // initially set to XREF_ADDR_DERIVE
 
 // Offsets
-XREF_SYMBOL(OFFSET_XapiCurrentFiber)    // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_XapiLastErrorCode)   // initially set to XREF_ADDR_DERIVE
-XREF_SYMBOL(OFFSET_XapiThreadFiberData) // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(XapiCurrentFiber_OFFSET)    // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(XapiLastErrorCode_OFFSET)   // initially set to XREF_ADDR_DERIVE
+XREF_SYMBOL(XapiThreadFiberData_OFFSET) // initially set to XREF_ADDR_DERIVE
 
 // Functions
-// include XAPI prefix
 XREF_SYMBOL(IUsbInit_GetMaxDeviceTypeCount)
 XREF_SYMBOL(MU_Init)
-XREF_SYMBOL(XAPI__cinit)
-XREF_SYMBOL(XAPI__rtinit)
-XREF_SYMBOL(XAPI_ConvertThreadToFiber)
-XREF_SYMBOL(XAPI_CreateEventA)
-XREF_SYMBOL(XAPI_CreateFiber)
-XREF_SYMBOL(XAPI_CreateMutexA)
-XREF_SYMBOL(XAPI_CreateThread)
-XREF_SYMBOL(XAPI_DeleteFiber)
-XREF_SYMBOL(XAPI_ExitThread)
-XREF_SYMBOL(XAPI_GetExitCodeThread)
-XREF_SYMBOL(XAPI_GetLastError)
-XREF_SYMBOL(XAPI_GetOverlappedResult)
-XREF_SYMBOL(XAPI_GetThreadPriority)
-XREF_SYMBOL(XAPI_GetTimeZoneInformation)
-XREF_SYMBOL(XAPI_GetTypeInformation_4)
-XREF_SYMBOL(XAPI_GetTypeInformation_8)
-XREF_SYMBOL(XAPI_mainCRTStartup)
-XREF_SYMBOL(XAPI_mainXapiStartup)
-XREF_SYMBOL(XAPI_MoveFileA)
-XREF_SYMBOL(XAPI_OpenEventA)
-XREF_SYMBOL(XAPI_OutputDebugStringA)
-XREF_SYMBOL(XAPI_OutputDebugStringW)
-XREF_SYMBOL(XAPI_PulseEvent)
-XREF_SYMBOL(XAPI_QueueUserAPC)
-XREF_SYMBOL(XAPI_QueryPerformanceCounter)
-XREF_SYMBOL(XAPI_RaiseException)
-XREF_SYMBOL(XAPI_ResetEvent)
-XREF_SYMBOL(XAPI_SetEvent)
-XREF_SYMBOL(XAPI_SetLastError)
-XREF_SYMBOL(XAPI_SetThreadPriority)
-XREF_SYMBOL(XAPI_SetThreadPriorityBoost)
-XREF_SYMBOL(XAPI_SignalObjectAndWait)
-XREF_SYMBOL(XAPI_SwitchToFiber)
-XREF_SYMBOL(XAPI_SwitchToThread)
-XREF_SYMBOL(XAPI_timeKillEvent)
-XREF_SYMBOL(XAPI_timeSetEvent)
-XREF_SYMBOL(XAPI_UnhandledExceptionFilter)
+XREF_SYMBOL(_cinit)
+XREF_SYMBOL(_rtinit)
+XREF_SYMBOL(ConvertThreadToFiber)
+XREF_SYMBOL(CreateEventA)
+XREF_SYMBOL(CreateFiber)
+XREF_SYMBOL(CreateMutexA)
+XREF_SYMBOL(CreateThread)
+XREF_SYMBOL(DeleteFiber)
+XREF_SYMBOL(ExitThread)
+XREF_SYMBOL(GetExitCodeThread)
+XREF_SYMBOL(GetLastError)
+XREF_SYMBOL(GetOverlappedResult)
+XREF_SYMBOL(GetThreadPriority)
+XREF_SYMBOL(GetTimeZoneInformation)
+XREF_SYMBOL(GetTypeInformation_4)
+XREF_SYMBOL(GetTypeInformation_8)
+XREF_SYMBOL(mainCRTStartup)
+XREF_SYMBOL(mainXapiStartup)
+XREF_SYMBOL(MoveFileA)
+XREF_SYMBOL(OpenEventA)
+XREF_SYMBOL(OutputDebugStringA)
+XREF_SYMBOL(OutputDebugStringW)
+XREF_SYMBOL(PulseEvent)
+XREF_SYMBOL(QueueUserAPC)
+XREF_SYMBOL(QueryPerformanceCounter)
+XREF_SYMBOL(RaiseException)
+XREF_SYMBOL(ResetEvent)
+XREF_SYMBOL(SetEvent)
+XREF_SYMBOL(SetLastError)
+XREF_SYMBOL(SetThreadPriority)
+XREF_SYMBOL(SetThreadPriorityBoost)
+XREF_SYMBOL(SignalObjectAndWait)
+XREF_SYMBOL(SwitchToFiber)
+XREF_SYMBOL(SwitchToThread)
+XREF_SYMBOL(timeKillEvent)
+XREF_SYMBOL(timeSetEvent)
+XREF_SYMBOL(UnhandledExceptionFilter)
 // Xapi prefix
 XREF_SYMBOL(XapiBootToDash)
 XREF_SYMBOL(XapiCallThreadNotifyRoutines)

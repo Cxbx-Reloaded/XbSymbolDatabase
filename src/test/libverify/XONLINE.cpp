@@ -15,7 +15,9 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(XOnlineMatchSessionUpdate, VER_RANGE(4831)),
     REGISTER_SYMBOL_INLINE(CXo_XOnlineMatchSessionCreate, VER_RANGE(4831)),
     REGISTER_SYMBOL_INLINE(XOnlineMatchSessionCreate, VER_RANGE(4831)),
-    REGISTER_SYMBOL_INLINE(XoUpdateLaunchNewImageInternal, VER_RANGE(4627)),
+    REGISTER_SYMBOLS(XoUpdateLaunchNewImageInternal,
+                     REGISTER_SYMBOL(XoUpdateLaunchNewImageInternal_12, VER_RANGE(4627, 5028)),
+                     REGISTER_SYMBOL(XoUpdateLaunchNewImageInternal_16, VER_RANGE(5028))),
 };
 
 enum LOCAL_XREFS {

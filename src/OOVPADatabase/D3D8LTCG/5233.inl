@@ -90,7 +90,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetTextureState_TexCoordIndex
 // ******************************************************************
 //81E30000FFFFB901 ...C20400
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex_4,
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1,
                       2052,
                       XRefOne)
 OOVPA_SIG_MATCH(
@@ -115,7 +115,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetTextureState_BorderColor
 // ******************************************************************
 //8BCEC1E10681C1241B04 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_BorderColor_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_BorderColor_0__LTCG_eax1_ebx2,
                          2036)
 OOVPA_SIG_MATCH(
 
@@ -138,7 +138,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetTextureState_ColorKeyColor
 // ******************************************************************
 //8D0CB5E00A0400 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor_0__LTCG_esi1_ebx2,
                          2036)
 OOVPA_SIG_MATCH(
 
@@ -160,12 +160,12 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetVertexShader
 // ******************************************************************
 //F6C30155568B35 ...C3
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader_0,
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetVertexShader_0__LTCG_ebx1,
                       2036,
                       XRefOne)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x0E, XREF_OFFSET_D3DDevice__m_VertexShader), // Derived (unverified, yet should be align base on existing 4 bytes in signatures)
+    XREF_ENTRY(0x0E, XREF_D3DDevice__m_VertexShader_OFFSET), // Derived (unverified, yet should be align base on existing 4 bytes in signatures)
 
     { 0x00, 0x51 },
 
@@ -191,7 +191,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetVertexShaderConstantNotInline
 // ******************************************************************
 //56578BFBC1E704 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexShaderConstantNotInline_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexShaderConstantNotInline_0__LTCG_ebx1_eax2_edx3,
                          2048)
 OOVPA_SIG_MATCH(
 
@@ -264,7 +264,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SelectVertexShaderDirect
 // ******************************************************************
 //53568BF185F68BD8741E57B8 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SelectVertexShaderDirect_0,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SelectVertexShaderDirect_0__LTCG_eax1_ebx2,
                          2048)
 OOVPA_SIG_MATCH(
 
@@ -311,7 +311,7 @@ OOVPA_SIG_MATCH(
 //******************************************************************
 //* D3DDevice_SetRenderTarget
 //******************************************************************
-OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderTarget_0,
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetRenderTarget_0__LTCG_ecx1_eax2,
                       2048,
                       XRefOne)
 OOVPA_SIG_MATCH(

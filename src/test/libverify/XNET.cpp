@@ -5,7 +5,9 @@
 static const library_list database_min = {};
 
 static const library_list database_full = {
-    REGISTER_SYMBOL_INLINE(XnInit, VER_RANGE(3911)),
+    REGISTER_SYMBOLS(XnInit,
+                     REGISTER_SYMBOL(XnInit_8, VER_RANGE(3911, 4361)),
+                     REGISTER_SYMBOL(XnInit_24, VER_RANGE(4361))),
     REGISTER_SYMBOL_INLINE(WSAStartup, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XNetStartup, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(XNetGetEthernetLinkStatus, VER_RANGE(3911)),

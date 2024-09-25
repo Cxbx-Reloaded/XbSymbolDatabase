@@ -1253,7 +1253,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSoundVoice::SetMixBinVolumes
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetMixBinVolumes,
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetMixBinVolumes_12,
                       3911,
                       XRefOne)
 OOVPA_SIG_MATCH(
@@ -2114,6 +2115,14 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
+// * CDirectSoundStream::Process (dummy)
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundStream_Process,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
 // * CDirectSoundStream_Process
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(CDirectSoundStream_Process,
@@ -2147,7 +2156,15 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * CDirectSoundStream_GetStatus
+// * CDirectSoundStream::GetStatus (dummy)
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundStream_GetStatus,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * CDirectSoundStream::GetStatus
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(CDirectSoundStream_GetStatus,
                          3911)
@@ -2210,6 +2227,14 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
+// * CDirectSoundStream::Flush (dummy)
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundStream_Flush,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
 // * CDirectSoundStream_Flush
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_Flush,
@@ -2268,7 +2293,15 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * CDirectSoundStream_Discontinuity
+// * CDirectSoundStream::Discontinuity (dummy)
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundStream_Discontinuity,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * CDirectSoundStream::Discontinuity
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_Discontinuity,
                       3911,
@@ -2296,7 +2329,15 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * CDirectSoundStream_GetInfo
+// * CDirectSoundStream::GetInfo (dummy)
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundStream_GetInfo,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * CDirectSoundStream::GetInfo
 // ******************************************************************
 OOVPA_SIG_HEADER_NO_XREF(CDirectSoundStream_GetInfo,
                          3911)
@@ -2795,7 +2836,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxVoiceClient::Commit3dSettings
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Commit3dSettings,
+// Generic OOVPA as of 3911 and newer
+OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Commit3dSettings_4,
                       3911,
                       XRefTwo)
 OOVPA_SIG_MATCH(
@@ -3998,7 +4040,15 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * CDirectSoundStream_AddRef
+// * CDirectSoundStream::AddRef (dummy)
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundStream_AddRef,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
+
+// ******************************************************************
+// * CDirectSoundStream::AddRef
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(CDirectSoundStream_AddRef,
                       3911,
@@ -4053,6 +4103,14 @@ OOVPA_SIG_MATCH(
     { 0x31, 0x04 },
     //
 );
+
+// ******************************************************************
+// * CDirectSoundStream::Release (dummy)
+// ******************************************************************
+// dummy signature
+OOVPA_SIG_HEADER_NO_XREF(CDirectSoundStream_Release,
+                         0)
+OOVPA_SIG_MATCH_DUMMY();
 
 // ******************************************************************
 // * CDirectSoundStream_Release
@@ -4535,7 +4593,8 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxAPU_SetMixBinHeadroom
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_SetMixBinHeadroom,
+// Generic OOVPA as of 3911 and newer
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_SetMixBinHeadroom_8,
                          3911)
 OOVPA_SIG_MATCH(
 
@@ -6155,7 +6214,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSoundBuffer::SetMixBinVolumes
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetMixBinVolumes,
+OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetMixBinVolumes_12,
                       3911,
                       XRefOne)
 OOVPA_SIG_MATCH(

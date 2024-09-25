@@ -273,7 +273,7 @@ OOVPA_SIG_MATCH(
 // * D3D_BlockOnResource
 // ******************************************************************
 //F7C20000780075 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource_0,
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource_0__LTCG_eax1,
                          2060)
 OOVPA_SIG_MATCH(
 

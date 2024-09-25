@@ -56,17 +56,32 @@
 // ******************************************************************
 OOVPATable XNET_OOVPA[] = {
 
-    REGISTER_OOVPAS(XnInit, 3911, 4361), // 3911 is only XNETS library, XNET library is different OOVPA.
-    REGISTER_OOVPAS(WSAStartup, 3911, 4361),
-    REGISTER_OOVPAS(XNetStartup, 3911, 4361),
-    REGISTER_OOVPAS(XNetGetEthernetLinkStatus, 3911, 4627), //NOTE: Found in .text section, confirmed it is correct.
-    REGISTER_OOVPAS(bind, 3911, 4627),
-    REGISTER_OOVPAS(connect, 3911, 5120),
-    REGISTER_OOVPAS(ioctlsocket, 3911, 4627),
-    REGISTER_OOVPAS(listen, 3911, 4627),
-    REGISTER_OOVPAS(recv, 3911),
-    REGISTER_OOVPAS(send, 3911),
-    REGISTER_OOVPAS(socket, 3911, 4627, 5455),
+    REGISTER_OOVPAS(SYM_FUN(XnInit, CALL(std), STACK(8), PARAMS(PARAM(psh, pxnsp), PARAM(psh, bWSA))),
+                    SYM_SIG(3911)), // 3911 is only XNETS library, XNET library is different OOVPA.
+    REGISTER_OOVPAS(SYM_FUN(XnInit, CALL(std), STACK(24), PARAMS(PARAM(psh, pUnknown1), PARAM(psh, unknown2), PARAM(psh, pxnsp), PARAM(psh, bWSA), PARAM(psh, wVersionRequested), PARAM(psh, lpWSAData))), // TODO: Update unknown parameter name(s) if able.
+                    SYM_SIG(4361)),
+    REGISTER_OOVPAS(SYM_FUN(WSAStartup, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, wVersionRequested), PARAM(psh, lpWSAData))),
+                    SYM_SIG(3911, 4361)),
+    REGISTER_OOVPAS(SYM_FUN(XNetStartup, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pxnsp))),
+                    SYM_SIG(3911, 4361)),
+    REGISTER_OOVPAS(SYM_FUN(XNetGetEthernetLinkStatus, CALL(std), STACK(/*default*/), PARAMS(PARAM1(void))),
+                    SYM_SIG(3911, 4627)), // NOTE: Found in .text section, confirmed it is correct.
+
+    // TODO: Fix below signatures to contain class (aka CXnSock_ prefix) then add actual non-class functions.
+    REGISTER_OOVPAS(SYM_FUN(bind, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, s), PARAM(psh, name), PARAM(psh, namelen))),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(connect, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, s), PARAM(psh, name), PARAM(psh, namelen))),
+                    SYM_SIG(3911, 5120)),
+    REGISTER_OOVPAS(SYM_FUN(ioctlsocket, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, s), PARAM(psh, cmd), PARAM(psh, argp))),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(listen, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, s), PARAM(psh, backlog))),
+                    SYM_SIG(3911, 4627)),
+    REGISTER_OOVPAS(SYM_FUN(recv, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, s), PARAM(psh, buf), PARAM(psh, len), PARAM(psh, flags))),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(send, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, s), PARAM(psh, buf), PARAM(psh, len), PARAM(psh, flags))),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(socket, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, af), PARAM(psh, type), PARAM(psh, protocol))),
+                    SYM_SIG(3911, 4627, 5455)),
 };
 
 // ******************************************************************

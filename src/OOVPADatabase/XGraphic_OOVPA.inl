@@ -77,18 +77,30 @@
 // ******************************************************************
 OOVPATable XGRAPHC_OOVPA[] = {
 
-    REGISTER_OOVPAS(XFONT_OpenBitmapFontFromMemory, 4361),
-    REGISTER_OOVPAS(XGCompressRect, 3911), // TODO: Do we need to patch this?
-    REGISTER_OOVPAS(XGIsSwizzledFormat, 3911),
-    REGISTER_OOVPAS(XGSetIndexBufferHeader, 3911, 4134),
-    REGISTER_OOVPAS(XGSetSurfaceHeader, 3911), // Final generic OOVPA: 3911; Removed: 0
-    REGISTER_OOVPAS(XGSetTextureHeader, 3911),
-    REGISTER_OOVPAS(XGSetVertexBufferHeader, 3911, 4134),
-    REGISTER_OOVPAS(XGSwizzleBox, 3911),
-    REGISTER_OOVPAS(XGSwizzleRect, 3911),
-    REGISTER_OOVPAS(XGUnswizzleBox, 3911),
-    REGISTER_OOVPAS(XGUnswizzleRect, 3911),
-    REGISTER_OOVPAS(XGWriteSurfaceOrTextureToXPR, 3911),
+    REGISTER_OOVPAS(SYM_FUN(XFONT_OpenBitmapFontFromMemory, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pFontData), PARAM(psh, uFontDataSize), PARAM(psh, ppFont))),
+                    SYM_SIG(4361)),
+    REGISTER_OOVPAS(SYM_FUN(XGCompressRect, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pDestBuf), PARAM(psh, DestFormat), PARAM(psh, DestPitch), PARAM(psh, Width), PARAM(psh, Height), PARAM(psh, pSrcData), PARAM(psh, SrcFormat), PARAM(psh, SrcPitch), PARAM(psh, fAlphaRef), PARAM(psh, Flags))),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGIsSwizzledFormat, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Format))),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGSetIndexBufferHeader, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Length), PARAM(psh, Usage), PARAM(psh, Format), PARAM(psh, Pool), PARAM(psh, pBuffer), PARAM(psh, Data))),
+                    SYM_SIG(3911, 4134)),
+    REGISTER_OOVPAS(SYM_FUN(XGSetSurfaceHeader, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Width), PARAM(psh, Height), PARAM(psh, Format), PARAM(psh, pSurface), PARAM(psh, Data), PARAM(psh, Pitch))),
+                    SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
+    REGISTER_OOVPAS(SYM_FUN(XGSetTextureHeader, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Width), PARAM(psh, Height), PARAM(psh, Levels), PARAM(psh, Usage), PARAM(psh, Format), PARAM(psh, Pool), PARAM(psh, pTexture), PARAM(psh, Data), PARAM(psh, Pitch))),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGSetVertexBufferHeader, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Length), PARAM(psh, Usage), PARAM(psh, FVF), PARAM(psh, Pool), PARAM(psh, pBuffer), PARAM(psh, Data))),
+                    SYM_SIG(3911, 4134)),
+    REGISTER_OOVPAS(SYM_FUN(XGSwizzleBox, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pSource), PARAM(psh, RowPitch), PARAM(psh, SlicePitch), PARAM(psh, pBox), PARAM(psh, pDest), PARAM(psh, Width), PARAM(psh, Height), PARAM(psh, Depth), PARAM(psh, pPoint), PARAM(psh, BytesPerPixel))),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGSwizzleRect, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pSource), PARAM(psh, Pitch), PARAM(psh, pRect), PARAM(psh, pDest), PARAM(psh, Width), PARAM(psh, Height), PARAM(psh, pPoint), PARAM(psh, BytesPerPixel))),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGUnswizzleBox, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pSource), PARAM(psh, Width), PARAM(psh, Height), PARAM(psh, Depth), PARAM(psh, pBox), PARAM(psh, pDest), PARAM(psh, RowPitch), PARAM(psh, SlicePitch), PARAM(psh, pPoint), PARAM(psh, BytesPerPixel))),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGUnswizzleRect, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pSource), PARAM(psh, Width), PARAM(psh, Height), PARAM(psh, pRect), PARAM(psh, pDest), PARAM(psh, Pitch), PARAM(psh, pPoint), PARAM(psh, BytesPerPixel))),
+                    SYM_SIG(3911)),
+    REGISTER_OOVPAS(SYM_FUN(XGWriteSurfaceOrTextureToXPR, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pResource), PARAM(psh, cPath), PARAM(psh, bWriteSurfaceAsTexture))),
+                    SYM_SIG(3911)),
 };
 
 // ******************************************************************

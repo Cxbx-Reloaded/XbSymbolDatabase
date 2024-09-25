@@ -27,7 +27,7 @@
 // * XnInit
 // ******************************************************************
 //Generic OOVPA as of 4361 and newer.
-OOVPA_SIG_HEADER_NO_XREF(XnInit,
+OOVPA_SIG_HEADER_NO_XREF(XnInit_24,
                          4361)
 OOVPA_SIG_MATCH(
 
@@ -39,9 +39,11 @@ OOVPA_SIG_MATCH(
     { 0x16, 0x00 },
     { 0x17, 0x00 },
     { 0x18, 0x00 },
+
     { 0x19, 0x0F },
     { 0x1A, 0xB1 },
     { 0x1B, 0x11 },
+
     { 0x1C, 0x33 },
     //{ 0x1D, 0xF6 },
     { 0x1E, 0x3B },

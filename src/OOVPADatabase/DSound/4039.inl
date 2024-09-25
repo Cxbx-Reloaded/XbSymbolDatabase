@@ -1480,7 +1480,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // Generic OOVPA as of 4039 and newer.
 // TODO: Should be able to reduce pairs since there are two XREFs.
-OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetMixBinVolumes,
+OOVPA_SIG_HEADER_XREF(CDirectSoundVoice_SetMixBinVolumes_8,
                       4039,
                       XRefTwo)
 OOVPA_SIG_MATCH(
@@ -1519,8 +1519,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CDirectSoundBuffer::SetMixBinVolumes
 // ******************************************************************
-//Generic OOVPA as of 4039 and newer
-OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetMixBinVolumes,
+OOVPA_SIG_HEADER_XREF(CDirectSoundBuffer_SetMixBinVolumes_8,
                       4039,
                       XRefOne)
 OOVPA_SIG_MATCH(
@@ -4381,7 +4380,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxVoiceClient::Commit3dSettings
 // ******************************************************************
-OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Commit3dSettings,
+OOVPA_SIG_HEADER_NO_XREF(CMcpxVoiceClient_Commit3dSettings_0,
                          4039)
 OOVPA_SIG_MATCH(
 
@@ -4582,7 +4581,7 @@ OOVPA_SIG_MATCH(
 // * CMcpxAPU::SetMixBinHeadroom
 // ******************************************************************
 // Generic OOVPA as of 4039 and newer
-OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_SetMixBinHeadroom,
+OOVPA_SIG_HEADER_NO_XREF(CMcpxAPU_SetMixBinHeadroom_4,
                          4039)
 OOVPA_SIG_MATCH(
 

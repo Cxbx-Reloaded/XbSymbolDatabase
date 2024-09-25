@@ -44,14 +44,15 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
 
     // Scan for DirectSoundStream's constructor function.
     if (pContext->xref_database[XREF_CDirectSoundStream_Constructor] == XREF_ADDR_UNDETERMINED) {
-        xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolFunction(pContext,
-                                                                     pLibrarySession,
-                                                                     pLibraryDB,
-                                                                     "CDirectSoundStream_Constructor",
-                                                                     pSection,
-                                                                     true,
-                                                                     &pSymbol,
-                                                                     NULL);
+        // TODO: Lookup xref index instead of symbol name.
+        xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
+                                                                 pLibrarySession,
+                                                                 pLibraryDB,
+                                                                 "CDirectSoundStream_Constructor",
+                                                                 pSection,
+                                                                 true,
+                                                                 &pSymbol,
+                                                                 NULL);
 
         // If not found, skip the rest of the scan.
         if (xFuncAddr == 0) {
@@ -62,9 +63,9 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
 
         // TODO: If possible, integrate into the OOVPA structure.
         internal_RegisterXRef(pContext, pLibrarySession, XREF_DSS_VOICE_VTABLE, 3911,
-                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x14), false);
+                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x14), symbol_variable, call_none, 0, NULL, false);
         internal_RegisterXRef(pContext, pLibrarySession, XREF_DSS_STREAM_VTABLE, 3911,
-                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x1B), false);
+                              NULL, *(xbaddr*)(virt_start_relative + xFuncAddr + 0x1B), symbol_variable, call_none, 0, NULL, false);
     }
 
     // Verify both variables are already set from the scan function above.
@@ -81,33 +82,34 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
 
         if (xblower <= vtable && vtable < xbupper) {
             pFuncAddr = (memptr_t)virt_start_relative + vtable;
+            OOVPATable* pSymbol = NULL;
+            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, CDirectSoundStream_AddRef);
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 3911, *(uint32_t*)(pFuncAddr + 0 * 4));
 
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_AddRef, 3911,
-                                      "CDirectSoundStream_AddRef", *(uint32_t*)(pFuncAddr + 0 * 4));
+            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, CDirectSoundStream_Release);
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 3911, *(uint32_t*)(pFuncAddr + 1 * 4));
 
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Release, 3911,
-                                      "CDirectSoundStream_Release", *(uint32_t*)(pFuncAddr + 1 * 4));
+            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, CDirectSoundStream_GetInfo);
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 3911, *(uint32_t*)(pFuncAddr + 2 * 4));
 
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_GetInfo, 3911,
-                                      "CDirectSoundStream_GetInfo", *(uint32_t*)(pFuncAddr + 2 * 4));
-
+            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, CDirectSoundStream_GetStatus);
+            // TODO: May need further investigation with Cxbx-Reloaded's source code for possible reasoning why this method is used.
+            SYMBOL_COUNTER_VALUE; // Force increase by one symbol counter since we do not have both revisions difference in the OOVPA database.
             if (pLibrary->build_version < 4134) {
-                internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_GetStatus, 3911,
-                                          "CDirectSoundStream_GetStatus__r1", *(uint32_t*)(pFuncAddr + 3 * 4));
+                internal_RegisterSymbolHelper(pContext, pLibrarySession, pSymbol, "CDirectSoundStream_GetStatus__r1", 3911, *(uint32_t*)(pFuncAddr + 3 * 4));
             }
             else {
-                internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_GetStatus, 4134,
-                                          "CDirectSoundStream_GetStatus__r2", *(uint32_t*)(pFuncAddr + 3 * 4));
+                internal_RegisterSymbolHelper(pContext, pLibrarySession, pSymbol, "CDirectSoundStream_GetStatus__r2", 4134, *(uint32_t*)(pFuncAddr + 3 * 4));
             }
 
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Process, 3911,
-                                      "CDirectSoundStream_Process", *(uint32_t*)(pFuncAddr + 4 * 4));
+            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, CDirectSoundStream_Process);
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 3911, *(uint32_t*)(pFuncAddr + 4 * 4));
 
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Discontinuity, 3911,
-                                      "CDirectSoundStream_Discontinuity", *(uint32_t*)(pFuncAddr + 5 * 4));
+            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, CDirectSoundStream_Discontinuity);
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 3911, *(uint32_t*)(pFuncAddr + 5 * 4));
 
-            internal_RegisterSymbol_M(pContext, pLibrarySession, XREF_CDirectSoundStream_Flush, 3911,
-                                      "CDirectSoundStream_Flush", *(uint32_t*)(pFuncAddr + 6 * 4));
+            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, CDirectSoundStream_Flush);
+            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 3911, *(uint32_t*)(pFuncAddr + 6 * 4));
 
             // NOTE: it is possible to manual add GetInfo, GetStatus, Process, Discontinuity,
             // and Flush functions.

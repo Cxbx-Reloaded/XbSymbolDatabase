@@ -128,17 +128,10 @@ bool match_library_db(std::map<uint32_t, symbol_result>& list,
         }
 
         // Since xref is within range, check if symbol is found.
-        // If a match is not found, then we basically need to push them into
-        // missing list.
+        // If a match is not found, then we need to push the generic symbol
+        // name into missing list.
         if (found_xref == list.end()) {
-            std::string symbols;
-            for (auto& symbol : xref->second) {
-                if (!symbols.empty()) {
-                    symbols += ", ";
-                }
-                symbols += symbol.first;
-            }
-            missing.push_back(symbols);
+            missing.push_back(XbSymbolDatabase_SymbolReferenceToString(xref->first));
             continue;
         }
 

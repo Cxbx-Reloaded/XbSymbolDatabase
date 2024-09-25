@@ -1264,8 +1264,7 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * CMcpxVoiceClient::Commit3dSettings
 // ******************************************************************
-// Generic OOVPA as of 5344 and newer
-OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Commit3dSettings,
+OOVPA_SIG_HEADER_XREF(CMcpxVoiceClient_Commit3dSettings_0,
                       5344,
                       XRefTwo)
 OOVPA_SIG_MATCH(
