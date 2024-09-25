@@ -397,8 +397,8 @@ static const char* const param_type_str[] = {
 #undef PARAM_TYPE__0
 #undef PARAM_TYPE_64
 #undef PARAM_TYPE_32
-#undef PARAM_TYPE_16
-#undef PARAM_TYPE__8
+#undef PARAM_TYPE_16_
+#undef PARAM_TYPE__8_
 };
 
 const char* XbSymbolDatabase_ParamToString(uint32_t param_type)
