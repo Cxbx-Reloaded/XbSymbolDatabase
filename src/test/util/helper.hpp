@@ -1,5 +1,4 @@
-// SPDX-License-Identifier: BSD-2-Clause
-
+// SPDX-License-Identifier: MIT
 // SPDX-FileCopyrightText: 2018 Luke Usher <luke.usher@outlook.com>
 // SPDX-FileCopyrightText: 2018 ergo720
 

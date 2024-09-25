@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-
 // SPDX-FileCopyrightText: 2019 RadWolfie
 
 // Perform detected symbol inspection for any symbols may had been missed or
