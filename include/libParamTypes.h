@@ -2,8 +2,8 @@
 
 PARAM_TYPE_32(unk)  // Unknown, intended to be used for "not a function" types and for "function" documentation when reverse-engineering efforts could not narrow it down to either the stack or one of the registers.
 PARAM_TYPE__0(void) //  0 bits
-PARAM_TYPE_64(stk2) // 64 bits (two pushes)
-PARAM_TYPE_32(stk)  // 32 bits (one push)
+PARAM_TYPE_64(psh2) // 64 bits (two pushes)
+PARAM_TYPE_32(psh)  // 32 bits (one push)
 PARAM_TYPE_32(eax)  // 32 bits
 PARAM_TYPE_16_(ax)  // 16 bits
 PARAM_TYPE__8_(ah)  //  8 bits

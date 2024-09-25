@@ -71,33 +71,33 @@
 OOVPATable XONLINE_OOVPA[] = {
 
     // XOnline section
-    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineLogon, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(stk, pUsers), PARAM(stk, pdwServiceIDs), PARAM(stk, dwServices), PARAM(stk, hEvent), PARAM(stk, pHandle))),
+    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineLogon, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, pUsers), PARAM(psh, pdwServiceIDs), PARAM(psh, dwServices), PARAM(psh, hEvent), PARAM(psh, pHandle))),
                     SYM_SIG(4361, 4627, 4721, 5455, 5558, 5849)),
-    REGISTER_OOVPAS(SYM_FUN(XOnlineLogon, CALL(std), STACK(/*default*/), PARAMS(PARAM(stk, pUsers), PARAM(stk, pdwServiceIDs), PARAM(stk, dwServices), PARAM(stk, hEvent), PARAM(stk, pHandle))),
+    REGISTER_OOVPAS(SYM_FUN(XOnlineLogon, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pUsers), PARAM(psh, pdwServiceIDs), PARAM(psh, dwServices), PARAM(psh, hEvent), PARAM(psh, pHandle))),
                     SYM_SIG(4361)),
-    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineMatchSearch, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(stk, dwProcedureIndex), PARAM(stk, dwNumResults), PARAM(stk, dwNumAttributes), PARAM(stk, pAttributes), PARAM(stk, dwResultsLen), PARAM(stk, hWorkEvent), PARAM(stk, phTask))),
+    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineMatchSearch, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, dwProcedureIndex), PARAM(psh, dwNumResults), PARAM(psh, dwNumAttributes), PARAM(psh, pAttributes), PARAM(psh, dwResultsLen), PARAM(psh, hWorkEvent), PARAM(psh, phTask))),
                     SYM_SIG(4721)),
-    REGISTER_OOVPAS(SYM_FUN(XOnlineMatchSearch, CALL(std), STACK(/*default*/), PARAMS(PARAM(stk, dwProcedureIndex), PARAM(stk, dwNumResults), PARAM(stk, dwNumAttributes), PARAM(stk, pAttributes), PARAM(stk, dwResultsLen), PARAM(stk, hWorkEvent), PARAM(stk, phTask))),
+    REGISTER_OOVPAS(SYM_FUN(XOnlineMatchSearch, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, dwProcedureIndex), PARAM(psh, dwNumResults), PARAM(psh, dwNumAttributes), PARAM(psh, pAttributes), PARAM(psh, dwResultsLen), PARAM(psh, hWorkEvent), PARAM(psh, phTask))),
                     SYM_SIG(4721)),
-    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineMatchSearchResultsLen, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(stk, dwNumResults), PARAM(stk, dwNumSessionAttributes), PARAM(stk, pSessionAttributeSpec))),
+    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineMatchSearchResultsLen, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, dwNumResults), PARAM(psh, dwNumSessionAttributes), PARAM(psh, pSessionAttributeSpec))),
                     SYM_SIG(4721)),
-    REGISTER_OOVPAS(SYM_FUN(XOnlineMatchSearchResultsLen, CALL(std), STACK(/*default*/), PARAMS(PARAM(stk, dwNumResults), PARAM(stk, dwNumSessionAttributes), PARAM(stk, pSessionAttributeSpec))),
+    REGISTER_OOVPAS(SYM_FUN(XOnlineMatchSearchResultsLen, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, dwNumResults), PARAM(psh, dwNumSessionAttributes), PARAM(psh, pSessionAttributeSpec))),
                     SYM_SIG(4721)),
-    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineMatchSearchGetResults, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(stk, hTask), PARAM(stk, prgpSearchResults), PARAM(stk, pdwReturnedResults))),
+    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineMatchSearchGetResults, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, hTask), PARAM(psh, prgpSearchResults), PARAM(psh, pdwReturnedResults))),
                     SYM_SIG(4721)),
-    REGISTER_OOVPAS(SYM_FUN(XOnlineMatchSearchGetResults, CALL(std), STACK(/*default*/), PARAMS(PARAM(stk, hTask), PARAM(stk, prgpSearchResults), PARAM(stk, pdwReturnedResults))),
+    REGISTER_OOVPAS(SYM_FUN(XOnlineMatchSearchGetResults, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, hTask), PARAM(psh, prgpSearchResults), PARAM(psh, pdwReturnedResults))),
                     SYM_SIG(4721)),
-    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineMatchSessionUpdate, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(stk, SessionID), PARAM(stk, dwPublicCurrent), PARAM(stk, dwPublicAvailable), PARAM(stk, dwPrivateCurrent), PARAM(stk, dwPrivateAvailable), PARAM(stk, dwNumAttributes), PARAM(stk, pAttributes), PARAM(stk, hWorkEvent), PARAM(stk, phTask))),
+    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineMatchSessionUpdate, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, SessionID), PARAM(psh, dwPublicCurrent), PARAM(psh, dwPublicAvailable), PARAM(psh, dwPrivateCurrent), PARAM(psh, dwPrivateAvailable), PARAM(psh, dwNumAttributes), PARAM(psh, pAttributes), PARAM(psh, hWorkEvent), PARAM(psh, phTask))),
                     SYM_SIG(4721, 5233)),
-    REGISTER_OOVPAS(SYM_FUN(XOnlineMatchSessionUpdate, CALL(std), STACK(/*default*/), PARAMS(PARAM(stk, SessionID), PARAM(stk, dwPublicCurrent), PARAM(stk, dwPublicAvailable), PARAM(stk, dwPrivateCurrent), PARAM(stk, dwPrivateAvailable), PARAM(stk, dwNumAttributes), PARAM(stk, pAttributes), PARAM(stk, hWorkEvent), PARAM(stk, phTask))),
+    REGISTER_OOVPAS(SYM_FUN(XOnlineMatchSessionUpdate, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, SessionID), PARAM(psh, dwPublicCurrent), PARAM(psh, dwPublicAvailable), PARAM(psh, dwPrivateCurrent), PARAM(psh, dwPrivateAvailable), PARAM(psh, dwNumAttributes), PARAM(psh, pAttributes), PARAM(psh, hWorkEvent), PARAM(psh, phTask))),
                     SYM_SIG(4721)),
-    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineMatchSessionCreate, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(stk, dwPublicCurrent), PARAM(stk, dwPublicAvailable), PARAM(stk, dwPrivateCurrent), PARAM(stk, dwPrivateAvailable), PARAM(stk, dwNumAttributes), PARAM(stk, pAttributes), PARAM(stk, hWorkEvent), PARAM(stk, phTask))),
+    REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineMatchSessionCreate, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, dwPublicCurrent), PARAM(psh, dwPublicAvailable), PARAM(psh, dwPrivateCurrent), PARAM(psh, dwPrivateAvailable), PARAM(psh, dwNumAttributes), PARAM(psh, pAttributes), PARAM(psh, hWorkEvent), PARAM(psh, phTask))),
                     SYM_SIG(4721, 5849)),
-    REGISTER_OOVPAS(SYM_FUN(XOnlineMatchSessionCreate, CALL(std), STACK(/*default*/), PARAMS(PARAM(stk, dwPublicCurrent), PARAM(stk, dwPublicAvailable), PARAM(stk, dwPrivateCurrent), PARAM(stk, dwPrivateAvailable), PARAM(stk, dwNumAttributes), PARAM(stk, pAttributes), PARAM(stk, hWorkEvent), PARAM(stk, phTask))),
+    REGISTER_OOVPAS(SYM_FUN(XOnlineMatchSessionCreate, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, dwPublicCurrent), PARAM(psh, dwPublicAvailable), PARAM(psh, dwPrivateCurrent), PARAM(psh, dwPrivateAvailable), PARAM(psh, dwNumAttributes), PARAM(psh, pAttributes), PARAM(psh, hWorkEvent), PARAM(psh, phTask))),
                     SYM_SIG(4721)),
-    REGISTER_OOVPAS(SYM_FUN(XoUpdateLaunchNewImageInternal, CALL(std), STACK(12), PARAMS(PARAM(stk, lpTitlePath), PARAM(stk, pLaunchData), PARAM(stk, unkFlags))), // TODO: Update unknown parameter name(s) if able.
+    REGISTER_OOVPAS(SYM_FUN(XoUpdateLaunchNewImageInternal, CALL(std), STACK(12), PARAMS(PARAM(psh, lpTitlePath), PARAM(psh, pLaunchData), PARAM(psh, unkFlags))), // TODO: Update unknown parameter name(s) if able.
                     SYM_SIG(4627)),
-    REGISTER_OOVPAS(SYM_FUN(XoUpdateLaunchNewImageInternal, CALL(std), STACK(16), PARAMS(PARAM(stk, lpTitlePath), PARAM(stk, pLaunchData), PARAM(stk, unkFlags), PARAM(stk, pUnknown4))), // TODO: Update unknown parameter name(s) if able.
+    REGISTER_OOVPAS(SYM_FUN(XoUpdateLaunchNewImageInternal, CALL(std), STACK(16), PARAMS(PARAM(psh, lpTitlePath), PARAM(psh, pLaunchData), PARAM(psh, unkFlags), PARAM(psh, pUnknown4))), // TODO: Update unknown parameter name(s) if able.
                     SYM_SIG(5028, 5788)),
 };
 

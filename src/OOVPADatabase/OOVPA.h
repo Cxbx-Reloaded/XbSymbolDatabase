@@ -304,8 +304,8 @@ typedef struct _OOVPATable {
 #define PARAM1(Param)                 Param, ""
 #define PARAM_TOKEN_unk(Index, Name)  _unk##Index
 #define PARAM_TOKEN_void(Index, Name) // No argument, do not append to symbol reference.
-#define PARAM_TOKEN_stk2(Index, Name) // (Custom) argument is stored in call stack with two pushes, do not append to symbol reference.
-#define PARAM_TOKEN_stk(Index, Name)  // Argument is stored in call stack with one push, do not append to symbol reference.
+#define PARAM_TOKEN_psh2(Index, Name) // (Custom) argument is stored in call stack with two pushes, do not append to symbol reference.
+#define PARAM_TOKEN_psh(Index, Name)  // Argument is stored in call stack with one push, do not append to symbol reference.
 #define PARAM_TOKEN_eax(Index, Name)  _eax##Index
 #define PARAM_TOKEN__ax(Index, Name)  _ax##Index
 #define PARAM_TOKEN__ah(Index, Name)  _ah##Index
