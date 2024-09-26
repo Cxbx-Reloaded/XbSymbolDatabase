@@ -1,7 +1,4 @@
-// TODO: Fix SPDX license in util/helper.hpp down to MIT
-// TODO: Fix license in XbSymbolDatabase down to MIT
-// SPDX-License-Identifier: GPL-2.0-or-later
-
+// SPDX-License-Identifier: MIT
 // SPDX-FileCopyrightText: 2019 RadWolfie
 
 // SimpleIni library is licensed to MIT

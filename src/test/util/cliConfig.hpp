@@ -1,6 +1,6 @@
-// SPDX-License-Identifier: BSD-2-Clause
-
+// SPDX-License-Identifier: MIT
 // SPDX-FileCopyrightText: 2019 RadWolfie
+
 #pragma once
 
 #include <string>

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: ODbL-1.0
+
 #pragma once
 
 #include <xref/list_xref.h>
