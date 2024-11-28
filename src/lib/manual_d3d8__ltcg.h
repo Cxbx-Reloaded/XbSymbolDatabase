@@ -784,20 +784,6 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     }
     else { // D3D8LTCG
 
-        /*
-        // TODO: Need some reform work for this portion. Since there are mixture of suffix involved.
-        // Current listing are:
-        // - D3DDevice_SetTextureState_TexCoordIndex   (1944, 1958)
-        // - D3DDevice_SetTextureState_TexCoordIndex_0 (2039, 2058)
-        // - D3DDevice_SetTextureState_TexCoordIndex_4 (2040, 2045, 2058, 2052)
-        pFunc = internal_LocateSymbolScan(pContext,
-                                          pLibrarySession,
-                                          pLibraryDB,
-                                          "",
-                                          pSection,
-                                          false,
-                                          pOOVPARevision);
-        //*/
 
         // verified for 3925
         pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2", 2039,
