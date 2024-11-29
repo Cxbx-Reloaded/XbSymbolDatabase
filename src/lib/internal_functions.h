@@ -519,6 +519,45 @@ static void internal_OOVPATable_scan(iXbSymbolContext* pContext,
     *pRevisionReturn = pLastKnownRevision;
 }
 
+static void* internal_SymbolDatabaseList_ScanByReference(iXbSymbolContext* pContext,
+                                                         const iXbSymbolLibrarySession* pLibrarySession,
+                                                         SymbolDatabaseList* LibraryDB,
+                                                         const XbSDBSection* pSection,
+                                                         bool xref_first_pass,
+                                                         const uint16_t xref_index,
+                                                         const unsigned scan_type,
+                                                         const OOVPATable** pSymbolReturn,
+                                                         const OOVPARevision** pRevisionReturn)
+{
+    OOVPARevision* pRevision = NULL;
+    void* pAddress = NULL;
+    OOVPATable_Total* Symbols = LibraryDB->Symbols;
+    for (unsigned i = 0; i < Symbols->Count; i++) {
+
+        // Intended for optimization purpose without need to search every single symbol reference index.
+        if ((scan_type & Symbols->Table[i].scan_type) == 0) {
+            continue;
+        }
+
+        if (Symbols->Table[i].xref == xref_index) {
+            // If reference is found, then perform the scan process.
+            internal_OOVPATable_scan(pContext, pLibrarySession, pSection, xref_first_pass, Symbols->Table + i, &pRevision, &pAddress);
+
+            // if symbol is found, then make the break to return the symbol entry.
+            if (pAddress) {
+                if (pSymbolReturn) {
+                    *pSymbolReturn = Symbols->Table + i;
+                }
+                if (pRevisionReturn) {
+                    *pRevisionReturn = pRevision;
+                }
+                break;
+            }
+        }
+    }
+    return pAddress;
+}
+
 static void internal_OOVPA_register(iXbSymbolContext* pContext,
                                     const OOVPATable* Symbol,
                                     const OOVPARevision* OovpaRevision,
