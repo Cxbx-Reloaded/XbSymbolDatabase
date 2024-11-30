@@ -16,6 +16,7 @@
 // * [4432] RedCard 2003                     |   100%    | Contain full library.
 // * [4432] Madden NFL 2003                  |   100%    | Contain full library.
 // * [4627] MLB SlugFest 2003                |   100%    | Contain full library.
+// * [4721] NFL 2K3                          |   100%    | Contain full library.
 // * [4721] Terminator Dawn of Fate          |   100%    | Contain full library.
 // * [4831] Whacked!                         |   100%    | Contain full library.
 // * [4928] Drihoo                           |   100%    | Contain full library.
