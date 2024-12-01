@@ -36,6 +36,9 @@ if(NOT TARGET simpleini)
 endif()
 
 if(NOT TARGET xxhash)
+ # Require to set CMAKE_ERROR_DEPRECATED as false for skip imported project using older minimal CMake version.
+ set(_CMAKE_ERROR_DEPRECATED ${CMAKE_ERROR_DEPRECATED})
+ set(CMAKE_ERROR_DEPRECATED FALSE CACHE BOOL "" FORCE)
  FetchContent_Populate(
   xxhash
   GIT_REPOSITORY https://github.com/Cyan4973/xxhash.git
@@ -46,6 +49,9 @@ if(NOT TARGET xxhash)
  set_target_properties(xxhash PROPERTIES
   FOLDER util
  )
+ # Then restore the previously set value for CMAKE_ERROR_DEPRECATED variable.
+ set(CMAKE_ERROR_DEPRECATED ${_CMAKE_ERROR_DEPRECATED} CACHE BOOL "" FORCE)
+ unset(_CMAKE_ERROR_DEPRECATED)
 endif()
 
 # Add source to this project's executable.
