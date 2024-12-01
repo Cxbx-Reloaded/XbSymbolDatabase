@@ -3,7 +3,8 @@
 // Titles which did compiled with full library version
 //   [LibV] Title Name                        | Verify  |   Comments
 //-------------------------------------------------------------------
-// * [4831] NBA2K3                            |  100%   | Contain full library.
+// * [4721] NFL 2K3                           |  100%   | Contain full library.
+// * [4831] NBA 2K3                           |  100%   | Contain full library.
 // * [4831] Whacked Demo                      |  100%   | Contain full library.
 // * [4928] Unreal Championship               |  100%   | Contain full library.
 // * [5028] Capcom vs. SNK 2 EO               |  100%   | Contain full library.
