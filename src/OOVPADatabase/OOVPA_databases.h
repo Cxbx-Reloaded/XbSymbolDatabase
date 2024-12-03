@@ -16,6 +16,8 @@ extern OOVPATable_Total JVSLIB_OOVPA;
 
 extern OOVPATable_Total XACTENG_OOVPA;
 
+extern OOVPATable_Total XAPILIB_OOVPA;
+
 extern OOVPATable_Total XGRAPHC_OOVPA;
 
 extern OOVPATable_Total XNET_OOVPA;

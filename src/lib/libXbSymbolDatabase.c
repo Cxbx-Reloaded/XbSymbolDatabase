@@ -55,7 +55,6 @@ static inline uint32_t BitScanReverse(uint32_t value)
 // ******************************************************************
 
 #include "OOVPA_databases.h"
-#include "Xapi_OOVPA.inl"
 
 #define PAIRSCANSEC_MAX 4
 

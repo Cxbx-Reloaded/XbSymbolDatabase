@@ -359,10 +359,7 @@
 //   * InterlockedExchangeAdd
 //   * InterlockedIncrement
 
-#ifndef XAPI_OOVPA_INL
-#define XAPI_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "Xapi/3911.inl"
 #include "Xapi/3950.inl"
@@ -590,5 +587,3 @@ OOVPATable XAPILIB_OOVPA_Table[] = {
 // * XAPILIB_OOVPA
 // ******************************************************************
 OOVPATable_Total XAPILIB_OOVPA = { XBSDB_ARRAY_SIZE(XAPILIB_OOVPA_Table), XAPILIB_OOVPA_Table };
-
-#endif
