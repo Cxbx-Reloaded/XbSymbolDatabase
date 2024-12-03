@@ -128,10 +128,7 @@
 //   * D3D_KickOffAndWaitForIdle2 (4627)
 //   * D3D_CommonSetRenderTargetB (4627)
 
-#ifndef D3D8_OOVPA_INL
-#define D3D8_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "D3D8/3911.inl"
 #include "D3D8/3925.inl"
@@ -703,5 +700,3 @@ OOVPATable D3D8_OOVPA_Table[] = {
 // * D3D8_OOVPA
 // ******************************************************************
 OOVPATable_Total D3D8_OOVPA = { XBSDB_ARRAY_SIZE(D3D8_OOVPA_Table), D3D8_OOVPA_Table };
-
-#endif

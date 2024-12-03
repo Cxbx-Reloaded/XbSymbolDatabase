@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include "libXbSymbolDatabase.h"
+
 // http://stackoverflow.com/questions/5134523/msvc-doesnt-expand-va-args-correctly
 // MSVC_EXPAND works around a Visual C++ problem, expanding __VA_ARGS__ incorrectly:
 #define MSVC_EXPAND(x) x

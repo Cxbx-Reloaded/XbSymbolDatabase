@@ -28,10 +28,7 @@
 //   * D3DDevice_Reset_0__LTCG_edi1 (4034 ... < 4039) // NOTE: Unknown if 4039 signature needs to be lower.
 //   * D3DDevice_Reset_0__LTCG_ebx1 (... < 5344) // NOTE: Unknown if signature needs to be lower, and may have appeared at the same time when CDevice_InitializeFrameBuffers_4__LTCG_edi1 was introduced.
 
-#ifndef D3D8LTCG_OOVPA_INL
-#define D3D8LTCG_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "D3D8LTCG/3911.inl"
 #include "D3D8LTCG/4034.inl"
@@ -49,6 +46,9 @@
 #include "D3D8LTCG/5455.inl"
 #include "D3D8LTCG/5788.inl"
 #include "D3D8LTCG/5849.inl"
+
+#define REGISTER_OOVPAS_D3D(Symbol, ...)  REGISTER_OOVPAS_PREFIX(D3D, Symbol, __VA_ARGS__)
+#define REGISTER_OOVPAS_D3D8(Symbol, ...) REGISTER_OOVPAS_PREFIX(D3D8, Symbol, __VA_ARGS__)
 
 // ******************************************************************
 // * D3D8LTCG_OOVPA_Table
@@ -461,5 +461,3 @@ OOVPATable D3D8LTCG_OOVPA_Table[] = {
 // * D3D8LTCG_OOVPA
 // ******************************************************************
 OOVPATable_Total D3D8LTCG_OOVPA = { XBSDB_ARRAY_SIZE(D3D8LTCG_OOVPA_Table), D3D8LTCG_OOVPA_Table };
-
-#endif
