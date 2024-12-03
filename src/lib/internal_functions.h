@@ -614,40 +614,6 @@ static void internal_OOVPA_scan(iXbSymbolContext* pContext,
     }
 }
 
-// Intended design for manual scan without register. Could be expand
-static void* internal_LocateSymbolScan(iXbSymbolContext* pContext,
-                                       const iXbSymbolLibrarySession* pLibrarySession,
-                                       SymbolDatabaseList* pLibraryDB,
-                                       const char* szSymbolName,
-                                       const XbSDBSection* pSection,
-                                       bool xref_first_pass,
-                                       OOVPATable** pSymbolEntryReturn,
-                                       OOVPARevision** pSymbolRevisionReturn)
-{
-    void* symbol_addr = 0;
-    OOVPARevision* pSymbolRevision = NULL;
-    OOVPATable* pSymbolEntry = internal_OOVPATable_FindBySymbolName(pLibraryDB, szSymbolName, DB_ST_MANUAL);
-
-    if (pSymbolEntry) {
-        internal_OOVPATable_scan(pContext,
-                                 pLibrarySession,
-                                 pSection,
-                                 xref_first_pass,
-                                 pSymbolEntry,
-                                 &pSymbolRevision,
-                                 &symbol_addr);
-    }
-
-    if (pSymbolEntryReturn) {
-        *pSymbolEntryReturn = pSymbolEntry;
-    }
-
-    if (pSymbolRevisionReturn) {
-        *pSymbolRevisionReturn = pSymbolRevision;
-    }
-    return symbol_addr;
-}
-
 static eLibraryType internal_GetLibraryType(uint32_t library)
 {
     switch (library) {
