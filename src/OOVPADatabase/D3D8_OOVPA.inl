@@ -159,9 +159,9 @@
 #define REGISTER_OOVPAS_D3D8(Symbol, ...) REGISTER_OOVPAS_PREFIX(D3D8, Symbol, __VA_ARGS__)
 
 // ******************************************************************
-// * D3D8_OOVPA
+// * D3D8_OOVPA_Table
 // ******************************************************************
-OOVPATable D3D8_OOVPA[] = {
+OOVPATable D3D8_OOVPA_Table[] = {
     // Custom manual search by reverse engineering team (which will not be public to the user)
     REGISTER_OOVPAS_M(SYM_INT(D3DDevice__m_VerticalBlankEvent__GenericFragment),
                       SYM_SIG(3911)), // This OOVPA signature is not a symbol. Read its note for more details.
@@ -699,10 +699,9 @@ OOVPATable D3D8_OOVPA[] = {
                     SYM_SIG(4627)),
 };
 
-
 // ******************************************************************
-// * D3D8_OOVPA_COUNT
+// * D3D8_OOVPA
 // ******************************************************************
-#define D3D8_OOVPA_COUNT XBSDB_ARRAY_SIZE(D3D8_OOVPA)
+OOVPATable_Total D3D8_OOVPA = { XBSDB_ARRAY_SIZE(D3D8_OOVPA_Table), D3D8_OOVPA_Table };
 
 #endif

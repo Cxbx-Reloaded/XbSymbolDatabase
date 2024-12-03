@@ -27,9 +27,9 @@
 #include "JVS/4831.inl"
 
 // ******************************************************************
-// * JVSLIB_OOVPA
+// * JVSLIB_OOVPA_Table
 // ******************************************************************
-OOVPATable JVSLIB_OOVPA[] = {
+OOVPATable JVSLIB_OOVPA_Table[] = {
 
     // Variables
     REGISTER_OOVPAS_M(SYM_VAR(JVS_g_pPINSA),
@@ -168,8 +168,8 @@ OOVPATable JVSLIB_OOVPA[] = {
 };
 
 // ******************************************************************
-// * JVSLIB_OOVPA_COUNT
+// * JVSLIB_OOVPA
 // ******************************************************************
-#define JVSLIB_OOVPA_COUNT XBSDB_ARRAY_SIZE(JVSLIB_OOVPA)
+OOVPATable_Total JVSLIB_OOVPA = { XBSDB_ARRAY_SIZE(JVSLIB_OOVPA_Table), JVSLIB_OOVPA_Table };
 
 #endif

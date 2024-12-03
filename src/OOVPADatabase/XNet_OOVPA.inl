@@ -29,9 +29,9 @@
 #include "XNet/5455.inl"
 
 // ******************************************************************
-// * XNET_OOVPA
+// * XNET_OOVPA_Table
 // ******************************************************************
-OOVPATable XNET_OOVPA[] = {
+OOVPATable XNET_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN(XnInit, CALL(std), STACK(8), PARAMS(PARAM(psh, pxnsp), PARAM(psh, bWSA))),
                     SYM_SIG(3911)), // 3911 is only XNETS library, XNET library is different OOVPA.
@@ -62,8 +62,8 @@ OOVPATable XNET_OOVPA[] = {
 };
 
 // ******************************************************************
-// * XNET_OOVPA_COUNT
+// * XNET_OOVPA
 // ******************************************************************
-#define XNET_OOVPA_COUNT XBSDB_ARRAY_SIZE(XNET_OOVPA)
+OOVPATable_Total XNET_OOVPA = { XBSDB_ARRAY_SIZE(XNET_OOVPA_Table), XNET_OOVPA_Table };
 
 #endif

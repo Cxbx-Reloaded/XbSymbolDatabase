@@ -43,9 +43,9 @@
 
 
 // ******************************************************************
-// * XACTENG_OOVPA
+// * XACTENG_OOVPA_Table
 // ******************************************************************
-OOVPATable XACTENG_OOVPA[] = {
+OOVPATable XACTENG_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN(XACTEngineCreate, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pParams), PARAM(psh, ppEngine))),
                     SYM_SIG(4627, 4928, 5120)),
@@ -96,8 +96,8 @@ OOVPATable XACTENG_OOVPA[] = {
 };
 
 // ******************************************************************
-// * XACTENG_OOVPA_COUNT
+// * XACTENG_OOVPA
 // ******************************************************************
-#define XACTENG_OOVPA_COUNT XBSDB_ARRAY_SIZE(XACTENG_OOVPA)
+OOVPATable_Total XACTENG_OOVPA = { XBSDB_ARRAY_SIZE(XACTENG_OOVPA_Table), XACTENG_OOVPA_Table };
 
 #endif

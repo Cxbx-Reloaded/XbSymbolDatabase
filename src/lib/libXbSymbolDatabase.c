@@ -127,8 +127,7 @@ typedef const struct _PairScanLibSec {
 typedef const struct _SymbolDatabaseList {
     PairScanLibSec LibSec;
 
-    OOVPATable* SymbolsTable;
-    unsigned int SymbolsTableCount;
+    OOVPATable_Total* Symbols;
 } SymbolDatabaseList;
 
 typedef bool (*custom_scan_func_t)(iXbSymbolContext* pContext,
@@ -138,56 +137,56 @@ typedef bool (*custom_scan_func_t)(iXbSymbolContext* pContext,
 
 SymbolDatabaseList SymbolDBList[] = {
     // Support inline functions in .text section
-    { XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG, { Sec_text, Sec_D3D, Sec_FLASHROM }, D3D8_OOVPA, D3D8_OOVPA_COUNT },
+    { XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG, { Sec_text, Sec_D3D, Sec_FLASHROM }, &D3D8_OOVPA },
 
     // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
-    { XbSymbolLib_D3D8LTCG, { Sec_text, Sec_D3D }, D3D8LTCG_OOVPA, D3D8LTCG_OOVPA_COUNT },
+    { XbSymbolLib_D3D8LTCG, { Sec_text, Sec_D3D }, &D3D8LTCG_OOVPA },
 
     // NOTE: Likely is a D3D Helper library.
     // Jarupxx mention this is not a requirement?
-    //{ Lib_D3DX8, { Sec_D3DX }, _OOVPA, _OOVPA_COUNT },
+    //{ Lib_D3DX8, { Sec_D3DX }, &_OOVPA },
 
     // Only used for manual scan purpose as a workaround since both FLASHROM
     // and text section will lead to false detection for non-manual signatures, see comment below.
-    { XbSymbolLib_DSOUND, { Sec_DSOUND, Sec_rdata, Sec_FLASHROM, Sec_text }, DSound_OOVPA_manual, DSound_OOVPA_manual_COUNT },
+    { XbSymbolLib_DSOUND, { Sec_DSOUND, Sec_rdata, Sec_FLASHROM, Sec_text }, &DSound_OOVPA_manual },
 
     // NOTE: By adding FLASHROM to scan section may will lead false detection.
     // Since some symbols has very short asm codes.
-    { XbSymbolLib_DSOUND, { Sec_DSOUND, Sec_rdata, Sec_FLASHROM }, DSound_OOVPA, DSound_OOVPA_COUNT },
+    { XbSymbolLib_DSOUND, { Sec_DSOUND, Sec_rdata, Sec_FLASHROM }, &DSound_OOVPA },
 
     // DSOUNDH is just meant to define hot fix, there is no separate section
-    //{ XbSymbolLib_DSOUNDH, { Sec_DSOUND }, &DSound_OOVPA, DSound_OOVPA_COUNT },
+    //{ XbSymbolLib_DSOUNDH, { Sec_DSOUND }, &DSound_OOVPA },
 
     // Only used in Chihiro applications
-    { XbSymbolLib_JVS, { Sec_text, Sec_XPP, Sec_FLASHROM }, JVSLIB_OOVPA, JVSLIB_OOVPA_COUNT },
+    { XbSymbolLib_JVS, { Sec_text, Sec_XPP, Sec_FLASHROM }, &JVSLIB_OOVPA },
 
     //
-    { XbSymbolLib_XACTENG, { Sec_XACTENG, Sec_FLASHROM }, XACTENG_OOVPA, XACTENG_OOVPA_COUNT },
+    { XbSymbolLib_XACTENG, { Sec_XACTENG, Sec_FLASHROM }, &XACTENG_OOVPA },
 
     // test case: Power Drome (Unluckily, it use LTCG version of the library.)
     // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
-    //{ XbSymbolLib_XACTENLT, { Sec_XACTENG }, XACTENGLT_OOVPA, XACTENGLT_OOVPA_COUNT },
+    //{ XbSymbolLib_XACTENLT, { Sec_XACTENG }, &XACTENGLT_OOVPA },
 
     //
-    { XbSymbolLib_XAPILIB, { Sec_text, Sec_XPP, Sec_FLASHROM }, XAPILIB_OOVPA, XAPILIB_OOVPA_COUNT },
+    { XbSymbolLib_XAPILIB, { Sec_text, Sec_XPP, Sec_FLASHROM }, &XAPILIB_OOVPA },
 
     // Support inline functions in .text section
-    { XbSymbolLib_XGRAPHC, { Sec_text, Sec_XGRPH, Sec_FLASHROM }, XGRAPHC_OOVPA, XGRAPHC_OOVPA_COUNT },
+    { XbSymbolLib_XGRAPHC, { Sec_text, Sec_XGRPH, Sec_FLASHROM }, &XGRAPHC_OOVPA },
 
     // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
-    //{ XbSymbolLib_XGRAPHCL, { Sec_XGRPH }, XGRAPHCL_OOVPA, XGRAPHCL_OOVPA_COUNT },
+    //{ XbSymbolLib_XGRAPHCL, { Sec_XGRPH }, &XGRAPHCL_OOVPA },
 
     // Added Sec_text and Sec_XNET just in case.
     // TODO: Do we need to keep Sec_XNET in here?
     // TODO: Need to find out which function is only part of XOnlines.
     // Fun fact, XONLINES are split into 2 header sections.
-    { XbSymbolLib_XONLINE | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS, { Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, XONLINE_OOVPA, XONLINE_OOVPA_COUNT },
+    { XbSymbolLib_XONLINE | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS, { Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, &XONLINE_OOVPA },
 
     // Added Sec_text just in case.
     // TODO: Need to find out which function is only part of XNets.
     // XNETS only has XNET, might be true.
     // XNETN's test case: Stake
-    { XbSymbolLib_XNET | XbSymbolLib_XNETS | XbSymbolLib_XNETN | XbSymbolLib_XONLINE | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS, { Sec_text, Sec_XNET, Sec_FLASHROM }, XNET_OOVPA, XNET_OOVPA_COUNT },
+    { XbSymbolLib_XNET | XbSymbolLib_XNETS | XbSymbolLib_XNETN | XbSymbolLib_XONLINE | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS, { Sec_text, Sec_XNET, Sec_FLASHROM }, &XNET_OOVPA },
 };
 
 // ******************************************************************
@@ -1087,7 +1086,7 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
                     output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section",
                                           pLibrary->name, pSymbolDB->LibSec.section[d3]);
 
-                    internal_OOVPA_scan(pContext, pSymbolDB->SymbolsTable, pSymbolDB->SymbolsTableCount,
+                    internal_OOVPA_scan(pContext, pSymbolDB->Symbols->Table, pSymbolDB->Symbols->Count,
                                         &librarySession, pContext->section_input.filters + s, xref_first_pass);
                     break;
                 }
@@ -1295,7 +1294,7 @@ unsigned XbSymbolDatabase_GetTotalSymbols(uint32_t library_filter)
     SymbolDatabaseList* pLibraryDB;
     while ((pLibraryDB = internal_FindLibraryDB(library_filter, &db_i))) {
         db_i++;
-        total += pLibraryDB->SymbolsTableCount;
+        total += pLibraryDB->Symbols->Count;
     }
     return total;
 }

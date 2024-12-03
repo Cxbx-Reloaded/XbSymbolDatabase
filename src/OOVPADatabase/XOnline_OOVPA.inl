@@ -44,9 +44,9 @@
 #include "XOnline/5849.inl"
 
 // ******************************************************************
-// * XONLINE_OOVPA
+// * XONLINE_OOVPA_Table
 // ******************************************************************
-OOVPATable XONLINE_OOVPA[] = {
+OOVPATable XONLINE_OOVPA_Table[] = {
 
     // XOnline section
     REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineLogon, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, pUsers), PARAM(psh, pdwServiceIDs), PARAM(psh, dwServices), PARAM(psh, hEvent), PARAM(psh, pHandle))),
@@ -80,8 +80,8 @@ OOVPATable XONLINE_OOVPA[] = {
 };
 
 // ******************************************************************
-// * XONLINE_OOVPA_COUNT
+// * XONLINE_OOVPA
 // ******************************************************************
-#define XONLINE_OOVPA_COUNT XBSDB_ARRAY_SIZE(XONLINE_OOVPA)
+OOVPATable_Total XONLINE_OOVPA = { XBSDB_ARRAY_SIZE(XONLINE_OOVPA_Table), XONLINE_OOVPA_Table };
 
 #endif

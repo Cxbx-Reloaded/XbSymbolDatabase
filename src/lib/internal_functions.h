@@ -430,15 +430,16 @@ static void internal_RegisterSymbol(iXbSymbolContext* pContext,
 
 static OOVPATable* internal_OOVPATable_FindBySymbolName(SymbolDatabaseList* LibraryDB, const char* szSymbolName, unsigned scan_type)
 {
-    for (unsigned i = 0; i < LibraryDB->SymbolsTableCount; i++) {
+    OOVPATable_Total* Symbols = LibraryDB->Symbols;
+    for (unsigned i = 0; i < Symbols->Count; i++) {
 
         // Intended for optimization purpose without need to search every single symbol's string.
-        if ((scan_type & LibraryDB->SymbolsTable[i].scan_type) == 0) {
+        if ((scan_type & LibraryDB->Symbols->Table[i].scan_type) == 0) {
             continue;
         }
 
-        if (strcmp(szSymbolName, LibraryDB->SymbolsTable[i].szSymbolName) == 0) {
-            return &LibraryDB->SymbolsTable[i];
+        if (strcmp(szSymbolName, Symbols->Table[i].szSymbolName) == 0) {
+            return &Symbols->Table[i];
         }
     }
     return NULL;
@@ -446,15 +447,16 @@ static OOVPATable* internal_OOVPATable_FindBySymbolName(SymbolDatabaseList* Libr
 
 static OOVPATable* internal_OOVPATable_FindByReference(SymbolDatabaseList* LibraryDB, uint16_t xref_index, unsigned scan_type)
 {
-    for (unsigned i = 0; i < LibraryDB->SymbolsTableCount; i++) {
+    OOVPATable_Total* Symbols = LibraryDB->Symbols;
+    for (unsigned i = 0; i < Symbols->Count; i++) {
 
         // Intended for optimization purpose without need to search every single symbol's string.
-        if ((scan_type & LibraryDB->SymbolsTable[i].scan_type) == 0) {
+        if ((scan_type & Symbols->Table[i].scan_type) == 0) {
             continue;
         }
 
-        if (LibraryDB->SymbolsTable[i].xref == xref_index) {
-            return &LibraryDB->SymbolsTable[i];
+        if (Symbols->Table[i].xref == xref_index) {
+            return &Symbols->Table[i];
         }
     }
     return NULL;

@@ -27,7 +27,7 @@ static int OOVPAErrorString(char* bufferTemp, SymbolDatabaseList* data, OOVPATab
     // Convert active data pointer to an index base on starting point of SymbolDBList.
     unsigned int db_index = (unsigned int)(data - SymbolDBList);
     // Convert active symbol pointer to an index base on starting point of SymbolsTable.
-    unsigned int sym_index = (unsigned int)(symbol - data->SymbolsTable);
+    unsigned int sym_index = (unsigned int)(symbol - data->Symbols->Table);
 
     return sprintf(bufferTemp, "OOVPATable db=%2u, i=[%4u], b=%4hu s=%s[%4u]", db_index, sym_index, symbol->revisions[index].Version, symbol->szSymbolName, index);
 }
@@ -40,14 +40,14 @@ static void SymbolDatabaseVerifyContext_OOVPAError(SymbolDatabaseVerifyContext* 
 
     if (context->main.data != NULL) {
 
-        ret_str_count = OOVPAErrorString(bufferTemp, context->main.data, context->main.data->SymbolsTable + context->main.symbol_index, context->main.revision_index);
+        ret_str_count = OOVPAErrorString(bufferTemp, context->main.data, context->main.data->Symbols->Table + context->main.symbol_index, context->main.revision_index);
         (void)strncat(buffer, bufferTemp, ret_str_count);
     }
 
     if (context->against.oovpa != NULL && context->against.data != NULL) {
         (void)strcat(buffer, ", comparing against ");
 
-        ret_str_count = OOVPAErrorString(bufferTemp, context->against.data, context->against.data->SymbolsTable + context->against.symbol_index, context->against.revision_index);
+        ret_str_count = OOVPAErrorString(bufferTemp, context->against.data, context->against.data->Symbols->Table + context->against.symbol_index, context->against.revision_index);
         (void)strncat(buffer, bufferTemp, ret_str_count);
     }
 
@@ -99,8 +99,8 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
     }
 
     // prevent checking an oovpa against itself
-    if ((&context->main.data->SymbolsTable[context->main.symbol_index].revisions + context->main.revision_index) ==
-        (&context->against.data->SymbolsTable[context->against.symbol_index].revisions + context->against.revision_index)) {
+    if ((&context->main.data->Symbols->Table[context->main.symbol_index].revisions + context->main.revision_index) ==
+        (&context->against.data->Symbols->Table[context->against.symbol_index].revisions + context->against.revision_index)) {
         return error_count;
     }
 
@@ -251,19 +251,20 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVer
     }
 
     // Verify each entry in data's symbol table.
-    for (uint32_t s = 0; s < data->SymbolsTableCount; s++) {
+    OOVPATable_Total* Symbols = data->Symbols;
+    for (uint32_t s = 0; s < Symbols->Count; s++) {
         // We only need to check from main, not against.
         if (context->against.data == NULL) {
             // For safety check purpose
-            if (internal_IsXRefUnset(data->SymbolsTable[s].xref)) {
-                output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s cannot have unset xref.", data->SymbolsTable[s].szSymbolName);
+            if (internal_IsXRefUnset(data->Symbols->Table[s].xref)) {
+                output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s cannot have unset xref.", Symbols->Table[s].szSymbolName);
                 error_count++;
             }
         }
 
         // Check each revision entry in a symbol.
-        for (uint32_t r = 0; r < data->SymbolsTable[s].count; r++) {
-            error_count += SymbolDatabaseVerifyContext_VerifyEntry(context, data->SymbolsTable, s, r);
+        for (uint32_t r = 0; r < data->Symbols->Table[s].count; r++) {
+            error_count += SymbolDatabaseVerifyContext_VerifyEntry(context, Symbols->Table, s, r);
         }
     }
     return error_count;

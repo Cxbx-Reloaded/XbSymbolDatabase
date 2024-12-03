@@ -140,9 +140,9 @@
 #include "DSound/5558.inl"
 
 // ******************************************************************
-// * DSOUND_OOVPA_manual
+// * DSound_OOVPA_manual_Table
 // ******************************************************************
-OOVPATable DSound_OOVPA_manual[] = {
+OOVPATable DSound_OOVPA_manual_Table[] = {
 
     // Without xrefs dependency
     REGISTER_OOVPAS_M(SYM_FUN(CDirectSoundStream_AddRef, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pThis))),
@@ -162,12 +162,12 @@ OOVPATable DSound_OOVPA_manual[] = {
     REGISTER_OOVPAS_M(SYM_FUN(CDirectSoundStream_Constructor, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, pdssd))),
                       SYM_SIG(3911)), // NOTE: Does not need to be register in db. Using manual work instead, like D3D8 did.
 };
-#define DSound_OOVPA_manual_COUNT XBSDB_ARRAY_SIZE(DSound_OOVPA_manual)
+OOVPATable_Total DSound_OOVPA_manual = { XBSDB_ARRAY_SIZE(DSound_OOVPA_manual_Table), DSound_OOVPA_manual_Table };
 
 // ******************************************************************
-// * DSOUND_OOVPA
+// * DSound_OOVPA_Table
 // ******************************************************************
-OOVPATable DSound_OOVPA[] = {
+OOVPATable DSound_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN(XAudioCalculatePitch, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, dwFrequency))),
                     SYM_SIG(3911, 4039, 5455)), // Final generic OOVPA: 5455; Removed: 0
@@ -884,8 +884,8 @@ OOVPATable DSound_OOVPA[] = {
 };
 
 // ******************************************************************
-// * DSound_OOVPA_COUNT
+// * DSound_OOVPA
 // ******************************************************************
-#define DSound_OOVPA_COUNT XBSDB_ARRAY_SIZE(DSound_OOVPA)
+OOVPATable_Total DSound_OOVPA = { XBSDB_ARRAY_SIZE(DSound_OOVPA_Table), DSound_OOVPA_Table };
 
 #endif

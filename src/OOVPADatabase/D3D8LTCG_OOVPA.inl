@@ -51,9 +51,9 @@
 #include "D3D8LTCG/5849.inl"
 
 // ******************************************************************
-// * D3D8LTCG_OOVPA
+// * D3D8LTCG_OOVPA_Table
 // ******************************************************************
-OOVPATable D3D8LTCG_OOVPA[] = {
+OOVPATable D3D8LTCG_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3D_CreateTexture, CALL(unk), STACK(28), PARAMS(PARAM(psh, Width), PARAM(psh, Height), PARAM(psh, Depth), PARAM(psh, Levels), PARAM(psh, Usage), PARAM(psh, Format), PARAM(psh, isCube), PARAM(_dl, isVolume), PARAM(edi, ppTexture))),
                     SYM_SIG(4039)), // Final generic OOVPA: 4039; Removed: 4627 // See note for details.
@@ -458,8 +458,8 @@ OOVPATable D3D8LTCG_OOVPA[] = {
 };
 
 // ******************************************************************
-// * D3D8LTCG_OOVPA_COUNT
+// * D3D8LTCG_OOVPA
 // ******************************************************************
-#define D3D8LTCG_OOVPA_COUNT XBSDB_ARRAY_SIZE(D3D8LTCG_OOVPA)
+OOVPATable_Total D3D8LTCG_OOVPA = { XBSDB_ARRAY_SIZE(D3D8LTCG_OOVPA_Table), D3D8LTCG_OOVPA_Table };
 
 #endif

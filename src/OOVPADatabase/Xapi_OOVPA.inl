@@ -379,9 +379,9 @@
 #include "Xapi/5455.inl"
 
 // ******************************************************************
-// * XAPILIB_OOVPA
+// * XAPILIB_OOVPA_Table
 // ******************************************************************
-OOVPATable XAPILIB_OOVPA[] = {
+OOVPATable XAPILIB_OOVPA_Table[] = {
 
     // Variables
     REGISTER_OOVPAS_M(SYM_VAR(_tls_array),
@@ -587,8 +587,8 @@ OOVPATable XAPILIB_OOVPA[] = {
 };
 
 // ******************************************************************
-// * XAPILIB_OOVPA_COUNT
+// * XAPILIB_OOVPA
 // ******************************************************************
-#define XAPILIB_OOVPA_COUNT XBSDB_ARRAY_SIZE(XAPILIB_OOVPA)
+OOVPATable_Total XAPILIB_OOVPA = { XBSDB_ARRAY_SIZE(XAPILIB_OOVPA_Table), XAPILIB_OOVPA_Table };
 
 #endif
