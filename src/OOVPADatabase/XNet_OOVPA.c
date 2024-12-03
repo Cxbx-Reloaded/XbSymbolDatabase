@@ -61,4 +61,4 @@ OOVPATable XNET_OOVPA_Table[] = {
 // ******************************************************************
 // * XNET_OOVPA
 // ******************************************************************
-OOVPATable_Total XNET_OOVPA = { XBSDB_ARRAY_SIZE(XNET_OOVPA_Table), XNET_OOVPA_Table };
+OOVPATableList XNET_OOVPA = { XBSDB_ARRAY_SIZE(XNET_OOVPA_Table), XNET_OOVPA_Table };

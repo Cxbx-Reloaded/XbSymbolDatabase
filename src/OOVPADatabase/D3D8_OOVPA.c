@@ -699,4 +699,4 @@ OOVPATable D3D8_OOVPA_Table[] = {
 // ******************************************************************
 // * D3D8_OOVPA
 // ******************************************************************
-OOVPATable_Total D3D8_OOVPA = { XBSDB_ARRAY_SIZE(D3D8_OOVPA_Table), D3D8_OOVPA_Table };
+OOVPATableList D3D8_OOVPA = { XBSDB_ARRAY_SIZE(D3D8_OOVPA_Table), D3D8_OOVPA_Table };

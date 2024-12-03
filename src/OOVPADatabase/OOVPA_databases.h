@@ -5,21 +5,21 @@
 #include "OOVPA.h"
 #include <xref/list_xref.h>
 
-extern OOVPATable_Total D3D8_OOVPA;
+extern OOVPATableList D3D8_OOVPA;
 
-extern OOVPATable_Total D3D8LTCG_OOVPA;
+extern OOVPATableList D3D8LTCG_OOVPA;
 
-extern OOVPATable_Total DSound_OOVPA_manual;
-extern OOVPATable_Total DSound_OOVPA;
+extern OOVPATableList DSound_OOVPA_manual;
+extern OOVPATableList DSound_OOVPA;
 
-extern OOVPATable_Total JVSLIB_OOVPA;
+extern OOVPATableList JVSLIB_OOVPA;
 
-extern OOVPATable_Total XACTENG_OOVPA;
+extern OOVPATableList XACTENG_OOVPA;
 
-extern OOVPATable_Total XAPILIB_OOVPA;
+extern OOVPATableList XAPILIB_OOVPA;
 
-extern OOVPATable_Total XGRAPHC_OOVPA;
+extern OOVPATableList XGRAPHC_OOVPA;
 
-extern OOVPATable_Total XNET_OOVPA;
+extern OOVPATableList XNET_OOVPA;
 
-extern OOVPATable_Total XONLINE_OOVPA;
+extern OOVPATableList XONLINE_OOVPA;

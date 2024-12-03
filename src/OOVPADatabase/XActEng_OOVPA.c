@@ -95,4 +95,4 @@ OOVPATable XACTENG_OOVPA_Table[] = {
 // ******************************************************************
 // * XACTENG_OOVPA
 // ******************************************************************
-OOVPATable_Total XACTENG_OOVPA = { XBSDB_ARRAY_SIZE(XACTENG_OOVPA_Table), XACTENG_OOVPA_Table };
+OOVPATableList XACTENG_OOVPA = { XBSDB_ARRAY_SIZE(XACTENG_OOVPA_Table), XACTENG_OOVPA_Table };

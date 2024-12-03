@@ -79,4 +79,4 @@ OOVPATable XONLINE_OOVPA_Table[] = {
 // ******************************************************************
 // * XONLINE_OOVPA
 // ******************************************************************
-OOVPATable_Total XONLINE_OOVPA = { XBSDB_ARRAY_SIZE(XONLINE_OOVPA_Table), XONLINE_OOVPA_Table };
+OOVPATableList XONLINE_OOVPA = { XBSDB_ARRAY_SIZE(XONLINE_OOVPA_Table), XONLINE_OOVPA_Table };

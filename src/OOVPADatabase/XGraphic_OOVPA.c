@@ -80,4 +80,4 @@ OOVPATable XGRAPHC_OOVPA_Table[] = {
 // ******************************************************************
 // * XGRAPHC_OOVPA
 // ******************************************************************
-OOVPATable_Total XGRAPHC_OOVPA = { XBSDB_ARRAY_SIZE(XGRAPHC_OOVPA_Table), XGRAPHC_OOVPA_Table };
+OOVPATableList XGRAPHC_OOVPA = { XBSDB_ARRAY_SIZE(XGRAPHC_OOVPA_Table), XGRAPHC_OOVPA_Table };

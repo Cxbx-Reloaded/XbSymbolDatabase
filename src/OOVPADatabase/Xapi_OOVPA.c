@@ -586,4 +586,4 @@ OOVPATable XAPILIB_OOVPA_Table[] = {
 // ******************************************************************
 // * XAPILIB_OOVPA
 // ******************************************************************
-OOVPATable_Total XAPILIB_OOVPA = { XBSDB_ARRAY_SIZE(XAPILIB_OOVPA_Table), XAPILIB_OOVPA_Table };
+OOVPATableList XAPILIB_OOVPA = { XBSDB_ARRAY_SIZE(XAPILIB_OOVPA_Table), XAPILIB_OOVPA_Table };

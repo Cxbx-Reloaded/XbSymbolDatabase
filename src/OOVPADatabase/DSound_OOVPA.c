@@ -163,7 +163,7 @@ OOVPATable DSound_OOVPA_manual_Table[] = {
     REGISTER_OOVPAS_M(SYM_FUN(CDirectSoundStream_Constructor, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, pdssd))),
                       SYM_SIG(3911)), // NOTE: Does not need to be register in db. Using manual work instead, like D3D8 did.
 };
-OOVPATable_Total DSound_OOVPA_manual = { XBSDB_ARRAY_SIZE(DSound_OOVPA_manual_Table), DSound_OOVPA_manual_Table };
+OOVPATableList DSound_OOVPA_manual = { XBSDB_ARRAY_SIZE(DSound_OOVPA_manual_Table), DSound_OOVPA_manual_Table };
 
 // ******************************************************************
 // * DSound_OOVPA_Table
@@ -887,6 +887,6 @@ OOVPATable DSound_OOVPA_Table[] = {
 // ******************************************************************
 // * DSound_OOVPA
 // ******************************************************************
-OOVPATable_Total DSound_OOVPA = { XBSDB_ARRAY_SIZE(DSound_OOVPA_Table), DSound_OOVPA_Table };
+OOVPATableList DSound_OOVPA = { XBSDB_ARRAY_SIZE(DSound_OOVPA_Table), DSound_OOVPA_Table };
 
 #endif

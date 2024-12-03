@@ -251,7 +251,7 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVer
     }
 
     // Verify each entry in data's symbol table.
-    OOVPATable_Total* Symbols = data->Symbols;
+    OOVPATableList* Symbols = data->Symbols;
     for (uint32_t s = 0; s < Symbols->Count; s++) {
         // We only need to check from main, not against.
         if (context->against.data == NULL) {

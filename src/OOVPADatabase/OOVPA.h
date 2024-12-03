@@ -223,10 +223,10 @@ typedef struct _OOVPATable {
 } OOVPATable;
 #pragma pack(1)
 
-typedef struct _OOVPATable_Total {
+typedef struct _OOVPATableList {
     unsigned int Count;
     OOVPATable* Table;
-} OOVPATable_Total;
+} OOVPATableList;
 
 // http://en.cppreference.com/w/cpp/iterator/size
 // clang-format off

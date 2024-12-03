@@ -167,4 +167,4 @@ OOVPATable JVSLIB_OOVPA_Table[] = {
 // ******************************************************************
 // * JVSLIB_OOVPA
 // ******************************************************************
-OOVPATable_Total JVSLIB_OOVPA = { XBSDB_ARRAY_SIZE(JVSLIB_OOVPA_Table), JVSLIB_OOVPA_Table };
+OOVPATableList JVSLIB_OOVPA = { XBSDB_ARRAY_SIZE(JVSLIB_OOVPA_Table), JVSLIB_OOVPA_Table };

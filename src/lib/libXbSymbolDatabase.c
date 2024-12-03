@@ -128,7 +128,7 @@ typedef const struct _PairScanLibSec {
 typedef const struct _SymbolDatabaseList {
     PairScanLibSec LibSec;
 
-    OOVPATable_Total* Symbols;
+    OOVPATableList* Symbols;
 } SymbolDatabaseList;
 
 typedef bool (*custom_scan_func_t)(iXbSymbolContext* pContext,
@@ -1087,8 +1087,11 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
                     output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section",
                                           pLibrary->name, pSymbolDB->LibSec.section[d3]);
 
-                    internal_OOVPA_scan(pContext, pSymbolDB->Symbols->Table, pSymbolDB->Symbols->Count,
-                                        &librarySession, pContext->section_input.filters + s, xref_first_pass);
+                    internal_OOVPATableList_scan(pContext,
+                                                 &librarySession,
+                                                 pSymbolDB->Symbols,
+                                                 pContext->section_input.filters + s,
+                                                 xref_first_pass);
                     break;
                 }
             }
