@@ -86,6 +86,16 @@ typedef enum _eScanStage {
     SS_2_SCAN_LIBS,
 } eScanStage;
 
+typedef enum _eRegisterSymbol {
+    REGISTER_NO = 0,
+    REGISTER_YES,
+} eRegisterSymbol;
+
+typedef enum _eFirstPass {
+    FIRSTPASS_NO = 0,
+    FIRSTPASS_YES,
+} eFirstPass;
+
 typedef struct _iXbSymbolLibraryContext {
     uint32_t xref_registered;
     bool is_active;

@@ -12,7 +12,7 @@ static bool internal_xapi_find_XGetSectionSize(iXbSymbolContext* pContext,
                                                uintptr_t virt_start_relative)
 {
     xbaddr xSymbolAddr = 0;
-    OOVPARevision* pOOVPARevision = NULL;
+    OOVPARevision* pSymbolRevision = NULL;
     OOVPATable* pSymbolEntry = NULL;
 
     // Find XapiMapLetterToDirectory function
@@ -23,14 +23,14 @@ static bool internal_xapi_find_XGetSectionSize(iXbSymbolContext* pContext,
                                                                                      pLibrarySession,
                                                                                      pLibraryDB,
                                                                                      pSection,
-                                                                                     true,
                                                                                      XREF_XapiMapLetterToDirectory,
                                                                                      DB_ST_MANUAL,
+                                                                                     FIRSTPASS_YES,
+                                                                                     REGISTER_YES,
                                                                                      &pSymbolEntry,
-                                                                                     &pOOVPARevision);
+                                                                                     &pSymbolRevision);
 
         if (xSymbolAddr) {
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, pOOVPARevision->Version, xSymbolAddr);
 
             // Register XGetSectionSize function.
             if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_XGetSectionSize])) {
@@ -38,11 +38,11 @@ static bool internal_xapi_find_XGetSectionSize(iXbSymbolContext* pContext,
                 output_message_format(&pContext->output,
                                       XB_OUTPUT_MESSAGE_ERROR,
                                       "Please verify %s (%hu) signature do contain %s's xref entry.",
-                                      pSymbolEntry->szSymbolName, pOOVPARevision->Version, xref_str);
+                                      pSymbolEntry->szSymbolName, pSymbolRevision->Version, xref_str);
                 return false;
             }
             // Manually translate to virtual address from relative address.
-            xSymbolAddr = internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(pContext, pSymbolEntry, pOOVPARevision, xref_str, XREF_XGetSectionSize);
+            xSymbolAddr = internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(pContext, pSymbolEntry, pSymbolRevision, xref_str, XREF_XGetSectionSize);
             if (!xSymbolAddr) {
                 // Error message is handled by above function. No extra message necessary here.
                 return false;
@@ -51,7 +51,7 @@ static bool internal_xapi_find_XGetSectionSize(iXbSymbolContext* pContext,
             pContext->xref_database[XREF_XGetSectionSize] = xSymbolAddr;
 
             internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, XGetSectionSize);
-            internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, pOOVPARevision->Version);
+            internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, pSymbolRevision->Version);
         }
     }
 
@@ -65,8 +65,6 @@ static bool internal_xapi_find_DeviceType_MU(iXbSymbolContext* pContext,
                                              uintptr_t virt_start_relative)
 {
     xbaddr xSymbolAddr = 0;
-    OOVPARevision* pOOVPARevision = NULL;
-    OOVPATable* pSymbolEntry = NULL;
     memptr_t buffer_upper = (memptr_t)pSection->buffer_lower + pSection->buffer_size;
 
     // Find MU_Init function
@@ -76,15 +74,12 @@ static bool internal_xapi_find_DeviceType_MU(iXbSymbolContext* pContext,
                                                                                      pLibrarySession,
                                                                                      pLibraryDB,
                                                                                      pSection,
-                                                                                     true,
                                                                                      XREF_MU_Init,
                                                                                      DB_ST_MANUAL,
-                                                                                     &pSymbolEntry,
-                                                                                     &pOOVPARevision);
-
-        if (xSymbolAddr) {
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, pOOVPARevision->Version, xSymbolAddr);
-        }
+                                                                                     FIRSTPASS_YES,
+                                                                                     REGISTER_YES,
+                                                                                     NULL,
+                                                                                     NULL);
     }
 
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_MU_Init])) {
@@ -99,18 +94,17 @@ static bool internal_xapi_find_DeviceType_MU(iXbSymbolContext* pContext,
                                                                                      pLibrarySession,
                                                                                      pLibraryDB,
                                                                                      pSection,
-                                                                                     true,
                                                                                      XREF_IUsbInit_GetMaxDeviceTypeCount,
                                                                                      DB_ST_MANUAL,
-                                                                                     &pSymbolEntry,
-                                                                                     &pOOVPARevision);
+                                                                                     FIRSTPASS_YES,
+                                                                                     REGISTER_YES,
+                                                                                     NULL,
+                                                                                     NULL);
 
         // If not found, skip the rest of the scan.
         if (xSymbolAddr == 0) {
             return false;
         }
-
-        internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, pOOVPARevision->Version, xSymbolAddr);
     }
 
     xSymbolAddr = 0;
@@ -140,6 +134,7 @@ static bool internal_xapi_find_DeviceType_MU(iXbSymbolContext* pContext,
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_g_DeviceType_MU])) {
 
         // Register g_DeviceType_MU
+        OOVPATable* pSymbolEntry = NULL;
         internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, g_DeviceType_MU);
         internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, pSymbolEntry->revisions[0].Version, xSymbolAddr);
     }
@@ -154,8 +149,6 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
                                             uintptr_t virt_start_relative)
 {
     xbaddr xSymbolAddr = 0;
-    OOVPARevision* pOOVPARevision = NULL;
-    OOVPATable* pSymbolEntry = NULL;
 
     // Find GetTypeInformation_4 function
     if (!internal_IsXRefAddrValid(pContext->xref_database[XREF_GetTypeInformation_4])) {
@@ -163,11 +156,12 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
                                                                                      pLibrarySession,
                                                                                      pLibraryDB,
                                                                                      pSection,
-                                                                                     true,
                                                                                      XREF_GetTypeInformation_4,
                                                                                      DB_ST_MANUAL,
-                                                                                     &pSymbolEntry,
-                                                                                     &pOOVPARevision);
+                                                                                     FIRSTPASS_YES,
+                                                                                     REGISTER_YES,
+                                                                                     NULL,
+                                                                                     NULL);
 
         // If GetTypeInformation_4 is not found, then try find GetTypeInformation_8
         if (!xSymbolAddr) {
@@ -175,18 +169,19 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
                                                                                          pLibrarySession,
                                                                                          pLibraryDB,
                                                                                          pSection,
-                                                                                         true,
                                                                                          XREF_GetTypeInformation_8,
                                                                                          DB_ST_MANUAL,
-                                                                                         &pSymbolEntry,
-                                                                                         &pOOVPARevision);
+                                                                                         FIRSTPASS_YES,
+                                                                                         REGISTER_YES,
+                                                                                         NULL,
+                                                                                         NULL);
         }
 
         // If either GetTypeInformation overload is found, start look up in DeviceTypeInfo table's entries.
         if (xSymbolAddr) {
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, pOOVPARevision->Version, xSymbolAddr);
 
             // TODO: Make below as self-register
+            OOVPATable* pSymbolEntry = NULL;
             internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, g_DeviceTypeInfoTableBegin);
             internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 4242);
             internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, g_DeviceTypeInfoTableEnd);
@@ -249,15 +244,13 @@ static bool internal_xapi_find_device_types(iXbSymbolContext* pContext,
                                                                                              pLibrarySession,
                                                                                              pLibraryDB,
                                                                                              pSection,
-                                                                                             true,
                                                                                              XREF_XInputOpen,
                                                                                              DB_ST_MANUAL,
-                                                                                             &pSymbolEntry,
-                                                                                             &pOOVPARevision);
-                if (xSymbolAddr) {
-                    internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, pOOVPARevision->Version, xSymbolAddr);
-                    // No further manual action require.
-                }
+                                                                                             FIRSTPASS_YES,
+                                                                                             REGISTER_YES,
+                                                                                             NULL,
+                                                                                             NULL);
+                // No further manual action require.
             }
         }
     }

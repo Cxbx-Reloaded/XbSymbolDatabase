@@ -523,14 +523,15 @@ static void* internal_SymbolDatabaseList_ScanByReference(iXbSymbolContext* pCont
                                                          const iXbSymbolLibrarySession* pLibrarySession,
                                                          SymbolDatabaseList* LibraryDB,
                                                          const XbSDBSection* pSection,
-                                                         bool xref_first_pass,
                                                          const uint16_t xref_index,
                                                          const unsigned scan_type,
+                                                         eFirstPass xref_first_pass,
+                                                         const eRegisterSymbol register_symbol,
                                                          const OOVPATable** pSymbolReturn,
                                                          const OOVPARevision** pRevisionReturn)
 {
     OOVPARevision* pRevision = NULL;
-    void* pAddress = NULL;
+    void* pSymbolAddr = NULL;
     OOVPATable_Total* Symbols = LibraryDB->Symbols;
     for (unsigned i = 0; i < Symbols->Count; i++) {
 
@@ -541,21 +542,24 @@ static void* internal_SymbolDatabaseList_ScanByReference(iXbSymbolContext* pCont
 
         if (Symbols->Table[i].xref == xref_index) {
             // If reference is found, then perform the scan process.
-            internal_OOVPATable_scan(pContext, pLibrarySession, pSection, xref_first_pass, Symbols->Table + i, &pRevision, &pAddress);
+            internal_OOVPATable_scan(pContext, pLibrarySession, pSection, xref_first_pass, Symbols->Table + i, &pRevision, &pSymbolAddr);
 
             // if symbol is found, then make the break to return the symbol entry.
-            if (pAddress) {
+            if (pSymbolAddr) {
                 if (pSymbolReturn) {
                     *pSymbolReturn = Symbols->Table + i;
                 }
                 if (pRevisionReturn) {
                     *pRevisionReturn = pRevision;
                 }
+                if (register_symbol) {
+                    internal_RegisterSymbol(pContext, pLibrarySession, Symbols->Table + i, pRevision->Version, (xbaddr)(uintptr_t)pSymbolAddr);
+                }
                 break;
             }
         }
     }
-    return pAddress;
+    return pSymbolAddr;
 }
 
 static void internal_OOVPA_register(iXbSymbolContext* pContext,
@@ -617,29 +621,29 @@ static void* internal_LocateSymbolScan(iXbSymbolContext* pContext,
                                        const char* szSymbolName,
                                        const XbSDBSection* pSection,
                                        bool xref_first_pass,
-                                       OOVPATable** pSymbol,
-                                       OOVPARevision** pOOVPARevision)
+                                       OOVPATable** pSymbolEntryReturn,
+                                       OOVPARevision** pSymbolRevisionReturn)
 {
     void* symbol_addr = 0;
-    OOVPARevision* pRevisionLocal = NULL;
-    OOVPATable* pSymbolLocal = internal_OOVPATable_FindBySymbolName(pLibraryDB, szSymbolName, DB_ST_MANUAL);
+    OOVPARevision* pSymbolRevision = NULL;
+    OOVPATable* pSymbolEntry = internal_OOVPATable_FindBySymbolName(pLibraryDB, szSymbolName, DB_ST_MANUAL);
 
-    if (pSymbolLocal) {
+    if (pSymbolEntry) {
         internal_OOVPATable_scan(pContext,
                                  pLibrarySession,
                                  pSection,
                                  xref_first_pass,
-                                 pSymbolLocal,
-                                 &pRevisionLocal,
+                                 pSymbolEntry,
+                                 &pSymbolRevision,
                                  &symbol_addr);
     }
 
-    if (pSymbol) {
-        *pSymbol = pSymbolLocal;
+    if (pSymbolEntryReturn) {
+        *pSymbolEntryReturn = pSymbolEntry;
     }
 
-    if (pOOVPARevision) {
-        *pOOVPARevision = pRevisionLocal;
+    if (pSymbolRevisionReturn) {
+        *pSymbolRevisionReturn = pSymbolRevision;
     }
     return symbol_addr;
 }
