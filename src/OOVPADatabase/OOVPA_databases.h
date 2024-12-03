@@ -9,6 +9,9 @@ extern OOVPATable_Total D3D8_OOVPA;
 
 extern OOVPATable_Total D3D8LTCG_OOVPA;
 
+extern OOVPATable_Total DSound_OOVPA_manual;
+extern OOVPATable_Total DSound_OOVPA;
+
 extern OOVPATable_Total JVSLIB_OOVPA;
 
 extern OOVPATable_Total XACTENG_OOVPA;

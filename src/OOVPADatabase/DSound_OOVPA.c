@@ -121,7 +121,8 @@
 #ifndef DSOUND_OOVPA_INL
 #define DSOUND_OOVPA_INL
 
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
+#include <xref/list_xref.h>
 
 #include "DSound/3911.inl"
 #include "DSound/3936.inl"
