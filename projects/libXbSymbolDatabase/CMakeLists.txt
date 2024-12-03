@@ -47,7 +47,7 @@ source_group(TREE ${XBSDB_ROOT_DIR}/src PREFIX header FILES ${HEADERS})
 
 file(GLOB_RECURSE SOURCES
  "${XBSDB_ROOT_DIR}/src/libXbSymbolDatabase.c"
- "${XBSDB_ROOT_DIR}/src/OOVPADatabase/*.inl"
+ "${XBSDB_ROOT_DIR}/src/OOVPADatabase/*/*.inl"
  "${XBSDB_ROOT_DIR}/src/OOVPADatabase/*.c"
 )
 source_group(TREE ${XBSDB_ROOT_DIR} FILES ${SOURCES})
