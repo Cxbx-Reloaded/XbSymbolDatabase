@@ -17,10 +17,7 @@
 //   * send (4721)
 //   * XNetGetEthernetLinkStatus (5344)
 
-#ifndef XNET_OOVPA_INL
-#define XNET_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "XNet/3911.inl"
 #include "XNet/4361.inl"
@@ -65,5 +62,3 @@ OOVPATable XNET_OOVPA_Table[] = {
 // * XNET_OOVPA
 // ******************************************************************
 OOVPATable_Total XNET_OOVPA = { XBSDB_ARRAY_SIZE(XNET_OOVPA_Table), XNET_OOVPA_Table };
-
-#endif

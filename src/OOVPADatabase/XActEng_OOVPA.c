@@ -29,10 +29,7 @@
 //   * IXACTSoundBank_PlayEx (5455)
 //   * IXACTSoundBank_Play (4928 to 5849)
 
-#ifndef XACTENG_OOVPA_INL
-#define XACTENG_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "XActEng/4627.inl"
 #include "XActEng/4928.inl"
@@ -99,5 +96,3 @@ OOVPATable XACTENG_OOVPA_Table[] = {
 // * XACTENG_OOVPA
 // ******************************************************************
 OOVPATable_Total XACTENG_OOVPA = { XBSDB_ARRAY_SIZE(XACTENG_OOVPA_Table), XACTENG_OOVPA_Table };
-
-#endif

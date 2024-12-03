@@ -28,10 +28,7 @@
 //   * recv (5120, 5233)
 //   * send (5120, 5233)
 
-#ifndef XONLINES_OOVPA_INL
-#define XONLINES_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "XOnline/4361.inl"
 #include "XOnline/4627.inl"
@@ -83,5 +80,3 @@ OOVPATable XONLINE_OOVPA_Table[] = {
 // * XONLINE_OOVPA
 // ******************************************************************
 OOVPATable_Total XONLINE_OOVPA = { XBSDB_ARRAY_SIZE(XONLINE_OOVPA_Table), XONLINE_OOVPA_Table };
-
-#endif

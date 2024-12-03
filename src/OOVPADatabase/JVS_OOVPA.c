@@ -19,10 +19,7 @@
 //    is the same except the functions are quite different in layout, etc
 //    and some offsets are different within them too.
 
-#ifndef JVS_OOVPA_INL
-#define JVS_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "JVS/4831.inl"
 
@@ -171,5 +168,3 @@ OOVPATable JVSLIB_OOVPA_Table[] = {
 // * JVSLIB_OOVPA
 // ******************************************************************
 OOVPATable_Total JVSLIB_OOVPA = { XBSDB_ARRAY_SIZE(JVSLIB_OOVPA_Table), JVSLIB_OOVPA_Table };
-
-#endif
