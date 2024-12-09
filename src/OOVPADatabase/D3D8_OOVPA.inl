@@ -537,8 +537,8 @@ OOVPATable D3D8_OOVPA_Table[] = {
                     SYM_SIG(3911, 4034, 4134)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetStipple, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pPattern))),
                     SYM_SIG(4627)),
-    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetStreamSource, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, StreamNumber), PARAM(psh, pStreamData), PARAM(psh, Stride))),
-                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS_M(SYM_FUN(D3DDevice_SetStreamSource, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, StreamNumber), PARAM(psh, pStreamData), PARAM(psh, Stride))),
+                      SYM_SIG(3911, 4034)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetSwapCallback, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pCallback))),
                     SYM_SIG(4039)), // Final generic OOVPA: 4039; Removed: 0
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTexture, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, pTexture))),
@@ -551,7 +551,7 @@ OOVPATable D3D8_OOVPA_Table[] = {
                     SYM_SIG(3911, 4034)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTextureState_ColorKeyColor, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, Value))),
                     SYM_SIG(3911, 4034)),
-    REGISTER_OOVPAS_C(SYM_FUN(D3DDevice_SetTextureState_TexCoordIndex, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, Value))),
+    REGISTER_OOVPAS_M(SYM_FUN(D3DDevice_SetTextureState_TexCoordIndex, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, Value))),
                       SYM_SIG(3911, 4034, 4242, 4627)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTile, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Index), PARAM(psh, pTile))),
                     SYM_SIG(3911, 4034, 4627)), // Then it has changed calls ?SetTileNoWait@D3D@@YGXKPBU_D3DTILE@@@Z in XDK 4627 and higher.
