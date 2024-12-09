@@ -873,6 +873,7 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
     // D3D
     pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] = XREF_ADDR_DERIVE;                     //In use
     pContext->xref_database[XREF_D3D_g_Stream] = XREF_ADDR_DERIVE;                             //In use
+    pContext->xref_database[XREF_D3D_g_Stream_i_pVertexBuffer] = XREF_ADDR_DERIVE;             //In use
     pContext->xref_database[XREF_D3DDevice__m_PixelShader_OFFSET] = XREF_ADDR_DERIVE;          //
     pContext->xref_database[XREF_D3DDevice__m_Textures_OFFSET] = XREF_ADDR_DERIVE;             //
     pContext->xref_database[XREF_D3DDevice__m_Palettes_OFFSET] = XREF_ADDR_DERIVE;             //

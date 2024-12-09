@@ -706,10 +706,11 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource_0__LTCG_eax1_edi2_ebx3,
                       2058,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x19, XREF_D3D_g_Stream), // Derived
+    XREF_ENTRY(0x19, XREF_D3D_g_Stream_i_pVertexBuffer), // Derived
+    XREF_ENTRY(0x49, XREF_D3D_g_Stream), // Derived
 
     // test edi, edi; mov ecx, [...]
     OV_MATCH(0x00, 0x85, 0xFF, 0x8B, 0x0D),
@@ -725,10 +726,11 @@ OOVPA_SIG_MATCH(
 //7406810300000800 ...C20400
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource_4__LTCG_eax1_ebx2,
                       2058,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x1E, XREF_D3D_g_Stream), // Derived
+    XREF_ENTRY(0x1E, XREF_D3D_g_Stream_i_pVertexBuffer), // Derived
+    XREF_ENTRY(0x4E, XREF_D3D_g_Stream), // Derived
 
     { 0x00, 0x85 },
     { 0x01, 0xDB },

@@ -621,31 +621,6 @@ static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
     internal_RegisterXRef(pContext, pLibrarySession, XREF_D3D_g_DeferredTextureState, 0, "D3D_g_DeferredTextureState", EmuD3DDeferredTextureState, symbol_variable, call_none, 0, NULL, true);
 }
 
-static void manual_scan_section_dx8_register_stream(iXbSymbolContext* pContext,
-                                                    const iXbSymbolLibrarySession* pLibrarySession,
-                                                    memptr_t pFunc,
-                                                    uint32_t iCodeOffsetFor_g_Stream)
-{
-    if (pFunc == NULL) {
-        return;
-    }
-    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
-
-    // Read address of Xbox_g_Stream from D3DDevice_SetStreamSource
-    uint32_t Derived_g_Stream = *((uint32_t*)(pFunc + iCodeOffsetFor_g_Stream));
-
-    // Temporary verification - is XREF_D3D_g_Stream derived correctly?
-    // TODO : Remove this when XREF_D3D_g_Stream derivation is deemed stable
-#if 0 // TODO: How can we enforce it for callback?
-    VerifySymbolAddressAgainstXRef("g_Stream", Derived_g_Stream, XREF_D3D_g_Stream);
-#endif
-
-    // Now that both Derived XREF and OOVPA-based function-contents match,
-    // correct base-address (because "g_Stream" is actually "g_Stream"+8") :
-    Derived_g_Stream -= 8;
-    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_Stream, "D3D_g_Stream", Derived_g_Stream, 0, symbol_variable, call_none, 0, NULL);
-}
-
 // Has dependency on D3D_g_pDevice xref.
 static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContext,
                                                        const iXbSymbolLibrarySession* pLibrarySession,
@@ -712,7 +687,6 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 {
     // Generic usage
     memptr_t pSymbolAddr = 0;
-    int iCodeOffsetFor_g_Stream;
     int pXRefOffset = 0; // TODO : Rename into something understandable
     uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
@@ -829,12 +803,6 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         manual_scan_section_dx8_register_D3DTSS(pContext, pLibrarySession, pSymbolAddr, pXRefOffset);
     }
 
-    // Locate Xbox symbol "g_Stream" and store it's address
-    // verified for D3D8 with 4361, 4627, 5344, 5558, 5659, 5788, 5849, 5933
-    // and verified for LTCG with 4432, 4627, 5344, 5558, 5849
-    iCodeOffsetFor_g_Stream = 0x22;
-
-    // Will this affect not being in D3D8 vs D3D8LTCG?
     pSymbolEntry = NULL;
     pSymbolEntryRevision = NULL;
     pSymbolAddr = internal_SymbolDatabaseList_ScanByReference(pContext,
@@ -848,51 +816,21 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
                                                               &pSymbolEntry,
                                                               &pSymbolEntryRevision);
 
-    if (pLibrary->flag == XbSymbolLib_D3D8) {
-        if (pLibrary->build_version < 4034) {
-            iCodeOffsetFor_g_Stream = 0x23; // verified for 3911
-        }
-    }
-    else { // D3D8LTCG
-        typedef struct {
-            XbSDBParamType params[3];
-            unsigned short revisionNumber;
-            int iCodeOffsetFor_g_StreamReturn;
-        } func_search;
-        const func_search findRevisions[] = {
-            // D3DDevice_SetStreamSource_4__LTCG_eax1_ebx2
-            { .params = { param_eax, param_ebx, param_psh }, .revisionNumber = 2058, .iCodeOffsetFor_g_StreamReturn = 0x1E }, // TODO: Verify 4034
-            // D3DDevice_SetStreamSource_8__LTCG_eax1
-            { .params = { param_eax, param_psh, param_psh }, .revisionNumber = 2040, .iCodeOffsetFor_g_StreamReturn = 0x23 }, // verified for 4039
-            // D3DDevice_SetStreamSource_8__LTCG_edx1
-            { .params = { param_edx, param_psh, param_psh }, .revisionNumber = 2039, .iCodeOffsetFor_g_StreamReturn = 0x47 }, // verified for 3925
-        };
-        size_t findRevisionsSize = XBSDB_ARRAY_SIZE(findRevisions);
-        if (pSymbolAddr != 0) {
-            const XbSDBSymbolParam* param_list = pSymbolEntry->param_list;
-            // Verify symbol has three parameters.
-            if (pSymbolEntry->param_count == 3) {
-                // Optimized code to look up each parameter and revision number match without direct reference to OOVPA signature.
-                for (unsigned i = 0; i < findRevisionsSize; i++) {
-                    if (findRevisions[i].revisionNumber == pSymbolEntryRevision->Version &&
-                        findRevisions[i].params[0] == param_list[0].type &&
-                        findRevisions[i].params[1] == param_list[1].type &&
-                        findRevisions[i].params[2] == param_list[2].type) {
-                        iCodeOffsetFor_g_Stream = findRevisions[i].iCodeOffsetFor_g_StreamReturn;
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
     if (pSymbolAddr != 0) {
         // Self register D3DDevice_SetStreamSource
 
-        // NOTE: Is a requirement to align properly.
-        pSymbolAddr += virt_start_relative;
+        xbaddr D3D_g_Stream = pContext->xref_database[XREF_D3D_g_Stream];
+        xbaddr D3D_g_Stream_i_pVertexBuffer = pContext->xref_database[XREF_D3D_g_Stream_i_pVertexBuffer];
 
-        manual_scan_section_dx8_register_stream(pContext, pLibrarySession, pSymbolAddr, iCodeOffsetFor_g_Stream);
+        // Verify both variables are offset correctly.
+        if (D3D_g_Stream_i_pVertexBuffer - D3D_g_Stream != 8) {
+            // If not correct, then do the correction in case of third-party rely on this.
+            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "D3D_g_Stream_i_pVertexBuffer (0x%08X) - D3D_g_Stream (0x%08X) != 0x8", D3D_g_Stream_i_pVertexBuffer, D3D_g_Stream);
+            pContext->xref_database[XREF_D3D_g_Stream] = D3D_g_Stream_i_pVertexBuffer - 8;
+        }
+
+        // TODO: Use internal_FindByReferenceHelper to get OOVPA revision. Or better yet, do self register.
+        internal_RegisterValidXRefAddr(pContext, pLibrary->name, pLibrary->flag, XREF_D3D_g_Stream, 0, "D3D_g_Stream", symbol_variable, call_none, 0, NULL);
     }
 
     bComplete = manual_scan_section_dx8_register_callbacks(pContext, pLibrarySession, pLibraryDB, pSection);

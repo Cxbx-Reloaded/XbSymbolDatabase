@@ -1742,10 +1742,11 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource,
                       3911,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x23, XREF_D3D_g_Stream), // Derived
+    XREF_ENTRY(0x23, XREF_D3D_g_Stream_i_pVertexBuffer), // Derived
+    XREF_ENTRY(0x53, XREF_D3D_g_Stream), // Derived
 
     // D3DDevice_SetStreamSource+0x00 : push ebx
     { 0x00, 0x53 },
