@@ -3,8 +3,9 @@
 // SPDX-FileCopyrightText: 2017 PatrickvL
 // SPDX-FileCopyrightText: 2017 RadWolfie
 
-#ifndef OOVPA_H
-#define OOVPA_H
+#pragma once
+
+#include "libXbSymbolDatabase.h"
 
 // http://stackoverflow.com/questions/5134523/msvc-doesnt-expand-va-args-correctly
 // MSVC_EXPAND works around a Visual C++ problem, expanding __VA_ARGS__ incorrectly:
@@ -221,6 +222,11 @@ typedef struct _OOVPATable {
     OOVPARevision* const revisions;
 } OOVPATable;
 #pragma pack(1)
+
+typedef struct _OOVPATableList {
+    unsigned int Count;
+    OOVPATable* Table;
+} OOVPATableList;
 
 // http://en.cppreference.com/w/cpp/iterator/size
 // clang-format off
@@ -440,5 +446,3 @@ typedef struct _OOVPATable {
                                   OV_BYTES_3, OV_BYTES_2, OV_BYTES_1, OV_BYTES_0)(Offset, __VA_ARGS__))
 
 #pragma pack()
-
-#endif

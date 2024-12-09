@@ -53,8 +53,9 @@ void HashOOVPATable(unsigned int* Hash, const OOVPATable* pTable)
 
 void HashSymbolData(unsigned int* Hash, SymbolDatabaseList* pData)
 {
-    for (unsigned int i = 0; i < pData->SymbolsTableCount; ++i) {
-        HashOOVPATable(Hash, &pData->SymbolsTable[i]);
+    OOVPATableList* Symbols = pData->Symbols;
+    for (unsigned int i = 0; i < Symbols->Count; ++i) {
+        HashOOVPATable(Hash, &Symbols->Table[i]);
     }
 }
 

@@ -430,15 +430,16 @@ static void internal_RegisterSymbol(iXbSymbolContext* pContext,
 
 static OOVPATable* internal_OOVPATable_FindBySymbolName(SymbolDatabaseList* LibraryDB, const char* szSymbolName, unsigned scan_type)
 {
-    for (unsigned i = 0; i < LibraryDB->SymbolsTableCount; i++) {
+    OOVPATableList* Symbols = LibraryDB->Symbols;
+    for (unsigned i = 0; i < Symbols->Count; i++) {
 
         // Intended for optimization purpose without need to search every single symbol's string.
-        if ((scan_type & LibraryDB->SymbolsTable[i].scan_type) == 0) {
+        if ((scan_type & LibraryDB->Symbols->Table[i].scan_type) == 0) {
             continue;
         }
 
-        if (strcmp(szSymbolName, LibraryDB->SymbolsTable[i].szSymbolName) == 0) {
-            return &LibraryDB->SymbolsTable[i];
+        if (strcmp(szSymbolName, Symbols->Table[i].szSymbolName) == 0) {
+            return &Symbols->Table[i];
         }
     }
     return NULL;
@@ -446,15 +447,16 @@ static OOVPATable* internal_OOVPATable_FindBySymbolName(SymbolDatabaseList* Libr
 
 static OOVPATable* internal_OOVPATable_FindByReference(SymbolDatabaseList* LibraryDB, uint16_t xref_index, unsigned scan_type)
 {
-    for (unsigned i = 0; i < LibraryDB->SymbolsTableCount; i++) {
+    OOVPATableList* Symbols = LibraryDB->Symbols;
+    for (unsigned i = 0; i < Symbols->Count; i++) {
 
         // Intended for optimization purpose without need to search every single symbol's string.
-        if ((scan_type & LibraryDB->SymbolsTable[i].scan_type) == 0) {
+        if ((scan_type & Symbols->Table[i].scan_type) == 0) {
             continue;
         }
 
-        if (LibraryDB->SymbolsTable[i].xref == xref_index) {
-            return &LibraryDB->SymbolsTable[i];
+        if (Symbols->Table[i].xref == xref_index) {
+            return &Symbols->Table[i];
         }
     }
     return NULL;
@@ -473,7 +475,7 @@ static OOVPATable* internal_OOVPATable_FindByReference(SymbolDatabaseList* Libra
 static void internal_OOVPATable_scan(iXbSymbolContext* pContext,
                                      const iXbSymbolLibrarySession* pLibrarySession,
                                      const XbSDBSection* pSection,
-                                     bool xref_first_pass,
+                                     const bool xref_first_pass,
                                      const OOVPATable* pSymbol,
                                      OOVPARevision** pRevisionReturn,
                                      void** pAddressReturn)
@@ -517,6 +519,55 @@ static void internal_OOVPATable_scan(iXbSymbolContext* pContext,
     *pRevisionReturn = pLastKnownRevision;
 }
 
+static void* internal_SymbolDatabaseList_ScanByReference(iXbSymbolContext* pContext,
+                                                         const iXbSymbolLibrarySession* pLibrarySession,
+                                                         SymbolDatabaseList* LibraryDB,
+                                                         const XbSDBSection* pSection,
+                                                         const uint16_t xref_index,
+                                                         const unsigned scan_type,
+                                                         const eFirstPass xref_first_pass,
+                                                         const eRegisterSymbol register_symbol,
+                                                         OOVPATable** pSymbolReturn,
+                                                         OOVPARevision** pRevisionReturn)
+{
+    OOVPARevision* pRevision = NULL;
+    void* pSymbolAddr = NULL;
+    OOVPATableList* Symbols = LibraryDB->Symbols;
+    for (unsigned i = 0; i < Symbols->Count; i++) {
+
+        // Intended for optimization purpose without need to search every single symbol reference index.
+        if ((scan_type & Symbols->Table[i].scan_type) == 0) {
+            continue;
+        }
+
+        if (Symbols->Table[i].xref == xref_index) {
+            // If reference is found, then perform the scan process.
+            internal_OOVPATable_scan(pContext,
+                                     pLibrarySession,
+                                     pSection,
+                                     xref_first_pass,
+                                     Symbols->Table + i,
+                                     &pRevision,
+                                     &pSymbolAddr);
+
+            // if symbol is found, then make the break to return the symbol entry.
+            if (pSymbolAddr) {
+                if (pSymbolReturn) {
+                    *pSymbolReturn = Symbols->Table + i;
+                }
+                if (pRevisionReturn) {
+                    *pRevisionReturn = pRevision;
+                }
+                if (register_symbol) {
+                    internal_RegisterSymbol(pContext, pLibrarySession, Symbols->Table + i, pRevision->Version, (xbaddr)(uintptr_t)pSymbolAddr);
+                }
+                break;
+            }
+        }
+    }
+    return pSymbolAddr;
+}
+
 static void internal_OOVPA_register(iXbSymbolContext* pContext,
                                     const OOVPATable* Symbol,
                                     const OOVPARevision* OovpaRevision,
@@ -524,24 +575,19 @@ static void internal_OOVPA_register(iXbSymbolContext* pContext,
                                     xbaddr address)
 {
     if (OovpaRevision != NULL) {
-
         internal_RegisterSymbol(pContext, pLibrarySession, Symbol, OovpaRevision->Version, address);
     }
 }
 
-static void internal_OOVPA_scan(iXbSymbolContext* pContext,
-                                OOVPATable* SymbolsTable,
-                                unsigned int SymbolsTableCount,
-                                const iXbSymbolLibrarySession* pLibrarySession,
-                                const XbSDBSection* pSection,
-                                bool xref_first_pass)
+static void internal_OOVPATableList_scan(iXbSymbolContext* pContext,
+                                         const iXbSymbolLibrarySession* pLibrarySession,
+                                         OOVPATableList* Symbols,
+                                         const XbSDBSection* pSection,
+                                         const bool xref_first_pass)
 {
-    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
-    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
-
     // traverse the full OOVPA table
-    OOVPATable* pSymbolEnd = &SymbolsTable[SymbolsTableCount];
-    OOVPATable* pSymbol = SymbolsTable;
+    OOVPATable* pSymbolEnd = &Symbols->Table[Symbols->Count];
+    OOVPATable* pSymbol = Symbols->Table;
 
     for (; pSymbol < pSymbolEnd; pSymbol++) {
 
@@ -567,40 +613,6 @@ static void internal_OOVPA_scan(iXbSymbolContext* pContext,
             internal_OOVPA_register(pContext, pSymbol, pLastKnownRevision, pLibrarySession, (xbaddr)(uintptr_t)lastKnownSymbolAddr);
         }
     }
-}
-
-// Intended design for manual scan without register. Could be expand
-static void* internal_LocateSymbolScan(iXbSymbolContext* pContext,
-                                       const iXbSymbolLibrarySession* pLibrarySession,
-                                       SymbolDatabaseList* pLibraryDB,
-                                       const char* szSymbolName,
-                                       const XbSDBSection* pSection,
-                                       bool xref_first_pass,
-                                       OOVPATable** pSymbol,
-                                       OOVPARevision** pOOVPARevision)
-{
-    void* symbol_addr = 0;
-    OOVPARevision* pRevisionLocal = NULL;
-    OOVPATable* pSymbolLocal = internal_OOVPATable_FindBySymbolName(pLibraryDB, szSymbolName, DB_ST_MANUAL);
-
-    if (pSymbolLocal) {
-        internal_OOVPATable_scan(pContext,
-                                 pLibrarySession,
-                                 pSection,
-                                 xref_first_pass,
-                                 pSymbolLocal,
-                                 &pRevisionLocal,
-                                 &symbol_addr);
-    }
-
-    if (pSymbol) {
-        *pSymbol = pSymbolLocal;
-    }
-
-    if (pOOVPARevision) {
-        *pOOVPARevision = pRevisionLocal;
-    }
-    return symbol_addr;
 }
 
 static eLibraryType internal_GetLibraryType(uint32_t library)

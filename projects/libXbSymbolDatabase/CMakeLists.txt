@@ -41,12 +41,14 @@ file(GLOB HEADERS
  "${XBSDB_ROOT_DIR}/src/lib/manual_jvs.h"
  "${XBSDB_ROOT_DIR}/src/lib/manual_xapilib.h"
  "${XBSDB_ROOT_DIR}/src/OOVPADatabase/OOVPA.h"
+ "${XBSDB_ROOT_DIR}/src/OOVPADatabase/OOVPA_databases.h"
 )
 source_group(TREE ${XBSDB_ROOT_DIR}/src PREFIX header FILES ${HEADERS})
 
 file(GLOB_RECURSE SOURCES
  "${XBSDB_ROOT_DIR}/src/libXbSymbolDatabase.c"
- "${XBSDB_ROOT_DIR}/src/OOVPADatabase/*.inl"
+ "${XBSDB_ROOT_DIR}/src/OOVPADatabase/*/*.inl"
+ "${XBSDB_ROOT_DIR}/src/OOVPADatabase/*.c"
 )
 source_group(TREE ${XBSDB_ROOT_DIR} FILES ${SOURCES})
 

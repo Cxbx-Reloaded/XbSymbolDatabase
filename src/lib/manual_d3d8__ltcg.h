@@ -362,25 +362,23 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
                                                    SymbolDatabaseList* pLibraryDB,
                                                    const XbSDBSection* pSection)
 {
-    OOVPATable* pSymbol = NULL;
-    OOVPARevision* pRevision = NULL;
     // First, we need to find D3DDevice_SetRenderState_Simple symbol.
     xbaddr D3DDevice_SetRenderState_Simple = pContext->xref_database[XREF_D3DDevice_SetRenderState_Simple];
     if (internal_IsXRefAddrUnset(D3DDevice_SetRenderState_Simple)) {
-        xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
-                                                                        pLibrarySession,
-                                                                        pLibraryDB,
-                                                                        "D3DDevice_SetRenderState_Simple",
-                                                                        pSection,
-                                                                        true,
-                                                                        &pSymbol,
-                                                                        &pRevision);
+        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                            pLibrarySession,
+                                                                                            pLibraryDB,
+                                                                                            pSection,
+                                                                                            XREF_D3DDevice_SetRenderState_Simple,
+                                                                                            DB_ST_MANUAL,
+                                                                                            FIRSTPASS_YES,
+                                                                                            REGISTER_YES,
+                                                                                            NULL,
+                                                                                            NULL);
         // If not found, skip the rest of the scan.
-        if (xFuncAddr == 0) {
+        if (xSymbolAddr == 0) {
             return false;
         }
-
-        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
     }
 
     memptr_t pD3D_g_DeferredRenderStateOffset = 0;
@@ -390,47 +388,50 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
     if (internal_IsXRefAddrUnset(D3D_g_RenderState)) {
         // Below xref is used to obtain from D3DDevice_SetRenderState(Not)Inline signatures.
         pContext->xref_database[XREF_D3D_g_RenderState] = XREF_ADDR_DERIVE;
-        xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
-                                                                        pLibrarySession,
-                                                                        pLibraryDB,
-                                                                        "D3DDevice_SetRenderStateNotInline",
-                                                                        pSection,
-                                                                        true,
-                                                                        &pSymbol,
-                                                                        &pRevision);
-        if (xFuncAddr == 0) {
+        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                            pLibrarySession,
+                                                                                            pLibraryDB,
+                                                                                            pSection,
+                                                                                            XREF_D3DDevice_SetRenderStateNotInline,
+                                                                                            DB_ST_MANUAL,
+                                                                                            FIRSTPASS_YES,
+                                                                                            REGISTER_YES,
+                                                                                            NULL,
+                                                                                            NULL);
+        if (xSymbolAddr == 0) {
             // If not found, then check if library is not LTCG.
             if (pLibrarySession->pLibrary->flag == XbSymbolLib_D3D8) {
                 pContext->xref_database[XREF_D3D_g_RenderState] = XREF_ADDR_UNDETERMINED;
                 return false;
             }
             // Otherwise, let's look up for D3DDevice_SetRenderStateInline__GenericFragment which is NOT a symbol.
-            xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
-                                                                     pLibrarySession,
-                                                                     pLibraryDB,
-                                                                     "D3DDevice_SetRenderStateInline__GenericFragment",
-                                                                     pSection,
-                                                                     true,
-                                                                     &pSymbol,
-                                                                     &pRevision);
+            xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                         pLibrarySession,
+                                                                                         pLibraryDB,
+                                                                                         pSection,
+                                                                                         XREF_D3DDevice_SetRenderStateInline__GenericFragment,
+                                                                                         DB_ST_MANUAL,
+                                                                                         FIRSTPASS_YES,
+                                                                                         REGISTER_NO,
+                                                                                         NULL,
+                                                                                         NULL);
 
             // If not found, skip the rest of the scan.
-            if (xFuncAddr == 0) {
+            if (xSymbolAddr == 0) {
                 pContext->xref_database[XREF_D3D_g_RenderState] = XREF_ADDR_UNDETERMINED;
                 return false;
             }
             // pointer to cmp opcode's value from D3DDevice_SetRenderStateInline__GenericFragment sig.
-            pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xFuncAddr + 0x02);
+            pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xSymbolAddr + 0x02);
 
             // If it is found, don't register it.
         }
         else {
             // pointer to cmp opcode's value from D3DDevice_SetRenderStateNotInline sig.
-            pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xFuncAddr + 0x07);
+            pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xSymbolAddr + 0x07);
 
-            // Register only D3DDevice_SetRenderStateNotInline symbol function.
+            // Self register only D3DDevice_SetRenderStateNotInline symbol function.
             // NOTE: D3DDevice_SetRenderStateInline__GenericFragment is NOT a symbol but a generic method to find D3D_g_RenderState.
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
         }
         // D3D_g_RenderState variable is already set internal, will be register later.
 
@@ -459,8 +460,6 @@ static bool manual_scan_section_dx8_register_D3DCRS(iXbSymbolContext* pContext,
                                                     SymbolDatabaseList* pLibraryDB,
                                                     const XbSDBSection* pSection)
 {
-    OOVPATable* pSymbol = NULL;
-    OOVPARevision* pRevision = NULL;
     // First, we need to find D3DRS_FillMode symbol.
     xbaddr D3DRS_FillMode = pContext->xref_database[XREF_D3DRS_FillMode];
     if (internal_IsXRefAddrUnset(D3DRS_FillMode)) {
@@ -468,23 +467,23 @@ static bool manual_scan_section_dx8_register_D3DCRS(iXbSymbolContext* pContext,
         pContext->xref_database[XREF_D3DRS_FillMode] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_BackFillMode] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_TwoSidedLighting] = XREF_ADDR_DERIVE;
-        xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
-                                                                        pLibrarySession,
-                                                                        pLibraryDB,
-                                                                        "D3DDevice_SetRenderState_FillMode",
-                                                                        pSection,
-                                                                        false,
-                                                                        &pSymbol,
-                                                                        &pRevision);
+        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                            pLibrarySession,
+                                                                                            pLibraryDB,
+                                                                                            pSection,
+                                                                                            XREF_D3DDevice_SetRenderState_FillMode,
+                                                                                            DB_ST_MANUAL,
+                                                                                            FIRSTPASS_NO,
+                                                                                            REGISTER_YES,
+                                                                                            NULL,
+                                                                                            NULL);
         // If not found, skip the rest of the scan.
-        if (xFuncAddr == 0) {
+        if (xSymbolAddr == 0) {
             pContext->xref_database[XREF_D3DRS_FillMode] = XREF_ADDR_UNDETERMINED;
             pContext->xref_database[XREF_D3DRS_BackFillMode] = XREF_ADDR_UNDETERMINED;
             pContext->xref_database[XREF_D3DRS_TwoSidedLighting] = XREF_ADDR_UNDETERMINED;
             return false;
         }
-
-        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
     }
 
     // Derived D3DRS_FillMode, D3DRS_BackFillMode, and D3DRS_TwoSidedLighting variables are already set.
@@ -505,8 +504,6 @@ static bool manual_scan_section_dx8_register_D3DRS_end_of_list(iXbSymbolContext*
                                                                SymbolDatabaseList* pLibraryDB,
                                                                const XbSDBSection* pSection)
 {
-    OOVPATable* pSymbol = NULL;
-    OOVPARevision* pRevision = NULL;
     // First, we need to find D3DRS_DoNotCullUncompressed symbol.
     xbaddr D3DRS_DoNotCullUncompressed = pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed];
     if (internal_IsXRefAddrUnset(D3DRS_DoNotCullUncompressed)) {
@@ -515,16 +512,18 @@ static bool manual_scan_section_dx8_register_D3DRS_end_of_list(iXbSymbolContext*
         pContext->xref_database[XREF_D3DRS_RopZCmpAlwaysRead] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_RopZRead] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed] = XREF_ADDR_DERIVE;
-        xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
-                                                                        pLibrarySession,
-                                                                        pLibraryDB,
-                                                                        "D3D_CommonSetDebugRegisters",
-                                                                        pSection,
-                                                                        false,
-                                                                        &pSymbol,
-                                                                        &pRevision);
+        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                            pLibrarySession,
+                                                                                            pLibraryDB,
+                                                                                            pSection,
+                                                                                            XREF_D3D_CommonSetDebugRegisters,
+                                                                                            DB_ST_MANUAL,
+                                                                                            FIRSTPASS_NO,
+                                                                                            REGISTER_YES,
+                                                                                            NULL,
+                                                                                            NULL);
         // If not found, skip the rest of the scan.
-        if (xFuncAddr == 0) {
+        if (xSymbolAddr == 0) {
             pContext->xref_database[XREF_D3D_g_pDevice] = XREF_ADDR_UNDETERMINED;
             pContext->xref_database[XREF_D3DRS_RopZCmpAlwaysRead] = XREF_ADDR_UNDETERMINED;
             pContext->xref_database[XREF_D3DRS_RopZRead] = XREF_ADDR_UNDETERMINED;
@@ -532,17 +531,16 @@ static bool manual_scan_section_dx8_register_D3DRS_end_of_list(iXbSymbolContext*
             return false;
         }
 
-        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, pRevision->Version, xFuncAddr);
-
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3D_g_pDevice);
-        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbol, 0);
+        OOVPATable* pSymbolEntry = NULL;
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3D_g_pDevice);
+        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
 #if 0 // TODO: Fix this after #208 pull request is merged.
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DRS_RopZCmpAlwaysRead);
-        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbol, 0);
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DRS_RopZRead);
-        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbol, 0);
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DRS_DoNotCullUncompressed);
-        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbol, 0);
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DRS_RopZCmpAlwaysRead);
+        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DRS_RopZRead);
+        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DRS_DoNotCullUncompressed);
+        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
 #endif
     }
     return true;
@@ -554,8 +552,6 @@ static bool manual_scan_section_dx8_register_D3DRS_Stencils_and_Occlusion(iXbSym
                                                                           SymbolDatabaseList* pLibraryDB,
                                                                           const XbSDBSection* pSection)
 {
-    OOVPATable* pSymbol = NULL;
-    OOVPARevision* pRevision = NULL;
     // First, we need to find D3DRS_StencilEnable symbol.
     xbaddr D3DRS_StencilEnable = pContext->xref_database[XREF_D3DRS_StencilEnable];
     if (internal_IsXRefAddrUnset(D3DRS_StencilEnable)) {
@@ -564,16 +560,18 @@ static bool manual_scan_section_dx8_register_D3DRS_Stencils_and_Occlusion(iXbSym
         pContext->xref_database[XREF_D3DRS_StencilFail] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_OcclusionCullEnable] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_StencilCullEnable] = XREF_ADDR_DERIVE;
-        xbaddr xFuncAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
-                                                                        pLibrarySession,
-                                                                        pLibraryDB,
-                                                                        "D3DRS_Stencils_and_Occlusion__GenericFragment",
-                                                                        pSection,
-                                                                        false,
-                                                                        &pSymbol,
-                                                                        &pRevision);
+        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                            pLibrarySession,
+                                                                                            pLibraryDB,
+                                                                                            pSection,
+                                                                                            XREF_D3DRS_Stencils_and_Occlusion__GenericFragment,
+                                                                                            DB_ST_MANUAL,
+                                                                                            FIRSTPASS_NO,
+                                                                                            REGISTER_NO,
+                                                                                            NULL,
+                                                                                            NULL);
         // If not found, skip the rest of the scan.
-        if (xFuncAddr == 0) {
+        if (xSymbolAddr == 0) {
             pContext->xref_database[XREF_D3DRS_StencilEnable] = XREF_ADDR_UNDETERMINED;
             pContext->xref_database[XREF_D3DRS_StencilFail] = XREF_ADDR_UNDETERMINED;
             pContext->xref_database[XREF_D3DRS_OcclusionCullEnable] = XREF_ADDR_UNDETERMINED;
@@ -587,65 +585,22 @@ static bool manual_scan_section_dx8_register_D3DRS_Stencils_and_Occlusion(iXbSym
 }
 
 static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
-                                                    const iXbSymbolLibrarySession* pLibrarySession,
-                                                    memptr_t pFunc,
-                                                    uint32_t pXRefOffset)
+                                                    const iXbSymbolLibrarySession* pLibrarySession)
 {
-    if (pFunc == NULL) {
-        return;
-    }
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
 
-    xbaddr DerivedAddr_D3DTSS_TEXCOORDINDEX = 0;
+    xbaddr DerivedAddr_D3DTSS_TEXCOORDINDEX = pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX];
     int Decrement = 0x70; // TODO : Rename into something understandable
 
-    // TODO : Remove this when XREF_D3D_TextureState_TexCoordIndex derivation is deemed stable
-    {
-        DerivedAddr_D3DTSS_TEXCOORDINDEX = *(xbaddr*)(pFunc + pXRefOffset);
-
-        // Temporary verification - is XREF_D3DTSS_TEXCOORDINDEX derived correctly?
-        if (pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] != DerivedAddr_D3DTSS_TEXCOORDINDEX) {
-
-            if (pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] != XREF_ADDR_DERIVE) {
-                output_message(&pContext->output, XB_OUTPUT_MESSAGE_WARN, "Second derived XREF_D3DTSS_TEXCOORDINDEX differs from first!");
-            }
-
-            //SetXRefDataBase(pContext, iLibraryType, XREF_D3DTSS_BUMPENV, DerivedAddr_D3DTSS_TEXCOORDINDEX - 28*4);
-            internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_TEXCOORDINDEX, DerivedAddr_D3DTSS_TEXCOORDINDEX);
-            //SetXRefDataBase(pContext, iLibraryType, XREF_D3DTSS_BORDERCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 1*4);
-            //SetXRefDataBase(pContext, iLibraryType, XREF_D3DTSS_COLORKEYCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 2*4);
-        }
-    }
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_BUMPENV, DerivedAddr_D3DTSS_TEXCOORDINDEX - 28 * 4);
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_TEXCOORDINDEX, DerivedAddr_D3DTSS_TEXCOORDINDEX); // Already been set.
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_BORDERCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 1 * 4);
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_COLORKEYCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 2 * 4);
 
     uint32_t EmuD3DDeferredTextureState = DerivedAddr_D3DTSS_TEXCOORDINDEX - Decrement;
 
     internal_RegisterXRef(pContext, pLibrarySession, XREF_D3D_g_DeferredTextureState, 0, "D3D_g_DeferredTextureState", EmuD3DDeferredTextureState, symbol_variable, call_none, 0, NULL, true);
-}
-
-static void manual_scan_section_dx8_register_stream(iXbSymbolContext* pContext,
-                                                    const iXbSymbolLibrarySession* pLibrarySession,
-                                                    memptr_t pFunc,
-                                                    uint32_t iCodeOffsetFor_g_Stream)
-{
-    if (pFunc == NULL) {
-        return;
-    }
-    const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
-
-    // Read address of Xbox_g_Stream from D3DDevice_SetStreamSource
-    uint32_t Derived_g_Stream = *((uint32_t*)(pFunc + iCodeOffsetFor_g_Stream));
-
-    // Temporary verification - is XREF_D3D_g_Stream derived correctly?
-    // TODO : Remove this when XREF_D3D_g_Stream derivation is deemed stable
-#if 0 // TODO: How can we enforce it for callback?
-    VerifySymbolAddressAgainstXRef("g_Stream", Derived_g_Stream, XREF_D3D_g_Stream);
-#endif
-
-    // Now that both Derived XREF and OOVPA-based function-contents match,
-    // correct base-address (because "g_Stream" is actually "g_Stream"+8") :
-    Derived_g_Stream -= 8;
-    pContext->register_func(pLibrary->name, pLibrary->flag, XREF_D3D_g_Stream, "D3D_g_Stream", Derived_g_Stream, 0, symbol_variable, call_none, 0, NULL);
 }
 
 // Has dependency on D3D_g_pDevice xref.
@@ -657,8 +612,6 @@ static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContex
     // Generic usage
     memptr_t pFunc = 0;
     xbaddr xSymbolAddr = 0;
-    OOVPATable* pSymbol = NULL;
-    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
     // Manual check require for able to self-register these symbols:
     // * D3DDevice_SetSwapCallback
     // * D3DDevice_SetVerticalBlankCallback
@@ -670,14 +623,16 @@ static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContex
 
         // Scan if event handle variable is not yet derived.
         if (pContext->xref_database[XREF_D3DDevice__m_VerticalBlankEvent_OFFSET] == XREF_ADDR_DERIVE) {
-            xSymbolAddr = (xbaddr)(uintptr_t)internal_LocateSymbolScan(pContext,
-                                                                       pLibrarySession,
-                                                                       pLibraryDB,
-                                                                       "D3DDevice__m_VerticalBlankEvent__GenericFragment",
-                                                                       pSection,
-                                                                       true,
-                                                                       NULL,
-                                                                       NULL);
+            xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                         pLibrarySession,
+                                                                                         pLibraryDB,
+                                                                                         pSection,
+                                                                                         XREF_D3DDevice__m_VerticalBlankEvent__GenericFragment,
+                                                                                         DB_ST_MANUAL,
+                                                                                         FIRSTPASS_YES,
+                                                                                         REGISTER_NO,
+                                                                                         NULL,
+                                                                                         NULL);
         }
 
         // We are not registering D3DDevice__m_VerticalBlankEvent__GenericFragment itself, as it is NOT a symbol.
@@ -689,13 +644,14 @@ static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContex
         }
 
         // Finally, manual register the symbol variables.
+        OOVPATable* pSymbolEntry = NULL;
         xSymbolAddr = pContext->xref_database[XREF_D3DDevice__m_VerticalBlankEvent_OFFSET];
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DDevice__m_VerticalBlankEvent_OFFSET);
-        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbol, 0);
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DDevice__m_SwapCallback_OFFSET);
-        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 0, xSymbolAddr - 8);
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, D3DDevice__m_VBlankCallback_OFFSET);
-        internal_RegisterSymbol(pContext, pLibrarySession, pSymbol, 0, xSymbolAddr - 4);
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DDevice__m_VerticalBlankEvent_OFFSET);
+        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DDevice__m_SwapCallback_OFFSET);
+        internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 0, xSymbolAddr - 8);
+        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DDevice__m_VBlankCallback_OFFSET);
+        internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 0, xSymbolAddr - 4);
     }
     // If D3D_g_pDevice is not found, the scan is not complete
     // and will continue scan to next given section.
@@ -712,16 +668,9 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
                                     const XbSDBSection* pSection)
 {
     // Generic usage
-    memptr_t pFunc = 0;
-    xbaddr xSymbolAddr = 0;
-    int OOVPA_version;
-    int iCodeOffsetFor_g_Stream;
-    int pXRefOffset = 0; // TODO : Rename into something understandable
+    memptr_t pSymbolAddr = 0;
     uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
-    const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
-
-    OOVPARevision* pOOVPARevision = NULL;
 
     // We need to mask boolean from each function's scan process if any return false.
     // Needed for no dependency, scanning multiple sections, and library's databases.
@@ -753,161 +702,58 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
         return bComplete;
     }
 
+    if (pLibrary->build_version < 3911) {
+        // Not supported, currently ignored.
+        return true;
+    }
+
     // then locate D3DDeferredTextureState
-    if (pLibrary->flag == XbSymbolLib_D3D8) {
+    OOVPATable* pSymbolEntry = NULL;
+    OOVPARevision* pSymbolEntryRevision = NULL;
+    pSymbolAddr = internal_SymbolDatabaseList_ScanByReference(pContext,
+                                                              pLibrarySession,
+                                                              pLibraryDB,
+                                                              pSection,
+                                                              XREF_D3DDevice_SetTextureState_TexCoordIndex, DB_ST_MANUAL,
+                                                              FIRSTPASS_YES,
+                                                              REGISTER_YES,
+                                                              &pSymbolEntry,
+                                                              &pSymbolEntryRevision);
 
-        if (pLibrary->build_version < 3911) {
-            // Not supported, currently ignored.
-            pFunc = 0;
-        }
-        else {
-            pFunc = internal_LocateSymbolScan(pContext,
-                                              pLibrarySession,
-                                              pLibraryDB,
-                                              "D3DDevice_SetTextureState_TexCoordIndex",
-                                              pSection,
-                                              true,
-                                              NULL,
-                                              NULL);
+    if (pSymbolAddr != 0) {
+        // Self register D3DDevice_SetTextureState_TexCoordIndex
 
-            // TODO: Can we integrate below into XRef?
-            if (pLibrary->build_version < 4034) {
-                pXRefOffset = 0x11;
-            }
-            else if (pLibrary->build_version < 4242) {
-                pXRefOffset = 0x18;
-            }
-            else {
-                pXRefOffset = 0x19;
-            }
-        }
-    }
-    else { // D3D8LTCG
-
-        /*
-        // TODO: Need some reform work for this portion. Since there are mixture of suffix involved.
-        // Current listing are:
-        // - D3DDevice_SetTextureState_TexCoordIndex   (1944, 1958)
-        // - D3DDevice_SetTextureState_TexCoordIndex_0 (2039, 2058)
-        // - D3DDevice_SetTextureState_TexCoordIndex_4 (2040, 2045, 2058, 2052)
-        pFunc = internal_LocateSymbolScan(pContext,
-                                          pLibrarySession,
-                                          pLibraryDB,
-                                          "",
-                                          pSection,
-                                          false,
-                                          pOOVPARevision);
-        //*/
-
-        // verified for 3925
-        pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2", 2039,
-                                 &D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2_2039, pSection);
-        pXRefOffset = 0x08;
-
-        if (pFunc == 0) { // verified for 4039
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1", 2040,
-                                     &D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1_2040, pSection);
-            pXRefOffset = 0x14;
-        }
-
-        if (pFunc == 0) { // verified for 4432
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 1944,
-                                     &D3DDevice_SetTextureState_TexCoordIndex_1944, pSection);
-            pXRefOffset = 0x19;
-        }
-
-        if (pFunc == 0) { // verified for 4531
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1", 2045,
-                                     &D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1_2045, pSection);
-            pXRefOffset = 0x14;
-        }
-
-        if (pFunc == 0) { // verified for 4627 and higher
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1", 2058,
-                                     &D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1_2058, pSection);
-            pXRefOffset = 0x14;
-        }
-
-        if (pFunc == 0) { // verified for 4627 and higher
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex", 1958,
-                                     &D3DDevice_SetTextureState_TexCoordIndex_1958, pSection);
-            pXRefOffset = 0x19;
-        }
-
-        if (pFunc == 0) { // verified for World Series Baseball 2K3
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1", 2052,
-                                     &D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1_2052, pSection);
-            pXRefOffset = 0x15;
-        }
-
-        if (pFunc == 0) { // verified for Ski Racing 2006
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2", 2058,
-                                     &D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2_2058, pSection);
-            pXRefOffset = 0x15;
-        }
+        manual_scan_section_dx8_register_D3DTSS(pContext, pLibrarySession);
     }
 
-    if (pFunc != 0) {
-        // NOTE: Is a requirement to align properly.
-        pFunc += virt_start_relative;
-        manual_scan_section_dx8_register_D3DTSS(pContext, pLibrarySession, pFunc, pXRefOffset);
-    }
+    pSymbolEntry = NULL;
+    pSymbolEntryRevision = NULL;
+    pSymbolAddr = internal_SymbolDatabaseList_ScanByReference(pContext,
+                                                              pLibrarySession,
+                                                              pLibraryDB,
+                                                              pSection,
+                                                              XREF_D3DDevice_SetStreamSource,
+                                                              DB_ST_MANUAL,
+                                                              FIRSTPASS_YES,
+                                                              REGISTER_YES,
+                                                              &pSymbolEntry,
+                                                              &pSymbolEntryRevision);
 
-    // Locate Xbox symbol "g_Stream" and store it's address
-    pFunc = 0;
-    // verified for D3D8 with 4361, 4627, 5344, 5558, 5659, 5788, 5849, 5933
-    // and verified for LTCG with 4432, 4627, 5344, 5558, 5849
-    iCodeOffsetFor_g_Stream = 0x22;
+    if (pSymbolAddr != 0) {
+        // Self register D3DDevice_SetStreamSource
 
-    // TODO: Need investigate reason for going with higher number first then lower last.
-    if (pLibrary->flag == XbSymbolLib_D3D8) {
-        if (pLibrary->build_version >= 4034) {
-            OOVPA_version = 4034;
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetStreamSource", 4034,
-                                     &D3DDevice_SetStreamSource_4034, pSection);
-        }
-        else {
-            OOVPA_version = 3911;
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetStreamSource", 3911,
-                                     &D3DDevice_SetStreamSource_3911, pSection);
-            iCodeOffsetFor_g_Stream = 0x23; // verified for 3911
-        }
-    }
-    else { // D3D8LTCG
-        if (pLibrary->build_version > 4039) {
-            OOVPA_version = 4034; // TODO Verify
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetStreamSource", 1044,
-                                     &D3DDevice_SetStreamSource_1044, pSection);
+        xbaddr D3D_g_Stream = pContext->xref_database[XREF_D3D_g_Stream];
+        xbaddr D3D_g_Stream_i_pVertexBuffer = pContext->xref_database[XREF_D3D_g_Stream_i_pVertexBuffer];
+
+        // Verify both variables are offset correctly.
+        if (D3D_g_Stream_i_pVertexBuffer - D3D_g_Stream != 8) {
+            // If not correct, then do the correction in case of third-party rely on this.
+            output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "D3D_g_Stream_i_pVertexBuffer (0x%08X) - D3D_g_Stream (0x%08X) != 0x8", D3D_g_Stream_i_pVertexBuffer, D3D_g_Stream);
+            pContext->xref_database[XREF_D3D_g_Stream] = D3D_g_Stream_i_pVertexBuffer - 8;
         }
 
-        if (pFunc == 0) { // LTCG specific
-
-            OOVPA_version = 4034; // TODO Verify
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_4__LTCG_eax1_ebx2", 2058,
-                                     &D3DDevice_SetStreamSource_4__LTCG_eax1_ebx2_2058, pSection);
-            iCodeOffsetFor_g_Stream = 0x1E;
-        }
-
-        if (pFunc == 0) { // verified for 4039
-            OOVPA_version = 4034;
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_8__LTCG_eax1", 2040,
-                                     &D3DDevice_SetStreamSource_8__LTCG_eax1_2040, pSection);
-            iCodeOffsetFor_g_Stream = 0x23;
-        }
-
-        if (pFunc == 0) { // verified for 3925
-            OOVPA_version = 3911;
-            pFunc = LocateSymbolCast(pContext, iLibraryType, "D3DDevice_SetStreamSource_8__LTCG_edx1", 2039,
-                                     &D3DDevice_SetStreamSource_8__LTCG_edx1_2039, pSection);
-            iCodeOffsetFor_g_Stream = 0x47;
-        }
-    }
-
-    if (pFunc != 0) {
-        // NOTE: Is a requirement to align properly.
-        pFunc += virt_start_relative;
-
-        manual_scan_section_dx8_register_stream(pContext, pLibrarySession, pFunc, iCodeOffsetFor_g_Stream);
+        // TODO: Use internal_FindByReferenceHelper to get OOVPA revision. Or better yet, do self register.
+        internal_RegisterValidXRefAddr(pContext, pLibrary->name, pLibrary->flag, XREF_D3D_g_Stream, 0, "D3D_g_Stream", symbol_variable, call_none, 0, NULL);
     }
 
     bComplete = manual_scan_section_dx8_register_callbacks(pContext, pLibrarySession, pLibraryDB, pSection);
