@@ -527,8 +527,8 @@ static void* internal_SymbolDatabaseList_ScanByReference(iXbSymbolContext* pCont
                                                          const unsigned scan_type,
                                                          const eFirstPass xref_first_pass,
                                                          const eRegisterSymbol register_symbol,
-                                                         const OOVPATable** pSymbolReturn,
-                                                         const OOVPARevision** pRevisionReturn)
+                                                         OOVPATable** pSymbolReturn,
+                                                         OOVPARevision** pRevisionReturn)
 {
     OOVPARevision* pRevision = NULL;
     void* pSymbolAddr = NULL;
