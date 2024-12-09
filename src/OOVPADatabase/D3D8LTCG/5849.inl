@@ -214,6 +214,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetTextureState_TexCoordIndex
 // ******************************************************************
 //81E30000FFFFB901 ...C3
+// verified for Ski Racing 2006
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2,
                       2058,
                       XRefOne)

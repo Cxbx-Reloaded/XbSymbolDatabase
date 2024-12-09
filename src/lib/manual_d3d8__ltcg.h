@@ -585,36 +585,18 @@ static bool manual_scan_section_dx8_register_D3DRS_Stencils_and_Occlusion(iXbSym
 }
 
 static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
-                                                    const iXbSymbolLibrarySession* pLibrarySession,
-                                                    memptr_t pFunc,
-                                                    uint32_t pXRefOffset)
+                                                    const iXbSymbolLibrarySession* pLibrarySession)
 {
-    if (pFunc == NULL) {
-        return;
-    }
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
 
-    xbaddr DerivedAddr_D3DTSS_TEXCOORDINDEX = 0;
+    xbaddr DerivedAddr_D3DTSS_TEXCOORDINDEX = pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX];
     int Decrement = 0x70; // TODO : Rename into something understandable
 
-    // TODO : Remove this when XREF_D3D_TextureState_TexCoordIndex derivation is deemed stable
-    {
-        DerivedAddr_D3DTSS_TEXCOORDINDEX = *(xbaddr*)(pFunc + pXRefOffset);
-
-        // Temporary verification - is XREF_D3DTSS_TEXCOORDINDEX derived correctly?
-        if (pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] != DerivedAddr_D3DTSS_TEXCOORDINDEX) {
-
-            if (pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX] != XREF_ADDR_DERIVE) {
-                output_message(&pContext->output, XB_OUTPUT_MESSAGE_WARN, "Second derived XREF_D3DTSS_TEXCOORDINDEX differs from first!");
-            }
-
-            //SetXRefDataBase(pContext, iLibraryType, XREF_D3DTSS_BUMPENV, DerivedAddr_D3DTSS_TEXCOORDINDEX - 28*4);
-            internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_TEXCOORDINDEX, DerivedAddr_D3DTSS_TEXCOORDINDEX);
-            //SetXRefDataBase(pContext, iLibraryType, XREF_D3DTSS_BORDERCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 1*4);
-            //SetXRefDataBase(pContext, iLibraryType, XREF_D3DTSS_COLORKEYCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 2*4);
-        }
-    }
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_BUMPENV, DerivedAddr_D3DTSS_TEXCOORDINDEX - 28 * 4);
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_TEXCOORDINDEX, DerivedAddr_D3DTSS_TEXCOORDINDEX); // Already been set.
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_BORDERCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 1 * 4);
+    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_COLORKEYCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 2 * 4);
 
     uint32_t EmuD3DDeferredTextureState = DerivedAddr_D3DTSS_TEXCOORDINDEX - Decrement;
 
@@ -687,7 +669,6 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 {
     // Generic usage
     memptr_t pSymbolAddr = 0;
-    int pXRefOffset = 0; // TODO : Rename into something understandable
     uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
 
@@ -738,69 +719,11 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
                                                               REGISTER_YES,
                                                               &pSymbolEntry,
                                                               &pSymbolEntryRevision);
-    if (pLibrary->flag == XbSymbolLib_D3D8) {
-        // TODO: Can we integrate below into XRef?
-        if (pLibrary->build_version < 4034) {
-            pXRefOffset = 0x11;
-        }
-        else if (pLibrary->build_version < 4242) {
-            pXRefOffset = 0x18;
-        }
-        else {
-            pXRefOffset = 0x19;
-        }
-    }
-    else { // D3D8LTCG
-        typedef struct {
-            XbSDBParamType params[2];
-            unsigned short revisionNumber;
-            int pXRefOffsetReturn;
-        } func_search;
-        const func_search findRevisions[] = {
-            // D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2
-            { .params = { param_edi, param_eax }, .revisionNumber = 2039, .pXRefOffsetReturn = 0x08 }, // verified for 3925
-            // D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1
-            { .params = { param_esi, param_psh }, .revisionNumber = 2040, .pXRefOffsetReturn = 0x14 }, // verified for 4039
-            // D3DDevice_SetTextureState_TexCoordIndex
-            { .params = { param_psh, param_psh }, .revisionNumber = 1944, .pXRefOffsetReturn = 0x19 }, // verified for 4432
-            // D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1
-            { .params = { param_esi, param_psh }, .revisionNumber = 2045, .pXRefOffsetReturn = 0x14 }, // verified for 4531
-            // D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1
-            { .params = { param_esi, param_psh }, .revisionNumber = 2058, .pXRefOffsetReturn = 0x14 }, // verified for 4627 and higher
-            // D3DDevice_SetTextureState_TexCoordIndex
-            { .params = { param_psh, param_psh }, .revisionNumber = 1958, .pXRefOffsetReturn = 0x19 }, // verified for 4627 and higher
-            // D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1
-            { .params = { param_esi, param_psh }, .revisionNumber = 2052, .pXRefOffsetReturn = 0x15 }, // verified for World Series Baseball 2K3
-            // D3DDevice_SetTextureState_TexCoordIndex_0__LTCG_edi1_eax2
-            { .params = { param_edi, param_eax }, .revisionNumber = 2058, .pXRefOffsetReturn = 0x15 }, // verified for Ski Racing 2006
-        };
-        size_t findRevisionsSize = XBSDB_ARRAY_SIZE(findRevisions);
-
-        if (pSymbolAddr != 0) {
-            // TODO: Try validate findRevisions to ensure they exists.
-
-            const XbSDBSymbolParam* param_list = pSymbolEntry->param_list;
-            // Verify symbol has two parameters.
-            if (pSymbolEntry->param_count == 2) {
-                // Optimized code to look up each parameter and revision number match without direct reference to OOVPA signature.
-                for (unsigned i = 0; i < findRevisionsSize; i++) {
-                    if (findRevisions[i].revisionNumber == pSymbolEntryRevision->Version &&
-                        findRevisions[i].params[0] == param_list[0].type &&
-                        findRevisions[i].params[1] == param_list[1].type) {
-                        pXRefOffset = findRevisions[i].pXRefOffsetReturn;
-                        break;
-                    }
-                }
-            }
-        }
-    }
 
     if (pSymbolAddr != 0) {
         // Self register D3DDevice_SetTextureState_TexCoordIndex
 
-        // NOTE: Is a requirement to align properly.
-        pSymbolAddr += virt_start_relative;
-        manual_scan_section_dx8_register_D3DTSS(pContext, pLibrarySession, pSymbolAddr, pXRefOffset);
+        manual_scan_section_dx8_register_D3DTSS(pContext, pLibrarySession);
     }
 
     pSymbolEntry = NULL;
