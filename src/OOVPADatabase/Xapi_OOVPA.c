@@ -378,7 +378,7 @@
 // ******************************************************************
 // * XAPILIB_OOVPA_Table
 // ******************************************************************
-OOVPATable XAPILIB_OOVPA_Table[] = {
+static OOVPATable XAPILIB_OOVPA_Table[] = {
 
     // Variables
     REGISTER_OOVPAS_M(SYM_VAR(_tls_array),

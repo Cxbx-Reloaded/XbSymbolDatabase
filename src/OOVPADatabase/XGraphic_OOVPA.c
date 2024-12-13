@@ -49,7 +49,7 @@
 // ******************************************************************
 // * XGRAPHC_OOVPA_Table
 // ******************************************************************
-OOVPATable XGRAPHC_OOVPA_Table[] = {
+static OOVPATable XGRAPHC_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN(XFONT_OpenBitmapFontFromMemory, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pFontData), PARAM(psh, uFontDataSize), PARAM(psh, ppFont))),
                     SYM_SIG(4361)),

@@ -143,7 +143,7 @@
 // ******************************************************************
 // * DSound_OOVPA_manual_Table
 // ******************************************************************
-OOVPATable DSound_OOVPA_manual_Table[] = {
+static OOVPATable DSound_OOVPA_manual_Table[] = {
 
     // Without xrefs dependency
     REGISTER_OOVPAS_M(SYM_FUN(CDirectSoundStream_AddRef, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pThis))),
@@ -168,7 +168,7 @@ OOVPATableList DSound_OOVPA_manual = { XBSDB_ARRAY_SIZE(DSound_OOVPA_manual_Tabl
 // ******************************************************************
 // * DSound_OOVPA_Table
 // ******************************************************************
-OOVPATable DSound_OOVPA_Table[] = {
+static OOVPATable DSound_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN(XAudioCalculatePitch, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, dwFrequency))),
                     SYM_SIG(3911, 4039, 5455)), // Final generic OOVPA: 5455; Removed: 0

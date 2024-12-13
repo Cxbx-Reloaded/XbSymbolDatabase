@@ -26,7 +26,7 @@
 // ******************************************************************
 // * JVSLIB_OOVPA_Table
 // ******************************************************************
-OOVPATable JVSLIB_OOVPA_Table[] = {
+static OOVPATable JVSLIB_OOVPA_Table[] = {
 
     // Variables
     REGISTER_OOVPAS_M(SYM_VAR(JVS_g_pPINSA),

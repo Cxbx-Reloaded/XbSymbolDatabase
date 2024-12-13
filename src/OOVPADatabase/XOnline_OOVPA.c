@@ -43,7 +43,7 @@
 // ******************************************************************
 // * XONLINE_OOVPA_Table
 // ******************************************************************
-OOVPATable XONLINE_OOVPA_Table[] = {
+static OOVPATable XONLINE_OOVPA_Table[] = {
 
     // XOnline section
     REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineLogon, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, pUsers), PARAM(psh, pdwServiceIDs), PARAM(psh, dwServices), PARAM(psh, hEvent), PARAM(psh, pHandle))),

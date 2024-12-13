@@ -42,7 +42,7 @@
 // ******************************************************************
 // * XACTENG_OOVPA_Table
 // ******************************************************************
-OOVPATable XACTENG_OOVPA_Table[] = {
+static OOVPATable XACTENG_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN(XACTEngineCreate, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pParams), PARAM(psh, ppEngine))),
                     SYM_SIG(4627, 4928, 5120)),

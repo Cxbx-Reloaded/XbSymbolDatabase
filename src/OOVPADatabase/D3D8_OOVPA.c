@@ -158,7 +158,7 @@
 // ******************************************************************
 // * D3D8_OOVPA_Table
 // ******************************************************************
-OOVPATable D3D8_OOVPA_Table[] = {
+static OOVPATable D3D8_OOVPA_Table[] = {
     // Custom manual search by reverse engineering team (which will not be public to the user)
     REGISTER_OOVPAS_M(SYM_INT(D3DDevice__m_VerticalBlankEvent__GenericFragment),
                       SYM_SIG(3911)), // This OOVPA signature is not a symbol. Read its note for more details.

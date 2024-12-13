@@ -28,7 +28,7 @@
 // ******************************************************************
 // * XNET_OOVPA_Table
 // ******************************************************************
-OOVPATable XNET_OOVPA_Table[] = {
+static OOVPATable XNET_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN(XnInit, CALL(std), STACK(8), PARAMS(PARAM(psh, pxnsp), PARAM(psh, bWSA))),
                     SYM_SIG(3911)), // 3911 is only XNETS library, XNET library is different OOVPA.
