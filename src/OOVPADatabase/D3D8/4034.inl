@@ -303,10 +303,11 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetStreamSource
 // ******************************************************************
 OOVPA_XREF(D3DDevice_SetStreamSource, 4034, 1 + 14, // 1+28
-           XRefOne)
+           XRefTwo)
     {
 
-        XREF_ENTRY(0x22, XREF_D3D_g_Stream), // Derived
+        XREF_ENTRY(0x22, XREF_D3D_g_Stream_i_pVertexBuffer), // Derived
+        XREF_ENTRY(0x52, XREF_D3D_g_Stream), // Derived
 
 #if 0
         { 0x00, 0x8B },

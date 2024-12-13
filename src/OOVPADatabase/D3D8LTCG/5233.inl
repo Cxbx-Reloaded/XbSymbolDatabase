@@ -67,6 +67,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetTextureState_TexCoordIndex
 // ******************************************************************
 //81E30000FFFFB901 ...C20400
+// verified for World Series Baseball 2K3
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_TexCoordIndex_4__LTCG_esi1,
                       2052,
                       XRefOne)

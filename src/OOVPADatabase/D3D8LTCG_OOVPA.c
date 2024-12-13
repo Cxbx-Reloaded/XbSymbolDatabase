@@ -28,10 +28,7 @@
 //   * D3DDevice_Reset_0__LTCG_edi1 (4034 ... < 4039) // NOTE: Unknown if 4039 signature needs to be lower.
 //   * D3DDevice_Reset_0__LTCG_ebx1 (... < 5344) // NOTE: Unknown if signature needs to be lower, and may have appeared at the same time when CDevice_InitializeFrameBuffers_4__LTCG_edi1 was introduced.
 
-#ifndef D3D8LTCG_OOVPA_INL
-#define D3D8LTCG_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "D3D8LTCG/3911.inl"
 #include "D3D8LTCG/4034.inl"
@@ -50,10 +47,13 @@
 #include "D3D8LTCG/5788.inl"
 #include "D3D8LTCG/5849.inl"
 
+#define REGISTER_OOVPAS_D3D(Symbol, ...)  REGISTER_OOVPAS_PREFIX(D3D, Symbol, __VA_ARGS__)
+#define REGISTER_OOVPAS_D3D8(Symbol, ...) REGISTER_OOVPAS_PREFIX(D3D8, Symbol, __VA_ARGS__)
+
 // ******************************************************************
-// * D3D8LTCG_OOVPA
+// * D3D8LTCG_OOVPA_Table
 // ******************************************************************
-OOVPATable D3D8LTCG_OOVPA[] = {
+static OOVPATable D3D8LTCG_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3D_CreateTexture, CALL(unk), STACK(28), PARAMS(PARAM(psh, Width), PARAM(psh, Height), PARAM(psh, Depth), PARAM(psh, Levels), PARAM(psh, Usage), PARAM(psh, Format), PARAM(psh, isCube), PARAM(_dl, isVolume), PARAM(edi, ppTexture))),
                     SYM_SIG(4039)), // Final generic OOVPA: 4039; Removed: 4627 // See note for details.
@@ -303,16 +303,16 @@ OOVPATable D3D8LTCG_OOVPA[] = {
                         SYM_SIG(4039, 4040)),
     REGISTER_OOVPAS_D3D(SYM_FUN(CDevice_SetStateVB, CALL(std), STACK(8), PARAMS(PARAM(psh, this), PARAM(psh, unknown2))),
                         SYM_SIG(3911, 4039)), // TODO: Update unknown parameter name(s) if able.
-    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetStreamSource, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, StreamNumber), PARAM(psh, pStreamData), PARAM(psh, Stride))),
-                    SYM_SIG(1044)),
-    REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetStreamSource, CALL(unk), STACK(0), PARAMS(PARAM(eax, StreamNumber), PARAM(edi, pStreamData), PARAM(ebx, Stride))),
-                    SYM_SIG(2058)),
-    REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetStreamSource, CALL(unk), STACK(8), PARAMS(PARAM(edx, StreamNumber), PARAM(psh, pStreamData), PARAM(psh, Stride))),
-                    SYM_SIG(2039)),
-    REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetStreamSource, CALL(unk), STACK(4), PARAMS(PARAM(eax, StreamNumber), PARAM(ebx, pStreamData), PARAM(psh, Stride))),
-                    SYM_SIG(2058)),
-    REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetStreamSource, CALL(unk), STACK(8), PARAMS(PARAM(eax, StreamNumber), PARAM(psh, pStreamData), PARAM(psh, Stride))),
-                    SYM_SIG(2040)),
+    REGISTER_OOVPAS_M(SYM_FUN(D3DDevice_SetStreamSource, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, StreamNumber), PARAM(psh, pStreamData), PARAM(psh, Stride))),
+                      SYM_SIG(1044)),
+    REGISTER_OOVPAS_M(SYM_FUN_LTCG(D3DDevice_SetStreamSource, CALL(unk), STACK(0), PARAMS(PARAM(eax, StreamNumber), PARAM(edi, pStreamData), PARAM(ebx, Stride))),
+                      SYM_SIG(2058)),
+    REGISTER_OOVPAS_M(SYM_FUN_LTCG(D3DDevice_SetStreamSource, CALL(unk), STACK(8), PARAMS(PARAM(edx, StreamNumber), PARAM(psh, pStreamData), PARAM(psh, Stride))),
+                      SYM_SIG(2039)),
+    REGISTER_OOVPAS_M(SYM_FUN_LTCG(D3DDevice_SetStreamSource, CALL(unk), STACK(4), PARAMS(PARAM(eax, StreamNumber), PARAM(ebx, pStreamData), PARAM(psh, Stride))),
+                      SYM_SIG(2058)),
+    REGISTER_OOVPAS_M(SYM_FUN_LTCG(D3DDevice_SetStreamSource, CALL(unk), STACK(8), PARAMS(PARAM(eax, StreamNumber), PARAM(psh, pStreamData), PARAM(psh, Stride))),
+                      SYM_SIG(2040)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTexture, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, pTexture))),
                     SYM_SIG(1024)),
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetTextureStageStateNotInline, CALL(unk), STACK(0), PARAMS(PARAM(ecx, Stage), PARAM(edx, Type), PARAM(eax, Value))),
@@ -343,11 +343,11 @@ OOVPATable D3D8LTCG_OOVPA[] = {
                     SYM_SIG(2024, 2036, 2048)),
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetTextureState_ColorKeyColor, CALL(unk), STACK(4), PARAMS(PARAM(eax, Stage), PARAM(psh, Value))),
                     SYM_SIG(2048, 2060)),
-    REGISTER_OOVPAS_C(SYM_FUN(D3DDevice_SetTextureState_TexCoordIndex, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, Value))),
+    REGISTER_OOVPAS_M(SYM_FUN(D3DDevice_SetTextureState_TexCoordIndex, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, Value))),
                       SYM_SIG(1944, 1958)),
-    REGISTER_OOVPAS_C(SYM_FUN_LTCG(D3DDevice_SetTextureState_TexCoordIndex, CALL(unk), STACK(0), PARAMS(PARAM(edi, Stage), PARAM(eax, Value))),
+    REGISTER_OOVPAS_M(SYM_FUN_LTCG(D3DDevice_SetTextureState_TexCoordIndex, CALL(unk), STACK(0), PARAMS(PARAM(edi, Stage), PARAM(eax, Value))),
                       SYM_SIG(2039, 2058)),
-    REGISTER_OOVPAS_C(SYM_FUN_LTCG(D3DDevice_SetTextureState_TexCoordIndex, CALL(unk), STACK(4), PARAMS(PARAM(esi, Stage), PARAM(psh, Value))),
+    REGISTER_OOVPAS_M(SYM_FUN_LTCG(D3DDevice_SetTextureState_TexCoordIndex, CALL(unk), STACK(4), PARAMS(PARAM(esi, Stage), PARAM(psh, Value))),
                       SYM_SIG(2040, 2045, 2052, 2058)),
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetTexture, CALL(unk), STACK(4), PARAMS(PARAM(psh, Stage), PARAM(eax, pTexture))),
                     SYM_SIG(2024)),
@@ -458,8 +458,6 @@ OOVPATable D3D8LTCG_OOVPA[] = {
 };
 
 // ******************************************************************
-// * D3D8LTCG_OOVPA_COUNT
+// * D3D8LTCG_OOVPA
 // ******************************************************************
-#define D3D8LTCG_OOVPA_COUNT XBSDB_ARRAY_SIZE(D3D8LTCG_OOVPA)
-
-#endif
+OOVPATableList D3D8LTCG_OOVPA = { XBSDB_ARRAY_SIZE(D3D8LTCG_OOVPA_Table), D3D8LTCG_OOVPA_Table };

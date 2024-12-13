@@ -17,10 +17,7 @@
 //   * send (4721)
 //   * XNetGetEthernetLinkStatus (5344)
 
-#ifndef XNET_OOVPA_INL
-#define XNET_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "XNet/3911.inl"
 #include "XNet/4361.inl"
@@ -29,9 +26,9 @@
 #include "XNet/5455.inl"
 
 // ******************************************************************
-// * XNET_OOVPA
+// * XNET_OOVPA_Table
 // ******************************************************************
-OOVPATable XNET_OOVPA[] = {
+static OOVPATable XNET_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN(XnInit, CALL(std), STACK(8), PARAMS(PARAM(psh, pxnsp), PARAM(psh, bWSA))),
                     SYM_SIG(3911)), // 3911 is only XNETS library, XNET library is different OOVPA.
@@ -62,8 +59,6 @@ OOVPATable XNET_OOVPA[] = {
 };
 
 // ******************************************************************
-// * XNET_OOVPA_COUNT
+// * XNET_OOVPA
 // ******************************************************************
-#define XNET_OOVPA_COUNT XBSDB_ARRAY_SIZE(XNET_OOVPA)
-
-#endif
+OOVPATableList XNET_OOVPA = { XBSDB_ARRAY_SIZE(XNET_OOVPA_Table), XNET_OOVPA_Table };

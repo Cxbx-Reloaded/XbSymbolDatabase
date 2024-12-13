@@ -128,10 +128,7 @@
 //   * D3D_KickOffAndWaitForIdle2 (4627)
 //   * D3D_CommonSetRenderTargetB (4627)
 
-#ifndef D3D8_OOVPA_INL
-#define D3D8_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "D3D8/3911.inl"
 #include "D3D8/3925.inl"
@@ -159,9 +156,9 @@
 #define REGISTER_OOVPAS_D3D8(Symbol, ...) REGISTER_OOVPAS_PREFIX(D3D8, Symbol, __VA_ARGS__)
 
 // ******************************************************************
-// * D3D8_OOVPA
+// * D3D8_OOVPA_Table
 // ******************************************************************
-OOVPATable D3D8_OOVPA[] = {
+static OOVPATable D3D8_OOVPA_Table[] = {
     // Custom manual search by reverse engineering team (which will not be public to the user)
     REGISTER_OOVPAS_M(SYM_INT(D3DDevice__m_VerticalBlankEvent__GenericFragment),
                       SYM_SIG(3911)), // This OOVPA signature is not a symbol. Read its note for more details.
@@ -537,8 +534,8 @@ OOVPATable D3D8_OOVPA[] = {
                     SYM_SIG(3911, 4034, 4134)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetStipple, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pPattern))),
                     SYM_SIG(4627)),
-    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetStreamSource, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, StreamNumber), PARAM(psh, pStreamData), PARAM(psh, Stride))),
-                    SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS_M(SYM_FUN(D3DDevice_SetStreamSource, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, StreamNumber), PARAM(psh, pStreamData), PARAM(psh, Stride))),
+                      SYM_SIG(3911, 4034)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetSwapCallback, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pCallback))),
                     SYM_SIG(4039)), // Final generic OOVPA: 4039; Removed: 0
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTexture, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, pTexture))),
@@ -551,7 +548,7 @@ OOVPATable D3D8_OOVPA[] = {
                     SYM_SIG(3911, 4034)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTextureState_ColorKeyColor, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, Value))),
                     SYM_SIG(3911, 4034)),
-    REGISTER_OOVPAS_C(SYM_FUN(D3DDevice_SetTextureState_TexCoordIndex, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, Value))),
+    REGISTER_OOVPAS_M(SYM_FUN(D3DDevice_SetTextureState_TexCoordIndex, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, Value))),
                       SYM_SIG(3911, 4034, 4242, 4627)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTile, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Index), PARAM(psh, pTile))),
                     SYM_SIG(3911, 4034, 4627)), // Then it has changed calls ?SetTileNoWait@D3D@@YGXKPBU_D3DTILE@@@Z in XDK 4627 and higher.
@@ -699,10 +696,7 @@ OOVPATable D3D8_OOVPA[] = {
                     SYM_SIG(4627)),
 };
 
-
 // ******************************************************************
-// * D3D8_OOVPA_COUNT
+// * D3D8_OOVPA
 // ******************************************************************
-#define D3D8_OOVPA_COUNT XBSDB_ARRAY_SIZE(D3D8_OOVPA)
-
-#endif
+OOVPATableList D3D8_OOVPA = { XBSDB_ARRAY_SIZE(D3D8_OOVPA_Table), D3D8_OOVPA_Table };

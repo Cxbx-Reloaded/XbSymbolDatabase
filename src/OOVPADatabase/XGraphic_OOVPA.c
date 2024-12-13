@@ -40,19 +40,16 @@
 // NOTE: Known Xgraphics OOVPA not included in initial revision.
 //   * XFONT_OpenBitmapFontFromMemory (4361)
 
-#ifndef XGRAPHC_OOVPA_INL
-#define XGRAPHC_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "XGraphic/3911.inl"
 #include "XGraphic/4134.inl"
 #include "XGraphic/4361.inl"
 
 // ******************************************************************
-// * XGRAPHC_OOVPA
+// * XGRAPHC_OOVPA_Table
 // ******************************************************************
-OOVPATable XGRAPHC_OOVPA[] = {
+static OOVPATable XGRAPHC_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN(XFONT_OpenBitmapFontFromMemory, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pFontData), PARAM(psh, uFontDataSize), PARAM(psh, ppFont))),
                     SYM_SIG(4361)),
@@ -81,8 +78,6 @@ OOVPATable XGRAPHC_OOVPA[] = {
 };
 
 // ******************************************************************
-// * XGRAPHC_OOVPA_COUNT
+// * XGRAPHC_OOVPA
 // ******************************************************************
-#define XGRAPHC_OOVPA_COUNT XBSDB_ARRAY_SIZE(XGRAPHC_OOVPA)
-
-#endif
+OOVPATableList XGRAPHC_OOVPA = { XBSDB_ARRAY_SIZE(XGRAPHC_OOVPA_Table), XGRAPHC_OOVPA_Table };

@@ -1119,10 +1119,11 @@ OOVPA_SIG_MATCH(
 //7406810300000800 ...C20800
 OOVPA_SIG_HEADER_XREF(D3DDevice_SetStreamSource_8__LTCG_eax1,
                       2040,
-                      XRefOne)
+                      XRefTwo)
 OOVPA_SIG_MATCH(
 
-    XREF_ENTRY(0x23, XREF_D3D_g_Stream), // Derived
+    XREF_ENTRY(0x23, XREF_D3D_g_Stream_i_pVertexBuffer), // Derived
+    XREF_ENTRY(0x53, XREF_D3D_g_Stream), // Derived
 
     { 0x00, 0x8B },
     { 0x01, 0x0D },

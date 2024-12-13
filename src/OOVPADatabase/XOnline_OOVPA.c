@@ -28,10 +28,7 @@
 //   * recv (5120, 5233)
 //   * send (5120, 5233)
 
-#ifndef XONLINES_OOVPA_INL
-#define XONLINES_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "XOnline/4361.inl"
 #include "XOnline/4627.inl"
@@ -44,9 +41,9 @@
 #include "XOnline/5849.inl"
 
 // ******************************************************************
-// * XONLINE_OOVPA
+// * XONLINE_OOVPA_Table
 // ******************************************************************
-OOVPATable XONLINE_OOVPA[] = {
+static OOVPATable XONLINE_OOVPA_Table[] = {
 
     // XOnline section
     REGISTER_OOVPAS(SYM_FUN(CXo_XOnlineLogon, CALL(thi), STACK(/*default*/), PARAMS(PARAM(ecx, this), PARAM(psh, pUsers), PARAM(psh, pdwServiceIDs), PARAM(psh, dwServices), PARAM(psh, hEvent), PARAM(psh, pHandle))),
@@ -80,8 +77,6 @@ OOVPATable XONLINE_OOVPA[] = {
 };
 
 // ******************************************************************
-// * XONLINE_OOVPA_COUNT
+// * XONLINE_OOVPA
 // ******************************************************************
-#define XONLINE_OOVPA_COUNT XBSDB_ARRAY_SIZE(XONLINE_OOVPA)
-
-#endif
+OOVPATableList XONLINE_OOVPA = { XBSDB_ARRAY_SIZE(XONLINE_OOVPA_Table), XONLINE_OOVPA_Table };

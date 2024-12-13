@@ -29,10 +29,7 @@
 //   * IXACTSoundBank_PlayEx (5455)
 //   * IXACTSoundBank_Play (4928 to 5849)
 
-#ifndef XACTENG_OOVPA_INL
-#define XACTENG_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "XActEng/4627.inl"
 #include "XActEng/4928.inl"
@@ -43,9 +40,9 @@
 
 
 // ******************************************************************
-// * XACTENG_OOVPA
+// * XACTENG_OOVPA_Table
 // ******************************************************************
-OOVPATable XACTENG_OOVPA[] = {
+static OOVPATable XACTENG_OOVPA_Table[] = {
 
     REGISTER_OOVPAS(SYM_FUN(XACTEngineCreate, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pParams), PARAM(psh, ppEngine))),
                     SYM_SIG(4627, 4928, 5120)),
@@ -96,8 +93,6 @@ OOVPATable XACTENG_OOVPA[] = {
 };
 
 // ******************************************************************
-// * XACTENG_OOVPA_COUNT
+// * XACTENG_OOVPA
 // ******************************************************************
-#define XACTENG_OOVPA_COUNT XBSDB_ARRAY_SIZE(XACTENG_OOVPA)
-
-#endif
+OOVPATableList XACTENG_OOVPA = { XBSDB_ARRAY_SIZE(XACTENG_OOVPA_Table), XACTENG_OOVPA_Table };

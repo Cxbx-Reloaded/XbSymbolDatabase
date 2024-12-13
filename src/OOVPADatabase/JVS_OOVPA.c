@@ -19,17 +19,14 @@
 //    is the same except the functions are quite different in layout, etc
 //    and some offsets are different within them too.
 
-#ifndef JVS_OOVPA_INL
-#define JVS_OOVPA_INL
-
-#include "OOVPA.h"
+#include "OOVPA_databases.h"
 
 #include "JVS/4831.inl"
 
 // ******************************************************************
-// * JVSLIB_OOVPA
+// * JVSLIB_OOVPA_Table
 // ******************************************************************
-OOVPATable JVSLIB_OOVPA[] = {
+static OOVPATable JVSLIB_OOVPA_Table[] = {
 
     // Variables
     REGISTER_OOVPAS_M(SYM_VAR(JVS_g_pPINSA),
@@ -168,8 +165,6 @@ OOVPATable JVSLIB_OOVPA[] = {
 };
 
 // ******************************************************************
-// * JVSLIB_OOVPA_COUNT
+// * JVSLIB_OOVPA
 // ******************************************************************
-#define JVSLIB_OOVPA_COUNT XBSDB_ARRAY_SIZE(JVSLIB_OOVPA)
-
-#endif
+OOVPATableList JVSLIB_OOVPA = { XBSDB_ARRAY_SIZE(JVSLIB_OOVPA_Table), JVSLIB_OOVPA_Table };
