@@ -299,9 +299,6 @@ static void* internal_LocateSymbol(iXbSymbolContext* pContext,
     return symbol_address;
 }
 
-#define LocateSymbolCast(pContext, iLibraryType, szSymbolName, version, Oovpa, pSection) \
-    internal_LocateSymbol(pContext, iLibraryType, szSymbolName, version, (OOVPA*)Oovpa, pSection, false)
-
 // Old Method - However, the library's scan method doesn't have self-register support implemented yet.
 // NOTE: Do not use direct call to this function. Use internal_RegisterValidXRefAddr_M macro instead.
 static void internal_RegisterValidXRefAddr(iXbSymbolContext* pContext,
