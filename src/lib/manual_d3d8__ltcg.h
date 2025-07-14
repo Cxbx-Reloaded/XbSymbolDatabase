@@ -669,7 +669,6 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 {
     // Generic usage
     memptr_t pSymbolAddr = 0;
-    uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
 
     // We need to mask boolean from each function's scan process if any return false.
