@@ -6,7 +6,7 @@
 #pragma once
 
 // ******************************************************************
-// * Used for XbSymbolDatabase_LibraryVersion
+// * Used for XbSDB_LibraryVersion
 // ******************************************************************
 
 // Adapted from https://gist.github.com/underscorediscovery/81308642d0325fd386237cfa3b44785c

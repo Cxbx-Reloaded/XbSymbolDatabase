@@ -18,63 +18,63 @@ extern "C" {
 // * Library strings
 // ******************************************************************
 // clang-format off
-#define Lib_UNKNOWN  "UNKNOWN"
+#define LIB_UNKNOWN  "UNKNOWN"
 // clang-format on
 // Group of sections since most libraries are compiled inside the
 // section(s) below.
-#define Sec_text     ".text"
-#define Sec_FLASHROM "FLASHROM"
+#define SEC_TEXT     ".text"
+#define SEC_FLASHROM "FLASHROM"
 // DSOUND has a vtable store in .rdata section.
 // clang-format off
-#define Sec_rdata    ".rdata"
+#define SEC_RDATA    ".rdata"
 // clang-format on
 // Individual library (yet do include group sections above)
-#define Lib_D3D8     "D3D8"
-#define Sec_D3D      "D3D"
-#define Lib_D3D8LTCG "D3D8LTCG"
-#define Lib_D3DX8    "D3DX8"
-#define Sec_D3DX     "D3DX"
-#define Lib_DSOUND   "DSOUND"
-#define Sec_DSOUND   Lib_DSOUND
-#define Lib_JVS      "JVS"
-#define Lib_XACTENG  "XACTENG"
-#define Sec_XACTENG  Lib_XACTENG
-#define Lib_XAPILIB  "XAPILIB"
-#define Sec_XID      ".XID"
-#define Sec_XPP      "XPP"
-#define Sec_XPPDat   ".XPP&Dat"
-#define Lib_XGRAPHC  "XGRAPHC"
-#define Sec_XGRPH    "XGRPH"
-#define Lib_XNET     "XNET"
-#define Lib_XNETN    "XNETN"
-#define Lib_XNETS    "XNETS"
-#define Lib_XONLINE  "XONLINE"
-#define Sec_XONLINE  Lib_XONLINE
-#define Lib_XONLINES "XONLINES"
-#define Lib_XONLINLS "XONLINLS"
-#define Sec_XNET     "XNET"
+#define LIB_D3D8     "D3D8"
+#define SEC_D3D      "D3D"
+#define LIB_D3D8LTCG "D3D8LTCG"
+#define LIB_D3DX8    "D3DX8"
+#define SEC_D3DX     "D3DX"
+#define LIB_DSOUND   "DSOUND"
+#define SEC_DSOUND   LIB_DSOUND
+#define LIB_JVS      "JVS"
+#define LIB_XACTENG  "XACTENG"
+#define SEC_XACTENG  LIB_XACTENG
+#define LIB_XAPILIB  "XAPILIB"
+#define SEC_XID      ".XID"
+#define SEC_XPP      "XPP"
+#define SEC_XPPDAT   ".XPP&Dat"
+#define LIB_XGRAPHC  "XGRAPHC"
+#define SEC_XGRPH    "XGRPH"
+#define LIB_XNET     "XNET"
+#define LIB_XNETN    "XNETN"
+#define LIB_XNETS    "XNETS"
+#define LIB_XONLINE  "XONLINE"
+#define SEC_XONLINE  LIB_XONLINE
+#define LIB_XONLINES "XONLINES"
+#define LIB_XONLINLS "XONLINLS"
+#define SEC_XNET     "XNET"
 
-#define XbSymbolLib_D3D8     (1 << 0)
-#define XbSymbolLib_D3D8LTCG (1 << 1)
-#define XbSymbolLib_D3DX8    (1 << 2)
-#define XbSymbolLib_DSOUND   (1 << 3)
-#define XbSymbolLib_JVS      (1 << 4)
-#define XbSymbolLib_XACTENG  (1 << 5)
-#define XbSymbolLib_XAPILIB  (1 << 6)
-#define XbSymbolLib_XGRAPHC  (1 << 7)
-#define XbSymbolLib_XNET     (1 << 8)
-#define XbSymbolLib_XNETN    (1 << 9)
-#define XbSymbolLib_XNETS    (1 << 10)
-#define XbSymbolLib_XONLINE  (1 << 11)
-#define XbSymbolLib_XONLINES (1 << 12)
-#define XbSymbolLib_XONLINLS (1 << 13)
+#define XBSDBLIB_D3D8     (1 << 0)
+#define XBSDBLIB_D3D8LTCG (1 << 1)
+#define XBSDBLIB_D3DX8    (1 << 2)
+#define XBSDBLIB_DSOUND   (1 << 3)
+#define XBSDBLIB_JVS      (1 << 4)
+#define XBSDBLIB_XACTENG  (1 << 5)
+#define XBSDBLIB_XAPILIB  (1 << 6)
+#define XBSDBLIB_XGRAPHC  (1 << 7)
+#define XBSDBLIB_XNET     (1 << 8)
+#define XBSDBLIB_XNETN    (1 << 9)
+#define XBSDBLIB_XNETS    (1 << 10)
+#define XBSDBLIB_XONLINE  (1 << 11)
+#define XBSDBLIB_XONLINES (1 << 12)
+#define XBSDBLIB_XONLINLS (1 << 13)
 
 // clang-format off
 // TODO: Need to find a way keep below intact.
-#define XbSymbolLib_ALL ( XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG | XbSymbolLib_D3DX8 | XbSymbolLib_DSOUND \
-                        | XbSymbolLib_JVS | XbSymbolLib_XACTENG | XbSymbolLib_XAPILIB | XbSymbolLib_XGRAPHC \
-                        | XbSymbolLib_XNET | XbSymbolLib_XNETN | XbSymbolLib_XNETS | XbSymbolLib_XONLINE \
-                        | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS)
+#define XBSDBLIB_ALL ( XBSDBLIB_D3D8 | XBSDBLIB_D3D8LTCG | XBSDBLIB_D3DX8 | XBSDBLIB_DSOUND \
+                     | XBSDBLIB_JVS | XBSDBLIB_XACTENG | XBSDBLIB_XAPILIB | XBSDBLIB_XGRAPHC \
+                     | XBSDBLIB_XNET | XBSDBLIB_XNETN | XBSDBLIB_XNETS | XBSDBLIB_XONLINE \
+                     | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS)
 // clang-format on
 
 typedef enum _xb_output_message {
@@ -168,7 +168,7 @@ typedef struct _XbSDBSectionHeader {
     XbSDBSection* filters;
 } XbSDBSectionHeader;
 
-typedef void* XbSymbolContextHandle;
+typedef void* XbSDBContextHandle;
 
 // ******************************************************************
 // * API functions to use with other projects.
@@ -178,21 +178,21 @@ typedef void* XbSymbolContextHandle;
 /// Return value is only useful to prevent re-cache the file every time. It does not taken existing functions into account.
 /// </summary>
 /// <returns>Return a version of current library database.</returns>
-unsigned int XbSymbolDatabase_LibraryVersion();
+unsigned int XbSDB_LibraryVersion();
 
 /// <summary>
 /// Total symbols return give ability to support for progress bar from third-party software. Not all symbols will be detected in every titles.
 /// </summary>
-/// <param name="library_filter">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to obtain total symbols.</param>
+/// <param name="library_filter">See defined prefix of XBSDBLIB_ above to choose one or more library you wish to obtain total symbols.</param>
 /// <returns>Return total symbols in current database system.</returns>
-unsigned XbSymbolDatabase_GetTotalSymbols(uint32_t library_filter);
+unsigned XbSDB_GetTotalSymbols(uint32_t library_filter);
 
 /// <summary>
 /// Register one or more library to be scan instead of whole database for optimize performance.
 /// </summary>
-/// <param name="library_filter">See defined prefix of XbSymbolLib_ above to choose one or more library you wish to scan.</param>
+/// <param name="library_filter">See defined prefix of XBSDBLIB_ above to choose one or more library you wish to scan.</param>
 /// <returns>Return true if success, or else will return false for invalid parameter.</returns>
-bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t library_filter);
+bool XbSDBContext_RegisterLibrary(XbSDBContextHandle pHandle, uint32_t library_filter);
 
 /// <summary>
 /// Callback function type for output message to software when have information to be output.
@@ -205,7 +205,7 @@ typedef void (*xb_output_message_t)(xb_output_message message_flag, const char* 
 /// Register output message callback function to receive output message.
 /// </summary>
 /// <param name="message_func">Set output message to a callback function.</param>
-void XbSymbolDatabase_SetOutputMessage(xb_output_message_t message_func);
+void XbSDB_SetOutputMessage(xb_output_message_t message_func);
 
 /// <summary>
 /// To register any detected symbol name with address and build version back to third-party program.
@@ -229,55 +229,55 @@ typedef void (*xb_symbol_register_t)(const char* library_str, uint32_t library_f
 /// <param name="register_func">Callback register function to be call for any detected symbols.</param>
 /// <param name="is_raw">True: Full scan of raw xbe; False: Scan only loaded sections.</param>
 /// <returns>Only return false if something is not valid.</returns>
-bool XbSymbolScan(const void* xb_header_addr, xb_symbol_register_t register_func, bool is_raw);
+bool XbSDB_Scan(const void* xb_header_addr, xb_symbol_register_t register_func, bool is_raw);
 
 /// <summary>
 /// To convert library flag into string format.
 /// </summary>
 /// <param name="library_flag">Input specific library flag.</param>
 /// <returns>Return "UNKNOWN" string if does not exist in the database. Otherwise will return library name string.</returns>
-const char* XbSymbolDatabase_LibraryToString(uint32_t library_flag);
+const char* XbSDB_LibraryToString(uint32_t library_flag);
 
 /// <summary>
 /// To convert parameter type into string format.
 /// </summary>
 /// <param name="param_type">Input provided param_type from symbol register callback.</param>
 /// <returns>Return "unk" string if does not exist in the database. Otherwise it will return the string representation of the parameter type.</returns>
-const char* XbSymbolDatabase_ParamToString(uint32_t param_type);
+const char* XbSDB_ParamToString(uint32_t param_type);
 
 /// <summary>
 /// To convert calling convention type into string format.
 /// </summary>
 /// <param name="call_type">Input provided call_type from symbol register callback.</param>
 /// <returns>Return "unknown" string if does not exist in the database. Otherwise it will return the string representation of the calling convention type.</returns>
-const char* XbSymbolDatabase_CallingConventionToString(uint32_t call_type);
+const char* XbSDB_CallingConventionToString(uint32_t call_type);
 
 /// <summary>
 /// To convert a symbol reference index into string format.
 /// </summary>
 /// <param name="xref_index">Input provided xref_index from symbol register callback.</param>
 /// <returns>Returns a demangled symbol name string.</returns>
-const char* XbSymbolDatabase_SymbolReferenceToString(uint32_t xref_index);
+const char* XbSDB_SymbolReferenceToString(uint32_t xref_index);
 
 /// <summary>
 /// To convert library name string into flag format.
 /// </summary>
 /// <param name="library_name">Input library name string.</param>
 /// <returns>Return 0 if does not exist in the database. Otherwise will return flag value.</returns>
-uint32_t XbSymbolDatabase_LibraryToFlag(const char* library_name);
+uint32_t XbSDB_LibraryToFlag(const char* library_name);
 
 /// <summary>
 /// (Debug feature) By calling it will perform a self test for duplicate OOVPAs. (May will change at any time.)
 /// </summary>
 /// <returns>Return total count of errors.</returns>
-unsigned int XbSymbolDatabase_TestOOVPAs();
+unsigned int XbSDB_TestOOVPAs();
 
 /// <summary>
 /// (Debug feature) Set to true will perform full range of OOVPAs registered in current database.
 /// Or stop at xbe's build version detected.
 /// </summary>
 /// <param name="bypass_limit">Input boolean to either bypass or enable the build version limit.</param>
-void XbSymbolContext_SetBypassBuildVersionLimit(XbSymbolContextHandle pHandle, bool bypass_limit);
+void XbSDBContext_SetBypassBuildVersionLimit(XbSDBContextHandle pHandle, bool bypass_limit);
 
 /// <summary>
 /// To set verbose level can be output message.
@@ -285,29 +285,29 @@ void XbSymbolContext_SetBypassBuildVersionLimit(XbSymbolContextHandle pHandle, b
 /// </summary>
 /// <param name="verbose_level">See xb_output_message enum for list of options.</param>
 /// <returns>True: Successful set. False: Invalid input value.</returns>
-bool XbSymbolDatabase_SetOutputVerbosity(xb_output_message verbose_level);
+bool XbSDB_SetOutputVerbosity(xb_output_message verbose_level);
 
 /// <summary>
 /// (Debug feature) Set to true will continue the same signature scan after first detected.
 /// </summary>
 /// <param name="enable">Input boolean to either continue with the signature scan after first symbol found or not.</param>
-void XbSymbolContext_SetContinuousSigScan(XbSymbolContextHandle pHandle, bool enable);
+void XbSDBContext_SetContinuousSigScan(XbSDBContextHandle pHandle, bool enable);
 
 /// <summary>
 /// (Debug feature) Set to true will register first detected address only.
-/// This function can be used if XbSymbolContext_SetContinuousSigScan is set to true.
+/// This function can be used if XbSDBContext_SetContinuousSigScan is set to true.
 /// </summary>
 /// <param name="enable">Input boolean to use first symbol address only or not.</param>
-void XbSymbolContext_SetFirstDetectAddressOnly(XbSymbolContextHandle pHandle, bool enable);
+void XbSDBContext_SetFirstDetectAddressOnly(XbSDBContextHandle pHandle, bool enable);
 
 /// <summary>
 /// Get library flag's dependencies.
 /// </summary>
-/// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
+/// <param name="pHandle">Input XbSDBContextHandle handler.</param>
 /// <param name="library_flag">Input specific library flag.</param>
 /// <param name="library_filters">Input generated library filters.</param>
 /// <returns>Return either none, one, or more library flag dependencies.</returns>
-uint32_t XbSymbolDatabase_GetLibraryDependencies(uint32_t library_flag, XbSDBLibraryHeader library_filters);
+uint32_t XbSDB_GetLibraryDependencies(uint32_t library_flag, XbSDBLibraryHeader library_filters);
 
 /// <summary>
 /// Step 1: Generate library array for LibraryHeader input.
@@ -316,7 +316,7 @@ uint32_t XbSymbolDatabase_GetLibraryDependencies(uint32_t library_flag, XbSDBLib
 /// <param name="xb_header_addr">Input pointer to xbox pe header.</param>
 /// <param name="library_out">Input null pointer will provide the count to allocate memory for library_out.filters field. Otherwise, information will be input to library_out.filters field.</param>
 /// <returns>Return total library found can be use in scan process.</returns>
-unsigned int XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSDBLibraryHeader* library_out);
+unsigned int XbSDB_GenerateLibraryFilter(const void* xb_header_addr, XbSDBLibraryHeader* library_out);
 
 /// <summary>
 /// Step 2: Generate section array for SectionHeader input.
@@ -326,73 +326,73 @@ unsigned int XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, 
 /// <param name="section_out">Input null pointer will provide the count to allocate memory, then allocate memory to section_out.filters field.</param>
 /// <param name="is_raw">True: Convert array to use raw xbe's relative address; False: Convert array to use xbox virtual memory relative address.</param>
 /// <returns>Return total sections found can be use in scan process.</returns>
-unsigned int XbSymbolDatabase_GenerateSectionFilter(const void* xb_header_addr, XbSDBSectionHeader* section_out, bool is_raw);
+unsigned int XbSDB_GenerateSectionFilter(const void* xb_header_addr, XbSDBSectionHeader* section_out, bool is_raw);
 
 /// <summary>
 /// Step 3: Get Xbox kernel thunk address.
 /// </summary>
 /// <param name="xb_header_addr">Input pointer to xbox pe header.</param>
 /// <returns>Return kernel thunk address. NOTE: This function may not return valid address.</returns>
-xbaddr XbSymbolDatabase_GetKernelThunkAddress(const void* xb_header_addr);
+xbaddr XbSDB_GetKernelThunkAddress(const void* xb_header_addr);
 
 /// <summary>
-/// Step 4: Create XbSymbolContextHandle context for the scan process.
+/// Step 4: Create XbSDBContextHandle context for the scan process.
 /// </summary>
-/// <param name="ppHandle">Output XbSymbolContextHandle handler.</param>
+/// <param name="ppHandle">Output XbSDBContextHandle handler.</param>
 /// <param name="register_func">Register callback function for any detected symbols during scan process.</param>
-/// <param name="library_input">See XbSymbolDatabase_GenerateLibraryFilter for details.</param>
-/// <param name="section_input">See XbSymbolDatabase_GenerateSectionFilter for details.</param>
+/// <param name="library_input">See XbSDB_GenerateLibraryFilter for details.</param>
+/// <param name="section_input">See XbSDB_GenerateSectionFilter for details.</param>
 /// <param name="kernel_thunk">Input decoded virtual kernel thunk.</param>
 /// <returns>Return true if context handle's creation is a success.</returns>
-bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle, xb_symbol_register_t register_func, XbSDBLibraryHeader library_input, XbSDBSectionHeader section_input, xbaddr kernel_thunk);
+bool XbSDB_CreateContext(XbSDBContextHandle* ppHandle, xb_symbol_register_t register_func, XbSDBLibraryHeader library_input, XbSDBSectionHeader section_input, xbaddr kernel_thunk);
 
 /// <summary>
 /// Step 5: Perform a manual scan to set references, XRefDatabase, manually by requirement.
 /// </summary>
-/// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
-void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle);
+/// <param name="pHandle">Input XbSDBContextHandle handler.</param>
+void XbSDBContext_ScanManual(XbSDBContextHandle pHandle);
 
 /// <summary>
 /// Step 6: Get library flag's dependencies.
 /// </summary>
-/// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
+/// <param name="pHandle">Input XbSDBContextHandle handler.</param>
 /// <param name="library_flag">Input specific library flag.</param>
 /// <param name="library_filters">Input generated library filters.</param>
 /// <returns>Return either none, one, or more library flag dependencies.</returns>
-uint32_t XbSymbolContext_GetLibraryDependencies(XbSymbolContextHandle pHandle, uint32_t library_flag);
+uint32_t XbSDBContext_GetLibraryDependencies(XbSDBContextHandle pHandle, uint32_t library_flag);
 
-#define XbSymbolDatabase_CheckDependencyCompletion(completion_flag, dependencies) ((completion_flag & dependencies) == dependencies)
+#define XbSDB_CheckDependencyCompletion(completion_flag, dependencies) ((completion_flag & dependencies) == dependencies)
 
 /// <summary>
 /// Step 7a: (multi-thread safe, optional) Process individual library input by third-party.
 /// NOTE: If planned to use multi-thread purpose, please use thread-safe method for library dependency checkup.
 /// </summary>
-/// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
+/// <param name="pHandle">Input XbSDBContextHandle handler.</param>
 /// <param name="pLibrary">Input pointer of a library to start a scan process.</param>
 /// <param name="xref_first_pass">True: Optimized first search scan process; False: 2nd call and later will continue to return non-zero; see return for detail.</param>
 /// <returns>Return total xref count found. Unless it return zero, then there's nothing left to find.</returns>
-unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle, const XbSDBLibrary* pLibrary, bool xref_first_pass);
+unsigned int XbSDBContext_ScanLibrary(XbSDBContextHandle pHandle, const XbSDBLibrary* pLibrary, bool xref_first_pass);
 
-#define XbSymbolDatabase_SetLibraryCompletion(completion_flag, library_flag) (completion_flag |= library_flag)
+#define XbSDB_SetLibraryCompletion(completion_flag, library_flag) (completion_flag |= library_flag)
 
 /// <summary>
 /// Step 7b: (single-thread usage) Process all of filter libraries internally.
 /// </summary>
-/// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
-void XbSymbolContext_ScanAllLibraryFilter(XbSymbolContextHandle pHandle);
+/// <param name="pHandle">Input XbSDBContextHandle handler.</param>
+void XbSDBContext_ScanAllLibraryFilter(XbSDBContextHandle pHandle);
 
 /// <summary>
 /// Step 8: Register any references, XRefDatabase, may not had been output during the scan process.
 /// NOTE: Currently a stub at the moment.
 /// </summary>
-/// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
-void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle);
+/// <param name="pHandle">Input XbSDBContextHandle handler.</param>
+void XbSDBContext_RegisterXRefs(XbSDBContextHandle pHandle);
 
 /// <summary>
 /// Final Step: Release context.
 /// </summary>
-/// <param name="pHandle">Input XbSymbolContextHandle handler.</param>
-void XbSymbolContext_Release(XbSymbolContextHandle pHandle);
+/// <param name="pHandle">Input XbSDBContextHandle handler.</param>
+void XbSDBContext_Release(XbSDBContextHandle pHandle);
 
 #ifdef __cplusplus
 }

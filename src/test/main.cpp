@@ -308,7 +308,7 @@ static void EmuRegisterSymbol(const char* library_str,
     if (xref_index == -1) {
         std::stringstream gen_str;
         gen_str << "Symbol could not be register due to xref index is -1: "
-            << XbSymbolDatabase_LibraryToString(library_flag) << " (b"
+            << XbSDB_LibraryToString(library_flag) << " (b"
             << std::dec << std::setfill('0') << std::setw(4) << build << ") 0x"
             << std::setfill('0') << std::setw(8) << std::hex << symbol_addr
             << " -> " << symbol_str;
@@ -336,12 +336,12 @@ static void EmuRegisterSymbol(const char* library_str,
 
             std::stringstream gen_str;
             gen_str << "Symbol names returned for same xref index: \n"
-                << XbSymbolDatabase_LibraryToString(hasSymbol.library_flag)
+                << XbSDB_LibraryToString(hasSymbol.library_flag)
                 << " (b" << std::dec << std::setfill('0') << std::setw(4)
                 << hasSymbol.build << ") 0x" << std::setfill('0')
                 << std::setw(8) << std::hex << hasSymbol.addr << " -> "
                 << hasSymbol.symbol << "\nvs\n"
-                << XbSymbolDatabase_LibraryToString(library_flag) << " (b"
+                << XbSDB_LibraryToString(library_flag) << " (b"
                 << std::dec << std::setfill('0') << std::setw(4) << build
                 << ") 0x" << std::setfill('0') << std::setw(8) << std::hex
                 << symbol_addr << " -> " << symbol_str;
@@ -355,7 +355,7 @@ static void EmuRegisterSymbol(const char* library_str,
 
     std::stringstream gen_str;
     gen_str << "Symbol Detected: "
-              << std::setw(8) << XbSymbolDatabase_LibraryToString(library_flag) << " (b"
+              << std::setw(8) << XbSDB_LibraryToString(library_flag) << " (b"
               << std::dec << std::setw(4) << std::setfill('0') << build
               << ") 0x" << std::setw(8) << std::hex
               << symbol_addr << " -> " << symbol_str;
@@ -436,7 +436,7 @@ static bool VerifyXbeIsBuiltWithXDK(const xbe_header* pXbeHeader,
     const char* section_str;
 
     // Output Symbol Database version
-    XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "XbSymbolDatabase_LibraryVersion: " + std::to_string(XbSymbolDatabase_LibraryVersion()));;
+    XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "XbSDB_LibraryVersion: " + std::to_string(XbSDB_LibraryVersion()));;
 
     // Store Certificate Details
     const auto& title_name = getXbeTitle(pXbeHeader);
@@ -475,34 +475,34 @@ static bool VerifyXbeIsBuiltWithXDK(const xbe_header* pXbeHeader,
         }
 
         // Translate string to flag for quicker assignment.
-        uint32_t lib_flag = XbSymbolDatabase_LibraryToFlag(LibraryName.c_str());
+        uint32_t lib_flag = XbSDB_LibraryToFlag(LibraryName.c_str());
         switch (lib_flag) {
-            case XbSymbolLib_D3D8:
+            case XBSDBLIB_D3D8:
                 lib_vers.d3d8 = pLibraryVersion[i].wBuildVersion;
                 break;
-            case XbSymbolLib_D3D8LTCG:
+            case XBSDBLIB_D3D8LTCG:
                 lib_vers.d3d8ltcg = pLibraryVersion[i].wBuildVersion;
                 break;
 #if 0
-            case XbSymbolLib_D3DX8:
+            case XBSDBLIB_D3DX8:
                 lib_vers.d3dx8 = pLibraryVersion[i].wBuildVersion;
                 break;
 #endif
-            case XbSymbolLib_DSOUND:
+            case XBSDBLIB_DSOUND:
                 lib_vers.dsound = pLibraryVersion[i].wBuildVersion;
                 break;
-            case XbSymbolLib_XACTENG:
+            case XBSDBLIB_XACTENG:
                 lib_vers.xacteng = pLibraryVersion[i].wBuildVersion;
                 break;
-            case XbSymbolLib_XAPILIB:
+            case XBSDBLIB_XAPILIB:
                 lib_vers.xapilib = pLibraryVersion[i].wBuildVersion;
                 break;
-            case XbSymbolLib_XGRAPHC:
+            case XBSDBLIB_XGRAPHC:
                 lib_vers.xgraphic = pLibraryVersion[i].wBuildVersion;
                 break;
-            case XbSymbolLib_XNET:
-            case XbSymbolLib_XNETN:
-            case XbSymbolLib_XNETS:
+            case XBSDBLIB_XNET:
+            case XBSDBLIB_XNETN:
+            case XBSDBLIB_XNETS:
                 lib_vers.xnet = pLibraryVersion[i].wBuildVersion;
                 // Technically, it is combined with XONLINE library. So, check
                 // if XONLINE doesn't exist then force check.
@@ -510,9 +510,9 @@ static bool VerifyXbeIsBuiltWithXDK(const xbe_header* pXbeHeader,
                     lib_vers.xonline = pLibraryVersion[i].wBuildVersion;
                 }
                 break;
-            case XbSymbolLib_XONLINE:
-            case XbSymbolLib_XONLINES:
-            case XbSymbolLib_XONLINLS:
+            case XBSDBLIB_XONLINE:
+            case XBSDBLIB_XONLINES:
+            case XBSDBLIB_XONLINLS:
                 lib_vers.xonline = pLibraryVersion[i].wBuildVersion;
                 // Technically, it is combined with XNET library. So, check if
                 // XNET doesn't exist then force check.
@@ -531,7 +531,7 @@ static bool VerifyXbeIsBuiltWithXDK(const xbe_header* pXbeHeader,
             section_str = reinterpret_cast<const char*>(
                 xb_start_addr + pSections[i].SectionNameAddr);
 
-            if (std::strncmp(section_str, Lib_DSOUND, 8) == 0) {
+            if (std::strncmp(section_str, LIB_DSOUND, 8) == 0) {
                 lib_vers.dsound = buildVersion;
                 XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Library Name[ ?]      : DSOUND   (b" + std::to_string(buildVersion) + ")");
                 gen_result.SetLongValue(section_libs, sect_libs.DSOUND, buildVersion);
@@ -564,7 +564,7 @@ static bool GetXbSymbolDatabaseFilters(const xbe_header* pXbeHeader,
     std::string error_msg = "unknown";
 
     library_output.count =
-        XbSymbolDatabase_GenerateLibraryFilter(pXbeHeader, nullptr);
+        XbSDB_GenerateLibraryFilter(pXbeHeader, nullptr);
 
     if (library_output.count != 0) {
         library_output.filters = new XbSDBLibrary[library_output.count];
@@ -580,10 +580,10 @@ static bool GetXbSymbolDatabaseFilters(const xbe_header* pXbeHeader,
         goto scanError;
     }
 
-    (void)XbSymbolDatabase_GenerateLibraryFilter(pXbeHeader, &library_output);
+    (void)XbSDB_GenerateLibraryFilter(pXbeHeader, &library_output);
 
     section_output.count =
-        XbSymbolDatabase_GenerateSectionFilter(pXbeHeader, nullptr, is_raw);
+        XbSDB_GenerateSectionFilter(pXbeHeader, nullptr, is_raw);
 
     if (section_output.count != 0) {
         section_output.filters = new XbSDBSection[section_output.count];
@@ -599,7 +599,7 @@ static bool GetXbSymbolDatabaseFilters(const xbe_header* pXbeHeader,
         goto scanError;
     }
 
-    (void)XbSymbolDatabase_GenerateSectionFilter(pXbeHeader, &section_output, is_raw);
+    (void)XbSDB_GenerateSectionFilter(pXbeHeader, &section_output, is_raw);
     return true;
 
 scanError:
@@ -673,7 +673,7 @@ static void ScanXbe(const xbe_header* pXbeHeader, bool is_raw)
     // start.
     g_SymbolAddresses.clear();
 
-    XbSymbolContextHandle pHandle;
+    XbSDBContextHandle pHandle;
     XbSDBLibraryHeader library_input = {};
     XbSDBSectionHeader section_input = {};
 
@@ -681,39 +681,39 @@ static void ScanXbe(const xbe_header* pXbeHeader, bool is_raw)
         return;
     }
 
-    xbaddr kt_addr = XbSymbolDatabase_GetKernelThunkAddress(pXbeHeader);
+    xbaddr kt_addr = XbSDB_GetKernelThunkAddress(pXbeHeader);
 
-    if (!XbSymbolDatabase_CreateXbSymbolContext(&pHandle, EmuRegisterSymbol, library_input, section_input, kt_addr)) {
-        error_msg = "Unable to create XbSymbolContext handle.";
+    if (!XbSDB_CreateContext(&pHandle, EmuRegisterSymbol, library_input, section_input, kt_addr)) {
+        error_msg = "Unable to create XbSDBContext handle.";
     }
     else {
 
         // delete[] library_input.filters;
         // library_input.filters = nullptr;
-        // We no longer need section_input variable as XbSymbolDatabase_CreateXbSymbolContext will store it internally.
+        // We no longer need section_input variable as XbSDB_CreateContext will store it internally.
         delete[] section_input.filters;
         section_input.filters = nullptr;
 
         // For output various false detection messages.
-        XbSymbolContext_SetBypassBuildVersionLimit(pHandle, true);
-        XbSymbolContext_SetContinuousSigScan(pHandle, true);
-        XbSymbolContext_SetFirstDetectAddressOnly(pHandle, true);
+        XbSDBContext_SetBypassBuildVersionLimit(pHandle, true);
+        XbSDBContext_SetContinuousSigScan(pHandle, true);
+        XbSDBContext_SetFirstDetectAddressOnly(pHandle, true);
 
-        XbSymbolContext_ScanManual(pHandle);
+        XbSDBContext_ScanManual(pHandle);
 
 #ifdef DISABLE_MULTI_THREAD
-        XbSymbolContext_ScanAllLibraryFilter(pHandle);
+        XbSDBContext_ScanAllLibraryFilter(pHandle);
 #else
         std::vector<std::thread> threads;
         uint32_t library_completion = 0;
-        auto ScanLibraryFunc = [&library_completion](XbSymbolContextHandle pHandle,
+        auto ScanLibraryFunc = [&library_completion](XbSDBContextHandle pHandle,
                                   const XbSDBLibrary* library) -> void {
-            uint32_t dependency_flags = XbSymbolContext_GetLibraryDependencies(pHandle, library->flag);
+            uint32_t dependency_flags = XbSDBContext_GetLibraryDependencies(pHandle, library->flag);
             if (dependency_flags) {
                 do {
                     std::this_thread::sleep_for(std::chrono::milliseconds(100));
                     std::lock_guard lck(mtx_context);
-                    if (XbSymbolDatabase_CheckDependencyCompletion(library_completion, dependency_flags)) {
+                    if (XbSDB_CheckDependencyCompletion(library_completion, dependency_flags)) {
                         break;
                     }
                 } while (true);
@@ -728,13 +728,13 @@ static void ScanXbe(const xbe_header* pXbeHeader, bool is_raw)
                 // Start library scan against symbol database we want to
                 // search for address of symbols and xreferences.
                 CurrentUnResolvedXRefs +=
-                    XbSymbolContext_ScanLibrary(pHandle, library, xref_first_pass);
+                    XbSDBContext_ScanLibrary(pHandle, library, xref_first_pass);
 
                 xref_first_pass = false;
             } while (LastUnResolvedXRefs < CurrentUnResolvedXRefs);
 
             std::lock_guard lck(mtx_context);
-            XbSymbolDatabase_SetLibraryCompletion(library_completion, library->flag);
+            XbSDB_SetLibraryCompletion(library_completion, library->flag);
         };
 
         for (unsigned i = 0; i < library_input.count; i++) {
@@ -749,9 +749,9 @@ static void ScanXbe(const xbe_header* pXbeHeader, bool is_raw)
         delete[] library_input.filters;
         library_input.filters = nullptr;
 
-        XbSymbolContext_RegisterXRefs(pHandle);
+        XbSDBContext_RegisterXRefs(pHandle);
 
-        XbSymbolContext_Release(pHandle);
+        XbSDBContext_Release(pHandle);
 
         std::cout << "\n";
 
@@ -912,13 +912,13 @@ int main(int argc, char** argv)
         g_verbose_mode = true;
     }
 
-    XbSymbolDatabase_SetOutputVerbosity(xbsdb_output);
-    XbSymbolDatabase_SetOutputMessage(XbSDb_OutputMessage);
-    XbSDB_test_error = XbSymbolDatabase_TestOOVPAs();
+    XbSDB_SetOutputVerbosity(xbsdb_output);
+    XbSDB_SetOutputMessage(XbSDb_OutputMessage);
+    XbSDB_test_error = XbSDB_TestOOVPAs();
 
     XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO,
                                "Total symbols in XbSymbolDatabase: " +
-                                   std::to_string(XbSymbolDatabase_GetTotalSymbols(XbSymbolLib_ALL)));
+                                   std::to_string(XbSDB_GetTotalSymbols(XBSDBLIB_ALL)));
 
     // Perform self test to verify all symbol registers are validated.
     if (!run_test_verify_libraries()) {
@@ -1032,7 +1032,7 @@ int main(int argc, char** argv)
         // Now report what's missing compared to other.
         for (const auto& xref : g_SymbolAddresses) {
             std::cout << "ERROR  : g_SymbolAddressesRaw is missing "
-                      << XbSymbolDatabase_LibraryToString(xref.second.library_flag)
+                      << XbSDB_LibraryToString(xref.second.library_flag)
                       << " (b" << std::dec << std::setfill('0') << std::setw(4)
                       << xref.second.build
                       << ") 0x" << std::hex << std::setfill('0') << std::setw(8)
@@ -1041,7 +1041,7 @@ int main(int argc, char** argv)
         }
         for (const auto& xref : g_SymbolAddressesRaw) {
             std::cout << "ERROR  : g_SymbolAddresses is missing "
-                      << XbSymbolDatabase_LibraryToString(xref.second.library_flag)
+                      << XbSDB_LibraryToString(xref.second.library_flag)
                       << " (b" << std::dec << std::setfill('0') << std::setw(4)
                       << xref.second.build
                       << ") 0x" << std::hex << std::setfill('0') << std::setw(8)

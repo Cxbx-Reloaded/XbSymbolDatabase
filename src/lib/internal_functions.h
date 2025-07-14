@@ -9,7 +9,7 @@
 // * internal functions designed for XbSymbolDatabase purpose
 // ******************************************************************
 
-static SymbolDatabaseList* internal_FindLibraryDB(uint32_t library_flag, unsigned* db_i)
+static SymbolDatabaseList* XbSDBi_FindLibraryDB(uint32_t library_flag, unsigned* db_i)
 {
     unsigned db = *db_i;
     for (; db < SymbolDBListCount; db++) {
@@ -25,19 +25,19 @@ static SymbolDatabaseList* internal_FindLibraryDB(uint32_t library_flag, unsigne
 
 // NOTE: PatrickvL state the arguments are named differently and the function does something that has another meaning,
 //       the implementation could be changed if the need ever arises.
-static inline void GetXRefEntry(OOVPA* oovpa, int index, uint32_t* xref_out, uint16_t* offset_out)
+static inline void XbSDBi_GetXRefEntry(OOVPA* oovpa, int index, uint32_t* xref_out, uint16_t* offset_out)
 {
     *xref_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].xref.index;
     *offset_out = ((LOOVPA*)oovpa)->Lovp[index].offset;
 }
 
-static inline void GetOovpaEntry(OOVPA* oovpa, int index, uint32_t* offset_out, uint8_t* value_out)
+static inline void XbSDBi_GetOovpaEntry(OOVPA* oovpa, int index, uint32_t* offset_out, uint8_t* value_out)
 {
     *offset_out = (unsigned int)((LOOVPA*)oovpa)->Lovp[index].offset;
     *value_out = (uint8_t)((LOOVPA*)oovpa)->Lovp[index].value;
 }
 
-static inline bool MatchXRefAddr(memptr_t cur, uintptr_t xb_start_virt_addr, xbaddr XRefAddr)
+static inline bool XbSDBi_MatchXRefAddr(memptr_t cur, uintptr_t xb_start_virt_addr, xbaddr XRefAddr)
 {
     xbaddr ActualAddr = *(xbaddr*)(cur);
     // check if PC-relative or direct reference matches XRef
@@ -47,7 +47,7 @@ static inline bool MatchXRefAddr(memptr_t cur, uintptr_t xb_start_virt_addr, xba
     return true;
 }
 
-static bool CompareOOVPAToAddress(iXbSymbolContext* pContext, OOVPA* Oovpa, memptr_t cur, uintptr_t xb_start_virt_addr)
+static bool XbSDBi_CompareOOVPAToAddress(XbSDBiContext* pContext, OOVPA* Oovpa, memptr_t cur, uintptr_t xb_start_virt_addr)
 {
     uint32_t v = 0; // verification counter
 
@@ -57,7 +57,7 @@ static bool CompareOOVPAToAddress(iXbSymbolContext* pContext, OOVPA* Oovpa, memp
         uint16_t Offset;
 
         // get currently registered (un)known address
-        GetXRefEntry(Oovpa, v, &XRef, &Offset);
+        XbSDBi_GetXRefEntry(Oovpa, v, &XRef, &Offset);
         xbaddr XRefAddr = pContext->xref_database[XRef];
         // Undetermined XRef cannot be checked yet
         // (XbSymbolLocateFunction already checked this, but this check
@@ -70,7 +70,7 @@ static bool CompareOOVPAToAddress(iXbSymbolContext* pContext, OOVPA* Oovpa, memp
             continue;
 
         // check if PC-relative or direct reference matches XRef
-        if (!MatchXRefAddr(cur + Offset, xb_start_virt_addr, XRefAddr))
+        if (!XbSDBi_MatchXRefAddr(cur + Offset, xb_start_virt_addr, XRefAddr))
             return false;
     }
 
@@ -80,7 +80,7 @@ static bool CompareOOVPAToAddress(iXbSymbolContext* pContext, OOVPA* Oovpa, memp
         uint8_t ExpectedValue;
 
         // get offset + value pair
-        GetOovpaEntry(Oovpa, v, &Offset, &ExpectedValue);
+        XbSDBi_GetOovpaEntry(Oovpa, v, &Offset, &ExpectedValue);
         uint8_t ActualValue = *(uint8_t*)(cur + Offset);
         if (ActualValue != ExpectedValue)
             return false;
@@ -91,28 +91,28 @@ static bool CompareOOVPAToAddress(iXbSymbolContext* pContext, OOVPA* Oovpa, memp
 }
 
 // Return if the given (XRef'erenced) is not set yet.
-static inline bool internal_IsXRefUnset(uint16_t XRef)
+static inline bool XbSDBi_IsXRefUnset(uint16_t XRef)
 {
     return (XRef == (uint16_t)XREF_ADDR_UNDETERMINED) || (XRef == XREF_ADDR_DERIVE);
 }
 
 // Return if the given (XRef'erenced) address is not set yet.
-static inline bool internal_IsXRefAddrUnset(xbaddr XRefAddr)
+static inline bool XbSDBi_IsXRefAddrUnset(xbaddr XRefAddr)
 {
     return (XRefAddr == XREF_ADDR_UNDETERMINED) || (XRefAddr == XREF_ADDR_DERIVE);
 }
 
 // Return if the given (XRef'erenced) address is valid.
-static bool internal_IsXRefAddrValid(xbaddr XRefAddr)
+static bool XbSDBi_IsXRefAddrValid(xbaddr XRefAddr)
 {
     return (XRefAddr + 1) > (XREF_ADDR_DERIVE + 1); // Implies also not equal to XREF_ADDR_UNDETERMINED (-1) nor XREF_ADDR_NOT_FOUND (0)
 }
 
-static xbaddr internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(iXbSymbolContext* pContext,
-                                                                        const OOVPATable* pSymbol,
-                                                                        const OOVPARevision* pRevision,
-                                                                        const char* xref_str,
-                                                                        XRefDatabase xref_target)
+static xbaddr XbSDBi_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(XbSDBiContext* pContext,
+                                                                      const OOVPATable* pSymbol,
+                                                                      const OOVPARevision* pRevision,
+                                                                      const char* xref_str,
+                                                                      XRefDatabase xref_target)
 {
     if (pRevision->Oovpa->XRefCount == 0) {
         // Should not be triggered when there is no xref listed.
@@ -144,23 +144,23 @@ static xbaddr internal_OOVPARevision_ConvertXRefRelativeAddrtToVirtAddr(iXbSymbo
 
 // Obligatory function for setting an address in the XRefDataBase
 // (only initialization may write to XRefDataBase outside of this function).
-static inline void internal_SetXRefDatabase(iXbSymbolContext* pContext, eLibraryType iLibraryType, uint32_t XRef, xbaddr XRefAddr)
+static inline void XbSDBi_SetXRefDatabase(XbSDBiContext* pContext, eLibraryType iLibraryType, uint32_t XRef, xbaddr XRefAddr)
 {
     // Count when changing from an initial value to a valid value
-    if (internal_IsXRefAddrUnset(pContext->xref_database[XRef])) {
+    if (XbSDBi_IsXRefAddrUnset(pContext->xref_database[XRef])) {
         pContext->library_contexts[iLibraryType].xref_registered++;
     }
     pContext->xref_database[XRef] = XRefAddr; // Besides initialization, this is the only code that writes values to XRefDataBase
 }
 
 // locate the given symbol, searching within lower and upper bounds
-static void* internal_LocateSymbol(iXbSymbolContext* pContext,
-                                   eLibraryType iLibraryType,
-                                   const char* szSymbolName,
-                                   uint16_t version,
-                                   OOVPA* Oovpa,
-                                   const XbSDBSection* pSection,
-                                   bool xref_first_pass)
+static void* XbSDBi_LocateSymbol(XbSDBiContext* pContext,
+                                 eLibraryType iLibraryType,
+                                 const char* szSymbolName,
+                                 uint16_t version,
+                                 OOVPA* Oovpa,
+                                 const XbSDBSection* pSection,
+                                 bool xref_first_pass)
 {
     memptr_t buffer_upper = (memptr_t)pSection->buffer_lower + pSection->buffer_size;
     uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
@@ -178,7 +178,7 @@ static void* internal_LocateSymbol(iXbSymbolContext* pContext,
         uint16_t Offset;
 
         // get currently registered (un)known address
-        GetXRefEntry(Oovpa, v, &XRef, &Offset);
+        XbSDBi_GetXRefEntry(Oovpa, v, &XRef, &Offset);
         xbaddr XRefAddr = pContext->xref_database[XRef];
         // Undetermined XRef cannot be checked yet
         if (XRefAddr == XREF_ADDR_UNDETERMINED)
@@ -199,7 +199,7 @@ static void* internal_LocateSymbol(iXbSymbolContext* pContext,
         uint32_t Offset;
         uint8_t Value; // ignored
 
-        GetOovpaEntry(Oovpa, count - 1, &Offset, &Value);
+        XbSDBi_GetOovpaEntry(Oovpa, count - 1, &Offset, &Value);
         buffer_upper -= Offset;
     }
 
@@ -209,7 +209,7 @@ static void* internal_LocateSymbol(iXbSymbolContext* pContext,
 
     // search all of the buffer memory range
     for (memptr_t cur = pSection->buffer_lower; cur < buffer_upper; cur++) {
-        if (CompareOOVPAToAddress(pContext, Oovpa, cur, virt_start_relative)) {
+        if (XbSDBi_CompareOOVPAToAddress(pContext, Oovpa, cur, virt_start_relative)) {
 
             // Increase the counter whenever detected address is found.
             counter++;
@@ -224,7 +224,7 @@ static void* internal_LocateSymbol(iXbSymbolContext* pContext,
                 derive_indices ^= (1 << derive_index);
 
                 // get currently registered (un)known address
-                GetXRefEntry(Oovpa, derive_index, &XRef, &Offset);
+                XbSDBi_GetXRefEntry(Oovpa, derive_index, &XRef, &Offset);
 
                 // Calculate the address where the XRef resides and read the address it points to
                 uint32_t XRefAddr = *(uint32_t*)(cur + Offset);
@@ -246,14 +246,14 @@ static void* internal_LocateSymbol(iXbSymbolContext* pContext,
                 // Check if selection is default (zero) then perform the standard procedure.
                 if (detect_selection == 0) {
                     if (!pContext->scan_first_detect || (pContext->scan_first_detect && symbol_address == NULL)) {
-                        internal_SetXRefDatabase(pContext, iLibraryType, XRef, XRefAddr);
+                        XbSDBi_SetXRefDatabase(pContext, iLibraryType, XRef, XRefAddr);
                     }
                 }
                 // Otherwise, perform a detected selection procedure.
                 else {
                     // If counter match the target selection, then save the ref address.
                     if (detect_selection == counter) {
-                        internal_SetXRefDatabase(pContext, iLibraryType, XRef, XRefAddr);
+                        XbSDBi_SetXRefDatabase(pContext, iLibraryType, XRef, XRefAddr);
                     }
                 }
             }
@@ -300,62 +300,62 @@ static void* internal_LocateSymbol(iXbSymbolContext* pContext,
 }
 
 // Old Method - However, the library's scan method doesn't have self-register support implemented yet.
-// NOTE: Do not use direct call to this function. Use internal_RegisterValidXRefAddr_M macro instead.
-static void internal_RegisterValidXRefAddr(iXbSymbolContext* pContext,
-                                           const char* library_name,
-                                           uint32_t library_flag,
-                                           uint32_t XRefIndex,
-                                           uint16_t version,
-                                           const char* symbol_name,
-                                           XbSDBSymbolType symbol_type,
-                                           XbSDBCallType call_type,
-                                           unsigned param_count,
-                                           const XbSDBSymbolParam* param_list)
+// NOTE: Do not use direct call to this function. Use XbSDBi_RegisterValidXRefAddr_M macro instead.
+static void XbSDBi_RegisterValidXRefAddr(XbSDBiContext* pContext,
+                                         const char* library_name,
+                                         uint32_t library_flag,
+                                         uint32_t XRefIndex,
+                                         uint16_t version,
+                                         const char* symbol_name,
+                                         XbSDBSymbolType symbol_type,
+                                         XbSDBCallType call_type,
+                                         unsigned param_count,
+                                         const XbSDBSymbolParam* param_list)
 {
     xbaddr xSymbolAddr = pContext->xref_database[XRefIndex];
 
-    if (internal_IsXRefAddrValid(xSymbolAddr)) {
+    if (XbSDBi_IsXRefAddrValid(xSymbolAddr)) {
         pContext->register_func(library_name, library_flag, XRefIndex, symbol_name, xSymbolAddr, version, symbol_type, call_type, param_count, param_list);
     }
 }
 
 // Always use this to be aware of manual register xrefs such as variables.
-#define internal_RegisterValidXRefAddr_M(...) \
-    SYMBOL_COUNTER_VALUE;                     \
-    internal_RegisterValidXRefAddr(__VA_ARGS__);
+#define XbSDBi_RegisterValidXRefAddr_M(...) \
+    SYMBOL_COUNTER_VALUE;                   \
+    XbSDBi_RegisterValidXRefAddr(__VA_ARGS__);
 
 // New Method
-static void internal_RegisterSelfValidXRefAddr(iXbSymbolContext* pContext,
-                                               const iXbSymbolLibrarySession* pLibrarySession,
-                                               const OOVPATable* pSymbol,
-                                               uint16_t version)
+static void XbSDBi_RegisterSelfValidXRefAddr(XbSDBiContext* pContext,
+                                             const XbSDBiLibrarySession* pLibrarySession,
+                                             const OOVPATable* pSymbol,
+                                             uint16_t version)
 {
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
 
     xbaddr xSymbolAddr = pContext->xref_database[pSymbol->xref];
 
-    if (internal_IsXRefAddrValid(xSymbolAddr)) {
+    if (XbSDBi_IsXRefAddrValid(xSymbolAddr)) {
         pContext->register_func(pLibrary->name, pLibrary->flag, pSymbol->xref, pSymbol->szSymbolName, xSymbolAddr, version, pSymbol->symbol_type, pSymbol->call_type, pSymbol->param_count, pSymbol->param_list);
     }
 }
 
 // Old Method
-static void internal_RegisterXRef(iXbSymbolContext* pContext,
-                                  const iXbSymbolLibrarySession* pLibrarySession,
-                                  uint32_t XRefIndex,
-                                  uint16_t version,
-                                  const char* symbol_name,
-                                  uint32_t symbol_addr,
-                                  XbSDBSymbolType symbol_type,
-                                  XbSDBCallType call_type,
-                                  unsigned param_count,
-                                  const XbSDBSymbolParam* param_list,
-                                  bool do_register)
+static void XbSDBi_RegisterXRef(XbSDBiContext* pContext,
+                                const XbSDBiLibrarySession* pLibrarySession,
+                                uint32_t XRefIndex,
+                                uint16_t version,
+                                const char* symbol_name,
+                                uint32_t symbol_addr,
+                                XbSDBSymbolType symbol_type,
+                                XbSDBCallType call_type,
+                                unsigned param_count,
+                                const XbSDBSymbolParam* param_list,
+                                bool do_register)
 {
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
     xbaddr xRefAddr = pContext->xref_database[XRefIndex];
 
-    if (internal_IsXRefAddrValid(xRefAddr)) {
+    if (XbSDBi_IsXRefAddrValid(xRefAddr)) {
 
         if (pContext->xref_database[XRefIndex] != symbol_addr) {
             output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
@@ -368,40 +368,40 @@ static void internal_RegisterXRef(iXbSymbolContext* pContext,
         }
     }
 
-    internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XRefIndex, symbol_addr);
+    XbSDBi_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, XRefIndex, symbol_addr);
     if (do_register && pContext->register_func != NULL) {
         pContext->register_func(pLibrary->name, pLibrary->flag, XRefIndex, symbol_name, symbol_addr, version, symbol_type, call_type, param_count, param_list);
     }
 }
 
 // New method
-static void internal_RegisterXRefHelper(iXbSymbolContext* pContext,
-                                        const iXbSymbolLibrarySession* pLibrarySection,
-                                        const OOVPATable* pSymbol,
-                                        uint16_t version,
-                                        uint32_t symbol_addr,
-                                        bool do_register)
+static void XbSDBi_RegisterXRefHelper(XbSDBiContext* pContext,
+                                      const XbSDBiLibrarySession* pLibrarySection,
+                                      const OOVPATable* pSymbol,
+                                      uint16_t version,
+                                      uint32_t symbol_addr,
+                                      bool do_register)
 {
-    internal_RegisterXRef(pContext, pLibrarySection, pSymbol->xref, version, pSymbol->szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->call_type, pSymbol->param_count, pSymbol->param_list, do_register);
+    XbSDBi_RegisterXRef(pContext, pLibrarySection, pSymbol->xref, version, pSymbol->szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->call_type, pSymbol->param_count, pSymbol->param_list, do_register);
 }
 
 // (Old / Manual) method
-static void internal_RegisterSymbolManual(iXbSymbolContext* pContext,
-                                          const iXbSymbolLibrarySession* pLibrarySession,
-                                          const XRefDatabase xref_index,
-                                          uint16_t version,
-                                          const char* symbol_name,
-                                          uint32_t symbol_addr,
-                                          const XbSDBSymbolType symbol_type,
-                                          const XbSDBCallType call_type,
-                                          const unsigned param_count,
-                                          const XbSDBSymbolParam* param_list)
+static void XbSDBi_RegisterSymbolManual(XbSDBiContext* pContext,
+                                        const XbSDBiLibrarySession* pLibrarySession,
+                                        const XRefDatabase xref_index,
+                                        uint16_t version,
+                                        const char* symbol_name,
+                                        uint32_t symbol_addr,
+                                        const XbSDBSymbolType symbol_type,
+                                        const XbSDBCallType call_type,
+                                        const unsigned param_count,
+                                        const XbSDBSymbolParam* param_list)
 {
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
 
     // If XRef is not found, save it then register once.
-    if (internal_IsXRefAddrUnset(pContext->xref_database[xref_index])) {
-        internal_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, xref_index, symbol_addr);
+    if (XbSDBi_IsXRefAddrUnset(pContext->xref_database[xref_index])) {
+        XbSDBi_SetXRefDatabase(pContext, pLibrarySession->iLibraryType, xref_index, symbol_addr);
         if (pContext->register_func != NULL) {
             pContext->register_func(pLibrary->name, pLibrary->flag, xref_index, symbol_name, symbol_addr, version, symbol_type, call_type, param_count, param_list);
         }
@@ -409,23 +409,23 @@ static void internal_RegisterSymbolManual(iXbSymbolContext* pContext,
 }
 
 // Use _M suffix only, if OOVPA signature is not in database.
-#define internal_RegisterSymbol_M(...) \
-    SYMBOL_COUNTER_VALUE;              \
-    internal_RegisterSymbolManual(__VA_ARGS__);
+#define XbSDBi_RegisterSymbol_M(...) \
+    SYMBOL_COUNTER_VALUE;            \
+    XbSDBi_RegisterSymbolManual(__VA_ARGS__);
 
 // New method
-static void internal_RegisterSymbol(iXbSymbolContext* pContext,
-                                    const iXbSymbolLibrarySession* pLibrarySession,
-                                    const OOVPATable* pSymbol,
-                                    uint16_t version,
-                                    uint32_t symbol_addr)
+static void XbSDBi_RegisterSymbol(XbSDBiContext* pContext,
+                                  const XbSDBiLibrarySession* pLibrarySession,
+                                  const OOVPATable* pSymbol,
+                                  uint16_t version,
+                                  uint32_t symbol_addr)
 {
-    // forward to internal_RegisterSymbolManual to avoid need to copy paste between two identical functions.
-    internal_RegisterSymbolManual(pContext, pLibrarySession, pSymbol->xref, version, pSymbol->szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->call_type, pSymbol->param_count, pSymbol->param_list);
+    // forward to XbSDBi_RegisterSymbolManual to avoid need to copy paste between two identical functions.
+    XbSDBi_RegisterSymbolManual(pContext, pLibrarySession, pSymbol->xref, version, pSymbol->szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->call_type, pSymbol->param_count, pSymbol->param_list);
 }
 
 
-static OOVPATable* internal_OOVPATable_FindBySymbolName(SymbolDatabaseList* LibraryDB, const char* szSymbolName, unsigned scan_type)
+static OOVPATable* XbSDBi_OOVPATable_FindBySymbolName(SymbolDatabaseList* LibraryDB, const char* szSymbolName, unsigned scan_type)
 {
     OOVPATableList* Symbols = LibraryDB->Symbols;
     for (unsigned i = 0; i < Symbols->Count; i++) {
@@ -442,7 +442,7 @@ static OOVPATable* internal_OOVPATable_FindBySymbolName(SymbolDatabaseList* Libr
     return NULL;
 }
 
-static OOVPATable* internal_OOVPATable_FindByReference(SymbolDatabaseList* LibraryDB, uint16_t xref_index, unsigned scan_type)
+static OOVPATable* XbSDBi_OOVPATable_FindByReference(SymbolDatabaseList* LibraryDB, uint16_t xref_index, unsigned scan_type)
 {
     OOVPATableList* Symbols = LibraryDB->Symbols;
     for (unsigned i = 0; i < Symbols->Count; i++) {
@@ -459,23 +459,23 @@ static OOVPATable* internal_OOVPATable_FindByReference(SymbolDatabaseList* Libra
     return NULL;
 }
 
-#define internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, xref)                                          \
-    pSymbol = internal_OOVPATable_FindByReference(pLibraryDB, XREF_##xref, DB_ST_MANUAL);                            \
+#define XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbol, xref)                                            \
+    pSymbol = XbSDBi_OOVPATable_FindByReference(pLibraryDB, XREF_##xref, DB_ST_MANUAL);                              \
     if (!pSymbol) {                                                                                                  \
         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Unable to find " #xref " entry in database..."); \
         return false;                                                                                                \
     }
 
-#define internal_RegisterSymbolHelper(pContext, pLibrarySession, pSymbol, szSymbolName, version, symbol_addr) \
-    internal_RegisterSymbolManual(pContext, pLibrarySession, pSymbol->xref, version, szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->call_type, pSymbol->param_count, pSymbol->param_list)
+#define XbSDBi_RegisterSymbolHelper(pContext, pLibrarySession, pSymbol, szSymbolName, version, symbol_addr) \
+    XbSDBi_RegisterSymbolManual(pContext, pLibrarySession, pSymbol->xref, version, szSymbolName, symbol_addr, pSymbol->symbol_type, pSymbol->call_type, pSymbol->param_count, pSymbol->param_list)
 
-static void internal_OOVPATable_scan(iXbSymbolContext* pContext,
-                                     const iXbSymbolLibrarySession* pLibrarySession,
-                                     const XbSDBSection* pSection,
-                                     const bool xref_first_pass,
-                                     const OOVPATable* pSymbol,
-                                     OOVPARevision** pRevisionReturn,
-                                     void** pAddressReturn)
+static void XbSDBi_OOVPATable_scan(XbSDBiContext* pContext,
+                                   const XbSDBiLibrarySession* pLibrarySession,
+                                   const XbSDBSection* pSection,
+                                   const bool xref_first_pass,
+                                   const OOVPATable* pSymbol,
+                                   OOVPARevision** pRevisionReturn,
+                                   void** pAddressReturn)
 {
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
@@ -491,7 +491,7 @@ static void internal_OOVPATable_scan(iXbSymbolContext* pContext,
             continue;
 
         // Search for each symbol's location using the OOVPA
-        void* symbol_addr = internal_LocateSymbol(pContext, iLibraryType, pSymbol->szSymbolName, pRevision->Version, pRevision->Oovpa, pSection, xref_first_pass);
+        void* symbol_addr = XbSDBi_LocateSymbol(pContext, iLibraryType, pSymbol->szSymbolName, pRevision->Version, pRevision->Oovpa, pSection, xref_first_pass);
         if (symbol_addr == 0) {
             continue;
         }
@@ -516,16 +516,16 @@ static void internal_OOVPATable_scan(iXbSymbolContext* pContext,
     *pRevisionReturn = pLastKnownRevision;
 }
 
-static void* internal_SymbolDatabaseList_ScanByReference(iXbSymbolContext* pContext,
-                                                         const iXbSymbolLibrarySession* pLibrarySession,
-                                                         SymbolDatabaseList* LibraryDB,
-                                                         const XbSDBSection* pSection,
-                                                         const uint16_t xref_index,
-                                                         const unsigned scan_type,
-                                                         const eFirstPass xref_first_pass,
-                                                         const eRegisterSymbol register_symbol,
-                                                         OOVPATable** pSymbolReturn,
-                                                         OOVPARevision** pRevisionReturn)
+static void* XbSDBi_SymbolDatabaseList_ScanByReference(XbSDBiContext* pContext,
+                                                       const XbSDBiLibrarySession* pLibrarySession,
+                                                       SymbolDatabaseList* LibraryDB,
+                                                       const XbSDBSection* pSection,
+                                                       const uint16_t xref_index,
+                                                       const unsigned scan_type,
+                                                       const eFirstPass xref_first_pass,
+                                                       const eRegisterSymbol register_symbol,
+                                                       OOVPATable** pSymbolReturn,
+                                                       OOVPARevision** pRevisionReturn)
 {
     OOVPARevision* pRevision = NULL;
     void* pSymbolAddr = NULL;
@@ -539,13 +539,13 @@ static void* internal_SymbolDatabaseList_ScanByReference(iXbSymbolContext* pCont
 
         if (Symbols->Table[i].xref == xref_index) {
             // If reference is found, then perform the scan process.
-            internal_OOVPATable_scan(pContext,
-                                     pLibrarySession,
-                                     pSection,
-                                     xref_first_pass,
-                                     Symbols->Table + i,
-                                     &pRevision,
-                                     &pSymbolAddr);
+            XbSDBi_OOVPATable_scan(pContext,
+                                   pLibrarySession,
+                                   pSection,
+                                   xref_first_pass,
+                                   Symbols->Table + i,
+                                   &pRevision,
+                                   &pSymbolAddr);
 
             // if symbol is found, then make the break to return the symbol entry.
             if (pSymbolAddr) {
@@ -556,7 +556,7 @@ static void* internal_SymbolDatabaseList_ScanByReference(iXbSymbolContext* pCont
                     *pRevisionReturn = pRevision;
                 }
                 if (register_symbol) {
-                    internal_RegisterSymbol(pContext, pLibrarySession, Symbols->Table + i, pRevision->Version, (xbaddr)(uintptr_t)pSymbolAddr);
+                    XbSDBi_RegisterSymbol(pContext, pLibrarySession, Symbols->Table + i, pRevision->Version, (xbaddr)(uintptr_t)pSymbolAddr);
                 }
                 break;
             }
@@ -565,22 +565,22 @@ static void* internal_SymbolDatabaseList_ScanByReference(iXbSymbolContext* pCont
     return pSymbolAddr;
 }
 
-static void internal_OOVPA_register(iXbSymbolContext* pContext,
-                                    const OOVPATable* Symbol,
-                                    const OOVPARevision* OovpaRevision,
-                                    const iXbSymbolLibrarySession* pLibrarySession,
-                                    xbaddr address)
+static void XbSDBi_OOVPA_register(XbSDBiContext* pContext,
+                                  const OOVPATable* Symbol,
+                                  const OOVPARevision* OovpaRevision,
+                                  const XbSDBiLibrarySession* pLibrarySession,
+                                  xbaddr address)
 {
     if (OovpaRevision != NULL) {
-        internal_RegisterSymbol(pContext, pLibrarySession, Symbol, OovpaRevision->Version, address);
+        XbSDBi_RegisterSymbol(pContext, pLibrarySession, Symbol, OovpaRevision->Version, address);
     }
 }
 
-static void internal_OOVPATableList_scan(iXbSymbolContext* pContext,
-                                         const iXbSymbolLibrarySession* pLibrarySession,
-                                         OOVPATableList* Symbols,
-                                         const XbSDBSection* pSection,
-                                         const bool xref_first_pass)
+static void XbSDBi_OOVPATableList_scan(XbSDBiContext* pContext,
+                                       const XbSDBiLibrarySession* pLibrarySession,
+                                       OOVPATableList* Symbols,
+                                       const XbSDBSection* pSection,
+                                       const bool xref_first_pass)
 {
     // traverse the full OOVPA table
     OOVPATable* pSymbolEnd = &Symbols->Table[Symbols->Count];
@@ -598,51 +598,51 @@ static void internal_OOVPATableList_scan(iXbSymbolContext* pContext,
         OOVPARevision* pLastKnownRevision = NULL;
         void* lastKnownSymbolAddr = 0;
 
-        internal_OOVPATable_scan(pContext,
-                                 pLibrarySession,
-                                 pSection,
-                                 xref_first_pass,
-                                 pSymbol,
-                                 &pLastKnownRevision,
-                                 &lastKnownSymbolAddr);
+        XbSDBi_OOVPATable_scan(pContext,
+                               pLibrarySession,
+                               pSection,
+                               xref_first_pass,
+                               pSymbol,
+                               &pLastKnownRevision,
+                               &lastKnownSymbolAddr);
 
         if (pLastKnownRevision != NULL) {
-            internal_OOVPA_register(pContext, pSymbol, pLastKnownRevision, pLibrarySession, (xbaddr)(uintptr_t)lastKnownSymbolAddr);
+            XbSDBi_OOVPA_register(pContext, pSymbol, pLastKnownRevision, pLibrarySession, (xbaddr)(uintptr_t)lastKnownSymbolAddr);
         }
     }
 }
 
-static eLibraryType internal_GetLibraryType(uint32_t library)
+static eLibraryType XbSDBi_GetLibraryType(uint32_t library)
 {
     switch (library) {
         default:
             return LT_UNKNOWN;
-        case XbSymbolLib_D3D8:
-        case XbSymbolLib_D3D8LTCG:
-        case XbSymbolLib_D3DX8:
+        case XBSDBLIB_D3D8:
+        case XBSDBLIB_D3D8LTCG:
+        case XBSDBLIB_D3DX8:
             return LT_D3D;
-        case XbSymbolLib_DSOUND:
-        case XbSymbolLib_XACTENG:
+        case XBSDBLIB_DSOUND:
+        case XBSDBLIB_XACTENG:
             return LT_AUDIO;
-        case XbSymbolLib_JVS:
+        case XBSDBLIB_JVS:
             return LT_JVS;
-        case XbSymbolLib_XAPILIB:
+        case XBSDBLIB_XAPILIB:
             return LT_XAPI;
-        case XbSymbolLib_XGRAPHC:
+        case XBSDBLIB_XGRAPHC:
             return LT_GRAPHIC;
-        case XbSymbolLib_XONLINE:
-        case XbSymbolLib_XONLINES:
-        case XbSymbolLib_XONLINLS:
-        case XbSymbolLib_XNET:
-        case XbSymbolLib_XNETS:
-        case XbSymbolLib_XNETN:
+        case XBSDBLIB_XONLINE:
+        case XBSDBLIB_XONLINES:
+        case XBSDBLIB_XONLINLS:
+        case XBSDBLIB_XNET:
+        case XBSDBLIB_XNETS:
+        case XBSDBLIB_XNETN:
             return LT_NETWORK;
     }
 }
 
-static bool internal_SetLibraryTypeStart(iXbSymbolContext* pContext, eLibraryType library_type)
+static bool XbSDBi_SetLibraryTypeStart(XbSDBiContext* pContext, eLibraryType library_type)
 {
-    if (!iXbSymbolContext_AllowScanLibrary(pContext)) {
+    if (!XbSDBiContext_AllowScanLibrary(pContext)) {
         return false;
     }
 
@@ -664,7 +664,7 @@ static bool internal_SetLibraryTypeStart(iXbSymbolContext* pContext, eLibraryTyp
     return ret;
 }
 
-static void internal_SetLibraryTypeEnd(iXbSymbolContext* pContext, eLibraryType library_type)
+static void XbSDBi_SetLibraryTypeEnd(XbSDBiContext* pContext, eLibraryType library_type)
 {
     // If library is active, deny the scan request.
     if (!pContext->library_contexts[library_type].is_active) {
@@ -675,7 +675,7 @@ static void internal_SetLibraryTypeEnd(iXbSymbolContext* pContext, eLibraryType 
     output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Library type inactive: %u", library_type);
 }
 
-static memptr_t internal_section_VirtToHostAddress(iXbSymbolContext* pContext, xbaddr virt_addr)
+static memptr_t XbSDBi_section_VirtToHostAddress(XbSDBiContext* pContext, xbaddr virt_addr)
 {
     memptr_t host_addr = NULL;
     XbSDBSection* section_filter = pContext->section_input.filters;
@@ -689,7 +689,7 @@ static memptr_t internal_section_VirtToHostAddress(iXbSymbolContext* pContext, x
     return host_addr;
 }
 
-static xbaddr internal_section_HostToVirtAddress(iXbSymbolContext* pContext, memptr_t host_addr)
+static xbaddr XbSDBi_section_HostToVirtAddress(XbSDBiContext* pContext, memptr_t host_addr)
 {
     xbaddr virt_addr = 0;
     XbSDBSection* section_filter = pContext->section_input.filters;
@@ -703,7 +703,7 @@ static xbaddr internal_section_HostToVirtAddress(iXbSymbolContext* pContext, mem
     return virt_addr;
 }
 
-static bool internal_LibraryFilterPermitScan(iXbSymbolContext* pContext, uint32_t library_flag)
+static bool XbSDBi_LibraryFilterPermitScan(XbSDBiContext* pContext, uint32_t library_flag)
 {
     if (pContext->library_filter == 0 || (pContext->library_filter & library_flag) > 0) {
         return true;
@@ -712,11 +712,11 @@ static bool internal_LibraryFilterPermitScan(iXbSymbolContext* pContext, uint32_
 }
 
 // Check & update if build version is higher than existing library flag.
-static void internal_LibraryFilterUpdateVersionIfGreater(XbSDBLibrary* filters,
-                                                         unsigned int count,
-                                                         uint32_t library_flags,
-                                                         uint16_t wBuildVersion,
-                                                         uint16_t QFEVersion)
+static void XbSDBi_LibraryFilterUpdateVersionIfGreater(XbSDBLibrary* filters,
+                                                       unsigned int count,
+                                                       uint32_t library_flags,
+                                                       uint16_t wBuildVersion,
+                                                       uint16_t QFEVersion)
 {
     for (unsigned filter_i = 0; filter_i < count; filter_i++) {
         if (filters[filter_i].flag & library_flags) {
@@ -732,15 +732,15 @@ static void internal_LibraryFilterUpdateVersionIfGreater(XbSDBLibrary* filters,
 }
 
 // Check & update existing library flag to new library flag.
-static void internal_LibraryFilterUpdateFlagIfExist(XbSDBLibrary* filters,
-                                                    unsigned int count,
-                                                    uint32_t library_flag_find,
-                                                    uint32_t library_flag_set)
+static void XbSDBi_LibraryFilterUpdateFlagIfExist(XbSDBLibrary* filters,
+                                                  unsigned int count,
+                                                  uint32_t library_flag_find,
+                                                  uint32_t library_flag_set)
 {
     for (unsigned filter_i = 0; filter_i < count; filter_i++) {
         if ((filters[filter_i].flag & library_flag_find) == library_flag_find) {
             filters[filter_i].flag = library_flag_set;
-            memcpy(filters[filter_i].name, XbSymbolDatabase_LibraryToString(library_flag_set), 8);
+            memcpy(filters[filter_i].name, XbSDB_LibraryToString(library_flag_set), 8);
         }
     }
 }

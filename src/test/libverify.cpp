@@ -130,7 +130,7 @@ bool match_library_db(std::map<uint32_t, symbol_result>& list,
         // If a match is not found, then we need to push the generic symbol
         // name into missing list.
         if (found_xref == list.end()) {
-            missing.push_back(XbSymbolDatabase_SymbolReferenceToString(xref->first));
+            missing.push_back(XbSDB_SymbolReferenceToString(xref->first));
             continue;
         }
 
@@ -461,28 +461,28 @@ bool run_test_verify_libraries()
     size_t error_count = 0;
     library_db lib_db;
     getLibraryD3D8(lib_db);
-    run_test_verify_library(Lib_D3D8, lib_db, error_count);
+    run_test_verify_library(LIB_D3D8, lib_db, error_count);
 
     getLibraryDSOUND(lib_db);
-    run_test_verify_library(Lib_DSOUND, lib_db, error_count);
+    run_test_verify_library(LIB_DSOUND, lib_db, error_count);
 
     getLibraryJVS(lib_db);
-    run_test_verify_library(Lib_JVS, lib_db, error_count);
+    run_test_verify_library(LIB_JVS, lib_db, error_count);
 
     getLibraryXACTENG(lib_db);
-    run_test_verify_library(Lib_XACTENG, lib_db, error_count);
+    run_test_verify_library(LIB_XACTENG, lib_db, error_count);
 
     getLibraryXAPILIB(lib_db);
-    run_test_verify_library(Lib_XAPILIB, lib_db, error_count);
+    run_test_verify_library(LIB_XAPILIB, lib_db, error_count);
 
     getLibraryXGRAPHIC(lib_db);
-    run_test_verify_library(Lib_XGRAPHC, lib_db, error_count);
+    run_test_verify_library(LIB_XGRAPHC, lib_db, error_count);
 
     getLibraryXNET(lib_db);
-    run_test_verify_library(Lib_XNET, lib_db, error_count);
+    run_test_verify_library(LIB_XNET, lib_db, error_count);
 
     getLibraryXONLINE(lib_db);
-    run_test_verify_library(Lib_XONLINE, lib_db, error_count);
+    run_test_verify_library(LIB_XONLINE, lib_db, error_count);
 
     if (error_count) {
         return false;
@@ -597,37 +597,37 @@ void run_test_verify_symbols(lib_versions& lib_vers,
 
     getLibraryD3D8(lib_db);
     if (lib_vers.d3d8ltcg) {
-        constexpr auto XbSymbolLib_D3D8LTCG_flags =
-            XbSymbolLib_D3D8LTCG | XbSymbolLib_D3D8;
-        run_test_verify_symbol(symbols_list, Lib_D3D8LTCG, lib_vers.d3d8ltcg, XbSymbolLib_D3D8LTCG_flags, lib_db, full_lib_count, error_count);
+        constexpr auto XBSDBLIB_D3D8LTCG_flags =
+            XBSDBLIB_D3D8LTCG | XBSDBLIB_D3D8;
+        run_test_verify_symbol(symbols_list, LIB_D3D8LTCG, lib_vers.d3d8ltcg, XBSDBLIB_D3D8LTCG_flags, lib_db, full_lib_count, error_count);
     }
     else {
-        run_test_verify_symbol(symbols_list, Lib_D3D8, lib_vers.d3d8, XbSymbolLib_D3D8, lib_db, full_lib_count, error_count);
+        run_test_verify_symbol(symbols_list, LIB_D3D8, lib_vers.d3d8, XBSDBLIB_D3D8, lib_db, full_lib_count, error_count);
     }
 
     getLibraryDSOUND(lib_db);
-    run_test_verify_symbol(symbols_list, Lib_DSOUND, lib_vers.dsound, XbSymbolLib_DSOUND, lib_db, full_lib_count, error_count);
+    run_test_verify_symbol(symbols_list, LIB_DSOUND, lib_vers.dsound, XBSDBLIB_DSOUND, lib_db, full_lib_count, error_count);
 
     getLibraryJVS(lib_db);
-    run_test_verify_symbol(symbols_list, Lib_JVS, lib_vers.jvs, XbSymbolLib_JVS, lib_db, full_lib_count, error_count);
+    run_test_verify_symbol(symbols_list, LIB_JVS, lib_vers.jvs, XBSDBLIB_JVS, lib_db, full_lib_count, error_count);
 
     getLibraryXACTENG(lib_db);
-    run_test_verify_symbol(symbols_list, Lib_XACTENG, lib_vers.xacteng, XbSymbolLib_XACTENG, lib_db, full_lib_count, error_count);
+    run_test_verify_symbol(symbols_list, LIB_XACTENG, lib_vers.xacteng, XBSDBLIB_XACTENG, lib_db, full_lib_count, error_count);
 
     getLibraryXAPILIB(lib_db);
-    run_test_verify_symbol(symbols_list, Lib_XAPILIB, lib_vers.xapilib, XbSymbolLib_XAPILIB, lib_db, full_lib_count, error_count);
+    run_test_verify_symbol(symbols_list, LIB_XAPILIB, lib_vers.xapilib, XBSDBLIB_XAPILIB, lib_db, full_lib_count, error_count);
 
     getLibraryXGRAPHIC(lib_db);
-    run_test_verify_symbol(symbols_list, Lib_XGRAPHC, lib_vers.xgraphic, XbSymbolLib_XGRAPHC, lib_db, full_lib_count, error_count);
+    run_test_verify_symbol(symbols_list, LIB_XGRAPHC, lib_vers.xgraphic, XBSDBLIB_XGRAPHC, lib_db, full_lib_count, error_count);
 
     getLibraryXNET(lib_db);
-    constexpr auto XbSymbolLib_XNET_flags =
-        XbSymbolLib_XNET | XbSymbolLib_XNETS | XbSymbolLib_XNETN |
-        XbSymbolLib_XONLINE | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS;
-    run_test_verify_symbol(symbols_list, Lib_XNET, lib_vers.xnet, XbSymbolLib_XNET_flags, lib_db, full_lib_count, error_count);
+    constexpr auto XBSDBLIB_XNET_flags =
+        XBSDBLIB_XNET | XBSDBLIB_XNETS | XBSDBLIB_XNETN |
+        XBSDBLIB_XONLINE | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS;
+    run_test_verify_symbol(symbols_list, LIB_XNET, lib_vers.xnet, XBSDBLIB_XNET_flags, lib_db, full_lib_count, error_count);
 
     getLibraryXONLINE(lib_db);
-    constexpr auto XbSymbolLib_XONLINE_flags =
-        XbSymbolLib_XONLINE | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS;
-    run_test_verify_symbol(symbols_list, Lib_XONLINE, lib_vers.xonline, XbSymbolLib_XONLINE_flags, lib_db, full_lib_count, error_count);
+    constexpr auto XBSDBLIB_XONLINE_flags =
+        XBSDBLIB_XONLINE | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS;
+    run_test_verify_symbol(symbols_list, LIB_XONLINE, lib_vers.xonline, XBSDBLIB_XONLINE_flags, lib_db, full_lib_count, error_count);
 }

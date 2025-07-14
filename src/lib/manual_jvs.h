@@ -5,8 +5,8 @@
 
 #pragma once
 
-static inline void manual_register_jvs(iXbSymbolContext* pContext)
+static inline void manual_register_jvs(XbSDBiContext* pContext)
 {
-    internal_RegisterValidXRefAddr(pContext, Lib_JVS, XbSymbolLib_JVS, XREF_JVS_g_pPINSA, 4831, "JVS_g_pPINSA", symbol_variable, call_none, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_JVS, XbSymbolLib_JVS, XREF_JVS_g_pPINSB, 4831, "JVS_g_pPINSB", symbol_variable, call_none, 0, NULL);
+    XbSDBi_RegisterValidXRefAddr(pContext, LIB_JVS, XBSDBLIB_JVS, XREF_JVS_g_pPINSA, 4831, "JVS_g_pPINSA", symbol_variable, call_none, 0, NULL);
+    XbSDBi_RegisterValidXRefAddr(pContext, LIB_JVS, XBSDBLIB_JVS, XREF_JVS_g_pPINSB, 4831, "JVS_g_pPINSB", symbol_variable, call_none, 0, NULL);
 }

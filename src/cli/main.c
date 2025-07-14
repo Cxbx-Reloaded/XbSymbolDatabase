@@ -24,7 +24,7 @@ static void reg_cb(const char* library_str,
                    uint32_t param_count,
                    const XbSDBSymbolParam* param_list)
 {
-    const char* symbol_name = bReverseMangle ? symbol_str : XbSymbolDatabase_SymbolReferenceToString(xref_index);
+    const char* symbol_name = bReverseMangle ? symbol_str : XbSDB_SymbolReferenceToString(xref_index);
     char buffer[64] = { 0 };
     char param_output[256] = { 0 };
     size_t param_size = 0;
@@ -39,7 +39,7 @@ static void reg_cb(const char* library_str,
                     if (param_list[i].type == param_void) {
                         break;
                     }
-                    snprintf(buffer, ARRAY_SIZE(buffer), (i == 0 ? "%s %s" : ", %s %s"), XbSymbolDatabase_ParamToString(param_list[i].type), param_list[i].name);
+                    snprintf(buffer, ARRAY_SIZE(buffer), (i == 0 ? "%s %s" : ", %s %s"), XbSDB_ParamToString(param_list[i].type), param_list[i].name);
                     size_t buffer_count = strnlen(buffer, ARRAY_SIZE(buffer));
                     if (param_size + buffer_count >= ARRAY_SIZE(param_output)) {
                         printf("ERROR: param_size(%zu) + buffer_count(%zu) is too long to be stored in param_output(%zu)\n", param_size, buffer_count, ARRAY_SIZE(param_output));
@@ -48,7 +48,7 @@ static void reg_cb(const char* library_str,
                     strncat(param_output, buffer, buffer_count);
                     param_size += buffer_count;
                 }
-                printf("%.8s__FUN__%s__%s(%s) = 0x%08x\n", library_str, XbSymbolDatabase_CallingConventionToString(call_type), symbol_name, param_output, address);
+                printf("%.8s__FUN__%s__%s(%s) = 0x%08x\n", library_str, XbSDB_CallingConventionToString(call_type), symbol_name, param_output, address);
                 return;
             }
             default: {
@@ -95,7 +95,7 @@ int main(int argc, char const* argv[])
         return 1;
     }
 
-    unsigned int version = XbSymbolDatabase_LibraryVersion();
+    unsigned int version = XbSDB_LibraryVersion();
     if (bVerbose) {
         fprintf(stderr, "Database Version = %x\n", version);
     }
@@ -123,14 +123,14 @@ int main(int argc, char const* argv[])
         return 1;
     }
 
-    XbSymbolDatabase_SetOutputMessage(&msg_cb);
+    XbSDB_SetOutputMessage(&msg_cb);
 
     if (bVerbose) {
-        XbSymbolDatabase_SetOutputVerbosity(XB_OUTPUT_MESSAGE_DEBUG);
+        XbSDB_SetOutputVerbosity(XB_OUTPUT_MESSAGE_DEBUG);
     }
 
     XbSDBLibraryHeader lib_header = {
-        .count = XbSymbolDatabase_GenerateLibraryFilter(xbe_buffer, NULL),
+        .count = XbSDB_GenerateLibraryFilter(xbe_buffer, NULL),
         .filters = malloc(lib_header.count * sizeof(XbSDBLibrary))
     };
     if (!lib_header.filters) {
@@ -138,7 +138,7 @@ int main(int argc, char const* argv[])
         free(xbe_buffer);
         return 1;
     }
-    XbSymbolDatabase_GenerateLibraryFilter(xbe_buffer, &lib_header);
+    XbSDB_GenerateLibraryFilter(xbe_buffer, &lib_header);
 
     if (bVerbose) {
         fprintf(stderr, "%u libraries\n", lib_header.count);
@@ -148,7 +148,7 @@ int main(int argc, char const* argv[])
     }
 
     XbSDBSectionHeader sect_header = {
-        .count = XbSymbolDatabase_GenerateSectionFilter(xbe_buffer, NULL, 1),
+        .count = XbSDB_GenerateSectionFilter(xbe_buffer, NULL, 1),
         .filters = malloc(sect_header.count * sizeof(XbSDBSection))
     };
     if (!sect_header.filters) {
@@ -157,7 +157,7 @@ int main(int argc, char const* argv[])
         free(xbe_buffer);
         return 1;
     }
-    XbSymbolDatabase_GenerateSectionFilter(xbe_buffer, &sect_header, 1);
+    XbSDB_GenerateSectionFilter(xbe_buffer, &sect_header, 1);
 
     if (bVerbose) {
         fprintf(stderr, "%u sections\n", sect_header.count);
@@ -166,17 +166,17 @@ int main(int argc, char const* argv[])
         }
     }
 
-    XbSymbolContextHandle ctx;
-    bool status = XbSymbolDatabase_CreateXbSymbolContext(&ctx,
-                                                         reg_cb,
-                                                         lib_header,
-                                                         sect_header,
-                                                         XbSymbolDatabase_GetKernelThunkAddress(xbe_buffer));
+    XbSDBContextHandle ctx;
+    bool status = XbSDB_CreateContext(&ctx,
+                                      reg_cb,
+                                      lib_header,
+                                      sect_header,
+                                      XbSDB_GetKernelThunkAddress(xbe_buffer));
     assert(status == 1);
-    XbSymbolContext_ScanManual(ctx);
-    XbSymbolContext_ScanAllLibraryFilter(ctx);
-    XbSymbolContext_RegisterXRefs(ctx);
-    XbSymbolContext_Release(ctx);
+    XbSDBContext_ScanManual(ctx);
+    XbSDBContext_ScanAllLibraryFilter(ctx);
+    XbSDBContext_RegisterXRefs(ctx);
+    XbSDBContext_Release(ctx);
 
     free(lib_header.filters);
     free(sect_header.filters);

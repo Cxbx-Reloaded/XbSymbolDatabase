@@ -96,17 +96,17 @@ typedef enum _eFirstPass {
     FIRSTPASS_YES,
 } eFirstPass;
 
-typedef struct _iXbSymbolLibraryContext {
+typedef struct _XbSDBiLibraryContext {
     uint32_t xref_registered;
     bool is_active;
-} iXbSymbolLibraryContext;
+} XbSDBiLibraryContext;
 
-typedef struct _iXbSymbolLibrarySession {
+typedef struct _XbSDBiLibrarySession {
     const XbSDBLibrary* pLibrary;
     eLibraryType iLibraryType;
-} iXbSymbolLibrarySession;
+} XbSDBiLibrarySession;
 
-typedef struct _iXbSymbolContext {
+typedef struct _XbSDBiContext {
     bool strict_build_version_limit;
     bool one_time_scan;
     bool scan_first_detect;
@@ -117,8 +117,8 @@ typedef struct _iXbSymbolContext {
     XbSDBLibraryHeader library_input;
     XbSDBSectionHeader section_input;
     eScanStage scan_stage;
-    iXbSymbolLibraryContext library_contexts[LT_COUNT];
-} iXbSymbolContext;
+    XbSDBiLibraryContext library_contexts[LT_COUNT];
+} XbSDBiContext;
 
 typedef const struct _PairScanLibSec {
     uint32_t library;
@@ -131,63 +131,63 @@ typedef const struct _SymbolDatabaseList {
     OOVPATableList* Symbols;
 } SymbolDatabaseList;
 
-typedef bool (*custom_scan_func_t)(iXbSymbolContext* pContext,
-                                   const iXbSymbolLibrarySession* pLibrarySession,
+typedef bool (*custom_scan_func_t)(XbSDBiContext* pContext,
+                                   const XbSDBiLibrarySession* pLibrarySession,
                                    SymbolDatabaseList* pLibraryDB,
                                    const XbSDBSection* pSection);
 
 SymbolDatabaseList SymbolDBList[] = {
     // Support inline functions in .text section
-    { XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG, { Sec_text, Sec_D3D, Sec_FLASHROM }, &D3D8_OOVPA },
+    { XBSDBLIB_D3D8 | XBSDBLIB_D3D8LTCG, { SEC_TEXT, SEC_D3D, SEC_FLASHROM }, &D3D8_OOVPA },
 
     // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
-    { XbSymbolLib_D3D8LTCG, { Sec_text, Sec_D3D }, &D3D8LTCG_OOVPA },
+    { XBSDBLIB_D3D8LTCG, { SEC_TEXT, SEC_D3D }, &D3D8LTCG_OOVPA },
 
     // NOTE: Likely is a D3D Helper library.
     // Jarupxx mention this is not a requirement?
-    //{ Lib_D3DX8, { Sec_D3DX }, &_OOVPA },
+    //{ LIB_D3DX8, { SEC_D3DX }, &_OOVPA },
 
     // Only used for manual scan purpose as a workaround since both FLASHROM
     // and text section will lead to false detection for non-manual signatures, see comment below.
-    { XbSymbolLib_DSOUND, { Sec_DSOUND, Sec_rdata, Sec_FLASHROM, Sec_text }, &DSound_OOVPA_manual },
+    { XBSDBLIB_DSOUND, { SEC_DSOUND, SEC_RDATA, SEC_FLASHROM, SEC_TEXT }, &DSound_OOVPA_manual },
 
     // NOTE: By adding FLASHROM to scan section may will lead false detection.
     // Since some symbols has very short asm codes.
-    { XbSymbolLib_DSOUND, { Sec_DSOUND, Sec_rdata, Sec_FLASHROM }, &DSound_OOVPA },
+    { XBSDBLIB_DSOUND, { SEC_DSOUND, SEC_RDATA, SEC_FLASHROM }, &DSound_OOVPA },
 
     // DSOUNDH is just meant to define hot fix, there is no separate section
-    //{ XbSymbolLib_DSOUNDH, { Sec_DSOUND }, &DSound_OOVPA },
+    //{ XBSDBLIB_DSOUNDH, { SEC_DSOUND }, &DSound_OOVPA },
 
     // Only used in Chihiro applications
-    { XbSymbolLib_JVS, { Sec_text, Sec_XPP, Sec_FLASHROM }, &JVSLIB_OOVPA },
+    { XBSDBLIB_JVS, { SEC_TEXT, SEC_XPP, SEC_FLASHROM }, &JVSLIB_OOVPA },
 
     //
-    { XbSymbolLib_XACTENG, { Sec_XACTENG, Sec_FLASHROM }, &XACTENG_OOVPA },
+    { XBSDBLIB_XACTENG, { SEC_XACTENG, SEC_FLASHROM }, &XACTENG_OOVPA },
 
     // test case: Power Drome (Unluckily, it use LTCG version of the library.)
     // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
-    //{ XbSymbolLib_XACTENLT, { Sec_XACTENG }, &XACTENGLT_OOVPA },
+    //{ XBSDBLIB_XACTENLT, { SEC_XACTENG }, &XACTENGLT_OOVPA },
 
     //
-    { XbSymbolLib_XAPILIB, { Sec_text, Sec_XPP, Sec_FLASHROM }, &XAPILIB_OOVPA },
+    { XBSDBLIB_XAPILIB, { SEC_TEXT, SEC_XPP, SEC_FLASHROM }, &XAPILIB_OOVPA },
 
     // Support inline functions in .text section
-    { XbSymbolLib_XGRAPHC, { Sec_text, Sec_XGRPH, Sec_FLASHROM }, &XGRAPHC_OOVPA },
+    { XBSDBLIB_XGRAPHC, { SEC_TEXT, SEC_XGRPH, SEC_FLASHROM }, &XGRAPHC_OOVPA },
 
     // LTCG database have to be after standard library or otherwise the scan process will not work correctly.
-    //{ XbSymbolLib_XGRAPHCL, { Sec_XGRPH }, &XGRAPHCL_OOVPA },
+    //{ XBSDBLIB_XGRAPHCL, { SEC_XGRPH }, &XGRAPHCL_OOVPA },
 
-    // Added Sec_text and Sec_XNET just in case.
-    // TODO: Do we need to keep Sec_XNET in here?
+    // Added SEC_TEXT and SEC_XNET just in case.
+    // TODO: Do we need to keep SEC_XNET in here?
     // TODO: Need to find out which function is only part of XOnlines.
     // Fun fact, XONLINES are split into 2 header sections.
-    { XbSymbolLib_XONLINE | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS, { Sec_text, Sec_XONLINE, Sec_XNET, Sec_FLASHROM }, &XONLINE_OOVPA },
+    { XBSDBLIB_XONLINE | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS, { SEC_TEXT, SEC_XONLINE, SEC_XNET, SEC_FLASHROM }, &XONLINE_OOVPA },
 
-    // Added Sec_text just in case.
+    // Added SEC_TEXT just in case.
     // TODO: Need to find out which function is only part of XNets.
     // XNETS only has XNET, might be true.
     // XNETN's test case: Stake
-    { XbSymbolLib_XNET | XbSymbolLib_XNETS | XbSymbolLib_XNETN | XbSymbolLib_XONLINE | XbSymbolLib_XONLINES | XbSymbolLib_XONLINLS, { Sec_text, Sec_XNET, Sec_FLASHROM }, &XNET_OOVPA },
+    { XBSDBLIB_XNET | XBSDBLIB_XNETS | XBSDBLIB_XNETN | XBSDBLIB_XONLINE | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS, { SEC_TEXT, SEC_XNET, SEC_FLASHROM }, &XNET_OOVPA },
 };
 
 // ******************************************************************
@@ -196,19 +196,19 @@ SymbolDatabaseList SymbolDBList[] = {
 const unsigned int SymbolDBListCount = XBSDB_ARRAY_SIZE(SymbolDBList);
 
 const char SectionList[][8] = {
-    Sec_text,
-    Sec_FLASHROM,
-    Sec_rdata,
-    Sec_D3D,
-    Sec_D3DX,
-    Sec_DSOUND,
-    Sec_XACTENG,
-    Sec_XID,
-    Sec_XPP,
-    Sec_XPPDat,
-    Sec_XGRPH,
-    Sec_XONLINE,
-    Sec_XNET
+    SEC_TEXT,
+    SEC_FLASHROM,
+    SEC_RDATA,
+    SEC_D3D,
+    SEC_D3DX,
+    SEC_DSOUND,
+    SEC_XACTENG,
+    SEC_XID,
+    SEC_XPP,
+    SEC_XPPDAT,
+    SEC_XGRPH,
+    SEC_XONLINE,
+    SEC_XNET
 };
 
 const unsigned int SectionListTotal = XBSDB_ARRAY_SIZE(SectionList);
@@ -267,7 +267,7 @@ static xb_xbe_type GetXbeType(const xbe_header* pXbeHeader)
     return XB_XBE_TYPE_RETAIL;
 }
 
-static bool iXbSymbolContext_AllowSetParameter(iXbSymbolContext* pContext)
+static bool XbSDBiContext_AllowSetParameter(XbSDBiContext* pContext)
 {
     bool bRet = (pContext->scan_stage == SS_NONE);
 
@@ -278,12 +278,12 @@ static bool iXbSymbolContext_AllowSetParameter(iXbSymbolContext* pContext)
     return bRet;
 }
 
-static bool iXbSymbolContext_AllowScanLibrary(iXbSymbolContext* pContext)
+static bool XbSDBiContext_AllowScanLibrary(XbSDBiContext* pContext)
 {
     bool bRet = (pContext->scan_stage == SS_2_SCAN_LIBS);
 
     if (!bRet) {
-        output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "XbSymbolContext_ScanManual must be call first before scan for library's symbols.");
+        output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "XbSDBContext_ScanManual must be call first before scan for library's symbols.");
     }
 
     return bRet;
@@ -301,12 +301,12 @@ static bool iXbSymbolContext_AllowScanLibrary(iXbSymbolContext* pContext)
 // ******************************************************************
 
 xb_output_message_t g_output_func = NULL;
-void XbSymbolDatabase_SetOutputMessage(xb_output_message_t message_func)
+void XbSDB_SetOutputMessage(xb_output_message_t message_func)
 {
     g_output_func = message_func;
 }
 
-bool XbSymbolDatabase_SetOutputVerbosity(xb_output_message verbose_level)
+bool XbSDB_SetOutputVerbosity(xb_output_message verbose_level)
 {
     if (verbose_level < XB_OUTPUT_MESSAGE_MAX) {
         g_output_verbose_level = verbose_level;
@@ -316,53 +316,53 @@ bool XbSymbolDatabase_SetOutputVerbosity(xb_output_message verbose_level)
     return false;
 }
 
-const char* XbSymbolDatabase_LibraryToString(uint32_t library_flag)
+const char* XbSDB_LibraryToString(uint32_t library_flag)
 {
     switch (library_flag) {
-        case XbSymbolLib_D3D8: {
-            return Lib_D3D8;
+        case XBSDBLIB_D3D8: {
+            return LIB_D3D8;
         }
-        case XbSymbolLib_D3D8LTCG: {
-            return Lib_D3D8LTCG;
+        case XBSDBLIB_D3D8LTCG: {
+            return LIB_D3D8LTCG;
         }
-        case XbSymbolLib_D3DX8: {
-            return Lib_D3DX8;
+        case XBSDBLIB_D3DX8: {
+            return LIB_D3DX8;
         }
-        case XbSymbolLib_DSOUND: {
-            return Lib_DSOUND;
+        case XBSDBLIB_DSOUND: {
+            return LIB_DSOUND;
         }
-        case XbSymbolLib_JVS: {
-            return Lib_JVS;
+        case XBSDBLIB_JVS: {
+            return LIB_JVS;
         }
-        case XbSymbolLib_XACTENG: {
-            return Lib_XACTENG;
+        case XBSDBLIB_XACTENG: {
+            return LIB_XACTENG;
         }
-        case XbSymbolLib_XAPILIB: {
-            return Lib_XAPILIB;
+        case XBSDBLIB_XAPILIB: {
+            return LIB_XAPILIB;
         }
-        case XbSymbolLib_XGRAPHC: {
-            return Lib_XGRAPHC;
+        case XBSDBLIB_XGRAPHC: {
+            return LIB_XGRAPHC;
         }
-        case XbSymbolLib_XNET: {
-            return Lib_XNET;
+        case XBSDBLIB_XNET: {
+            return LIB_XNET;
         }
-        case XbSymbolLib_XNETN: {
-            return Lib_XNETN;
+        case XBSDBLIB_XNETN: {
+            return LIB_XNETN;
         }
-        case XbSymbolLib_XNETS: {
-            return Lib_XNETS;
+        case XBSDBLIB_XNETS: {
+            return LIB_XNETS;
         }
-        case XbSymbolLib_XONLINE: {
-            return Lib_XONLINE;
+        case XBSDBLIB_XONLINE: {
+            return LIB_XONLINE;
         }
-        case XbSymbolLib_XONLINES: {
-            return Lib_XONLINES;
+        case XBSDBLIB_XONLINES: {
+            return LIB_XONLINES;
         }
-        case XbSymbolLib_XONLINLS: {
-            return Lib_XONLINLS;
+        case XBSDBLIB_XONLINLS: {
+            return LIB_XONLINLS;
         }
         default: {
-            return Lib_UNKNOWN;
+            return LIB_UNKNOWN;
         }
     }
 }
@@ -381,7 +381,7 @@ static const char* const param_type_str[] = {
 #undef PARAM_TYPE__8_
 };
 
-const char* XbSymbolDatabase_ParamToString(uint32_t param_type)
+const char* XbSDB_ParamToString(uint32_t param_type)
 {
     if (param_type >= param_max) {
         return param_type_str[param_unk];
@@ -396,7 +396,7 @@ static const char* const call_type_str[] = {
 #undef CALL_
 };
 
-const char* XbSymbolDatabase_CallingConventionToString(uint32_t call_type)
+const char* XbSDB_CallingConventionToString(uint32_t call_type)
 {
     if (call_type >= call_max) {
         return call_type_str[call_unknown];
@@ -419,7 +419,7 @@ const char* xref_str[] = {
 #undef XREF_SYMBOL
 };
 
-const char* XbSymbolDatabase_SymbolReferenceToString(uint32_t xref_index)
+const char* XbSDB_SymbolReferenceToString(uint32_t xref_index)
 {
     if (xref_index <= XREF_KT_COUNT || XREF_COUNT <= xref_index) {
         return NULL;
@@ -428,70 +428,70 @@ const char* XbSymbolDatabase_SymbolReferenceToString(uint32_t xref_index)
 }
 
 // NOTE: Library string must return only one specific flag, cannot make a mix combo flags.
-//       Otherwise, internal scan and XbSymbolDatabase_LibraryToString will not function correctly.
-uint32_t XbSymbolDatabase_LibraryToFlag(const char* library_name)
+//       Otherwise, internal scan and XbSDB_LibraryToString will not function correctly.
+uint32_t XbSDB_LibraryToFlag(const char* library_name)
 {
-    if (strncmp(library_name, Lib_D3D8, 8) == 0) {
-        return XbSymbolLib_D3D8;
+    if (strncmp(library_name, LIB_D3D8, 8) == 0) {
+        return XBSDBLIB_D3D8;
     }
-    if (strncmp(library_name, Lib_D3D8LTCG, 8) == 0) {
-        return XbSymbolLib_D3D8LTCG;
+    if (strncmp(library_name, LIB_D3D8LTCG, 8) == 0) {
+        return XBSDBLIB_D3D8LTCG;
     }
-    if (strncmp(library_name, Lib_D3DX8, 8) == 0) {
-        return XbSymbolLib_D3DX8;
+    if (strncmp(library_name, LIB_D3DX8, 8) == 0) {
+        return XBSDBLIB_D3DX8;
     }
-    if (strncmp(library_name, Lib_DSOUND, 8) == 0) {
-        return XbSymbolLib_DSOUND;
+    if (strncmp(library_name, LIB_DSOUND, 8) == 0) {
+        return XBSDBLIB_DSOUND;
     }
-    if (strncmp(library_name, Lib_JVS, 8) == 0) {
-        return XbSymbolLib_JVS;
+    if (strncmp(library_name, LIB_JVS, 8) == 0) {
+        return XBSDBLIB_JVS;
     }
-    if (strncmp(library_name, Lib_XACTENG, 8) == 0) {
-        return XbSymbolLib_XACTENG;
+    if (strncmp(library_name, LIB_XACTENG, 8) == 0) {
+        return XBSDBLIB_XACTENG;
     }
-    if (strncmp(library_name, Lib_XAPILIB, 8) == 0) {
-        return XbSymbolLib_XAPILIB;
+    if (strncmp(library_name, LIB_XAPILIB, 8) == 0) {
+        return XBSDBLIB_XAPILIB;
     }
-    if (strncmp(library_name, Lib_XGRAPHC, 8) == 0) {
-        return XbSymbolLib_XGRAPHC;
+    if (strncmp(library_name, LIB_XGRAPHC, 8) == 0) {
+        return XBSDBLIB_XGRAPHC;
     }
-    if (strncmp(library_name, Lib_XNET, 8) == 0) {
-        return XbSymbolLib_XNET;
+    if (strncmp(library_name, LIB_XNET, 8) == 0) {
+        return XBSDBLIB_XNET;
     }
-    if (strncmp(library_name, Lib_XNETN, 8) == 0) {
-        return XbSymbolLib_XNETN;
+    if (strncmp(library_name, LIB_XNETN, 8) == 0) {
+        return XBSDBLIB_XNETN;
     }
-    if (strncmp(library_name, Lib_XNETS, 8) == 0) {
-        return XbSymbolLib_XNETS;
+    if (strncmp(library_name, LIB_XNETS, 8) == 0) {
+        return XBSDBLIB_XNETS;
     }
-    if (strncmp(library_name, Lib_XONLINE, 8) == 0) {
-        return XbSymbolLib_XONLINE;
+    if (strncmp(library_name, LIB_XONLINE, 8) == 0) {
+        return XBSDBLIB_XONLINE;
     }
-    if (strncmp(library_name, Lib_XONLINES, 8) == 0) {
-        return XbSymbolLib_XONLINES;
+    if (strncmp(library_name, LIB_XONLINES, 8) == 0) {
+        return XBSDBLIB_XONLINES;
     }
-    if (strncmp(library_name, Lib_XONLINLS, 8) == 0) {
-        return XbSymbolLib_XONLINLS;
+    if (strncmp(library_name, LIB_XONLINLS, 8) == 0) {
+        return XBSDBLIB_XONLINLS;
     }
     return 0;
 }
 
-uint32_t XbSymbolDatabase_GetLibraryDependencies(uint32_t library_flag, XbSDBLibraryHeader library_filters)
+uint32_t XbSDB_GetLibraryDependencies(uint32_t library_flag, XbSDBLibraryHeader library_filters)
 {
     uint32_t flag_dependencies;
     switch (library_flag) {
         default:
             return 0;
-        case XbSymbolLib_D3DX8:
-            flag_dependencies = XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG;
+        case XBSDBLIB_D3DX8:
+            flag_dependencies = XBSDBLIB_D3D8 | XBSDBLIB_D3D8LTCG;
             break;
-        case XbSymbolLib_XACTENG:
-            return XbSymbolLib_DSOUND;
+        case XBSDBLIB_XACTENG:
+            return XBSDBLIB_DSOUND;
 #if 0 // Disabled since internal scan will scan XNET(N|S) library anyway.
-        case XbSymbolLib_XONLINE:
-        case XbSymbolLib_XONLINES:
-        case XbSymbolLib_XONLINLS:
-            flag_dependencies = XbSymbolLib_XNET | XbSymbolLib_XNETN | XbSymbolLib_XNETS;
+        case XBSDBLIB_XONLINE:
+        case XBSDBLIB_XONLINES:
+        case XBSDBLIB_XONLINLS:
+            flag_dependencies = XBSDBLIB_XNET | XBSDBLIB_XNETN | XBSDBLIB_XNETS;
             break;
 #endif
     }
@@ -511,15 +511,15 @@ uint32_t XbSymbolDatabase_GetLibraryDependencies(uint32_t library_flag, XbSDBLib
     return flag_dependencies;
 }
 
-uint32_t XbSymbolContext_GetLibraryDependencies(XbSymbolContextHandle pHandle, uint32_t library_flag)
+uint32_t XbSDBContext_GetLibraryDependencies(XbSDBContextHandle pHandle, uint32_t library_flag)
 {
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
-    // Forward call to XbSymbolDatabase_GetLibraryDependencies.
-    return XbSymbolDatabase_GetLibraryDependencies(library_flag, pContext->library_input);
+    XbSDBiContext* pContext = (XbSDBiContext*)pHandle;
+    // Forward call to XbSDB_GetLibraryDependencies.
+    return XbSDB_GetLibraryDependencies(library_flag, pContext->library_input);
 }
 
 // TODO: Expose to third-party?
-bool XbSymbolHasDSoundSection(const void* xb_header_addr)
+bool XbSDBi_HasDSoundSection(const void* xb_header_addr)
 {
     const xbe_header* pXbeHeader = xb_header_addr;
     memptr_t xb_start_addr = (memptr_t)xb_header_addr - pXbeHeader->dwBaseAddr;
@@ -531,7 +531,7 @@ bool XbSymbolHasDSoundSection(const void* xb_header_addr)
     for (unsigned int v = 0; v < pXbeHeader->dwSections; v++) {
         SectionName = (const char*)(xb_start_addr + pSectionHeaders[v].SectionNameAddr);
 
-        if (strncmp(SectionName, Lib_DSOUND, 8) == 0) {
+        if (strncmp(SectionName, LIB_DSOUND, 8) == 0) {
             has_dsound = true;
             break;
         }
@@ -540,7 +540,7 @@ bool XbSymbolHasDSoundSection(const void* xb_header_addr)
     return has_dsound;
 }
 
-uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSDBLibraryHeader* library_header)
+uint32_t XbSDB_GenerateLibraryFilter(const void* xb_header_addr, XbSDBLibraryHeader* library_header)
 {
     uint32_t library_flag;
     const xbe_header* pXbeHeader = xb_header_addr;
@@ -562,7 +562,7 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
 
         for (unsigned library_index = 0; library_index < library_total; library_index++) {
 
-            library_flag = XbSymbolDatabase_LibraryToFlag(xb_library_versions[library_index].szName);
+            library_flag = XbSDB_LibraryToFlag(xb_library_versions[library_index].szName);
 
             // Keep the highest build version for manual checklist.
             if (build_version < xb_library_versions[library_index].wBuildVersion) {
@@ -575,7 +575,7 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
             }
 
             // If found DSOUND library, then skip the manual check.
-            if (library_flag == XbSymbolLib_DSOUND) {
+            if (library_flag == XBSDBLIB_DSOUND) {
                 if (!has_dsound_library) {
                     has_dsound_library = true;
                 }
@@ -583,22 +583,22 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
 
             // If D3D8 and D3D8LTCG library details may had bundled by accident, then do manual fix below.
             // See details from https://github.com/Cxbx-Reloaded/XbSymbolDatabase/issues/178
-            if (library_flag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) {
+            if (library_flag & (XBSDBLIB_D3D8 | XBSDBLIB_D3D8LTCG)) {
                 if (has_d3d8__ltcg_library) {
                     if (library_header != NULL) {
-                        if (library_flag == XbSymbolLib_D3D8LTCG) {
+                        if (library_flag == XBSDBLIB_D3D8LTCG) {
                             // Force set to D3D8LTCG if D3D8 flag was found first.
-                            internal_LibraryFilterUpdateFlagIfExist(library_header->filters,
-                                                                    count,
-                                                                    XbSymbolLib_D3D8,
-                                                                    XbSymbolLib_D3D8LTCG);
+                            XbSDBi_LibraryFilterUpdateFlagIfExist(library_header->filters,
+                                                                  count,
+                                                                  XBSDBLIB_D3D8,
+                                                                  XBSDBLIB_D3D8LTCG);
                         }
                         // Update duplicated library detail
-                        internal_LibraryFilterUpdateVersionIfGreater(library_header->filters,
-                                                                     count,
-                                                                     XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG,
-                                                                     xb_library_versions[library_index].wBuildVersion,
-                                                                     xb_library_versions[library_index].wFlags.QFEVersion);
+                        XbSDBi_LibraryFilterUpdateVersionIfGreater(library_header->filters,
+                                                                   count,
+                                                                   XBSDBLIB_D3D8 | XBSDBLIB_D3D8LTCG,
+                                                                   xb_library_versions[library_index].wBuildVersion,
+                                                                   xb_library_versions[library_index].wFlags.QFEVersion);
                     }
 
                     // Skip duplicate library finding.
@@ -615,9 +615,9 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
                 library_header->filters[count].flag = library_flag;
                 library_header->filters[count].build_version = xb_library_versions[library_index].wBuildVersion;
                 library_header->filters[count].qfe_version = xb_library_versions[library_index].wFlags.QFEVersion;
-                memcpy(library_header->filters[count].name, XbSymbolDatabase_LibraryToString(library_flag), 8);
+                memcpy(library_header->filters[count].name, XbSDB_LibraryToString(library_flag), 8);
 
-                if ((library_flag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
+                if ((library_flag & (XBSDBLIB_D3D8 | XBSDBLIB_D3D8LTCG)) > 0) {
 
                     // Functions in this library were updated by June 2003 XDK (5558) with Integrated Hotfixes,
                     // However August 2003 XDK (5659) still uses the old function.
@@ -640,12 +640,12 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
 
         // Manual check if DSOUND section do exist.
         if (!has_dsound_library) {
-            if (XbSymbolHasDSoundSection(xb_header_addr)) {
+            if (XbSDBi_HasDSoundSection(xb_header_addr)) {
                 if (library_header != NULL) {
-                    library_header->filters[count].flag = XbSymbolLib_DSOUND;
+                    library_header->filters[count].flag = XBSDBLIB_DSOUND;
                     library_header->filters[count].build_version = build_version;
                     library_header->filters[count].qfe_version = 0;
-                    (void)strncpy(library_header->filters[count].name, Lib_DSOUND, 8);
+                    (void)strncpy(library_header->filters[count].name, LIB_DSOUND, 8);
                 }
                 count++;
             }
@@ -654,10 +654,10 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
         // Manual check if Xbe type is debug or Chihiro
         if (XbeType != XB_XBE_TYPE_RETAIL) {
             if (library_header != NULL) {
-                library_header->filters[count].flag = XbSymbolLib_JVS;
+                library_header->filters[count].flag = XBSDBLIB_JVS;
                 library_header->filters[count].build_version = build_version;
                 library_header->filters[count].qfe_version = 0;
-                (void)strncpy(library_header->filters[count].name, Lib_JVS, 8);
+                (void)strncpy(library_header->filters[count].name, LIB_JVS, 8);
             }
             count++;
         }
@@ -666,7 +666,7 @@ uint32_t XbSymbolDatabase_GenerateLibraryFilter(const void* xb_header_addr, XbSD
     return count;
 }
 
-uint32_t XbSymbolDatabase_GenerateSectionFilter(const void* xb_header_addr, XbSDBSectionHeader* section_header, bool is_raw)
+uint32_t XbSDB_GenerateSectionFilter(const void* xb_header_addr, XbSDBSectionHeader* section_header, bool is_raw)
 {
     const xbe_header* pXbeHeader = xb_header_addr;
     const memptr_t xb_start_addr = (memptr_t)xb_header_addr - pXbeHeader->dwBaseAddr;
@@ -680,7 +680,7 @@ uint32_t XbSymbolDatabase_GenerateSectionFilter(const void* xb_header_addr, XbSD
 
     if (pXbeHeader->pSectionHeadersAddr != 0) {
 
-        kernel_thunk_addr = XbSymbolDatabase_GetKernelThunkAddress(xb_header_addr);
+        kernel_thunk_addr = XbSDB_GetKernelThunkAddress(xb_header_addr);
 
         for (unsigned section_index = 0; section_index < section_total; section_index++) {
 
@@ -737,7 +737,7 @@ uint32_t XbSymbolDatabase_GenerateSectionFilter(const void* xb_header_addr, XbSD
     return count;
 }
 
-xbaddr XbSymbolDatabase_GetKernelThunkAddress(const void* xb_header_addr)
+xbaddr XbSDB_GetKernelThunkAddress(const void* xb_header_addr)
 {
     xb_xbe_type xbe_type = GetXbeType(xb_header_addr);
 
@@ -748,7 +748,7 @@ xbaddr XbSymbolDatabase_GetKernelThunkAddress(const void* xb_header_addr)
 }
 
 #include "internal_db_version.h"
-unsigned int XbSymbolDatabase_LibraryVersion()
+unsigned int XbSDB_LibraryVersion()
 {
     // Calculate this just once
     static unsigned int CalculatedHash = 0;
@@ -759,23 +759,23 @@ unsigned int XbSymbolDatabase_LibraryVersion()
 }
 
 #include "internal_tests.h"
-unsigned int XbSymbolDatabase_TestOOVPAs()
+unsigned int XbSDB_TestOOVPAs()
 {
-    SymbolDatabaseVerifyContext context = { 0 };
+    XbSDBiVerifyContext context = { 0 };
     context.output.func = g_output_func;
     context.output.verbose_level = g_output_verbose_level;
-    return SymbolDatabaseVerifyContext_VerifyDatabaseList(&context);
+    return XbSDBiVerifyContext_VerifyDatabaseList(&context);
 }
 
 // ******************************************************************
-// * XbSymbolContextHandle manager functions
+// * XbSDBContextHandle manager functions
 // ******************************************************************
 
-bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
-                                            xb_symbol_register_t register_func,
-                                            XbSDBLibraryHeader library_input,
-                                            XbSDBSectionHeader section_input,
-                                            xbaddr kernel_thunk)
+bool XbSDB_CreateContext(XbSDBContextHandle* ppHandle,
+                         xb_symbol_register_t register_func,
+                         XbSDBLibraryHeader library_input,
+                         XbSDBSectionHeader section_input,
+                         xbaddr kernel_thunk)
 {
     if (register_func == NULL) {
         goto EmptyCleanup;
@@ -791,13 +791,13 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
         goto EmptyCleanup;
     }
 
-    *ppHandle = calloc(1, sizeof(iXbSymbolContext));
+    *ppHandle = calloc(1, sizeof(XbSDBiContext));
 
     if (*ppHandle == NULL) {
         goto EmptyCleanup;
     }
 
-    iXbSymbolContext* pContext = (iXbSymbolContext*)*ppHandle;
+    XbSDBiContext* pContext = (XbSDBiContext*)*ppHandle;
 
     pContext->scan_stage = SS_NONE;
 
@@ -849,7 +849,7 @@ bool XbSymbolDatabase_CreateXbSymbolContext(XbSymbolContextHandle* ppHandle,
                 unsigned int index = *kt & 0x7FFFFFFF;
                 // Check if the index is within range, then add to the xreference database.
                 if (index > 0 && index < XREF_KT_COUNT) {
-                    internal_SetXRefDatabase(pContext, LT_KERNEL, index, kt_addr);
+                    XbSDBi_SetXRefDatabase(pContext, LT_KERNEL, index, kt_addr);
                 }
                 else {
                     output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_WARN,
@@ -928,9 +928,9 @@ EmptyCleanup:
     return false;
 }
 
-void XbSymbolContext_Release(XbSymbolContextHandle pHandle)
+void XbSDBContext_Release(XbSDBContextHandle pHandle)
 {
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+    XbSDBiContext* pContext = (XbSDBiContext*)pHandle;
 
     for (unsigned int i = 0; i < LT_COUNT; i++) {
         if (pContext->library_contexts[i].is_active) {
@@ -943,46 +943,46 @@ void XbSymbolContext_Release(XbSymbolContextHandle pHandle)
 
 
 // ******************************************************************
-// * XbSymbolContext API functions
+// * Context API functions
 // ******************************************************************
 
-void XbSymbolContext_SetBypassBuildVersionLimit(XbSymbolContextHandle pHandle, bool bypass_limit)
+void XbSDBContext_SetBypassBuildVersionLimit(XbSDBContextHandle pHandle, bool bypass_limit)
 {
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+    XbSDBiContext* pContext = (XbSDBiContext*)pHandle;
 
-    if (iXbSymbolContext_AllowSetParameter(pContext)) {
+    if (XbSDBiContext_AllowSetParameter(pContext)) {
         pContext->strict_build_version_limit = !bypass_limit;
     }
 }
 
-void XbSymbolContext_SetContinuousSigScan(XbSymbolContextHandle pHandle, bool enable)
+void XbSDBContext_SetContinuousSigScan(XbSDBContextHandle pHandle, bool enable)
 {
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+    XbSDBiContext* pContext = (XbSDBiContext*)pHandle;
 
-    if (iXbSymbolContext_AllowSetParameter(pContext)) {
+    if (XbSDBiContext_AllowSetParameter(pContext)) {
         pContext->one_time_scan = !enable;
     }
 }
 
-void XbSymbolContext_SetFirstDetectAddressOnly(XbSymbolContextHandle pHandle, bool enable)
+void XbSDBContext_SetFirstDetectAddressOnly(XbSDBContextHandle pHandle, bool enable)
 {
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+    XbSDBiContext* pContext = (XbSDBiContext*)pHandle;
 
-    if (iXbSymbolContext_AllowSetParameter(pContext)) {
+    if (XbSDBiContext_AllowSetParameter(pContext)) {
         pContext->scan_first_detect = enable;
     }
 }
 
-bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t library_filter)
+bool XbSDBContext_RegisterLibrary(XbSDBContextHandle pHandle, uint32_t library_filter)
 {
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+    XbSDBiContext* pContext = (XbSDBiContext*)pHandle;
 
-    if (!iXbSymbolContext_AllowSetParameter(pContext)) {
+    if (!XbSDBiContext_AllowSetParameter(pContext)) {
         return false;
     }
 
     // Check to make sure all flags are acceptable before set.
-    if ((library_filter & ~XbSymbolLib_ALL) > 0) {
+    if ((library_filter & ~XBSDBLIB_ALL) > 0) {
         return false;
     }
 
@@ -991,9 +991,9 @@ bool XbSymbolContext_RegisterLibrary(XbSymbolContextHandle pHandle, uint32_t lib
 }
 
 #include "manual_custom.h"
-void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
+void XbSDBContext_ScanManual(XbSDBContextHandle pHandle)
 {
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+    XbSDBiContext* pContext = (XbSDBiContext*)pHandle;
 
     if (pContext->scan_stage >= SS_1_MANUAL) {
         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "Manual rescan request is skip.");
@@ -1004,18 +1004,18 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
     for (unsigned int lv = 0; lv < pContext->library_input.count; lv++) {
 
         const XbSDBLibrary* pLibrary = pContext->library_input.filters + lv;
-        eLibraryType i_LibraryType = internal_GetLibraryType(pLibrary->flag);
+        eLibraryType i_LibraryType = XbSDBi_GetLibraryType(pLibrary->flag);
 
         if (i_LibraryType <= LT_UNKNOWN || LT_MAX <= i_LibraryType) {
             continue;
         }
 
-        iXbSymbolLibrarySession libSession = {
+        XbSDBiLibrarySession libSession = {
             .pLibrary = pLibrary,
             .iLibraryType = i_LibraryType
         };
 
-        if ((pLibrary->flag & (XbSymbolLib_D3D8 | XbSymbolLib_D3D8LTCG)) > 0) {
+        if ((pLibrary->flag & (XBSDBLIB_D3D8 | XBSDBLIB_D3D8LTCG)) > 0) {
             // TODO: Do we need to check twice?
             // Perform check twice, since sections can be in different order.
             for (unsigned int loop = 0; loop < 2; loop++) {
@@ -1027,7 +1027,7 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
                 break;
             }
         }
-        else if ((pLibrary->flag & XbSymbolLib_DSOUND) > 0) {
+        else if ((pLibrary->flag & XBSDBLIB_DSOUND) > 0) {
             // Perform check twice, since sections can be in different order.
             for (unsigned int loop = 0; loop < 2; loop++) {
                 // Initialize a matching specific section is currently pair with library in order to scan specific section only.
@@ -1038,7 +1038,7 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
                 break;
             }
         }
-        else if ((pLibrary->flag & XbSymbolLib_XAPILIB) > 0) {
+        else if ((pLibrary->flag & XBSDBLIB_XAPILIB) > 0) {
             manual_scan_library_custom(pContext, manual_scan_section_xapilib, &libSession);
         }
     }
@@ -1046,36 +1046,36 @@ void XbSymbolContext_ScanManual(XbSymbolContextHandle pHandle)
     pContext->scan_stage = SS_2_SCAN_LIBS;
 }
 
-unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
-                                         const XbSDBLibrary* pLibrary,
-                                         bool xref_first_pass)
+unsigned int XbSDBContext_ScanLibrary(XbSDBContextHandle pHandle,
+                                      const XbSDBLibrary* pLibrary,
+                                      bool xref_first_pass)
 {
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
-    eLibraryType iLibraryType = internal_GetLibraryType(pLibrary->flag);
+    XbSDBiContext* pContext = (XbSDBiContext*)pHandle;
+    eLibraryType iLibraryType = XbSDBi_GetLibraryType(pLibrary->flag);
 
     if (iLibraryType <= LT_UNKNOWN || LT_MAX <= iLibraryType) {
         return 0;
     }
 
-    iXbSymbolLibrarySession librarySession = {
+    XbSDBiLibrarySession librarySession = {
         .pLibrary = pLibrary,
         .iLibraryType = iLibraryType
     };
 
     unsigned int xref_count = pContext->library_contexts[iLibraryType].xref_registered;
 
-    if (!iXbSymbolContext_AllowScanLibrary(pContext)) {
+    if (!XbSDBiContext_AllowScanLibrary(pContext)) {
         return 0;
     }
 
     // If library type is active, do nothing.
-    if (!internal_SetLibraryTypeStart(pContext, iLibraryType)) {
+    if (!XbSDBi_SetLibraryTypeStart(pContext, iLibraryType)) {
         return 0;
     }
 
     SymbolDatabaseList* pSymbolDB;
     unsigned db_i = 0;
-    while ((pSymbolDB = internal_FindLibraryDB(pLibrary->flag, &db_i))) {
+    while ((pSymbolDB = XbSDBi_FindLibraryDB(pLibrary->flag, &db_i))) {
         db_i++;
         for (unsigned int s = 0; s < pContext->section_input.count; s++) {
 
@@ -1088,11 +1088,11 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
                     output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Scanning %.8s library in %.8s section",
                                           pLibrary->name, pSymbolDB->LibSec.section[d3]);
 
-                    internal_OOVPATableList_scan(pContext,
-                                                 &librarySession,
-                                                 pSymbolDB->Symbols,
-                                                 pContext->section_input.filters + s,
-                                                 xref_first_pass);
+                    XbSDBi_OOVPATableList_scan(pContext,
+                                               &librarySession,
+                                               pSymbolDB->Symbols,
+                                               pContext->section_input.filters + s,
+                                               xref_first_pass);
                     break;
                 }
             }
@@ -1110,16 +1110,16 @@ unsigned int XbSymbolContext_ScanLibrary(XbSymbolContextHandle pHandle,
 
     xref_count = pContext->library_contexts[iLibraryType].xref_registered - xref_count;
 
-    internal_SetLibraryTypeEnd(pContext, iLibraryType);
+    XbSDBi_SetLibraryTypeEnd(pContext, iLibraryType);
 
     return xref_count;
 }
 
-void XbSymbolContext_ScanAllLibraryFilter(XbSymbolContextHandle pHandle)
+void XbSDBContext_ScanAllLibraryFilter(XbSDBContextHandle pHandle)
 {
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+    XbSDBiContext* pContext = (XbSDBiContext*)pHandle;
 
-    if (!iXbSymbolContext_AllowScanLibrary(pContext)) {
+    if (!XbSDBiContext_AllowScanLibrary(pContext)) {
         return;
     }
 
@@ -1135,8 +1135,8 @@ void XbSymbolContext_ScanAllLibraryFilter(XbSymbolContextHandle pHandle)
     // Get Library's dependency flag(s)
     for (unsigned int lv = 0; lv < pContext->library_input.count; lv++) {
         const XbSDBLibrary* library = pContext->library_input.filters + lv;
-        if (internal_LibraryFilterPermitScan(pContext, library->flag)) {
-            library_dependency[lv] = XbSymbolContext_GetLibraryDependencies(pHandle, library->flag);
+        if (XbSDBi_LibraryFilterPermitScan(pContext, library->flag)) {
+            library_dependency[lv] = XbSDBContext_GetLibraryDependencies(pHandle, library->flag);
             library_scan |= library->flag;
         }
     }
@@ -1151,27 +1151,27 @@ void XbSymbolContext_ScanAllLibraryFilter(XbSymbolContextHandle pHandle)
             do {
                 // Temporary placeholder until v2.0 API's section scan function is ready or may be permanent in here.
                 // Skip specific library if third-party set to specific library.
-                if (!internal_LibraryFilterPermitScan(pContext, library->flag)) {
+                if (!XbSDBi_LibraryFilterPermitScan(pContext, library->flag)) {
                     output_message_format(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Skipping %.8s (%hu) scan.", library->name, library->build_version);
                 }
                 else {
                     // Check if we already completed library scan first.
-                    if (XbSymbolDatabase_CheckDependencyCompletion(library_completion, library->flag)) {
+                    if (XbSDB_CheckDependencyCompletion(library_completion, library->flag)) {
                         // Skip if already been scanned.
                         break;
                     }
 
                     // Check if any dependency is set and if they are completed
-                    if (library_dependency[lv] && !XbSymbolDatabase_CheckDependencyCompletion(library_completion, library_dependency[lv])) {
+                    if (library_dependency[lv] && !XbSDB_CheckDependencyCompletion(library_completion, library_dependency[lv])) {
                         // Skip if any dependency library isn't done yet.
                         break;
                     }
                     // Start library scan against symbol database we want to search for address of symbols and xreferences.
-                    unsigned counter = XbSymbolContext_ScanLibrary(pHandle, library, !not_first_pass[lv]);
+                    unsigned counter = XbSDBContext_ScanLibrary(pHandle, library, !not_first_pass[lv]);
 
                     // If no additional symbols found, then set as scan completed.
                     if (counter == 0) {
-                        XbSymbolDatabase_SetLibraryCompletion(library_completion, library->flag);
+                        XbSDB_SetLibraryCompletion(library_completion, library->flag);
                     }
                     // Once first pass is done, multiple passes may will occur for any xref dependency symbols haven't been found.
                     if (!not_first_pass[lv]) {
@@ -1181,14 +1181,14 @@ void XbSymbolContext_ScanAllLibraryFilter(XbSymbolContextHandle pHandle)
             } while (true);
         }
 
-    } while (!XbSymbolDatabase_CheckDependencyCompletion(library_completion, library_scan));
+    } while (!XbSDB_CheckDependencyCompletion(library_completion, library_scan));
 }
 
 // Does individual registration of derived XRef's that are useful but not yet registered.
 // Called after entire scan.
-void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle)
+void XbSDBContext_RegisterXRefs(XbSDBContextHandle pHandle)
 {
-    iXbSymbolContext* pContext = (iXbSymbolContext*)pHandle;
+    XbSDBiContext* pContext = (XbSDBiContext*)pHandle;
 
     if (pContext->register_func == NULL) {
         return;
@@ -1205,19 +1205,19 @@ void XbSymbolContext_RegisterXRefs(XbSymbolContextHandle pHandle)
 // ******************************************************************
 
 // Aka the basic example to handle the scan process.
-bool XbSymbolScan(const void* xb_header_addr,
-                  xb_symbol_register_t register_func,
-                  bool is_raw)
+bool XbSDB_Scan(const void* xb_header_addr,
+                xb_symbol_register_t register_func,
+                bool is_raw)
 {
     bool bCheckJVS = false;
 
-    XbSymbolContextHandle pHandle;
-    iXbSymbolContext* iContext;
+    XbSDBContextHandle pHandle;
+    XbSDBiContext* iContext;
     XbSDBLibraryHeader library_input = { 0 };
     XbSDBSectionHeader section_input = { 0 };
 
     // Step 1, let's get the total sum of array to allocate library input.
-    library_input.count = XbSymbolDatabase_GenerateLibraryFilter(xb_header_addr, NULL);
+    library_input.count = XbSDB_GenerateLibraryFilter(xb_header_addr, NULL);
     // If total sum is zero, then the input is invalid.
     if (library_input.count == 0) {
         return false;
@@ -1229,10 +1229,10 @@ bool XbSymbolScan(const void* xb_header_addr,
         return false;
     }
     // Finally, obtain the information for internal scan process.
-    (void)XbSymbolDatabase_GenerateLibraryFilter(xb_header_addr, &library_input);
+    (void)XbSDB_GenerateLibraryFilter(xb_header_addr, &library_input);
 
     // Step 2, let's get the total sum of array to allocate section input.
-    section_input.count = XbSymbolDatabase_GenerateSectionFilter(xb_header_addr, NULL, is_raw);
+    section_input.count = XbSDB_GenerateSectionFilter(xb_header_addr, NULL, is_raw);
     // If total sum is zero, then the input is invalid.
     if (section_input.count == 0) {
         goto LibraryCleanup;
@@ -1244,37 +1244,37 @@ bool XbSymbolScan(const void* xb_header_addr,
         goto LibraryCleanup;
     }
     // Finally, obtain the information for internal scan process.
-    (void)XbSymbolDatabase_GenerateSectionFilter(xb_header_addr, &section_input, is_raw);
+    (void)XbSDB_GenerateSectionFilter(xb_header_addr, &section_input, is_raw);
 
     xb_xbe_type xbe_type = GetXbeType(xb_header_addr);
 
-    uint32_t kernel_thunk_addr = XbSymbolDatabase_GetKernelThunkAddress(xb_header_addr);
+    uint32_t kernel_thunk_addr = XbSDB_GetKernelThunkAddress(xb_header_addr);
 
     // Step 3, initialize context handle to pre-allocate the requirement.
     // However, calling global functions are recommended first for any customization.
-    if (!XbSymbolDatabase_CreateXbSymbolContext(&pHandle, register_func, library_input, section_input, kernel_thunk_addr)) {
+    if (!XbSDB_CreateContext(&pHandle, register_func, library_input, section_input, kernel_thunk_addr)) {
         goto FullCleanup;
     }
     // After initialize, we do not need to keep the allocated filter arrays in memory.
     free(section_input.filters);
     free(library_input.filters);
 
-    iContext = (iXbSymbolContext*)pHandle;
+    iContext = (XbSDBiContext*)pHandle;
 
     output_message_format(&iContext->output, XB_OUTPUT_MESSAGE_DEBUG, "xbe type is %s", xbe_type_str[xbe_type]);
 
     // Step 4, perform manual scan requirement to collect the necessary requirement
     // before perform general scan.
-    XbSymbolContext_ScanManual(pHandle);
+    XbSDBContext_ScanManual(pHandle);
 
     // Step 5, do a full scan process.
-    XbSymbolContext_ScanAllLibraryFilter(pHandle);
+    XbSDBContext_ScanAllLibraryFilter(pHandle);
 
     // Step 6, register any xrefs (which doesn't have its own OOVPA)
-    XbSymbolContext_RegisterXRefs(pHandle);
+    XbSDBContext_RegisterXRefs(pHandle);
 
     // Finally, after all the scan process is done, release the context handler.
-    XbSymbolContext_Release(pHandle);
+    XbSDBContext_Release(pHandle);
 
     return true;
 
@@ -1293,11 +1293,11 @@ LibraryCleanup:
 }
 
 // Require to be at end of various functions may use manual register calls in order to count properly.
-unsigned XbSymbolDatabase_GetTotalSymbols(uint32_t library_filter)
+unsigned XbSDB_GetTotalSymbols(uint32_t library_filter)
 {
     unsigned db_i = 0, total = SYMBOL_COUNTER_VALUE;
     SymbolDatabaseList* pLibraryDB;
-    while ((pLibraryDB = internal_FindLibraryDB(library_filter, &db_i))) {
+    while ((pLibraryDB = XbSDBi_FindLibraryDB(library_filter, &db_i))) {
         db_i++;
         total += pLibraryDB->Symbols->Count;
     }
