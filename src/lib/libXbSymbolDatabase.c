@@ -519,7 +519,7 @@ uint32_t XbSDBContext_GetLibraryDependencies(XbSDBContextHandle pHandle, uint32_
 }
 
 // TODO: Expose to third-party?
-bool XbSDBi_HasDSoundSection(const void* xb_header_addr)
+static bool XbSDBi_HasDSoundSection(const void* xb_header_addr)
 {
     const xbe_header* pXbeHeader = xb_header_addr;
     memptr_t xb_start_addr = (memptr_t)xb_header_addr - pXbeHeader->dwBaseAddr;
