@@ -6028,3 +6028,29 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x2C, 0x24),
     //
 );
+
+// ******************************************************************
+// * D3DDevice_SetTextureState_Deferred
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_Deferred,
+                      3911,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // mov [ecx * 0x04 + D3D_g_DeferredTextureState],edx
+    XREF_ENTRY(0x22, XREF_D3D_g_DeferredTextureState),
+
+    // mov eax, [edx * 0x04 + ????]
+    OV_MATCH(0x00, 0x8B, 0x04, 0x95),
+
+    // shl param_1, 0x05
+    OV_MATCH(0x0E, 0xC1, 0xE1, 0x05),
+
+    // add param_1, param_2
+    // mov edx, [esp + param_3]
+    OV_MATCH(0x13, 0x03, 0xCA, 0x8B, 0x54, 0x24, 0x08),
+
+    // mov [ecx * 0x04 + D3D_g_DeferredTextureState], edx
+    OV_MATCH(0x1F, 0x89, 0x14, 0x8D),
+    //
+);
