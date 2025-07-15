@@ -244,7 +244,7 @@ static const library_list database_full = {
                      REGISTER_SYMBOL(D3DDevice_SetRenderStateNotInline_0__LTCG_esi1_edi2, VER_RANGE(3911))),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetRenderState_BackFillMode, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetRenderState_CullMode, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE(D3DDevice_SetRenderState_Deferred, VER_RANGE(3911)),
+    REGISTER_SYMBOL_INLINE(D3DDevice_SetRenderState_Deferred, VER_RANGE(3911, 4034)),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetRenderState_DoNotCullUncompressed, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetRenderState_Dxt1NoiseEnable, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetRenderState_EdgeAntiAlias, VER_RANGE(3911)),
