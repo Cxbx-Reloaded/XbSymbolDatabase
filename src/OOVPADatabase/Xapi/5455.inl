@@ -41,10 +41,10 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * GetTypeInformation_8
+// * GetTypeInformation2
 // ******************************************************************
 // Generic OOVPA as of 5455 and newer.
-OOVPA_SIG_HEADER_XREF(GetTypeInformation_8,
+OOVPA_SIG_HEADER_XREF(GetTypeInformation2,
                       5455,
                       XRefTwo)
 OOVPA_SIG_MATCH(

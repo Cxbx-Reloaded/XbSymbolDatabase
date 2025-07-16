@@ -35,8 +35,8 @@ static const library_list database_full = {
     // REGISTER_SYMBOL_INLINE(XCalculateSignatureBeginEx, VER_RANGE(3911)), // no signature and currently unknown.
     REGISTER_SYMBOL_INLINE(GetOverlappedResult, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(GetTimeZoneInformation, VER_RANGE(3911)),
-    REGISTER_SYMBOL_INLINE(GetTypeInformation_4, VER_RANGE(4242)),
-    REGISTER_SYMBOL_INLINE(GetTypeInformation_8, VER_RANGE(4242)),
+    REGISTER_SYMBOL_INLINE(GetTypeInformation, VER_RANGE(4242)),
+    REGISTER_SYMBOL_INLINE(GetTypeInformation2, VER_RANGE(4242)),
     REGISTER_SYMBOL_INLINE(OutputDebugStringA, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(OutputDebugStringW, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(mainCRTStartup, VER_RANGE(3911)),

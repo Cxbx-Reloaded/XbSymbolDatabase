@@ -150,26 +150,26 @@ static bool internal_xapi_find_device_types(XbSDBiContext* pContext,
 {
     xbaddr xSymbolAddr = 0;
 
-    // Find GetTypeInformation_4 function
-    if (!XbSDBi_IsXRefAddrValid(pContext->xref_database[XREF_GetTypeInformation_4])) {
+    // Find GetTypeInformation function
+    if (!XbSDBi_IsXRefAddrValid(pContext->xref_database[XREF_GetTypeInformation])) {
         xSymbolAddr = (xbaddr)(uintptr_t)XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
                                                                                    pLibrarySession,
                                                                                    pLibraryDB,
                                                                                    pSection,
-                                                                                   XREF_GetTypeInformation_4,
+                                                                                   XREF_GetTypeInformation,
                                                                                    DB_ST_MANUAL,
                                                                                    FIRSTPASS_YES,
                                                                                    REGISTER_YES,
                                                                                    NULL,
                                                                                    NULL);
 
-        // If GetTypeInformation_4 is not found, then try find GetTypeInformation_8
+        // If GetTypeInformation is not found, then try find GetTypeInformation2
         if (!xSymbolAddr) {
             xSymbolAddr = (xbaddr)(uintptr_t)XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
                                                                                        pLibrarySession,
                                                                                        pLibraryDB,
                                                                                        pSection,
-                                                                                       XREF_GetTypeInformation_8,
+                                                                                       XREF_GetTypeInformation2,
                                                                                        DB_ST_MANUAL,
                                                                                        FIRSTPASS_YES,
                                                                                        REGISTER_YES,
