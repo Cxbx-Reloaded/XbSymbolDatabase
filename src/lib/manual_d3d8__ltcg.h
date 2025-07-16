@@ -239,8 +239,8 @@ static int GetRenderStateOffsetByXRef(uint16_t xref,
     return -1;
 }
 
-static void manual_scan_section_dx8_VerifyRenderStateOffsets(iXbSymbolContext* pContext,
-                                                             const iXbSymbolLibrarySession* pLibrarySession)
+static void manual_scan_section_dx8_VerifyRenderStateOffsets(XbSDBiContext* pContext,
+                                                             const XbSDBiLibrarySession* pLibrarySession)
 {
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
 
@@ -249,14 +249,14 @@ static void manual_scan_section_dx8_VerifyRenderStateOffsets(iXbSymbolContext* p
     // * Complex offset
     // Verify D3D_g_RenderState is set.
     xbaddr g_RenderState = pContext->xref_database[XREF_D3D_g_RenderState];
-    if (internal_IsXRefAddrUnset(g_RenderState)) {
+    if (XbSDBi_IsXRefAddrUnset(g_RenderState)) {
         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "D3D_g_RenderState is not set!");
         return;
     }
 
     // Verify D3D_g_DeferredRenderState is set.
     xbaddr g_DeferredRenderState = pContext->xref_database[XREF_D3D_g_DeferredRenderState];
-    if (internal_IsXRefAddrUnset(g_DeferredRenderState)) {
+    if (XbSDBi_IsXRefAddrUnset(g_DeferredRenderState)) {
         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "D3D_g_DeferredRenderState is not set!");
         return;
     }
@@ -272,7 +272,7 @@ static void manual_scan_section_dx8_VerifyRenderStateOffsets(iXbSymbolContext* p
 
     // Verify D3D_g_ComplexRenderState is set.
     xbaddr g_ComplexRenderState = pContext->xref_database[XREF_D3D_g_ComplexRenderState];
-    if (internal_IsXRefAddrUnset(g_ComplexRenderState)) {
+    if (XbSDBi_IsXRefAddrUnset(g_ComplexRenderState)) {
         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, "D3D_g_ComplexRenderState is not set!");
         return;
     }
@@ -294,7 +294,7 @@ static void manual_scan_section_dx8_VerifyRenderStateOffsets(iXbSymbolContext* p
         if (IsRenderStateAvailableInCurrentXboxD3D8Lib(DxbxRenderStateInfo[i], pLibrary->build_version)) {
             if (DxbxRenderStateInfo[i].xref) {
                 xbaddr RenderState_iAddr = pContext->xref_database[DxbxRenderStateInfo[i].xref];
-                if (internal_IsXRefAddrUnset(RenderState_iAddr)) {
+                if (XbSDBi_IsXRefAddrUnset(RenderState_iAddr)) {
                     if (RenderState_iAddr != XREF_ADDR_DERIVE) {
                         snprintf(buffer_str, XBSDB_ARRAY_SIZE(buffer_str), "XbSymbolDatabase's %s symbol is not set!", DxbxRenderStateInfo[i].name);
                         output_message(&pContext->output, XB_OUTPUT_MESSAGE_ERROR, buffer_str);
@@ -316,8 +316,8 @@ static void manual_scan_section_dx8_VerifyRenderStateOffsets(iXbSymbolContext* p
     output_message(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, "Verify RenderState offsets is complete.");
 }
 
-static bool manual_scan_section_dx8_register_D3DRS_vars(iXbSymbolContext* pContext,
-                                                        const iXbSymbolLibrarySession* pLibrarySession,
+static bool manual_scan_section_dx8_register_D3DRS_vars(XbSDBiContext* pContext,
+                                                        const XbSDBiLibrarySession* pLibrarySession,
                                                         SymbolDatabaseList* pLibraryDB,
                                                         const XbSDBSection* pSection)
 {
@@ -331,50 +331,50 @@ static bool manual_scan_section_dx8_register_D3DRS_vars(iXbSymbolContext* pConte
             if (DxbxRenderStateInfo[i].xref) {
                 xbaddr RenderState_iAddr = pContext->xref_database[DxbxRenderStateInfo[i].xref];
                 // Check if D3DRS_ prefix variables are set.
-                if (internal_IsXRefAddrUnset(RenderState_iAddr)) {
+                if (XbSDBi_IsXRefAddrUnset(RenderState_iAddr)) {
                     if (RenderState_iAddr != XREF_ADDR_DERIVE) {
                         // If it is not derive address, then let's calculate base on DxbxRenderStateInfo table for accuracy.
-                        internal_SetXRefDatabase(pContext,
-                                                 pLibrarySession->iLibraryType,
-                                                 DxbxRenderStateInfo[i].xref,
-                                                 pContext->xref_database[XREF_D3D_g_RenderState] + RenderState_iLib * sizeof(xbaddr));
+                        XbSDBi_SetXRefDatabase(pContext,
+                                               pLibrarySession->iLibraryType,
+                                               DxbxRenderStateInfo[i].xref,
+                                               pContext->xref_database[XREF_D3D_g_RenderState] + RenderState_iLib * sizeof(xbaddr));
                         snprintf(buffer_str, XBSDB_ARRAY_SIZE(buffer_str), "%s symbol address is manually set to D3D_g_RenderState + %zd * %u.", DxbxRenderStateInfo[i].name, sizeof(xbaddr), RenderState_iLib);
                         output_message(&pContext->output, XB_OUTPUT_MESSAGE_DEBUG, buffer_str);
                     }
                 }
-                internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, render_state_i.xref, render_state_i.version, render_state_i.name, symbol_variable, call_none, 0, NULL);
+                XbSDBi_RegisterValidXRefAddr(pContext, LIB_D3D8, XBSDBLIB_D3D8, render_state_i.xref, render_state_i.version, render_state_i.name, symbol_variable, call_none, 0, NULL);
             }
             RenderState_iLib++;
         }
     }
 
     // Manual register RenderState sections.
-    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_RenderState, 0, "D3D_g_RenderState", symbol_variable, call_none, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_ComplexRenderState, 0, "D3D_g_ComplexRenderState", symbol_variable, call_none, 0, NULL);
-    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3D_g_DeferredRenderState, 0, "D3D_g_DeferredRenderState", symbol_variable, call_none, 0, NULL);
+    XbSDBi_RegisterValidXRefAddr(pContext, LIB_D3D8, XBSDBLIB_D3D8, XREF_D3D_g_RenderState, 0, "D3D_g_RenderState", symbol_variable, call_none, 0, NULL);
+    XbSDBi_RegisterValidXRefAddr(pContext, LIB_D3D8, XBSDBLIB_D3D8, XREF_D3D_g_ComplexRenderState, 0, "D3D_g_ComplexRenderState", symbol_variable, call_none, 0, NULL);
+    XbSDBi_RegisterValidXRefAddr(pContext, LIB_D3D8, XBSDBLIB_D3D8, XREF_D3D_g_DeferredRenderState, 0, "D3D_g_DeferredRenderState", symbol_variable, call_none, 0, NULL);
 
     return true;
 }
 
 // No dependency requirement
-static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
-                                                   const iXbSymbolLibrarySession* pLibrarySession,
+static bool manual_scan_section_dx8_register_D3DRS(XbSDBiContext* pContext,
+                                                   const XbSDBiLibrarySession* pLibrarySession,
                                                    SymbolDatabaseList* pLibraryDB,
                                                    const XbSDBSection* pSection)
 {
     // First, we need to find D3DDevice_SetRenderState_Simple symbol.
     xbaddr D3DDevice_SetRenderState_Simple = pContext->xref_database[XREF_D3DDevice_SetRenderState_Simple];
-    if (internal_IsXRefAddrUnset(D3DDevice_SetRenderState_Simple)) {
-        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
-                                                                                            pLibrarySession,
-                                                                                            pLibraryDB,
-                                                                                            pSection,
-                                                                                            XREF_D3DDevice_SetRenderState_Simple,
-                                                                                            DB_ST_MANUAL,
-                                                                                            FIRSTPASS_YES,
-                                                                                            REGISTER_YES,
-                                                                                            NULL,
-                                                                                            NULL);
+    if (XbSDBi_IsXRefAddrUnset(D3DDevice_SetRenderState_Simple)) {
+        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                          pLibrarySession,
+                                                                                          pLibraryDB,
+                                                                                          pSection,
+                                                                                          XREF_D3DDevice_SetRenderState_Simple,
+                                                                                          DB_ST_MANUAL,
+                                                                                          FIRSTPASS_YES,
+                                                                                          REGISTER_YES,
+                                                                                          NULL,
+                                                                                          NULL);
         // If not found, skip the rest of the scan.
         if (xSymbolAddr == 0) {
             return false;
@@ -385,36 +385,36 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
 
     // Then look up for D3D_g_RenderState
     xbaddr D3D_g_RenderState = pContext->xref_database[XREF_D3D_g_RenderState];
-    if (internal_IsXRefAddrUnset(D3D_g_RenderState)) {
+    if (XbSDBi_IsXRefAddrUnset(D3D_g_RenderState)) {
         // Below xref is used to obtain from D3DDevice_SetRenderState(Not)Inline signatures.
         pContext->xref_database[XREF_D3D_g_RenderState] = XREF_ADDR_DERIVE;
-        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
-                                                                                            pLibrarySession,
-                                                                                            pLibraryDB,
-                                                                                            pSection,
-                                                                                            XREF_D3DDevice_SetRenderStateNotInline,
-                                                                                            DB_ST_MANUAL,
-                                                                                            FIRSTPASS_YES,
-                                                                                            REGISTER_YES,
-                                                                                            NULL,
-                                                                                            NULL);
+        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                          pLibrarySession,
+                                                                                          pLibraryDB,
+                                                                                          pSection,
+                                                                                          XREF_D3DDevice_SetRenderStateNotInline,
+                                                                                          DB_ST_MANUAL,
+                                                                                          FIRSTPASS_YES,
+                                                                                          REGISTER_YES,
+                                                                                          NULL,
+                                                                                          NULL);
         if (xSymbolAddr == 0) {
             // If not found, then check if library is not LTCG.
-            if (pLibrarySession->pLibrary->flag == XbSymbolLib_D3D8) {
+            if (pLibrarySession->pLibrary->flag == XBSDBLIB_D3D8) {
                 pContext->xref_database[XREF_D3D_g_RenderState] = XREF_ADDR_UNDETERMINED;
                 return false;
             }
             // Otherwise, let's look up for D3DDevice_SetRenderStateInline__GenericFragment which is NOT a symbol.
-            xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
-                                                                                         pLibrarySession,
-                                                                                         pLibraryDB,
-                                                                                         pSection,
-                                                                                         XREF_D3DDevice_SetRenderStateInline__GenericFragment,
-                                                                                         DB_ST_MANUAL,
-                                                                                         FIRSTPASS_YES,
-                                                                                         REGISTER_NO,
-                                                                                         NULL,
-                                                                                         NULL);
+            xSymbolAddr = (xbaddr)(uintptr_t)XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                       pLibrarySession,
+                                                                                       pLibraryDB,
+                                                                                       pSection,
+                                                                                       XREF_D3DDevice_SetRenderStateInline__GenericFragment,
+                                                                                       DB_ST_MANUAL,
+                                                                                       FIRSTPASS_YES,
+                                                                                       REGISTER_NO,
+                                                                                       NULL,
+                                                                                       NULL);
 
             // If not found, skip the rest of the scan.
             if (xSymbolAddr == 0) {
@@ -422,13 +422,13 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
                 return false;
             }
             // pointer to cmp opcode's value from D3DDevice_SetRenderStateInline__GenericFragment sig.
-            pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xSymbolAddr + 0x02);
+            pD3D_g_DeferredRenderStateOffset = XbSDBi_section_VirtToHostAddress(pContext, xSymbolAddr + 0x02);
 
             // If it is found, don't register it.
         }
         else {
             // pointer to cmp opcode's value from D3DDevice_SetRenderStateNotInline sig.
-            pD3D_g_DeferredRenderStateOffset = internal_section_VirtToHostAddress(pContext, xSymbolAddr + 0x07);
+            pD3D_g_DeferredRenderStateOffset = XbSDBi_section_VirtToHostAddress(pContext, xSymbolAddr + 0x07);
 
             // Self register only D3DDevice_SetRenderStateNotInline symbol function.
             // NOTE: D3DDevice_SetRenderStateInline__GenericFragment is NOT a symbol but a generic method to find D3D_g_RenderState.
@@ -440,43 +440,43 @@ static bool manual_scan_section_dx8_register_D3DRS(iXbSymbolContext* pContext,
         // This is 100% accurate method than manual offset usage.
         if (pD3D_g_DeferredRenderStateOffset) {
             uint8_t D3D_g_DeferredRenderStateOffset = *(uint8_t*)pD3D_g_DeferredRenderStateOffset;
-            internal_SetXRefDatabase(pContext,
-                                     pLibrarySession->iLibraryType,
-                                     XREF_D3D_g_DeferredRenderState,
-                                     pContext->xref_database[XREF_D3D_g_RenderState] + D3D_g_DeferredRenderStateOffset * 4);
+            XbSDBi_SetXRefDatabase(pContext,
+                                   pLibrarySession->iLibraryType,
+                                   XREF_D3D_g_DeferredRenderState,
+                                   pContext->xref_database[XREF_D3D_g_RenderState] + D3D_g_DeferredRenderStateOffset * 4);
 
-            internal_SetXRefDatabase(pContext,
-                                     pLibrarySession->iLibraryType,
-                                     XREF_D3DRS_FogEnable,
-                                     pContext->xref_database[XREF_D3D_g_DeferredRenderState]);
+            XbSDBi_SetXRefDatabase(pContext,
+                                   pLibrarySession->iLibraryType,
+                                   XREF_D3DRS_FogEnable,
+                                   pContext->xref_database[XREF_D3D_g_DeferredRenderState]);
         }
     }
     return true;
 }
 
 // No dependency requirement
-static bool manual_scan_section_dx8_register_D3DCRS(iXbSymbolContext* pContext,
-                                                    const iXbSymbolLibrarySession* pLibrarySession,
+static bool manual_scan_section_dx8_register_D3DCRS(XbSDBiContext* pContext,
+                                                    const XbSDBiLibrarySession* pLibrarySession,
                                                     SymbolDatabaseList* pLibraryDB,
                                                     const XbSDBSection* pSection)
 {
     // First, we need to find D3DRS_FillMode symbol.
     xbaddr D3DRS_FillMode = pContext->xref_database[XREF_D3DRS_FillMode];
-    if (internal_IsXRefAddrUnset(D3DRS_FillMode)) {
+    if (XbSDBi_IsXRefAddrUnset(D3DRS_FillMode)) {
         // These xrefs are used to obtain from D3DDevice_SetRenderState_FillMode signature.
         pContext->xref_database[XREF_D3DRS_FillMode] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_BackFillMode] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_TwoSidedLighting] = XREF_ADDR_DERIVE;
-        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
-                                                                                            pLibrarySession,
-                                                                                            pLibraryDB,
-                                                                                            pSection,
-                                                                                            XREF_D3DDevice_SetRenderState_FillMode,
-                                                                                            DB_ST_MANUAL,
-                                                                                            FIRSTPASS_NO,
-                                                                                            REGISTER_YES,
-                                                                                            NULL,
-                                                                                            NULL);
+        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                          pLibrarySession,
+                                                                                          pLibraryDB,
+                                                                                          pSection,
+                                                                                          XREF_D3DDevice_SetRenderState_FillMode,
+                                                                                          DB_ST_MANUAL,
+                                                                                          FIRSTPASS_NO,
+                                                                                          REGISTER_YES,
+                                                                                          NULL,
+                                                                                          NULL);
         // If not found, skip the rest of the scan.
         if (xSymbolAddr == 0) {
             pContext->xref_database[XREF_D3DRS_FillMode] = XREF_ADDR_UNDETERMINED;
@@ -499,29 +499,29 @@ static bool manual_scan_section_dx8_register_D3DCRS(iXbSymbolContext* pContext,
 }
 
 // No dependency requirement
-static bool manual_scan_section_dx8_register_D3DRS_end_of_list(iXbSymbolContext* pContext,
-                                                               const iXbSymbolLibrarySession* pLibrarySession,
+static bool manual_scan_section_dx8_register_D3DRS_end_of_list(XbSDBiContext* pContext,
+                                                               const XbSDBiLibrarySession* pLibrarySession,
                                                                SymbolDatabaseList* pLibraryDB,
                                                                const XbSDBSection* pSection)
 {
     // First, we need to find D3DRS_DoNotCullUncompressed symbol.
     xbaddr D3DRS_DoNotCullUncompressed = pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed];
-    if (internal_IsXRefAddrUnset(D3DRS_DoNotCullUncompressed)) {
+    if (XbSDBi_IsXRefAddrUnset(D3DRS_DoNotCullUncompressed)) {
         // These xrefs are used to obtain from D3D_CommonSetDebugRegisters signature.
         pContext->xref_database[XREF_D3D_g_pDevice] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_RopZCmpAlwaysRead] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_RopZRead] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_DoNotCullUncompressed] = XREF_ADDR_DERIVE;
-        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
-                                                                                            pLibrarySession,
-                                                                                            pLibraryDB,
-                                                                                            pSection,
-                                                                                            XREF_D3D_CommonSetDebugRegisters,
-                                                                                            DB_ST_MANUAL,
-                                                                                            FIRSTPASS_NO,
-                                                                                            REGISTER_YES,
-                                                                                            NULL,
-                                                                                            NULL);
+        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                          pLibrarySession,
+                                                                                          pLibraryDB,
+                                                                                          pSection,
+                                                                                          XREF_D3D_CommonSetDebugRegisters,
+                                                                                          DB_ST_MANUAL,
+                                                                                          FIRSTPASS_NO,
+                                                                                          REGISTER_YES,
+                                                                                          NULL,
+                                                                                          NULL);
         // If not found, skip the rest of the scan.
         if (xSymbolAddr == 0) {
             pContext->xref_database[XREF_D3D_g_pDevice] = XREF_ADDR_UNDETERMINED;
@@ -532,44 +532,44 @@ static bool manual_scan_section_dx8_register_D3DRS_end_of_list(iXbSymbolContext*
         }
 
         OOVPATable* pSymbolEntry = NULL;
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3D_g_pDevice);
-        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
+        XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3D_g_pDevice);
+        XbSDBi_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
 #if 0 // TODO: Fix this after #208 pull request is merged.
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DRS_RopZCmpAlwaysRead);
-        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DRS_RopZRead);
-        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DRS_DoNotCullUncompressed);
-        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
+        XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DRS_RopZCmpAlwaysRead);
+        XbSDBi_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
+        XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DRS_RopZRead);
+        XbSDBi_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
+        XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DRS_DoNotCullUncompressed);
+        XbSDBi_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
 #endif
     }
     return true;
 }
 
 // No dependency requirement
-static bool manual_scan_section_dx8_register_D3DRS_Stencils_and_Occlusion(iXbSymbolContext* pContext,
-                                                                          const iXbSymbolLibrarySession* pLibrarySession,
+static bool manual_scan_section_dx8_register_D3DRS_Stencils_and_Occlusion(XbSDBiContext* pContext,
+                                                                          const XbSDBiLibrarySession* pLibrarySession,
                                                                           SymbolDatabaseList* pLibraryDB,
                                                                           const XbSDBSection* pSection)
 {
     // First, we need to find D3DRS_StencilEnable symbol.
     xbaddr D3DRS_StencilEnable = pContext->xref_database[XREF_D3DRS_StencilEnable];
-    if (internal_IsXRefAddrUnset(D3DRS_StencilEnable)) {
+    if (XbSDBi_IsXRefAddrUnset(D3DRS_StencilEnable)) {
         // These xrefs are used to obtain from D3DRS_Stencils_and_Occlusion__GenericFragment signature.
         pContext->xref_database[XREF_D3DRS_StencilEnable] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_StencilFail] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_OcclusionCullEnable] = XREF_ADDR_DERIVE;
         pContext->xref_database[XREF_D3DRS_StencilCullEnable] = XREF_ADDR_DERIVE;
-        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
-                                                                                            pLibrarySession,
-                                                                                            pLibraryDB,
-                                                                                            pSection,
-                                                                                            XREF_D3DRS_Stencils_and_Occlusion__GenericFragment,
-                                                                                            DB_ST_MANUAL,
-                                                                                            FIRSTPASS_NO,
-                                                                                            REGISTER_NO,
-                                                                                            NULL,
-                                                                                            NULL);
+        xbaddr xSymbolAddr = (xbaddr)(uintptr_t)XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                          pLibrarySession,
+                                                                                          pLibraryDB,
+                                                                                          pSection,
+                                                                                          XREF_D3DRS_Stencils_and_Occlusion__GenericFragment,
+                                                                                          DB_ST_MANUAL,
+                                                                                          FIRSTPASS_NO,
+                                                                                          REGISTER_NO,
+                                                                                          NULL,
+                                                                                          NULL);
         // If not found, skip the rest of the scan.
         if (xSymbolAddr == 0) {
             pContext->xref_database[XREF_D3DRS_StencilEnable] = XREF_ADDR_UNDETERMINED;
@@ -584,8 +584,8 @@ static bool manual_scan_section_dx8_register_D3DRS_Stencils_and_Occlusion(iXbSym
     return true;
 }
 
-static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
-                                                    const iXbSymbolLibrarySession* pLibrarySession)
+static void manual_scan_section_dx8_register_D3DTSS(XbSDBiContext* pContext,
+                                                    const XbSDBiLibrarySession* pLibrarySession)
 {
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
     const eLibraryType iLibraryType = pLibrarySession->iLibraryType;
@@ -593,19 +593,19 @@ static void manual_scan_section_dx8_register_D3DTSS(iXbSymbolContext* pContext,
     xbaddr DerivedAddr_D3DTSS_TEXCOORDINDEX = pContext->xref_database[XREF_D3DTSS_TEXCOORDINDEX];
     int Decrement = 0x70; // TODO : Rename into something understandable
 
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_BUMPENV, DerivedAddr_D3DTSS_TEXCOORDINDEX - 28 * 4);
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_TEXCOORDINDEX, DerivedAddr_D3DTSS_TEXCOORDINDEX); // Already been set.
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_BORDERCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 1 * 4);
-    //internal_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_COLORKEYCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 2 * 4);
+    //XbSDBi_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_BUMPENV, DerivedAddr_D3DTSS_TEXCOORDINDEX - 28 * 4);
+    //XbSDBi_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_TEXCOORDINDEX, DerivedAddr_D3DTSS_TEXCOORDINDEX); // Already been set.
+    //XbSDBi_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_BORDERCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 1 * 4);
+    //XbSDBi_SetXRefDatabase(pContext, iLibraryType, XREF_D3DTSS_COLORKEYCOLOR, DerivedAddr_D3DTSS_TEXCOORDINDEX + 2 * 4);
 
     uint32_t EmuD3DDeferredTextureState = DerivedAddr_D3DTSS_TEXCOORDINDEX - Decrement;
 
-    internal_RegisterXRef(pContext, pLibrarySession, XREF_D3D_g_DeferredTextureState, 0, "D3D_g_DeferredTextureState", EmuD3DDeferredTextureState, symbol_variable, call_none, 0, NULL, true);
+    XbSDBi_RegisterXRef(pContext, pLibrarySession, XREF_D3D_g_DeferredTextureState, 0, "D3D_g_DeferredTextureState", EmuD3DDeferredTextureState, symbol_variable, call_none, 0, NULL, true);
 }
 
 // Has dependency on D3D_g_pDevice xref.
-static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContext,
-                                                       const iXbSymbolLibrarySession* pLibrarySession,
+static bool manual_scan_section_dx8_register_callbacks(XbSDBiContext* pContext,
+                                                       const XbSDBiLibrarySession* pLibrarySession,
                                                        SymbolDatabaseList* pLibraryDB,
                                                        const XbSDBSection* pSection)
 {
@@ -623,16 +623,16 @@ static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContex
 
         // Scan if event handle variable is not yet derived.
         if (pContext->xref_database[XREF_D3DDevice__m_VerticalBlankEvent_OFFSET] == XREF_ADDR_DERIVE) {
-            xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
-                                                                                         pLibrarySession,
-                                                                                         pLibraryDB,
-                                                                                         pSection,
-                                                                                         XREF_D3DDevice__m_VerticalBlankEvent__GenericFragment,
-                                                                                         DB_ST_MANUAL,
-                                                                                         FIRSTPASS_YES,
-                                                                                         REGISTER_NO,
-                                                                                         NULL,
-                                                                                         NULL);
+            xSymbolAddr = (xbaddr)(uintptr_t)XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                       pLibrarySession,
+                                                                                       pLibraryDB,
+                                                                                       pSection,
+                                                                                       XREF_D3DDevice__m_VerticalBlankEvent__GenericFragment,
+                                                                                       DB_ST_MANUAL,
+                                                                                       FIRSTPASS_YES,
+                                                                                       REGISTER_NO,
+                                                                                       NULL,
+                                                                                       NULL);
         }
 
         // We are not registering D3DDevice__m_VerticalBlankEvent__GenericFragment itself, as it is NOT a symbol.
@@ -646,12 +646,12 @@ static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContex
         // Finally, manual register the symbol variables.
         OOVPATable* pSymbolEntry = NULL;
         xSymbolAddr = pContext->xref_database[XREF_D3DDevice__m_VerticalBlankEvent_OFFSET];
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DDevice__m_VerticalBlankEvent_OFFSET);
-        internal_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DDevice__m_SwapCallback_OFFSET);
-        internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 0, xSymbolAddr - 8);
-        internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DDevice__m_VBlankCallback_OFFSET);
-        internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 0, xSymbolAddr - 4);
+        XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DDevice__m_VerticalBlankEvent_OFFSET);
+        XbSDBi_RegisterSelfValidXRefAddr(pContext, pLibrarySession, pSymbolEntry, 0);
+        XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DDevice__m_SwapCallback_OFFSET);
+        XbSDBi_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 0, xSymbolAddr - 8);
+        XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, D3DDevice__m_VBlankCallback_OFFSET);
+        XbSDBi_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 0, xSymbolAddr - 4);
     }
     // If D3D_g_pDevice is not found, the scan is not complete
     // and will continue scan to next given section.
@@ -662,14 +662,13 @@ static bool manual_scan_section_dx8_register_callbacks(iXbSymbolContext* pContex
     return true;
 }
 
-static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
-                                    const iXbSymbolLibrarySession* pLibrarySession,
+static bool manual_scan_section_dx8(XbSDBiContext* pContext,
+                                    const XbSDBiLibrarySession* pLibrarySession,
                                     SymbolDatabaseList* pLibraryDB,
                                     const XbSDBSection* pSection)
 {
     // Generic usage
     memptr_t pSymbolAddr = 0;
-    uintptr_t virt_start_relative = (uintptr_t)pSection->buffer_lower - pSection->xb_virt_addr;
     const XbSDBLibrary* pLibrary = pLibrarySession->pLibrary;
 
     // We need to mask boolean from each function's scan process if any return false.
@@ -710,15 +709,15 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     // then locate D3DDeferredTextureState
     OOVPATable* pSymbolEntry = NULL;
     OOVPARevision* pSymbolEntryRevision = NULL;
-    pSymbolAddr = internal_SymbolDatabaseList_ScanByReference(pContext,
-                                                              pLibrarySession,
-                                                              pLibraryDB,
-                                                              pSection,
-                                                              XREF_D3DDevice_SetTextureState_TexCoordIndex, DB_ST_MANUAL,
-                                                              FIRSTPASS_YES,
-                                                              REGISTER_YES,
-                                                              &pSymbolEntry,
-                                                              &pSymbolEntryRevision);
+    pSymbolAddr = XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
+                                                            pLibrarySession,
+                                                            pLibraryDB,
+                                                            pSection,
+                                                            XREF_D3DDevice_SetTextureState_TexCoordIndex, DB_ST_MANUAL,
+                                                            FIRSTPASS_YES,
+                                                            REGISTER_YES,
+                                                            &pSymbolEntry,
+                                                            &pSymbolEntryRevision);
 
     if (pSymbolAddr != 0) {
         // Self register D3DDevice_SetTextureState_TexCoordIndex
@@ -728,16 +727,16 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
 
     pSymbolEntry = NULL;
     pSymbolEntryRevision = NULL;
-    pSymbolAddr = internal_SymbolDatabaseList_ScanByReference(pContext,
-                                                              pLibrarySession,
-                                                              pLibraryDB,
-                                                              pSection,
-                                                              XREF_D3DDevice_SetStreamSource,
-                                                              DB_ST_MANUAL,
-                                                              FIRSTPASS_YES,
-                                                              REGISTER_YES,
-                                                              &pSymbolEntry,
-                                                              &pSymbolEntryRevision);
+    pSymbolAddr = XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
+                                                            pLibrarySession,
+                                                            pLibraryDB,
+                                                            pSection,
+                                                            XREF_D3DDevice_SetStreamSource,
+                                                            DB_ST_MANUAL,
+                                                            FIRSTPASS_YES,
+                                                            REGISTER_YES,
+                                                            &pSymbolEntry,
+                                                            &pSymbolEntryRevision);
 
     if (pSymbolAddr != 0) {
         // Self register D3DDevice_SetStreamSource
@@ -752,8 +751,8 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
             pContext->xref_database[XREF_D3D_g_Stream] = D3D_g_Stream_i_pVertexBuffer - 8;
         }
 
-        // TODO: Use internal_FindByReferenceHelper to get OOVPA revision. Or better yet, do self register.
-        internal_RegisterValidXRefAddr(pContext, pLibrary->name, pLibrary->flag, XREF_D3D_g_Stream, 0, "D3D_g_Stream", symbol_variable, call_none, 0, NULL);
+        // TODO: Use XbSDBi_FindByReferenceHelper to get OOVPA revision. Or better yet, do self register.
+        XbSDBi_RegisterValidXRefAddr(pContext, pLibrary->name, pLibrary->flag, XREF_D3D_g_Stream, 0, "D3D_g_Stream", symbol_variable, call_none, 0, NULL);
     }
 
     bComplete = manual_scan_section_dx8_register_callbacks(pContext, pLibrarySession, pLibraryDB, pSection);
@@ -761,9 +760,9 @@ static bool manual_scan_section_dx8(iXbSymbolContext* pContext,
     return bComplete;
 }
 
-static inline void manual_register_d3d8__ltcg(iXbSymbolContext* pContext)
+static inline void manual_register_d3d8__ltcg(XbSDBiContext* pContext)
 {
     // TODO: Require to be here until self register functionality is implement.
-    internal_RegisterValidXRefAddr(pContext, Lib_D3D8, XbSymbolLib_D3D8, XREF_D3DDevice__m_VertexShader_OFFSET, 0, "D3DDevice__m_VertexShader_OFFSET", symbol_variable, call_none, 0, NULL);
+    XbSDBi_RegisterValidXRefAddr(pContext, LIB_D3D8, XBSDBLIB_D3D8, XREF_D3DDevice__m_VertexShader_OFFSET, 0, "D3DDevice__m_VertexShader_OFFSET", symbol_variable, call_none, 0, NULL);
     // NOTE: D3DDevice__m_PixelShader_OFFSET is not accessible to the user.
 }

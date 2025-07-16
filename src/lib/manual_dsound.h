@@ -5,8 +5,8 @@
 
 #pragma once
 
-static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
-                                       const iXbSymbolLibrarySession* pLibrarySession,
+static bool manual_scan_section_dsound(XbSDBiContext* pContext,
+                                       const XbSDBiLibrarySession* pLibrarySession,
                                        SymbolDatabaseList* pLibraryDB,
                                        const XbSDBSection* pSection)
 {
@@ -24,16 +24,16 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
 
     // Scan for DirectSoundStream's constructor function.
     if (pContext->xref_database[XREF_CDirectSoundStream_Constructor] == XREF_ADDR_UNDETERMINED) {
-        xSymbolAddr = (xbaddr)(uintptr_t)internal_SymbolDatabaseList_ScanByReference(pContext,
-                                                                                     pLibrarySession,
-                                                                                     pLibraryDB,
-                                                                                     pSection,
-                                                                                     XREF_CDirectSoundStream_Constructor,
-                                                                                     DB_ST_MANUAL,
-                                                                                     FIRSTPASS_YES,
-                                                                                     REGISTER_YES,
-                                                                                     NULL,
-                                                                                     NULL);
+        xSymbolAddr = (xbaddr)(uintptr_t)XbSDBi_SymbolDatabaseList_ScanByReference(pContext,
+                                                                                   pLibrarySession,
+                                                                                   pLibraryDB,
+                                                                                   pSection,
+                                                                                   XREF_CDirectSoundStream_Constructor,
+                                                                                   DB_ST_MANUAL,
+                                                                                   FIRSTPASS_YES,
+                                                                                   REGISTER_YES,
+                                                                                   NULL,
+                                                                                   NULL);
 
         // If not found, skip the rest of the scan.
         if (xSymbolAddr == 0) {
@@ -41,10 +41,10 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
         }
 
         // TODO: If possible, integrate into the OOVPA structure.
-        internal_RegisterXRef(pContext, pLibrarySession, XREF_DSS_VOICE_VTABLE, 3911,
-                              NULL, *(xbaddr*)(virt_start_relative + xSymbolAddr + 0x14), symbol_variable, call_none, 0, NULL, false);
-        internal_RegisterXRef(pContext, pLibrarySession, XREF_DSS_STREAM_VTABLE, 3911,
-                              NULL, *(xbaddr*)(virt_start_relative + xSymbolAddr + 0x1B), symbol_variable, call_none, 0, NULL, false);
+        XbSDBi_RegisterXRef(pContext, pLibrarySession, XREF_DSS_VOICE_VTABLE, 3911,
+                            NULL, *(xbaddr*)(virt_start_relative + xSymbolAddr + 0x14), symbol_variable, call_none, 0, NULL, false);
+        XbSDBi_RegisterXRef(pContext, pLibrarySession, XREF_DSS_STREAM_VTABLE, 3911,
+                            NULL, *(xbaddr*)(virt_start_relative + xSymbolAddr + 0x1B), symbol_variable, call_none, 0, NULL, false);
     }
 
     // Verify both variables are already set from the scan function above.
@@ -62,33 +62,33 @@ static bool manual_scan_section_dsound(iXbSymbolContext* pContext,
         if (xblower <= vtable && vtable < xbupper) {
             pSymbolAddr = (memptr_t)virt_start_relative + vtable;
             OOVPATable* pSymbolEntry = NULL;
-            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_AddRef);
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 0 * 4));
+            XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_AddRef);
+            XbSDBi_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 0 * 4));
 
-            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_Release);
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 1 * 4));
+            XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_Release);
+            XbSDBi_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 1 * 4));
 
-            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_GetInfo);
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 2 * 4));
+            XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_GetInfo);
+            XbSDBi_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 2 * 4));
 
-            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_GetStatus);
+            XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_GetStatus);
             // TODO: May need further investigation with Cxbx-Reloaded's source code for possible reasoning why this method is used.
             SYMBOL_COUNTER_VALUE; // Force increase by one symbol counter since we do not have both revisions difference in the OOVPA database.
             if (pLibrarySession->pLibrary->build_version < 4134) {
-                internal_RegisterSymbolHelper(pContext, pLibrarySession, pSymbolEntry, "CDirectSoundStream_GetStatus__r1", 3911, *(uint32_t*)(pSymbolAddr + 3 * 4));
+                XbSDBi_RegisterSymbolHelper(pContext, pLibrarySession, pSymbolEntry, "CDirectSoundStream_GetStatus__r1", 3911, *(uint32_t*)(pSymbolAddr + 3 * 4));
             }
             else {
-                internal_RegisterSymbolHelper(pContext, pLibrarySession, pSymbolEntry, "CDirectSoundStream_GetStatus__r2", 4134, *(uint32_t*)(pSymbolAddr + 3 * 4));
+                XbSDBi_RegisterSymbolHelper(pContext, pLibrarySession, pSymbolEntry, "CDirectSoundStream_GetStatus__r2", 4134, *(uint32_t*)(pSymbolAddr + 3 * 4));
             }
 
-            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_Process);
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 4 * 4));
+            XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_Process);
+            XbSDBi_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 4 * 4));
 
-            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_Discontinuity);
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 5 * 4));
+            XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_Discontinuity);
+            XbSDBi_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 5 * 4));
 
-            internal_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_Flush);
-            internal_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 6 * 4));
+            XbSDBi_FindByReferenceHelper(pContext, pLibraryDB, pSymbolEntry, CDirectSoundStream_Flush);
+            XbSDBi_RegisterSymbol(pContext, pLibrarySession, pSymbolEntry, 3911, *(uint32_t*)(pSymbolAddr + 6 * 4));
 
             // NOTE: it is possible to manual add GetInfo, GetStatus, Process, Discontinuity,
             // and Flush functions.

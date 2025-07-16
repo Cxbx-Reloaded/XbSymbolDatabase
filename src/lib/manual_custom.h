@@ -6,7 +6,7 @@
 #pragma once
 
 // ******************************************************************
-// * Used for XbSymbolContext_ScanManual
+// * Used for XbSDBContext_ScanManual
 // ******************************************************************
 
 // Each include is base on library requirement to do by hand
@@ -15,9 +15,9 @@
 #include "manual_jvs.h"
 #include "manual_xapilib.h"
 
-static bool manual_scan_library_custom(iXbSymbolContext* pContext,
+static bool manual_scan_library_custom(XbSDBiContext* pContext,
                                        custom_scan_func_t custom_scan_func,
-                                       const iXbSymbolLibrarySession* pLibSession)
+                                       const XbSDBiLibrarySession* pLibSession)
 {
     bool scan_ret = false;
 
@@ -25,7 +25,7 @@ static bool manual_scan_library_custom(iXbSymbolContext* pContext,
 
     SymbolDatabaseList* pLibraryDB;
     unsigned db_i = 0;
-    while ((pLibraryDB = internal_FindLibraryDB(pLibSession->pLibrary->flag, &db_i))) {
+    while ((pLibraryDB = XbSDBi_FindLibraryDB(pLibSession->pLibrary->flag, &db_i))) {
         db_i++;
         for (unsigned int s = 0; s < pContext->section_input.count; s++) {
 
@@ -57,7 +57,7 @@ static bool manual_scan_library_custom(iXbSymbolContext* pContext,
     return scan_ret;
 }
 
-static inline void manual_register_symbols(iXbSymbolContext* pContext)
+static inline void manual_register_symbols(XbSDBiContext* pContext)
 {
     manual_register_d3d8__ltcg(pContext);
     manual_register_jvs(pContext);

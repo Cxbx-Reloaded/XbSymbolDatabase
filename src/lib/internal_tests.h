@@ -6,23 +6,23 @@
 #pragma once
 
 // ******************************************************************
-// * Used for XbSymbolDatabase_TestOOVPAs
+// * Used for XbSDB_TestOOVPAs
 // ******************************************************************
 
-typedef struct _SymbolDatabaseVerifyContextUniform {
+typedef struct _XbSDBiVerifyContextUniform {
     SymbolDatabaseList* data;
     OOVPA* oovpa;
     uint32_t symbol_index;
     uint32_t revision_index;
-} SymbolDatabaseVerifyContextUniform;
+} XbSDBiVerifyContextUniform;
 
-typedef struct _SymbolDatabaseVerifyContext {
-    SymbolDatabaseVerifyContextUniform main;
-    SymbolDatabaseVerifyContextUniform against;
+typedef struct _XbSDBiVerifyContext {
+    XbSDBiVerifyContextUniform main;
+    XbSDBiVerifyContextUniform against;
     OutputHandler output;
-} SymbolDatabaseVerifyContext;
+} XbSDBiVerifyContext;
 
-static int OOVPAErrorString(char* bufferTemp, SymbolDatabaseList* data, OOVPATable* symbol, uint32_t index)
+static int XbSDBi_OOVPAErrorString(char* bufferTemp, SymbolDatabaseList* data, OOVPATable* symbol, uint32_t index)
 {
     // Convert active data pointer to an index base on starting point of SymbolDBList.
     unsigned int db_index = (unsigned int)(data - SymbolDBList);
@@ -32,7 +32,7 @@ static int OOVPAErrorString(char* bufferTemp, SymbolDatabaseList* data, OOVPATab
     return sprintf(bufferTemp, "OOVPATable db=%2u, i=[%4u], b=%4hu s=%s[%4u]", db_index, sym_index, symbol->revisions[index].Version, symbol->szSymbolName, index);
 }
 
-static void SymbolDatabaseVerifyContext_OOVPAError(SymbolDatabaseVerifyContext* context, char* format, ...)
+static void XbSDBiVerifyContext_OOVPAError(XbSDBiVerifyContext* context, char* format, ...)
 {
     char buffer[2048] = { 0 };
     static char bufferTemp[400] = { 0 };
@@ -40,14 +40,14 @@ static void SymbolDatabaseVerifyContext_OOVPAError(SymbolDatabaseVerifyContext* 
 
     if (context->main.data != NULL) {
 
-        ret_str_count = OOVPAErrorString(bufferTemp, context->main.data, context->main.data->Symbols->Table + context->main.symbol_index, context->main.revision_index);
+        ret_str_count = XbSDBi_OOVPAErrorString(bufferTemp, context->main.data, context->main.data->Symbols->Table + context->main.symbol_index, context->main.revision_index);
         (void)strncat(buffer, bufferTemp, ret_str_count);
     }
 
     if (context->against.oovpa != NULL && context->against.data != NULL) {
         (void)strcat(buffer, ", comparing against ");
 
-        ret_str_count = OOVPAErrorString(bufferTemp, context->against.data, context->against.data->Symbols->Table + context->against.symbol_index, context->against.revision_index);
+        ret_str_count = XbSDBi_OOVPAErrorString(bufferTemp, context->against.data, context->against.data->Symbols->Table + context->against.symbol_index, context->against.revision_index);
         (void)strncat(buffer, bufferTemp, ret_str_count);
     }
 
@@ -64,9 +64,9 @@ static void SymbolDatabaseVerifyContext_OOVPAError(SymbolDatabaseVerifyContext* 
     output_message(&context->output, XB_OUTPUT_MESSAGE_ERROR, buffer);
 }
 
-static unsigned int SymbolDatabaseVerifyContext_VerifyDatabaseList(SymbolDatabaseVerifyContext* context); // forward
+static unsigned int XbSDBiVerifyContext_VerifyDatabaseList(XbSDBiVerifyContext* context); // forward
 
-static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerifyContext* context, OOVPA* oovpa)
+static unsigned int XbSDBiVerifyContext_VerifyOOVPA(XbSDBiVerifyContext* context, OOVPA* oovpa)
 {
     unsigned int error_count = 0;
 
@@ -76,16 +76,16 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
         // verify offsets are in increasing order
         uint32_t prev_offset;
         uint8_t dummy_value;
-        GetOovpaEntry(oovpa, oovpa->XRefCount, &prev_offset, &dummy_value);
+        XbSDBi_GetOovpaEntry(oovpa, oovpa->XRefCount, &prev_offset, &dummy_value);
         for (int p = oovpa->XRefCount + 1; p < oovpa->Count; p++) {
             uint32_t curr_offset;
-            GetOovpaEntry(oovpa, p, &curr_offset, &dummy_value);
+            XbSDBi_GetOovpaEntry(oovpa, p, &curr_offset, &dummy_value);
 
             if (!(curr_offset > prev_offset)) {
                 error_count++;
-                SymbolDatabaseVerifyContext_OOVPAError(context,
-                                                       "Lovp[%2u] : Offset (0x%03x) must be larger then previous offset (0x%03x)",
-                                                       p, curr_offset, prev_offset);
+                XbSDBiVerifyContext_OOVPAError(context,
+                                               "Lovp[%2u] : Offset (0x%03x) must be larger then previous offset (0x%03x)",
+                                               p, curr_offset, prev_offset);
             }
             prev_offset = curr_offset;
         }
@@ -93,7 +93,7 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
         // find duplicate OOVPA's across all other data-table-oovpa's
         context->main.oovpa = oovpa;
         context->against.oovpa = oovpa;
-        error_count += SymbolDatabaseVerifyContext_VerifyDatabaseList(context);
+        error_count += XbSDBiVerifyContext_VerifyDatabaseList(context);
         context->against.oovpa = NULL; // reset scanning state
         return error_count;
     }
@@ -109,8 +109,8 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
     int l = 0, r = 0;
     uint32_t left_offset, right_offset;
     uint8_t left_value, right_value;
-    GetOovpaEntry(left, l, &left_offset, &left_value);
-    GetOovpaEntry(right, r, &right_offset, &right_value);
+    XbSDBi_GetOovpaEntry(left, l, &left_offset, &left_value);
+    XbSDBi_GetOovpaEntry(right, r, &right_offset, &right_value);
     int unique_offset_left = 0;
     int unique_offset_right = 0;
     int equal_offset_value = 0;
@@ -147,7 +147,7 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
                 break;
             }
 
-            GetOovpaEntry(left, l, &left_offset, &left_value);
+            XbSDBi_GetOovpaEntry(left, l, &left_offset, &left_value);
         }
 
         if (right_next) {
@@ -156,7 +156,7 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
                 break;
             }
 
-            GetOovpaEntry(right, r, &right_offset, &right_value);
+            XbSDBi_GetOovpaEntry(right, r, &right_offset, &right_value);
         }
     }
 
@@ -184,10 +184,10 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
                 // If detect selection is not unique, then make an error report.
                 if (!unique_detect_select) {
                     error_count++;
-                    SymbolDatabaseVerifyContext_OOVPAError(context,
-                                                           "OOVPA's are identical",
-                                                           unique_offset_left,
-                                                           unique_offset_right);
+                    XbSDBiVerifyContext_OOVPAError(context,
+                                                   "OOVPA's are identical",
+                                                   unique_offset_left,
+                                                   unique_offset_right);
                 }
             }
             else {
@@ -196,10 +196,10 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
                     // not too many new OV-pairs on the right side?
                     if (unique_offset_right < 6) {
                         error_count++;
-                        SymbolDatabaseVerifyContext_OOVPAError(context,
-                                                               "OOVPA's are expanded (left +%d, right +%d)",
-                                                               unique_offset_left,
-                                                               unique_offset_right);
+                        XbSDBiVerifyContext_OOVPAError(context,
+                                                       "OOVPA's are expanded (left +%d, right +%d)",
+                                                       unique_offset_left,
+                                                       unique_offset_right);
                     }
                 }
             }
@@ -209,23 +209,23 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyOOVPA(SymbolDatabaseVerify
 }
 
 
-static unsigned int SymbolDatabaseVerifyContext_VerifyXRefSymbolVsRevision(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
+static unsigned int XbSDBiVerifyContext_VerifyXRefSymbolVsRevision(XbSDBiVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
 {
     unsigned int error_count = 0;
-    if (!internal_IsXRefUnset(table[symbol_index].xref)) {
+    if (!XbSDBi_IsXRefUnset(table[symbol_index].xref)) {
         LOOVPA* loovpa = (LOOVPA*)table[symbol_index].revisions[revision_index].Oovpa;
     }
     return error_count;
 }
 
-static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
+static unsigned int XbSDBiVerifyContext_VerifyEntry(XbSDBiVerifyContext* context, const OOVPATable* table, uint32_t symbol_index, uint32_t revision_index)
 {
     unsigned int error_count = 0;
     if (context->against.oovpa == NULL) {
         context->main.symbol_index = symbol_index;
         context->main.revision_index = revision_index;
 
-        error_count += SymbolDatabaseVerifyContext_VerifyXRefSymbolVsRevision(context, table, symbol_index, revision_index);
+        error_count += XbSDBiVerifyContext_VerifyXRefSymbolVsRevision(context, table, symbol_index, revision_index);
     }
     else {
         context->against.symbol_index = symbol_index;
@@ -235,12 +235,12 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyEntry(SymbolDatabaseVerify
 
     // verify the OOVPA of this entry
     if (table[symbol_index].revisions[revision_index].Oovpa != NULL) {
-        error_count += SymbolDatabaseVerifyContext_VerifyOOVPA(context, table[symbol_index].revisions[revision_index].Oovpa);
+        error_count += XbSDBiVerifyContext_VerifyOOVPA(context, table[symbol_index].revisions[revision_index].Oovpa);
     }
     return error_count;
 }
 
-static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVerifyContext* context, SymbolDatabaseList* data)
+static unsigned int XbSDBiVerifyContext_VerifyDatabase(XbSDBiVerifyContext* context, SymbolDatabaseList* data)
 {
     unsigned int error_count = 0;
     if (context->against.oovpa == NULL) {
@@ -256,7 +256,7 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVer
         // We only need to check from main, not against.
         if (context->against.data == NULL) {
             // For safety check purpose
-            if (internal_IsXRefUnset(data->Symbols->Table[s].xref)) {
+            if (XbSDBi_IsXRefUnset(data->Symbols->Table[s].xref)) {
                 output_message_format(&context->output, XB_OUTPUT_MESSAGE_ERROR, "%s cannot have unset xref.", Symbols->Table[s].szSymbolName);
                 error_count++;
             }
@@ -264,18 +264,18 @@ static unsigned int SymbolDatabaseVerifyContext_VerifyDatabase(SymbolDatabaseVer
 
         // Check each revision entry in a symbol.
         for (uint32_t r = 0; r < data->Symbols->Table[s].count; r++) {
-            error_count += SymbolDatabaseVerifyContext_VerifyEntry(context, Symbols->Table, s, r);
+            error_count += XbSDBiVerifyContext_VerifyEntry(context, Symbols->Table, s, r);
         }
     }
     return error_count;
 }
 
-static unsigned int SymbolDatabaseVerifyContext_VerifyDatabaseList(SymbolDatabaseVerifyContext* context)
+static unsigned int XbSDBiVerifyContext_VerifyDatabaseList(XbSDBiVerifyContext* context)
 {
     unsigned int error_count = 0;
     // verify all SymbolDatabaseList's
     for (uint32_t d = 0; d < SymbolDBListCount; d++) {
-        error_count += SymbolDatabaseVerifyContext_VerifyDatabase(context, &SymbolDBList[d]);
+        error_count += XbSDBiVerifyContext_VerifyDatabase(context, &SymbolDBList[d]);
     }
     return error_count;
 }
