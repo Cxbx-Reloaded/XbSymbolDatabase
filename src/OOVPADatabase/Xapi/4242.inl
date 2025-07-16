@@ -33,8 +33,8 @@ OOVPA_SIG_HEADER_XREF(XInputOpen,
                       XRefTwo)
 OOVPA_SIG_MATCH(
 
-    // call GetTypeInformation_4
-    XREF_ENTRY(0x0C, XREF_GetTypeInformation_4),
+    // call GetTypeInformation
+    XREF_ENTRY(0x0C, XREF_GetTypeInformation),
 
     // call SetLastError
     XREF_ENTRY(0x17, XREF_SetLastError),
@@ -277,10 +277,10 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * GetTypeInformation_4
+// * GetTypeInformation
 // ******************************************************************
 // Generic OOVPA as of 4242 and newer.
-OOVPA_SIG_HEADER_XREF(GetTypeInformation_4,
+OOVPA_SIG_HEADER_XREF(GetTypeInformation,
                       4242,
                       XRefTwo)
 OOVPA_SIG_MATCH(
@@ -322,9 +322,9 @@ OOVPA_SIG_MATCH(
 );
 
 // ******************************************************************
-// * GetTypeInformation_8
+// * GetTypeInformation2
 // ******************************************************************
-OOVPA_SIG_HEADER_XREF(GetTypeInformation_8,
+OOVPA_SIG_HEADER_XREF(GetTypeInformation2,
                       4242,
                       XRefTwo)
 OOVPA_SIG_MATCH(
