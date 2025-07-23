@@ -485,9 +485,9 @@ static OOVPATable XAPILIB_OOVPA_Table[] = {
                     SYM_SIG(3911)),
     REGISTER_OOVPAS(SYM_FUN(GetTimeZoneInformation, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, lpTimeZoneInformation))),
                     SYM_SIG(3911)),
-    REGISTER_OOVPAS_M(SYM_FUN(GetTypeInformation_4, CALL(fas), STACK(/*default*/), PARAMS(PARAM(ecx, XppType))),
+    REGISTER_OOVPAS_M(SYM_FUN(GetTypeInformation, CALL(fas), STACK(/*default*/), PARAMS(PARAM(ecx, XppType))),
                       SYM_SIG(4242)), // Final generic OOVPA: 4242; Removed: 0
-    REGISTER_OOVPAS_C(SYM_FUN(GetTypeInformation_8, CALL(fas), STACK(/*default*/), PARAMS(PARAM(_cl, XidType), PARAM(edx, pTypeIndex))),
+    REGISTER_OOVPAS_C(SYM_FUN(GetTypeInformation2, CALL(fas), STACK(/*default*/), PARAMS(PARAM(_cl, XidType), PARAM(edx, pTypeIndex))),
                       SYM_SIG(4242, 5455)), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS_M(SYM_FUN(MU_Init, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pThis))),
                       SYM_SIG(3911, 4242, 5233)),
