@@ -169,7 +169,7 @@ OOVPA_SIG_MATCH(
 // * D3DDevice_SetVertexShaderConstantNotInline
 // ******************************************************************
 //56578BFBC1E704 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexShaderConstantNotInline_0__LTCG_ebx1_eax2_edx3,
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetVertexShaderConstantNotInline_0__LTCG_ebx1_edx2_eax3,
                          2048)
 OOVPA_SIG_MATCH(
 
