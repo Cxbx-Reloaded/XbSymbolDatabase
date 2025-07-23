@@ -383,7 +383,7 @@ static OOVPATable D3D8LTCG_OOVPA_Table[] = {
                     SYM_SIG(1024, 1036)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetVertexShaderConstant, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Register), PARAM(psh, pConstantData), PARAM(psh, ConstantCount))),
                     SYM_SIG(1024)),
-    REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetVertexShaderConstantNotInline, CALL(unk), STACK(0), PARAMS(PARAM(ebx, Register), PARAM(eax, pConstantData), PARAM(edx, ConstantCount))),
+    REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetVertexShaderConstantNotInline, CALL(unk), STACK(0), PARAMS(PARAM(ebx, Register), PARAM(edx, pConstantData), PARAM(eax, ConstantCount))),
                     SYM_SIG(2048)),
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetVertexShaderConstant, CALL(unk), STACK(8), PARAMS(PARAM(psh, Register), PARAM(psh, pConstantData), PARAM(edx, ConstantCount))),
                     SYM_SIG(2024)),
