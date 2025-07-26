@@ -102,7 +102,7 @@ static OOVPATable D3D8LTCG_OOVPA_Table[] = {
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_Clear, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Count), PARAM(psh, pRects), PARAM(psh, Flags), PARAM(psh, Color), PARAM(psh, Z), PARAM(psh, Stencil))),
                     SYM_SIG(1024, 1036)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_CopyRects, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pSourceSurface), PARAM(psh, pSourceRectsArray), PARAM(psh, cRects), PARAM(psh, pDestinationSurface), PARAM(psh, pDestPointsArray))),
-                    SYM_SIG(1024, 1036, 1048)),
+                    SYM_SIG(3911, 4627, 5120, 5121)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_CreateCubeTexture, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, EdgeLength), PARAM(psh, Levels), PARAM(psh, Usage), PARAM(psh, Format), PARAM(psh, Pool), PARAM(psh, ppCubeTexture))),
                     SYM_SIG(4432)),
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_CreateCubeTexture, CALL(unk), STACK(4), PARAMS(PARAM(eax, EdgeLength), PARAM(psh, Levels), PARAM(edx, Usage), PARAM(ecx, Format), PARAM(psh, Pool), PARAM(edi, ppCubeTexture))),

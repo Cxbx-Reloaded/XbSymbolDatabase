@@ -305,6 +305,32 @@ OOVPA_SIG_MATCH(
     //
 );
 
+// ******************************************************************
+// * D3DDevice_CopyRects
+// ******************************************************************
+// Test case:
+// DDS9 (4928)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CopyRects,
+                         4627)
+OOVPA_SIG_MATCH(
+    // sub esp, 0x___ (always 0x194)
+    OV_MATCH(0x00, 0x81, 0xEC),
+
+    // mov esi, [esp + param_1]
+    OV_MATCH(0x09, 0x8B, 0xB4, 0x24),
+    // movzx edx, [esi + 0x0D]
+    OV_MATCH(0x10, 0x0F, 0xB6, 0x56, 0x0D),
+    // mov bl, [edx + 0x____]
+    OV_MATCH(0x14, 0x8A, 0x9A),
+
+    // Few instructions later will always have
+    // shr e__, 0x3
+    // and e__, 0x7
+    // except above instructions could not be add into signature due
+    // to offset change over time.
+    //
+);
+
 //******************************************************************
 //* D3DDevice_BeginVisibilityTest
 //******************************************************************
