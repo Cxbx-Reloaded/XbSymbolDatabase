@@ -363,7 +363,7 @@ static const library_list database_full = {
     REGISTER_SYMBOL_INLINE(D3DDevice_SetVertexShaderConstant4, VER_RANGE(4627)),
     REGISTER_SYMBOLS(D3DDevice_SetVertexShaderConstantNotInline,
                      REGISTER_SYMBOL(D3DDevice_SetVertexShaderConstantNotInline, VER_RANGE(4627)),
-                     REGISTER_SYMBOL(D3DDevice_SetVertexShaderConstantNotInline_0__LTCG_ebx1_eax2_edx3, VER_RANGE(4627))),
+                     REGISTER_SYMBOL(D3DDevice_SetVertexShaderConstantNotInline_0__LTCG_ebx1_edx2_eax3, VER_RANGE(4627))),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetVertexShaderConstantNotInlineFast, VER_RANGE(4627)),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetVertexShaderInput, VER_RANGE(3911)),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetVertexShaderInputDirect, VER_RANGE(4361)),
