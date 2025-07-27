@@ -162,10 +162,10 @@ typedef struct _LOOVPA {
 // clang-format on
 
 #define OOVPA_SIG_HEADER_XREF_EXTEND(Name, Version, XRefCount, DetectSelect) \
-    LOOVPA Name##_##Version = { VARPADSET, XRefCount, DetectSelect,
+    static LOOVPA Name##_##Version = { VARPADSET, XRefCount, DetectSelect,
 
 #define OOVPA_XREF_EXTEND(Name, Version, Count, XRefCount, DetectSelect) \
-    LOOVPA Name##_##Version = { VARPADSET, XRefCount, DetectSelect, Count,
+    static LOOVPA Name##_##Version = { VARPADSET, XRefCount, DetectSelect, Count,
 
 #define OOVPA_SIG_HEADER_XREF_DETECT OOVPA_SIG_HEADER_XREF_EXTEND
 
