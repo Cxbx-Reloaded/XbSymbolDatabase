@@ -310,6 +310,34 @@ OOVPA_SIG_MATCH(
     //
 );
 
+// ******************************************************************
+// * D3DDevice_CopyRects
+// ******************************************************************
+// TODO: May could be lower down to 3911 as the 4627+ is very
+//       similar to 3911+ assembly instructions structure.
+// Test case:
+// Rally Fusion : Race Of Champions (4928)
+// Enter The Matrix (5344)
+// The Italian Job (5344)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CopyRects,
+                         4628)
+OOVPA_SIG_MATCH(
+    // mov edx, [esp + param_1]
+    OV_MATCH(0x00, 0x8B, 0x54, 0x24, 0x04),
+    // mov ecx, [edx + 0x10]
+    OV_MATCH(0x04, 0x8B, 0x4A, 0x10),
+    // sub esp, 0x___ (always 0x194 or 0x34 for 5120 and later)
+    // offset 0x07 will have 0x81 for 4627 until 5120 and later has 0x83.
+    OV_MATCH(0x08, 0xEC),
+
+    // Few instructions later will always have
+    // shr e__, 0x3
+    // and e__, 0x7
+    // except above instructions could not be added into the signature
+    // because of the offset changing over time.
+    //
+);
+
 //******************************************************************
 //* D3DDevice_BeginVisibilityTest
 //******************************************************************
