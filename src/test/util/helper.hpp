@@ -137,3 +137,9 @@ static const std::string FormatGameRegion(uint32_t game_region)
     }
     return output;
 }
+
+// made by Luke Usher
+static const std::string FormatVersion(uint32_t version)
+{
+    return std::to_string(version & 0xFF) + "." + std::to_string((version & 0xFFFFFF00) >> 8);
+}
