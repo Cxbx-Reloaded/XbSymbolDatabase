@@ -107,3 +107,33 @@ static constexpr uint32_t FourCC(char const c[5])
 {
     return (c[0] << 24) | (c[1] << 16) | (c[2] << 8) | c[3];
 }
+
+// made by RadWolfie
+static const std::string FormatGameRegion(uint32_t game_region)
+{
+    constexpr uint32_t GAME_REGION_CODE_MASK = 0x7;
+    constexpr uint32_t GAME_REGION_MANUFACTURING = 0x80000000;
+    constexpr uint32_t GAME_REGION_VALID_MASK = GAME_REGION_CODE_MASK + GAME_REGION_MANUFACTURING;
+    if (game_region & ~GAME_REGION_VALID_MASK) {
+        return "REGION ERROR";
+    }
+    const struct RegionList {
+        std::string Code;
+        std::string Name;
+    } Regions[] = {
+        { "?", "Unknown" },
+        { "A", "NTSC" },
+        { "J", "JAPAN" },
+        { "K", "NTSC+JAPAN" },
+        { "E", "PAL" },
+        { "L", "PAL+NTSC" },
+        { "?", "PAL+JAPAN" },
+        { "W", "Region Free" }
+    };
+    const RegionList& region_struct = Regions[game_region & GAME_REGION_CODE_MASK];
+    std::string output = region_struct.Code + " (" + region_struct.Name + ")";
+    if (game_region & GAME_REGION_MANUFACTURING) {
+        output += " (DEBUG)";
+    }
+    return output;
+}
