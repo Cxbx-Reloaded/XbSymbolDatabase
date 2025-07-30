@@ -88,6 +88,8 @@ static struct {
     const char* TitleIDHex = "TitleIDHex";
     const char* Region = "Region";
     const char* RegionHex = "RegionHex";
+    const char* Version = "Version";
+    const char* VersionHex = "VersionHex";
 } sect_certificate;
 
 static const char* section_libs = "Libs";
@@ -456,6 +458,12 @@ static bool VerifyXbeIsBuiltWithXDK(const xbe_header* pXbeHeader,
     snprintf(buffer_str, std::size(buffer_str), "%08X", pCertificate->dwGameRegion);
     XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "RegionHex             : 0x" + std::string(buffer_str));
     gen_result.SetLongValue(section_certificate, sect_certificate.RegionHex, pCertificate->dwGameRegion, nullptr, true);
+    const auto& game_version = FormatVersion(pCertificate->dwVersion);
+    XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Version               : " + game_version);
+    gen_result.SetValue(section_certificate, sect_certificate.Version, game_version.c_str());
+    snprintf(buffer_str, std::size(buffer_str), "%08X", pCertificate->dwVersion);
+    XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "VersionHex            : 0x" + std::string(buffer_str));
+    gen_result.SetLongValue(section_certificate, sect_certificate.VersionHex, pCertificate->dwVersion, nullptr, true);
 
     // Hash the loaded XBE's header, use it as a filename
     XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Xbe header hash       : " + getXbeHeaderHash(pXbeHeader));
