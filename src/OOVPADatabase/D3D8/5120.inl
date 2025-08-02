@@ -31,14 +31,21 @@ OOVPA_SIG_MATCH(
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CopyRects,
                          5120)
 OOVPA_SIG_MATCH(
+    // sub esp, 0x__ (always 0x34)
+    OV_MATCH(0x00, 0x83, 0xEC),
 
-    { 0x1E, 0xE1 },
-    { 0x42, 0x84 },
-    { 0x5E, 0x24 },
-    { 0x7E, 0x8B },
-    { 0x9E, 0x1C },
-    { 0xBE, 0x00 },
-    { 0xDE, 0xBD },
-    { 0xFE, 0x4C },
+    // mov eax, [esp + param_1]
+    OV_MATCH(0x03, 0x8B, 0x44, 0x24),
+
+    // movzx ebp, [eax + 0x0D]
+    OV_MATCH(0x09, 0x0F, 0xB6, 0x68, 0x0D),
+    // mov bl, [ebp + 0x____]
+    OV_MATCH(0x0D, 0x8A, 0x9D),
+
+    // Few instructions later will always have
+    // shr e__, 0x3
+    // and e__, 0x7
+    // except above instructions could not be added into the signature
+    // because of the offset changing over time.
     //
 );

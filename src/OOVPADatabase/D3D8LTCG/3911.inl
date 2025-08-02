@@ -1495,3 +1495,30 @@ OOVPA_SIG_MATCH(
     OV_MATCH(0x30, 0x57),
     //
 );
+
+// ******************************************************************
+// * D3DDevice_CopyRects
+// ******************************************************************
+// Test case:
+// Bruce Lee: QOD (4432)
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_CopyRects,
+                         3911)
+OOVPA_SIG_MATCH(
+    // sub esp, 0x___ (always 0x1A0)
+    OV_MATCH(0x00, 0x81, 0xEC),
+
+    // mov ebp, [esp + param_1]
+    OV_MATCH(0x08, 0x8B, 0xAC, 0x24),
+
+    // movzx esi, [ebp + 0x0D]
+    OV_MATCH(0x13, 0x0F, 0xB6, 0x75, 0x0D),
+    // mov bl, [esi + 0x____]
+    OV_MATCH(0x17, 0x8A, 0x9E),
+
+    // Few instructions later will always have
+    // shr e__, 0x3
+    // and e__, 0x7
+    // except above instructions could not be added into the signature
+    // because of the offset changing over time.
+    //
+);
