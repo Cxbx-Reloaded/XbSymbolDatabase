@@ -623,11 +623,11 @@ void run_test_verify_symbols(lib_versions& lib_vers,
     getLibraryXNET(lib_db);
     constexpr auto XBSDBLIB_XNET_flags =
         XBSDBLIB_XNET | XBSDBLIB_XNETS | XBSDBLIB_XNETN |
-        XBSDBLIB_XONLINE | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS;
+        XBSDBLIB_XONLINE | XBSDBLIB_XONLINEN | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS;
     run_test_verify_symbol(symbols_list, LIB_XNET, lib_vers.xnet, XBSDBLIB_XNET_flags, lib_db, full_lib_count, error_count);
 
     getLibraryXONLINE(lib_db);
     constexpr auto XBSDBLIB_XONLINE_flags =
-        XBSDBLIB_XONLINE | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS;
+        XBSDBLIB_XONLINE | XBSDBLIB_XONLINEN | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS;
     run_test_verify_symbol(symbols_list, LIB_XONLINE, lib_vers.xonline, XBSDBLIB_XONLINE_flags, lib_db, full_lib_count, error_count);
 }

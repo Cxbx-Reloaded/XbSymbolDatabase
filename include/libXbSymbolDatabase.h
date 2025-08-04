@@ -51,6 +51,7 @@ extern "C" {
 #define LIB_XNETS    "XNETS"
 #define LIB_XONLINE  "XONLINE"
 #define SEC_XONLINE  LIB_XONLINE
+#define LIB_XONLINEN "XONLINEN"
 #define LIB_XONLINES "XONLINES"
 #define LIB_XONLINLS "XONLINLS"
 
@@ -66,15 +67,16 @@ extern "C" {
 #define XBSDBLIB_XNETN    (1 << 9)
 #define XBSDBLIB_XNETS    (1 << 10)
 #define XBSDBLIB_XONLINE  (1 << 11)
-#define XBSDBLIB_XONLINES (1 << 12)
-#define XBSDBLIB_XONLINLS (1 << 13)
+#define XBSDBLIB_XONLINEN (1 << 12)
+#define XBSDBLIB_XONLINES (1 << 13)
+#define XBSDBLIB_XONLINLS (1 << 14)
 
 // clang-format off
 // TODO: Need to find a way keep below intact.
 #define XBSDBLIB_ALL ( XBSDBLIB_D3D8 | XBSDBLIB_D3D8LTCG | XBSDBLIB_D3DX8 | XBSDBLIB_DSOUND \
                      | XBSDBLIB_JVS | XBSDBLIB_XACTENG | XBSDBLIB_XAPILIB | XBSDBLIB_XGRAPHC \
                      | XBSDBLIB_XNET | XBSDBLIB_XNETN | XBSDBLIB_XNETS | XBSDBLIB_XONLINE \
-                     | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS)
+                     | XBSDBLIB_XONLINEN | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS)
 // clang-format on
 
 typedef enum _xb_output_message {

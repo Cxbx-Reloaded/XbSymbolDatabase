@@ -181,13 +181,13 @@ SymbolDatabaseList SymbolDBList[] = {
     // TODO: Do we need to keep SEC_XNET in here?
     // TODO: Need to find out which function is only part of XOnlines.
     // Fun fact, XONLINES are split into 2 header sections.
-    { XBSDBLIB_XONLINE | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS, { SEC_TEXT, SEC_XONLINE, SEC_XNET, SEC_FLASHROM }, &XONLINE_OOVPA },
+    { XBSDBLIB_XONLINE | XBSDBLIB_XONLINEN | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS, { SEC_TEXT, SEC_XONLINE, SEC_XNET, SEC_FLASHROM }, &XONLINE_OOVPA },
 
     // Added SEC_TEXT just in case.
     // TODO: Need to find out which function is only part of XNets.
     // XNETS only has XNET, might be true.
     // XNETN's test case: Stake
-    { XBSDBLIB_XNET | XBSDBLIB_XNETS | XBSDBLIB_XNETN | XBSDBLIB_XONLINE | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS, { SEC_TEXT, SEC_XNET, SEC_FLASHROM }, &XNET_OOVPA },
+    { XBSDBLIB_XNET | XBSDBLIB_XNETS | XBSDBLIB_XNETN | XBSDBLIB_XONLINE | XBSDBLIB_XONLINEN | XBSDBLIB_XONLINES | XBSDBLIB_XONLINLS, { SEC_TEXT, SEC_XNET, SEC_FLASHROM }, &XNET_OOVPA },
 };
 
 // ******************************************************************
@@ -355,6 +355,9 @@ const char* XbSDB_LibraryToString(uint32_t library_flag)
         case XBSDBLIB_XONLINE: {
             return LIB_XONLINE;
         }
+        case XBSDBLIB_XONLINEN: {
+            return LIB_XONLINEN;
+        }
         case XBSDBLIB_XONLINES: {
             return LIB_XONLINES;
         }
@@ -467,6 +470,9 @@ uint32_t XbSDB_LibraryToFlag(const char* library_name)
     if (strncmp(library_name, LIB_XONLINE, 8) == 0) {
         return XBSDBLIB_XONLINE;
     }
+    if (strncmp(library_name, LIB_XONLINEN, 8) == 0) {
+        return XBSDBLIB_XONLINEN;
+    }
     if (strncmp(library_name, LIB_XONLINES, 8) == 0) {
         return XBSDBLIB_XONLINES;
     }
@@ -489,6 +495,7 @@ uint32_t XbSDB_GetLibraryDependencies(uint32_t library_flag, XbSDBLibraryHeader 
             return XBSDBLIB_DSOUND;
 #if 0 // Disabled since internal scan will scan XNET(N|S) library anyway.
         case XBSDBLIB_XONLINE:
+        case XBSDBLIB_XONLINEN:
         case XBSDBLIB_XONLINES:
         case XBSDBLIB_XONLINLS:
             flag_dependencies = XBSDBLIB_XNET | XBSDBLIB_XNETN | XBSDBLIB_XNETS;
