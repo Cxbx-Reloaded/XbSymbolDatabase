@@ -4,23 +4,36 @@
 //   [LibV] Title Name                        | Verify  |   Comments
 //-------------------------------------------------------------------
 // * [4721] NFL 2K3                           |  100%   | Contain full library.
+// * [4721] NFL Fever 2003                    |  100%   | Contain full library.
+// * [4831] MechAssault                       |  100%   | Contain full library.
 // * [4831] NBA 2K3                           |  100%   | Contain full library.
 // * [4831] Whacked Demo                      |  100%   | Contain full library.
+// * [4928] Ghost Recon                       |  100%   | Contain full library.
 // * [4928] Unreal Championship               |  100%   | Contain full library.
 // * [5028] Capcom vs. SNK 2 EO               |  100%   | Contain full library.
 // * [5120] Muzzle Flash                      |  100%   | have 11/14 library.
+// * [5233] Midtown Madness 3                 |  100%   | Contain full library.
 // * [5233] MotoGP 2                          |  100%   | have 11/14 library.
 // * [5344] Burnout 2                         |  100%   | have 11/14 library.
-// * [5344] Wolfentein                        |  100%   | May contain full library.
+// * [5344] Wolfenstein                       |  100%   | May contain full library.
 // * [5455] Ghost Recon Island Thunder        |  100%   | Contain full library.
+// * [5558] ESPN NBA Basketball               |  100%   | Contain full library.
+// * [5558] Links 2004                        |  100%   | Contain full library.
 // * [5558] XIII                              |  100%   | Contain full library.
 // * [5659] Crimson Skies                     |  100%   | Contain full library.
 // * [5659] Plus Plum 2                       |  100%   | Contain full library.
+// * [5659] Unreal II: The Awakening          |  100%   | Contain full library.
 // * [5788] All-Star Baseball '05             |  100%   | Contain full library.
 // * [5788] Splinter Cell: Pandora Tomorrow   |  100%   | Contain full library.
+// * [5849] Brothers In Arms: Earned In Blood |  100%   | Contain full library.
+// * [5849] Brothers In Arms: Road to Hill 30 |  100%   | Contain full library.
 // * [5849] Call of Duty Finest Hour          |  100%   | Contain full library.
+// * [5849] Chessmaster                       |  100%   | Contain full library.
 // * [5849] Kingdom Under Fire: The Crusaders |  100%   | Contain full library.
+// * [5849] MechAssault 2: Lone Wolf          |  100%   | Contain full library.
 // * [5849] Splinter Cell: Chaos Theory       |  100%   | Contain full library.
+// * [5849] Stacked                           |  100%   | Contain full library.
+// * [5849] World Series of Poker             |  100%   | Contain full library.
 
 // TODO: Known XOnlines OOVPA issue list
 // * Following OOVPA revision are not verified
