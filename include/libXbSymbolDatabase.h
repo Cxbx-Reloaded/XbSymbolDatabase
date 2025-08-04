@@ -46,13 +46,13 @@ extern "C" {
 #define LIB_XGRAPHC  "XGRAPHC"
 #define SEC_XGRPH    "XGRPH"
 #define LIB_XNET     "XNET"
+#define SEC_XNET     LIB_XNET
 #define LIB_XNETN    "XNETN"
 #define LIB_XNETS    "XNETS"
 #define LIB_XONLINE  "XONLINE"
 #define SEC_XONLINE  LIB_XONLINE
 #define LIB_XONLINES "XONLINES"
 #define LIB_XONLINLS "XONLINLS"
-#define SEC_XNET     "XNET"
 
 #define XBSDBLIB_D3D8     (1 << 0)
 #define XBSDBLIB_D3D8LTCG (1 << 1)
