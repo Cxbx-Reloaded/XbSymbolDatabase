@@ -15,6 +15,7 @@
 // * [4361] Flight Academy                   |   100%    | Only has 50%-ish of the library compiled with xbe build.
 // * [4432] RedCard 2003                     |   100%    | Contain full library.
 // * [4432] Madden NFL 2003                  |   100%    | Contain full library.
+// * [4531] Hitman 2: Silent Assassin        |   100%    | Contain full library.
 // * [4627] MLB SlugFest 2003                |   100%    | Contain full library.
 // * [4721] NFL 2K3                          |   100%    | Contain full library.
 // * [4721] Terminator Dawn of Fate          |   100%    | Contain full library.
@@ -28,6 +29,7 @@
 // * [5455] NCAA Football 2004               |   100%    | Contain full library.
 // * [5455] Dinosaur Hunting                 |   100%    | Contain full library.
 // * [5558] Dino Crisis 3                    |   100%    | Contain full library.
+// * [5558] ESPN NBA Basketball              |   100%    | Contain full library.
 // * [5659] Midway Arcade Treasures Paperboy |   100%    | Contain full library.
 // * [5788] Digimon Battle Chronicle         |   100%    | Contain full library.
 // * [5788] Splinter Cell: Pandora Tomorrow  |   100%    | Contain full library.
