@@ -62,7 +62,7 @@
 //   * D3DDevice_End (4034)
 //   * D3DDevice_EndPushBuffer (3950, 4034, 4242, 4831, 5028)
 //   * D3DDevice_EndStateBlock (3950, 4034, 4039, 4721, 4831, 5028, 5120)
-//   * D3DDevice_FlushVertexCache (4034, 4039)
+//   * D3DDevice_FlushVertexCache (4034)
 //   * D3DDevice_GetBackBuffer (4721, 4831, 4928, 5028, 5120, 5233, 5455)
 //   * D3DDevice_GetBackMaterial (4034)
 //   * D3DDevice_GetDepthStencilSurface (4034)
@@ -308,7 +308,7 @@ static OOVPATable D3D8_OOVPA_Table[] = {
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_EndVisibilityTest, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Index))),
                     SYM_SIG(3911)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_FlushVertexCache, CALL(std), STACK(/*default*/), PARAMS(PARAM1(void))),
-                    SYM_SIG(3911, 4134)),
+                    SYM_SIG(3911, 4039)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetBackBuffer, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, BackBuffer), PARAM(psh, Type), PARAM(psh, ppBackBuffer))),
                     SYM_SIG(3911, 4034, 4134, 4627)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_GetBackBuffer2, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, BackBuffer))),

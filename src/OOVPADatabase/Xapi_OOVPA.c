@@ -371,7 +371,6 @@
 #include "Xapi/4831.inl"
 #include "Xapi/5028.inl"
 #include "Xapi/5120.inl"
-#include "Xapi/5233.inl"
 #include "Xapi/5344.inl"
 #include "Xapi/5455.inl"
 
@@ -490,7 +489,7 @@ static OOVPATable XAPILIB_OOVPA_Table[] = {
     REGISTER_OOVPAS_C(SYM_FUN(GetTypeInformation2, CALL(fas), STACK(/*default*/), PARAMS(PARAM(_cl, XidType), PARAM(edx, pTypeIndex))),
                       SYM_SIG(4242, 5455)), // Final generic OOVPA: 5455; Removed: 0
     REGISTER_OOVPAS_M(SYM_FUN(MU_Init, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pThis))),
-                      SYM_SIG(3911, 4242, 5233)),
+                      SYM_SIG(3911, 4242, 5120)),
     REGISTER_OOVPAS(SYM_FUN(OpenEventA, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, dwDesiredAccess), PARAM(psh, bInheritHandle), PARAM(psh, lpName))),
                     SYM_SIG(3911)), // Final generic OOVPA: 3911; Removed: 0
     REGISTER_OOVPAS(SYM_FUN(OutputDebugStringA, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, lpOutputString))),
