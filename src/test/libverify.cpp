@@ -491,6 +491,32 @@ bool run_test_verify_libraries()
     return true;
 }
 
+template <bool required = true>
+static bool run_test_output_results(const bool is_match,
+                                    const std::vector<std::string>& symbols_missing,
+                                    const std::string& lib_subcategory)
+{
+    if (!is_match) {
+        for (auto& symbol : symbols_missing) {
+            XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Title is missing one of " + symbol);
+        }
+        if (symbols_missing.empty()) {
+            Custom_OutputMessage(XB_OUTPUT_MESSAGE_INFO, results_str, lib_subcategory, none_str);
+            std::cout << "\n";
+        }
+        else {
+            Custom_OutputMessage(XB_OUTPUT_MESSAGE_INFO, results_str, lib_subcategory, required ? fail_str : partial_str);
+            std::cout << "\n";
+        }
+    }
+    else {
+        Custom_OutputMessage(XB_OUTPUT_MESSAGE_INFO, results_str, lib_subcategory, pass_str);
+        std::cout << "\n";
+        return true;
+    }
+    return false;
+}
+
 void run_test_verify_symbol(std::map<uint32_t, symbol_result>& symbols_list,
                             const char* lib_str,
                             const uint16_t lib_ver,
@@ -501,6 +527,7 @@ void run_test_verify_symbol(std::map<uint32_t, symbol_result>& symbols_list,
 {
     std::vector<std::string> symbols_missing;
     bool is_match;
+    bool lib_passed;
 
     if (lib_ver == 0) {
         XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, std::string(lib_str) + " is not detected, skipping...");
@@ -526,23 +553,7 @@ void run_test_verify_symbol(std::map<uint32_t, symbol_result>& symbols_list,
             is_match = match_library_db(symbols_list, lib_ver, lib_subcategory, subcategory->optional, lib_db.xref_offset, lib_db.xref_total, lib_flags, symbols_missing, error_count_local, true);
 
             lib_subcategory += " optional";
-            if (!is_match) {
-                for (auto& symbol : symbols_missing) {
-                    XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Title is missing one of " + symbol);
-                }
-                if (symbols_missing.empty()) {
-                    Custom_OutputMessage(XB_OUTPUT_MESSAGE_INFO, results_str, lib_subcategory, none_str);
-                    std::cout << "\n";
-                }
-                else {
-                    Custom_OutputMessage(XB_OUTPUT_MESSAGE_INFO, results_str, lib_subcategory, partial_str);
-                    std::cout << "\n";
-                }
-            }
-            else {
-                Custom_OutputMessage(XB_OUTPUT_MESSAGE_INFO, results_str, lib_subcategory, pass_str);
-                std::cout << "\n";
-            }
+            (void)run_test_output_results<false>(is_match, symbols_missing, lib_subcategory);
         }
 
         if (subcategory->min != nullptr) {
@@ -552,16 +563,10 @@ void run_test_verify_symbol(std::map<uint32_t, symbol_result>& symbols_list,
             is_match = match_library_db(symbols_list, lib_ver, lib_subcategory, subcategory->min, lib_db.xref_offset, lib_db.xref_total, lib_flags, symbols_missing, error_count);
 
             lib_subcategory += " min";
-            if (!is_match) {
-                for (auto& symbol : symbols_missing) {
-                    XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Title is missing one of " + symbol);
-                }
-                Custom_OutputMessage(XB_OUTPUT_MESSAGE_INFO, results_str, lib_subcategory, fail_str);
-                std::cout << "\n";
+            lib_passed = run_test_output_results(is_match, symbols_missing, lib_subcategory);
+            if (!lib_passed && !symbols_missing.empty()) {
                 continue;
             }
-            Custom_OutputMessage(XB_OUTPUT_MESSAGE_INFO, results_str, lib_subcategory, pass_str);
-            std::cout << "\n";
         }
 
         std::string lib_subcategory = library_prefix + subcategory->name + ")";
@@ -574,17 +579,11 @@ void run_test_verify_symbol(std::map<uint32_t, symbol_result>& symbols_list,
         is_match = match_library_db(symbols_list, lib_ver, lib_subcategory, subcategory->full, lib_db.xref_offset, lib_db.xref_total, lib_flags, symbols_missing, error_count);
 
         lib_subcategory += " full";
-        if (!is_match) {
-            for (auto& symbol : symbols_missing) {
-                XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Title is missing one of " + symbol);
-            }
-            Custom_OutputMessage(XB_OUTPUT_MESSAGE_INFO, results_str, lib_subcategory, fail_str);
-            std::cout << "\n";
+        lib_passed = run_test_output_results(is_match, symbols_missing, lib_subcategory);
+        if (!lib_passed) {
             continue;
         }
         full_lib_count++;
-        Custom_OutputMessage(XB_OUTPUT_MESSAGE_INFO, results_str, lib_subcategory, pass_str);
-        std::cout << "\n";
     }
 }
 
