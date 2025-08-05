@@ -511,6 +511,7 @@ static bool VerifyXbeIsBuiltWithXDK(const xbe_header* pXbeHeader,
                 }
                 break;
             case XBSDBLIB_XONLINE:
+            case XBSDBLIB_XONLINEN:
             case XBSDBLIB_XONLINES:
             case XBSDBLIB_XONLINLS:
                 lib_vers.xonline = pLibraryVersion[i].wBuildVersion;

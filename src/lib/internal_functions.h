@@ -631,6 +631,7 @@ static eLibraryType XbSDBi_GetLibraryType(uint32_t library)
         case XBSDBLIB_XGRAPHC:
             return LT_GRAPHIC;
         case XBSDBLIB_XONLINE:
+        case XBSDBLIB_XONLINEN:
         case XBSDBLIB_XONLINES:
         case XBSDBLIB_XONLINLS:
         case XBSDBLIB_XNET:
