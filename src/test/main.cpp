@@ -87,6 +87,9 @@ static struct {
     const char* TitleID = "TitleID";
     const char* TitleIDHex = "TitleIDHex";
     const char* Region = "Region";
+    const char* RegionHex = "RegionHex";
+    const char* Version = "Version";
+    const char* VersionHex = "VersionHex";
 } sect_certificate;
 
 static const char* section_libs = "Libs";
@@ -449,9 +452,18 @@ static bool VerifyXbeIsBuiltWithXDK(const xbe_header* pXbeHeader,
     XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "TitleIDHex            : 0x" + std::string(buffer_str));
     gen_result.SetValue(section_certificate, sect_certificate.TitleID, title_id.c_str());
     gen_result.SetLongValue(section_certificate, sect_certificate.TitleIDHex, pCertificate->dwTitleId, nullptr, true);
+    const auto& game_region = FormatGameRegion(pCertificate->dwGameRegion);
+    XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Region                : " + game_region);
+    gen_result.SetValue(section_certificate, sect_certificate.Region, game_region.c_str());
     snprintf(buffer_str, std::size(buffer_str), "%08X", pCertificate->dwGameRegion);
-    XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Region                : 0x" + std::string(buffer_str));
-    gen_result.SetLongValue(section_certificate, sect_certificate.Region, pCertificate->dwGameRegion, nullptr, true);
+    XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "RegionHex             : 0x" + std::string(buffer_str));
+    gen_result.SetLongValue(section_certificate, sect_certificate.RegionHex, pCertificate->dwGameRegion, nullptr, true);
+    const auto& game_version = FormatVersion(pCertificate->dwVersion);
+    XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Version               : " + game_version);
+    gen_result.SetValue(section_certificate, sect_certificate.Version, game_version.c_str());
+    snprintf(buffer_str, std::size(buffer_str), "%08X", pCertificate->dwVersion);
+    XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "VersionHex            : 0x" + std::string(buffer_str));
+    gen_result.SetLongValue(section_certificate, sect_certificate.VersionHex, pCertificate->dwVersion, nullptr, true);
 
     // Hash the loaded XBE's header, use it as a filename
     XbSUT_OutputMessage<false>(XB_OUTPUT_MESSAGE_INFO, "Xbe header hash       : " + getXbeHeaderHash(pXbeHeader));
