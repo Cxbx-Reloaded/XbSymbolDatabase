@@ -482,20 +482,28 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetTextureState_ColorKeyColor
 // ******************************************************************
-//E00A040089 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor_0__LTCG_esi1_ebx2,
-                         2048)
+// Generic OOVPA as of 5788 and newer
+OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor_0__LTCG_eax1_ebx2,
+                         5788)
 OOVPA_SIG_MATCH(
 
-    { 0x01, 0x57 },
-    { 0x0B, 0x8B },
-    { 0x1D, 0xE8 },
+    // push esi
+    OV_MATCH(0x00, 0x56),
 
-    { 0x25, 0xE0 },
-    { 0x26, 0x0A },
-    { 0x27, 0x04 },
-    { 0x28, 0x00 },
-    { 0x29, 0x89 },
+    // mov esi, param_1
+    // mov eax, [e??]
+    OV_MATCH(0x0B, 0x8B, 0xF0, 0x8B),
+    // cmp eax, ecx
+    // jne +0x0F
+    OV_MATCH(0x0F, 0x3B, 0xC1, 0x72, 0x0F),
+
+    // lea e??, [e?? * 0x04 + 0x40AE0] // 0x40AE0 is a reliable hardcoded value across all builds.
+    OV_MATCH(0x22, 0x8D),
+    OV_MATCH(0x25, 0xE0, 0x0A, 0x04, 0x00),
+
+    // This is required OV pair to tell the difference from the (symbol)_4__LTCG_eax1 signature.
+    // ret
+    OV_MATCH(0x3E, 0xC3),
     //
 );
 

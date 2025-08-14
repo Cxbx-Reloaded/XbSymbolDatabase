@@ -327,7 +327,7 @@ static const library_list database_full = {
                      REGISTER_SYMBOL(D3DDevice_SetTextureState_BumpEnv_8__LTCG_eax1, VER_RANGE(3911))),
     REGISTER_SYMBOLS(D3DDevice_SetTextureState_ColorKeyColor,
                      REGISTER_SYMBOL(D3DDevice_SetTextureState_ColorKeyColor, VER_RANGE(3911)),
-                     REGISTER_SYMBOL(D3DDevice_SetTextureState_ColorKeyColor_0__LTCG_esi1_ebx2, VER_RANGE(3911)),
+                     REGISTER_SYMBOL(D3DDevice_SetTextureState_ColorKeyColor_0__LTCG_eax1_ebx2, VER_RANGE(3911)),
                      REGISTER_SYMBOL(D3DDevice_SetTextureState_ColorKeyColor_4__LTCG_eax1, VER_RANGE(3911))),
     REGISTER_SYMBOL_INLINE(D3DDevice_SetTextureState_Deferred, VER_RANGE(3911, 4034)),
     REGISTER_SYMBOLS(D3DDevice_SetTextureState_TexCoordIndex,
