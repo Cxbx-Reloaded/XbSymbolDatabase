@@ -824,21 +824,42 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D_BlockOnResource
 // ******************************************************************
-//F7C20000780075 ...C3
-OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource_0__LTCG_eax1,
-                         2036)
+// Generic OOVPA as of 4039 and newer
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource_0__LTCG_ecx1,
+                         4039)
 OOVPA_SIG_MATCH(
+    // mov esi, [D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
 
-    { 0x01, 0x8B },
-    { 0x02, 0x35 },
+    // mov edx, param_1
+    OV_MATCH(0x0B, 0x8B, 0x11),
 
-    { 0x22, 0xF7 },
-    { 0x23, 0xC2 },
-    { 0x24, 0x00 },
-    { 0x25, 0x00 },
-    { 0x26, 0x78 },
-    { 0x27, 0x00 },
-    { 0x28, 0x75 },
+    // test edx, 0x780000
+    OV_MATCH(0x22, 0xF7, 0xC2, 0x00, 0x00, 0x78, 0x00),
+    // jnz +0x??
+    OV_MATCH(0x28, 0x75),
+    //
+);
+
+// ******************************************************************
+// * D3D_BlockOnResource
+// ******************************************************************
+// TODO: Lowest build detected is 4627, find if any other titles are
+//       detected by this signature or missing detection.
+// Generic OOVPA as of 4039 and newer
+OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource_0__LTCG_eax1,
+                         4039)
+OOVPA_SIG_MATCH(
+    // mov esi, [D3D_g_pDevice]
+    OV_MATCH(0x01, 0x8B, 0x35),
+
+    // mov edx, param_1
+    OV_MATCH(0x0B, 0x8B, 0x10),
+
+    // test edx, 0x780000
+    OV_MATCH(0x24, 0xF7, 0xC2, 0x00, 0x00, 0x78, 0x00),
+    // jnz +0x??
+    OV_MATCH(0x2A, 0x75),
     //
 );
 

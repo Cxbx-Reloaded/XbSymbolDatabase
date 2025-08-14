@@ -1139,23 +1139,20 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3D_BlockOnResource
 // ******************************************************************
-//00007800750C85 ...C3
 OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource_0__LTCG_eax1,
-                         2024)
+                         3911)
 OOVPA_SIG_MATCH(
+    // mov edx, [D3D_g_pDevice]
+    OV_MATCH(0x00, 0x8B, 0x15),
 
-    { 0x00, 0x8B },
-    { 0x01, 0x15 },
+    // mov esi, param_1
+    OV_MATCH(0x09, 0x8B, 0xF0),
 
-    { 0x28, 0xF7 },
-    { 0x29, 0xC1 },
-    { 0x2A, 0x00 },
-    { 0x2B, 0x00 },
-    { 0x2C, 0x78 },
-    { 0x2D, 0x00 },
-    { 0x2E, 0x75 },
-    { 0x2F, 0x0C },
-    { 0x30, 0x85 },
+    // test ecx, 0x780000
+    OV_MATCH(0x28, 0xF7, 0xC1, 0x00, 0x00, 0x78, 0x00),
+    // jnz +0x0C
+    // test e??, e??
+    OV_MATCH(0x2E, 0x75, 0x0C, 0x085),
     //
 );
 

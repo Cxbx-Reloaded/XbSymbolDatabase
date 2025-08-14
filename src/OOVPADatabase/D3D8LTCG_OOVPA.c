@@ -27,6 +27,7 @@
 //   * D3DDevice_Reset (4034 ... < 4432) // NOTE: Unknown if any signatures need to be lower.
 //   * D3DDevice_Reset_0__LTCG_edi1 (4034 ... < 4039) // NOTE: Unknown if 4039 signature needs to be lower.
 //   * D3DDevice_Reset_0__LTCG_ebx1 (... < 5344) // NOTE: Unknown if signature needs to be lower, and may have appeared at the same time when CDevice_InitializeFrameBuffers_4__LTCG_edi1 was introduced.
+//   * D3D_BlockOnResource_0__LTCG_eax1 (4039 ... < 4627) // NOTE: Lowest build detected is 4627, I had not found any older titles able to detect this signature yet. But it seems to be able lower down to 4039, according to D3D_BlockOnResource_0__LTCG_ecx1 variant.
 
 #include "OOVPA_databases.h"
 
@@ -418,7 +419,9 @@ static OOVPATable D3D8LTCG_OOVPA_Table[] = {
     REGISTER_OOVPAS(SYM_FUN(D3DVertexBuffer_Lock2, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pVertexBuffer), PARAM(psh, Flags))),
                     SYM_SIG(1024)),
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3D_BlockOnResource, CALL(unk), STACK(0), PARAMS(PARAM(eax, pResource))),
-                    SYM_SIG(2024, 2036, 2048, 2060)),
+                    SYM_SIG(3911, 4039, 5455)),
+    REGISTER_OOVPAS(SYM_FUN_LTCG(D3D_BlockOnResource, CALL(fas), STACK(0), PARAMS(PARAM(ecx, pResource))),
+                    SYM_SIG(4039)),
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3D_DestroyResource, CALL(unk), STACK(0), PARAMS(PARAM(edi, pResource))),
                     SYM_SIG(3911)),
     REGISTER_OOVPAS(SYM_FUN(D3D_CommonSetRenderTarget, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, pRenderTarget), PARAM(psh, pNewZStencil), PARAM(psh, unknown3))),
