@@ -339,7 +339,7 @@ static OOVPATable D3D8LTCG_OOVPA_Table[] = {
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetTextureState_BumpEnv, CALL(unk), STACK(8), PARAMS(PARAM(eax, Stage), PARAM(psh, Type), PARAM(psh, Value))),
                     SYM_SIG(2024)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTextureState_ColorKeyColor, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, Value))),
-                    SYM_SIG(1024, 1036)),
+                    SYM_SIG(4432, 5788)),
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetTextureState_ColorKeyColor, CALL(unk), STACK(0), PARAMS(PARAM(eax, Stage), PARAM(ebx, Value))),
                     SYM_SIG(3911, 5233, 5788)),
     REGISTER_OOVPAS(SYM_FUN_LTCG(D3DDevice_SetTextureState_ColorKeyColor, CALL(unk), STACK(4), PARAMS(PARAM(eax, Stage), PARAM(psh, Value))),
