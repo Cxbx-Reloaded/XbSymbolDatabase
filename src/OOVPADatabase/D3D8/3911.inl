@@ -4239,15 +4239,23 @@ OOVPA_SIG_MATCH(
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor,
                          3911)
 OOVPA_SIG_MATCH(
+    // push esi
+    OV_MATCH(0x00, 0x56),
 
-    { 0x00, 0x56 },
-    { 0x07, 0x56 },
-    { 0x0D, 0x8B },
-    { 0x13, 0x8D },
-    { 0x1A, 0x8B },
-    { 0x21, 0x83 },
-    { 0x28, 0x07 },
-    { 0x2F, 0x5E },
+    // mov e??, [esp + param_1]
+    OV_MATCH(0x0D, 0x8B),
+    OV_MATCH(0x0F, 0x24, 0x08),
+    // lea e??, [e?? * 0x04 + 0x40AE0] // 0x40AE0 is a reliable hardcoded value across all builds.
+    OV_MATCH(0x11, 0x8D),
+    OV_MATCH(0x14, 0xE0, 0x0A, 0x04, 0x00),
+
+    // mov e??, [esp + param_2]
+    OV_MATCH(0x1A, 0x8B),
+    OV_MATCH(0x1C, 0x24, 0x0C),
+
+    // This is an optional OV pair to tell the difference from the (symbol)_(LTCG variant) signature.
+    // retn 0x08
+    OV_MATCH(0x30, 0xC2, 0x08),
     //
 );
 
