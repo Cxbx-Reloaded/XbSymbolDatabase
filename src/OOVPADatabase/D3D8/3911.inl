@@ -4239,15 +4239,23 @@ OOVPA_SIG_MATCH(
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor,
                          3911)
 OOVPA_SIG_MATCH(
+    // push esi
+    OV_MATCH(0x00, 0x56),
 
-    { 0x00, 0x56 },
-    { 0x07, 0x56 },
-    { 0x0D, 0x8B },
-    { 0x13, 0x8D },
-    { 0x1A, 0x8B },
-    { 0x21, 0x83 },
-    { 0x28, 0x07 },
-    { 0x2F, 0x5E },
+    // mov e??, [esp + param_1]
+    OV_MATCH(0x0D, 0x8B),
+    OV_MATCH(0x0F, 0x24, 0x08),
+    // lea e??, [e?? * 0x04 + 0x40AE0] // 0x40AE0 is a reliable hardcoded value across all builds.
+    OV_MATCH(0x11, 0x8D),
+    OV_MATCH(0x14, 0xE0, 0x0A, 0x04, 0x00),
+
+    // mov e??, [esp + param_2]
+    OV_MATCH(0x1A, 0x8B),
+    OV_MATCH(0x1C, 0x24, 0x0C),
+
+    // This is an optional OV pair to tell the difference from the (symbol)_(LTCG variant) signature.
+    // retn 0x08
+    OV_MATCH(0x30, 0xC2, 0x08),
     //
 );
 
@@ -5174,17 +5182,16 @@ OOVPA_SIG_MATCH(
 OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource,
                          3911)
 OOVPA_SIG_MATCH(
+    // mov eax, [D3D_g_pDevice]
+    OV_MATCH(0x00, 0xA1),
 
-    { 0x00, 0xA1 },
-    { 0x34, 0x8B }, // mov edx, [ecx+0x1C]
-    { 0x35, 0x51 },
-    { 0x36, 0x1C },
-    { 0x41, 0xC2 }, // retn 4
-    { 0x42, 0x04 },
-    { 0x43, 0x00 },
-    { 0x7E, 0xC2 }, // retn 4
-    { 0x7F, 0x04 },
-    { 0x80, 0x00 },
+    // mov esi, [esp + param_1]
+    OV_MATCH(0x0A, 0x8B, 0x74, 0x24, 0x08),
+
+    // and eax, 0x70000
+    OV_MATCH(0x10, 0x25, 0x00, 0x00, 0x07, 0x00),
+    // cmp eax, 0x50000
+    OV_MATCH(0x15, 0x3D, 0x00, 0x00, 0x05, 0x00),
     //
 );
 
@@ -6026,5 +6033,31 @@ OOVPA_SIG_MATCH(
     // mov e??, [e?? + 0x24]
     OV_MATCH(0x2A, 0x8B),
     OV_MATCH(0x2C, 0x24),
+    //
+);
+
+// ******************************************************************
+// * D3DDevice_SetTextureState_Deferred
+// ******************************************************************
+// Generic OOVPA as of 3911 and newer.
+OOVPA_SIG_HEADER_XREF(D3DDevice_SetTextureState_Deferred,
+                      3911,
+                      XRefOne)
+OOVPA_SIG_MATCH(
+    // mov [ecx * 0x04 + D3D_g_DeferredTextureState],edx
+    XREF_ENTRY(0x22, XREF_D3D_g_DeferredTextureState),
+
+    // mov eax, [edx * 0x04 + ????]
+    OV_MATCH(0x00, 0x8B, 0x04, 0x95),
+
+    // shl param_1, 0x05
+    OV_MATCH(0x0E, 0xC1, 0xE1, 0x05),
+
+    // add param_1, param_2
+    // mov edx, [esp + param_3]
+    OV_MATCH(0x13, 0x03, 0xCA, 0x8B, 0x54, 0x24, 0x08),
+
+    // mov [ecx * 0x04 + D3D_g_DeferredTextureState], edx
+    OV_MATCH(0x1F, 0x89, 0x14, 0x8D),
     //
 );

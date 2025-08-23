@@ -548,6 +548,8 @@ static OOVPATable D3D8_OOVPA_Table[] = {
                     SYM_SIG(3911, 4034)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTextureState_ColorKeyColor, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, Value))),
                     SYM_SIG(3911, 4034)),
+    REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTextureState_Deferred, CALL(fas), STACK(/*default*/), PARAMS(PARAM(ecx, Stage), PARAM(edx, Type), PARAM(psh, Value))),
+                    SYM_SIG(3911)),
     REGISTER_OOVPAS_M(SYM_FUN(D3DDevice_SetTextureState_TexCoordIndex, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Stage), PARAM(psh, Value))),
                       SYM_SIG(3911, 4034, 4242, 4627)),
     REGISTER_OOVPAS(SYM_FUN(D3DDevice_SetTile, CALL(std), STACK(/*default*/), PARAMS(PARAM(psh, Index), PARAM(psh, pTile))),

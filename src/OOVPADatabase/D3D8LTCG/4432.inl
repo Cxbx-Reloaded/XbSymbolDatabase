@@ -287,19 +287,32 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetTextureState_ColorKeyColor
 // ******************************************************************
-//E00A040089
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor,
-                         1036)
+                         4432)
 OOVPA_SIG_MATCH(
+    // push esi
+    OV_MATCH(0x00, 0x56),
 
-    { 0x01, 0x8B },
-    { 0x1D, 0x4C },
+    // mov eax, [e??]
+    OV_MATCH(0x07, 0x8B),
+    // cmp eax, [esi + 0x04]
+    // jne +0x0E
+    OV_MATCH(0x09, 0x3B, 0x46, 0x04, 0x72, 0x0E),
 
-    { 0x23, 0xE0 },
-    { 0x24, 0x0A },
-    { 0x25, 0x04 },
-    { 0x26, 0x00 },
-    { 0x27, 0x89 },
+    // mov e??, [esp + param_1]
+    OV_MATCH(0x1C, 0x8B),
+    OV_MATCH(0x1E, 0x24, 0x08),
+    // lea e??, [e?? * 0x04 + 0x40AE0] // 0x40AE0 is a reliable hardcoded value across all builds.
+    OV_MATCH(0x20, 0x8D),
+    OV_MATCH(0x23, 0xE0, 0x0A, 0x04, 0x00),
+
+    // mov e??, [esp + param_2]
+    OV_MATCH(0x29, 0x8B),
+    OV_MATCH(0x2B, 0x24, 0x0C),
+
+    // This is an optional OV pair to tell the difference from the (symbol)_(LTCG variant) signature.
+    // retn 0x08
+    OV_MATCH(0x3F, 0xC2, 0x08),
     //
 );
 

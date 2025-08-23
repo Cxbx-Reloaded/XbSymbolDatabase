@@ -369,18 +369,27 @@ OOVPA_SIG_MATCH(
 // ******************************************************************
 // * D3DDevice_SetTextureState_ColorKeyColor
 // ******************************************************************
+// Generic OOVPA as of 4034 and newer.
 OOVPA_SIG_HEADER_NO_XREF(D3DDevice_SetTextureState_ColorKeyColor,
                          4034)
 OOVPA_SIG_MATCH(
+    // push esi
+    OV_MATCH(0x00, 0x56),
 
-    { 0x00, 0x56 },
-    { 0x07, 0x8B },
-    { 0x0E, 0xE8 },
-    { 0x16, 0x08 },
-    { 0x1E, 0x89 },
-    { 0x26, 0x04 },
-    { 0x2E, 0x07 },
-    { 0x36, 0xC2 },
+    // mov e??, [esp + param_1]
+    OV_MATCH(0x13, 0x8B),
+    OV_MATCH(0x15, 0x24, 0x08),
+    // lea e??, [e?? * 0x04 + 0x40AE0] // 0x40AE0 is a reliable hardcoded value across all builds.
+    OV_MATCH(0x17, 0x8D),
+    OV_MATCH(0x1A, 0xE0, 0x0A, 0x04, 0x00),
+
+    // mov e??, [esp + param_2]
+    OV_MATCH(0x20, 0x8B),
+    OV_MATCH(0x22, 0x24, 0x0C),
+
+    // This is an optional OV pair to tell the difference from the (symbol)_(LTCG variant) signature.
+    // retn 0x08
+    OV_MATCH(0x36, 0xC2, 0x08),
     //
 );
 
@@ -1288,22 +1297,20 @@ OOVPA_END;
 // ******************************************************************
 // * D3D::BlockOnResource
 // ******************************************************************
+// Generic OOVPA as of 4034 and newer
 OOVPA_SIG_HEADER_NO_XREF(D3D_BlockOnResource,
                          4034)
 OOVPA_SIG_MATCH(
+    // mov eax, [D3D_g_pDevice]
+    OV_MATCH(0x00, 0xA1),
 
-    { 0x00, 0xA1 },
-    { 0x05, 0x85 },
-    { 0x18, 0x00 },
-    { 0x19, 0x05 },
-    { 0x1A, 0x00 },
-    { 0x1B, 0x56 },
-    { 0x1C, 0x75 },
-    { 0x1D, 0x28 },
-    { 0x1E, 0x8B },
-    { 0x1F, 0x70 },
-    { 0x40, 0x5E },
-    { 0x4A, 0xE8 },
+    // mov eax, [esp + param_1]
+    OV_MATCH(0x09, 0x8B, 0x44, 0x24, 0x04),
+
+    // and ecx, 0x70000
+    OV_MATCH(0x0F, 0x81, 0xE1, 0x00, 0x00, 0x07, 0x00),
+    // cmp ecx, 0x50000
+    OV_MATCH(0x15, 0x81, 0xF9, 0x00, 0x00, 0x05, 0x00),
     //
 );
 
